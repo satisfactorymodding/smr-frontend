@@ -33,7 +33,7 @@ jobs:
           run_install: true
 
       - name: Build
-        run: pnpm build
+        run: pnpm graphql-codegen:prod && pnpm build
 
   lint:
     name: Lint
@@ -65,7 +65,7 @@ jobs:
           run_install: true
 
       - name: Lint
-        run: pnpm check && pnpm lint
+        run: pnpm graphql-codegen:prod && pnpm check && pnpm lint
 
   pages:
     name: Pages
@@ -100,7 +100,7 @@ jobs:
           run_install: true
 
       - name: Build
-        run: pnpm build
+        run: pnpm graphql-codegen:prod && pnpm build
 
       - name: Inject slug/short variables
         uses: rlespinasse/github-slug-action@v3.x
