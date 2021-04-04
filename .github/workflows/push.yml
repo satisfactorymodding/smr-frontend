@@ -99,13 +99,13 @@ jobs:
           version: 5.17.2
           run_install: true
 
+      - name: Inject slug/short variables
+        uses: rlespinasse/github-slug-action@v3.x
+
       - name: Build
         run: pnpm graphql-codegen:prod && pnpm build
         env:
           SVELTE_BASE_PATH: "/$GITHUB_REPOSITORY_SLUG/$GITHUB_REF_SLUG"
-
-      - name: Inject slug/short variables
-        uses: rlespinasse/github-slug-action@v3.x
 
       - name: Deploy to pages
         uses: JamesIves/github-pages-deploy-action@4.1.0
