@@ -1,0 +1,13 @@
+query GetMods ($offset: Int!, $limit: Int!) {
+  getMods(filter: { limit: $limit, offset: $offset }) {
+    count
+    mods {
+      id
+      name
+      logo
+      views
+      downloads
+      short_description
+    }
+  }
+}

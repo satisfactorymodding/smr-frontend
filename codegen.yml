@@ -1,0 +1,22 @@
+overwrite: true
+schema: "https://api.ficsit.app/v2/query"
+documents: "src/**/*.graphql"
+generates:
+  ./src/generated/graphql.ts:
+    plugins:
+      - add:
+          content: '/* eslint-disable */'
+      - "typescript"
+      - "typescript-operations"
+      - "typed-document-node"
+    config:
+      useTypeImports: true
+  ./src/generated/graphql.schema.urql.json:
+    plugins:
+      - "urql-introspection"
+    config:
+      module: commonjs
+  ./graphql.schema.json:
+    plugins:
+      - "introspection"
+
