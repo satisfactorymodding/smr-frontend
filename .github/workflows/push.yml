@@ -105,7 +105,7 @@ jobs:
       - name: Build
         run: pnpm graphql-codegen:prod && pnpm build
         env:
-          SVELTE_BASE_PATH: "/$GITHUB_REPOSITORY_SLUG/$GITHUB_REF_SLUG"
+          SVELTE_BASE_PATH: "/${{ env.GITHUB_REPOSITORY_SLUG }}/${{ env.GITHUB_REF_SLUG }}"
 
       - name: Deploy to pages
         uses: JamesIves/github-pages-deploy-action@4.1.0
