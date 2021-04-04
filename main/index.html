@@ -29,10 +29,10 @@
 
 
 		<script type="module">
-			import { start } from "/$GITHUB_REPOSITORY_SLUG/$GITHUB_REF_SLUG/_app/start-1a92a139.js";
+			import { start } from "/vilsol-smr-frontend/main/_app/start-1a92a139.js";
 			start({
 				target: document.querySelector("#svelte"),
-				paths: {"base":"/$GITHUB_REPOSITORY_SLUG/$GITHUB_REF_SLUG","assets":"/$GITHUB_REPOSITORY_SLUG/$GITHUB_REF_SLUG"},
+				paths: {"base":"/vilsol-smr-frontend/main","assets":"/vilsol-smr-frontend/main"},
 				session: {},
 				host: location.host,
 				route: true,
@@ -40,7 +40,7 @@
 					status: 200,
 					error: null,
 					nodes: [
-						import("/$GITHUB_REPOSITORY_SLUG/$GITHUB_REF_SLUG/_app/pages/index.svelte-942ef1ed.js")
+						import("/vilsol-smr-frontend/main/_app/pages/index.svelte-942ef1ed.js")
 					],
 					page: {
 						host: location.host, // TODO this is redundant
