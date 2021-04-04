@@ -101,6 +101,8 @@ jobs:
 
       - name: Build
         run: pnpm graphql-codegen:prod && pnpm build
+        env:
+          SVELTE_BASE_PATH: "/$GITHUB_REPOSITORY_SLUG/$GITHUB_REF_SLUG"
 
       - name: Inject slug/short variables
         uses: rlespinasse/github-slug-action@v3.x

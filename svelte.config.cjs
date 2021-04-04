@@ -32,6 +32,10 @@ module.exports = {
       optimizeDeps: {
         exclude: ["@urql/svelte"]
       }
+    },
+
+    paths: {
+      base: process.env.SVELTE_BASE_PATH || ''
     }
   }
 };
