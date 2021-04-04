@@ -36,6 +36,8 @@ module.exports = {
 
     paths: {
       base: process.env.SVELTE_BASE_PATH || ''
-    }
+    },
+
+    appDir: 'app'
   }
 };
