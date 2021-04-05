@@ -9,3 +9,8 @@ declare module "*.json" {
 }
 
 declare module '@iconify/svelte';
+
+declare module '$app/paths' {
+  export const base: string;
+  export const assets: string;
+}
