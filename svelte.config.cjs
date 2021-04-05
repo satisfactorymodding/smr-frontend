@@ -20,14 +20,14 @@ module.exports = {
       assets: 'build/static'
     }),
 
-    ssr: process.env.SVELTE_ADAPTER === 'node',
+    ssr: true,
 
     // hydrate the <div id="svelte"> element in src/app.html
     target: '#svelte',
 
     vite: {
       ssr: {
-        noExternal: ['node-fetch']
+        noExternal: ['node-fetch', '@urql/svelte']
       },
       optimizeDeps: {
         exclude: ["@urql/svelte"]
@@ -36,8 +36,6 @@ module.exports = {
 
     paths: {
       base: process.env.SVELTE_BASE_PATH || ''
-    },
-
-    appDir: 'app'
+    }
   }
 };
