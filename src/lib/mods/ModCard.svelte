@@ -3,16 +3,17 @@
   import Icon from "@iconify/svelte";
   import downloadIcon from '@iconify/icons-mdi/download.js';
   import eyeIcon from '@iconify/icons-mdi/eye.js';
+  import {assets} from '$app/paths';
 
   export let mod: Pick<Mod, 'id' | 'name' | 'logo' | 'views' | 'downloads' | 'short_description'>;
 
   /* eslint-disable @typescript-eslint/no-unused-vars */
-  $: logo = mod.logo || '/images/no_image.png'
+  $: logo = mod.logo || assets + '/images/no_image.png'
 </script>
 
 <div class="max-w-none bg-gray-800 rounded-lg flex items-center">
   <div class="flex-shrink-0">
-    <img class="h-max min-w-full rounded-l-lg mod-logo" src={logo} alt="ChitChat Logo">
+    <img class="h-max min-w-full rounded-l-lg mod-logo" src={logo} alt="{mod.name} Logo">
   </div>
   <div class="px-4 py-3 flex flex-col flex-grow justify-between h-full">
     <div>
