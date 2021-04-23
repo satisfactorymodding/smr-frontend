@@ -1,14 +1,14 @@
 /* eslint-disable */
-import { defaults } from '@iconify/core/lib/customisations';
+import { defaults } from '@iconify/core/lib/customisations/index.js';
 import {
   flipFromString,
   alignmentFromString,
-} from '@iconify/core/lib/customisations/shorthand';
-import { rotateFromString } from '@iconify/core/lib/customisations/rotate';
-import { fullIcon } from '@iconify/core/lib/icon';
-import { iconToSVG } from '@iconify/core/lib/builder';
-import { replaceIDs } from '@iconify/core/lib/builder/ids';
-import { merge } from '@iconify/core/lib/misc/merge';
+} from '@iconify/core/lib/customisations/shorthand.js';
+import { rotateFromString } from '@iconify/core/lib/customisations/rotate.js';
+import { fullIcon } from '@iconify/core/lib/icon/index.js';
+import { iconToSVG } from '@iconify/core/lib/builder/index.js';
+import { replaceIDs } from '@iconify/core/lib/builder/ids.js';
+import { merge } from '@iconify/core/lib/misc/merge.js';
 
 /**
  * Default SVG attributes
