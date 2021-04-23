@@ -8,7 +8,7 @@
     "build:static": "rimraf .svelte build/static && svelte-kit build",
     "check": "svelte-check --ignore build,.svelte",
     "check:dev": "svelte-check --ignore build,.svelte --watch",
-    "dev": "run-p -r dev:serve check:dev lint:dev",
+    "dev": "run-p -r graphql-codegen:prod:watch dev:serve check:dev lint:dev",
     "dev:serve": "svelte-kit dev",
     "graphql-codegen:prod": "graphql-codegen --config codegen.yml",
     "graphql-codegen:prod:watch": "graphql-codegen --config codegen.yml --watch",
