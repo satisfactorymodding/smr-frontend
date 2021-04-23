@@ -18,8 +18,11 @@ module.exports = {
   },
   darkMode: 'class',
   theme: {
-    colors: {
-      gray: colors.trueGray,
+    extend: {
+      colors: {
+        gray: colors.trueGray,
+        lime: colors.lime,
+      }
     }
   },
   variants: {
