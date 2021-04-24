@@ -35,7 +35,8 @@ module.exports = {
     },
 
     paths: {
-      base: process.env.SVELTE_BASE_PATH || ''
+      base: process.env.SVELTE_BASE_PATH || '',
+      assets: process.env.SVELTE_BASE_PATH || ''
     }
   }
 };
