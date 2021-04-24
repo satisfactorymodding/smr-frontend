@@ -6,15 +6,23 @@
   import {operationStore, query} from "@urql/svelte";
   import {assets} from '$app/paths';
 
-  const mods = operationStore(
+  const featuredMods = operationStore(
     GetModsDocument,
     {offset: 0, limit: 5}
+  );
+
+  query(featuredMods);
+
+  const mods = operationStore(
+    GetModsDocument,
+    {offset: 0, limit: 100}
   );
 
   query(mods);
 </script>
 
-<div class="h-screen bg-center bg-cover fold grid" style={'background-image: url("' + assets + '/assets/header_bg_image.png")'}>
+<div class="h-screen bg-center bg-cover fold grid"
+     style={'background-image: url("' + assets + '/assets/header_bg_image.png")'}>
   <div class="menu grid bg-black bg-opacity-70 py-2.5 px-4 items-center">
     <div class="grid grid-flow-col justify-self-center items-center">
       <span class="border-r-2 border-white px-4">Link 1</span>
@@ -60,17 +68,37 @@
         </div>
       </div>
       <div class="featured-mods w-5/6 mx-auto grid grid-flow-col gap-4">
-        {#if $mods.fetching}
+        {#if $featuredMods.fetching}
+          <!-- TODO Placeholders -->
           <p>Loading...</p>
-        {:else if $mods.error}
-          <p>Oh no... {$mods.error.message}</p>
+        {:else if $featuredMods.error}
+          <p>Oh no... {$featuredMods.error.message}</p>
         {:else}
-          {#each $mods.data.getMods.mods as mod}
+          {#each $featuredMods.data.getMods.mods as mod}
             <ModCard mod="{mod}" expanded={true}/>
           {/each}
         {/if}
       </div>
     </div>
+  </div>
+</div>
+
+<div class="w-full text-center py-6 bg-lime-600 mb-8">
+  <span class="text-3xl">Browse all 330 mods</span>
+</div>
+
+<div class="grid">
+  <div class="w-5/6 mx-auto grid grid-cols-5 gap-4">
+    {#if $mods.fetching}
+      <!-- TODO Placeholders -->
+      <p>Loading...</p>
+    {:else if $mods.error}
+      <p>Oh no... {$mods.error.message}</p>
+    {:else}
+      {#each $mods.data.getMods.mods as mod}
+        <ModCard mod="{mod}" expanded={false}/>
+      {/each}
+    {/if}
   </div>
 </div>
 
