@@ -6,6 +6,9 @@
   import {operationStore, query} from "@urql/svelte";
   import {assets} from '$app/paths';
 
+  // TODO Fetch from backend
+  let alertMessage = '';
+
   const featuredMods = operationStore(
     GetModsDocument,
     {offset: 0, limit: 5}
@@ -39,10 +42,12 @@
     <div class="under-header text-3xl">
       <span>The unofficially official source for Satisfactory mods</span>
     </div>
-    <div class="alert mt-10 bg-red-700 inline-block mx-auto p-4 shadow-md">
-      <span><Icon icon={alertIcon} inline={true} class="inline-block"/></span>
-      <span>Mods do not currently work on Experimental (EXP) / Update 4 - More info</span>
-    </div>
+    {#if alertMessage != ''}
+      <div class="alert mt-10 bg-red-700 inline-block mx-auto p-4 shadow-md">
+        <span><Icon icon={alertIcon} inline={true} class="inline-block"/></span>
+        <span>{ alertMessage }</span>
+      </div>
+    {/if}
   </div>
   <div class="w-5/6 justify-self-center">
     <div class="grid grid-flow-col justify-around h-14 mb-3 bg-black bg-opacity-70">

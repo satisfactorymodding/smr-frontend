@@ -83,7 +83,6 @@
         });
       })
     ]).then(colors => {
-      console.log(colors);
       let result = '';
       result += `linear-gradient(to bottom right, ${colors[0]}, 35%, transparent),`;
       result += `linear-gradient(to bottom left, ${colors[1]}, 35%, transparent),`;
@@ -116,7 +115,7 @@
   }
 </script>
 
-<div class:h-36={!expanded} class="h-36 relative">
+<div class:h-36={!expanded} class="relative">
   <div class="mod-card shadowed grid grid-flow-row p-3 bg-gray-700 gap-3 relative min-h-full"
        style={shouldExpand && activeBackground ? 'background:' + activeBackground : undefined}
        class:max-h-72={shouldExpand} class:max-h-36={!shouldExpand} class:z-10={shouldExpand}
