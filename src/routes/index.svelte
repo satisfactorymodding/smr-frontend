@@ -14,7 +14,7 @@
   query(mods);
 </script>
 
-<div class="h-screen bg-center bg-cover fold grid" style={'background: url("' + assets + '/assets/header_bg_image.png")'}>
+<div class="h-screen bg-center bg-cover fold grid" style={'background-image: url("' + assets + '/assets/header_bg_image.png")'}>
   <div class="menu grid bg-black bg-opacity-70 py-2.5 px-4 items-center">
     <div class="grid grid-flow-col justify-self-center items-center">
       <span class="border-r-2 border-white px-4">Link 1</span>
