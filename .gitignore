@@ -303,3 +303,4 @@ $RECYCLE.BIN/
 /.graphqlconfig
 /schema.graphql
 /graphql.schema.json
+/.svelte-kit

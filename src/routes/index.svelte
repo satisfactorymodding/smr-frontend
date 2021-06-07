@@ -1,6 +1,6 @@
 <script lang="ts">
   import alertIcon from '@iconify/icons-mdi/alert.js';
-  import Icon from "../lib/utils/iconify/Icon.svelte";
+  import Icon from "@iconify/svelte";
   import ModCard from "../lib/mods/ModCard.svelte";
   import {GetModsDocument} from "../generated";
   import {operationStore, query} from "@urql/svelte";

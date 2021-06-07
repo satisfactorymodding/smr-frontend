@@ -4,7 +4,7 @@
   import eyeIcon from '@iconify/icons-mdi/eye.js';
   import openInNewIcon from '@iconify/icons-mdi/open-in-new.js';
   import {assets} from '$app/paths';
-  import Icon from "../utils/iconify/Icon.svelte";
+  import Icon from "@iconify/svelte";
   import FastAverageColor from 'fast-average-color';
 
   export let mod: Pick<Mod, 'id' | 'name' | 'logo' | 'views' | 'downloads' | 'short_description'>;
