@@ -1,0 +1,1 @@
+import{S as s,i as e,s as r,t,g as a,f as n,Z as o,d as i}from"../../chunks/vendor-8f565e2e.js";function l(s){let e;return{c(){e=t("Unapproved version list")},l(s){e=a(s,"Unapproved version list")},m(s,r){n(s,e,r)},p:o,i:o,o:o,d(s){s&&i(e)}}}export default class extends s{constructor(s){super(),e(this,s,null,l,r,{})}}

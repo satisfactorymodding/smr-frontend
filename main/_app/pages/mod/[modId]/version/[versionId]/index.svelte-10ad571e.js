@@ -1,0 +1,1 @@
+import{S as s,i as e,s as a,t as i,g as r,f as t,Z as c,d as n}from"../../../../../chunks/vendor-8f565e2e.js";function o(s){let e;return{c(){e=i("Specific version page")},l(s){e=r(s,"Specific version page")},m(s,a){t(s,e,a)},p:c,i:c,o:c,d(s){s&&n(e)}}}export default class extends s{constructor(s){super(),e(this,s,null,o,a,{})}}

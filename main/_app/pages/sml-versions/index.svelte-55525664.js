@@ -1,0 +1,1 @@
+import{S as s,i as t,s as e,t as o,g as r,f as a,Z as n,d as i}from"../../chunks/vendor-8f565e2e.js";function f(s){let t;return{c(){t=o("List of SML versions")},l(s){t=r(s,"List of SML versions")},m(s,e){a(s,t,e)},p:n,i:n,o:n,d(s){s&&i(t)}}}export default class extends s{constructor(s){super(),t(this,s,null,f,e,{})}}

@@ -1,0 +1,1 @@
+import{S as s,i as r,s as e,t as o,g as t,f as a,Z as u,d as c}from"../../chunks/vendor-8f565e2e.js";function n(s){let r;return{c(){r=o("SSO for Discourse")},l(s){r=t(s,"SSO for Discourse")},m(s,e){a(s,r,e)},p:u,i:u,o:u,d(s){s&&c(r)}}}export default class extends s{constructor(s){super(),r(this,s,null,n,e,{})}}

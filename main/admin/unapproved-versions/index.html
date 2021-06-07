@@ -18,10 +18,9 @@
 		<link rel="modulepreload" href="/smr-frontend/main/_app/chunks/vendor-8f565e2e.js">
 		<link rel="modulepreload" href="/smr-frontend/main/_app/chunks/paths-2c73d5fe.js">
 		<link rel="modulepreload" href="/smr-frontend/main/_app/pages/__layout.svelte-b495b0cc.js">
-		<link rel="modulepreload" href="/smr-frontend/main/_app/pages/index.svelte-004e6b8c.js">
+		<link rel="modulepreload" href="/smr-frontend/main/_app/pages/admin/unapproved-versions.svelte-e725c1da.js">
 		<link rel="stylesheet" href="/smr-frontend/main/_app/assets/start-9aa571ba.css">
 		<link rel="stylesheet" href="/smr-frontend/main/_app/assets/pages/__layout.svelte-01cb2ece.css">
-		<link rel="stylesheet" href="/smr-frontend/main/_app/assets/pages/index.svelte-2abad56a.css">
 
 		<script type="module">
 			import { start } from "/smr-frontend/main/_app/start-17733bcd.js";
@@ -38,11 +37,11 @@
 					error: null,
 					nodes: [
 						import("/smr-frontend/main/_app/pages/__layout.svelte-b495b0cc.js"),
-						import("/smr-frontend/main/_app/pages/index.svelte-004e6b8c.js")
+						import("/smr-frontend/main/_app/pages/admin/unapproved-versions.svelte-e725c1da.js")
 					],
 					page: {
 						host: location.host, // TODO this is redundant
-						path: "/",
+						path: "/admin/unapproved-versions",
 						query: new URLSearchParams(""),
 						params: {}
 					}
@@ -58,31 +57,7 @@
 
 
 
-<main><div class="h-screen bg-center bg-cover fold grid svelte-5qzry0" style="background-image: url(&quot;/smr-frontend/main/assets/header_bg_image.png&quot;)"><div class="menu grid bg-black bg-opacity-70 py-2.5 px-4 items-center svelte-5qzry0"><div class="grid grid-flow-col justify-self-center items-center svelte-5qzry0"><span class="border-r-2 border-white px-4">Link 1</span>
-      <span class="border-r-2 border-white px-4">Link 2</span>
-      <span class="px-4">Link 3</span></div>
-    <div class="log-in justify-self-center svelte-5qzry0">Log in / register</div></div>
-  <div class="text-center self-center"><div class="header text-6xl"><span class="text-lime-500">SMR</span>
-      <span>Satisfactory Mod Repository</span></div>
-    <div class="under-header text-3xl"><span>The unofficially official source for Satisfactory mods</span></div>
-    </div>
-  <div class="w-5/6 justify-self-center"><div class="grid grid-flow-col justify-around h-14 mb-3 bg-black bg-opacity-70"><div>Link 1</div>
-      <div>Link 2</div>
-      <div>Link 3</div></div>
-    <div class="h-14 bg-black bg-opacity-70"><span>Type here to search, you can use #tags or !awards</span></div></div>
-  <div class="grid"><div class="py-8 bg-black bg-opacity-70"><div class="w-5/6 mx-auto grid grid-flow-col mb-3"><div><span>Featured mods:</span>
-          <span class="text-lime-500">Newest</span></div>
-        <div class="text-right"><span>Browse all</span>
-          <span class="text-lime-500">330</span>
-          <span>mods</span></div></div>
-      <div class="featured-mods w-5/6 mx-auto grid grid-flow-col gap-4">
-          <p>Loading...</p></div></div></div></div>
-
-<div class="w-full text-center py-6 bg-lime-600 mb-8"><span class="text-3xl">Browse all 330 mods</span></div>
-
-<div class="grid"><div class="w-5/6 mx-auto grid grid-cols-5 gap-4">
-      <p>Loading...</p></div>
-</div></main>
+<main>Unapproved version list</main>
 
 
 
