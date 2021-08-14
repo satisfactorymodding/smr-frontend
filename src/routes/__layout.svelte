@@ -1,7 +1,7 @@
 <svelte:head>
   <title>SMR</title>
 
-  <link rel="icon" type="image/x-icon" href="{base}/favicon.ico">
+  <link rel="icon" type="image/x-icon" href="{base}/assets/favicon.ico">
   <link rel="apple-touch-icon" sizes="180x180" href="{base}/assets/apple-touch-icon.png?v=69P26YMB35">
   <link rel="icon" type="image/png" sizes="32x32" href="{base}/assets/favicon-32x32.png?v=69P26YMB35">
   <link rel="icon" type="image/png" sizes="16x16" href="{base}/assets/favicon-16x16.png?v=69P26YMB35">

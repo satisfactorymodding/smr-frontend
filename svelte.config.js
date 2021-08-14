@@ -20,7 +20,16 @@ const config = {
     // You can create optimized builds for different platforms by
     // specifying a different adapter
     adapter: process.env.SVELTE_ADAPTER === 'node' ? adapterNode({
-      out: 'build/node'
+      out: 'build/node',
+      esbuild(defaultOptions) {
+        return {
+          ...defaultOptions,
+          external: [
+            ...defaultOptions.external || [],
+            'canvas'
+          ]
+        }
+      }
     }) : adapterStatic({
       pages: 'build/static',
       assets: 'build/static'
@@ -41,8 +50,12 @@ const config = {
     },
 
     paths: {
-      base: process.env.SVELTE_BASE_PATH || '',
-      assets: process.env.SVELTE_BASE_PATH || ''
+      base: process.env.SVELTE_BASE_PATH || ''
+    },
+
+    // TODO Fix prerender
+    prerender: {
+      enabled: false
     }
   }
 };
