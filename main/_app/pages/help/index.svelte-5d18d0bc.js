@@ -1,1 +1,0 @@
-import{S as s,i as a,s as e,t as n,g as t,f as r,Z as l,d as o}from"../../chunks/vendor-8f565e2e.js";function d(s){let a;return{c(){a=n("Help page with Markdown and UPlugin")},l(s){a=t(s,"Help page with Markdown and UPlugin")},m(s,e){r(s,a,e)},p:l,i:l,o:l,d(s){s&&o(a)}}}export default class extends s{constructor(s){super(),a(this,s,null,d,e,{})}}

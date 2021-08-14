@@ -1,1 +1,0 @@
-import{S as s,i as t,s as e,t as a,g as n,f as r,Z as o,d as i}from"../../chunks/vendor-8f565e2e.js";function u(s){let t;return{c(){t=a("Settings page")},l(s){t=n(s,"Settings page")},m(s,e){r(s,t,e)},p:o,i:o,o:o,d(s){s&&i(t)}}}export default class extends s{constructor(s){super(),t(this,s,null,u,e,{})}}

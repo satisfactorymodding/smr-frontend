@@ -1,1 +1,0 @@
-import{S as s,i as t,s as a,t as e,g as o,f as r,Z as n,d}from"../../chunks/vendor-8f565e2e.js";function l(s){let t;return{c(){t=e("Unapproved mod list")},l(s){t=o(s,"Unapproved mod list")},m(s,a){r(s,t,a)},p:n,i:n,o:n,d(s){s&&d(t)}}}export default class extends s{constructor(s){super(),t(this,s,null,l,a,{})}}
