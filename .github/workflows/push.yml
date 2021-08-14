@@ -6,6 +6,9 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        action: [ "build:node", "build:static" ]
     steps:
 
       - name: Checkout
@@ -14,7 +17,7 @@ jobs:
       - name: Setup nodejs
         uses: actions/setup-node@v1
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 16
 
       - name: Cache pnpm modules
         uses: actions/cache@v2
@@ -22,9 +25,9 @@ jobs:
           cache-name: cache-pnpm-modules
         with:
           path: ~/.pnpm-store
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-${{ hashFiles('**/package.json') }}
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-16-${{ hashFiles('**/package.json') }}
           restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-
+            ${{ runner.os }}-build-${{ env.cache-name }}-16-
 
       - name: Install dependencies
         uses: pnpm/action-setup@v1.2.1
@@ -33,7 +36,7 @@ jobs:
           run_install: true
 
       - name: Build
-        run: pnpm graphql-codegen:prod && pnpm build
+        run: pnpm graphql-codegen:prod && pnpm ${{ matrix.action }}
 
   lint:
     name: Lint
@@ -46,7 +49,7 @@ jobs:
       - name: Setup nodejs
         uses: actions/setup-node@v1
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 16
 
       - name: Cache pnpm modules
         uses: actions/cache@v2
@@ -54,9 +57,9 @@ jobs:
           cache-name: cache-pnpm-modules
         with:
           path: ~/.pnpm-store
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-${{ hashFiles('**/package.json') }}
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-16-${{ hashFiles('**/package.json') }}
           restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-
+            ${{ runner.os }}-build-${{ env.cache-name }}-16-
 
       - name: Install dependencies
         uses: pnpm/action-setup@v1.2.1
@@ -81,7 +84,7 @@ jobs:
       - name: Setup nodejs
         uses: actions/setup-node@v1
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 16
 
       - name: Cache pnpm modules
         uses: actions/cache@v2
@@ -89,9 +92,9 @@ jobs:
           cache-name: cache-pnpm-modules
         with:
           path: ~/.pnpm-store
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-${{ hashFiles('**/package.json') }}
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-16-${{ hashFiles('**/package.json') }}
           restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-
+            ${{ runner.os }}-build-${{ env.cache-name }}-16-
 
       - name: Install dependencies
         uses: pnpm/action-setup@v1.2.1
@@ -103,7 +106,7 @@ jobs:
         uses: rlespinasse/github-slug-action@v3.x
 
       - name: Build
-        run: pnpm graphql-codegen:prod && pnpm build
+        run: pnpm graphql-codegen:prod && pnpm build:static
         env:
           SVELTE_BASE_PATH: "/${{ env.GITHUB_REPOSITORY_NAME_PART_SLUG }}/${{ env.GITHUB_REF_SLUG }}"
 
