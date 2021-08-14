@@ -28,6 +28,7 @@ module.exports = {
   ],
   settings: {
     'svelte3/typescript': require('typescript'),
-    'svelte3/ignore-styles': () => true
+    'svelte3/ignore-styles': () => true,
+    quotes: 'single'
   },
 }

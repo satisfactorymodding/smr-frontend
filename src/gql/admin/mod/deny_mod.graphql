@@ -1,0 +1,3 @@
+mutation DenyMod($modId: ModID!) {
+  denyMod(modId: $modId)
+}

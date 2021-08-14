@@ -1,0 +1,16 @@
+query GetSMLVersionsAdmin($filter: SMLVersionFilter) {
+  getSMLVersions(filter: $filter) {
+    sml_versions {
+      id
+      version
+      stability
+      link
+      changelog
+      created_at
+      date
+      satisfactory_version
+      bootstrap_version
+    }
+    count
+  }
+}

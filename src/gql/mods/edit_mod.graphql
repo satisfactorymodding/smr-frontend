@@ -1,0 +1,19 @@
+mutation EditMod($modId: ModID!, $mod: UpdateMod!) {
+  updateMod(modId: $modId, mod: $mod) {
+    id
+    name
+    full_description
+    short_description
+    logo
+    mod_reference
+    source_url
+    authors {
+      role
+      user {
+        id
+        username
+        avatar
+      }
+    }
+  }
+}

@@ -1,0 +1,5 @@
+mutation OAuthGoogle ($code: String!, $state: String!) {
+  session: oAuthGoogle(code: $code, state: $state) {
+    token
+  }
+}

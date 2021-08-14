@@ -1,0 +1,43 @@
+query GetMod($mod: ModID!) {
+  getMod(modId: $mod) {
+    id
+    created_at
+    name
+    full_description
+    short_description
+    logo
+    mod_reference
+    source_url
+    latestVersions {
+      alpha {
+        id
+        link
+        version
+        created_at
+      }
+      beta {
+        id
+        link
+        version
+        created_at
+      }
+      release {
+        id
+        link
+        version
+        created_at
+      }
+    }
+    downloads
+    views
+    authors {
+      role
+      user_id
+      user {
+        id
+        username
+        avatar
+      }
+    }
+  }
+}

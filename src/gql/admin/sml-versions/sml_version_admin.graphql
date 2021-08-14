@@ -1,0 +1,13 @@
+query GetSMLVersionAdmin($smlVersionID: SMLVersionID!) {
+  getSMLVersion(smlVersionID: $smlVersionID) {
+    id
+    version
+    stability
+    link
+    changelog
+    created_at
+    date
+    satisfactory_version
+    bootstrap_version
+  }
+}

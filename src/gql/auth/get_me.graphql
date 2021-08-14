@@ -1,0 +1,21 @@
+query GetMe {
+  getMe {
+    id
+    username
+    avatar
+    created_at
+    groups {
+      id
+      name
+    }
+    roles {
+      approveMods
+      approveVersions
+      deleteContent
+      editContent
+      editUsers
+      editSMLVersions
+      editBootstrapVersions
+    }
+  }
+}

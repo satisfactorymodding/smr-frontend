@@ -1,0 +1,5 @@
+mutation OAuthGithub ($code: String!, $state: String!) {
+  session: oAuthGithub(code: $code, state: $state) {
+    token
+  }
+}

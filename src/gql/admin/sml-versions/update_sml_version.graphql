@@ -1,0 +1,5 @@
+mutation UpdateSMLVersion($smlVersionID: SMLVersionID!, $smlVersion: UpdateSMLVersion!) {
+  updateSMLVersion(smlVersionId: $smlVersionID, smlVersion: $smlVersion) {
+    id
+  }
+}

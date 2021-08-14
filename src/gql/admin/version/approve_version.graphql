@@ -1,0 +1,3 @@
+mutation ApproveVersion($versionId: VersionID!) {
+  approveVersion(versionId: $versionId)
+}

@@ -1,4 +1,5 @@
 <div>
+  <h1>Terms of Service</h1>
   <p>ficsit.app strives to provide its users with services and information that facilitate the discussion
     and
     distribution of user-submitted video game modifications ("mods") and other video game related
@@ -160,3 +161,15 @@
   <br>
   <p>Updated: <b>25/06/2020</b></p>
 </div>
+
+<style lang="postcss">
+  p {
+    @apply text-base my-5;
+  }
+  h1 {
+    @apply text-4xl my-4 font-bold;
+  }
+  h2 {
+    @apply text-3xl my-4 font-bold;
+  }
+</style>

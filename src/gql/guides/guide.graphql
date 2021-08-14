@@ -1,0 +1,15 @@
+query GetGuide($guide: GuideID!) {
+  getGuide(guideId: $guide) {
+    id
+    created_at
+    views
+    guide
+    name
+    short_description
+    user {
+      id
+      username
+      avatar
+    }
+  }
+}

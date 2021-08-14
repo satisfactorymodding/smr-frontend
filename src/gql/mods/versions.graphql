@@ -1,0 +1,20 @@
+query GetModVersions($mod: ModID!, $limit: Int!, $offset: Int!) {
+  getMod(modId: $mod) {
+    id
+    versions (filter: {
+      limit: $limit,
+      offset: $offset
+    }) {
+      id
+      version
+      stability
+      sml_version
+      downloads
+      created_at
+      changelog
+      link
+      hash
+      size
+    }
+  }
+}

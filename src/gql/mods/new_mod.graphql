@@ -1,0 +1,5 @@
+mutation NewMod($mod: NewMod!) {
+  createMod(mod: $mod) {
+    id
+  }
+}

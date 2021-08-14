@@ -15,12 +15,17 @@
 
 <script lang="ts">
   import './_global.postcss';
-  import {initializeGraphQLClient} from "../core";
+  import {initializeGraphQLClient} from "$lib/core";
   import {base} from '$app/paths';
+  import LoginDialog from "$lib/components/auth/LoginDialog.svelte";
+  import {initializeUserStore} from "$lib/stores/user";
 
   initializeGraphQLClient();
+  initializeUserStore();
 </script>
 
 <main>
   <slot/>
+
+  <LoginDialog/>
 </main>

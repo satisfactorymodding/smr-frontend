@@ -1,0 +1,24 @@
+query GetUser($user: UserID!) {
+  getUser(userId: $user) {
+    id
+    avatar
+    created_at
+    username
+    mods {
+      mod {
+        id
+        name
+        logo
+        views
+        downloads
+        short_description
+      }
+    }
+    guides {
+      id
+      name
+      short_description
+      views
+    }
+  }
+}

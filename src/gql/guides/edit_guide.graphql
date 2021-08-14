@@ -1,0 +1,8 @@
+mutation EditGuide($guideId: GuideID!, $guide: UpdateGuide!) {
+  updateGuide(guideId: $guideId, guide: $guide) {
+    id
+    guide
+    name
+    short_description
+  }
+}

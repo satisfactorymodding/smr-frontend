@@ -1,0 +1,3 @@
+mutation DeleteVersion ($versionId: VersionID!) {
+  deleteVersion(versionId: $versionId)
+}

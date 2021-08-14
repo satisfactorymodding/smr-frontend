@@ -1,0 +1,3 @@
+mutation UploadVersionPart($modId: ModID!, $versionId: VersionID!, $part: Int!, $file: Upload!) {
+  uploadVersionPart(modId: $modId, versionId: $versionId, part: $part, file: $file)
+}

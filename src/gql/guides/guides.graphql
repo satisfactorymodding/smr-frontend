@@ -1,0 +1,15 @@
+query GetGuides($offset: Int!, $limit: Int!) {
+  getGuides(filter: { limit: $limit, offset: $offset }) {
+    count
+    guides {
+      id
+      name
+      views
+      short_description
+      user {
+        id
+        avatar
+      }
+    }
+  }
+}

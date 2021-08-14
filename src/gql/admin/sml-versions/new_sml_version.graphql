@@ -1,0 +1,5 @@
+mutation NewSMLVersion($smlVersion: NewSMLVersion!) {
+  createSMLVersion(smlVersion: $smlVersion) {
+    id
+  }
+}

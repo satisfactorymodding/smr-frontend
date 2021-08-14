@@ -1,4 +1,5 @@
 <div>
+  <h1>Privacy Policy</h1>
   <p>At ficsit.app, accessible from https://ficsit.app, one of our main priorities is the privacy of our visitors.
     This
     Privacy Policy document contains types of information that is collected and recorded by ficsit.app and how we
@@ -125,3 +126,15 @@
     to contact us immediately and we will do our best efforts to promptly remove such information from our
     records.</p>
 </div>
+
+<style lang="postcss">
+  p {
+    @apply text-base my-5;
+  }
+  h1 {
+    @apply text-4xl my-4 font-bold;
+  }
+  h2 {
+    @apply text-3xl my-4 font-bold;
+  }
+</style>

@@ -1,0 +1,5 @@
+mutation UpdateVersion($versionId: VersionID!, $version: UpdateVersion!) {
+  updateVersion(versionId: $versionId, version: $version) {
+    id
+  }
+}

@@ -1,0 +1,5 @@
+mutation NewGuide($guide: NewGuide!) {
+  createGuide(guide: $guide) {
+    id
+  }
+}

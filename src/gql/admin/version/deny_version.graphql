@@ -1,0 +1,3 @@
+mutation DenyVersion($versionId: VersionID!) {
+  denyVersion(versionId: $versionId)
+}

@@ -1,1 +1,134 @@
-Specific mod page
+<script lang="ts" context="module">
+  import {paramsToProps} from "$lib/utils/routing";
+
+  export const load = paramsToProps();
+</script>
+
+<script lang="ts">
+  import {DeleteModDocument, GetModDocument} from "$lib/generated";
+  import {mutation, operationStore, query} from "@urql/svelte";
+  import ModInfo from "$lib/components/mods/ModInfo.svelte";
+  import ModLatestVersions from "$lib/components/mods/ModLatestVersions.svelte";
+  import ModAuthors from "$lib/components/mods/ModAuthors.svelte";
+  import ModLogo from "$lib/components/mods/ModLogo.svelte";
+  import ModDescription from "$lib/components/mods/ModDescription.svelte";
+  import ModVersions from "$lib/components/mods/ModVersions.svelte";
+  import {user} from "$lib/stores/user";
+  import {goto} from "$app/navigation";
+  import {writable} from "svelte/store";
+  import Dialog from "$lib/components/general/Dialog.svelte";
+  import Toast from "$lib/components/general/Toast.svelte";
+
+  export let modId!: string;
+
+  let versionsTab = false;
+
+  let errorMessage = '';
+  let errorToast = false;
+
+  const mod = operationStore(
+    GetModDocument,
+    {mod: modId}
+  );
+
+  const deleteMod = mutation({
+    query: DeleteModDocument
+  });
+
+  $: canUserEdit = $user?.roles?.deleteContent || $mod?.data?.getMod?.authors?.findIndex(author => author.user_id == $user?.id) >= 0;
+
+  const deleteDialogOpen = writable<boolean>(false);
+
+  const deleteModFn = () => {
+    deleteMod({modId}).then(value => {
+      if (value.error) {
+        console.error(value.error.message);
+        errorMessage = 'Error deleting mod: ' + value.error.message;
+        errorToast = true;
+      } else {
+        // TODO Toast or something
+        goto('/mods');
+      }
+    });
+  };
+
+  query(mod);
+</script>
+
+{#if $mod.fetching}
+  <p>Loading...</p>
+{:else if $mod.error}
+  <p>Oh no... {$mod.error.message}</p>
+{:else}
+  {#if $mod.data.getMod}
+    <div class="grid gap-8 grid-auto-max">
+      <div class="grid grid-cols-1 auto-rows-min gap-8">
+        <div class="grid grid-flow-col grid-auto-max h-auto gap-4 items-center">
+          <h1 class="text-4xl my-4 font-bold">{ $mod.data.getMod.name }</h1>
+
+          {#if canUserEdit}
+            <button class="py-2 px-4 rounded text-base bg-yellow-600"
+                    on:click={() => goto('/mod/' + modId + '/edit')}>
+              Edit
+            </button>
+            <button class="py-2 px-4 rounded text-base bg-red-500"
+                    on:click={() => deleteDialogOpen.set(true)}>
+              Delete
+            </button>
+            <button class="py-2 px-4 rounded text-base bg-green-600"
+                    on:click={() => goto('/mod/' + modId + '/new-version')}>
+              New Version
+            </button>
+          {/if}
+
+          <button class="py-2 px-4 rounded text-base bg-blue-500" on:click={() => versionsTab = !versionsTab}>
+            {#if !versionsTab}
+              Versions
+            {:else}
+              Description
+            {/if}
+          </button>
+        </div>
+        {#if !versionsTab}
+          <ModDescription mod={$mod.data.getMod}/>
+        {:else}
+          <ModVersions modId={$mod.data.getMod.id}/>
+        {/if}
+      </div>
+      <div class="grid grid-cols-1 auto-rows-min gap-8">
+        <ModLogo modLogo={$mod.data.getMod.logo} modName={$mod.data.getMod.name}/>
+        <ModInfo mod={$mod.data.getMod}/>
+        <ModLatestVersions modId={$mod.data.getMod.id} latestVersions={$mod.data.getMod.latestVersions}/>
+        <ModAuthors authors={$mod.data.getMod.authors}/>
+      </div>
+    </div>
+
+    <Dialog bind:open={$deleteDialogOpen}>
+      <div class="grid grid-flow-row gap-4">
+        <h3 class="text-2xl font-bold">Delete Mod?</h3>
+
+        <span>Are you sure you wish to delete this mod</span>
+
+        <button class="py-1 px-4 rounded text-base bg-yellow-600" on:click={() => deleteDialogOpen.set(false)}>
+          Cancel
+        </button>
+        <button class="py-1 px-4 rounded text-base bg-red-500" on:click={() => deleteModFn()}>
+          Delete
+        </button>
+      </div>
+    </Dialog>
+
+    <Toast bind:running={errorToast}>
+      <span>{errorMessage}</span>
+    </Toast>
+  {:else }
+    <!-- TODO Better 404 -->
+    404
+  {/if}
+{/if}
+
+<style lang="postcss">
+  .grid-auto-max {
+    grid-template-columns: auto max-content max-content max-content max-content;
+  }
+</style>

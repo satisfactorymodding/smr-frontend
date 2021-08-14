@@ -1,0 +1,15 @@
+query GetUnapprovedMods($filter: ModFilter) {
+  getUnapprovedMods(filter: $filter) {
+    mods {
+      id
+      name
+      views
+      downloads
+      logo
+      short_description
+      full_description
+      created_at
+    }
+    count
+  }
+}

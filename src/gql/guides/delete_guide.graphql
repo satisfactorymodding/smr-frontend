@@ -1,0 +1,3 @@
+mutation DeleteGuide($guideId: GuideID!) {
+  deleteGuide(guideId: $guideId)
+}

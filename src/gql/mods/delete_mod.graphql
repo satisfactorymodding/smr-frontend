@@ -1,0 +1,3 @@
+mutation DeleteMod($modId: ModID!) {
+  deleteMod(modId: $modId)
+}

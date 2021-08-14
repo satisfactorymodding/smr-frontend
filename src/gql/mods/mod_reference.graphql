@@ -1,0 +1,7 @@
+query GetModReference($mod: ModID!) {
+  getMod(modId: $mod) {
+    id
+    mod_reference
+    name
+  }
+}

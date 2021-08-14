@@ -1,0 +1,18 @@
+query GetUnapprovedVersions($filter: VersionFilter) {
+  getUnapprovedVersions(filter: $filter) {
+    versions {
+      id
+      mod_id
+      version
+      stability
+      link
+      changelog
+      created_at
+
+      mod {
+        name
+      }
+    }
+    count
+  }
+}
