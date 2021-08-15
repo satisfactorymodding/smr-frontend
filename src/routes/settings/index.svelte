@@ -10,6 +10,7 @@
   import {user} from "$lib/stores/user";
   import * as zod from "zod";
   import type {Form} from "@felte/core";
+  import {base} from "$app/paths";
 
   let errorMessage = '';
   let errorToast = false;
@@ -44,7 +45,7 @@
               errorToast = true;
             } else {
               // TODO Toast or something
-              goto('/user/' + value.data.updateUser.id);
+              goto(base + '/user/' + value.data.updateUser.id);
             }
           });
         },

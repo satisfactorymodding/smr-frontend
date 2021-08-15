@@ -2,6 +2,7 @@
   import {page} from '$app/stores';
   import {loginDialogOpen} from "$lib/stores/global";
   import {user} from "$lib/stores/user";
+  import {base} from "$app/paths";
 
   $: currentPath = $page.path;
 
@@ -13,9 +14,9 @@
 </script>
 
 <div class="menu flex justify-between bg-black items-center">
-  <a class="py-2.5 px-4 hoverable" href="/">SMR</a>
+  <a class="py-2.5 px-4 hoverable" href="{base}">SMR</a>
   <div class="grid grid-flow-col items-center h-full text-gray-400">
-    <a class="hoverable h-full grid content-center{activeLink('/mods')}" href="/mods">
+    <a class="hoverable h-full grid content-center{activeLink('/mods')}" href="{base}/mods">
       <div class="border-r-2 border-white px-4">Browse All Mods</div>
     </a>
     <a class="hoverable h-full grid content-center" target="_blank" href="https://docs.ficsit.app">
@@ -24,13 +25,13 @@
     <a class="font-bold hoverable h-full grid content-center" target="_blank" href="https://smm.ficsit.app">
       <div class="border-r-2 border-white px-4 text-white">Download the Mod Manager</div>
     </a>
-    <a class="hoverable h-full grid content-center{activeLink('/guides')}" href="/guides">
+    <a class="hoverable h-full grid content-center{activeLink('/guides')}" href="{base}/guides">
       <div class="border-r-2 border-white px-4">Guides</div>
     </a>
-    <a class="hoverable h-full grid content-center{activeLink('/tools')}" href="/tools">
+    <a class="hoverable h-full grid content-center{activeLink('/tools')}" href="{base}/tools">
       <div class="border-r-2 border-white px-4">Tools</div>
     </a>
-    <a class="hoverable h-full grid content-center{activeLink('/about')}" href="/about">
+    <a class="hoverable h-full grid content-center{activeLink('/about')}" href="{base}/about">
       <div class="px-4">About</div>
     </a>
   </div>
@@ -40,7 +41,7 @@
   {:else}
     <div class="h-full grid grid-flow-col gap-4">
       {#if isAdmin}
-        <a href="/admin" class="grid grid-flow-col hoverable px-4 content-center h-full cursor-pointer">
+        <a href="{base}/admin" class="grid grid-flow-col hoverable px-4 content-center h-full cursor-pointer">
           <div>Admin</div>
         </a>
       {/if}

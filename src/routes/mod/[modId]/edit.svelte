@@ -11,6 +11,7 @@
   import {goto} from '$app/navigation';
   import ModForm from "$lib/components/mods/ModForm.svelte";
   import type {ModData} from "$lib/models/mods";
+  import {base} from "$app/paths";
 
   export let modId!: string;
 
@@ -37,7 +38,7 @@
         errorToast = true;
       } else {
         // TODO Toast or something
-        goto('/mod/' + value.data.updateMod.id);
+        goto(base + '/mod/' + value.data.updateMod.id);
       }
     });
   }

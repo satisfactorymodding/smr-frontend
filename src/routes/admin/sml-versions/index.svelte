@@ -3,6 +3,7 @@
   import {mutation, operationStore, query} from "@urql/svelte";
   import {writable} from "svelte/store";
   import PageControls from "$lib/components/utils/PageControls.svelte";
+  import {base} from "$app/paths";
 
   // TODO Selectable
   const perPage = 20;
@@ -39,7 +40,7 @@
 
 <div class="flex justify-between items-center">
   <h1 class="text-4xl my-4 font-bold">SML Versions</h1>
-  <a href="/admin/sml-versions/new" class="rounded text-base bg-blue-500 py-2 px-4 h-fit">New SML Version</a>
+  <a href="{base}/admin/sml-versions/new" class="rounded text-base bg-blue-500 py-2 px-4 h-fit">New SML Version</a>
 </div>
 
 {#if totalVersions}

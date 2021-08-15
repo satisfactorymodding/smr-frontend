@@ -11,6 +11,7 @@
   import {goto} from '$app/navigation';
   import GuideForm from "$lib/components/guides/GuideForm.svelte";
   import type {GuideData} from "$lib/models/guides";
+  import {base} from "$app/paths";
 
   export let guideId!: string;
 
@@ -37,7 +38,7 @@
         errorToast = true;
       } else {
         // TODO Toast or something
-        goto('/guide/' + value.data.updateGuide.id);
+        goto(base + '/guide/' + value.data.updateGuide.id);
       }
     });
   }

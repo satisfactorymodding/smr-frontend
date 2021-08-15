@@ -5,6 +5,7 @@
   import {goto} from '$app/navigation';
   import GuideForm from "$lib/components/guides/GuideForm.svelte";
   import type {GuideData} from "$lib/models/guides";
+  import {base} from "$app/paths";
 
   let errorMessage = '';
   let errorToast = false;
@@ -23,7 +24,7 @@
         errorToast = true;
       } else {
         // TODO Toast or something
-        goto('/guide/' + value.data.createGuide.id);
+        goto(base + '/guide/' + value.data.createGuide.id);
       }
     });
   }

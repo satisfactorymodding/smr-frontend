@@ -17,6 +17,7 @@
   import {writable} from "svelte/store";
   import {goto} from "$app/navigation";
   import {user} from "$lib/stores/user";
+  import {base} from "$app/paths";
 
   export let modId!: string;
   export let versionId!: string;
@@ -45,7 +46,7 @@
         errorToast = true;
       } else {
         // TODO Toast or something
-        goto('/mod/' + modId);
+        goto(base + '/mod/' + modId);
       }
     });
   };
@@ -67,7 +68,7 @@
           <div class="grid grid-flow-col gap-4">
             {#if canUserEdit}
               <button class="py-2 px-4 rounded text-base bg-yellow-600"
-                      on:click={() => goto('/mod/' + modId + '/version/' + versionId + '/edit')}>
+                      on:click={() => goto(base + '/mod/' + modId + '/version/' + versionId + '/edit')}>
                 Edit
               </button>
               <button class="py-2 px-4 rounded text-base bg-red-500"
@@ -79,7 +80,7 @@
             <a href={API_REST + '/mod/' + modId + '/versions/' + versionId + '/download'}
                class="py-2 px-4 rounded text-base bg-green-600 text-center">Download</a>
             <!-- TODO SMM -->
-            <a href="/" class="py-2 px-4 rounded text-base bg-blue-600 text-center">
+            <a href="{base}" class="py-2 px-4 rounded text-base bg-blue-600 text-center">
               <span>Install</span>
               <Icon icon={downloadIcon} inline={true} class="inline-block"/>
             </a>

@@ -11,6 +11,7 @@
   import {goto} from '$app/navigation';
   import VersionForm from "$lib/components/versions/VersionForm.svelte";
   import type {VersionData} from "$lib/models/versions";
+  import {base} from "$app/paths";
 
   export let modId!: string;
   export let versionId!: string;
@@ -38,7 +39,7 @@
         errorToast = true;
       } else {
         // TODO Toast or something
-        return goto('/mod/' + modId + '/version/' + versionId);
+        return goto(base + '/mod/' + modId + '/version/' + versionId);
       }
     });
   }

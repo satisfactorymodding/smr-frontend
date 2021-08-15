@@ -18,6 +18,7 @@
   import {writable} from "svelte/store";
   import Dialog from "$lib/components/general/Dialog.svelte";
   import Toast from "$lib/components/general/Toast.svelte";
+  import {base} from "$app/paths";
 
   export let modId!: string;
 
@@ -47,7 +48,7 @@
         errorToast = true;
       } else {
         // TODO Toast or something
-        goto('/mods');
+        goto(base + '/mods');
       }
     });
   };
@@ -68,7 +69,7 @@
 
           {#if canUserEdit}
             <button class="py-2 px-4 rounded text-base bg-yellow-600"
-                    on:click={() => goto('/mod/' + modId + '/edit')}>
+                    on:click={() => goto(base + '/mod/' + modId + '/edit')}>
               Edit
             </button>
             <button class="py-2 px-4 rounded text-base bg-red-500"
@@ -76,7 +77,7 @@
               Delete
             </button>
             <button class="py-2 px-4 rounded text-base bg-green-600"
-                    on:click={() => goto('/mod/' + modId + '/new-version')}>
+                    on:click={() => goto(base + '/mod/' + modId + '/new-version')}>
               New Version
             </button>
           {/if}

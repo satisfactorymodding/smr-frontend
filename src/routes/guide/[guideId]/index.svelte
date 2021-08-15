@@ -15,6 +15,7 @@
   import Dialog from "$lib/components/general/Dialog.svelte";
   import Toast from "$lib/components/general/Toast.svelte";
   import {markdown} from '$lib/utils/markdown';
+  import {base} from "$app/paths";
 
   export let guideId!: string;
 
@@ -42,7 +43,7 @@
         errorToast = true;
       } else {
         // TODO Toast or something
-        goto('/guides');
+        goto(base + '/guides');
       }
     });
   };
@@ -65,7 +66,7 @@
 
           {#if canUserEdit}
             <button class="py-2 px-4 rounded text-base bg-yellow-600"
-                    on:click={() => goto('/guide/' + guideId + '/edit')}>
+                    on:click={() => goto(base + '/guide/' + guideId + '/edit')}>
               Edit
             </button>
             <button class="py-2 px-4 rounded text-base bg-red-500"

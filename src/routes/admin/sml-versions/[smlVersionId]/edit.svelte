@@ -11,6 +11,7 @@
   import {goto} from '$app/navigation';
   import type {SMLVersionData} from "$lib/models/sml-versions";
   import SMLVersionForm from "$lib/components/sml-versions/SMLVersionForm.svelte";
+  import {base} from "$app/paths";
 
   export let smlVersionId!: string;
 
@@ -37,7 +38,7 @@
         errorToast = true;
       } else {
         // TODO Toast or something
-        goto('/admin/sml-versions');
+        goto(base + '/admin/sml-versions');
       }
     });
   }

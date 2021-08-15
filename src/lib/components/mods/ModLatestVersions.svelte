@@ -6,6 +6,7 @@
   import releaseIcon from '@iconify/icons-mdi/alert-decagram.js';
   import downloadIcon from '@iconify/icons-mdi/download.js';
   import {API_REST} from "$lib/core";
+  import {base} from "$app/paths";
 
   type ILatestVersions = {
     alpha?: Pick<Version, 'id' | 'link' | 'version' | 'created_at'>,
@@ -33,7 +34,7 @@
           <Icon icon={stabilities[stability]} inline={true} class="inline-block"/>
         </div>
         <div class="grid grid-flow-row">
-          <a href="/mod/{modId}/version/{latestVersions[stability].id}/" class="text-yellow-500 underline">Version {latestVersions[stability].version}</a>
+          <a href="{base}/mod/{modId}/version/{latestVersions[stability].id}/" class="text-yellow-500 underline">Version {latestVersions[stability].version}</a>
           <div>{latestVersions[stability].created_at}</div>
         </div>
         <div class="text-3xl w-14 h-14 p-2.5">

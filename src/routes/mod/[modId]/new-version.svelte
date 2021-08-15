@@ -20,6 +20,7 @@
   import {writable} from "svelte/store";
   import {chunkedUpload} from "$lib/utils/chunked-upload";
   import type {UploadState} from "$lib/utils/chunked-upload";
+  import {base} from "$app/paths";
 
   export let modId!: string;
 
@@ -87,7 +88,7 @@
     }).then(success => {
       console.log({success});
       // TODO Toast or something
-      goto('/mod/' + modId + '/version/' + success.version.id);
+      goto(base + '/mod/' + modId + '/version/' + success.version.id);
     }).catch(err => {
       console.error(err);
       errorMessage = 'Error creating version: ' + err.message;

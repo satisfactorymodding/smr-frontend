@@ -3,7 +3,7 @@
   import downloadIcon from '@iconify/icons-mdi/download.js';
   import eyeIcon from '@iconify/icons-mdi/eye.js';
   import openInNewIcon from '@iconify/icons-mdi/open-in-new.js';
-  import {assets} from '$app/paths';
+  import {assets, base} from '$app/paths';
   import Icon from "@iconify/svelte";
   import {getImageCornerColors} from "$lib/utils/image";
 
@@ -66,7 +66,7 @@
         <div><span class:text-gray-50={!light} class:text-gray-800={light && shouldExpand}
                    class="text-base">{mod.short_description}</span></div>
         <div class="grid grid-flow-col gap-4">
-          <a href="/mod/{mod.id}/">
+          <a href="{base}/mod/{mod.id}/">
             <button class="shadowed py-1 px-4 rounded text-base bg-blue-500">
               <span>More info <Icon icon={openInNewIcon} inline={true} class="inline-block"/></span>
             </button>

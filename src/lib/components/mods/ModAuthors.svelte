@@ -1,5 +1,6 @@
 <script lang="ts">
   import type {User, UserMod} from "$lib/generated";
+  import {base} from "$app/paths";
 
   export let authors: Array<(Pick<UserMod, 'role'> & {
     user: Pick<User, 'id' | 'username' | 'avatar'>
@@ -14,7 +15,7 @@
       <div class="grid grid-flow-col auto-cols-max gap-x-4">
         <div class="rounded-full bg-cover w-14 h-14" style={`background-image: url("${author.user.avatar}")`}></div>
         <div class="grid grid-flow-row">
-          <a href="/user/{author.user.id}/" class="text-yellow-500 underline">{author.user.username}</a>
+          <a href="{base}/user/{author.user.id}/" class="text-yellow-500 underline">{author.user.username}</a>
           <div>{author.role.charAt(0).toUpperCase() + author.role.slice(1).toLowerCase()}</div>
         </div>
       </div>

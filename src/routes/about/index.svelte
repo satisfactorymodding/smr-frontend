@@ -1,14 +1,18 @@
+<script>
+  import {base} from "$app/paths";
+</script>
+
 <h1>About</h1>
 
-<a href="/api-docs">
+<a href="{base}/api-docs">
   <h2>API Docs</h2>
 </a>
 
-<a href="/privacy-policy">
+<a href="{base}/privacy-policy">
   <h2>Privacy Policy</h2>
 </a>
 
-<a href="/tos">
+<a href="{base}/tos">
   <h2>Terms of Service</h2>
 </a>
 

@@ -4,7 +4,7 @@
   import ModCard from "$lib/components/mods/ModCard.svelte";
   import {GetModCountDocument, GetModsDocument} from "$lib/generated";
   import {operationStore, query} from "@urql/svelte";
-  import {assets} from '$app/paths';
+  import {assets, base} from '$app/paths';
   import MenuBar from "$lib/components/general/MenuBar.svelte";
   import SearchBox from "$lib/components/general/SearchBox.svelte";
   import LinksBox from "$lib/components/general/LinksBox.svelte";
@@ -59,7 +59,7 @@
           <span class="text-lime-500">Newest</span>
         </div>
         <div class="text-right">
-          <span class="cursor-pointer" on:click={() => goto('/mods')}>
+          <span class="cursor-pointer" on:click={() => goto(base + '/mods')}>
             <span>Browse all</span>
             {#if $mods.fetching}
               <span class="text-lime-500">...</span>
@@ -88,7 +88,7 @@
   </div>
 </div>
 
-<div class="w-full text-center py-6 bg-lime-600 mb-8 cursor-pointer" on:click={() => goto('/mods')}>
+<div class="w-full text-center py-6 bg-lime-600 mb-8 cursor-pointer" on:click={() => goto(base + '/mods')}>
   {#if $mods.fetching}
     <span class="text-3xl">Browse all ... mods</span>
   {:else if $mods.error}

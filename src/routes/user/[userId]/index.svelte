@@ -12,6 +12,7 @@
   import ModCard from "$lib/components/mods/ModCard.svelte";
   import GuideCard from "$lib/components/guides/GuideCard.svelte";
   import {user as me} from "$lib/stores/user";
+  import {base} from "$app/paths";
 
   export let userId!: string;
 
@@ -37,7 +38,7 @@
           <h1 class="text-4xl my-4 font-bold">{ $user.data.getUser.username }</h1>
 
           {#if $me && $user.data.getUser.id === $me.id}
-            <a href="/settings" class="py-2 px-4 rounded text-base bg-yellow-600">Settings</a>
+            <a href="{base}/settings" class="py-2 px-4 rounded text-base bg-yellow-600">Settings</a>
           {/if}
 
           <button class="py-2 px-4 rounded text-base bg-blue-500" on:click={() => guidesTab = !guidesTab}>

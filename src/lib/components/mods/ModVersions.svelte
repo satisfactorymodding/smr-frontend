@@ -5,6 +5,7 @@
   import downloadIcon from '@iconify/icons-mdi/download.js';
   import {API_REST} from "$lib/core";
   import {markdown} from '$lib/utils/markdown';
+  import {base} from "$app/paths";
 
   export let modId!: string;
 
@@ -60,7 +61,7 @@
           <a href={API_REST + '/mod/' + modId + '/versions/' + version.id + '/download'}
              class="py-1 px-4 rounded text-base bg-green-600 text-center">Download</a>
           <!-- TODO SMM -->
-          <a href="/" class="py-1 px-4 rounded text-base bg-yellow-600 text-center">
+          <a href="{base}" class="py-1 px-4 rounded text-base bg-yellow-600 text-center">
             <span>Install</span>
             <Icon icon={downloadIcon} inline={true} class="inline-block"/>
           </a>
