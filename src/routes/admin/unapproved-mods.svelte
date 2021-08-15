@@ -3,6 +3,7 @@
   import {mutation, operationStore, query} from "@urql/svelte";
   import {writable} from "svelte/store";
   import PageControls from "$lib/components/utils/PageControls.svelte";
+  import {base} from "$app/paths";
 
   // TODO Selectable
   const perPage = 20;
@@ -80,7 +81,7 @@
                   on:click={() => denyMod(mod.id)}>
             Deny
           </button>
-          <a href={'/mod/' + mod.id} class="py-1 px-4 rounded text-base bg-blue-500 text-center cursor-pointer">View</a>
+          <a href={base +'/mod/' + mod.id} class="py-1 px-4 rounded text-base bg-blue-500 text-center cursor-pointer">View</a>
         </div>
       </div>
     {/each}

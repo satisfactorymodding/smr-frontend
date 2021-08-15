@@ -76,7 +76,7 @@
                   on:click={() => deleteVersion(version.id)}>
             Delete
           </button>
-          <a href={'/admin/sml-versions/' + version.id + '/edit'} class="py-1 px-4 rounded text-base bg-blue-500 text-center cursor-pointer">Edit</a>
+          <a href={base +'/admin/sml-versions/' + version.id + '/edit'} class="py-1 px-4 rounded text-base bg-blue-500 text-center cursor-pointer">Edit</a>
         </div>
       </div>
     {/each}

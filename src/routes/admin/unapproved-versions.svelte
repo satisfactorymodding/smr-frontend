@@ -4,6 +4,7 @@
   import {writable} from "svelte/store";
   import PageControls from "$lib/components/utils/PageControls.svelte";
   import {API_REST} from "$lib/core";
+  import {base} from "$app/paths";
 
   // TODO Selectable
   const perPage = 20;
@@ -83,7 +84,7 @@
           </button>
           <a href={API_REST + '/mod/' + version.mod_id + '/versions/' + version.id + '/download'}
              class="py-1 px-4 rounded text-base bg-yellow-600 text-center cursor-pointer">Download</a>
-          <a href={'/mod/' + version.mod_id + '/version/' + version.id} class="py-1 px-4 rounded text-base bg-blue-500 text-center cursor-pointer">View</a>
+          <a href={base +'/mod/' + version.mod_id + '/version/' + version.id} class="py-1 px-4 rounded text-base bg-blue-500 text-center cursor-pointer">View</a>
         </div>
       </div>
     {/each}

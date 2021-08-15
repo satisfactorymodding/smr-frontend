@@ -56,7 +56,7 @@
         <!-- TODO Pretty Date -->
         <div>{version.created_at}</div>
         <div class="grid grid-flow-col gap-4">
-          <a href={'/mod/' + modId + '/version/' + version.id}
+          <a href={base + '/mod/' + modId + '/version/' + version.id}
              class="py-1 px-4 rounded text-base bg-blue-500 text-center">View</a>
           <a href={API_REST + '/mod/' + modId + '/versions/' + version.id + '/download'}
              class="py-1 px-4 rounded text-base bg-green-600 text-center">Download</a>
