@@ -2,6 +2,7 @@
   import Dialog from "../general/Dialog.svelte";
   import {loginDialogOpen} from "$lib/stores/global";
   import {
+    GetMeDocument,
     GetOAuthOptionsDocument,
     OAuthFacebookDocument,
     OAuthGithubDocument,
@@ -16,7 +17,50 @@
   import {page} from '$app/stores';
   import {goto} from '$app/navigation';
   import Toast from "../general/Toast.svelte";
-  import {userToken} from "$lib/stores/user";
+  import {user, userToken} from "$lib/stores/user";
+  import cookie from "js-cookie";
+
+  if (browser) {
+    const getMe = operationStore(GetMeDocument, undefined, {
+      pause: true
+    });
+
+    query(getMe);
+
+    let first = true;
+    userToken.subscribe(token => {
+      if (token) {
+        const oneMonth = new Date(new Date().getTime() + (30 * 24 * 60 * 60 * 1000));
+        cookie.set('token', token, {
+          domain: window.location.hostname,
+          expires: oneMonth,
+        });
+      } else if (!first) {
+        cookie.remove('token');
+      }
+
+      first = false;
+
+      if (token) {
+        getMe.reexecute();
+
+        const unsub = getMe.subscribe((response) => {
+          console.log({response});
+          if (!response.fetching) {
+            if (response.error) {
+              // TODO Toast or something
+              console.error(response.error.message);
+            } else {
+              user.set(response.data.getMe)
+            }
+            unsub();
+          }
+        });
+      } else {
+        user.set(null);
+      }
+    });
+  }
 
   const signInMethods = {
     github: mutation({
