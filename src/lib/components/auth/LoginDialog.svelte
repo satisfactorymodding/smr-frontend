@@ -37,8 +37,13 @@
     const signInMethod = localStorage.getItem('sign.in.method');
     localStorage.removeItem('sign.in.method');
 
-    const code = $page.query.get('code');
-    const state = $page.query.get('state');
+    let queryParams = Object.fromEntries($page.query.entries());
+    if (Object.keys(queryParams).length === 0) {
+      queryParams = Object.fromEntries(new URLSearchParams(window.location.search));
+    }
+
+    const code = queryParams['code'];
+    const state = queryParams['state'];
 
     if (signInMethod && code && state) {
       signInMethods[signInMethod as 'github' | 'google' | 'facebook']({
