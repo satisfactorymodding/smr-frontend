@@ -50,10 +50,11 @@
             if (response.error) {
               // TODO Toast or something
               console.error(response.error.message);
-            } else {
+              unsub();
+            } else if (response.data) {
               user.set(response.data.getMe)
+              unsub();
             }
-            unsub();
           }
         });
       } else {

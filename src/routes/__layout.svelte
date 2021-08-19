@@ -11,6 +11,8 @@
   <meta name="msapplication-TileColor" content="#da8517">
   <meta name="msapplication-config" content="{base}/static/assets/browserconfig.xml?v=69P26YMB35">
   <meta name="theme-color" content="#da8517">
+
+  <link rel="preload" href="{base}/assets/fonts/flow-rounded.woff" as="font" type="font/woff">
 </svelte:head>
 
 <script lang="ts">
