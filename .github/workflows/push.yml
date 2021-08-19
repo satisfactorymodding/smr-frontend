@@ -140,7 +140,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v3
         with:
-          images: ghcr.io/${{ env.GITHUB_REPOSITORY }}
+          images: ghcr.io/${{ github.repository }}
 
       - name: Build and push
         uses: docker/build-push-action@v2
