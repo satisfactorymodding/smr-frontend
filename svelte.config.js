@@ -2,9 +2,9 @@ import sveltePreprocess from 'svelte-preprocess';
 import adapterNode from '@sveltejs/adapter-node';
 import adapterStatic from '@sveltejs/adapter-static';
 
-const mode = process.env.NODE_ENV;
-const dev = mode === "development";
-process.env.TAILWIND_MODE = dev ? "watch" : "build";
+const mode = process.env.NODE_ENV || 'development';
+const dev = mode === 'development';
+process.env.TAILWIND_MODE = dev ? 'watch' : 'build';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -45,8 +45,9 @@ const config = {
         noExternal: ['node-fetch', '@urql/svelte', '@cfworker/json-schema', 'dompurify']
       },
       optimizeDeps: {
-        exclude: ["@urql/svelte"]
-      }
+        exclude: ['@urql/svelte']
+      },
+      mode: mode
     },
 
     paths: {
