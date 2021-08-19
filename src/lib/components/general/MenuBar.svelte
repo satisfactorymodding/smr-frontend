@@ -14,7 +14,7 @@
 </script>
 
 <div class="menu flex justify-between bg-black items-center">
-  <a class="py-2.5 px-4 hoverable" href="{base}">SMR</a>
+  <a class="py-2.5 px-4 hoverable" href="{base}/">SMR</a>
   <div class="grid grid-flow-col items-center h-full text-gray-400">
     <a class="hoverable h-full grid content-center{activeLink('/mods')}" href="{base}/mods">
       <div class="border-r-2 border-white px-4">Browse All Mods</div>
