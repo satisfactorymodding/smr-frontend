@@ -42,7 +42,9 @@
       first = false;
 
       if (token) {
-        getMe.reexecute();
+        getMe.reexecute({
+          requestPolicy: 'network-only',
+        });
 
         const unsub = getMe.subscribe((response) => {
           console.log({response});
