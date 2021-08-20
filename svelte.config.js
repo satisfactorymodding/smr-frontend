@@ -32,7 +32,8 @@ const config = {
       }
     }) : adapterStatic({
       pages: 'build/static',
-      assets: 'build/static'
+      assets: 'build/static',
+      fallback: 'index.html'
     }),
 
     ssr: true,
