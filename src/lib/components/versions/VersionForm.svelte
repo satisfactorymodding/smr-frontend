@@ -22,7 +22,7 @@
 
   const versionSchema = constructVersionSchema(modReference, modMeta);
   const {form, data} = createForm<VersionData>({
-    initialValues: initialValues,
+    initialValues: initialValues as VersionData,
     extend: [validator, svelteReporter],
     validateSchema: versionSchema,
     onSubmit: (data) => {
