@@ -5,11 +5,11 @@ export const paramsToProps = (callback?: Load): Load => {
     if (callback) {
       const response = await callback(input);
       return {
+        ...response || {},
         props: {
           ...(input.page.params || {}),
           ...response ? response?.props || {} : {}
         },
-        ...response || {}
       };
     }
 

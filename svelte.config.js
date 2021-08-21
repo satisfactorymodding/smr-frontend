@@ -48,7 +48,10 @@ const config = {
       optimizeDeps: {
         exclude: ['@urql/svelte']
       },
-      mode: mode
+      mode: mode,
+      build: {
+        sourcemap: true
+      }
     },
 
     paths: {
