@@ -1,0 +1,2 @@
+import{C as s,a4 as e}from"./vendor-ecacde99.js";const i=s(!1),r=s(void 0),a={subscribe:s=>(()=>{const s=e("__svelte__");return{page:{subscribe:s.page.subscribe},navigating:{subscribe:s.navigating.subscribe},get preloading(){return console.error("stores.preloading is deprecated; use stores.navigating instead"),{subscribe:s.navigating.subscribe}},session:s.session}})().page.subscribe(s)};export{r as g,i as l,a as p};
+//# sourceMappingURL=stores-0d6f4ea5.js.map
