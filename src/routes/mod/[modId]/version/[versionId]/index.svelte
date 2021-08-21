@@ -1,12 +1,31 @@
+<svelte:head>
+  {#if !$version.fetching && !$version.error}
+    <title>{$version.data.getVersion.mod.name} {$version.data.getVersion.version} - SMR</title>
+  {/if}
+</svelte:head>
+
 <script lang="ts" context="module">
   import {paramsToProps} from "$lib/utils/routing";
+  import {operationStore} from "@urql/svelte";
+  import {GetModVersionDocument} from "$lib/generated";
+  import {loadWaitForNoFetch} from "$lib/utils/gql";
 
-  export const load = paramsToProps();
+  const versionQ = operationStore(
+    GetModVersionDocument,
+    {version: undefined}
+  );
+
+  export const load = paramsToProps(async (input) => {
+    versionQ.variables.version = input.page.params.versionId;
+    return loadWaitForNoFetch({
+      version: versionQ,
+    })(input);
+  });
 </script>
 
 <script lang="ts">
-  import {mutation, operationStore, query} from "@urql/svelte";
-  import {DeleteVersionDocument, GetModVersionDocument} from "$lib/generated";
+  import {mutation, query} from "@urql/svelte";
+  import {DeleteVersionDocument} from "$lib/generated";
   import VersionDescription from "$lib/components/versions/VersionDescription.svelte";
   import VersionInfo from "$lib/components/versions/VersionInfo.svelte";
   import Icon from "@iconify/svelte";
@@ -18,17 +37,14 @@
   import {goto} from "$app/navigation";
   import {user} from "$lib/stores/user";
   import {base} from "$app/paths";
+  import {browser} from "$app/env";
 
   export let modId!: string;
   export let versionId!: string;
+  export let version: typeof versionQ;
 
   let errorMessage = '';
   let errorToast = false;
-
-  const version = operationStore(
-    GetModVersionDocument,
-    {version: versionId}
-  );
 
   const deleteVersion = mutation({
     query: DeleteVersionDocument
@@ -51,7 +67,9 @@
     });
   };
 
-  query(version);
+  if (browser) {
+    query(version);
+  }
 </script>
 
 {#if $version.fetching}
@@ -63,7 +81,8 @@
     <div class="grid gap-8 grid-auto-max">
       <div class="grid grid-cols-1 auto-rows-min gap-8">
         <div class="grid grid-flow-col grid-auto-max h-auto items-center">
-          <h1 class="text-4xl my-4 font-bold">{ $version.data.getVersion.mod.name } Version {$version.data.getVersion.version}</h1>
+          <h1 class="text-4xl my-4 font-bold">{ $version.data.getVersion.mod.name }
+            Version {$version.data.getVersion.version}</h1>
 
           <div class="grid grid-flow-col gap-4">
             {#if canUserEdit}

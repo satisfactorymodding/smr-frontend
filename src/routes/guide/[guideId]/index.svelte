@@ -1,12 +1,31 @@
+<svelte:head>
+  {#if !$guide.fetching && !$guide.error}
+    <title>Edit {$guide.data.getGuide.name} - SMR</title>
+  {/if}
+</svelte:head>
+
 <script lang="ts" context="module">
   import {paramsToProps} from "$lib/utils/routing";
+  import {operationStore} from "@urql/svelte";
+  import {GetGuideDocument} from "$lib/generated";
+  import {loadWaitForNoFetch} from "$lib/utils/gql";
 
-  export const load = paramsToProps();
+  const guideQ = operationStore(
+    GetGuideDocument,
+    {guide: undefined}
+  );
+
+  export const load = paramsToProps(async (input) => {
+    guideQ.variables.guide = input.page.params.guideId;
+    return loadWaitForNoFetch({
+      guide: guideQ,
+    })(input);
+  });
 </script>
 
 <script lang="ts">
-  import {mutation, operationStore, query} from "@urql/svelte";
-  import {DeleteGuideDocument, GetGuideDocument} from "$lib/generated";
+  import {mutation, query} from "@urql/svelte";
+  import {DeleteGuideDocument} from "$lib/generated";
   import GuideInfo from "$lib/components/guides/GuideInfo.svelte";
   import GuideAuthor from "$lib/components/guides/GuideAuthor.svelte";
   import {user} from "$lib/stores/user";
@@ -16,16 +35,13 @@
   import Toast from "$lib/components/general/Toast.svelte";
   import {markdown} from '$lib/utils/markdown';
   import {base} from "$app/paths";
+  import {browser} from "$app/env";
 
   export let guideId!: string;
+  export let guide: typeof guideQ;
 
   let errorMessage = '';
   let errorToast = false;
-
-  const guide = operationStore(
-    GetGuideDocument,
-    {guide: guideId}
-  );
 
   const deleteGuide = mutation({
     query: DeleteGuideDocument
@@ -50,7 +66,9 @@
 
   $: if (!errorToast) errorMessage = '';
 
-  query(guide);
+  if (browser) {
+    query(guide);
+  }
 </script>
 
 {#if $guide.fetching}

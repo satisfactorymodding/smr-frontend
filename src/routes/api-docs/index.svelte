@@ -1,6 +1,11 @@
+<svelte:head>
+  <title>API Docs - SMR</title>
+</svelte:head>
+
 <script lang="ts">
   import {API_GRAPHQL, API_GRAPHQL_PLAYGROUND, API_REST, API_REST_DOCS} from "$lib/core";
 </script>
+
 <h1>API Docs</h1>
 <div>
   <h2>GraphQL API</h2>

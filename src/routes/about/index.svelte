@@ -1,3 +1,7 @@
+<svelte:head>
+  <title>About - SMR</title>
+</svelte:head>
+
 <script>
   import {base} from "$app/paths";
 </script>

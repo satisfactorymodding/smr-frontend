@@ -1,3 +1,7 @@
+<svelte:head>
+  <title>Mods - SMR</title>
+</svelte:head>
+
 <script lang="ts">
   import ModGrid from "$lib/components/mods/ModGrid.svelte";
   import {base} from "$app/paths";

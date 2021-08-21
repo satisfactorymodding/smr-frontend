@@ -1,3 +1,7 @@
+<svelte:head>
+  <title>Admin: Edit SML Version - SMR</title>
+</svelte:head>
+
 <script lang="ts" context="module">
   import {paramsToProps} from "$lib/utils/routing";
 

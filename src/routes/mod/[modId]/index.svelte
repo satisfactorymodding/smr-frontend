@@ -1,12 +1,33 @@
+<svelte:head>
+  {#if !$mod.fetching && !$mod.error}
+    <title>{$mod.data.getMod.name} - SMR</title>
+    <meta property="og:image" content={$mod.data.getMod.logo} />
+    <meta property="og:description" content={$mod.data.getMod.short_description} />
+  {/if}
+</svelte:head>
+
 <script lang="ts" context="module">
   import {paramsToProps} from "$lib/utils/routing";
+  import {operationStore} from "@urql/svelte";
+  import {GetModDocument} from "$lib/generated";
+  import {loadWaitForNoFetch} from "$lib/utils/gql";
 
-  export const load = paramsToProps();
+  const modQ = operationStore(
+    GetModDocument,
+    {mod: undefined}
+  );
+
+  export const load = paramsToProps(async (input) => {
+    modQ.variables.mod = input.page.params.modId;
+    return loadWaitForNoFetch({
+      mod: modQ,
+    })(input);
+  });
 </script>
 
 <script lang="ts">
-  import {DeleteModDocument, GetModDocument} from "$lib/generated";
-  import {mutation, operationStore, query} from "@urql/svelte";
+  import {DeleteModDocument} from "$lib/generated";
+  import {mutation, query} from "@urql/svelte";
   import ModInfo from "$lib/components/mods/ModInfo.svelte";
   import ModLatestVersions from "$lib/components/mods/ModLatestVersions.svelte";
   import ModAuthors from "$lib/components/mods/ModAuthors.svelte";
@@ -19,18 +40,15 @@
   import Dialog from "$lib/components/general/Dialog.svelte";
   import Toast from "$lib/components/general/Toast.svelte";
   import {base} from "$app/paths";
+  import {browser} from "$app/env";
 
   export let modId!: string;
+  export let mod: typeof modQ;
 
   let versionsTab = false;
 
   let errorMessage = '';
   let errorToast = false;
-
-  const mod = operationStore(
-    GetModDocument,
-    {mod: modId}
-  );
 
   const deleteMod = mutation({
     query: DeleteModDocument
@@ -53,7 +71,9 @@
     });
   };
 
-  query(mod);
+  if (browser) {
+    query(mod);
+  }
 </script>
 
 {#if $mod.fetching}

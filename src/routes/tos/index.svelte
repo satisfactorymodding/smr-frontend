@@ -1,3 +1,7 @@
+<svelte:head>
+  <title>Terms of Service - SMR</title>
+</svelte:head>
+
 <div>
   <h1>Terms of Service</h1>
   <p>ficsit.app strives to provide its users with services and information that facilitate the discussion

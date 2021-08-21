@@ -1,3 +1,7 @@
+<svelte:head>
+  <title>Settings - SMR</title>
+</svelte:head>
+
 <script lang="ts">
   import {mutation} from '@urql/svelte';
   import {UpdateUserDocument} from "$lib/generated";

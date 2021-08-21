@@ -1,29 +1,45 @@
+<svelte:head>
+  {#if !$user.fetching && !$user.error}
+    <title>{$user.data.getUser.username} - SMR</title>
+  {/if}
+</svelte:head>
+
 <script lang="ts" context="module">
   import {paramsToProps} from "$lib/utils/routing";
+  import {operationStore} from "@urql/svelte";
+  import {GetUserDocument} from "$lib/generated";
+  import {loadWaitForNoFetch} from "$lib/utils/gql";
 
-  export const load = paramsToProps();
+  const userQ = operationStore(
+    GetUserDocument,
+    {user: undefined}
+  );
+
+  export const load = paramsToProps(async (input) => {
+    userQ.variables.user = input.page.params.userId;
+    return loadWaitForNoFetch({
+      user: userQ,
+    })(input);
+  });
 </script>
 
 <script lang="ts">
-  import {operationStore, query} from "@urql/svelte";
-  import {GetUserDocument} from "$lib/generated";
+  import {query} from "@urql/svelte";
   import UserInfo from "$lib/components/users/UserInfo.svelte";
   import UserAvatar from "$lib/components/users/UserAvatar.svelte";
   import ModCard from "$lib/components/mods/ModCard.svelte";
   import GuideCard from "$lib/components/guides/GuideCard.svelte";
   import {user as me} from "$lib/stores/user";
   import {base} from "$app/paths";
+  import {browser} from "$app/env";
 
-  export let userId!: string;
+  export let user: typeof userQ;
 
   let guidesTab = false;
 
-  const user = operationStore(
-    GetUserDocument,
-    {user: userId}
-  );
-
-  query(user);
+  if (browser) {
+    query(user);
+  }
 </script>
 
 {#if $user.fetching}

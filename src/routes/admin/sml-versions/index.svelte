@@ -1,3 +1,7 @@
+<svelte:head>
+  <title>Admin: SML Versions - SMR</title>
+</svelte:head>
+
 <script lang="ts">
   import {DeleteSmlVersionDocument, GetSmlVersionsAdminDocument,} from "$lib/generated";
   import {mutation, operationStore, query} from "@urql/svelte";

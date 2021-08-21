@@ -1,3 +1,7 @@
+<svelte:head>
+  <title>New Guide - SMR</title>
+</svelte:head>
+
 <script lang="ts">
   import {mutation} from '@urql/svelte';
   import {NewGuideDocument} from "$lib/generated";

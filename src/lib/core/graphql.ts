@@ -1,20 +1,23 @@
 import schema from '$lib/generated/graphql.schema.urql.json';
-import {initClient} from '@urql/svelte';
+import type {Client} from '@urql/svelte';
+import {createClient} from '@urql/svelte';
 import {cacheExchange} from '@urql/exchange-graphcache';
-import {persistedFetchExchange} from './persisted-query/persistedFetchExchange';
+import {persistedFetchExchange} from '@urql/exchange-persisted-fetch';
 import {multipartFetchExchange} from '@urql/exchange-multipart-fetch';
 import {API_GRAPHQL} from "./api";
 import {userToken} from "$lib/stores/user";
 import {authExchange} from '@urql/exchange-auth';
 import type {Operation} from "@urql/core";
+import type {LoadInput} from "@sveltejs/kit/types/page";
 
 interface SMRAuthState {
   token: string | null;
 }
 
-export const initializeGraphQLClient = (): void => {
-  initClient({
+export const initializeGraphQLClient = (fetch?: LoadInput['fetch']): Client => {
+  return createClient({
     url: API_GRAPHQL,
+    fetch,
     exchanges: [
       cacheExchange({
         schema,

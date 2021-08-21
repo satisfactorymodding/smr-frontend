@@ -47,7 +47,6 @@
         });
 
         const unsub = getMe.subscribe((response) => {
-          console.log({response});
           if (!response.fetching) {
             if (response.error) {
               // TODO Toast or something

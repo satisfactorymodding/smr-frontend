@@ -1,9 +1,32 @@
+<svelte:head>
+  <title>Home - SMR</title>
+</svelte:head>
+
+<script lang="ts" context="module">
+  import {operationStore, query} from "@urql/svelte";
+  import {GetModCountDocument, GetModsDocument} from "$lib/generated";
+  import {loadWaitForNoFetch} from "$lib/utils/gql";
+  import {browser} from "$app/env";
+
+  const featuredModsQ = operationStore(
+    GetModsDocument,
+    {offset: 0, limit: 5}
+  );
+
+  const modsQ = operationStore(
+    GetModCountDocument
+  );
+
+  export const load = loadWaitForNoFetch({
+    featuredMods: featuredModsQ,
+    mods: modsQ,
+  });
+</script>
+
 <script lang="ts">
   import alertIcon from '@iconify/icons-mdi/alert.js';
   import Icon from "@iconify/svelte";
   import ModCard from "$lib/components/mods/ModCard.svelte";
-  import {GetModCountDocument, GetModsDocument} from "$lib/generated";
-  import {operationStore, query} from "@urql/svelte";
   import {assets, base} from '$app/paths';
   import MenuBar from "$lib/components/general/MenuBar.svelte";
   import SearchBox from "$lib/components/general/SearchBox.svelte";
@@ -12,21 +35,16 @@
   import Footer from "$lib/components/general/Footer.svelte";
   import {goto} from '$app/navigation';
 
+  export let featuredMods!: typeof featuredModsQ;
+  export let mods!: typeof modsQ;
+
   // TODO Fetch from backend
   let alertMessage = '';
 
-  const featuredMods = operationStore(
-    GetModsDocument,
-    {offset: 0, limit: 5}
-  );
-
-  query(featuredMods);
-
-  const mods = operationStore(
-    GetModCountDocument
-  );
-
-  query(mods);
+  if (browser) {
+    query(featuredMods);
+    query(mods);
+  }
 </script>
 
 <div class="h-screen bg-center bg-cover fold grid"

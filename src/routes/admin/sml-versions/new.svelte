@@ -1,3 +1,7 @@
+<svelte:head>
+  <title>Admin: New SML Version - SMR</title>
+</svelte:head>
+
 <script lang="ts">
   import {mutation} from '@urql/svelte';
   import {NewSmlVersionDocument} from "$lib/generated";

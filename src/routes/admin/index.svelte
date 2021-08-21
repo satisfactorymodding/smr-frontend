@@ -1,3 +1,7 @@
+<svelte:head>
+  <title>Admin - SMR</title>
+</svelte:head>
+
 <script>
   import {base} from "$app/paths";
 </script>

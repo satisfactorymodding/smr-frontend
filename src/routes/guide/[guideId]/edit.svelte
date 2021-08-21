@@ -1,3 +1,9 @@
+<svelte:head>
+  {#if !$guide.fetching && !$guide.error}
+    <title>{$guide.data.getGuide.name} - SMR</title>
+  {/if}
+</svelte:head>
+
 <script lang="ts" context="module">
   import {paramsToProps} from "$lib/utils/routing";
 

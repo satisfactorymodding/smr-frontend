@@ -1,3 +1,7 @@
+<svelte:head>
+  <title>Admin: Unapproved Mods - SMR</title>
+</svelte:head>
+
 <script lang="ts">
   import {ApproveModDocument, DenyModDocument, GetUnapprovedModsDocument} from "$lib/generated";
   import {mutation, operationStore, query} from "@urql/svelte";

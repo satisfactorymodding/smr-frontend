@@ -1,3 +1,7 @@
+<svelte:head>
+  <title>Admin: Unapproved Versions - SMR</title>
+</svelte:head>
+
 <script lang="ts">
   import {ApproveVersionDocument, DenyVersionDocument, GetUnapprovedVersionsDocument} from "$lib/generated";
   import {mutation, operationStore, query} from "@urql/svelte";

@@ -1,3 +1,7 @@
+<svelte:head>
+  <title>New Mod - SMR</title>
+</svelte:head>
+
 <script lang="ts">
   import {mutation} from '@urql/svelte';
   import {NewModDocument} from "$lib/generated";

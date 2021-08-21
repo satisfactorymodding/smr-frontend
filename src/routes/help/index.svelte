@@ -1,3 +1,7 @@
+<svelte:head>
+  <title>Help - SMR</title>
+</svelte:head>
+
 <script lang="ts">
   import {markdown} from '$lib/utils/markdown';
   import {validateUPluginJson} from "$lib/utils/uplugin";

@@ -1,3 +1,7 @@
+<svelte:head>
+  <title>SML Versions - SMR</title>
+</svelte:head>
+
 <script lang="ts">
   import {GetSmlVersionsDocument} from "$lib/generated";
   import {operationStore, query} from "@urql/svelte";

@@ -1,3 +1,7 @@
+<svelte:head>
+  <title>Guides - SMR</title>
+</svelte:head>
+
 <script lang="ts">
   import GuideGrid from "$lib/components/guides/GuideGrid.svelte";
   import {base} from "$app/paths";

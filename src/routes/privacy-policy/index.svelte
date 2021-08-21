@@ -1,3 +1,7 @@
+<svelte:head>
+  <title>Privacy Policy - SMR</title>
+</svelte:head>
+
 <div>
   <h1>Privacy Policy</h1>
   <p>At ficsit.app, accessible from https://ficsit.app, one of our main priorities is the privacy of our visitors.

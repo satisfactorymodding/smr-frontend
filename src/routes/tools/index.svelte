@@ -1,3 +1,7 @@
+<svelte:head>
+  <title>Tools - SMR</title>
+</svelte:head>
+
 <script lang="ts">
   import type {Tool} from "$lib/models/tools";
   import ToolCard from "$lib/components/tools/ToolCard.svelte";

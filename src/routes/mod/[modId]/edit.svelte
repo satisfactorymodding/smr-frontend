@@ -1,3 +1,9 @@
+<svelte:head>
+  {#if !$mod.fetching && !$mod.error}
+    <title>Edit Mod: {$mod.data.getMod.name} - SMR</title>
+  {/if}
+</svelte:head>
+
 <script lang="ts" context="module">
   import {paramsToProps} from "$lib/utils/routing";
 
