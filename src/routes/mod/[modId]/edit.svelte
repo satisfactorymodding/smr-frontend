@@ -1,5 +1,5 @@
 <svelte:head>
-  {#if !$mod.fetching && !$mod.error}
+  {#if !$mod.fetching && !$mod.error && $mod.data.getMod}
     <title>Edit Mod: {$mod.data.getMod.name} - SMR</title>
   {/if}
 </svelte:head>

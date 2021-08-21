@@ -9,6 +9,7 @@ import {userToken} from "$lib/stores/user";
 import {authExchange} from '@urql/exchange-auth';
 import type {Operation} from "@urql/core";
 import type {LoadInput} from "@sveltejs/kit/types/page";
+import {get} from "svelte/store";
 
 interface SMRAuthState {
   token: string | null;
@@ -113,10 +114,13 @@ export const initializeGraphQLClient = (fetch?: LoadInput['fetch']): Client => {
             },
           };
         },
-        getAuth: (): Promise<SMRAuthState | null> => {
-          return new Promise<string>(resolve => userToken.subscribe(token => resolve(token))()).then(token => {
-            return {token};
-          });
+        getAuth: async (): Promise<SMRAuthState | null> => {
+          return {
+            token: get(userToken)
+          };
+        },
+        didAuthError({ error }): boolean {
+          return error.message.indexOf('user not logged in') >= 0;
         }
       }),
       persistedFetchExchange({

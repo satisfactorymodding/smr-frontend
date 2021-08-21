@@ -1,5 +1,5 @@
 <svelte:head>
-  {#if !$guide.fetching && !$guide.error}
+  {#if !$guide.fetching && !$guide.error && $guide.data.getGuide}
     <title>Edit {$guide.data.getGuide.name} - SMR</title>
   {/if}
 </svelte:head>

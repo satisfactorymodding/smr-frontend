@@ -1,11 +1,14 @@
 <script lang="ts">
+  import {assets} from "$app/paths";
+
   export let modLogo!: string;
   export let modName!: string;
+
+  $: logo = modLogo || assets + '/images/no_image.png'
 
   // TODO Outdated Flag
 </script>
 
 <div>
-  <!-- TODO Fallback to default Logo -->
-  <img class="rounded-lg max-w-lg" src={modLogo} alt="Logo for {modName}"/>
+  <img class="rounded-lg max-w-lg" src={logo} alt="Logo for {modName}"/>
 </div>

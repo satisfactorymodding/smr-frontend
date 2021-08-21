@@ -1,5 +1,5 @@
 <svelte:head>
-  {#if !$version.fetching && !$version.error}
+  {#if !$version.fetching && !$version.error && $version.data.getVersion}
     <title>Edit {$version.data.getVersion.mod.name} {$version.data.getVersion.version} - SMR</title>
   {/if}
 </svelte:head>

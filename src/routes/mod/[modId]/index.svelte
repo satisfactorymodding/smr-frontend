@@ -1,5 +1,5 @@
 <svelte:head>
-  {#if !$mod.fetching && !$mod.error}
+  {#if !$mod.fetching && !$mod.error && $mod.data.getMod}
     <title>{$mod.data.getMod.name} - SMR</title>
     <meta property="og:image" content={$mod.data.getMod.logo} />
     <meta property="og:description" content={$mod.data.getMod.short_description} />

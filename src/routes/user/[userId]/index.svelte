@@ -1,5 +1,5 @@
 <svelte:head>
-  {#if !$user.fetching && !$user.error}
+  {#if !$user.fetching && !$user.error && $user.data.getUser}
     <title>{$user.data.getUser.username} - SMR</title>
   {/if}
 </svelte:head>
