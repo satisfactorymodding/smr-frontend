@@ -1,6 +1,9 @@
 <svelte:head>
   {#if !$mod.fetching && !$mod.error && $mod.data.getMod}
-    <title>New Version: {$mod.data.getMod.name} - SMR</title>
+    <MetaDescriptors 
+      description="Creating a new version of mod {$mod.data.getMod.name}"
+      title="New version of mod {$mod.data.getMod.name}" 
+  />
   {/if}
 </svelte:head>
 
@@ -27,6 +30,7 @@
   import {chunkedUpload} from "$lib/utils/chunked-upload";
   import type {UploadState} from "$lib/utils/chunked-upload";
   import {base} from "$app/paths";
+  import MetaDescriptors from "$lib/components/utils/MetaDescriptors.svelte";
 
   export let modId!: string;
 

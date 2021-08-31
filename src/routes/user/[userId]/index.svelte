@@ -1,6 +1,9 @@
 <svelte:head>
   {#if !$user.fetching && !$user.error && $user.data.getUser}
-    <title>{$user.data.getUser.username} - SMR</title>
+    <MetaDescriptors 
+      description="{$user.data.getUser.username} profile"
+      title="{$user.data.getUser.username} profile" 
+    />
   {/if}
 </svelte:head>
 
@@ -9,6 +12,7 @@
   import {operationStore} from "@urql/svelte";
   import {GetUserDocument} from "$lib/generated";
   import {loadWaitForNoFetch} from "$lib/utils/gql";
+  import MetaDescriptors from "$lib/components/utils/MetaDescriptors.svelte";
 
   const userQ = operationStore(
     GetUserDocument,

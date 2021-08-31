@@ -1,5 +1,8 @@
 <svelte:head>
-  <title>Home - SMR</title>
+  <MetaDescriptors 
+    description="Satisfactory Mod Repository" 
+    title="Home" 
+  />
 </svelte:head>
 
 <script lang="ts" context="module">
@@ -34,6 +37,7 @@
   import ModGrid from "$lib/components/mods/ModGrid.svelte";
   import Footer from "$lib/components/general/Footer.svelte";
   import {goto} from '$app/navigation';
+  import MetaDescriptors from "$lib/components/utils/MetaDescriptors.svelte";
 
   export let featuredMods!: typeof featuredModsQ;
   export let mods!: typeof modsQ;

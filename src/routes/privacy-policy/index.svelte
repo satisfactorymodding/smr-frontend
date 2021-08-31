@@ -1,6 +1,13 @@
 <svelte:head>
-  <title>Privacy Policy - SMR</title>
+  <MetaDescriptors 
+    description="Privacy policy for the Satisfactory Mod Repository"
+    title="Privacy policy" 
+  />
 </svelte:head>
+
+<script lang="ts">
+  import MetaDescriptors from "$lib/components/utils/MetaDescriptors.svelte";
+</script>
 
 <div>
   <h1>Privacy Policy</h1>

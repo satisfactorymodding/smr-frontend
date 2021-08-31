@@ -1,6 +1,9 @@
 <svelte:head>
   {#if !$version.fetching && !$version.error && $version.data.getVersion}
-    <title>Edit {$version.data.getVersion.mod.name} {$version.data.getVersion.version} - SMR</title>
+    <MetaDescriptors 
+      description="Editing mod version {$version.data.getVersion.mod.name} {$version.data.getVersion.version}"
+      title="Edit mod version {$version.data.getVersion.mod.name} {$version.data.getVersion.version}" 
+    />
   {/if}
 </svelte:head>
 
@@ -18,6 +21,8 @@
   import VersionForm from "$lib/components/versions/VersionForm.svelte";
   import type {VersionData} from "$lib/models/versions";
   import {base} from "$app/paths";
+  import MetaDescriptors from "$lib/components/utils/MetaDescriptors.svelte";
+
 
   export let modId!: string;
   export let versionId!: string;

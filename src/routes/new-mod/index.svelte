@@ -1,5 +1,8 @@
 <svelte:head>
-  <title>New Mod - SMR</title>
+  <MetaDescriptors 
+    description="Adding a new mod in the Satisfactory Mod Repository"
+    title="New mod" 
+  />
 </svelte:head>
 
 <script lang="ts">
@@ -10,6 +13,7 @@
   import ModForm from "$lib/components/mods/ModForm.svelte";
   import type {ModData} from "$lib/models/mods";
   import {base} from "$app/paths";
+  import MetaDescriptors from "$lib/components/utils/MetaDescriptors.svelte";
 
   let errorMessage = '';
   let errorToast = false;

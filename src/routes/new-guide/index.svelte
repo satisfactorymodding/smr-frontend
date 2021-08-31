@@ -1,5 +1,8 @@
 <svelte:head>
-  <title>New Guide - SMR</title>
+  <MetaDescriptors 
+    description="Creating a new guide"
+    title="New guide" 
+  />
 </svelte:head>
 
 <script lang="ts">
@@ -10,6 +13,7 @@
   import GuideForm from "$lib/components/guides/GuideForm.svelte";
   import type {GuideData} from "$lib/models/guides";
   import {base} from "$app/paths";
+  import MetaDescriptors from "$lib/components/utils/MetaDescriptors.svelte";
 
   let errorMessage = '';
   let errorToast = false;

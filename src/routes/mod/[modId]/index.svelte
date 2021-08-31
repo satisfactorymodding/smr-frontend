@@ -1,8 +1,10 @@
 <svelte:head>
   {#if !$mod.fetching && !$mod.error && $mod.data.getMod}
-    <title>{$mod.data.getMod.name} - SMR</title>
-    <meta property="og:image" content={$mod.data.getMod.logo} />
-    <meta property="og:description" content={$mod.data.getMod.short_description} />
+    <MetaDescriptors 
+      description={$mod.data.getMod.short_description}
+      title={$mod.data.getMod.name}
+      image={$mod.data.getMod.logo}
+    />
   {/if}
 </svelte:head>
 
@@ -11,6 +13,7 @@
   import {operationStore} from "@urql/svelte";
   import {GetModDocument} from "$lib/generated";
   import {loadWaitForNoFetch} from "$lib/utils/gql";
+  import MetaDescriptors from "$lib/components/utils/MetaDescriptors.svelte";
 
   const modQ = operationStore(
     GetModDocument,

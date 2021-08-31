@@ -1,9 +1,13 @@
 <svelte:head>
-  <title>API Docs - SMR</title>
+  <MetaDescriptors 
+    description="API documentation for the Satisfactory Mod Repository"
+    title="API Docs" 
+  />
 </svelte:head>
 
 <script lang="ts">
   import {API_GRAPHQL, API_GRAPHQL_PLAYGROUND, API_REST, API_REST_DOCS} from "$lib/core";
+  import MetaDescriptors from "$lib/components/utils/MetaDescriptors.svelte";
 </script>
 
 <h1>API Docs</h1>

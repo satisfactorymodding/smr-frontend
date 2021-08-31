@@ -1,10 +1,14 @@
 <svelte:head>
-  <title>Mods - SMR</title>
+  <MetaDescriptors 
+    description="Mods available from the Satisfactory Mod Repository"
+    title="Mods" 
+  />
 </svelte:head>
 
 <script lang="ts">
   import ModGrid from "$lib/components/mods/ModGrid.svelte";
   import {base} from "$app/paths";
+  import MetaDescriptors from "$lib/components/utils/MetaDescriptors.svelte";
 </script>
 
 <div class="flex justify-between items-center">
