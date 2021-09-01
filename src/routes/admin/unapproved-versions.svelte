@@ -1,36 +1,26 @@
-<svelte:head>
-  <MetaDescriptors 
-    description="Unapproved mod versions" 
-    title="Admin: Unapproved Versions" 
-  />
-</svelte:head>
-
 <script lang="ts">
-  import {ApproveVersionDocument, DenyVersionDocument, GetUnapprovedVersionsDocument} from "$lib/generated";
-  import {mutation, operationStore, query} from "@urql/svelte";
-  import {writable} from "svelte/store";
-  import PageControls from "$lib/components/utils/PageControls.svelte";
-  import {API_REST} from "$lib/core";
-  import {base} from "$app/paths";
-  import MetaDescriptors from "$lib/components/utils/MetaDescriptors.svelte";
+  import { ApproveVersionDocument, DenyVersionDocument, GetUnapprovedVersionsDocument } from '$lib/generated';
+  import { mutation, operationStore, query } from '@urql/svelte';
+  import { writable } from 'svelte/store';
+  import PageControls from '$lib/components/utils/PageControls.svelte';
+  import { API_REST } from '$lib/core';
+  import { base } from '$app/paths';
+  import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
 
   // TODO Selectable
   const perPage = 20;
 
-  const versions = operationStore(
-    GetUnapprovedVersionsDocument,
-    {
-      filter: {
-        offset: 0,
-        limit: perPage
-      }
+  const versions = operationStore(GetUnapprovedVersionsDocument, {
+    filter: {
+      offset: 0,
+      limit: perPage
     }
-  );
+  });
 
   const page = writable(1);
   let totalVersions: number;
 
-  page.subscribe(p => $versions.variables.filter.offset = (p - 1) * perPage);
+  page.subscribe((p) => ($versions.variables.filter.offset = (p - 1) * perPage));
 
   $: totalVersions = $versions?.data?.getUnapprovedVersions?.count;
 
@@ -39,27 +29,31 @@
   });
 
   const approveVersion = (versionId: string) => {
-    approveVersionMut({versionId}).then(() => {
+    approveVersionMut({ versionId }).then(() => {
       versions.reexecute();
     });
-  }
+  };
 
   const denyVersionMut = mutation({
     query: DenyVersionDocument
   });
 
   const denyVersion = (versionId: string) => {
-    denyVersionMut({versionId}).then(() => {
+    denyVersionMut({ versionId }).then(() => {
       versions.reexecute();
     });
-  }
+  };
 
   query(versions);
 </script>
 
+<svelte:head>
+  <MetaDescriptors description="Unapproved mod versions" title="Admin: Unapproved Versions" />
+</svelte:head>
+
 {#if totalVersions}
   <div class="mt-5 ml-auto flex justify-end">
-    <PageControls totalPages={Math.ceil(totalVersions / perPage)} currentPage={page}/>
+    <PageControls totalPages={Math.ceil(totalVersions / perPage)} currentPage={page} />
   </div>
 {/if}
 
@@ -82,17 +76,22 @@
         <!-- TODO Pretty Date -->
         <div>{version.created_at}</div>
         <div class="grid grid-flow-col gap-4">
-          <button class="py-1 px-4 rounded text-base bg-green-600 text-center cursor-pointer"
-                  on:click={() => approveVersion(version.id)}>
+          <button
+            class="py-1 px-4 rounded text-base bg-green-600 text-center cursor-pointer"
+            on:click={() => approveVersion(version.id)}>
             Approve
           </button>
-          <button class="py-1 px-4 rounded text-base bg-red-600 text-center cursor-pointer"
-                  on:click={() => denyVersion(version.id)}>
+          <button
+            class="py-1 px-4 rounded text-base bg-red-600 text-center cursor-pointer"
+            on:click={() => denyVersion(version.id)}>
             Deny
           </button>
-          <a href={API_REST + '/mod/' + version.mod_id + '/versions/' + version.id + '/download'}
-             class="py-1 px-4 rounded text-base bg-yellow-600 text-center cursor-pointer">Download</a>
-          <a href={base +'/mod/' + version.mod_id + '/version/' + version.id} class="py-1 px-4 rounded text-base bg-blue-500 text-center cursor-pointer">View</a>
+          <a
+            href={API_REST + '/mod/' + version.mod_id + '/versions/' + version.id + '/download'}
+            class="py-1 px-4 rounded text-base bg-yellow-600 text-center cursor-pointer">Download</a>
+          <a
+            href={base + '/mod/' + version.mod_id + '/version/' + version.id}
+            class="py-1 px-4 rounded text-base bg-blue-500 text-center cursor-pointer">View</a>
         </div>
       </div>
     {/each}
@@ -101,7 +100,7 @@
 
 {#if totalVersions}
   <div class="mt-5 ml-auto flex justify-end">
-    <PageControls totalPages={Math.ceil(totalVersions / perPage)} currentPage={page}/>
+    <PageControls totalPages={Math.ceil(totalVersions / perPage)} currentPage={page} />
   </div>
 {/if}
 

@@ -1,24 +1,24 @@
 <script lang="ts">
-  import Dialog from "../general/Dialog.svelte";
-  import {loginDialogOpen} from "$lib/stores/global";
+  import Dialog from '../general/Dialog.svelte';
+  import { loginDialogOpen } from '$lib/stores/global';
   import {
     GetMeDocument,
     GetOAuthOptionsDocument,
     OAuthFacebookDocument,
     OAuthGithubDocument,
     OAuthGoogleDocument
-  } from "../../generated";
-  import {mutation, operationStore, query} from "@urql/svelte";
-  import Icon from "@iconify/svelte";
+  } from '../../generated';
+  import { mutation, operationStore, query } from '@urql/svelte';
+  import Icon from '@iconify/svelte';
   import githubIcon from '@iconify/icons-mdi/github.js';
   import googleIcon from '@iconify/icons-mdi/google.js';
   import facebookIcon from '@iconify/icons-mdi/facebook.js';
-  import {browser} from '$app/env';
-  import {page} from '$app/stores';
-  import {goto} from '$app/navigation';
-  import Toast from "../general/Toast.svelte";
-  import {user, userToken} from "$lib/stores/user";
-  import cookie from "js-cookie";
+  import { browser } from '$app/env';
+  import { page } from '$app/stores';
+  import { goto } from '$app/navigation';
+  import Toast from '../general/Toast.svelte';
+  import { user, userToken } from '$lib/stores/user';
+  import cookie from 'js-cookie';
 
   if (browser) {
     const getMe = operationStore(GetMeDocument, undefined, {
@@ -28,12 +28,12 @@
     query(getMe);
 
     let first = true;
-    userToken.subscribe(token => {
+    userToken.subscribe((token) => {
       if (token) {
-        const oneMonth = new Date(new Date().getTime() + (30 * 24 * 60 * 60 * 1000));
+        const oneMonth = new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000);
         cookie.set('token', token, {
           domain: window.location.hostname,
-          expires: oneMonth,
+          expires: oneMonth
         });
       } else if (!first) {
         cookie.remove('token');
@@ -43,7 +43,7 @@
 
       if (token) {
         getMe.reexecute({
-          requestPolicy: 'network-only',
+          requestPolicy: 'network-only'
         });
 
         const unsub = getMe.subscribe((response) => {
@@ -53,7 +53,7 @@
               console.error(response.error.message);
               unsub();
             } else if (response.data) {
-              user.set(response.data.getMe)
+              user.set(response.data.getMe);
               unsub();
             }
           }
@@ -74,7 +74,7 @@
     facebook: mutation({
       query: OAuthFacebookDocument
     })
-  }
+  };
 
   let errorMessage = '';
   let errorToast = false;
@@ -103,17 +103,17 @@
         } else {
           userToken.set(result.data.session.token);
         }
-      })
+      });
     }
   }
 
   const oauthOptions = operationStore(
     GetOAuthOptionsDocument,
-    {callback_url: ''},
+    { callback_url: '' },
     {
       requestPolicy: 'network-only'
     }
-  )
+  );
 
   $: if ($loginDialogOpen) {
     oauthOptions.variables.callback_url = encodeURIComponent(window.location.origin + window.location.pathname);
@@ -123,7 +123,7 @@
   const goTo = (service: string, url: string) => {
     localStorage.setItem('sign.in.method', service);
     goto(url);
-  }
+  };
 </script>
 
 <Dialog bind:open={$loginDialogOpen}>
@@ -136,15 +136,15 @@
       <p>Oh no... {$oauthOptions.error.message}</p>
     {:else}
       <button on:click={() => goTo('github', $oauthOptions.data.getOAuthOptions.github)} class="login-button">
-        <Icon icon={githubIcon} inline={true} class="inline-block mr-2"/>
+        <Icon icon={githubIcon} inline={true} class="inline-block mr-2" />
         <span>Sign in with Github</span>
       </button>
       <button on:click={() => goTo('google', $oauthOptions.data.getOAuthOptions.google)} class="login-button">
-        <Icon icon={googleIcon} inline={true} class="inline-block mr-2"/>
+        <Icon icon={googleIcon} inline={true} class="inline-block mr-2" />
         <span>Sign in with Google</span>
       </button>
       <button on:click={() => goTo('facebook', $oauthOptions.data.getOAuthOptions.facebook)} class="login-button">
-        <Icon icon={facebookIcon} inline={true} class="inline-block mr-2"/>
+        <Icon icon={facebookIcon} inline={true} class="inline-block mr-2" />
         <span>Sign in with Facebook</span>
       </button>
     {/if}

@@ -1,13 +1,13 @@
 <script lang="ts">
-  import {createForm} from 'felte';
-  import {validator} from '@felte/validator-zod';
-  import {svelteReporter, ValidationMessage} from '@felte/reporter-svelte';
-  import type {VersionData, VersionMetadata} from "$lib/models/versions";
-  import {constructVersionSchema} from "$lib/models/versions";
-  import {trimNonSchema} from "$lib/utils/forms";
-  import {markdown} from '$lib/utils/markdown';
-  import {writable} from "svelte/store";
-  import {formatBytes} from "$lib/utils/pretty";
+  import { createForm } from 'felte';
+  import { validator } from '@felte/validator-zod';
+  import { svelteReporter, ValidationMessage } from '@felte/reporter-svelte';
+  import type { VersionData, VersionMetadata } from '$lib/models/versions';
+  import { constructVersionSchema } from '$lib/models/versions';
+  import { trimNonSchema } from '$lib/utils/forms';
+  import { markdown } from '$lib/utils/markdown';
+  import { writable } from 'svelte/store';
+  import { formatBytes } from '$lib/utils/pretty';
 
   export let modReference: string;
   export let onSubmit: (data: VersionData) => Promise<void>;
@@ -21,14 +21,14 @@
   let disabled = false;
 
   const versionSchema = constructVersionSchema(modReference, modMeta);
-  const {form, data} = createForm<VersionData>({
+  const { form, data } = createForm<VersionData>({
     initialValues: initialValues as VersionData,
     extend: [validator, svelteReporter],
     validateSchema: versionSchema,
     onSubmit: (data) => {
       disabled = true;
-      onSubmit(trimNonSchema(data, versionSchema)).then(() => disabled = false);
-    },
+      onSubmit(trimNonSchema(data, versionSchema)).then(() => (disabled = false));
+    }
   });
 
   $: preview = ($data.changelog as string) || '';
@@ -51,7 +51,7 @@
     {#if !editing}
       <div class="grid grid-flow-row gap-2">
         <label for="file">File:</label>
-        <input id="file" class="base-input" name="file" type="file" accept=".zip,.smod" placeholder="File">
+        <input id="file" class="base-input" name="file" type="file" accept=".zip,.smod" placeholder="File" />
         <ValidationMessage for="file" let:messages={message}>
           <span class="validation-message">{message || ''}</span>
         </ValidationMessage>
@@ -59,46 +59,47 @@
 
       {#if $data.file}
         <div>
-          <span><strong>File Type:</strong> { $data.file.type || 'Unknown' }</span><br>
-          <span><strong>File Size:</strong> { formatBytes($data.file.size) }</span>
+          <span><strong>File Type:</strong> {$data.file.type || 'Unknown'}</span><br />
+          <span><strong>File Size:</strong> {formatBytes($data.file.size)}</span>
         </div>
       {/if}
 
       {#if $modMeta}
         <div>
           <p class="mb-4">
-            <span><strong>Version:</strong> { $modMeta.uplugin.Version }<br></span>
+            <span><strong>Version:</strong> {$modMeta.uplugin.Version}<br /></span>
 
             {#if $modMeta.uplugin.SemVersion !== undefined}
-              <span><strong>SemVersion:</strong> { $modMeta.uplugin.SemVersion }<br></span>
+              <span><strong>SemVersion:</strong> {$modMeta.uplugin.SemVersion}<br /></span>
             {:else}
               <span class="text-yellow-600">
-                Mod is missing SemVersion field! Are you sure you want to continue? Your version will be set to { $modMeta.uplugin.Version }.0.0
+                Mod is missing SemVersion field! Are you sure you want to continue? Your version will be set to {$modMeta
+                  .uplugin.Version}.0.0
               </span>
             {/if}
           </p>
 
           {#if $modMeta.uplugin.Plugins !== undefined}
             <p>
-              <strong>Dependencies:</strong><br>
+              <strong>Dependencies:</strong><br />
               {#each $modMeta.uplugin.Plugins as dependency}
-                <strong>{ dependency.Name }: </strong>
+                <strong>{dependency.Name}: </strong>
                 {#if dependency.SemVersion}
-                  <span>{ dependency.SemVersion }</span>
+                  <span>{dependency.SemVersion}</span>
                 {:else}
                   <span>*</span>
                 {/if}
-                <br>
+                <br />
               {/each}
             </p>
           {/if}
 
           {#if $modMeta.objects && $modMeta.objects.length > 0}
             <p>
-              <strong>Objects:</strong><br>
+              <strong>Objects:</strong><br />
               {#each $modMeta.objects as object}
-                <span>{ object }</span>
-                <br>
+                <span>{object}</span>
+                <br />
               {/each}
             </p>
           {:else}
@@ -115,7 +116,7 @@
     <div class="grid gap-6 split">
       <div class="grid grid-flow-row gap-2 auto-rows-max">
         <label for="changelog">Changelog:</label>
-        <textarea class="base-input" id="changelog" name="changelog" placeholder="Changelog" rows="10"></textarea>
+        <textarea class="base-input" id="changelog" name="changelog" placeholder="Changelog" rows="10" />
         <ValidationMessage for="changelog" let:messages={message}>
           <span class="validation-message">{message || ''}</span>
         </ValidationMessage>
@@ -123,13 +124,17 @@
       <div class="grid grid-flow-row gap-2 auto-rows-max">
         <span>Preview:</span>
         {#await markdown(preview) then previewRendered}
-          <div class="markdown-content right">{ @html previewRendered}</div>
+          <div class="markdown-content right">{@html previewRendered}</div>
         {/await}
       </div>
     </div>
 
     <div>
-      <input type="submit" disabled={disabled} value={submitText} class="px-4 py-2 rounded text-base bg-blue-500 cursor-pointer disabled:opacity-50">
+      <input
+        type="submit"
+        {disabled}
+        value={submitText}
+        class="px-4 py-2 rounded text-base bg-blue-500 cursor-pointer disabled:opacity-50" />
     </div>
   </div>
 </form>

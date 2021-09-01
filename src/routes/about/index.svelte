@@ -1,14 +1,11 @@
-<svelte:head>
-  <MetaDescriptors 
-    description="About the Satisfactory Mod Repository" 
-    title="About" 
-  />
-</svelte:head>
-
 <script>
-  import {base} from "$app/paths";
-  import MetaDescriptors from "$lib/components/utils/MetaDescriptors.svelte";
+  import { base } from '$app/paths';
+  import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
 </script>
+
+<svelte:head>
+  <MetaDescriptors description="About the Satisfactory Mod Repository" title="About" />
+</svelte:head>
 
 <h1>About</h1>
 
@@ -34,6 +31,6 @@
   }
 
   a {
-    @apply underline text-yellow-500
+    @apply underline text-yellow-500;
   }
 </style>

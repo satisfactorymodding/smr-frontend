@@ -7,5 +7,5 @@
 
 <div>
   <!-- TODO Fallback to default Logo -->
-  <img class="rounded-lg max-w-lg" src={avatar} alt="Avatar for {username}"/>
+  <img class="rounded-lg max-w-lg" src={avatar} alt="Avatar for {username}" />
 </div>

@@ -13,10 +13,11 @@
     "dev:serve": "svelte-kit dev",
     "graphql-codegen:prod": "graphql-codegen --config codegen.yml",
     "graphql-codegen:prod:watch": "graphql-codegen --config codegen.yml --watch",
-    "lint": "eslint . --ext .ts,.svelte",
+    "lint": "eslint . --ext .ts,.svelte && prettier --check --plugin-search-dir=. .",
     "lint:dev": "chokidar -c \"eslint . --ext .ts,.svelte --cache\" --silent --initial \"src/**/*.svelte\" \"src/**/*.ts\"",
     "prepare": "husky install",
-    "start": "svelte-kit start"
+    "start": "svelte-kit start",
+    "format": "prettier --write --plugin-search-dir=. ."
   },
   "devDependencies": {
     "@cfworker/json-schema": "^1.8.3",
@@ -84,7 +85,10 @@
     "urql": "^2.0.4",
     "vite": "^2.5.0",
     "wonka": "^4.0.15",
-    "zod": "^3.7.3"
+    "zod": "^3.7.3",
+    "prettier": "~2.2.1",
+    "prettier-plugin-svelte": "^2.2.0",
+    "eslint-config-prettier": "^8.1.0"
   },
   "type": "module",
   "engines": {

@@ -1,4 +1,4 @@
-query GetMods ($offset: Int!, $limit: Int!) {
+query GetMods($offset: Int!, $limit: Int!) {
   getMods(filter: { limit: $limit, offset: $offset }) {
     count
     mods {

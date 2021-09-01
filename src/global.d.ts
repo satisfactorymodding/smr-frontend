@@ -3,7 +3,7 @@
 /// <reference types="vite/client" />
 
 /* eslint-disable */
-declare module "*.json" {
+declare module '*.json' {
   const value: any;
   export default value;
 }

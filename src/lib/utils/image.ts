@@ -1,4 +1,4 @@
-import FastAverageColor from "fast-average-color";
+import FastAverageColor from 'fast-average-color';
 
 const fac = new FastAverageColor();
 
@@ -10,58 +10,60 @@ export function luminance(r: number, g: number, b: number): number {
   return a[0] * 0.2126 + a[1] * 0.7152 + a[2] * 0.0722;
 }
 
-export async function getImageCornerColors(element: HTMLImageElement): Promise<{ background: string, light: boolean }> {
+export async function getImageCornerColors(element: HTMLImageElement): Promise<{ background: string; light: boolean }> {
   const halfWidth = element.naturalWidth / 2;
   const halfHeight = element.naturalHeight / 2;
 
   // TODO Cleanup
   return Promise.all([
     // Top Left
-    new Promise(resolve => {
-      fac.getColorAsync(element, {width: halfWidth, height: halfHeight}).then(color => {
+    new Promise((resolve) => {
+      fac.getColorAsync(element, { width: halfWidth, height: halfHeight }).then((color) => {
         if (color && 'hex' in color) {
           resolve(color.hex);
         }
       });
     }),
     // Top Right
-    new Promise(resolve => {
-      fac.getColorAsync(element, {width: halfWidth, height: halfHeight, left: halfWidth}).then(color => {
+    new Promise((resolve) => {
+      fac.getColorAsync(element, { width: halfWidth, height: halfHeight, left: halfWidth }).then((color) => {
         if (color && 'hex' in color) {
           resolve(color.hex);
         }
       });
     }),
     // Bottom Left
-    new Promise(resolve => {
-      fac.getColorAsync(element, {width: halfWidth, height: halfHeight, top: halfHeight}).then(color => {
+    new Promise((resolve) => {
+      fac.getColorAsync(element, { width: halfWidth, height: halfHeight, top: halfHeight }).then((color) => {
         if (color && 'hex' in color) {
           resolve(color.hex);
         }
       });
     }),
     // Bottom Right
-    new Promise(resolve => {
-      fac.getColorAsync(element, {
-        width: halfWidth,
-        height: halfHeight,
-        left: halfWidth,
-        top: halfHeight
-      }).then(color => {
-        if (color && 'hex' in color) {
-          resolve(color.hex);
-        }
-      });
+    new Promise((resolve) => {
+      fac
+        .getColorAsync(element, {
+          width: halfWidth,
+          height: halfHeight,
+          left: halfWidth,
+          top: halfHeight
+        })
+        .then((color) => {
+          if (color && 'hex' in color) {
+            resolve(color.hex);
+          }
+        });
     }),
     // Lightness
-    new Promise(resolve => {
-      fac.getColorAsync(element).then(color => {
+    new Promise((resolve) => {
+      fac.getColorAsync(element).then((color) => {
         if (color && 'value' in color) {
           resolve(color.value);
         }
       });
     })
-  ]).then(colors => {
+  ]).then((colors) => {
     let result = '';
     result += `linear-gradient(to bottom right, ${colors[0]}, 35%, transparent),`;
     result += `linear-gradient(to bottom left, ${colors[1]}, 35%, transparent),`;
@@ -72,5 +74,5 @@ export async function getImageCornerColors(element: HTMLImageElement): Promise<{
       background: result,
       light: luminance(colors[4][0] as number, colors[4][1] as number, colors[4][2] as number) > 0.4
     };
-  })
+  });
 }

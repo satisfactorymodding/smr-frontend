@@ -1,25 +1,22 @@
 <script lang="ts">
-  import {GetModVersionsDocument} from "$lib/generated";
-  import {operationStore, query} from "@urql/svelte";
-  import Icon from "@iconify/svelte";
+  import { GetModVersionsDocument } from '$lib/generated';
+  import { operationStore, query } from '@urql/svelte';
+  import Icon from '@iconify/svelte';
   import downloadIcon from '@iconify/icons-mdi/download.js';
-  import {API_REST} from "$lib/core";
-  import {markdown} from '$lib/utils/markdown';
-  import {base} from "$app/paths";
+  import { API_REST } from '$lib/core';
+  import { markdown } from '$lib/utils/markdown';
+  import { base } from '$app/paths';
 
   export let modId!: string;
 
   let expandedVersions = new Set<string>();
 
   // TODO Pagination
-  const versions = operationStore(
-    GetModVersionsDocument,
-    {
-      mod: modId,
-      limit: 100,
-      offset: 0
-    }
-  );
+  const versions = operationStore(GetModVersionsDocument, {
+    mod: modId,
+    limit: 100,
+    offset: 0
+  });
 
   query(versions);
 
@@ -30,7 +27,7 @@
       expandedVersions.add(versionId);
     }
     expandedVersions = expandedVersions;
-  }
+  };
 </script>
 
 {#if $versions.fetching}
@@ -56,14 +53,16 @@
         <!-- TODO Pretty Date -->
         <div>{version.created_at}</div>
         <div class="grid grid-flow-col gap-4">
-          <a href={base + '/mod/' + modId + '/version/' + version.id}
-             class="py-1 px-4 rounded text-base bg-blue-500 text-center">View</a>
-          <a href={API_REST + '/mod/' + modId + '/versions/' + version.id + '/download'}
-             class="py-1 px-4 rounded text-base bg-green-600 text-center">Download</a>
+          <a
+            href={base + '/mod/' + modId + '/version/' + version.id}
+            class="py-1 px-4 rounded text-base bg-blue-500 text-center">View</a>
+          <a
+            href={API_REST + '/mod/' + modId + '/versions/' + version.id + '/download'}
+            class="py-1 px-4 rounded text-base bg-green-600 text-center">Download</a>
           <!-- TODO SMM -->
-          <a href="{base}" class="py-1 px-4 rounded text-base bg-yellow-600 text-center">
+          <a href={base} class="py-1 px-4 rounded text-base bg-yellow-600 text-center">
             <span>Install</span>
-            <Icon icon={downloadIcon} inline={true} class="inline-block"/>
+            <Icon icon={downloadIcon} inline={true} class="inline-block" />
           </a>
         </div>
       </div>
@@ -75,7 +74,7 @@
 
         <div class="col-span-6 p-2 markdown-content">
           {#await markdown(version.changelog) then changelogRendered}
-            { @html changelogRendered }
+            {@html changelogRendered}
           {/await}
         </div>
       {/if}

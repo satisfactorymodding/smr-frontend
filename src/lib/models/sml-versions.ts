@@ -1,5 +1,5 @@
-import * as zod from "zod";
-import type {VersionStabilities} from "$lib/generated";
+import * as zod from 'zod';
+import type { VersionStabilities } from '$lib/generated';
 
 export type SMLVersionData = {
   version: string;
@@ -9,7 +9,7 @@ export type SMLVersionData = {
   link: string;
   changelog: string;
   date: Date;
-}
+};
 
 const versionRegex = /^(<=|<|>|>=|\^)?(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$/;
 
@@ -20,5 +20,5 @@ export const smlVersionSchema = zod.object({
   stability: zod.string(),
   link: zod.string().url(),
   changelog: zod.string(),
-  date: zod.string(),
+  date: zod.string()
 });

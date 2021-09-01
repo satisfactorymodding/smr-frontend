@@ -1,14 +1,14 @@
 <script lang="ts">
-  import {page} from '$app/stores';
-  import {loginDialogOpen} from "$lib/stores/global";
-  import {user} from "$lib/stores/user";
-  import {base} from "$app/paths";
+  import { page } from '$app/stores';
+  import { loginDialogOpen } from '$lib/stores/global';
+  import { user } from '$lib/stores/user';
+  import { base } from '$app/paths';
 
   $: currentPath = $page.path;
 
   const activeLink = (path: string): string => {
     return currentPath.startsWith(path) ? ' active' : '';
-  }
+  };
 
   $: isAdmin = !$user ? false : $user.roles.approveMods || $user.roles.approveVersions || $user.roles.editSMLVersions;
 </script>
@@ -36,7 +36,8 @@
     </a>
   </div>
   {#if $user === null}
-    <button class="py-2.5 px-4 hoverable cursor-pointer" on:click={() => loginDialogOpen.set(true)}>Log in / Sign Up
+    <button class="py-2.5 px-4 hoverable cursor-pointer" on:click={() => loginDialogOpen.set(true)}
+      >Log in / Sign Up
     </button>
   {:else}
     <div class="h-full grid grid-flow-col gap-4">
@@ -45,9 +46,11 @@
           <div>Admin</div>
         </a>
       {/if}
-      <a href={base +'/user/' + $user.id} class="grid grid-flow-col hoverable px-4 content-center h-full cursor-pointer">
+      <a
+        href={base + '/user/' + $user.id}
+        class="grid grid-flow-col hoverable px-4 content-center h-full cursor-pointer">
         <div class="mr-3">{$user.username}</div>
-        <div class="rounded-full bg-cover w-7 h-7" style={`background-image: url("${$user.avatar}")`}></div>
+        <div class="rounded-full bg-cover w-7 h-7" style={`background-image: url("${$user.avatar}")`} />
       </a>
     </div>
   {/if}

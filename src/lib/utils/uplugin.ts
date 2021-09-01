@@ -1,8 +1,8 @@
-import {Validator} from '@cfworker/json-schema';
-import {API_BASE} from "$lib/core";
+import { Validator } from '@cfworker/json-schema';
+import { API_BASE } from '$lib/core';
 
 let resolver;
-const uPluginValidator = new Promise<Validator>(r => resolver = r);
+const uPluginValidator = new Promise<Validator>((r) => (resolver = r));
 
 fetch(API_BASE + '/static/uplugin-json-schema.json')
   .then((response) => response.json())
@@ -19,27 +19,29 @@ export const validateUPluginJson = async (input: string): Promise<string[]> => {
       return [];
     }
 
-    return result.errors.map(error => {
-      if (error.keyword === '$ref') {
-        return undefined;
-      }
+    return result.errors
+      .map((error) => {
+        if (error.keyword === '$ref') {
+          return undefined;
+        }
 
-      let message = '`' + error.instanceLocation + '`';
+        let message = '`' + error.instanceLocation + '`';
 
-      const value = resolveValue(objInput, error.instanceLocation);
+        const value = resolveValue(objInput, error.instanceLocation);
 
-      if (typeof value !== 'object') {
-        message += ' **"' + value + '"**';
-      }
+        if (typeof value !== 'object') {
+          message += ' **"' + value + '"**';
+        }
 
-      message += ': ' + error.error;
+        message += ': ' + error.error;
 
-      return message;
-    }).filter(v => !!v);
+        return message;
+      })
+      .filter((v) => !!v);
   } catch (e) {
     return ['Invalid JSON'];
   }
-}
+};
 
 const resolveValue = (object: unknown, path: string) => {
   const parser = new RegExp(`\\['?(.+?)'?\\]|\\.([^\\.\\[\\]]+)`, `gm`);
@@ -57,4 +59,4 @@ const resolveValue = (object: unknown, path: string) => {
   }
 
   return undefined;
-}
+};

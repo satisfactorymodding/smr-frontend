@@ -1,6 +1,6 @@
 <script lang="ts">
-  import type {Mod} from "$lib/generated";
-  import {markdown} from '$lib/utils/markdown';
+  import type { Mod } from '$lib/generated';
+  import { markdown } from '$lib/utils/markdown';
 
   export let mod!: Pick<Mod, 'full_description' | 'short_description'>;
 
@@ -9,6 +9,6 @@
 
 <div class="markdown-content">
   {#await description then descriptionRendered}
-    <p>{ @html descriptionRendered }</p>
+    <p>{@html descriptionRendered}</p>
   {/await}
 </div>

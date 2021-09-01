@@ -1,35 +1,25 @@
-<svelte:head>
-  <MetaDescriptors 
-    description="SML Versions"
-    title="Admin: SML Versions" 
-  />
-</svelte:head>
-
 <script lang="ts">
-  import {DeleteSmlVersionDocument, GetSmlVersionsAdminDocument,} from "$lib/generated";
-  import {mutation, operationStore, query} from "@urql/svelte";
-  import {writable} from "svelte/store";
-  import PageControls from "$lib/components/utils/PageControls.svelte";
-  import {base} from "$app/paths";
-  import MetaDescriptors from "$lib/components/utils/MetaDescriptors.svelte";
+  import { DeleteSmlVersionDocument, GetSmlVersionsAdminDocument } from '$lib/generated';
+  import { mutation, operationStore, query } from '@urql/svelte';
+  import { writable } from 'svelte/store';
+  import PageControls from '$lib/components/utils/PageControls.svelte';
+  import { base } from '$app/paths';
+  import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
 
   // TODO Selectable
   const perPage = 20;
 
-  const versions = operationStore(
-    GetSmlVersionsAdminDocument,
-    {
-      filter: {
-        offset: 0,
-        limit: perPage
-      }
+  const versions = operationStore(GetSmlVersionsAdminDocument, {
+    filter: {
+      offset: 0,
+      limit: perPage
     }
-  );
+  });
 
   const page = writable(1);
   let totalVersions: number;
 
-  page.subscribe(p => $versions.variables.filter.offset = (p - 1) * perPage);
+  page.subscribe((p) => ($versions.variables.filter.offset = (p - 1) * perPage));
 
   $: totalVersions = $versions?.data?.getSMLVersions?.count;
 
@@ -38,13 +28,17 @@
   });
 
   const deleteVersion = (smlVersionID: string) => {
-    deleteVersionMut({smlVersionID}).then(() => {
+    deleteVersionMut({ smlVersionID }).then(() => {
       versions.reexecute();
     });
-  }
+  };
 
   query(versions);
 </script>
+
+<svelte:head>
+  <MetaDescriptors description="SML Versions" title="Admin: SML Versions" />
+</svelte:head>
 
 <div class="flex justify-between items-center">
   <h1 class="text-4xl my-4 font-bold">SML Versions</h1>
@@ -53,7 +47,7 @@
 
 {#if totalVersions}
   <div class="mt-5 ml-auto flex justify-end">
-    <PageControls totalPages={Math.ceil(totalVersions / perPage)} currentPage={page}/>
+    <PageControls totalPages={Math.ceil(totalVersions / perPage)} currentPage={page} />
   </div>
 {/if}
 
@@ -80,11 +74,14 @@
         <!-- TODO Pretty Date -->
         <div>{version.created_at}</div>
         <div class="grid grid-flow-col gap-4">
-          <button class="py-1 px-4 rounded text-base bg-red-600 text-center cursor-pointer"
-                  on:click={() => deleteVersion(version.id)}>
+          <button
+            class="py-1 px-4 rounded text-base bg-red-600 text-center cursor-pointer"
+            on:click={() => deleteVersion(version.id)}>
             Delete
           </button>
-          <a href={base +'/admin/sml-versions/' + version.id + '/edit'} class="py-1 px-4 rounded text-base bg-blue-500 text-center cursor-pointer">Edit</a>
+          <a
+            href={base + '/admin/sml-versions/' + version.id + '/edit'}
+            class="py-1 px-4 rounded text-base bg-blue-500 text-center cursor-pointer">Edit</a>
         </div>
       </div>
     {/each}
@@ -93,7 +90,7 @@
 
 {#if totalVersions}
   <div class="mt-5 ml-auto flex justify-end">
-    <PageControls totalPages={Math.ceil(totalVersions / perPage)} currentPage={page}/>
+    <PageControls totalPages={Math.ceil(totalVersions / perPage)} currentPage={page} />
   </div>
 {/if}
 

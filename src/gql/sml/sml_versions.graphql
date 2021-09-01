@@ -1,8 +1,5 @@
 query GetSMLVersions($limit: Int!, $offset: Int!) {
-  getSMLVersions(filter: {
-    limit: $limit,
-    offset: $offset
-  }) {
+  getSMLVersions(filter: { limit: $limit, offset: $offset }) {
     count
     sml_versions {
       id

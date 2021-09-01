@@ -1,6 +1,6 @@
-import {writable} from 'svelte/store';
+import { writable } from 'svelte/store';
 import cookie from 'js-cookie';
-import type {GetMeQuery} from "$lib/generated";
+import type { GetMeQuery } from '$lib/generated';
 
 export type MeUser = GetMeQuery['getMe'];
 

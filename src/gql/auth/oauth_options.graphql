@@ -1,4 +1,4 @@
-query GetOAuthOptions ($callback_url: String!){
+query GetOAuthOptions($callback_url: String!) {
   getOAuthOptions(callback_url: $callback_url) {
     github
     google

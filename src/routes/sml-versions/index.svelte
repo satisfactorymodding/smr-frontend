@@ -1,18 +1,10 @@
-<svelte:head>
-  <title>SML Versions - SMR</title>
-  <MetaDescriptors 
-    description="Versions of the Satisfactory Mod Loader"
-    title="Satisfactory Mod Loader versions" 
-  />
-</svelte:head>
-
 <script lang="ts">
-  import {GetSmlVersionsDocument} from "$lib/generated";
-  import {operationStore, query} from "@urql/svelte";
-  import {writable} from "svelte/store";
-  import PageControls from "$lib/components/utils/PageControls.svelte";
-  import {markdown} from '$lib/utils/markdown';
-  import MetaDescriptors from "$lib/components/utils/MetaDescriptors.svelte";
+  import { GetSmlVersionsDocument } from '$lib/generated';
+  import { operationStore, query } from '@urql/svelte';
+  import { writable } from 'svelte/store';
+  import PageControls from '$lib/components/utils/PageControls.svelte';
+  import { markdown } from '$lib/utils/markdown';
+  import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
 
   let expandedVersions = new Set<string>();
 
@@ -20,15 +12,12 @@
   const perPage = 20;
 
   // TODO Pagination
-  const versions = operationStore(
-    GetSmlVersionsDocument,
-    {offset: 0, limit: perPage}
-  );
+  const versions = operationStore(GetSmlVersionsDocument, { offset: 0, limit: perPage });
 
   const page = writable(1);
   let totalVersions: number;
 
-  page.subscribe(p => $versions.variables.offset = (p - 1) * perPage);
+  page.subscribe((p) => ($versions.variables.offset = (p - 1) * perPage));
 
   $: totalVersions = $versions?.data?.getSMLVersions?.count;
 
@@ -41,12 +30,17 @@
       expandedVersions.add(versionId);
     }
     expandedVersions = expandedVersions;
-  }
+  };
 </script>
+
+<svelte:head>
+  <title>SML Versions - SMR</title>
+  <MetaDescriptors description="Versions of the Satisfactory Mod Loader" title="Satisfactory Mod Loader versions" />
+</svelte:head>
 
 {#if totalVersions}
   <div class="mt-5 ml-auto flex justify-end">
-    <PageControls totalPages={Math.ceil(totalVersions / perPage)} currentPage={page}/>
+    <PageControls totalPages={Math.ceil(totalVersions / perPage)} currentPage={page} />
   </div>
 {/if}
 
@@ -78,7 +72,7 @@
       {#if expandedVersions.has(version.id)}
         <div class="col-span-5 p-2 markdown-content">
           {#await markdown(version.changelog) then changelogRendered}
-            { @html changelogRendered }
+            {@html changelogRendered}
           {/await}
         </div>
       {/if}
@@ -88,7 +82,7 @@
 
 {#if totalVersions}
   <div class="mt-5 ml-auto flex justify-end">
-    <PageControls totalPages={Math.ceil(totalVersions / perPage)} currentPage={page}/>
+    <PageControls totalPages={Math.ceil(totalVersions / perPage)} currentPage={page} />
   </div>
 {/if}
 

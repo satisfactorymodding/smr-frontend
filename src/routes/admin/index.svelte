@@ -1,14 +1,11 @@
-<svelte:head>
-  <MetaDescriptors 
-    description="SMR Admin" 
-    title="Admin" 
-  />
-</svelte:head>
-
 <script>
-  import {base} from "$app/paths";
-  import MetaDescriptors from "$lib/components/utils/MetaDescriptors.svelte";
+  import { base } from '$app/paths';
+  import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
 </script>
+
+<svelte:head>
+  <MetaDescriptors description="SMR Admin" title="Admin" />
+</svelte:head>
 
 <h1>Admin Panel</h1>
 
@@ -34,6 +31,6 @@
   }
 
   a {
-    @apply underline text-yellow-500
+    @apply underline text-yellow-500;
   }
 </style>

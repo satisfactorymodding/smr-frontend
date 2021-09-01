@@ -1,35 +1,25 @@
-<svelte:head>
-  <MetaDescriptors 
-    description="Unapproved mods" 
-    title="Admin: Unapproved Mods" 
-  />
-</svelte:head>
-
 <script lang="ts">
-  import {ApproveModDocument, DenyModDocument, GetUnapprovedModsDocument} from "$lib/generated";
-  import {mutation, operationStore, query} from "@urql/svelte";
-  import {writable} from "svelte/store";
-  import PageControls from "$lib/components/utils/PageControls.svelte";
-  import {base} from "$app/paths";
-  import MetaDescriptors from "$lib/components/utils/MetaDescriptors.svelte";
+  import { ApproveModDocument, DenyModDocument, GetUnapprovedModsDocument } from '$lib/generated';
+  import { mutation, operationStore, query } from '@urql/svelte';
+  import { writable } from 'svelte/store';
+  import PageControls from '$lib/components/utils/PageControls.svelte';
+  import { base } from '$app/paths';
+  import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
 
   // TODO Selectable
   const perPage = 20;
 
-  const mods = operationStore(
-    GetUnapprovedModsDocument,
-    {
-      filter: {
-        offset: 0,
-        limit: perPage
-      }
+  const mods = operationStore(GetUnapprovedModsDocument, {
+    filter: {
+      offset: 0,
+      limit: perPage
     }
-  );
+  });
 
   const page = writable(1);
   let totalMods: number;
 
-  page.subscribe(p => $mods.variables.filter.offset = (p - 1) * perPage);
+  page.subscribe((p) => ($mods.variables.filter.offset = (p - 1) * perPage));
 
   $: totalMods = $mods?.data?.getUnapprovedMods?.count;
 
@@ -38,27 +28,31 @@
   });
 
   const approveMod = (modId: string) => {
-    approveModMut({modId}).then(() => {
+    approveModMut({ modId }).then(() => {
       mods.reexecute();
     });
-  }
+  };
 
   const denyModMut = mutation({
     query: DenyModDocument
   });
 
   const denyMod = (modId: string) => {
-    denyModMut({modId}).then(() => {
+    denyModMut({ modId }).then(() => {
       mods.reexecute();
     });
-  }
+  };
 
   query(mods);
 </script>
 
+<svelte:head>
+  <MetaDescriptors description="Unapproved mods" title="Admin: Unapproved Mods" />
+</svelte:head>
+
 {#if totalMods}
   <div class="mt-5 ml-auto flex justify-end">
-    <PageControls totalPages={Math.ceil(totalMods / perPage)} currentPage={page}/>
+    <PageControls totalPages={Math.ceil(totalMods / perPage)} currentPage={page} />
   </div>
 {/if}
 
@@ -81,15 +75,18 @@
         <!-- TODO Pretty Date -->
         <div>{mod.created_at}</div>
         <div class="grid grid-flow-col gap-4">
-          <button class="py-1 px-4 rounded text-base bg-green-600 text-center cursor-pointer"
-                  on:click={() => approveMod(mod.id)}>
+          <button
+            class="py-1 px-4 rounded text-base bg-green-600 text-center cursor-pointer"
+            on:click={() => approveMod(mod.id)}>
             Approve
           </button>
-          <button class="py-1 px-4 rounded text-base bg-red-600 text-center cursor-pointer"
-                  on:click={() => denyMod(mod.id)}>
+          <button
+            class="py-1 px-4 rounded text-base bg-red-600 text-center cursor-pointer"
+            on:click={() => denyMod(mod.id)}>
             Deny
           </button>
-          <a href={base +'/mod/' + mod.id} class="py-1 px-4 rounded text-base bg-blue-500 text-center cursor-pointer">View</a>
+          <a href={base + '/mod/' + mod.id} class="py-1 px-4 rounded text-base bg-blue-500 text-center cursor-pointer"
+            >View</a>
         </div>
       </div>
     {/each}
@@ -98,7 +95,7 @@
 
 {#if totalMods}
   <div class="mt-5 ml-auto flex justify-end">
-    <PageControls totalPages={Math.ceil(totalMods / perPage)} currentPage={page}/>
+    <PageControls totalPages={Math.ceil(totalMods / perPage)} currentPage={page} />
   </div>
 {/if}
 

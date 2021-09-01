@@ -1,4 +1,4 @@
-mutation OAuthFacebook ($code: String!, $state: String!) {
+mutation OAuthFacebook($code: String!, $state: String!) {
   session: oAuthFacebook(code: $code, state: $state) {
     token
   }

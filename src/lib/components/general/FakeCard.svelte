@@ -2,7 +2,7 @@
   <div class="shadowed grid grid-flow-row p-3 bg-gray-700 gap-3 relative min-h-full">
     <div class="top grid grid-flow-col gap-4">
       <div class="shadowed relative padded">
-        <div class="bg-gray-500 w-full h-full absolute left-0 top-0"></div>
+        <div class="bg-gray-500 w-full h-full absolute left-0 top-0" />
       </div>
       <div>
         <div><span class="text-xl font-flow">Fake Card Name</span></div>

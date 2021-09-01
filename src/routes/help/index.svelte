@@ -1,35 +1,34 @@
-<svelte:head>
-  <title>Help - SMR</title>
-  <MetaDescriptors 
-    description="Help for submitting modules to the Satsifactory Mod Repository"
-    title="Help" 
-    />
-</svelte:head>
-
 <script lang="ts">
-  import {markdown} from '$lib/utils/markdown';
-  import {validateUPluginJson} from "$lib/utils/uplugin";
-  import MetaDescriptors from "$lib/components/utils/MetaDescriptors.svelte";
+  import { markdown } from '$lib/utils/markdown';
+  import { validateUPluginJson } from '$lib/utils/uplugin';
+  import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
 
-  const exampleUPluginJson = '```json\n' + JSON.stringify({
-    "CanContainContent": true,
-    "FileVersion": 3,
-    "SemVersion": "1.0.0",
-    "Version": 1,
-    "Modules": [
+  const exampleUPluginJson =
+    '```json\n' +
+    JSON.stringify(
       {
-        "LoadingPhase": "PostDefault",
-        "Name": "testmod",
-        "Type": "Runtime"
-      }
-    ],
-    "Plugins": [
-      {
-        "Name": "SML",
-        "SemVersion": "^3.0.0"
+        CanContainContent: true,
+        FileVersion: 3,
+        SemVersion: '1.0.0',
+        Version: 1,
+        Modules: [
+          {
+            LoadingPhase: 'PostDefault',
+            Name: 'testmod',
+            Type: 'Runtime'
+          }
+        ],
+        Plugins: [
+          {
+            Name: 'SML',
+            SemVersion: '^3.0.0'
+          }
+        ]
       },
-    ]
-  }, null, 2) + '\n```';
+      null,
+      2
+    ) +
+    '\n```';
 
   const typescriptMarkdown = `
 ## Headers
@@ -391,23 +390,28 @@ This line is way far down
   $: upluginErrors = validateUPluginJson(uPluginJsonInput);
 </script>
 
+<svelte:head>
+  <title>Help - SMR</title>
+  <MetaDescriptors description="Help for submitting modules to the Satsifactory Mod Repository" title="Help" />
+</svelte:head>
+
 <div class="grid grid-flow-row gap-4">
   <div class="grid gap-4 gridLayout">
     <div>
       <h3 class="text-2xl my-4 font-bold">data.json format</h3>
-      <p class="text-base my-5">The mod zip structure is very simple. The current requirements are that there is a
-        <strong>data.json</strong> that follows the format below.</p>
+      <p class="text-base my-5">
+        The mod zip structure is very simple. The current requirements are that there is a
+        <strong>data.json</strong> that follows the format below.
+      </p>
       <div class="markdown-content">
         {#await markdown(exampleUPluginJson) then exampleUPluginJsonRendered}
-          { @html exampleUPluginJsonRendered }
+          {@html exampleUPluginJsonRendered}
         {/await}
       </div>
     </div>
     <div>
       <h3 class="text-2xl my-4 font-bold">Validate your &lt;mod&gt;.uplugin</h3>
-      <textarea placeholder="enter your <mod>.uplugin" rows="23"
-                class="markdownEditor"
-                bind:value={uPluginJsonInput}></textarea>
+      <textarea placeholder="enter your <mod>.uplugin" rows="23" class="markdownEditor" bind:value={uPluginJsonInput} />
       {#if uPluginJsonInput !== ''}
         {#await upluginErrors}
           <p>Loading...</p>
@@ -418,7 +422,7 @@ This line is way far down
             <ul>
               {#each errors as err}
                 {#await markdown(err) then errRendered}
-                  <li class="markdown-content">{ @html errRendered }</li>
+                  <li class="markdown-content">{@html errRendered}</li>
                 {/await}
               {/each}
             </ul>
@@ -430,7 +434,7 @@ This line is way far down
   <div class="markdown-content">
     <h1 class="text-4xl my-4 font-bold">Markdown</h1>
     {#await markdownHtml then markdownHtmlRendered}
-      <p>{ @html markdownHtmlRendered }</p>
+      <p>{@html markdownHtmlRendered}</p>
     {/await}
   </div>
 </div>
