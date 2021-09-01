@@ -1,5 +1,8 @@
 <svelte:head>
-  <title>Admin: Edit SML Version - SMR</title>
+  <MetaDescriptors 
+    description="Edit SML Version"
+    title="Admin: Edit SML Version" 
+  />
 </svelte:head>
 
 <script lang="ts" context="module">
@@ -16,6 +19,7 @@
   import type {SMLVersionData} from "$lib/models/sml-versions";
   import SMLVersionForm from "$lib/components/sml-versions/SMLVersionForm.svelte";
   import {base} from "$app/paths";
+  import MetaDescriptors from "$lib/components/utils/MetaDescriptors.svelte";
 
   export let smlVersionId!: string;
 

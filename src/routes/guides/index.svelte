@@ -1,10 +1,14 @@
 <svelte:head>
-  <title>Guides - SMR</title>
+  <MetaDescriptors 
+    description="Guides for Satisfactory and modding Satisfactory"
+    title="Guides" 
+  />
 </svelte:head>
 
 <script lang="ts">
   import GuideGrid from "$lib/components/guides/GuideGrid.svelte";
   import {base} from "$app/paths";
+  import MetaDescriptors from "$lib/components/utils/MetaDescriptors.svelte";
 </script>
 
 <div class="flex justify-between items-center">

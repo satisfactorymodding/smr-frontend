@@ -1,6 +1,13 @@
 <svelte:head>
-  <title>Terms of Service - SMR</title>
+  <MetaDescriptors 
+    description="Terms of service for the Satisfactory Mod Repository"
+    title="Terms of service" 
+  />  
 </svelte:head>
+
+<script lang="ts">
+  import MetaDescriptors from "$lib/components/utils/MetaDescriptors.svelte";
+</script>
 
 <div>
   <h1>Terms of Service</h1>

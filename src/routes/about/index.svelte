@@ -1,9 +1,13 @@
 <svelte:head>
-  <title>About - SMR</title>
+  <MetaDescriptors 
+    description="About the Satisfactory Mod Repository" 
+    title="About" 
+  />
 </svelte:head>
 
 <script>
   import {base} from "$app/paths";
+  import MetaDescriptors from "$lib/components/utils/MetaDescriptors.svelte";
 </script>
 
 <h1>About</h1>

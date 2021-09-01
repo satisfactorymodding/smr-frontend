@@ -1,9 +1,13 @@
 <svelte:head>
-  <title>Admin - SMR</title>
+  <MetaDescriptors 
+    description="SMR Admin" 
+    title="Admin" 
+  />
 </svelte:head>
 
 <script>
   import {base} from "$app/paths";
+  import MetaDescriptors from "$lib/components/utils/MetaDescriptors.svelte";
 </script>
 
 <h1>Admin Panel</h1>

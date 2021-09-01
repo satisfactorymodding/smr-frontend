@@ -1,6 +1,9 @@
 <svelte:head>
   {#if !$guide.fetching && !$guide.error && $guide.data.getGuide}
-    <title>Edit {$guide.data.getGuide.name} - SMR</title>
+    <MetaDescriptors 
+      description="{$guide.data.getGuide.short_description}"
+      title="{$guide.data.getGuide.name}" 
+    />
   {/if}
 </svelte:head>
 
@@ -9,6 +12,7 @@
   import {operationStore} from "@urql/svelte";
   import {GetGuideDocument} from "$lib/generated";
   import {loadWaitForNoFetch} from "$lib/utils/gql";
+  import MetaDescriptors from "$lib/components/utils/MetaDescriptors.svelte";
 
   const guideQ = operationStore(
     GetGuideDocument,

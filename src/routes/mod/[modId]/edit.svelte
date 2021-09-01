@@ -1,6 +1,10 @@
 <svelte:head>
   {#if !$mod.fetching && !$mod.error && $mod.data.getMod}
-    <title>Edit Mod: {$mod.data.getMod.name} - SMR</title>
+    <MetaDescriptors 
+      description="Editing mod {$mod.data.getMod.name}"
+      title="Edit mod {$mod.data.getMod.name}" 
+      image={$mod.data.getMod.logo}
+    />
   {/if}
 </svelte:head>
 
@@ -18,6 +22,7 @@
   import ModForm from "$lib/components/mods/ModForm.svelte";
   import type {ModData} from "$lib/models/mods";
   import {base} from "$app/paths";
+  import MetaDescriptors from "$lib/components/utils/MetaDescriptors.svelte";
 
   export let modId!: string;
 

@@ -1,5 +1,8 @@
 <svelte:head>
-  <title>Settings - SMR</title>
+  <MetaDescriptors 
+      description="Change your user settings"
+      title="Settings" 
+  />
 </svelte:head>
 
 <script lang="ts">
@@ -15,6 +18,7 @@
   import * as zod from "zod";
   import type {Form} from "@felte/core";
   import {base} from "$app/paths";
+  import MetaDescriptors from "$lib/components/utils/MetaDescriptors.svelte";
 
   let errorMessage = '';
   let errorToast = false;

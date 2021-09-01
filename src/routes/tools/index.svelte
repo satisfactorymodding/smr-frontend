@@ -1,10 +1,15 @@
 <svelte:head>
   <title>Tools - SMR</title>
+  <MetaDescriptors 
+    description="A collection of useful tools for Satisfactory, such as recipe calculators and save editors"
+    title="Tools" 
+  />
 </svelte:head>
 
 <script lang="ts">
   import type {Tool} from "$lib/models/tools";
   import ToolCard from "$lib/components/tools/ToolCard.svelte";
+  import MetaDescriptors from "$lib/components/utils/MetaDescriptors.svelte";
 
   const tools: Tool[] = [
     {

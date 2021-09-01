@@ -1,6 +1,9 @@
 <svelte:head>
   {#if !$guide.fetching && !$guide.error && $guide.data.getGuide}
-    <title>{$guide.data.getGuide.name} - SMR</title>
+    <MetaDescriptors 
+      description="Editing guide '{$guide.data.getGuide.short_description}'"
+      title="Edit guide '{$guide.data.getGuide.name}'" 
+    />
   {/if}
 </svelte:head>
 
@@ -18,6 +21,7 @@
   import GuideForm from "$lib/components/guides/GuideForm.svelte";
   import type {GuideData} from "$lib/models/guides";
   import {base} from "$app/paths";
+  import MetaDescriptors from "$lib/components/utils/MetaDescriptors.svelte";
 
   export let guideId!: string;
 

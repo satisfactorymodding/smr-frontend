@@ -1,5 +1,9 @@
 <svelte:head>
   <title>SML Versions - SMR</title>
+  <MetaDescriptors 
+    description="Versions of the Satisfactory Mod Loader"
+    title="Satisfactory Mod Loader versions" 
+  />
 </svelte:head>
 
 <script lang="ts">
@@ -8,6 +12,7 @@
   import {writable} from "svelte/store";
   import PageControls from "$lib/components/utils/PageControls.svelte";
   import {markdown} from '$lib/utils/markdown';
+  import MetaDescriptors from "$lib/components/utils/MetaDescriptors.svelte";
 
   let expandedVersions = new Set<string>();
 

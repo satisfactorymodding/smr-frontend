@@ -1,10 +1,15 @@
 <svelte:head>
   <title>Help - SMR</title>
+  <MetaDescriptors 
+    description="Help for submitting modules to the Satsifactory Mod Repository"
+    title="Help" 
+    />
 </svelte:head>
 
 <script lang="ts">
   import {markdown} from '$lib/utils/markdown';
   import {validateUPluginJson} from "$lib/utils/uplugin";
+  import MetaDescriptors from "$lib/components/utils/MetaDescriptors.svelte";
 
   const exampleUPluginJson = '```json\n' + JSON.stringify({
     "CanContainContent": true,

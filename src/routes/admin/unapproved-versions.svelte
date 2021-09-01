@@ -1,5 +1,8 @@
 <svelte:head>
-  <title>Admin: Unapproved Versions - SMR</title>
+  <MetaDescriptors 
+    description="Unapproved mod versions" 
+    title="Admin: Unapproved Versions" 
+  />
 </svelte:head>
 
 <script lang="ts">
@@ -9,6 +12,7 @@
   import PageControls from "$lib/components/utils/PageControls.svelte";
   import {API_REST} from "$lib/core";
   import {base} from "$app/paths";
+  import MetaDescriptors from "$lib/components/utils/MetaDescriptors.svelte";
 
   // TODO Selectable
   const perPage = 20;
