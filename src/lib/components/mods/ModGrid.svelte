@@ -7,14 +7,20 @@
   import FakeCard from '../general/FakeCard.svelte';
 
   export let colCount: 4 | 5 = 4;
+  export let search: string | undefined = undefined;
 
   // TODO Selectable
   const perPage = 40;
 
-  const mods = operationStore(GetModsDocument, { offset: 0, limit: perPage });
+  const mods = operationStore(GetModsDocument, { offset: 0, limit: perPage, search });
 
   const page = writable(1);
   let totalMods: number;
+
+  $: {
+    $mods.variables.search = search;
+    $mods.reexecute();
+  }
 
   page.subscribe((p) => {
     $mods.variables.offset = (p - 1) * perPage;
