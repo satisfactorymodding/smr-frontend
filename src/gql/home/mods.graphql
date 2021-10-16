@@ -8,6 +8,17 @@ query GetMods($offset: Int!, $limit: Int!, $search: String) {
       views
       downloads
       short_description
+      latestVersions {
+        alpha {
+          id
+        }
+        beta {
+          id
+        }
+        release {
+          id
+        }
+      }
     }
   }
 }

@@ -12,6 +12,17 @@ query GetUser($user: UserID!) {
         views
         downloads
         short_description
+        latestVersions {
+          alpha {
+            id
+          }
+          beta {
+            id
+          }
+          release {
+            id
+          }
+        }
       }
     }
     guides {

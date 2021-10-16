@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Mod } from '$lib/generated';
+  import type { Mod, Maybe, Version } from '$lib/generated';
   import downloadIcon from '@iconify/icons-mdi/download.js';
   import eyeIcon from '@iconify/icons-mdi/eye.js';
   import openInNewIcon from '@iconify/icons-mdi/open-in-new.js';
@@ -7,11 +7,20 @@
   import Icon from '@iconify/svelte';
   import { getImageCornerColors } from '$lib/utils/image';
 
-  export let mod: Pick<Mod, 'id' | 'name' | 'logo' | 'views' | 'downloads' | 'short_description'>;
+  export let mod: Pick<Mod, 'id' | 'name' | 'logo' | 'views' | 'downloads' | 'short_description'> & {
+    latestVersions: {
+      alpha?: Maybe<Pick<Version, 'id'>>;
+      beta?: Maybe<Pick<Version, 'id'>>;
+      release?: Maybe<Pick<Version, 'id'>>;
+    };
+  };
   export let expanded = false;
 
   /* eslint-disable @typescript-eslint/no-unused-vars */
   $: logo = mod.logo || assets + '/images/no_image.png';
+
+  $: installable =
+    'latestVersions' in mod ? mod.latestVersions.alpha || mod.latestVersions.beta || mod.latestVersions.release : false;
 
   let hovering = false;
 
@@ -79,10 +88,12 @@
               <span>More info <Icon icon={openInNewIcon} inline={true} class="inline-block" /></span>
             </button>
           </a>
-          <!-- TODO SMM Button -->
-          <button class="shadowed py-1 px-4 rounded text-base bg-lime-600">
-            <span>Install <Icon icon={downloadIcon} inline={true} class="inline-block" /></span>
-          </button>
+          {#if installable}
+            <!-- TODO SMM Button -->
+            <button class="shadowed py-1 px-4 rounded text-base bg-lime-600">
+              <span>Install <Icon icon={downloadIcon} inline={true} class="inline-block" /></span>
+            </button>
+          {/if}
         </div>
       </div>
     {/if}
