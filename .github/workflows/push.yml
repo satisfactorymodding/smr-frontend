@@ -122,6 +122,10 @@ jobs:
   image:
     name: Image
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        target: [ "staging", "production" ]
     needs:
       - build
       - lint
@@ -142,6 +146,9 @@ jobs:
         uses: docker/metadata-action@v3
         with:
           images: ghcr.io/${{ github.repository }}
+          flavor: |
+            latest=false
+            suffix=${{ matrix.target }}
 
       - name: Build and push
         uses: docker/build-push-action@v2
@@ -151,4 +158,4 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
-            BUILD=build:staging
+            BUILD=build:${{ matrix.target }}

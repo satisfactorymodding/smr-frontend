@@ -5,6 +5,7 @@
     "adapt": "svelte-kit adapt",
     "build": "run-s build:static build:node",
     "build:staging": "cross-env NODE_ENV=staging run-s build:static build:node",
+    "build:production": "cross-env NODE_ENV=production run-s build:static build:node",
     "build:node": "rimraf .svelte build/node && cross-env SVELTE_ADAPTER=node svelte-kit build",
     "build:static": "rimraf .svelte build/static && svelte-kit build",
     "check": "svelte-check --ignore build,.svelte,.svelte-kit",
