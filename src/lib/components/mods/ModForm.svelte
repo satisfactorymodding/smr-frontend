@@ -41,7 +41,8 @@
         name="mod_reference"
         type="text"
         placeholder="Mod Reference"
-        readonly={editing} />
+        readonly={editing}
+      />
       <ValidationMessage for="mod_reference" let:messages={message}>
         <span class="validation-message">{message || ''}</span>
       </ValidationMessage>
@@ -54,7 +55,8 @@
         class="base-input"
         name="short_description"
         type="text"
-        placeholder="Short Description" />
+        placeholder="Short Description"
+      />
       <ValidationMessage for="short_description" let:messages={message}>
         <span class="validation-message">{message || ''}</span>
       </ValidationMessage>
@@ -68,7 +70,8 @@
           id="full_description"
           name="full_description"
           placeholder="Full Description"
-          rows="10" />
+          rows="10"
+        />
         <ValidationMessage for="full_description" let:messages={message}>
           <span class="validation-message">{message || ''}</span>
         </ValidationMessage>
@@ -89,7 +92,8 @@
         name="logo"
         type="file"
         accept="image/png,image/jpeg,image/gif"
-        placeholder="Logo" />
+        placeholder="Logo"
+      />
       <ValidationMessage for="logo" let:messages={message}>
         <span class="validation-message">{message || ''}</span>
       </ValidationMessage>

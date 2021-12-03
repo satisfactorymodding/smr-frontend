@@ -50,7 +50,8 @@
   {#if !$guide.fetching && !$guide.error && $guide.data.getGuide}
     <MetaDescriptors
       description="Editing guide '{$guide.data.getGuide.short_description}'"
-      title="Edit guide '{$guide.data.getGuide.name}'" />
+      title="Edit guide '{$guide.data.getGuide.name}'"
+    />
   {/if}
 </svelte:head>
 

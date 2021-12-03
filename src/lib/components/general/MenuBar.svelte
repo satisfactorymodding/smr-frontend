@@ -48,7 +48,8 @@
       {/if}
       <a
         href={base + '/user/' + $user.id}
-        class="grid grid-flow-col hoverable px-4 content-center h-full cursor-pointer">
+        class="grid grid-flow-col hoverable px-4 content-center h-full cursor-pointer"
+      >
         <div class="mr-3">{$user.username}</div>
         <div class="rounded-full bg-cover w-7 h-7" style={`background-image: url("${$user.avatar}")`} />
       </a>

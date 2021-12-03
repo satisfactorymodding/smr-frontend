@@ -12,6 +12,7 @@ query GetModVersion($version: VersionID!) {
     size
     mod {
       id
+      mod_reference
       name
       authors {
         role

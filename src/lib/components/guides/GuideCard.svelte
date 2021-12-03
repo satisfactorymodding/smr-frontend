@@ -48,7 +48,8 @@
     on:mouseover={() => (hovering = true)}
     on:mouseleave={() => (hovering = false)}
     on:focus={() => (hovering = true)}
-    on:focusout={() => (hovering = false)}>
+    on:focusout={() => (hovering = false)}
+  >
     <div class="top grid grid-flow-col gap-4">
       <div class="shadowed">
         <img bind:this={logoElement} crossorigin="anonymous" src={logo} alt="{guide.name} Logo" />
@@ -56,7 +57,8 @@
       <div>
         <div>
           <span class:text-gray-50={!light} class:text-gray-800={light && shouldExpand} class="text-xl"
-            >{guide.name}</span>
+            >{guide.name}</span
+          >
         </div>
         <div class:text-gray-50={!light} class:text-gray-800={light && shouldExpand} class="text-sm">
           <span><Icon icon={eyeIcon} inline={true} class="inline-block" /> {guide.views}</span>
@@ -67,7 +69,8 @@
       <div class="expanded grid grid-flow-row content-between gap-3">
         <div>
           <span class:text-gray-50={!light} class:text-gray-800={light && shouldExpand} class="text-base"
-            >{guide.short_description}</span>
+            >{guide.short_description}</span
+          >
         </div>
         <div class="grid grid-flow-col gap-4">
           <a href="{base}/guide/{guide.id}/">

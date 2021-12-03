@@ -78,20 +78,24 @@
         <div class="grid grid-flow-col gap-4">
           <button
             class="py-1 px-4 rounded text-base bg-green-600 text-center cursor-pointer"
-            on:click={() => approveVersion(version.id)}>
+            on:click={() => approveVersion(version.id)}
+          >
             Approve
           </button>
           <button
             class="py-1 px-4 rounded text-base bg-red-600 text-center cursor-pointer"
-            on:click={() => denyVersion(version.id)}>
+            on:click={() => denyVersion(version.id)}
+          >
             Deny
           </button>
           <a
             href={API_REST + '/mod/' + version.mod_id + '/versions/' + version.id + '/download'}
-            class="py-1 px-4 rounded text-base bg-yellow-600 text-center cursor-pointer">Download</a>
+            class="py-1 px-4 rounded text-base bg-yellow-600 text-center cursor-pointer">Download</a
+          >
           <a
             href={base + '/mod/' + version.mod_id + '/version/' + version.id}
-            class="py-1 px-4 rounded text-base bg-blue-500 text-center cursor-pointer">View</a>
+            class="py-1 px-4 rounded text-base bg-blue-500 text-center cursor-pointer">View</a
+          >
         </div>
       </div>
     {/each}

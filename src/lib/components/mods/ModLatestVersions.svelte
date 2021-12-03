@@ -35,13 +35,15 @@
         </div>
         <div class="grid grid-flow-row">
           <a href="{base}/mod/{modId}/version/{latestVersions[stability].id}/" class="text-yellow-500 underline"
-            >Version {latestVersions[stability].version}</a>
+            >Version {latestVersions[stability].version}</a
+          >
           <div>{latestVersions[stability].created_at}</div>
         </div>
         <div class="text-3xl w-14 h-14 p-2.5">
           <a
             href={API_REST + '/mod/' + modId + '/versions/' + latestVersions[stability].id + '/download'}
-            class="text-yellow-500 underline">
+            class="text-yellow-500 underline"
+          >
             <Icon icon={downloadIcon} inline={true} class="inline-block" />
           </a>
         </div>

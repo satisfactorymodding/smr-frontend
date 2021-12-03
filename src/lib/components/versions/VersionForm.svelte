@@ -134,7 +134,8 @@
         type="submit"
         {disabled}
         value={submitText}
-        class="px-4 py-2 rounded text-base bg-blue-500 cursor-pointer disabled:opacity-50" />
+        class="px-4 py-2 rounded text-base bg-blue-500 cursor-pointer disabled:opacity-50"
+      />
     </div>
   </div>
 </form>

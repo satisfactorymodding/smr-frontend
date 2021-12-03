@@ -78,7 +78,8 @@
           name="avatar"
           type="file"
           accept="image/png,image/jpeg,image/gif"
-          placeholder="Avatar" />
+          placeholder="Avatar"
+        />
         <ValidationMessage for="avatar" let:messages={message}>
           <span class="validation-message">{message || ''}</span>
         </ValidationMessage>

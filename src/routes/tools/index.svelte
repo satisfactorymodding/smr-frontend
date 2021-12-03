@@ -7,8 +7,7 @@
     {
       name: 'Save Editor',
       author: 'Goz3rr',
-      logo:
-        'https://cdn.jsdelivr.net/gh/Goz3rr/SatisfactorySaveEditor@6958101e3f2c0e50ba92df798ebefe4e6bdd4eb5/Reference%20Materials/SatisfactorySaveEditorLogo.png',
+      logo: 'https://cdn.jsdelivr.net/gh/Goz3rr/SatisfactorySaveEditor@6958101e3f2c0e50ba92df798ebefe4e6bdd4eb5/Reference%20Materials/SatisfactorySaveEditorLogo.png',
       description:
         'A work in progress save editor for Satisfactory. Consists of both a save parser and an application for viewing and editing the parsed data.',
       link: 'https://github.com/Goz3rr/SatisfactorySaveEditor'
@@ -38,8 +37,7 @@
     {
       name: 'SatisGraphtory',
       author: 'tehalexf and thinkaliker',
-      logo:
-        'https://cdn.jsdelivr.net/gh/rhocode/rhocode.github.io@4713b4887e8821f1482de7af4ae32fb6a4b2bcaf/img/satoolsfactory_icons/dot.png',
+      logo: 'https://cdn.jsdelivr.net/gh/rhocode/rhocode.github.io@4713b4887e8821f1482de7af4ae32fb6a4b2bcaf/img/satoolsfactory_icons/dot.png',
       description:
         'This is a factory planner/optimizer/analyzer tool for factories old and new! Simulate resource chains, factory layouts, and more!',
       link: 'https://satisgraphtory.com/'
@@ -95,7 +93,8 @@
   <title>Tools - SMR</title>
   <MetaDescriptors
     description="A collection of useful tools for Satisfactory, such as recipe calculators and save editors"
-    title="Tools" />
+    title="Tools"
+  />
 </svelte:head>
 
 <h1 class="text-4xl my-4 font-bold">Tools</h1>

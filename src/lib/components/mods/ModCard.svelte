@@ -60,15 +60,16 @@
     on:mouseover={() => (hovering = true)}
     on:mouseleave={() => (hovering = false)}
     on:focus={() => (hovering = true)}
-    on:focusout={() => (hovering = false)}>
+    on:focusout={() => (hovering = false)}
+  >
     <div class="top grid grid-flow-col gap-4">
       <div class="shadowed">
         <img bind:this={logoElement} crossorigin="anonymous" src={logo} alt="{mod.name} Logo" />
       </div>
       <div>
         <div>
-          <span class:text-gray-50={!light} class:text-gray-800={light && shouldExpand} class="text-xl"
-            >{mod.name}</span>
+          <span class:text-gray-50={!light} class:text-gray-800={light && shouldExpand} class="text-xl">{mod.name}</span
+          >
         </div>
         <div class:text-gray-50={!light} class:text-gray-800={light && shouldExpand} class="text-sm">
           <span><Icon icon={eyeIcon} inline={true} class="inline-block" /> {mod.views}</span>
@@ -80,7 +81,8 @@
       <div class="expanded grid grid-flow-row content-between gap-3">
         <div>
           <span class:text-gray-50={!light} class:text-gray-800={light && shouldExpand} class="text-base"
-            >{mod.short_description}</span>
+            >{mod.short_description}</span
+          >
         </div>
         <div class="grid grid-flow-col gap-4">
           <a href="{base}/mod/{mod.id}/">

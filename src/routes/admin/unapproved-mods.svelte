@@ -77,16 +77,19 @@
         <div class="grid grid-flow-col gap-4">
           <button
             class="py-1 px-4 rounded text-base bg-green-600 text-center cursor-pointer"
-            on:click={() => approveMod(mod.id)}>
+            on:click={() => approveMod(mod.id)}
+          >
             Approve
           </button>
           <button
             class="py-1 px-4 rounded text-base bg-red-600 text-center cursor-pointer"
-            on:click={() => denyMod(mod.id)}>
+            on:click={() => denyMod(mod.id)}
+          >
             Deny
           </button>
           <a href={base + '/mod/' + mod.id} class="py-1 px-4 rounded text-base bg-blue-500 text-center cursor-pointer"
-            >View</a>
+            >View</a
+          >
         </div>
       </div>
     {/each}

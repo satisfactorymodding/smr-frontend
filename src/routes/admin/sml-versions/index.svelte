@@ -76,12 +76,14 @@
         <div class="grid grid-flow-col gap-4">
           <button
             class="py-1 px-4 rounded text-base bg-red-600 text-center cursor-pointer"
-            on:click={() => deleteVersion(version.id)}>
+            on:click={() => deleteVersion(version.id)}
+          >
             Delete
           </button>
           <a
             href={base + '/admin/sml-versions/' + version.id + '/edit'}
-            class="py-1 px-4 rounded text-base bg-blue-500 text-center cursor-pointer">Edit</a>
+            class="py-1 px-4 rounded text-base bg-blue-500 text-center cursor-pointer">Edit</a
+          >
         </div>
       </div>
     {/each}

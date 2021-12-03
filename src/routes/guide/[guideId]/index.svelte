@@ -82,7 +82,8 @@
         {#if canUserEdit}
           <button
             class="py-2 px-4 rounded text-base bg-yellow-600"
-            on:click={() => goto(base + '/guide/' + guideId + '/edit')}>
+            on:click={() => goto(base + '/guide/' + guideId + '/edit')}
+          >
             Edit
           </button>
           <button class="py-2 px-4 rounded text-base bg-red-500" on:click={() => deleteDialogOpen.set(true)}>

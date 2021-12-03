@@ -70,7 +70,8 @@
   {#if !$version.fetching && !$version.error && $version.data.getVersion}
     <MetaDescriptors
       description="Information for mod version {$version.data.getVersion.mod.name} {$version.data.getVersion.version}"
-      title="Mod version {$version.data.getVersion.mod.name} {$version.data.getVersion.version}" />
+      title="Mod version {$version.data.getVersion.mod.name} {$version.data.getVersion.version}"
+    />
   {/if}
 </svelte:head>
 
@@ -91,7 +92,8 @@
           {#if canUserEdit}
             <button
               class="py-2 px-4 rounded text-base bg-yellow-600"
-              on:click={() => goto(base + '/mod/' + modId + '/version/' + versionId + '/edit')}>
+              on:click={() => goto(base + '/mod/' + modId + '/version/' + versionId + '/edit')}
+            >
               Edit
             </button>
             <button class="py-2 px-4 rounded text-base bg-red-500" on:click={() => deleteDialogOpen.set(true)}>
@@ -101,7 +103,8 @@
 
           <a
             href={API_REST + '/mod/' + modId + '/versions/' + versionId + '/download'}
-            class="py-2 px-4 rounded text-base bg-green-600 text-center">Download</a>
+            class="py-2 px-4 rounded text-base bg-green-600 text-center">Download</a
+          >
           <!-- TODO SMM -->
           <a href={base} class="py-2 px-4 rounded text-base bg-blue-600 text-center">
             <span>Install</span>

@@ -38,7 +38,8 @@
         class="base-input"
         name="short_description"
         type="text"
-        placeholder="Short Description" />
+        placeholder="Short Description"
+      />
       <ValidationMessage for="short_description" let:messages={message}>
         <span class="validation-message">{message || ''}</span>
       </ValidationMessage>

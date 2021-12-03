@@ -58,7 +58,8 @@
   {#if !$version.fetching && !$version.error && $version.data.getVersion}
     <MetaDescriptors
       description="Editing mod version {$version.data.getVersion.mod.name} {$version.data.getVersion.version}"
-      title="Edit mod version {$version.data.getVersion.mod.name} {$version.data.getVersion.version}" />
+      title="Edit mod version {$version.data.getVersion.mod.name} {$version.data.getVersion.version}"
+    />
   {/if}
 </svelte:head>
 
@@ -69,7 +70,13 @@
 {:else if $version.error}
   <p>Oh no... {$version.error.message}</p>
 {:else}
-  <VersionForm {onSubmit} {initialValues} editing={true} submitText="Save" />
+  <VersionForm
+    {onSubmit}
+    {initialValues}
+    modReference={$version.data.getVersion.mod.mod_reference}
+    editing={true}
+    submitText="Save"
+  />
 {/if}
 
 <Toast bind:running={errorToast}>

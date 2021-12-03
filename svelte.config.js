@@ -52,7 +52,8 @@ const config = {
       },
       mode: mode,
       build: {
-        sourcemap: true
+        sourcemap: true,
+        target: ['es2020']
       }
     },
 

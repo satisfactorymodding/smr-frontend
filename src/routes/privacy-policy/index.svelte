@@ -71,7 +71,8 @@
     pages, and possibly the number of clicks. These are not linked to any information that is personally identifiable.
     The purpose of the information is for analyzing trends, administering the site, tracking users' movement on the
     website, and gathering demographic information. Our Privacy Policy was created with the help of the <a
-      href="https://www.privacypolicygenerator.info">Privacy Policy Generator</a>
+      href="https://www.privacypolicygenerator.info">Privacy Policy Generator</a
+    >
     and the <a href="https://www.privacypolicytemplate.net/">Privacy Policy Template</a>.
   </p>
 

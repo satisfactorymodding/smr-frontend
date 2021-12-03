@@ -15,7 +15,7 @@
 </script>
 
 <script lang="ts">
-  import alertIcon from '@iconify/icons-mdi/alert.js';
+  import alertIcon from '@iconify/icons-mdi/alert';
   import Icon from '@iconify/svelte';
   import ModCard from '$lib/components/mods/ModCard.svelte';
   import { assets, base } from '$app/paths';
@@ -45,7 +45,8 @@
 
 <div
   class="h-screen bg-center bg-cover fold grid"
-  style={'background-image: url("' + assets + '/assets/header_bg_image.png")'}>
+  style={'background-image: url("' + assets + '/assets/header_bg_image.png")'}
+>
   <MenuBar />
   <div class="text-center self-center">
     <div class="header text-6xl">

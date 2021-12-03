@@ -20,7 +20,8 @@
     class="bg-transparent w-full focus:outline-none text-gray-300"
     placeholder="An awesome mod..."
     on:keypress={onKeyPress}
-    bind:value={search} />
+    bind:value={search}
+  />
   <!-- TODO Tags/Rewards -->
   <!--  <a class="text-gray-400 cursor-pointer" href={base}>See all tags / See all rewards</a>-->
 </div>

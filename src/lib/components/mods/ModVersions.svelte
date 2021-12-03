@@ -55,10 +55,12 @@
         <div class="grid grid-flow-col gap-4">
           <a
             href={base + '/mod/' + modId + '/version/' + version.id}
-            class="py-1 px-4 rounded text-base bg-blue-500 text-center">View</a>
+            class="py-1 px-4 rounded text-base bg-blue-500 text-center">View</a
+          >
           <a
             href={API_REST + '/mod/' + modId + '/versions/' + version.id + '/download'}
-            class="py-1 px-4 rounded text-base bg-green-600 text-center">Download</a>
+            class="py-1 px-4 rounded text-base bg-green-600 text-center">Download</a
+          >
           <!-- TODO SMM -->
           <a href={base} class="py-1 px-4 rounded text-base bg-yellow-600 text-center">
             <span>Install</span>

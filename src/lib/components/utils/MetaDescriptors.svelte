@@ -5,9 +5,9 @@
   let baseUrl = $page.host;
   let route = $page.path;
 
-  export let description: string;
-  export let image: string;
-  export let title: string;
+  export let description: string | undefined = undefined;
+  export let image: string | undefined = undefined;
+  export let title: string | undefined = undefined;
 </script>
 
 {#if description}

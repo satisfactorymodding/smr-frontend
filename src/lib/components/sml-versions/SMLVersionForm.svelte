@@ -38,7 +38,8 @@
         class="base-input"
         name="satisfactory_version"
         type="number"
-        placeholder="Satisfactory Version" />
+        placeholder="Satisfactory Version"
+      />
       <ValidationMessage for="satisfactory_version" let:messages={message}>
         <span class="validation-message">{message || ''}</span>
       </ValidationMessage>
@@ -51,7 +52,8 @@
         class="base-input"
         name="bootstrap_version"
         type="text"
-        placeholder="Bootstrap Version" />
+        placeholder="Bootstrap Version"
+      />
       <ValidationMessage for="bootstrap_version" let:messages={message}>
         <span class="validation-message">{message || ''}</span>
       </ValidationMessage>

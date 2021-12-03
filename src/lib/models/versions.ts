@@ -1,5 +1,5 @@
 import * as zod from 'zod';
-import * as JSZip from 'jszip';
+import JSZip from 'jszip';
 import { validateUPluginJson } from '$lib/utils/uplugin';
 import type { Writable } from 'svelte/store';
 import type { ZodObject, ZodRawShape } from 'zod';
@@ -62,23 +62,26 @@ const validateModZip = async (
   modReference: string
 ): Promise<{ [key: string]: unknown } | VersionMetadata> => {
   const zipper = new JSZip();
-  return zipper
-    .loadAsync(file)
-    .then((zip) => {
-      const uPluginJsonFile = zip.file(modReference + '.uplugin');
-      if (uPluginJsonFile) {
-        return validateUPluginJsonModZip(zip, uPluginJsonFile, modReference);
-      }
+  return (
+    zipper
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      .loadAsync(file as any)
+      .then((zip) => {
+        const uPluginJsonFile = zip.file(modReference + '.uplugin');
+        if (uPluginJsonFile) {
+          return validateUPluginJsonModZip(zip, uPluginJsonFile, modReference);
+        }
 
-      return {
-        message: modReference + '.uplugin missing from mod'
-      };
-    })
-    .catch((err) => {
-      return {
-        message: 'invalid zip/smod file: ' + err
-      };
-    });
+        return {
+          message: modReference + '.uplugin missing from mod'
+        };
+      })
+      .catch((err) => {
+        return {
+          message: 'invalid zip/smod file: ' + err
+        };
+      })
+  );
 };
 
 const validateUPluginJsonModZip = async (

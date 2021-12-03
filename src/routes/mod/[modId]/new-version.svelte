@@ -110,7 +110,8 @@
   {#if !$mod.fetching && !$mod.error && $mod.data.getMod}
     <MetaDescriptors
       description="Creating a new version of mod {$mod.data.getMod.name}"
-      title="New version of mod {$mod.data.getMod.name}" />
+      title="New version of mod {$mod.data.getMod.name}"
+    />
   {/if}
 </svelte:head>
 
@@ -145,7 +146,8 @@
       <div class="overflow-hidden h-2 mb-4 text-xs flex rounded bg-gray-600">
         <div
           style="width: {$uploadPercent.toFixed(0)}%"
-          class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-yellow-600" />
+          class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-yellow-600"
+        />
       </div>
     </div>
   {/if}

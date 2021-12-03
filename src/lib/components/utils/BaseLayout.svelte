@@ -8,7 +8,8 @@
 
 <div
   class="h-screen bg-center bg-cover grid fold"
-  style={'background-image: url("' + assets + '/assets/header_bg_image.png")'}>
+  style={'background-image: url("' + assets + '/assets/header_bg_image.png")'}
+>
   <MenuBar />
   <div class="w-5/6 justify-self-center">
     <LinksBox />

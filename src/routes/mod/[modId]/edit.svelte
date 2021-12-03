@@ -58,7 +58,8 @@
     <MetaDescriptors
       description="Editing mod {$mod.data.getMod.name}"
       title="Edit mod {$mod.data.getMod.name}"
-      image={$mod.data.getMod.logo} />
+      image={$mod.data.getMod.logo}
+    />
   {/if}
 </svelte:head>
 

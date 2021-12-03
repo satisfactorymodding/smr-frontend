@@ -72,7 +72,8 @@
     <MetaDescriptors
       description={$mod.data.getMod.short_description}
       title={$mod.data.getMod.name}
-      image={$mod.data.getMod.logo} />
+      image={$mod.data.getMod.logo}
+    />
   {/if}
 </svelte:head>
 
@@ -89,7 +90,8 @@
         {#if canUserEdit}
           <button
             class="py-2 px-4 rounded text-base bg-yellow-600"
-            on:click={() => goto(base + '/mod/' + modId + '/edit')}>
+            on:click={() => goto(base + '/mod/' + modId + '/edit')}
+          >
             Edit
           </button>
           <button class="py-2 px-4 rounded text-base bg-red-500" on:click={() => deleteDialogOpen.set(true)}>
@@ -97,7 +99,8 @@
           </button>
           <button
             class="py-2 px-4 rounded text-base bg-green-600"
-            on:click={() => goto(base + '/mod/' + modId + '/new-version')}>
+            on:click={() => goto(base + '/mod/' + modId + '/new-version')}
+          >
             New Version
           </button>
         {/if}
