@@ -1,2 +1,2 @@
-import{r as o}from"./singletons-12a22614.js";const n=o,s=async function(o,s){return n.goto(o,s,[])};export{s as g};
+import{r}from"./singletons-12a22614.js";const n=r,g=s;async function s(o,t){return n.goto(o,t,[])}export{g};
 //# sourceMappingURL=navigation-51f4a605.js.map

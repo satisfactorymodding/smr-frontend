@@ -1,2 +1,2 @@
-let t;function a(a){t=a}export{a as i,t as r};
+let i;function r(t){i=t}export{r as i,i as r};
 //# sourceMappingURL=singletons-12a22614.js.map

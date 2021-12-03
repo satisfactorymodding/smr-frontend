@@ -1,2 +1,2 @@
-const a="https://api.ficsit.app",s=a+"/v2/query",t=a+"/v2",p=a+"/v1",e=a+"/swagger/index.html";export{s as A,t as a,p as b,e as c,a as d};
+const s="https://api.ficsit.app",t=s+"/v2/query",A=s+"/v2",a=s+"/v1",P=s+"/swagger/index.html";export{t as A,A as a,a as b,P as c,s as d};
 //# sourceMappingURL=api-82c76902.js.map
