@@ -5,6 +5,9 @@
   import PageControls from '$lib/components/utils/PageControls.svelte';
   import { markdown } from '$lib/utils/markdown';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
+  import Card, { Content } from '@smui/card';
+  import DataTable, { Head, Body, Row, Cell } from '@smui/data-table';
+  import Button from '@smui/button';
 
   let expandedVersions = new Set<string>();
 
@@ -39,66 +42,63 @@
 </svelte:head>
 
 {#if totalVersions}
-  <div class="mt-5 ml-auto flex justify-end">
-    <PageControls totalPages={Math.ceil(totalVersions / perPage)} currentPage={page} />
+  <div class="mb-5 ml-auto flex justify-end">
+    <div>
+      <PageControls totalPages={Math.ceil(totalVersions / perPage)} currentPage={page} />
+    </div>
   </div>
 {/if}
 
-{#if $versions.fetching}
-  <p>Loading...</p>
-{:else if $versions.error}
-  <p>Oh no... {$versions.error.message}</p>
-{:else}
-  <div class="grid grid-cols-6 versions">
-    <!-- Header -->
-    <div>Version</div>
-    <div>Stability</div>
-    <div>Game Version</div>
-    <div>Release Date</div>
-    <div><!-- Buttons --></div>
+<Card>
+  {#if $versions.fetching}
+    <Content>Loading...</Content>
+  {:else if $versions.error}
+    <Content>Oh no... {$versions.error.message}</Content>
+  {:else}
+    <DataTable table$aria-label="People list" style="max-width: 100%;">
+      <Head>
+        <Row>
+          <Cell>Version</Cell>
+          <Cell>Stability</Cell>
+          <Cell>Game Version</Cell>
+          <Cell>Release Date</Cell>
+          <Cell><!-- Buttons --></Cell>
+        </Row>
+      </Head>
+      <Body>
+        {#each $versions.data.getSMLVersions.sml_versions as version}
+          <Row on:click={() => toggleRow(version.id)}>
+            <Cell>{version.version}</Cell>
+            <Cell>{version.stability}</Cell>
+            <Cell>{version.satisfactory_version}</Cell>
+            <!-- TODO Pretty Date -->
+            <Cell>{version.date}</Cell>
+            <Cell>
+              <div class="grid grid-flow-col gap-4">
+                <Button variant="outlined" href={version.link}>View</Button>
+              </div>
+            </Cell>
+          </Row>
 
-    {#each $versions.data.getSMLVersions.sml_versions as version}
-      <div class="contents version-header" on:click={() => toggleRow(version.id)}>
-        <div>{version.version}</div>
-        <div>{version.stability}</div>
-        <div>{version.satisfactory_version}</div>
-        <!-- TODO Pretty Date -->
-        <div>{version.date}</div>
-        <div class="grid grid-flow-col gap-4">
-          <a href={version.link} class="py-1 px-4 rounded text-base bg-blue-500 text-center">View</a>
-        </div>
-      </div>
-
-      {#if expandedVersions.has(version.id)}
-        <div class="col-span-5 p-2 markdown-content">
-          {#await markdown(version.changelog) then changelogRendered}
-            {@html changelogRendered}
-          {/await}
-        </div>
-      {/if}
-    {/each}
-  </div>
-{/if}
+          {#if expandedVersions.has(version.id)}
+            <Row>
+              <Cell colspan={5} class="p-2 markdown-content">
+                {#await markdown(version.changelog) then changelogRendered}
+                  {@html changelogRendered}
+                {/await}
+              </Cell>
+            </Row>
+          {/if}
+        {/each}
+      </Body>
+    </DataTable>
+  {/if}
+</Card>
 
 {#if totalVersions}
   <div class="mt-5 ml-auto flex justify-end">
-    <PageControls totalPages={Math.ceil(totalVersions / perPage)} currentPage={page} />
+    <div>
+      <PageControls totalPages={Math.ceil(totalVersions / perPage)} currentPage={page} />
+    </div>
   </div>
 {/if}
-
-<style lang="postcss">
-  .versions {
-    grid-template-columns: auto auto auto max-content auto;
-
-    & .version-header {
-      & > div {
-        @apply border-t-2 border-white p-4;
-      }
-
-      &:hover > div {
-        @apply cursor-pointer;
-        background: rgba(255, 255, 255, 0.25);
-      }
-    }
-  }
-</style>

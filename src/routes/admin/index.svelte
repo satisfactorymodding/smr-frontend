@@ -1,6 +1,7 @@
 <script>
   import { base } from '$app/paths';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
+  import Card, { Content } from '@smui/card';
 </script>
 
 <svelte:head>
@@ -9,17 +10,21 @@
 
 <h1>Admin Panel</h1>
 
-<a href="{base}/admin/unapproved-mods">
-  <h2>Unapproved Mods</h2>
-</a>
+<Card>
+  <Content>
+    <a href="{base}/admin/unapproved-mods">
+      <h2>Unapproved Mods</h2>
+    </a>
 
-<a href="{base}/admin/unapproved-versions">
-  <h2>Unapproved Versions</h2>
-</a>
+    <a href="{base}/admin/unapproved-versions">
+      <h2>Unapproved Versions</h2>
+    </a>
 
-<a href="{base}/admin/sml-versions">
-  <h2>SML Versions</h2>
-</a>
+    <a href="{base}/admin/sml-versions">
+      <h2>SML Versions</h2>
+    </a>
+  </Content>
+</Card>
 
 <style lang="postcss">
   h1 {

@@ -6,6 +6,9 @@
   import { API_REST } from '$lib/core';
   import { base } from '$app/paths';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
+  import Card, { Content } from '@smui/card';
+  import DataTable, { Head, Body, Row, Cell } from '@smui/data-table';
+  import Button from '@smui/button';
 
   // TODO Selectable
   const perPage = 20;
@@ -52,74 +55,59 @@
 </svelte:head>
 
 {#if totalVersions}
-  <div class="mt-5 ml-auto flex justify-end">
-    <PageControls totalPages={Math.ceil(totalVersions / perPage)} currentPage={page} />
+  <div class="mb-5 ml-auto flex justify-end">
+    <div>
+      <PageControls totalPages={Math.ceil(totalVersions / perPage)} currentPage={page} />
+    </div>
   </div>
 {/if}
 
-{#if $versions.fetching}
-  <p>Loading...</p>
-{:else if $versions.error}
-  <p>Oh no... {$versions.error.message}</p>
-{:else}
-  <div class="grid grid-cols-6 itemList">
-    <!-- Header -->
-    <div>Mod</div>
-    <div>Version</div>
-    <div>Release Date</div>
-    <div><!-- Buttons --></div>
-
-    {#each $versions.data.getUnapprovedVersions.versions as version}
-      <div class="contents itemHeader">
-        <div>{version.mod.name}</div>
-        <div>{version.version}</div>
-        <!-- TODO Pretty Date -->
-        <div>{version.created_at}</div>
-        <div class="grid grid-flow-col gap-4">
-          <button
-            class="py-1 px-4 rounded text-base bg-green-600 text-center cursor-pointer"
-            on:click={() => approveVersion(version.id)}
-          >
-            Approve
-          </button>
-          <button
-            class="py-1 px-4 rounded text-base bg-red-600 text-center cursor-pointer"
-            on:click={() => denyVersion(version.id)}
-          >
-            Deny
-          </button>
-          <a
-            href={API_REST + '/mod/' + version.mod_id + '/versions/' + version.id + '/download'}
-            class="py-1 px-4 rounded text-base bg-yellow-600 text-center cursor-pointer">Download</a
-          >
-          <a
-            href={base + '/mod/' + version.mod_id + '/version/' + version.id}
-            class="py-1 px-4 rounded text-base bg-blue-500 text-center cursor-pointer">View</a
-          >
-        </div>
-      </div>
-    {/each}
-  </div>
-{/if}
+<Card>
+  {#if $versions.fetching}
+    <Content>Loading...</Content>
+  {:else if $versions.error}
+    <Content>Oh no... {$versions.error.message}</Content>
+  {:else}
+    <DataTable table$aria-label="People list" style="max-width: 100%;">
+      <Head>
+        <Row>
+          <Cell>Mod</Cell>
+          <Cell>Version</Cell>
+          <Cell>Release Date</Cell>
+          <Cell><!-- Buttons --></Cell>
+        </Row>
+      </Head>
+      <Body>
+        {#each $versions.data.getUnapprovedVersions.versions as version}
+          <Row>
+            <Cell>{version.mod.name}</Cell>
+            <Cell>{version.version}</Cell>
+            <!-- TODO Pretty Date -->
+            <Cell>{version.created_at}</Cell>
+            <Cell>
+              <div class="grid grid-flow-col gap-4">
+                <Button variant="outlined" on:click={() => approveVersion(version.id)}>Approve</Button>
+                <Button variant="outlined" on:click={() => denyVersion(version.id)}>Deny</Button>
+                <Button
+                  variant="outlined"
+                  href={API_REST + '/mod/' + version.mod_id + '/versions/' + version.id + '/download'}
+                >
+                  Download
+                </Button>
+                <Button variant="outlined" href={base + '/mod/' + version.mod_id + '/version/' + version.id}>
+                  View
+                </Button>
+              </div>
+            </Cell>
+          </Row>
+        {/each}
+      </Body>
+    </DataTable>
+  {/if}
+</Card>
 
 {#if totalVersions}
   <div class="mt-5 ml-auto flex justify-end">
     <PageControls totalPages={Math.ceil(totalVersions / perPage)} currentPage={page} />
   </div>
 {/if}
-
-<style lang="postcss">
-  .itemList {
-    grid-template-columns: auto auto max-content auto;
-
-    & .itemHeader {
-      & > div {
-        @apply border-t-2 border-white p-4;
-      }
-
-      &:hover > div {
-        background: rgba(255, 255, 255, 0.25);
-      }
-    }
-  }
-</style>

@@ -4,6 +4,8 @@
   import { GetGuideDocument } from '$lib/generated';
   import { loadWaitForNoFetch } from '$lib/utils/gql';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
+  import Card, { Content } from '@smui/card';
+  import Button from '@smui/button';
 
   const guideQ = operationStore(GetGuideDocument, { guide: undefined });
 
@@ -75,27 +77,24 @@
   <p>Oh no... {$guide.error.message}</p>
 {:else if $guide.data.getGuide}
   <div class="grid gap-8 grid-auto-max">
-    <div class="grid grid-cols-1 auto-rows-min gap-8">
+    <div class="grid grid-cols-1 auto-rows-min gap-4">
       <div class="grid grid-flow-col grid-auto-max h-auto gap-4 items-center">
         <h1 class="text-4xl my-4 font-bold">{$guide.data.getGuide.name}</h1>
 
         {#if canUserEdit}
-          <button
-            class="py-2 px-4 rounded text-base bg-yellow-600"
-            on:click={() => goto(base + '/guide/' + guideId + '/edit')}
-          >
-            Edit
-          </button>
-          <button class="py-2 px-4 rounded text-base bg-red-500" on:click={() => deleteDialogOpen.set(true)}>
-            Delete
-          </button>
+          <Button variant="outlined" on:click={() => goto(base + '/guide/' + guideId + '/edit')}>Edit</Button>
+          <Button variant="outlined" on:click={() => deleteDialogOpen.set(true)}>Delete</Button>
         {/if}
       </div>
-      <div class="markdown-content">
-        {#await markdown($guide.data.getGuide.guide) then guideRendered}
-          <p>{@html guideRendered}</p>
-        {/await}
-      </div>
+      <Card>
+        <Content>
+          <div class="markdown-content">
+            {#await markdown($guide.data.getGuide.guide) then guideRendered}
+              <p>{@html guideRendered}</p>
+            {/await}
+          </div>
+        </Content>
+      </Card>
     </div>
     <div class="grid grid-cols-1 auto-rows-min gap-8">
       <GuideInfo guide={$guide.data.getGuide} />
@@ -112,7 +111,7 @@
       <button class="py-1 px-4 rounded text-base bg-yellow-600" on:click={() => deleteDialogOpen.set(false)}>
         Cancel
       </button>
-      <button class="py-1 px-4 rounded text-base bg-red-500" on:click={() => deleteGuideFn()}> Delete </button>
+      <button class="py-1 px-4 rounded text-base bg-red-500" on:click={() => deleteGuideFn()}> Delete</button>
     </div>
   </Dialog>
 

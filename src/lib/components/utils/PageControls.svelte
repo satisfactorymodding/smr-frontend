@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { Writable } from 'svelte/store';
+  import Button from '@smui/button';
 
   export let startPage = 1;
   export let totalPages: number;
@@ -7,8 +8,8 @@
 </script>
 
 {#if $currentPage > startPage}
-  <button class="page-button" on:click={() => currentPage.set(startPage)}> &laquo; </button>
-  <button class="page-button" on:click={() => currentPage.set($currentPage - 1)}> &lt; </button>
+  <Button variant="outlined" on:click={() => currentPage.set(startPage)}>&laquo;</Button>
+  <Button variant="outlined" on:click={() => currentPage.set($currentPage - 1)}>&lt;</Button>
 {/if}
 
 {#if $currentPage > startPage + 1}
@@ -16,19 +17,19 @@
 {/if}
 
 {#if $currentPage > startPage}
-  <button class="page-button" on:click={() => currentPage.set($currentPage - 1)}>
+  <Button variant="outlined" on:click={() => currentPage.set($currentPage - 1)}>
     {$currentPage - 1}
-  </button>
+  </Button>
 {/if}
 
-<button class="py-1 px-4 rounded border border-gray-50 mr-2 cursor-default">
+<Button variant="unelevated">
   {$currentPage}
-</button>
+</Button>
 
 {#if $currentPage < totalPages}
-  <button class="page-button" on:click={() => currentPage.set($currentPage + 1)}>
+  <Button variant="outlined" on:click={() => currentPage.set($currentPage + 1)}>
     {$currentPage + 1}
-  </button>
+  </Button>
 {/if}
 
 {#if $currentPage < totalPages - 1}
@@ -36,12 +37,6 @@
 {/if}
 
 {#if $currentPage < totalPages}
-  <button class="page-button" on:click={() => currentPage.set($currentPage + 1)}> &gt; </button>
-  <button class="page-button" on:click={() => currentPage.set(totalPages)}> &raquo; </button>
+  <Button variant="outlined" on:click={() => currentPage.set($currentPage + 1)}>&gt;</Button>
+  <Button variant="outlined" on:click={() => currentPage.set(totalPages)}>&raquo;</Button>
 {/if}
-
-<style lang="postcss">
-  .page-button {
-    @apply py-1 px-4 rounded border border-gray-500 mr-2 hover:border-gray-50;
-  }
-</style>

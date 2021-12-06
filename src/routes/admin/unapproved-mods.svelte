@@ -5,6 +5,9 @@
   import PageControls from '$lib/components/utils/PageControls.svelte';
   import { base } from '$app/paths';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
+  import Card, { Content } from '@smui/card';
+  import DataTable, { Head, Body, Row, Cell } from '@smui/data-table';
+  import Button from '@smui/button';
 
   // TODO Selectable
   const perPage = 20;
@@ -51,69 +54,53 @@
 </svelte:head>
 
 {#if totalMods}
-  <div class="mt-5 ml-auto flex justify-end">
-    <PageControls totalPages={Math.ceil(totalMods / perPage)} currentPage={page} />
+  <div class="mb-5 ml-auto flex justify-end">
+    <div>
+      <PageControls totalPages={Math.ceil(totalMods / perPage)} currentPage={page} />
+    </div>
   </div>
 {/if}
 
-{#if $mods.fetching}
-  <p>Loading...</p>
-{:else if $mods.error}
-  <p>Oh no... {$mods.error.message}</p>
-{:else}
-  <div class="grid grid-cols-6 itemList">
-    <!-- Header -->
-    <div>Mod</div>
-    <div>Description</div>
-    <div>Release Date</div>
-    <div><!-- Buttons --></div>
-
-    {#each $mods.data.getUnapprovedMods.mods as mod}
-      <div class="contents itemHeader">
-        <div>{mod.name}</div>
-        <div>{mod.short_description}</div>
-        <!-- TODO Pretty Date -->
-        <div>{mod.created_at}</div>
-        <div class="grid grid-flow-col gap-4">
-          <button
-            class="py-1 px-4 rounded text-base bg-green-600 text-center cursor-pointer"
-            on:click={() => approveMod(mod.id)}
-          >
-            Approve
-          </button>
-          <button
-            class="py-1 px-4 rounded text-base bg-red-600 text-center cursor-pointer"
-            on:click={() => denyMod(mod.id)}
-          >
-            Deny
-          </button>
-          <a href={base + '/mod/' + mod.id} class="py-1 px-4 rounded text-base bg-blue-500 text-center cursor-pointer"
-            >View</a
-          >
-        </div>
-      </div>
-    {/each}
-  </div>
-{/if}
+<Card>
+  {#if $mods.fetching}
+    <Content>Loading...</Content>
+  {:else if $mods.error}
+    <Content>Oh no... {$mods.error.message}</Content>
+  {:else}
+    <DataTable table$aria-label="People list" style="max-width: 100%;">
+      <Head>
+        <Row>
+          <Cell>Mod</Cell>
+          <Cell>Description</Cell>
+          <Cell>Release Date</Cell>
+          <Cell><!-- Buttons --></Cell>
+        </Row>
+      </Head>
+      <Body>
+        {#each $mods.data.getUnapprovedMods.mods as mod}
+          <Row>
+            <Cell>{mod.name}</Cell>
+            <Cell>{mod.short_description}</Cell>
+            <!-- TODO Pretty Date -->
+            <Cell>{mod.created_at}</Cell>
+            <Cell>
+              <div class="grid grid-flow-col gap-4">
+                <Button variant="outlined" on:click={() => approveMod(mod.id)}>Approve</Button>
+                <Button variant="outlined" on:click={() => denyMod(mod.id)}>Deny</Button>
+                <Button variant="outlined" href={base + '/mod/' + mod.id}>View</Button>
+              </div>
+            </Cell>
+          </Row>
+        {/each}
+      </Body>
+    </DataTable>
+  {/if}
+</Card>
 
 {#if totalMods}
   <div class="mt-5 ml-auto flex justify-end">
-    <PageControls totalPages={Math.ceil(totalMods / perPage)} currentPage={page} />
+    <div>
+      <PageControls totalPages={Math.ceil(totalMods / perPage)} currentPage={page} />
+    </div>
   </div>
 {/if}
-
-<style lang="postcss">
-  .itemList {
-    grid-template-columns: auto auto max-content auto;
-
-    & .itemHeader {
-      & > div {
-        @apply border-t-2 border-white p-4;
-      }
-
-      &:hover > div {
-        background: rgba(255, 255, 255, 0.25);
-      }
-    }
-  }
-</style>

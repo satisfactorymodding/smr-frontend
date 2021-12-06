@@ -14,6 +14,10 @@ module.exports = {
       colors: {
         gray: colors.trueGray,
         lime: colors.lime,
+      },
+      screens: {
+        'fhd': '1920px',
+        '3xl': '2100px'
       }
     }
   },

@@ -4,6 +4,7 @@
   import { GetUserDocument } from '$lib/generated';
   import { loadWaitForNoFetch } from '$lib/utils/gql';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
+  import Button from '@smui/button';
 
   const userQ = operationStore(GetUserDocument, { user: undefined });
 
@@ -57,16 +58,16 @@
           <a href="{base}/settings" class="py-2 px-4 rounded text-base bg-yellow-600">Settings</a>
         {/if}
 
-        <button class="py-2 px-4 rounded text-base bg-blue-500" on:click={() => (guidesTab = !guidesTab)}>
+        <Button variant="outlined" on:click={() => (guidesTab = !guidesTab)}>
           {#if !guidesTab}
             Guides
           {:else}
             Mods
           {/if}
-        </button>
+        </Button>
       </div>
       {#if !guidesTab}
-        <div class="grid 2xl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-2 grid-cols-1 gap-4">
+        <div class="grid 3xl:grid-cols-3 2xl:grid-cols-2 grid-cols-1 gap-4">
           {#each $user.data.getUser.mods as mod}
             <ModCard mod={mod.mod} />
           {/each}
@@ -77,7 +78,7 @@
           {/if}
         </div>
       {:else}
-        <div class="grid 2xl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-2 grid-cols-1 gap-4">
+        <div class="grid 3xl:grid-cols-3 2xl:grid-cols-2 grid-cols-1 gap-4">
           {#each $user.data.getUser.guides as guide}
             <GuideCard {guide} logo={$user.data.getUser.avatar} />
           {/each}

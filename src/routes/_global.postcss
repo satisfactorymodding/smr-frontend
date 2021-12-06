@@ -2,11 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+html,
 body {
-  @apply antialiased dark:text-gray-50 dark:bg-gray-900;
-  @apply leading-normal tracking-normal text-base font-normal break-words;
-  @apply text-base lg:text-xl;
   font-family: 'Atkinson Hyperlegible', Helvetica Neue, sans-serif;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
 }
 
 .markdown-content {
@@ -119,14 +120,6 @@ body {
 
 .h-fit {
   height: fit-content;
-}
-
-.base-input {
-  @apply w-full py-2 px-4 bg-gray-700 text-white placeholder-gray-400 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-yellow-500;
-}
-
-.validation-message {
-  @apply text-red-500 font-bold text-sm;
 }
 
 .markdownEditor {

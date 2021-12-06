@@ -4,6 +4,7 @@
   import { GetModDocument } from '$lib/generated';
   import { loadWaitForNoFetch } from '$lib/utils/gql';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
+  import Button from '@smui/button';
 
   const modQ = operationStore(GetModDocument, { mod: undefined });
 
@@ -83,35 +84,23 @@
   <p>Oh no... {$mod.error.message}</p>
 {:else if $mod.data.getMod}
   <div class="grid gap-8 grid-auto-max">
-    <div class="grid grid-cols-1 auto-rows-min gap-8">
+    <div class="grid grid-cols-1 auto-rows-min gap-4">
       <div class="grid grid-flow-col grid-auto-max h-auto gap-4 items-center">
         <h1 class="text-4xl my-4 font-bold">{$mod.data.getMod.name}</h1>
 
         {#if canUserEdit}
-          <button
-            class="py-2 px-4 rounded text-base bg-yellow-600"
-            on:click={() => goto(base + '/mod/' + modId + '/edit')}
-          >
-            Edit
-          </button>
-          <button class="py-2 px-4 rounded text-base bg-red-500" on:click={() => deleteDialogOpen.set(true)}>
-            Delete
-          </button>
-          <button
-            class="py-2 px-4 rounded text-base bg-green-600"
-            on:click={() => goto(base + '/mod/' + modId + '/new-version')}
-          >
-            New Version
-          </button>
+          <Button variant="outlined" on:click={() => goto(base + '/mod/' + modId + '/edit')}>Edit</Button>
+          <Button variant="outlined" on:click={() => deleteDialogOpen.set(true)}>Delete</Button>
+          <Button variant="outlined" on:click={() => goto(base + '/mod/' + modId + '/new-version')}>New Version</Button>
         {/if}
 
-        <button class="py-2 px-4 rounded text-base bg-blue-500" on:click={() => (versionsTab = !versionsTab)}>
+        <Button variant="outlined" on:click={() => (versionsTab = !versionsTab)}>
           {#if !versionsTab}
             Versions
           {:else}
             Description
           {/if}
-        </button>
+        </Button>
       </div>
       {#if !versionsTab}
         <ModDescription mod={$mod.data.getMod} />

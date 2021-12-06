@@ -2,6 +2,7 @@
   import { markdown } from '$lib/utils/markdown';
   import { validateUPluginJson } from '$lib/utils/uplugin';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
+  import Card, { Content } from '@smui/card';
 
   const exampleUPluginJson =
     '```json\n' +
@@ -206,7 +207,7 @@ Inline \`code\` has \`back-ticks around\` it.
 
 Blocks of code are either fenced by lines with three back-ticks <code>\`\`\`</code>, or are indented with four spaces. I recommend only using the fenced code blocks -- they're easier and only they support syntax highlighting.
 
-<pre lang="no-highlight"><code>\`\`\`javascript
+<pre lang='no-highlight'><code>\`\`\`javascript
 var s = "JavaScript syntax highlighting";
 alert(s);
 \`\`\`
@@ -396,51 +397,56 @@ This line is way far down
 </svelte:head>
 
 <div class="grid grid-flow-row gap-4">
-  <div class="grid gap-4 gridLayout">
-    <div>
-      <h3 class="text-2xl my-4 font-bold">data.json format</h3>
-      <p class="text-base my-5">
-        The mod zip structure is very simple. The current requirements are that there is a
-        <strong>data.json</strong> that follows the format below.
-      </p>
-      <div class="markdown-content">
-        {#await markdown(exampleUPluginJson) then exampleUPluginJsonRendered}
-          {@html exampleUPluginJsonRendered}
-        {/await}
-      </div>
-    </div>
-    <div>
-      <h3 class="text-2xl my-4 font-bold">Validate your &lt;mod&gt;.uplugin</h3>
-      <textarea placeholder="enter your <mod>.uplugin" rows="23" class="markdownEditor" bind:value={uPluginJsonInput} />
-      {#if uPluginJsonInput !== ''}
-        {#await upluginErrors}
-          <p>Loading...</p>
-        {:then errors}
-          {#if errors.length === 0}
-            <h3 class="text-2xl my-4 font-bold">&lt;mod&gt;.uplugin valid!</h3>
-          {:else}
-            <ul>
-              {#each errors as err}
-                {#await markdown(err) then errRendered}
-                  <li class="markdown-content">{@html errRendered}</li>
-                {/await}
-              {/each}
-            </ul>
-          {/if}
-        {/await}
-      {/if}
-    </div>
+  <div class="grid gap-4 grid-flow-col grid-cols-2">
+    <Card>
+      <Content>
+        <h3 class="text-2xl my-4 font-bold">&lt;mod&gt;.uplugin format</h3>
+        <div class="markdown-content">
+          {#await markdown(exampleUPluginJson) then exampleUPluginJsonRendered}
+            {@html exampleUPluginJsonRendered}
+          {/await}
+        </div>
+      </Content>
+    </Card>
+
+    <Card>
+      <Content>
+        <h3 class="text-2xl my-4 font-bold">Validate your &lt;mod&gt;.uplugin</h3>
+        <textarea
+          placeholder="enter your <mod>.uplugin"
+          rows="23"
+          class="markdownEditor"
+          bind:value={uPluginJsonInput}
+        />
+        {#if uPluginJsonInput !== ''}
+          {#await upluginErrors}
+            <p>Loading...</p>
+          {:then errors}
+            {#if errors.length === 0}
+              <h3 class="text-2xl my-4 font-bold">&lt;mod&gt;.uplugin valid!</h3>
+            {:else}
+              <ul>
+                {#each errors as err}
+                  {#await markdown(err) then errRendered}
+                    <li class="markdown-content">{@html errRendered}</li>
+                  {/await}
+                {/each}
+              </ul>
+            {/if}
+          {/await}
+        {/if}
+      </Content>
+    </Card>
   </div>
+
   <div class="markdown-content">
     <h1 class="text-4xl my-4 font-bold">Markdown</h1>
-    {#await markdownHtml then markdownHtmlRendered}
-      <p>{@html markdownHtmlRendered}</p>
-    {/await}
+    <Card>
+      <Content>
+        {#await markdownHtml then markdownHtmlRendered}
+          <p>{@html markdownHtmlRendered}</p>
+        {/await}
+      </Content>
+    </Card>
   </div>
 </div>
-
-<style lang="postcss">
-  .gridLayout {
-    grid-template-columns: 50% 50%;
-  }
-</style>

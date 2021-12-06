@@ -5,6 +5,9 @@
   import PageControls from '$lib/components/utils/PageControls.svelte';
   import { base } from '$app/paths';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
+  import Card, { Content } from '@smui/card';
+  import DataTable, { Head, Body, Row, Cell } from '@smui/data-table';
+  import Button from '@smui/button';
 
   // TODO Selectable
   const perPage = 20;
@@ -40,74 +43,59 @@
   <MetaDescriptors description="SML Versions" title="Admin: SML Versions" />
 </svelte:head>
 
-<div class="flex justify-between items-center">
-  <h1 class="text-4xl my-4 font-bold">SML Versions</h1>
-  <a href="{base}/admin/sml-versions/new" class="rounded text-base bg-blue-500 py-2 px-4 h-fit">New SML Version</a>
-</div>
+{#if totalVersions}
+  <div class="mb-5 ml-auto flex justify-between">
+    <Button variant="outlined" href="{base}/admin/sml-versions/new">New SML Version</Button>
+
+    <div>
+      <PageControls totalPages={Math.ceil(totalVersions / perPage)} currentPage={page} />
+    </div>
+  </div>
+{/if}
+
+<Card>
+  {#if $versions.fetching}
+    <Content>Loading...</Content>
+  {:else if $versions.error}
+    <Content>Oh no... {$versions.error.message}</Content>
+  {:else}
+    <DataTable table$aria-label="People list" style="max-width: 100%;">
+      <Head>
+        <Row>
+          <Cell>Version</Cell>
+          <Cell>Stability</Cell>
+          <Cell>Satisfactory Version</Cell>
+          <Cell>Bootstrap Version</Cell>
+          <Cell>Release Date</Cell>
+          <Cell><!-- Buttons --></Cell>
+        </Row>
+      </Head>
+      <Body>
+        {#each $versions.data.getSMLVersions.sml_versions as version}
+          <Row>
+            <Cell>{version.version}</Cell>
+            <Cell>{version.stability}</Cell>
+            <Cell>{version.satisfactory_version}</Cell>
+            <Cell>{version.bootstrap_version}</Cell>
+            <!-- TODO Pretty Date -->
+            <Cell>{version.created_at}</Cell>
+            <Cell>
+              <div class="grid grid-flow-col gap-4">
+                <Button variant="outlined" on:click={() => deleteVersion(version.id)}>Delete</Button>
+                <Button variant="outlined" href={base + '/admin/sml-versions/' + version.id + '/edit'}>Edit</Button>
+              </div>
+            </Cell>
+          </Row>
+        {/each}
+      </Body>
+    </DataTable>
+  {/if}
+</Card>
 
 {#if totalVersions}
   <div class="mt-5 ml-auto flex justify-end">
-    <PageControls totalPages={Math.ceil(totalVersions / perPage)} currentPage={page} />
+    <div>
+      <PageControls totalPages={Math.ceil(totalVersions / perPage)} currentPage={page} />
+    </div>
   </div>
 {/if}
-
-{#if $versions.fetching}
-  <p>Loading...</p>
-{:else if $versions.error}
-  <p>Oh no... {$versions.error.message}</p>
-{:else}
-  <div class="grid grid-cols-6 itemList">
-    <!-- Header -->
-    <div>Version</div>
-    <div>Stability</div>
-    <div>Satisfactory Version</div>
-    <div>Bootstrap Version</div>
-    <div>Release Date</div>
-    <div><!-- Buttons --></div>
-
-    {#each $versions.data.getSMLVersions.sml_versions as version}
-      <div class="contents itemHeader">
-        <div>{version.version}</div>
-        <div>{version.stability}</div>
-        <div>{version.satisfactory_version}</div>
-        <div>{version.bootstrap_version}</div>
-        <!-- TODO Pretty Date -->
-        <div>{version.created_at}</div>
-        <div class="grid grid-flow-col gap-4">
-          <button
-            class="py-1 px-4 rounded text-base bg-red-600 text-center cursor-pointer"
-            on:click={() => deleteVersion(version.id)}
-          >
-            Delete
-          </button>
-          <a
-            href={base + '/admin/sml-versions/' + version.id + '/edit'}
-            class="py-1 px-4 rounded text-base bg-blue-500 text-center cursor-pointer">Edit</a
-          >
-        </div>
-      </div>
-    {/each}
-  </div>
-{/if}
-
-{#if totalVersions}
-  <div class="mt-5 ml-auto flex justify-end">
-    <PageControls totalPages={Math.ceil(totalVersions / perPage)} currentPage={page} />
-  </div>
-{/if}
-
-<style lang="postcss">
-  .itemList {
-    grid-template-columns: auto auto auto auto max-content auto;
-
-    & .itemHeader {
-      & > div {
-        @apply border-t-2 border-white p-4;
-      }
-
-      &:hover > div {
-        background: rgba(255, 255, 255, 0.25);
-      }
-    }
-  }
-</style>

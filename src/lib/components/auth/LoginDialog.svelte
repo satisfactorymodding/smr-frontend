@@ -10,9 +10,6 @@
   } from '../../generated';
   import { mutation, operationStore, query } from '@urql/svelte';
   import Icon from '@iconify/svelte';
-  import githubIcon from '@iconify/icons-mdi/github.js';
-  import googleIcon from '@iconify/icons-mdi/google.js';
-  import facebookIcon from '@iconify/icons-mdi/facebook.js';
   import { browser } from '$app/env';
   import { page } from '$app/stores';
   import { goto } from '$app/navigation';
@@ -136,15 +133,15 @@
       <p>Oh no... {$oauthOptions.error.message}</p>
     {:else}
       <button on:click={() => goTo('github', $oauthOptions.data.getOAuthOptions.github)} class="login-button">
-        <Icon icon={githubIcon} inline={true} class="inline-block mr-2" />
+        <Icon icon="mdi-light:github" inline={true} class="inline-block mr-2" />
         <span>Sign in with Github</span>
       </button>
       <button on:click={() => goTo('google', $oauthOptions.data.getOAuthOptions.google)} class="login-button">
-        <Icon icon={googleIcon} inline={true} class="inline-block mr-2" />
+        <Icon icon="mdi-light:google" inline={true} class="inline-block mr-2" />
         <span>Sign in with Google</span>
       </button>
       <button on:click={() => goTo('facebook', $oauthOptions.data.getOAuthOptions.facebook)} class="login-button">
-        <Icon icon={facebookIcon} inline={true} class="inline-block mr-2" />
+        <Icon icon="mdi-light:facebook" inline={true} class="inline-block mr-2" />
         <span>Sign in with Facebook</span>
       </button>
     {/if}

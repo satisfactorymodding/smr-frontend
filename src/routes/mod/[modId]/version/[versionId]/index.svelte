@@ -20,8 +20,6 @@
   import { DeleteVersionDocument } from '$lib/generated';
   import VersionDescription from '$lib/components/versions/VersionDescription.svelte';
   import VersionInfo from '$lib/components/versions/VersionInfo.svelte';
-  import Icon from '@iconify/svelte';
-  import downloadIcon from '@iconify/icons-mdi/download.js';
   import { API_REST } from '$lib/core';
   import Toast from '$lib/components/general/Toast.svelte';
   import Dialog from '$lib/components/general/Dialog.svelte';
@@ -30,6 +28,7 @@
   import { user } from '$lib/stores/user';
   import { base } from '$app/paths';
   import { browser } from '$app/env';
+  import Button, { Label, Icon } from '@smui/button';
 
   export let modId!: string;
   export let versionId!: string;
@@ -90,26 +89,23 @@
 
         <div class="grid grid-flow-col gap-4">
           {#if canUserEdit}
-            <button
-              class="py-2 px-4 rounded text-base bg-yellow-600"
+            <Button
+              variant="outlined"
               on:click={() => goto(base + '/mod/' + modId + '/version/' + versionId + '/edit')}
             >
               Edit
-            </button>
-            <button class="py-2 px-4 rounded text-base bg-red-500" on:click={() => deleteDialogOpen.set(true)}>
-              Delete
-            </button>
+            </Button>
+            <Button variant="outlined" on:click={() => deleteDialogOpen.set(true)}>Delete</Button>
           {/if}
 
-          <a
-            href={API_REST + '/mod/' + modId + '/versions/' + versionId + '/download'}
-            class="py-2 px-4 rounded text-base bg-green-600 text-center">Download</a
-          >
+          <Button variant="outlined" href={API_REST + '/mod/' + modId + '/versions/' + versionId + '/download'}>
+            Download
+          </Button>
           <!-- TODO SMM -->
-          <a href={base} class="py-2 px-4 rounded text-base bg-blue-600 text-center">
-            <span>Install</span>
-            <Icon icon={downloadIcon} inline={true} class="inline-block" />
-          </a>
+          <Button variant="outlined" href={base}>
+            <Label>Install</Label>
+            <Icon class="material-icons">download</Icon>
+          </Button>
         </div>
       </div>
       <VersionDescription changelog={$version.data.getVersion.changelog} />
@@ -128,7 +124,7 @@
       <button class="py-1 px-4 rounded text-base bg-yellow-600" on:click={() => deleteDialogOpen.set(false)}>
         Cancel
       </button>
-      <button class="py-1 px-4 rounded text-base bg-red-500" on:click={() => deleteVersionFn()}> Delete </button>
+      <button class="py-1 px-4 rounded text-base bg-red-500" on:click={() => deleteVersionFn()}> Delete</button>
     </div>
   </Dialog>
 

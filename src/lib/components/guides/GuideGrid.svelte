@@ -4,9 +4,11 @@
   import GuideCard from './GuideCard.svelte';
   import PageControls from '$lib/components/utils/PageControls.svelte';
   import { writable } from 'svelte/store';
-  import FakeCard from '../general/FakeCard.svelte';
+  import { base } from '$app/paths';
+  import Button from '@smui/button';
 
   export let colCount: 4 | 5 = 4;
+  export let newGuide = false;
 
   // TODO Selectable
   const perPage = 40;
@@ -27,20 +29,22 @@
 
   $: gridClasses =
     colCount == 4
-      ? '2xl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-2 grid-cols-1'
-      : '2xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-3 grid-cols-1';
+      ? '3xl:grid-cols-4 2xl:grid-cols-3 lg:grid-cols-2 grid-cols-1'
+      : '3xl:grid-cols-3 2xl:grid-cols-2 grid-cols-1';
 </script>
 
-<div class="mb-5 ml-auto flex justify-end">
-  <PageControls totalPages={Math.ceil(totalGuides / perPage)} currentPage={page} />
+<div class="mb-5 ml-auto flex justify-between">
+  {#if newGuide}
+    <Button variant="outlined" href="{base}/new-guide">New Guide</Button>
+  {/if}
+
+  <div>
+    <PageControls totalPages={Math.ceil(totalGuides / perPage)} currentPage={page} />
+  </div>
 </div>
 
 {#if $guides.fetching}
-  <div class="grid {gridClasses} gap-4">
-    {#each Array(perPage) as _}
-      <FakeCard />
-    {/each}
-  </div>
+  <p>Loading...</p>
 {:else if $guides.error}
   <p>Oh no... {$guides.error.message}</p>
 {:else}
@@ -52,5 +56,7 @@
 {/if}
 
 <div class="mt-5 ml-auto flex justify-end">
-  <PageControls totalPages={Math.ceil(totalGuides / perPage)} currentPage={page} />
+  <div>
+    <PageControls totalPages={Math.ceil(totalGuides / perPage)} currentPage={page} />
+  </div>
 </div>
