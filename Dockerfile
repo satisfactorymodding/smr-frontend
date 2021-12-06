@@ -10,11 +10,11 @@ WORKDIR /app
 COPY package.json package.json
 COPY pnpm-lock.yaml pnpm-lock.yaml
 
-RUN pnpm install --unsafe-perm
+RUN pnpm install
 
 COPY . .
 
-RUN yarn run $CODEGEN && yarn run $BUILD
+RUN yarn run prepare && yarn run $CODEGEN && yarn run $BUILD
 
 
 FROM node:16-alpine
