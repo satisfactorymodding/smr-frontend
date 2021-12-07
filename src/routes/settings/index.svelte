@@ -15,6 +15,7 @@
   import Card, { Content } from '@smui/card';
   import Textfield from '@smui/textfield';
   import type { Writable } from 'svelte/store';
+  import Button from '@smui/button';
 
   let errorMessage = '';
   let errorToast = false;
@@ -100,7 +101,7 @@
           </div>
 
           <div>
-            <input type="submit" value="Save" class="px-4 py-2 rounded text-base bg-blue-500 cursor-pointer" />
+            <Button type="submit" variant="outlined">Save</Button>
           </div>
         </div>
       </form>

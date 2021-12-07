@@ -24,10 +24,11 @@
   import IconButton from '@smui/icon-button';
   import Button, { Label, Icon } from '@smui/button';
   import { page } from '$app/stores';
-  import { user } from '$lib/stores/user';
+  import { user, userToken } from '$lib/stores/user';
   import { browser } from '$app/env';
   import { goto } from '$app/navigation';
   import { loginDialogOpen } from '$lib/stores/global';
+  import Menu, { MenuComponentDev } from '@smui/menu';
 
   setClient(client);
 
@@ -45,6 +46,8 @@
 
     drawerVariant = mediaQuery.matches ? undefined : 'modal';
   }
+
+  let menu: MenuComponentDev;
 </script>
 
 <svelte:head>
@@ -90,10 +93,26 @@
             </Button>
           {/if}
 
-          <Button variant="outlined" color="secondary" href={base + '/user/' + $user.id} class="grid grid-flow-col">
-            <div class="mr-3">{$user.username}</div>
-            <div class="rounded-full bg-cover w-7 h-7" style={`background-image: url("${$user.avatar}")`} />
-          </Button>
+          <div>
+            <Button variant="outlined" color="secondary" on:click={() => menu.setOpen(true)} class="grid grid-flow-col">
+              <div class="mr-3">{$user.username}</div>
+              <div class="rounded-full bg-cover w-7 h-7" style={`background-image: url("${$user.avatar}")`} />
+            </Button>
+
+            <Menu bind:this={menu}>
+              <List>
+                <Item on:SMUI:action={() => goto(base + '/user/' + $user.id)}>
+                  <Text>Profile</Text>
+                </Item>
+                <Item on:SMUI:action={() => goto(base + '/settings')}>
+                  <Text>Settings</Text>
+                </Item>
+                <Item on:SMUI:action={() => userToken.set(null)}>
+                  <Text>Logout</Text>
+                </Item>
+              </List>
+            </Menu>
+          </div>
         {/if}
       </Section>
     </Row>

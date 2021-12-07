@@ -5,7 +5,8 @@
     GetOAuthOptionsDocument,
     OAuthFacebookDocument,
     OAuthGithubDocument,
-    OAuthGoogleDocument
+    OAuthGoogleDocument,
+    LogoutDocument
   } from '$lib/generated';
   import { mutation, operationStore, query } from '@urql/svelte';
   import { browser } from '$app/env';
@@ -16,6 +17,11 @@
   import cookie from 'js-cookie';
   import Dialog, { Title, Content } from '@smui/dialog';
   import Button from '@smui/button';
+  import CircularProgress from '@smui/circular-progress';
+
+  const logoutMutation = mutation({
+    query: LogoutDocument
+  });
 
   if (browser) {
     const getMe = operationStore(GetMeDocument, undefined, {
@@ -26,6 +32,7 @@
 
     let first = true;
     userToken.subscribe((token) => {
+      console.log('token set:', token);
       if (token) {
         const oneMonth = new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000);
         cookie.set('token', token, {
@@ -33,17 +40,27 @@
           expires: oneMonth
         });
       } else if (!first) {
-        cookie.remove('token');
+        logoutMutation(undefined, {
+          requestPolicy: 'network-only'
+        })
+          .catch()
+          .then(() => {
+            cookie.remove('token');
+          });
       }
 
       first = false;
 
       if (token) {
         getMe.reexecute({
-          requestPolicy: 'network-only'
+          requestPolicy: 'network-only',
+          fetchOptions: {
+            cache: 'no-cache'
+          }
         });
 
         const unsub = getMe.subscribe((response) => {
+          console.log({ response });
           if (!response.fetching) {
             if (response.error) {
               // TODO Toast or something
@@ -75,6 +92,7 @@
 
   let errorMessage = '';
   let errorToast = false;
+  let signingIn = false;
 
   if (browser) {
     const signInMethod = localStorage.getItem('sign.in.method');
@@ -89,18 +107,25 @@
     const state = queryParams['state'];
 
     if (signInMethod && code && state) {
+      signingIn = true;
+      loginDialogOpen.set(true);
+
       signInMethods[signInMethod as 'github' | 'google' | 'facebook']({
         code,
         state
-      }).then((result) => {
-        if (result.error) {
-          console.error(result.error.message);
-          errorMessage = 'Error logging in: ' + result.error.message;
-          errorToast = true;
-        } else {
-          userToken.set(result.data.session.token);
-        }
-      });
+      })
+        .then((result) => {
+          if (result.error) {
+            console.error(result.error.message);
+            errorMessage = 'Error logging in: ' + result.error.message;
+            errorToast = true;
+          } else {
+            userToken.set(result.data.session.token);
+            loginDialogOpen.set(false);
+          }
+        })
+        .catch()
+        .then(() => (signingIn = false));
     }
   }
 
@@ -127,7 +152,12 @@
   <Title>Login / Sign Up</Title>
   <Content>
     <div class="grid grid-flow-row gap-4">
-      {#if $oauthOptions.fetching}
+      {#if signingIn}
+        <p>Logging in...</p>
+        <div style="display: flex; justify-content: center">
+          <CircularProgress style="height: 32px; width: 32px;" indeterminate />
+        </div>
+      {:else if $oauthOptions.fetching}
         <!-- TODO Placeholders -->
         <p>Loading...</p>
       {:else if $oauthOptions.error}
