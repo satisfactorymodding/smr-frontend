@@ -15,7 +15,7 @@
     {
       name: 'Satisfactory Tools',
       author: 'greeny',
-      logo: 'https://www.satisfactorytools.com/assets/images/icons/android-chrome-512x512.png',
+      logo: 'https://i.imgur.com/WQEHo26.png',
       description:
         'A collection of powerful tools for planning and building the perfect base. Calculate your production or consumption, browse items, buildings, and schematics and share your builds with others!',
       link: 'https://www.satisfactorytools.com/'
