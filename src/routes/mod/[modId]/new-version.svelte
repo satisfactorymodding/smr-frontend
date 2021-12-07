@@ -22,6 +22,7 @@
   import type { UploadState } from '$lib/utils/chunked-upload';
   import { base } from '$app/paths';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
+  import Card, { Content } from '@smui/card';
 
   export let modId!: string;
 
@@ -124,34 +125,40 @@
   {/if}
 </h1>
 
-{#if $mod.fetching}
-  <p>Loading...</p>
-{:else if $mod.error}
-  <p>Oh no... {$mod.error.message}</p>
-{:else}
-  <VersionForm {onSubmit} modReference={$mod.data.getMod.mod_reference} />
+<Card>
+  <Content>
+    {#if $mod.fetching}
+      <p>Loading...</p>
+    {:else if $mod.error}
+      <p>Oh no... {$mod.error.message}</p>
+    {:else}
+      <VersionForm {onSubmit} modReference={$mod.data.getMod.mod_reference} />
 
-  {#if $uploadStatus}
-    <div class="relative pt-4">
-      <div class="flex mb-2 items-center justify-between">
-        <div>
-          <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-white bg-yellow-600">
-            {$uploadStatus}
-          </span>
+      {#if $uploadStatus}
+        <div class="relative pt-4">
+          <div class="flex mb-2 items-center justify-between">
+            <div>
+              <span
+                class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-white bg-yellow-600"
+              >
+                {$uploadStatus}
+              </span>
+            </div>
+            <div class="text-right">
+              <span class="text-xs font-semibold inline-block text-white">{$uploadPercent.toFixed(0)}%</span>
+            </div>
+          </div>
+          <div class="overflow-hidden h-2 mb-4 text-xs flex rounded bg-gray-600">
+            <div
+              style="width: {$uploadPercent.toFixed(0)}%"
+              class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-yellow-600"
+            />
+          </div>
         </div>
-        <div class="text-right">
-          <span class="text-xs font-semibold inline-block text-white">{$uploadPercent.toFixed(0)}%</span>
-        </div>
-      </div>
-      <div class="overflow-hidden h-2 mb-4 text-xs flex rounded bg-gray-600">
-        <div
-          style="width: {$uploadPercent.toFixed(0)}%"
-          class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-yellow-600"
-        />
-      </div>
-    </div>
-  {/if}
-{/if}
+      {/if}
+    {/if}
+  </Content>
+</Card>
 
 <Toast bind:running={errorToast}>
   <span>{errorMessage}</span>

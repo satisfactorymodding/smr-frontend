@@ -3,9 +3,6 @@
   import { operationStore } from '@urql/svelte';
   import { GetGuideDocument } from '$lib/generated';
   import { loadWaitForNoFetch } from '$lib/utils/gql';
-  import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
-  import Card, { Content } from '@smui/card';
-  import Button from '@smui/button';
 
   const guideQ = operationStore(GetGuideDocument, { guide: undefined });
 
@@ -25,11 +22,14 @@
   import { user } from '$lib/stores/user';
   import { goto } from '$app/navigation';
   import { writable } from 'svelte/store';
-  import Dialog from '$lib/components/general/Dialog.svelte';
   import Toast from '$lib/components/general/Toast.svelte';
   import { markdown } from '$lib/utils/markdown';
   import { base } from '$app/paths';
   import { browser } from '$app/env';
+  import Dialog, { Title, Content as DialogContent } from '@smui/dialog';
+  import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
+  import Card, { Content } from '@smui/card';
+  import Button from '@smui/button';
 
   export let guideId!: string;
   export let guide: typeof guideQ;
@@ -103,16 +103,15 @@
   </div>
 
   <Dialog bind:open={$deleteDialogOpen}>
-    <div class="grid grid-flow-row gap-4">
-      <h3 class="text-2xl font-bold">Delete Guide?</h3>
+    <Title>Delete Guide?</Title>
+    <DialogContent>
+      <div class="grid grid-flow-row gap-4">
+        <span>Are you sure you wish to delete this guide</span>
 
-      <span>Are you sure you wish to delete this guide</span>
-
-      <button class="py-1 px-4 rounded text-base bg-yellow-600" on:click={() => deleteDialogOpen.set(false)}>
-        Cancel
-      </button>
-      <button class="py-1 px-4 rounded text-base bg-red-500" on:click={() => deleteGuideFn()}> Delete</button>
-    </div>
+        <Button variant="outlined" on:click={() => deleteDialogOpen.set(false)}>Cancel</Button>
+        <Button variant="outlined" on:click={() => deleteGuideFn()}>Delete</Button>
+      </div>
+    </DialogContent>
   </Dialog>
 
   <Toast bind:running={errorToast}>

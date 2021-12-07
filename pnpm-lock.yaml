@@ -26,6 +26,7 @@ specifiers:
   '@material/checkbox': ^13.0.0
   '@material/data-table': ^13.0.0
   '@material/density': ^13.0.0
+  '@material/dialog': ^13.0.0
   '@material/dom': ^13.0.0
   '@material/drawer': ^13.0.0
   '@material/elevation': ^13.0.0
@@ -36,6 +37,7 @@ specifiers:
   '@material/line-ripple': ^13.0.0
   '@material/list': ^13.0.0
   '@material/menu': ^13.0.0
+  '@material/menu-surface': ^13.0.0
   '@material/notched-outline': ^13.0.0
   '@material/ripple': ^13.0.0
   '@material/rtl': ^13.0.0
@@ -51,12 +53,19 @@ specifiers:
   '@smui/card': ^6.0.0-beta.4
   '@smui/common': ^6.0.0-beta.4
   '@smui/data-table': ^6.0.0-beta.4
+  '@smui/dialog': ^6.0.0-beta.4
   '@smui/drawer': ^6.0.0-beta.4
   '@smui/fab': ^6.0.0-beta.4
+  '@smui/floating-label': ^6.0.0-beta.4
   '@smui/icon-button': ^6.0.0-beta.4
   '@smui/layout-grid': ^6.0.0-beta.4
+  '@smui/line-ripple': ^6.0.0-beta.4
   '@smui/list': ^6.0.0-beta.4
+  '@smui/menu': ^6.0.0-beta.4
+  '@smui/menu-surface': ^6.0.0-beta.4
+  '@smui/notched-outline': ^6.0.0-beta.4
   '@smui/paper': ^6.0.0-beta.4
+  '@smui/select': ^6.0.0-beta.4
   '@smui/textfield': ^6.0.0-beta.4
   '@smui/top-app-bar': ^6.0.0-beta.4
   '@sveltejs/adapter-node': ^1.0.0-next.55
@@ -136,6 +145,7 @@ devDependencies:
   '@material/checkbox': 13.0.0
   '@material/data-table': 13.0.0
   '@material/density': 13.0.0
+  '@material/dialog': 13.0.0
   '@material/dom': 13.0.0
   '@material/drawer': 13.0.0
   '@material/elevation': 13.0.0
@@ -146,6 +156,7 @@ devDependencies:
   '@material/line-ripple': 13.0.0
   '@material/list': 13.0.0
   '@material/menu': 13.0.0
+  '@material/menu-surface': 13.0.0
   '@material/notched-outline': 13.0.0
   '@material/ripple': 13.0.0
   '@material/rtl': 13.0.0
@@ -161,12 +172,19 @@ devDependencies:
   '@smui/card': 6.0.0-beta.4_svelte@3.44.2+typescript@4.5.2
   '@smui/common': 6.0.0-beta.4_svelte@3.44.2+typescript@4.5.2
   '@smui/data-table': 6.0.0-beta.4_svelte@3.44.2+typescript@4.5.2
+  '@smui/dialog': 6.0.0-beta.4_svelte@3.44.2+typescript@4.5.2
   '@smui/drawer': 6.0.0-beta.4_svelte@3.44.2+typescript@4.5.2
   '@smui/fab': 6.0.0-beta.4_svelte@3.44.2+typescript@4.5.2
+  '@smui/floating-label': 6.0.0-beta.4_svelte@3.44.2+typescript@4.5.2
   '@smui/icon-button': 6.0.0-beta.4_svelte@3.44.2+typescript@4.5.2
   '@smui/layout-grid': 6.0.0-beta.4_svelte@3.44.2+typescript@4.5.2
+  '@smui/line-ripple': 6.0.0-beta.4_svelte@3.44.2+typescript@4.5.2
   '@smui/list': 6.0.0-beta.4_svelte@3.44.2+typescript@4.5.2
+  '@smui/menu': 6.0.0-beta.4_svelte@3.44.2+typescript@4.5.2
+  '@smui/menu-surface': 6.0.0-beta.4_svelte@3.44.2+typescript@4.5.2
+  '@smui/notched-outline': 6.0.0-beta.4_svelte@3.44.2+typescript@4.5.2
   '@smui/paper': 6.0.0-beta.4_svelte@3.44.2+typescript@4.5.2
+  '@smui/select': 6.0.0-beta.4_svelte@3.44.2+typescript@4.5.2
   '@smui/textfield': 6.0.0-beta.4_svelte@3.44.2+typescript@4.5.2
   '@smui/top-app-bar': 6.0.0-beta.4_svelte@3.44.2+typescript@4.5.2
   '@sveltejs/adapter-node': 1.0.0-next.55
@@ -1601,6 +1619,26 @@ packages:
       tslib: 2.3.1
     dev: true
 
+  /@material/dialog/13.0.0:
+    resolution: {integrity: sha512-1Ggo9Bid94F1ttZJKSjIcgMvkVQtKsqwbqLs5cWlleaiwtAcwUE12XA2B1MNj8xM9ajU3BJm4GigupBOK1jGHQ==}
+    dependencies:
+      '@material/animation': 13.0.0
+      '@material/base': 13.0.0
+      '@material/button': 13.0.0
+      '@material/dom': 13.0.0
+      '@material/elevation': 13.0.0
+      '@material/feature-targeting': 13.0.0
+      '@material/icon-button': 13.0.0
+      '@material/ripple': 13.0.0
+      '@material/rtl': 13.0.0
+      '@material/shape': 13.0.0
+      '@material/theme': 13.0.0
+      '@material/tokens': 13.0.0
+      '@material/touch-target': 13.0.0
+      '@material/typography': 13.0.0
+      tslib: 2.3.1
+    dev: true
+
   /@material/dom/13.0.0:
     resolution: {integrity: sha512-M9HLAYBZtkTUvf66FL+jAEvUOdhji1HkGA1mV6oyE+HY9gkCkmso+mngvzlLd5+uaAVE9I3WQFhSb9gp0cpXnw==}
     dependencies:
@@ -2009,6 +2047,19 @@ packages:
       '@smui/icon-button': 6.0.0-beta.4_svelte@3.44.2+typescript@4.5.2
       '@smui/ripple': 6.0.0-beta.4_svelte@3.44.2+typescript@4.5.2
       '@smui/select': 6.0.0-beta.4_svelte@3.44.2+typescript@4.5.2
+      svelte2tsx: 0.4.10_svelte@3.44.2+typescript@4.5.2
+    transitivePeerDependencies:
+      - svelte
+      - typescript
+    dev: true
+
+  /@smui/dialog/6.0.0-beta.4_svelte@3.44.2+typescript@4.5.2:
+    resolution: {integrity: sha512-TTSNdC9Z7Je8GOirKbeCoqaMbbEsHnNqLWYOgy+yqGXYNvYLE4A6DTKWyxEc2xTH3D2ctKtmWnTmJq3Wbnt5uQ==}
+    dependencies:
+      '@material/button': 13.0.0
+      '@material/dialog': 13.0.0
+      '@material/dom': 13.0.0
+      '@smui/common': 6.0.0-beta.4_svelte@3.44.2+typescript@4.5.2
       svelte2tsx: 0.4.10_svelte@3.44.2+typescript@4.5.2
     transitivePeerDependencies:
       - svelte

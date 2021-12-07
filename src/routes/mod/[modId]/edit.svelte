@@ -13,6 +13,7 @@
   import type { ModData } from '$lib/models/mods';
   import { base } from '$app/paths';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
+  import Card, { Content } from '@smui/card';
 
   export let modId!: string;
 
@@ -65,13 +66,17 @@
 
 <h1 class="text-4xl my-4 font-bold">Edit Mod</h1>
 
-{#if $mod.fetching}
-  <p>Loading...</p>
-{:else if $mod.error}
-  <p>Oh no... {$mod.error.message}</p>
-{:else}
-  <ModForm {onSubmit} {initialValues} editing={true} submitText="Save" />
-{/if}
+<Card>
+  <Content>
+    {#if $mod.fetching}
+      <p>Loading...</p>
+    {:else if $mod.error}
+      <p>Oh no... {$mod.error.message}</p>
+    {:else}
+      <ModForm {onSubmit} {initialValues} editing={true} submitText="Save" />
+    {/if}
+  </Content>
+</Card>
 
 <Toast bind:running={errorToast}>
   <span>{errorMessage}</span>

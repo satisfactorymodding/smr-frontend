@@ -6,9 +6,18 @@
   import { modSchema } from '$lib/models/mods';
   import { trimNonSchema } from '$lib/utils/forms';
   import { markdown } from '$lib/utils/markdown';
+  import Textfield from '@smui/textfield';
+  import HelperText from '@smui/textfield/helper-text';
+  import Button from '@smui/button';
 
   export let onSubmit: (data: ModData) => void;
-  export let initialValues: ModData | undefined = undefined;
+  export let initialValues: ModData = {
+    full_description: '',
+    mod_reference: '',
+    name: '',
+    short_description: '',
+    source_url: ''
+  };
   export let submitText = 'Create';
 
   export let editing = false;
@@ -26,37 +35,28 @@
 <form use:form>
   <div class="grid grid-flow-row gap-6">
     <div class="grid grid-flow-row gap-2">
-      <label for="name">Name:</label>
-      <input id="name" class="base-input" name="name" type="text" placeholder="Name" />
+      <Textfield bind:value={$data.name} label="Name" required />
       <ValidationMessage for="name" let:messages={message}>
         <span class="validation-message">{message || ''}</span>
       </ValidationMessage>
     </div>
 
     <div class="grid grid-flow-row gap-2">
-      <label for="mod_reference">Mod Reference:</label>
-      <input
-        id="mod_reference"
-        class="base-input"
-        name="mod_reference"
-        type="text"
-        placeholder="Mod Reference"
-        readonly={editing}
-      />
+      <Textfield bind:value={$data.mod_reference} label="Mod Reference" required disabled={editing}>
+        <HelperText persistent={!editing} slot="helper">
+          {#if !editing}
+            Warning! You will not be able to change this after creating the mod! Please ensure this is a unique modifier
+            that closely matches the name of your mod!
+          {/if}
+        </HelperText>
+      </Textfield>
       <ValidationMessage for="mod_reference" let:messages={message}>
         <span class="validation-message">{message || ''}</span>
       </ValidationMessage>
     </div>
 
     <div class="grid grid-flow-row gap-2">
-      <label for="short_description">Short Description:</label>
-      <input
-        id="short_description"
-        class="base-input"
-        name="short_description"
-        type="text"
-        placeholder="Short Description"
-      />
+      <Textfield bind:value={$data.short_description} label="Short Description" required />
       <ValidationMessage for="short_description" let:messages={message}>
         <span class="validation-message">{message || ''}</span>
       </ValidationMessage>
@@ -64,14 +64,7 @@
 
     <div class="grid gap-6 split">
       <div class="grid grid-flow-row gap-2 auto-rows-max">
-        <label for="full_description">Full Description:</label>
-        <textarea
-          class="base-input"
-          id="full_description"
-          name="full_description"
-          placeholder="Full Description"
-          rows="10"
-        />
+        <Textfield textarea bind:value={$data.full_description} label="Full Description" required input$rows={10} />
         <ValidationMessage for="full_description" let:messages={message}>
           <span class="validation-message">{message || ''}</span>
         </ValidationMessage>
@@ -100,15 +93,14 @@
     </div>
 
     <div class="grid grid-flow-row gap-2">
-      <label for="source_url">Source URL:</label>
-      <input id="source_url" class="base-input" name="source_url" type="text" placeholder="Source URL" />
+      <Textfield bind:value={$data.source_url} label="Source URL" />
       <ValidationMessage for="source_url" let:messages={message}>
         <span class="validation-message">{message || ''}</span>
       </ValidationMessage>
     </div>
 
     <div>
-      <input type="submit" value={submitText} class="px-4 py-2 rounded text-base bg-blue-500 cursor-pointer" />
+      <Button variant="outlined" type="submit">{submitText}</Button>
     </div>
   </div>
 </form>

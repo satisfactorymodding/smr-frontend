@@ -43,15 +43,15 @@
   <MetaDescriptors description="SML Versions" title="Admin: SML Versions" />
 </svelte:head>
 
-{#if totalVersions}
-  <div class="mb-5 ml-auto flex justify-between">
-    <Button variant="outlined" href="{base}/admin/sml-versions/new">New SML Version</Button>
+<div class="mb-5 ml-auto flex justify-between">
+  <Button variant="outlined" href="{base}/admin/sml-versions/new">New SML Version</Button>
 
+  {#if totalVersions}
     <div>
       <PageControls totalPages={Math.ceil(totalVersions / perPage)} currentPage={page} />
     </div>
-  </div>
-{/if}
+  {/if}
+</div>
 
 <Card>
   {#if $versions.fetching}

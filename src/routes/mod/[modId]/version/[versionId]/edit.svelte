@@ -13,6 +13,7 @@
   import type { VersionData } from '$lib/models/versions';
   import { base } from '$app/paths';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
+  import Card, { Content } from '@smui/card';
 
   export let modId!: string;
   export let versionId!: string;
@@ -65,19 +66,23 @@
 
 <h1 class="text-4xl my-4 font-bold">Edit Version</h1>
 
-{#if $version.fetching}
-  <p>Loading...</p>
-{:else if $version.error}
-  <p>Oh no... {$version.error.message}</p>
-{:else}
-  <VersionForm
-    {onSubmit}
-    {initialValues}
-    modReference={$version.data.getVersion.mod.mod_reference}
-    editing={true}
-    submitText="Save"
-  />
-{/if}
+<Card>
+  <Content>
+    {#if $version.fetching}
+      <p>Loading...</p>
+    {:else if $version.error}
+      <p>Oh no... {$version.error.message}</p>
+    {:else}
+      <VersionForm
+        {onSubmit}
+        {initialValues}
+        modReference={$version.data.getVersion.mod.mod_reference}
+        editing={true}
+        submitText="Save"
+      />
+    {/if}
+  </Content>
+</Card>
 
 <Toast bind:running={errorToast}>
   <span>{errorMessage}</span>

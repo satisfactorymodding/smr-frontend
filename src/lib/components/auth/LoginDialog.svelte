@@ -1,5 +1,4 @@
 <script lang="ts">
-  import Dialog from '../general/Dialog.svelte';
   import { loginDialogOpen } from '$lib/stores/global';
   import {
     GetMeDocument,
@@ -7,15 +6,16 @@
     OAuthFacebookDocument,
     OAuthGithubDocument,
     OAuthGoogleDocument
-  } from '../../generated';
+  } from '$lib/generated';
   import { mutation, operationStore, query } from '@urql/svelte';
-  import Icon from '@iconify/svelte';
   import { browser } from '$app/env';
   import { page } from '$app/stores';
   import { goto } from '$app/navigation';
   import Toast from '../general/Toast.svelte';
   import { user, userToken } from '$lib/stores/user';
   import cookie from 'js-cookie';
+  import Dialog, { Title, Content } from '@smui/dialog';
+  import Button from '@smui/button';
 
   if (browser) {
     const getMe = operationStore(GetMeDocument, undefined, {
@@ -124,37 +124,29 @@
 </script>
 
 <Dialog bind:open={$loginDialogOpen}>
-  <div class="grid grid-flow-row gap-4">
-    <h3 class="text-2xl font-bold">Login / Sign Up</h3>
-    {#if $oauthOptions.fetching}
-      <!-- TODO Placeholders -->
-      <p>Loading...</p>
-    {:else if $oauthOptions.error}
-      <p>Oh no... {$oauthOptions.error.message}</p>
-    {:else}
-      <button on:click={() => goTo('github', $oauthOptions.data.getOAuthOptions.github)} class="login-button">
-        <Icon icon="mdi-light:github" inline={true} class="inline-block mr-2" />
-        <span>Sign in with Github</span>
-      </button>
-      <button on:click={() => goTo('google', $oauthOptions.data.getOAuthOptions.google)} class="login-button">
-        <Icon icon="mdi-light:google" inline={true} class="inline-block mr-2" />
-        <span>Sign in with Google</span>
-      </button>
-      <button on:click={() => goTo('facebook', $oauthOptions.data.getOAuthOptions.facebook)} class="login-button">
-        <Icon icon="mdi-light:facebook" inline={true} class="inline-block mr-2" />
-        <span>Sign in with Facebook</span>
-      </button>
-    {/if}
-  </div>
+  <Title>Login / Sign Up</Title>
+  <Content>
+    <div class="grid grid-flow-row gap-4">
+      {#if $oauthOptions.fetching}
+        <!-- TODO Placeholders -->
+        <p>Loading...</p>
+      {:else if $oauthOptions.error}
+        <p>Oh no... {$oauthOptions.error.message}</p>
+      {:else}
+        <Button variant="outlined" on:click={() => goTo('github', $oauthOptions.data.getOAuthOptions.github)}>
+          Sign in with Github
+        </Button>
+        <Button variant="outlined" on:click={() => goTo('google', $oauthOptions.data.getOAuthOptions.google)}>
+          Sign in with Google
+        </Button>
+        <Button variant="outlined" on:click={() => goTo('facebook', $oauthOptions.data.getOAuthOptions.facebook)}>
+          Sign in with Facebook
+        </Button>
+      {/if}
+    </div>
+  </Content>
 </Dialog>
 
 <Toast bind:running={errorToast}>
   <span>{errorMessage}</span>
 </Toast>
-
-<style lang="postcss">
-  .login-button {
-    @apply px-4 py-2 hover:bg-white hover:bg-opacity-10 rounded;
-    @apply focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-opacity-50;
-  }
-</style>

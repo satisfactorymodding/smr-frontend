@@ -22,13 +22,13 @@
   import VersionInfo from '$lib/components/versions/VersionInfo.svelte';
   import { API_REST } from '$lib/core';
   import Toast from '$lib/components/general/Toast.svelte';
-  import Dialog from '$lib/components/general/Dialog.svelte';
   import { writable } from 'svelte/store';
   import { goto } from '$app/navigation';
   import { user } from '$lib/stores/user';
   import { base } from '$app/paths';
   import { browser } from '$app/env';
   import Button, { Label, Icon } from '@smui/button';
+  import Dialog, { Title, Content as DialogContent } from '@smui/dialog';
 
   export let modId!: string;
   export let versionId!: string;
@@ -116,16 +116,15 @@
   </div>
 
   <Dialog bind:open={$deleteDialogOpen}>
-    <div class="grid grid-flow-row gap-4">
-      <h3 class="text-2xl font-bold">Delete Version?</h3>
+    <Title id="simple-title">Delete Version?</Title>
+    <DialogContent>
+      <div class="grid grid-flow-row gap-4">
+        <span>Are you sure you wish to delete this version</span>
 
-      <span>Are you sure you wish to delete this version</span>
-
-      <button class="py-1 px-4 rounded text-base bg-yellow-600" on:click={() => deleteDialogOpen.set(false)}>
-        Cancel
-      </button>
-      <button class="py-1 px-4 rounded text-base bg-red-500" on:click={() => deleteVersionFn()}> Delete</button>
-    </div>
+        <Button variant="outlined" on:click={() => deleteDialogOpen.set(false)}>Cancel</Button>
+        <Button variant="outlined" on:click={() => deleteVersionFn()}>Delete</Button>
+      </div>
+    </DialogContent>
   </Dialog>
 
   <Toast bind:running={errorToast}>

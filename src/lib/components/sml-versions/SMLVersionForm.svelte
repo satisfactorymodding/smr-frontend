@@ -6,9 +6,21 @@
   import { markdown } from '$lib/utils/markdown';
   import type { SMLVersionData } from '$lib/models/sml-versions';
   import { smlVersionSchema } from '$lib/models/sml-versions';
+  import Textfield from '@smui/textfield';
+  import Button from '@smui/button';
+  import { VersionStabilities } from '$lib/generated';
+  import Select, { Option } from '@smui/select';
 
   export let onSubmit: (data: SMLVersionData) => void;
-  export let initialValues: SMLVersionData | undefined = undefined;
+  export let initialValues: SMLVersionData = {
+    link: '',
+    bootstrap_version: '',
+    date: '',
+    changelog: '',
+    satisfactory_version: 0,
+    stability: VersionStabilities.Alpha,
+    version: ''
+  };
   export let submitText = 'Create';
 
   const { form, data } = createForm<SMLVersionData>({
@@ -24,48 +36,32 @@
 <form use:form>
   <div class="grid grid-flow-row gap-6">
     <div class="grid grid-flow-row gap-2">
-      <label for="version">Version:</label>
-      <input id="version" class="base-input" name="version" type="text" placeholder="Version" />
+      <Textfield bind:value={$data.version} label="Version" required />
       <ValidationMessage for="version" let:messages={message}>
         <span class="validation-message">{message || ''}</span>
       </ValidationMessage>
     </div>
 
     <div class="grid grid-flow-row gap-2">
-      <label for="satisfactory_version">Satisfactory Version:</label>
-      <input
-        id="satisfactory_version"
-        class="base-input"
-        name="satisfactory_version"
-        type="number"
-        placeholder="Satisfactory Version"
-      />
+      <Textfield bind:value={$data.satisfactory_version} label="Satisfactory Version" required type="number" />
       <ValidationMessage for="satisfactory_version" let:messages={message}>
         <span class="validation-message">{message || ''}</span>
       </ValidationMessage>
     </div>
 
     <div class="grid grid-flow-row gap-2">
-      <label for="bootstrap_version">Bootstrap Version:</label>
-      <input
-        id="bootstrap_version"
-        class="base-input"
-        name="bootstrap_version"
-        type="text"
-        placeholder="Bootstrap Version"
-      />
+      <Textfield bind:value={$data.bootstrap_version} label="Bootstrap Version" required />
       <ValidationMessage for="bootstrap_version" let:messages={message}>
         <span class="validation-message">{message || ''}</span>
       </ValidationMessage>
     </div>
 
     <div class="grid grid-flow-row gap-2">
-      <label for="stability">Stability:</label>
-      <select id="stability" class="base-input" name="stability">
-        <option value="alpha">Alpha</option>
-        <option value="beta">Beta</option>
-        <option value="release">Release</option>
-      </select>
+      <Select bind:value={$data.stability} label="Stability">
+        <Option value="alpha">Alpha</Option>
+        <Option value="beta">Beta</Option>
+        <Option value="release">Release</Option>
+      </Select>
       <ValidationMessage for="stability" let:messages={message}>
         <span class="validation-message">{message || ''}</span>
       </ValidationMessage>
@@ -73,8 +69,7 @@
 
     <div class="grid gap-6 split">
       <div class="grid grid-flow-row gap-2 auto-rows-max">
-        <label for="changelog">Changelog:</label>
-        <textarea class="base-input" id="changelog" name="changelog" placeholder="Changelog" rows="10" />
+        <Textfield textarea bind:value={$data.changelog} label="Changelog" required input$rows={10} />
         <ValidationMessage for="changelog" let:messages={message}>
           <span class="validation-message">{message || ''}</span>
         </ValidationMessage>
@@ -88,23 +83,21 @@
     </div>
 
     <div class="grid grid-flow-row gap-2">
-      <label for="date">Date and Time:</label>
-      <input id="date" class="base-input" name="date" type="text" placeholder="Date and Time" />
+      <Textfield bind:value={$data.date} label="Date and Time" required />
       <ValidationMessage for="date" let:messages={message}>
         <span class="validation-message">{message || ''}</span>
       </ValidationMessage>
     </div>
 
     <div class="grid grid-flow-row gap-2">
-      <label for="link">Link:</label>
-      <input id="link" class="base-input" name="link" type="text" placeholder="Link" />
+      <Textfield bind:value={$data.link} label="Link" required />
       <ValidationMessage for="link" let:messages={message}>
         <span class="validation-message">{message || ''}</span>
       </ValidationMessage>
     </div>
 
     <div>
-      <input type="submit" value={submitText} class="px-4 py-2 rounded text-base bg-blue-500 cursor-pointer" />
+      <Button variant="outlined" type="submit">{submitText}</Button>
     </div>
   </div>
 </form>

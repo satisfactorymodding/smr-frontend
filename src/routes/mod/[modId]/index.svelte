@@ -3,8 +3,6 @@
   import { operationStore } from '@urql/svelte';
   import { GetModDocument } from '$lib/generated';
   import { loadWaitForNoFetch } from '$lib/utils/gql';
-  import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
-  import Button from '@smui/button';
 
   const modQ = operationStore(GetModDocument, { mod: undefined });
 
@@ -28,10 +26,12 @@
   import { user } from '$lib/stores/user';
   import { goto } from '$app/navigation';
   import { writable } from 'svelte/store';
-  import Dialog from '$lib/components/general/Dialog.svelte';
   import Toast from '$lib/components/general/Toast.svelte';
   import { base } from '$app/paths';
   import { browser } from '$app/env';
+  import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
+  import Button from '@smui/button';
+  import Dialog, { Title, Content as DialogContent } from '@smui/dialog';
 
   export let modId!: string;
   export let mod: typeof modQ;
@@ -117,16 +117,15 @@
   </div>
 
   <Dialog bind:open={$deleteDialogOpen}>
-    <div class="grid grid-flow-row gap-4">
-      <h3 class="text-2xl font-bold">Delete Mod?</h3>
+    <Title>Delete Mod?</Title>
+    <DialogContent>
+      <div class="grid grid-flow-row gap-4">
+        <span>Are you sure you wish to delete this mod</span>
 
-      <span>Are you sure you wish to delete this mod</span>
-
-      <button class="py-1 px-4 rounded text-base bg-yellow-600" on:click={() => deleteDialogOpen.set(false)}>
-        Cancel
-      </button>
-      <button class="py-1 px-4 rounded text-base bg-red-500" on:click={() => deleteModFn()}> Delete </button>
-    </div>
+        <Button variant="outlined" on:click={() => deleteDialogOpen.set(false)}>Cancel</Button>
+        <Button variant="outlined" on:click={() => deleteModFn()}>Delete</Button>
+      </div>
+    </DialogContent>
   </Dialog>
 
   <Toast bind:running={errorToast}>

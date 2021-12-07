@@ -1,5 +1,6 @@
 <script lang="ts" context="module">
   import { paramsToProps } from '$lib/utils/routing';
+  import Card, { Content } from '@smui/card';
 
   export const load = paramsToProps();
 </script>
@@ -57,13 +58,17 @@
 
 <h1 class="text-4xl my-4 font-bold">Edit Guide</h1>
 
-{#if $guide.fetching}
-  <p>Loading...</p>
-{:else if $guide.error}
-  <p>Oh no... {$guide.error.message}</p>
-{:else}
-  <GuideForm {onSubmit} initialValues={$guide.data.getGuide} submitText="Save" />
-{/if}
+<Card>
+  <Content>
+    {#if $guide.fetching}
+      <p>Loading...</p>
+    {:else if $guide.error}
+      <p>Oh no... {$guide.error.message}</p>
+    {:else}
+      <GuideForm {onSubmit} initialValues={$guide.data.getGuide} submitText="Save" />
+    {/if}
+  </Content>
+</Card>
 
 <Toast bind:running={errorToast}>
   <span>{errorMessage}</span>

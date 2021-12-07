@@ -27,6 +27,7 @@
   import { user } from '$lib/stores/user';
   import { browser } from '$app/env';
   import { goto } from '$app/navigation';
+  import { loginDialogOpen } from '$lib/stores/global';
 
   setClient(client);
 
@@ -71,18 +72,29 @@
         <Title>FICSIT Augmentation Database</Title>
       </Section>
       <Section align="end" toolbar>
-        <Button color="secondary" variant="outlined">
+        <Button color="secondary" variant="outlined" class="mr-3" target="_blank" href="https://smm.ficsit.app">
           <Label>Mod Manager</Label>
           <Icon class="material-icons">file_download</Icon>
         </Button>
 
-        {#if isAdmin}
-          <IconButton class="material-icons" aria-label="Admin Panel" on:click={() => goto(base + '/admin')}>
-            admin_panel_settings
-          </IconButton>
-        {/if}
+        {#if $user === null}
+          <Button color="secondary" variant="outlined" on:click={() => loginDialogOpen.set(true)}>
+            <Label>Sign In</Label>
+            <Icon class="material-icons">login</Icon>
+          </Button>
+        {:else}
+          {#if isAdmin}
+            <Button color="secondary" variant="outlined" class="mr-3" on:click={() => goto(base + '/admin')}>
+              <Label>Admin</Label>
+              <Icon class="material-icons">admin_panel_settings</Icon>
+            </Button>
+          {/if}
 
-        <IconButton class="material-icons" aria-label="Sign In">login</IconButton>
+          <Button variant="outlined" color="secondary" href={base + '/user/' + $user.id} class="grid grid-flow-col">
+            <div class="mr-3">{$user.username}</div>
+            <div class="rounded-full bg-cover w-7 h-7" style={`background-image: url("${$user.avatar}")`} />
+          </Button>
+        {/if}
       </Section>
     </Row>
   </TopAppBar>

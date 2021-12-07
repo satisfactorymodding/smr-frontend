@@ -6,9 +6,15 @@
   import { guideSchema } from '$lib/models/guides';
   import { trimNonSchema } from '$lib/utils/forms';
   import { markdown } from '$lib/utils/markdown';
+  import Textfield from '@smui/textfield';
+  import Button from '@smui/button';
 
   export let onSubmit: (data: GuideData) => void;
-  export let initialValues: GuideData | undefined = undefined;
+  export let initialValues: GuideData | undefined = {
+    name: '',
+    guide: '',
+    short_description: ''
+  };
   export let submitText = 'Create';
 
   const { form, data } = createForm<GuideData>({
@@ -24,22 +30,14 @@
 <form use:form>
   <div class="grid grid-flow-row gap-6">
     <div class="grid grid-flow-row gap-2">
-      <label for="name">Name:</label>
-      <input id="name" class="base-input" name="name" type="text" placeholder="Name" />
+      <Textfield bind:value={$data.name} label="Name" required />
       <ValidationMessage for="name" let:messages={message}>
         <span class="validation-message">{message || ''}</span>
       </ValidationMessage>
     </div>
 
     <div class="grid grid-flow-row gap-2">
-      <label for="short_description">Short Description:</label>
-      <input
-        id="short_description"
-        class="base-input"
-        name="short_description"
-        type="text"
-        placeholder="Short Description"
-      />
+      <Textfield bind:value={$data.short_description} label="Short Description" required />
       <ValidationMessage for="short_description" let:messages={message}>
         <span class="validation-message">{message || ''}</span>
       </ValidationMessage>
@@ -47,8 +45,7 @@
 
     <div class="grid gap-6 split">
       <div class="grid grid-flow-row gap-2 auto-rows-max">
-        <label for="guide">Guide:</label>
-        <textarea class="base-input" id="guide" name="guide" placeholder="Guide" rows="10" />
+        <Textfield textarea bind:value={$data.guide} label="Guide" required input$rows={10} />
         <ValidationMessage for="guide" let:messages={message}>
           <span class="validation-message">{message || ''}</span>
         </ValidationMessage>
@@ -62,7 +59,7 @@
     </div>
 
     <div>
-      <input type="submit" value={submitText} class="px-4 py-2 rounded text-base bg-blue-500 cursor-pointer" />
+      <Button variant="outlined" type="submit">{submitText}</Button>
     </div>
   </div>
 </form>

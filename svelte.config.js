@@ -28,7 +28,7 @@ const config = {
             ...defaultOptions.external || [],
             'canvas'
           ]
-        }
+        };
       }
     }) : adapterStatic({
       pages: 'build/static',
@@ -45,7 +45,7 @@ const config = {
 
     vite: {
       ssr: {
-        noExternal: ['node-fetch', '@urql/svelte', '@cfworker/json-schema', 'dompurify']
+        noExternal: ['node-fetch', '@urql/svelte', '@cfworker/json-schema', 'dompurify', '@material/animation', '@material/select', '@material/textfield']
       },
       optimizeDeps: {
         exclude: ['@urql/svelte']

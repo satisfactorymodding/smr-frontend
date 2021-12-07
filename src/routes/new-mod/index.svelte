@@ -7,6 +7,7 @@
   import type { ModData } from '$lib/models/mods';
   import { base } from '$app/paths';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
+  import Card, { Content } from '@smui/card';
 
   let errorMessage = '';
   let errorToast = false;
@@ -39,7 +40,11 @@
 
 <h1 class="text-4xl my-4 font-bold">New Mod</h1>
 
-<ModForm {onSubmit} />
+<Card>
+  <Content>
+    <ModForm {onSubmit} />
+  </Content>
+</Card>
 
 <Toast bind:running={errorToast}>
   <span>{errorMessage}</span>

@@ -12,6 +12,9 @@
   import type { Form } from '@felte/core';
   import { base } from '$app/paths';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
+  import Card, { Content } from '@smui/card';
+  import Textfield from '@smui/textfield';
+  import type { Writable } from 'svelte/store';
 
   let errorMessage = '';
   let errorToast = false;
@@ -25,11 +28,12 @@
     username: zod.string().min(3).max(32)
   });
 
-  let userForm: Form<{ [key: string]: string }>['form'];
+  let form: Form<{ [key: string]: string }>['form'];
+  let data: Writable<{ username: string }>;
 
   $: {
     if ($user) {
-      const { form } = createForm({
+      const createdForm = createForm({
         initialValues: {
           username: $user.username
         },
@@ -52,7 +56,8 @@
         }
       });
 
-      userForm = form;
+      form = createdForm.form;
+      data = createdForm.data;
     }
   }
 
@@ -65,40 +70,43 @@
 
 <h1 class="text-4xl my-4 font-bold">Settings</h1>
 
-{#if !userForm}
-  <p>Please log in</p>
-{:else}
-  <form use:userForm>
-    <div class="grid grid-flow-row gap-6">
-      <div class="grid grid-flow-row gap-2">
-        <label for="avatar">Avatar:</label>
-        <input
-          id="avatar"
-          class="base-input"
-          name="avatar"
-          type="file"
-          accept="image/png,image/jpeg,image/gif"
-          placeholder="Avatar"
-        />
-        <ValidationMessage for="avatar" let:messages={message}>
-          <span class="validation-message">{message || ''}</span>
-        </ValidationMessage>
-      </div>
+<Card>
+  <Content>
+    {#if $user === null}
+      <p>Please log in</p>
+    {:else}
+      <form use:form>
+        <div class="grid grid-flow-row gap-6">
+          <div class="grid grid-flow-row gap-2">
+            <label for="avatar">Avatar:</label>
+            <input
+              id="avatar"
+              class="base-input"
+              name="avatar"
+              type="file"
+              accept="image/png,image/jpeg,image/gif"
+              placeholder="Avatar"
+            />
+            <ValidationMessage for="avatar" let:messages={message}>
+              <span class="validation-message">{message || ''}</span>
+            </ValidationMessage>
+          </div>
 
-      <div class="grid grid-flow-row gap-2">
-        <label for="username">Username:</label>
-        <input id="username" class="base-input" name="username" type="text" placeholder="Username" />
-        <ValidationMessage for="username" let:messages={message}>
-          <span class="validation-message">{message || ''}</span>
-        </ValidationMessage>
-      </div>
+          <div class="grid grid-flow-row gap-2">
+            <Textfield bind:value={$data.username} label="Username" required />
+            <ValidationMessage for="username" let:messages={message}>
+              <span class="validation-message">{message || ''}</span>
+            </ValidationMessage>
+          </div>
 
-      <div>
-        <input type="submit" value="Save" class="px-4 py-2 rounded text-base bg-blue-500 cursor-pointer" />
-      </div>
-    </div>
-  </form>
-{/if}
+          <div>
+            <input type="submit" value="Save" class="px-4 py-2 rounded text-base bg-blue-500 cursor-pointer" />
+          </div>
+        </div>
+      </form>
+    {/if}
+  </Content>
+</Card>
 
 <Toast bind:running={errorToast}>
   <span>{errorMessage}</span>

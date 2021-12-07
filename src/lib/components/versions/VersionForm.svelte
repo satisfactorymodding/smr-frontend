@@ -8,10 +8,17 @@
   import { markdown } from '$lib/utils/markdown';
   import { writable } from 'svelte/store';
   import { formatBytes } from '$lib/utils/pretty';
+  import Textfield from '@smui/textfield';
+  import Button from '@smui/button';
+  import { VersionStabilities } from '$lib/generated';
+  import Select, { Option } from '@smui/select';
 
   export let modReference: string;
   export let onSubmit: (data: VersionData) => Promise<void>;
-  export let initialValues: Omit<VersionData, 'file'> | undefined = undefined;
+  export let initialValues: Omit<VersionData, 'file'> = {
+    changelog: '',
+    stability: VersionStabilities.Alpha
+  };
   export let submitText = 'Create';
 
   export let editing = false;
@@ -37,12 +44,11 @@
 <form use:form>
   <div class="grid grid-flow-row gap-6">
     <div class="grid grid-flow-row gap-2">
-      <label for="stability">Stability:</label>
-      <select id="stability" class="base-input" name="stability">
-        <option value="alpha">Alpha</option>
-        <option value="beta">Beta</option>
-        <option value="release">Release</option>
-      </select>
+      <Select bind:value={$data.stability} label="Stability">
+        <Option value="alpha">Alpha</Option>
+        <Option value="beta">Beta</Option>
+        <Option value="release">Release</Option>
+      </Select>
       <ValidationMessage for="stability" let:messages={message}>
         <span class="validation-message">{message || ''}</span>
       </ValidationMessage>
@@ -115,8 +121,7 @@
 
     <div class="grid gap-6 split">
       <div class="grid grid-flow-row gap-2 auto-rows-max">
-        <label for="changelog">Changelog:</label>
-        <textarea class="base-input" id="changelog" name="changelog" placeholder="Changelog" rows="10" />
+        <Textfield textarea bind:value={$data.changelog} label="Changelog" required input$rows={10} />
         <ValidationMessage for="changelog" let:messages={message}>
           <span class="validation-message">{message || ''}</span>
         </ValidationMessage>
@@ -130,12 +135,7 @@
     </div>
 
     <div>
-      <input
-        type="submit"
-        {disabled}
-        value={submitText}
-        class="px-4 py-2 rounded text-base bg-blue-500 cursor-pointer disabled:opacity-50"
-      />
+      <Button variant="outlined" type="submit" {disabled}>{submitText}</Button>
     </div>
   </div>
 </form>

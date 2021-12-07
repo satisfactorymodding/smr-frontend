@@ -55,7 +55,7 @@
         <h1 class="text-4xl my-4 font-bold">{$user.data.getUser.username}</h1>
 
         {#if $me && $user.data.getUser.id === $me.id}
-          <a href="{base}/settings" class="py-2 px-4 rounded text-base bg-yellow-600">Settings</a>
+          <Button variant="outlined" href="{base}/settings">Settings</Button>
         {/if}
 
         <Button variant="outlined" on:click={() => (guidesTab = !guidesTab)}>

@@ -13,6 +13,7 @@
   import SMLVersionForm from '$lib/components/sml-versions/SMLVersionForm.svelte';
   import { base } from '$app/paths';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
+  import Card, { Content } from '@smui/card';
 
   export let smlVersionId!: string;
 
@@ -59,13 +60,17 @@
 
 <h1 class="text-4xl my-4 font-bold">Edit SMLVersion</h1>
 
-{#if $smlVersion.fetching}
-  <p>Loading...</p>
-{:else if $smlVersion.error}
-  <p>Oh no... {$smlVersion.error.message}</p>
-{:else}
-  <SMLVersionForm {onSubmit} {initialValues} submitText="Save" />
-{/if}
+<Card>
+  <Content>
+    {#if $smlVersion.fetching}
+      <p>Loading...</p>
+    {:else if $smlVersion.error}
+      <p>Oh no... {$smlVersion.error.message}</p>
+    {:else}
+      <SMLVersionForm {onSubmit} {initialValues} submitText="Save" />
+    {/if}
+  </Content>
+</Card>
 
 <Toast bind:running={errorToast}>
   <span>{errorMessage}</span>

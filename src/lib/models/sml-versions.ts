@@ -8,7 +8,7 @@ export type SMLVersionData = {
   stability: VersionStabilities;
   link: string;
   changelog: string;
-  date: Date;
+  date: string;
 };
 
 const versionRegex =
