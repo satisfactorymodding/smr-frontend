@@ -91,7 +91,7 @@
 
   let errorMessage = '';
   let errorToast = false;
-  let signingIn = true;
+  let signingIn = false;
 
   if (browser) {
     const signInMethod = localStorage.getItem('sign.in.method');
