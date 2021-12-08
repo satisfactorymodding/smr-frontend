@@ -10,25 +10,19 @@
   $: logo = tool.logo || assets + '/images/no_image.png';
 </script>
 
-<Card style="height: 100%">
+<Card class="h-full">
   <div class="grid sm:grid-cols-2 grid-cols-1 justify-items-center">
-    <div style="max-width: 200px; max-height: 200px; cursor: pointer" on:click={() => goto(tool.link)}>
-      <img
-        crossorigin="anonymous"
-        src={logo}
-        alt="{tool.name} Logo"
-        style="max-width: 100%; max-height: 100%; min-width: 200px; min-height: 200px;"
-        class="logo"
-      />
+    <div class="cursor-pointer card-image-container" on:click={() => goto(tool.link)}>
+      <img crossorigin="anonymous" src={logo} alt="{tool.name} Logo" class="logo max-w-full max-h-full" />
     </div>
-    <div style="display: flex; flex-direction: column; justify-content: space-between; width: 100%">
-      <Content style="display: flex; flex-direction: column; padding-bottom: 0;">
-        <div style="margin-bottom: 10px">
+    <div class="w-full flex flex-col justify-between">
+      <Content class="flex flex-col pb-0">
+        <div class="mb-2">
           <a href={tool.link}>
             <span class="text-xl text-gray-50 break-all">{tool.name}</span>
           </a>
 
-          <h5 class="text-sm" style="margin: 0;">
+          <h5 class="text-sm m-0">
             <span>{tool.author}</span>
           </h5>
         </div>
@@ -38,7 +32,7 @@
         </div>
       </Content>
 
-      <Actions style="align-self: end;">
+      <Actions class="self-end">
         <IconButton href={tool.link} aria-label="Go to tool page" title="Go to tool page">
           <Icon class="material-icons">info</Icon>
         </IconButton>

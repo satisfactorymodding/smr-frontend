@@ -20,33 +20,21 @@
     'latestVersions' in mod ? mod.latestVersions.alpha || mod.latestVersions.beta || mod.latestVersions.release : false;
 </script>
 
-<Card style="height: 100%">
+<Card class="h-full">
   <div class="grid sm:grid-cols-2 grid-cols-1 justify-items-center">
-    <div style="max-width: 200px; max-height: 200px; cursor: pointer" on:click={() => goto(base + `/mod/${mod.id}/`)}>
-      <img
-        crossorigin="anonymous"
-        src={logo}
-        alt="{mod.name} Logo"
-        style="max-width: 100%; max-height: 100%; min-width: 200px; min-height: 200px;"
-        class="logo"
-      />
+    <div class="cursor-pointer card-image-container" on:click={() => goto(base + `/mod/${mod.id}/`)}>
+      <img crossorigin="anonymous" src={logo} alt="{mod.name} Logo" class="logo max-w-full max-h-full" />
     </div>
-    <div style="display: flex; flex-direction: column; justify-content: space-between; width: 100%">
-      <Content style="display: flex; flex-direction: column; padding-bottom: 0;">
-        <div style="margin-bottom: 10px">
+    <div class="w-full flex flex-col justify-between">
+      <Content class="flex flex-col pb-0">
+        <div class="mb-2">
           <a href="{base}/mod/{mod.id}/">
             <span class="text-xl text-gray-50 break-all">{mod.name}</span>
           </a>
 
-          <h5 class="text-sm" style="margin: 0;">
-            <span>
-              <Icon class="material-icons" style="font-size: inherit; vertical-align: middle;">visibility</Icon>
-              {mod.views}
-            </span>
-            <span>
-              <Icon class="material-icons" style="font-size: inherit; vertical-align: middle;">download</Icon>
-              {mod.downloads}
-            </span>
+          <h5 class="text-sm m-0">
+            <span><Icon class="material-icons align-middle text-sm">visibility</Icon>{mod.views}</span>
+            <span><Icon class="material-icons align-middle text-sm">download</Icon>{mod.downloads}</span>
           </h5>
         </div>
 
@@ -55,7 +43,7 @@
         </div>
       </Content>
 
-      <Actions style="align-self: end;">
+      <Actions class="self-end">
         <IconButton href="{base}/mod/{mod.id}/" aria-label="Go to mod page" title="Go to mod page">
           <Icon class="material-icons">info</Icon>
         </IconButton>

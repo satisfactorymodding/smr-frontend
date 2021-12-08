@@ -68,7 +68,7 @@
   {:else if $versions.error}
     <Content>Oh no... {$versions.error.message}</Content>
   {:else}
-    <DataTable table$aria-label="People list" style="max-width: 100%;">
+    <DataTable class="max-w-full">
       <Head>
         <Row>
           <Cell>Mod</Cell>

@@ -91,7 +91,7 @@
 
   let errorMessage = '';
   let errorToast = false;
-  let signingIn = false;
+  let signingIn = true;
 
   if (browser) {
     const signInMethod = localStorage.getItem('sign.in.method');
@@ -153,8 +153,8 @@
     <div class="grid grid-flow-row gap-4">
       {#if signingIn}
         <p>Logging in...</p>
-        <div style="display: flex; justify-content: center">
-          <CircularProgress style="height: 32px; width: 32px;" indeterminate />
+        <div class="flex justify-center">
+          <CircularProgress class="h-10 w-10" indeterminate />
         </div>
       {:else if $oauthOptions.fetching}
         <!-- TODO Placeholders -->

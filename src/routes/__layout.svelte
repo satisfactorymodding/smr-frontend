@@ -227,7 +227,7 @@
       <Scrim fixed={false} />
     {/if}
 
-    <AppContent class="app-content" style="overflow: auto; width: 100%; padding: 20px 15px;">
+    <AppContent class="app-content w-full overflow-auto py-4 px-3">
       <main class="main-content">
         <slot />
       </main>

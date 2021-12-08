@@ -67,7 +67,7 @@
   {:else if $mods.error}
     <Content>Oh no... {$mods.error.message}</Content>
   {:else}
-    <DataTable table$aria-label="People list" style="max-width: 100%;">
+    <DataTable class="max-w-full">
       <Head>
         <Row>
           <Cell>Mod</Cell>
