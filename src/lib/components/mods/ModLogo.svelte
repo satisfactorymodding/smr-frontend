@@ -10,5 +10,5 @@
 </script>
 
 <div>
-  <img class="rounded-lg max-w-lg" src={logo} alt="Logo for {modName}" />
+  <img class="rounded-lg sm:max-w-lg max-w-full" src={logo} alt="Logo for {modName}" />
 </div>

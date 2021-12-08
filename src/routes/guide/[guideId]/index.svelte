@@ -76,19 +76,21 @@
 {:else if $guide.error}
   <p>Oh no... {$guide.error.message}</p>
 {:else if $guide.data.getGuide}
-  <div class="grid gap-8 grid-auto-max">
+  <div class="grid gap-8 grid-auto-max xlx:grid-flow-row">
     <div class="grid grid-cols-1 auto-rows-min gap-4">
-      <div class="grid grid-flow-col grid-auto-max h-auto gap-4 items-center">
+      <div class="flex flex-wrap h-auto justify-between">
         <h1 class="text-4xl my-4 font-bold">{$guide.data.getGuide.name}</h1>
 
-        {#if canUserEdit}
-          <Button variant="outlined" on:click={() => goto(base + '/guide/' + guideId + '/edit')}>Edit</Button>
-          <Button variant="outlined" on:click={() => deleteDialogOpen.set(true)}>Delete</Button>
-        {/if}
+        <div>
+          {#if canUserEdit}
+            <Button variant="outlined" on:click={() => goto(base + '/guide/' + guideId + '/edit')}>Edit</Button>
+            <Button variant="outlined" on:click={() => deleteDialogOpen.set(true)}>Delete</Button>
+          {/if}
+        </div>
       </div>
       <Card>
         <Content>
-          <div class="markdown-content">
+          <div class="markdown-content break-all">
             {#await markdown($guide.data.getGuide.guide) then guideRendered}
               <p>{@html guideRendered}</p>
             {/await}
@@ -123,7 +125,9 @@
 {/if}
 
 <style lang="postcss">
-  .grid-auto-max {
-    grid-template-columns: auto max-content max-content;
+  @media (min-width: 1279px) {
+    .grid-auto-max {
+      grid-template-columns: auto max-content;
+    }
   }
 </style>

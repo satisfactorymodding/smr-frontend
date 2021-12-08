@@ -62,16 +62,16 @@
   }
 </script>
 
-<div class="mb-5 ml-auto flex justify-between">
+<div class="ml-auto flex flex-wrap justify-between">
   {#if newMod}
-    <Button variant="outlined" href="{base}/new-mod">New Mod</Button>
+    <Button variant="outlined" href="{base}/new-mod" class="mb-5">New Mod</Button>
   {/if}
 
   {#if showSearch}
-    <div class="search-container">
-      <Paper class="search-paper" elevation={6}>
+    <div class="search-container mb-5 sm:px-4">
+      <Paper class="search-paper mr-3" elevation={6}>
         <Icon class="material-icons">search</Icon>
-        <Input bind:value={searchField} on:keypress={handleKeyDown} placeholder="Search" class="solo-input" />
+        <Input bind:value={searchField} on:keypress={handleKeyDown} placeholder="Search" />
       </Paper>
       <Fab on:click={() => goto(base + '/mods?q=' + search)} color="primary" mini class="solo-fab">
         <Icon class="material-icons">arrow_forward</Icon>
@@ -79,7 +79,7 @@
     </div>
   {/if}
 
-  <div>
+  <div class="mb-5">
     <PageControls totalPages={Math.ceil(totalMods / perPage)} currentPage={page} />
   </div>
 </div>
@@ -115,8 +115,6 @@
     align-items: center;
     flex-grow: 1;
     max-width: 600px;
-    margin: 0 12px;
-    padding: 0 12px;
     height: 48px;
   }
 

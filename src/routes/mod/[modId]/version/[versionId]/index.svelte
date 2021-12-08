@@ -79,9 +79,9 @@
 {:else if $version.error}
   <p>Oh no... {$version.error.message}</p>
 {:else if $version.data.getVersion}
-  <div class="grid gap-8 grid-auto-max">
+  <div class="grid gap-8 grid-auto-max xlx:grid-flow-row">
     <div class="grid grid-cols-1 auto-rows-min gap-8">
-      <div class="grid grid-flow-col grid-auto-max h-auto items-center">
+      <div class="flex flex-wrap h-auto justify-between">
         <h1 class="text-4xl my-4 font-bold">
           {$version.data.getVersion.mod.name}
           Version {$version.data.getVersion.version}
@@ -105,6 +105,11 @@
           <Button variant="outlined" href={base}>
             <Label>Install</Label>
             <Icon class="material-icons">download</Icon>
+          </Button>
+
+          <Button variant="outlined" href={base + '/mod/' + modId}>
+            <Label>Mod</Label>
+            <Icon class="material-icons">extension</Icon>
           </Button>
         </div>
       </div>
@@ -136,7 +141,9 @@
 {/if}
 
 <style lang="postcss">
-  .grid-auto-max {
-    grid-template-columns: auto max-content;
+  @media (min-width: 1279px) {
+    .grid-auto-max {
+      grid-template-columns: auto max-content;
+    }
   }
 </style>

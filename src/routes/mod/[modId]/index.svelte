@@ -83,24 +83,28 @@
 {:else if $mod.error}
   <p>Oh no... {$mod.error.message}</p>
 {:else if $mod.data.getMod}
-  <div class="grid gap-8 grid-auto-max">
+  <div class="grid gap-8 grid-auto-max xlx:grid-flow-row">
     <div class="grid grid-cols-1 auto-rows-min gap-4">
-      <div class="grid grid-flow-col grid-auto-max h-auto gap-4 items-center">
+      <div class="flex flex-wrap h-auto justify-between">
         <h1 class="text-4xl my-4 font-bold">{$mod.data.getMod.name}</h1>
 
-        {#if canUserEdit}
-          <Button variant="outlined" on:click={() => goto(base + '/mod/' + modId + '/edit')}>Edit</Button>
-          <Button variant="outlined" on:click={() => deleteDialogOpen.set(true)}>Delete</Button>
-          <Button variant="outlined" on:click={() => goto(base + '/mod/' + modId + '/new-version')}>New Version</Button>
-        {/if}
-
-        <Button variant="outlined" on:click={() => (versionsTab = !versionsTab)}>
-          {#if !versionsTab}
-            Versions
-          {:else}
-            Description
+        <div>
+          {#if canUserEdit}
+            <Button variant="outlined" on:click={() => goto(base + '/mod/' + modId + '/edit')}>Edit</Button>
+            <Button variant="outlined" on:click={() => deleteDialogOpen.set(true)}>Delete</Button>
+            <Button variant="outlined" on:click={() => goto(base + '/mod/' + modId + '/new-version')}
+              >New Version</Button
+            >
           {/if}
-        </Button>
+
+          <Button variant="outlined" on:click={() => (versionsTab = !versionsTab)}>
+            {#if !versionsTab}
+              Versions
+            {:else}
+              Description
+            {/if}
+          </Button>
+        </div>
       </div>
       {#if !versionsTab}
         <ModDescription mod={$mod.data.getMod} />
@@ -137,7 +141,9 @@
 {/if}
 
 <style lang="postcss">
-  .grid-auto-max {
-    grid-template-columns: auto max-content max-content max-content max-content;
+  @media (min-width: 1279px) {
+    .grid-auto-max {
+      grid-template-columns: auto max-content;
+    }
   }
 </style>

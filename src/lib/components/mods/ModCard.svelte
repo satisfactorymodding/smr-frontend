@@ -20,8 +20,8 @@
     'latestVersions' in mod ? mod.latestVersions.alpha || mod.latestVersions.beta || mod.latestVersions.release : false;
 </script>
 
-<Card style="height: 100%; min-width: 450px">
-  <div style="display: flex; height: 100%;">
+<Card style="height: 100%">
+  <div class="grid sm:grid-cols-2 grid-cols-1 justify-items-center">
     <div style="max-width: 200px; max-height: 200px; cursor: pointer" on:click={() => goto(base + `/mod/${mod.id}/`)}>
       <img
         crossorigin="anonymous"
@@ -35,22 +35,22 @@
       <Content style="display: flex; flex-direction: column; padding-bottom: 0;">
         <div style="margin-bottom: 10px">
           <a href="{base}/mod/{mod.id}/">
-            <span class="text-xl text-gray-50">{mod.name}</span>
+            <span class="text-xl text-gray-50 break-all">{mod.name}</span>
           </a>
 
           <h5 class="text-sm" style="margin: 0;">
-            <span
-              ><Icon class="material-icons" style="font-size: inherit; vertical-align: middle;">visibility</Icon>
-              {mod.views}</span
-            >
-            <span
-              ><Icon class="material-icons" style="font-size: inherit; vertical-align: middle;">download</Icon>
-              {mod.downloads}</span
-            >
+            <span>
+              <Icon class="material-icons" style="font-size: inherit; vertical-align: middle;">visibility</Icon>
+              {mod.views}
+            </span>
+            <span>
+              <Icon class="material-icons" style="font-size: inherit; vertical-align: middle;">download</Icon>
+              {mod.downloads}
+            </span>
           </h5>
         </div>
 
-        <div>
+        <div class="break-all">
           {mod.short_description}
         </div>
       </Content>

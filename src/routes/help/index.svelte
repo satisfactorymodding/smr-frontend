@@ -207,7 +207,7 @@ Inline \`code\` has \`back-ticks around\` it.
 
 Blocks of code are either fenced by lines with three back-ticks <code>\`\`\`</code>, or are indented with four spaces. I recommend only using the fenced code blocks -- they're easier and only they support syntax highlighting.
 
-<pre lang='no-highlight'><code>\`\`\`javascript
+<pre lang="no-highlight"><code>\`\`\`javascript
 var s = "JavaScript syntax highlighting";
 alert(s);
 \`\`\`
@@ -396,7 +396,7 @@ This line is way far down
   <MetaDescriptors description="Help for submitting modules to the Satsifactory Mod Repository" title="Help" />
 </svelte:head>
 
-<div class="grid grid-flow-row gap-4">
+<div>
   <div class="grid gap-4 grid-flow-col grid-cols-2">
     <Card>
       <Content>
@@ -439,14 +439,14 @@ This line is way far down
     </Card>
   </div>
 
-  <div class="markdown-content">
-    <h1 class="text-4xl my-4 font-bold">Markdown</h1>
-    <Card>
-      <Content>
+  <h1 class="text-4xl my-4 font-bold">Markdown</h1>
+  <Card>
+    <Content>
+      <div class="markdown-content">
         {#await markdownHtml then markdownHtmlRendered}
           <p>{@html markdownHtmlRendered}</p>
         {/await}
-      </Content>
-    </Card>
-  </div>
+      </div>
+    </Content>
+  </Card>
 </div>

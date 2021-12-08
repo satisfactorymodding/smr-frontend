@@ -11,5 +11,5 @@
 
 <div>
   <!-- TODO Fallback to default Logo -->
-  <img class="rounded-lg max-w-lg" src={userAvatar} alt="Avatar for {username}" />
+  <img class="rounded-lg sm:max-w-lg max-w-full" src={userAvatar} alt="Avatar for {username}" />
 </div>

@@ -10,8 +10,8 @@
   $: logo = tool.logo || assets + '/images/no_image.png';
 </script>
 
-<Card style="height: 100%; min-width: 450px">
-  <div style="display: flex; height: 100%;">
+<Card style="height: 100%">
+  <div class="grid sm:grid-cols-2 grid-cols-1 justify-items-center">
     <div style="max-width: 200px; max-height: 200px; cursor: pointer" on:click={() => goto(tool.link)}>
       <img
         crossorigin="anonymous"
@@ -25,7 +25,7 @@
       <Content style="display: flex; flex-direction: column; padding-bottom: 0;">
         <div style="margin-bottom: 10px">
           <a href={tool.link}>
-            <span class="text-xl text-gray-50">{tool.name}</span>
+            <span class="text-xl text-gray-50 break-all">{tool.name}</span>
           </a>
 
           <h5 class="text-sm" style="margin: 0;">

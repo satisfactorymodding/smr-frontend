@@ -49,22 +49,24 @@
 {:else if $user.error}
   <p>Oh no... {$user.error.message}</p>
 {:else if $user.data.getUser}
-  <div class="grid gap-8 grid-auto-max">
+  <div class="grid gap-8 grid-auto-max xlx:grid-flow-row">
     <div class="grid grid-cols-1 auto-rows-min gap-8">
-      <div class="grid grid-flow-col grid-auto-max h-auto gap-4 items-center">
+      <div class="flex flex-wrap h-auto justify-between">
         <h1 class="text-4xl my-4 font-bold">{$user.data.getUser.username}</h1>
 
-        {#if $me && $user.data.getUser.id === $me.id}
-          <Button variant="outlined" href="{base}/settings">Settings</Button>
-        {/if}
-
-        <Button variant="outlined" on:click={() => (guidesTab = !guidesTab)}>
-          {#if !guidesTab}
-            Guides
-          {:else}
-            Mods
+        <div>
+          {#if $me && $user.data.getUser.id === $me.id}
+            <Button variant="outlined" href="{base}/settings">Settings</Button>
           {/if}
-        </Button>
+
+          <Button variant="outlined" on:click={() => (guidesTab = !guidesTab)}>
+            {#if !guidesTab}
+              Guides
+            {:else}
+              Mods
+            {/if}
+          </Button>
+        </div>
       </div>
       {#if !guidesTab}
         <div class="grid 3xl:grid-cols-3 2xl:grid-cols-2 grid-cols-1 gap-4">
@@ -101,7 +103,9 @@
 {/if}
 
 <style lang="postcss">
-  .grid-auto-max {
-    grid-template-columns: auto max-content max-content;
+  @media (min-width: 1279px) {
+    .grid-auto-max {
+      grid-template-columns: auto max-content;
+    }
   }
 </style>

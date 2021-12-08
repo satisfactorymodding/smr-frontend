@@ -20,7 +20,7 @@
   import { setClient } from '@urql/svelte';
   import TopAppBar, { Row, Section, Title } from '@smui/top-app-bar';
   import Drawer, { AppContent, Content, Scrim } from '@smui/drawer';
-  import List, { Item, Text, Graphic } from '@smui/list';
+  import List, { Item, Text, Graphic, Separator } from '@smui/list';
   import IconButton from '@smui/icon-button';
   import Button, { Label, Icon } from '@smui/button';
   import { page } from '$app/stores';
@@ -37,14 +37,17 @@
 
   let open = false;
   let drawerVariant: 'modal' | undefined = 'modal';
+  let hideTopElements = true;
   if (browser) {
     const mediaQuery = window.matchMedia('(min-width: 1280px)');
 
     mediaQuery.addEventListener('change', (data) => {
       drawerVariant = data.matches ? undefined : 'modal';
+      hideTopElements = !data.matches;
     });
 
     drawerVariant = mediaQuery.matches ? undefined : 'modal';
+    hideTopElements = !mediaQuery.matches;
   }
 
   let menu: MenuComponentDev;
@@ -74,47 +77,54 @@
         {/if}
         <Title>FICSIT Augmentation Database</Title>
       </Section>
-      <Section align="end" toolbar>
-        <Button color="secondary" variant="outlined" class="mr-3" target="_blank" href="https://smm.ficsit.app">
-          <Label>Mod Manager</Label>
-          <Icon class="material-icons">file_download</Icon>
-        </Button>
-
-        {#if $user === null}
-          <Button color="secondary" variant="outlined" on:click={() => loginDialogOpen.set(true)}>
-            <Label>Sign In</Label>
-            <Icon class="material-icons">login</Icon>
+      {#if !hideTopElements}
+        <Section align="end" toolbar>
+          <Button color="secondary" variant="outlined" class="mr-3" target="_blank" href="https://smm.ficsit.app">
+            <Label>Mod Manager</Label>
+            <Icon class="material-icons">file_download</Icon>
           </Button>
-        {:else}
-          {#if isAdmin}
-            <Button color="secondary" variant="outlined" class="mr-3" on:click={() => goto(base + '/admin')}>
-              <Label>Admin</Label>
-              <Icon class="material-icons">admin_panel_settings</Icon>
+
+          {#if $user === null}
+            <Button color="secondary" variant="outlined" on:click={() => loginDialogOpen.set(true)}>
+              <Label>Sign In</Label>
+              <Icon class="material-icons">login</Icon>
             </Button>
+          {:else}
+            {#if isAdmin}
+              <Button color="secondary" variant="outlined" class="mr-3" on:click={() => goto(base + '/admin')}>
+                <Label>Admin</Label>
+                <Icon class="material-icons">admin_panel_settings</Icon>
+              </Button>
+            {/if}
+
+            <div>
+              <Button
+                variant="outlined"
+                color="secondary"
+                on:click={() => menu.setOpen(true)}
+                class="grid grid-flow-col"
+              >
+                <div class="mr-3">{$user.username}</div>
+                <div class="rounded-full bg-cover w-7 h-7" style={`background-image: url("${$user.avatar}")`} />
+              </Button>
+
+              <Menu bind:this={menu}>
+                <List>
+                  <Item on:SMUI:action={() => goto(base + '/user/' + $user.id)}>
+                    <Text>Profile</Text>
+                  </Item>
+                  <Item on:SMUI:action={() => goto(base + '/settings')}>
+                    <Text>Settings</Text>
+                  </Item>
+                  <Item on:SMUI:action={() => userToken.set(null)}>
+                    <Text>Logout</Text>
+                  </Item>
+                </List>
+              </Menu>
+            </div>
           {/if}
-
-          <div>
-            <Button variant="outlined" color="secondary" on:click={() => menu.setOpen(true)} class="grid grid-flow-col">
-              <div class="mr-3">{$user.username}</div>
-              <div class="rounded-full bg-cover w-7 h-7" style={`background-image: url("${$user.avatar}")`} />
-            </Button>
-
-            <Menu bind:this={menu}>
-              <List>
-                <Item on:SMUI:action={() => goto(base + '/user/' + $user.id)}>
-                  <Text>Profile</Text>
-                </Item>
-                <Item on:SMUI:action={() => goto(base + '/settings')}>
-                  <Text>Settings</Text>
-                </Item>
-                <Item on:SMUI:action={() => userToken.set(null)}>
-                  <Text>Logout</Text>
-                </Item>
-              </List>
-            </Menu>
-          </div>
-        {/if}
-      </Section>
+        </Section>
+      {/if}
     </Row>
   </TopAppBar>
 
@@ -122,6 +132,38 @@
     <Drawer variant={drawerVariant} fixed={false} bind:open>
       <Content>
         <div class="drawer-content">
+          {#if hideTopElements}
+            <List>
+              {#if $user === null}
+                <Item on:click={() => loginDialogOpen.set(true)}>
+                  <Graphic class="material-icons">login</Graphic>
+                  <Text>Sign In</Text>
+                </Item>
+              {:else}
+                {#if isAdmin}
+                  <Item on:click={() => goto(base + '/admin')} activated={currentPath.startsWith('/admin')}>
+                    <Graphic class="material-icons">admin_panel_settings</Graphic>
+                    <Text>Admin</Text>
+                  </Item>
+                {/if}
+
+                <Item on:click={() => goto(base + '/user/' + $user.id)} activated={currentPath.startsWith('/user')}>
+                  <Graphic>
+                    <div class="rounded-full bg-cover w-7 h-7" style={`background-image: url("${$user.avatar}")`} />
+                  </Graphic>
+                  <Text>{$user.username}</Text>
+                </Item>
+
+                <Item on:click={() => userToken.set(null)}>
+                  <Graphic class="material-icons">logout</Graphic>
+                  <Text>Logout</Text>
+                </Item>
+              {/if}
+            </List>
+
+            <Separator />
+          {/if}
+
           <List>
             <Item href="{base}/" activated={currentPath === '/'}>
               <Graphic class="material-icons">home</Graphic>
@@ -170,6 +212,12 @@
               <Graphic class="material-icons">api</Graphic>
               <Text>API</Text>
             </Item>
+            {#if hideTopElements}
+              <Item target="_blank" href="https://smm.ficsit.app">
+                <Graphic class="material-icons">file_download</Graphic>
+                <Text>Mod Manager</Text>
+              </Item>
+            {/if}
           </List>
         </div>
       </Content>
