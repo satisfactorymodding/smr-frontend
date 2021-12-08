@@ -1,6 +1,6 @@
 <script lang="ts">
   import { operationStore, query } from '@urql/svelte';
-  import { GetModsDocument } from '$lib/generated';
+  import { GetModsDocument, ModFields, Order } from '$lib/generated';
   import ModCard from './ModCard.svelte';
   import PageControls from '$lib/components/utils/PageControls.svelte';
   import { writable } from 'svelte/store';
@@ -21,15 +21,20 @@
 
   // TODO Selectable
   const perPage = 40;
+  let order: Order = Order.Desc;
+  let orderBy: ModFields = ModFields.LastVersionDate;
 
-  const mods = operationStore(GetModsDocument, { offset: 0, limit: perPage, search });
+  const mods = operationStore(GetModsDocument, { offset: 0, limit: perPage, search, order, orderBy });
 
   const page = writable(1);
   let totalMods: number;
 
   let searchField = search;
   $: {
+    orderBy = search ? ModFields.Search : ModFields.LastVersionDate;
+
     $mods.variables.search = search;
+    $mods.variables.orderBy = orderBy;
     $mods.reexecute();
   }
 

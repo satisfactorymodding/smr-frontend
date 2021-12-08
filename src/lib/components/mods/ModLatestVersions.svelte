@@ -1,9 +1,9 @@
 <script lang="ts">
   import type { Version } from '$lib/generated';
-  import Icon from '@iconify/svelte';
   import { API_REST } from '$lib/core';
   import { base } from '$app/paths';
   import Card, { Content } from '@smui/card';
+  import { Icon } from '@smui/common';
 
   type ILatestVersions = {
     alpha?: Pick<Version, 'id' | 'link' | 'version' | 'created_at'>;
@@ -12,9 +12,9 @@
   };
 
   const stabilities = {
-    alpha: 'mdi-light:alpha',
-    beta: 'mdi-light:beta',
-    release: 'mdi-light:alert-decagram'
+    release: 'new_releases',
+    beta: 'warning',
+    alpha: 'report'
   };
 
   export let latestVersions!: ILatestVersions;
@@ -30,7 +30,7 @@
         {#if latestVersions[stability]}
           <div class="version">
             <div class="text-4xl w-14 h-14 p-2.5">
-              <Icon icon={stabilities[stability]} inline={true} class="inline-block" />
+              <Icon class="material-icons">{stabilities[stability]}</Icon>
             </div>
             <div class="grid grid-flow-row">
               <a href="{base}/mod/{modId}/version/{latestVersions[stability].id}/" class="text-yellow-500 underline"
@@ -43,7 +43,7 @@
                 href={API_REST + '/mod/' + modId + '/versions/' + latestVersions[stability].id + '/download'}
                 class="text-yellow-500 underline"
               >
-                <Icon icon="mdi-light:download" inline={true} class="inline-block" />
+                <Icon class="material-icons">download</Icon>
               </a>
             </div>
           </div>
