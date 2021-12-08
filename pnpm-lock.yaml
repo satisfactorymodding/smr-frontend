@@ -75,6 +75,7 @@ specifiers:
   '@sveltejs/kit': ^1.0.0-next.201
   '@types/js-cookie': ^3.0.1
   '@types/marked': ^4.0.1
+  '@types/prismjs': ^1.16.6
   '@typescript-eslint/eslint-plugin': ^5.5.0
   '@typescript-eslint/parser': ^5.5.0
   '@urql/core': ^2.3.5
@@ -108,6 +109,7 @@ specifiers:
   postcss-preset-env: ^7.0.1
   prettier: ~2.5.0
   prettier-plugin-svelte: ^2.5.0
+  prismjs: ^1.25.0
   rimraf: ^3.0.2
   smui-theme: ^6.0.0-beta.4
   svelte: ^3.44.2
@@ -196,6 +198,7 @@ devDependencies:
   '@sveltejs/kit': 1.0.0-next.201_svelte@3.44.2
   '@types/js-cookie': 3.0.1
   '@types/marked': 4.0.1
+  '@types/prismjs': 1.16.6
   '@typescript-eslint/eslint-plugin': 5.5.0_2a935f58a3cc0b0f42856ccf18d8367f
   '@typescript-eslint/parser': 5.5.0_eslint@8.3.0+typescript@4.5.2
   '@urql/core': 2.3.5_graphql@16.0.1
@@ -229,6 +232,7 @@ devDependencies:
   postcss-preset-env: 7.0.1
   prettier: 2.5.0
   prettier-plugin-svelte: 2.5.0_prettier@2.5.0+svelte@3.44.2
+  prismjs: 1.25.0
   rimraf: 3.0.2
   smui-theme: 6.0.0-beta.4
   svelte: 3.44.2
@@ -2415,6 +2419,10 @@ packages:
 
   /@types/parse-json/4.0.0:
     resolution: {integrity: sha512-//oorEZjL6sbPcKUaCdIGlIUeH26mgzimjBB77G6XRgnDl/L5wOnpyBGRe/Mmf5CVW3PwEBE1NjiMZ/ssFh4wA==}
+    dev: true
+
+  /@types/prismjs/1.16.6:
+    resolution: {integrity: sha512-dTvnamRITNqNkqhlBd235kZl3KfVJQQoT5jkXeiWSBK7i4/TLKBNLV0S1wOt8gy4E2TY722KLtdmv2xc6+Wevg==}
     dev: true
 
   /@types/pug/2.0.5:
@@ -7007,6 +7015,10 @@ packages:
   /pretty-hrtime/1.0.3:
     resolution: {integrity: sha1-t+PqQkNaTJsnWdmeDyAesZWALuE=}
     engines: {node: '>= 0.8'}
+    dev: true
+
+  /prismjs/1.25.0:
+    resolution: {integrity: sha512-WCjJHl1KEWbnkQom1+SzftbtXMKQoezOCYs5rECqMN+jP+apI7ftoflyqigqzopSO3hMhTEb0mFClA8lkolgEg==}
     dev: true
 
   /process-nextick-args/2.0.1:
