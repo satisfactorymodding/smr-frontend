@@ -32,19 +32,24 @@
 
     let first = true;
     userToken.subscribe((token) => {
+      console.log('User token changed:', token);
       if (token) {
         const oneMonth = new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000);
         cookie.set('token', token, {
           domain: window.location.hostname,
           expires: oneMonth
         });
+        console.log('cookie set');
       } else if (!first) {
         logoutMutation(undefined, {
           requestPolicy: 'network-only'
         })
           .catch()
           .then(() => {
-            cookie.remove('token');
+            cookie.remove('token', {
+              domain: window.location.hostname
+            });
+            console.log('cookie removed');
           });
       }
 
