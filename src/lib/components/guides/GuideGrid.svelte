@@ -6,6 +6,7 @@
   import { writable } from 'svelte/store';
   import { base } from '$app/paths';
   import Button from '@smui/button';
+  import { user } from '$lib/stores/user';
 
   export let colCount: 4 | 5 = 4;
   export let newGuide = false;
@@ -34,7 +35,7 @@
 </script>
 
 <div class="mb-5 ml-auto flex justify-between">
-  {#if newGuide}
+  {#if newGuide && $user !== null}
     <Button variant="outlined" href="{base}/new-guide">New Guide</Button>
   {/if}
 

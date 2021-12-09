@@ -12,6 +12,7 @@
   import { Icon } from '@smui/common';
   import { goto } from '$app/navigation';
   import { page as storePage } from '$app/stores';
+  import { user } from '$lib/stores/user';
 
   export let colCount: 4 | 5 = 4;
   export let newMod = false;
@@ -68,7 +69,7 @@
 </script>
 
 <div class="ml-auto flex flex-wrap justify-between">
-  {#if newMod}
+  {#if newMod && $user !== null}
     <Button variant="outlined" href="{base}/new-mod" class="mb-5">New Mod</Button>
   {/if}
 
