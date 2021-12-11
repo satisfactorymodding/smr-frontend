@@ -10,7 +10,7 @@
 </script>
 
 <Card class="h-full">
-  <div class="grid sm:grid-cols-2 grid-cols-1 justify-items-center">
+  <div class="grid grid-max-auto sm:grid-cols-2 grid-cols-1 justify-items-center">
     <div class="cursor-pointer card-image-container" on:click={() => goto(base + `/guide/${guide.id}/`)}>
       <img crossorigin="anonymous" src={logo} alt="{guide.name} Logo" class="logo max-w-full max-h-full" />
     </div>
@@ -39,3 +39,16 @@
     </div>
   </div>
 </Card>
+
+<style lang="postcss">
+  .logo {
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+  }
+
+  @media (min-width: 1279px) {
+    .grid-max-auto {
+      grid-template-columns: max-content auto;
+    }
+  }
+</style>
