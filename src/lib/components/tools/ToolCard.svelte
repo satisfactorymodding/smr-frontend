@@ -19,7 +19,7 @@
       <Content class="flex flex-col pb-0">
         <div class="mb-2">
           <a href={tool.link}>
-            <span class="text-xl text-gray-50 break-all">{tool.name}</span>
+            <span class="text-xl text-gray-50 break-words">{tool.name}</span>
           </a>
 
           <h5 class="text-sm m-0">

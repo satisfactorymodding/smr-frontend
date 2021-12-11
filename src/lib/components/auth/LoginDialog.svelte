@@ -44,9 +44,7 @@
         })
           .catch()
           .then(() => {
-            while (typeof cookie.get('token') === 'string') {
-              cookie.remove('token');
-            }
+            cookie.remove('token');
           });
       }
 

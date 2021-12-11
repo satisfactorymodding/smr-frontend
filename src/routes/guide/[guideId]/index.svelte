@@ -90,7 +90,7 @@
       </div>
       <Card>
         <Content>
-          <div class="markdown-content break-all">
+          <div class="markdown-content break-words">
             {#await markdown($guide.data.getGuide.guide) then guideRendered}
               <p>{@html guideRendered}</p>
             {/await}

@@ -10,7 +10,7 @@
 
 <Card>
   <Content>
-    <div class="markdown-content break-all">
+    <div class="markdown-content break-words">
       {#await description then descriptionRendered}
         <p>{@html descriptionRendered}</p>
       {/await}

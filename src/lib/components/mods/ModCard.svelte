@@ -29,7 +29,7 @@
       <Content class="flex flex-col pb-0">
         <div class="mb-2">
           <a href="{base}/mod/{mod.id}/">
-            <span class="text-xl text-gray-50 break-all">{mod.name}</span>
+            <span class="text-xl text-gray-50 break-words">{mod.name}</span>
           </a>
 
           <h5 class="text-sm m-0">
@@ -38,7 +38,7 @@
           </h5>
         </div>
 
-        <div class="break-all">
+        <div class="break-words">
           {mod.short_description}
         </div>
       </Content>
