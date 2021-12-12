@@ -13,6 +13,7 @@
   import { goto } from '$app/navigation';
   import { page as storePage } from '$app/stores';
   import { user } from '$lib/stores/user';
+  import FicsitCard from '$lib/components/general/FicsitCard.svelte';
 
   export let colCount: 4 | 5 = 4;
   export let newMod = false;
@@ -91,7 +92,11 @@
 </div>
 
 {#if $mods.fetching}
-  <p>Loading...</p>
+  <div class="grid {gridClasses} gap-4">
+    {#each Array(perPage) as _}
+      <FicsitCard fake />
+    {/each}
+  </div>
 {:else if $mods.error}
   <p>Oh no... {$mods.error.message}</p>
 {:else}

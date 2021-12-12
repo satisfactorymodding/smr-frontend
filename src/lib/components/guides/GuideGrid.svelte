@@ -7,6 +7,7 @@
   import { base } from '$app/paths';
   import Button from '@smui/button';
   import { user } from '$lib/stores/user';
+  import FicsitCard from '$lib/components/general/FicsitCard.svelte';
 
   export let colCount: 4 | 5 = 4;
   export let newGuide = false;
@@ -45,7 +46,11 @@
 </div>
 
 {#if $guides.fetching}
-  <p>Loading...</p>
+  <div class="grid {gridClasses} gap-4">
+    {#each Array(perPage) as _}
+      <FicsitCard fake />
+    {/each}
+  </div>
 {:else if $guides.error}
   <p>Oh no... {$guides.error.message}</p>
 {:else}
