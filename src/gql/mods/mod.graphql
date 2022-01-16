@@ -1,5 +1,5 @@
-query GetMod($mod: ModID!) {
-  getMod(modId: $mod) {
+query GetMod($mod: String!) {
+  mod: getModByIdOrReference(modIdOrReference: $mod) {
     id
     created_at
     name

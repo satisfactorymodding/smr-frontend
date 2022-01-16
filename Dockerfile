@@ -17,7 +17,7 @@ COPY . .
 RUN pnpm run prepare && pnpm run $CODEGEN && pnpm run $BUILD
 
 
-FROM ghcr.io/vilsol/yeet:latest as yeet
+FROM ghcr.io/vilsol/yeet:v0.5.2 as yeet
 
 FROM node:16-alpine
 

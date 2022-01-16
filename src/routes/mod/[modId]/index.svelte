@@ -47,7 +47,7 @@
   });
 
   $: canUserEdit =
-    $user?.roles?.deleteContent || $mod?.data?.getMod?.authors?.findIndex((author) => author.user_id == $user?.id) >= 0;
+    $user?.roles?.deleteContent || $mod?.data?.mod?.authors?.findIndex((author) => author.user_id == $user?.id) >= 0;
 
   const deleteDialogOpen = writable<boolean>(false);
 
@@ -70,14 +70,14 @@
 </script>
 
 <svelte:head>
-  {#if !$mod.fetching && !$mod.error && $mod.data.getMod}
+  {#if !$mod.fetching && !$mod.error && $mod.data.mod}
     <MetaDescriptors
-      description={$mod.data.getMod.short_description}
-      title={$mod.data.getMod.name}
-      image={$mod.data.getMod.logo}
+      description={$mod.data.mod.short_description}
+      title={$mod.data.mod.name}
+      image={$mod.data.mod.logo}
     />
 
-    {@html serializeSchema(modSchema($mod.data.getMod))}
+    {@html serializeSchema(modSchema($mod.data.mod))}
   {/if}
 </svelte:head>
 
@@ -85,10 +85,10 @@
   <p>Loading...</p>
 {:else if $mod.error}
   <p>Oh no... {$mod.error.message}</p>
-{:else if $mod.data.getMod}
+{:else if $mod.data.mod}
   <div class="grid gap-6 xlx:grid-flow-row">
     <div class="flex flex-wrap h-auto justify-between items-center">
-      <h1 class="text-4xl font-bold">{$mod.data.getMod.name}</h1>
+      <h1 class="text-4xl font-bold">{$mod.data.mod.name}</h1>
 
       <div>
         {#if canUserEdit}
@@ -108,15 +108,15 @@
     </div>
     <div class="grid grid-auto-max auto-rows-min gap-4">
       {#if !versionsTab}
-        <ModDescription mod={$mod.data.getMod} />
+        <ModDescription mod={$mod.data.mod} />
       {:else}
-        <ModVersions modId={$mod.data.getMod.id} />
+        <ModVersions modId={$mod.data.mod.id} />
       {/if}
       <div class="grid grid-cols-1 auto-rows-min gap-8">
-        <ModLogo modLogo={$mod.data.getMod.logo} modName={$mod.data.getMod.name} />
-        <ModInfo mod={$mod.data.getMod} />
-        <ModLatestVersions modId={$mod.data.getMod.id} latestVersions={$mod.data.getMod.latestVersions} />
-        <ModAuthors authors={$mod.data.getMod.authors} />
+        <ModLogo modLogo={$mod.data.mod.logo} modName={$mod.data.mod.name} />
+        <ModInfo mod={$mod.data.mod} />
+        <ModLatestVersions modId={$mod.data.mod.id} latestVersions={$mod.data.mod.latestVersions} />
+        <ModAuthors authors={$mod.data.mod.authors} />
       </div>
     </div>
   </div>

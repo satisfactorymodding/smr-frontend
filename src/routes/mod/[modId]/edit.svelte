@@ -46,7 +46,7 @@
 
   $: initialValues = $mod.data
     ? {
-        ...$mod.data.getMod,
+        ...$mod.data.mod,
         logo: undefined
       }
     : undefined;
@@ -55,11 +55,11 @@
 </script>
 
 <svelte:head>
-  {#if !$mod.fetching && !$mod.error && $mod.data.getMod}
+  {#if !$mod.fetching && !$mod.error && $mod.data.mod}
     <MetaDescriptors
-      description="Editing mod {$mod.data.getMod.name}"
-      title="Edit mod {$mod.data.getMod.name}"
-      image={$mod.data.getMod.logo}
+      description="Editing mod {$mod.data.mod.name}"
+      title="Edit mod {$mod.data.mod.name}"
+      image={$mod.data.mod.logo}
     />
   {/if}
 </svelte:head>
