@@ -9,6 +9,7 @@
   import Textfield from '@smui/textfield';
   import HelperText from '@smui/textfield/helper-text';
   import Button, { Label } from '@smui/button';
+  import ModAuthor from '$lib/components/mods/ModAuthor.svelte';
 
   export let onSubmit: (data: ModData) => void;
   export let initialValues: ModData = {
@@ -74,7 +75,14 @@
 
     <div class="grid gap-6 split">
       <div class="grid grid-flow-row gap-2 auto-rows-max">
-        <Textfield textarea bind:value={$data.full_description} label="Full Description" required input$rows={10} />
+        <Textfield
+          textarea
+          class="vertical-textarea"
+          bind:value={$data.full_description}
+          label="Full Description"
+          required
+          input$rows={10}
+        />
         <ValidationMessage for="full_description" let:messages={message}>
           <span class="validation-message">{message || ''}</span>
         </ValidationMessage>
@@ -119,6 +127,9 @@
         </div>
         {#each $data.authors as author, i}
           <div class="flex items-baseline">
+            {#if $data.authors[i].user_id}
+              <ModAuthor id={$data.authors[i].user_id} />
+            {/if}
             <Textfield
               bind:value={$data.authors[i].user_id}
               label="User ID"

@@ -45,7 +45,7 @@
 
     <div class="grid gap-6 split">
       <div class="grid grid-flow-row gap-2 auto-rows-max">
-        <Textfield textarea bind:value={$data.guide} label="Guide" required input$rows={10} />
+        <Textfield textarea class="vertical-textarea" bind:value={$data.guide} label="Guide" required input$rows={10} />
         <ValidationMessage for="guide" let:messages={message}>
           <span class="validation-message">{message || ''}</span>
         </ValidationMessage>

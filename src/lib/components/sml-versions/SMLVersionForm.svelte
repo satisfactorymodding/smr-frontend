@@ -69,7 +69,14 @@
 
     <div class="grid gap-6 split">
       <div class="grid grid-flow-row gap-2 auto-rows-max">
-        <Textfield textarea bind:value={$data.changelog} label="Changelog" required input$rows={10} />
+        <Textfield
+          textarea
+          class="vertical-textarea"
+          bind:value={$data.changelog}
+          label="Changelog"
+          required
+          input$rows={10}
+        />
         <ValidationMessage for="changelog" let:messages={message}>
           <span class="validation-message">{message || ''}</span>
         </ValidationMessage>
