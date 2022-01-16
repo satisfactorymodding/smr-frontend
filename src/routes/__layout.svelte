@@ -291,7 +291,7 @@
     {/if}
 
     <AppContent class="app-content w-full overflow-auto py-6 px-3">
-      <main class="main-content">
+      <main class="main-content min-h-full h-full">
         <slot />
       </main>
     </AppContent>
