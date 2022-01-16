@@ -29,6 +29,7 @@
   import { browser } from '$app/env';
   import Button, { Label, Icon } from '@smui/button';
   import Dialog, { Title, Content as DialogContent } from '@smui/dialog';
+  import { installMod } from '$lib/stores/launcher';
 
   export let modId!: string;
   export let versionId!: string;
@@ -97,8 +98,7 @@
         <Button variant="outlined" href={API_REST + '/mod/' + modId + '/versions/' + versionId + '/download'}>
           Download
         </Button>
-        <!-- TODO SMM -->
-        <Button variant="outlined" href={base}>
+        <Button variant="outlined" on:click={() => installMod(modId)}>
           <Label>Install</Label>
           <Icon class="material-icons">download</Icon>
         </Button>

@@ -43,10 +43,10 @@ const config = {
 
     vite: {
       ssr: {
-        noExternal: ['node-fetch', '@urql/svelte', '@cfworker/json-schema', 'dompurify', '@material/animation', '@material/select', '@material/textfield']
+        noExternal: ['node-fetch', '@urql/svelte', '@cfworker/json-schema', 'dompurify', '@material/animation', '@material/select', '@material/textfield', 'custom-protocol-check']
       },
       optimizeDeps: {
-        exclude: ['@urql/svelte']
+        exclude: ['@urql/svelte', 'custom-protocol-check']
       },
       mode: mode,
       build: {

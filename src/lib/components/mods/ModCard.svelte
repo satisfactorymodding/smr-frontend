@@ -3,6 +3,7 @@
   import { base } from '$app/paths';
   import IconButton, { Icon } from '@smui/icon-button';
   import FicsitCard from '$lib/components/general/FicsitCard.svelte';
+  import { installMod } from '$lib/stores/launcher';
 
   export let mod: Pick<Mod, 'id' | 'name' | 'logo' | 'views' | 'downloads' | 'short_description'> & {
     latestVersions: {
@@ -23,8 +24,7 @@
   </div>
   <div slot="actions">
     {#if installable}
-      <!-- TODO SMM Button -->
-      <IconButton class="material-icons" title="Install">download</IconButton>
+      <IconButton class="material-icons" title="Install" on:click={() => installMod(mod.id)}>download</IconButton>
     {/if}
   </div>
 </FicsitCard>

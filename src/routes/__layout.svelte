@@ -32,6 +32,7 @@
   import { onMount } from 'svelte';
   import Switch from '@smui/switch';
   import FormField from '@smui/form-field';
+  import { customProtocolCheck, hasLauncher, pingLauncher } from '$lib/stores/launcher';
 
   let root: HTMLElement;
   onMount(async () => {
@@ -54,6 +55,18 @@
           position: 'bottom-right'
         });
       }
+
+      customProtocolCheck.set(await import('../lib/utils/custom_protocol'));
+
+      hasLauncher.set(
+        localStorage.getItem('hasLauncher') && localStorage.getItem('hasLauncher').toLocaleLowerCase() === 'true'
+      );
+
+      hasLauncher.subscribe((value) => {
+        if (value === true || value === false) {
+          localStorage.setItem('hasLauncher', value.toString().toLocaleLowerCase());
+        }
+      });
     }
   });
 
@@ -109,17 +122,24 @@
       </Section>
       {#if !hideTopElements}
         <Section align="end" toolbar>
-          <Button
-            color="secondary"
-            variant="outlined"
-            class="mr-3"
-            target="_blank"
-            rel="noopener"
-            href="https://smm.ficsit.app"
-          >
-            <Label>Mod Manager</Label>
-            <Icon class="material-icons">file_download</Icon>
-          </Button>
+          {#if $hasLauncher}
+            <Button color="secondary" variant="outlined" class="mr-3" on:click={pingLauncher}>
+              <Label>Launcher Detected</Label>
+              <Icon class="material-icons">file_download</Icon>
+            </Button>
+          {:else}
+            <Button
+              color="secondary"
+              variant="outlined"
+              class="mr-3"
+              target="_blank"
+              rel="noopener"
+              href="https://smm.ficsit.app"
+            >
+              <Label>Mod Manager</Label>
+              <Icon class="material-icons">file_download</Icon>
+            </Button>
+          {/if}
 
           {#if $user === null}
             <Button color="secondary" variant="outlined" on:click={() => loginDialogOpen.set(true)}>

@@ -7,6 +7,7 @@
   import Card, { Content } from '@smui/card';
   import DataTable, { Head, Body, Row, Cell } from '@smui/data-table';
   import Button, { Label, Icon } from '@smui/button';
+  import { installMod } from '$lib/stores/launcher';
 
   export let modId!: string;
 
@@ -63,8 +64,7 @@
                 <Button variant="outlined" href={API_REST + '/mod/' + modId + '/versions/' + version.id + '/download'}
                   >Download</Button
                 >
-                <!-- TODO SMM -->
-                <Button variant="outlined" href={base}>
+                <Button variant="outlined" on:click={() => installMod(modId)}>
                   <Label>Install</Label>
                   <Icon class="material-icons">download</Icon>
                 </Button>
