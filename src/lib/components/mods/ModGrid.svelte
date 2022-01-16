@@ -14,6 +14,7 @@
   import { page as storePage } from '$app/stores';
   import { user } from '$lib/stores/user';
   import FicsitCard from '$lib/components/general/FicsitCard.svelte';
+  import Select, { Option } from '@smui/select';
 
   export let colCount: 4 | 5 = 4;
   export let newMod = false;
@@ -33,18 +34,44 @@
 
   let searchField = search;
   $: {
-    orderBy = search ? ModFields.Search : ModFields.LastVersionDate;
+    let changed = false;
+    if ($mods.variables.search !== search) {
+      changed = true;
+      $mods.variables.search = search;
+    }
 
-    $mods.variables.search = search;
-    $mods.variables.orderBy = orderBy;
-    $mods.reexecute();
+    if ($mods.variables.order !== order) {
+      changed = true;
+      $mods.variables.order = order;
+    }
+
+    if ($mods.variables.orderBy !== orderBy && orderBy) {
+      changed = true;
+      $mods.variables.orderBy = orderBy;
+    }
+
+    if (changed) {
+      $mods.reexecute();
+    }
   }
 
   let timer: number;
   $: {
     clearTimeout(timer);
     timer = setTimeout(() => {
-      search = searchField;
+      if (searchField && searchField.length > 2) {
+        if ((search === '' || search === null) && searchField !== '' && searchField !== null) {
+          orderBy = ModFields.Search;
+        }
+
+        search = searchField;
+      } else if (searchField === '' || searchField === null) {
+        if (orderBy === ModFields.Search || !orderBy) {
+          orderBy = ModFields.LastVersionDate;
+        }
+
+        search = null;
+      }
     }, 250) as unknown as number;
   }
 
@@ -67,6 +94,17 @@
       goto(base + '/mods?q=' + search);
     }
   }
+
+  $: orderFields = [
+    ['Name', 'name'],
+    ['Views', 'views'],
+    ['Downloads', 'downloads'],
+    ['Hotness (Views)', 'hotness'],
+    ['Popularity (Downloads)', 'popularity'],
+    ['Creation Date', 'created_at'],
+    ['Last Version', 'last_version_date'],
+    ...(search !== '' && search !== null ? [['Search', 'search']] : [])
+  ];
 </script>
 
 <div class="ml-auto flex flex-wrap justify-between">
@@ -75,7 +113,20 @@
   {/if}
 
   {#if showSearch}
-    <div class="search-container mb-5 sm:px-4">
+    <div class="search-container flex flex-wrap mb-5 sm:px-4">
+      <div class="mr-3">
+        <Select bind:value={orderBy} label="Order By">
+          {#each orderFields as orderField}
+            <Option value={orderField[1]}>{orderField[0]}</Option>
+          {/each}
+        </Select>
+      </div>
+      <div class="mr-3">
+        <Select bind:value={order} label="Order">
+          <Option value="asc">Ascending</Option>
+          <Option value="desc">Descending</Option>
+        </Select>
+      </div>
       <Paper class="search-paper mr-3" elevation={6}>
         <Icon class="material-icons">search</Icon>
         <Input bind:value={searchField} on:keypress={handleKeyDown} placeholder="Search" />

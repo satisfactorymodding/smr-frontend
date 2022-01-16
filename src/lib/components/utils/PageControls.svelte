@@ -13,7 +13,7 @@
 {/if}
 
 {#if $currentPage > startPage + 1}
-  <div class="py-1 px-4 inline-block">...</div>
+  <div class="py-1 px-2 inline-block">...</div>
 {/if}
 
 {#if $currentPage > startPage}
