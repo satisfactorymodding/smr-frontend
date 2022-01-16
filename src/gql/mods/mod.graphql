@@ -14,18 +14,21 @@ query GetMod($mod: String!) {
         link
         version
         created_at
+        sml_version
       }
       beta {
         id
         link
         version
         created_at
+        sml_version
       }
       release {
         id
         link
         version
         created_at
+        sml_version
       }
     }
     downloads

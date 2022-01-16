@@ -15,7 +15,7 @@
   $: renderedDescription = description || (fake && 'Short card description');
 </script>
 
-<Card class="h-full">
+<Card class="h-full overflow-hidden">
   <div
     class:text-gray-500={fake}
     class:font-flow={fake}
@@ -59,6 +59,8 @@
       </Actions>
     </div>
   </div>
+
+  <slot name="outer" />
 </Card>
 
 <style lang="postcss">

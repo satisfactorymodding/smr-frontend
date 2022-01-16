@@ -113,7 +113,11 @@
         <ModVersions modId={$mod.data.mod.id} />
       {/if}
       <div class="grid grid-cols-1 auto-rows-min gap-8">
-        <ModLogo modLogo={$mod.data.mod.logo} modName={$mod.data.mod.name} />
+        <ModLogo
+          modLogo={$mod.data.mod.logo}
+          modName={$mod.data.mod.name}
+          latestVersions={$mod.data.mod.latestVersions}
+        />
         <ModInfo mod={$mod.data.mod} />
         <ModLatestVersions modId={$mod.data.mod.id} latestVersions={$mod.data.mod.latestVersions} />
         <ModAuthors authors={$mod.data.mod.authors} />

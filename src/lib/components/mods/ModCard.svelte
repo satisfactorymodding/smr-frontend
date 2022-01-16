@@ -4,12 +4,13 @@
   import IconButton, { Icon } from '@smui/icon-button';
   import FicsitCard from '$lib/components/general/FicsitCard.svelte';
   import { installMod } from '$lib/stores/launcher';
+  import { modStatus } from '$lib/utils/mod';
 
   export let mod: Pick<Mod, 'id' | 'mod_reference' | 'name' | 'logo' | 'views' | 'downloads' | 'short_description'> & {
     latestVersions: {
-      alpha?: Maybe<Pick<Version, 'id'>>;
-      beta?: Maybe<Pick<Version, 'id'>>;
-      release?: Maybe<Pick<Version, 'id'>>;
+      alpha?: Maybe<Pick<Version, 'id' | 'sml_version'>>;
+      beta?: Maybe<Pick<Version, 'id' | 'sml_version'>>;
+      release?: Maybe<Pick<Version, 'id' | 'sml_version'>>;
     };
   };
 
@@ -29,9 +30,22 @@
   </div>
   <div slot="actions">
     {#if installable}
-      <IconButton class="material-icons" title="Install" on:click={() => installMod(mod.mod_reference)}
-        >download</IconButton
-      >
+      <IconButton class="material-icons" title="Install" on:click={() => installMod(mod.mod_reference)}>
+        download
+      </IconButton>
+    {/if}
+  </div>
+  <div slot="outer">
+    {#if modStatus(mod.latestVersions) === 'own-risk'}
+      <div class="mod-own-risk">
+        <div class="mod-inset" />
+        <div class="mod-stripe">USE AT YOUR OWN RISK</div>
+      </div>
+    {:else if modStatus(mod.latestVersions) === 'outdated'}
+      <div class="mod-outdated">
+        <div class="mod-inset" />
+        <div class="mod-stripe">OUTDATED</div>
+      </div>
     {/if}
   </div>
 </FicsitCard>

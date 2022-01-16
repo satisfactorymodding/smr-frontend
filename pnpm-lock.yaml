@@ -82,6 +82,7 @@ specifiers:
   '@types/js-cookie': ^3.0.1
   '@types/marked': ^4.0.1
   '@types/prismjs': ^1.16.6
+  '@types/semver': ^7.3.9
   '@typescript-eslint/eslint-plugin': ^5.9.1
   '@typescript-eslint/parser': ^5.9.1
   '@urql/core': ^2.3.6
@@ -119,6 +120,7 @@ specifiers:
   prismjs: ^1.26.0
   rimraf: ^3.0.2
   schema-dts: ^1.0.0
+  semver: ^7.3.5
   smui-theme: ^6.0.0-beta.13
   socket.io-client: ^4.4.1
   svelte: ^3.46.2
@@ -185,6 +187,7 @@ dependencies:
   jszip: 3.7.1
   marked: 4.0.10
   prismjs: 1.26.0
+  semver: 7.3.5
   socket.io-client: 4.4.1
   wonka: 4.0.15
   zod: 3.11.6
@@ -234,6 +237,7 @@ devDependencies:
   '@types/js-cookie': 3.0.1
   '@types/marked': 4.0.1
   '@types/prismjs': 1.16.6
+  '@types/semver': 7.3.9
   '@typescript-eslint/eslint-plugin': 5.9.1_b7b2e42b32ee097737cd3e626b10847b
   '@typescript-eslint/parser': 5.9.1_eslint@8.6.0+typescript@4.5.4
   autoprefixer: 10.4.2_postcss@8.4.5
@@ -2593,6 +2597,10 @@ packages:
     resolution: {integrity: sha512-BPdoIt1lfJ6B7rw35ncdwBZrAssjcwzI5LByIrYs+tpXlj/CAkuVdRsgZDdP4lq5EjyWzwxZCqAoFyHKFwp32g==}
     dependencies:
       '@types/node': 17.0.8
+    dev: true
+
+  /@types/semver/7.3.9:
+    resolution: {integrity: sha512-L/TMpyURfBkf+o/526Zb6kd/tchUP3iBDEPjqjb+U2MAJhVRxxrmr2fwpe08E7QsV7YLcpq0tUaQ9O9x97ZIxQ==}
     dev: true
 
   /@types/websocket/1.0.4:
@@ -5891,7 +5899,6 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       yallist: 4.0.0
-    dev: true
 
   /magic-string/0.25.7:
     resolution: {integrity: sha512-4CrMT5DOHTDk4HYDlzmwu4FVCcIYI8gauveasrdCu2IKIFOJ3f0v/8MDGJCDL9oD2ppz/Av1b0Nj345H9M+XIA==}
@@ -7529,7 +7536,6 @@ packages:
     hasBin: true
     dependencies:
       lru-cache: 6.0.0
-    dev: true
 
   /sentence-case/3.0.4:
     resolution: {integrity: sha512-8LS0JInaQMCRoQ7YUytAo/xUu5W2XnQxV2HI/6uM6U7CITS1RqPElr30V6uIqyMKM9lJGRVFy5/4CuzcixNYSg==}
@@ -8619,7 +8625,6 @@ packages:
 
   /yallist/4.0.0:
     resolution: {integrity: sha512-3wdGidZyq5PB084XLES5TpOSRA3wjXAlIWMhum2kRcv/41Sn2emQ0dycQW4uZXLejwKvg6EsvbdlVL+FYEct7A==}
-    dev: true
 
   /yaml-ast-parser/0.0.43:
     resolution: {integrity: sha512-2PTINUwsRqSd+s8XxKaJWQlUuEMHJQyEuh2edBbW8KNJz0SJPwUSD2zRWqezFEdN7IzAgeuYHFUCF7o8zRdZ0A==}
