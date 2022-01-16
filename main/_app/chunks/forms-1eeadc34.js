@@ -1,2 +1,0 @@
-import{aX as f}from"./vendor-590cc875.js";const i=(o,a)=>Object.fromEntries(Object.entries(o).map(t=>{if(Object.keys(a.shape).indexOf(t[0])>=0){let e=t[1];if(typeof e=="object"){let r=a.shape[t[0]];if(r instanceof f&&(r=r.unwrap()),Array.isArray(e)){const s=r.element;for(let n=0;n<e.length;n++)e[n]=i(e[n],s)}else e=i(e,r)}return[t[0],e]}}).filter(t=>!!t));export{i as t};
-//# sourceMappingURL=forms-1eeadc34.js.map
