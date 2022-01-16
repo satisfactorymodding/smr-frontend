@@ -278,7 +278,7 @@
             <Item>
               <FormField align="end">
                 <Switch bind:checked={accessibility} />
-                <span slot="label">Accessibility</span>
+                <span slot="label">Accessibility Font</span>
               </FormField>
             </Item>
           </List>
