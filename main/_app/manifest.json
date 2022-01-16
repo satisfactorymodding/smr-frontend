@@ -1,6 +1,6 @@
 {
   ".svelte-kit/runtime/client/start.js": {
-    "file": "start-a73d6abf.js",
+    "file": "start-da5db1de.js",
     "src": ".svelte-kit/runtime/client/start.js",
     "isEntry": true,
     "imports": [
@@ -99,18 +99,18 @@
       "_paths-396f020f.js"
     ],
     "css": [
-      "assets/pages/privacy-policy/index.svelte-bcc48566.css"
+      "assets/pages/tos/index.svelte-1ae42d62.css"
     ]
   },
   "src/routes/sml-versions/index.svelte": {
-    "file": "pages/sml-versions/index.svelte-8a250b8a.js",
+    "file": "pages/sml-versions/index.svelte-0dfaa88f.js",
     "src": "src/routes/sml-versions/index.svelte",
     "isEntry": true,
     "isDynamicEntry": true,
     "imports": [
       "_vendor-7eb9e018.js",
       "_graphql-1af4868d.js",
-      "_PageControls-62fa1b6d.js",
+      "_PageControls-2ce81db2.js",
       "_markdown-e402d3eb.js",
       "_MetaDescriptors-2122f7eb.js",
       "_stores-82e7e44c.js",
@@ -150,7 +150,7 @@
       "_paths-396f020f.js"
     ],
     "css": [
-      "assets/pages/privacy-policy/index.svelte-bcc48566.css"
+      "assets/pages/tos/index.svelte-1ae42d62.css"
     ]
   },
   "src/routes/settings/index.svelte": {
@@ -191,7 +191,7 @@
     ]
   },
   "src/routes/guides/index.svelte": {
-    "file": "pages/guides/index.svelte-00991c36.js",
+    "file": "pages/guides/index.svelte-1a607b8d.js",
     "src": "src/routes/guides/index.svelte",
     "isEntry": true,
     "isDynamicEntry": true,
@@ -199,7 +199,7 @@
       "_vendor-7eb9e018.js",
       "_graphql-1af4868d.js",
       "_GuideCard-10af1a8c.js",
-      "_PageControls-62fa1b6d.js",
+      "_PageControls-2ce81db2.js",
       "_paths-396f020f.js",
       "_user-6b1c89ad.js",
       "_FicsitCard-239b4864.js",
@@ -225,14 +225,14 @@
     ]
   },
   "src/routes/admin/unapproved-versions.svelte": {
-    "file": "pages/admin/unapproved-versions.svelte-97c4701c.js",
+    "file": "pages/admin/unapproved-versions.svelte-6137ddef.js",
     "src": "src/routes/admin/unapproved-versions.svelte",
     "isEntry": true,
     "isDynamicEntry": true,
     "imports": [
       "_vendor-7eb9e018.js",
       "_graphql-1af4868d.js",
-      "_PageControls-62fa1b6d.js",
+      "_PageControls-2ce81db2.js",
       "_api-82c76902.js",
       "_user-6b1c89ad.js",
       "_paths-396f020f.js",
@@ -241,28 +241,28 @@
     ]
   },
   "src/routes/admin/unapproved-mods.svelte": {
-    "file": "pages/admin/unapproved-mods.svelte-c8a4fd1d.js",
+    "file": "pages/admin/unapproved-mods.svelte-26649848.js",
     "src": "src/routes/admin/unapproved-mods.svelte",
     "isEntry": true,
     "isDynamicEntry": true,
     "imports": [
       "_vendor-7eb9e018.js",
       "_graphql-1af4868d.js",
-      "_PageControls-62fa1b6d.js",
+      "_PageControls-2ce81db2.js",
       "_paths-396f020f.js",
       "_MetaDescriptors-2122f7eb.js",
       "_stores-82e7e44c.js"
     ]
   },
   "src/routes/admin/sml-versions/index.svelte": {
-    "file": "pages/admin/sml-versions/index.svelte-fa7989dc.js",
+    "file": "pages/admin/sml-versions/index.svelte-59a0e965.js",
     "src": "src/routes/admin/sml-versions/index.svelte",
     "isEntry": true,
     "isDynamicEntry": true,
     "imports": [
       "_vendor-7eb9e018.js",
       "_graphql-1af4868d.js",
-      "_PageControls-62fa1b6d.js",
+      "_PageControls-2ce81db2.js",
       "_paths-396f020f.js",
       "_MetaDescriptors-2122f7eb.js",
       "_stores-82e7e44c.js"
@@ -382,7 +382,7 @@
     ]
   },
   "src/routes/mods/index.svelte": {
-    "file": "pages/mods/index.svelte-c820ffb1.js",
+    "file": "pages/mods/index.svelte-d520f2e5.js",
     "src": "src/routes/mods/index.svelte",
     "isEntry": true,
     "isDynamicEntry": true,
@@ -390,7 +390,7 @@
       "_vendor-7eb9e018.js",
       "_graphql-1af4868d.js",
       "_ModCard-0ce22ab3.js",
-      "_PageControls-62fa1b6d.js",
+      "_PageControls-2ce81db2.js",
       "_paths-396f020f.js",
       "_navigation-b10cf5bf.js",
       "_stores-82e7e44c.js",
@@ -553,7 +553,7 @@
       "_paths-396f020f.js"
     ],
     "css": [
-      "assets/pages/privacy-policy/index.svelte-bcc48566.css"
+      "assets/pages/tos/index.svelte-1ae42d62.css"
     ]
   },
   "_vendor-7eb9e018.js": {
@@ -612,8 +612,8 @@
       "_paths-396f020f.js"
     ]
   },
-  "_PageControls-62fa1b6d.js": {
-    "file": "chunks/PageControls-62fa1b6d.js",
+  "_PageControls-2ce81db2.js": {
+    "file": "chunks/PageControls-2ce81db2.js",
     "imports": [
       "_vendor-7eb9e018.js"
     ]
