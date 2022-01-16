@@ -3,6 +3,7 @@ query GetMods($offset: Int!, $limit: Int!, $search: String, $order: Order, $orde
     count
     mods {
       id
+      mod_reference
       name
       logo
       views

@@ -64,7 +64,7 @@
                 <Button variant="outlined" href={API_REST + '/mod/' + modId + '/versions/' + version.id + '/download'}
                   >Download</Button
                 >
-                <Button variant="outlined" on:click={() => installMod(modId)}>
+                <Button variant="outlined" on:click={() => installMod($versions.data.getMod.mod_reference)}>
                   <Label>Install</Label>
                   <Icon class="material-icons">download</Icon>
                 </Button>

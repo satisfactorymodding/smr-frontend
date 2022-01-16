@@ -1,6 +1,7 @@
 query GetModVersions($mod: ModID!, $limit: Int!, $offset: Int!) {
   getMod(modId: $mod) {
     id
+    mod_reference
     versions(filter: { limit: $limit, offset: $offset }) {
       id
       version

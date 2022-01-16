@@ -1,27 +1,25 @@
 import { get, writable } from 'svelte/store';
 import { browser } from '$app/env';
+import { io } from 'socket.io-client';
 
 export const customProtocolCheck = writable<unknown | null>(null);
 export const hasLauncher = writable<boolean>(false);
 export const launcherOpen = writable<boolean>(false);
-export const launcherWs = writable<WebSocket | null>(null);
 
 const connectToLauncher = () => {
   new Promise(() => {
-    const ws = new WebSocket('ws://localhost:33642');
-    launcherWs.set(ws);
+    const ws = io('http://localhost:33642', {
+      transports: ['websocket']
+    });
 
-    ws.onopen = () => {
+    ws.on('connect', () => {
       hasLauncher.set(true);
       launcherOpen.set(true);
-    };
+    });
 
-    ws.onclose = () => {
+    ws.on('disconnect', () => {
       launcherOpen.set(false);
-      setTimeout(() => {
-        connectToLauncher();
-      }, 10000);
-    };
+    });
   }).catch(console.error);
 };
 
@@ -46,8 +44,8 @@ export const pingLauncher = () => {
   });
 };
 
-export const installMod = (modId: string) => {
-  open('smmanager://install?modID=' + modId, () => {
+export const installMod = (modReference: string) => {
+  open('smmanager://install?modID=' + modReference, () => {
     window.open(modLoaderLink, '_blank');
   });
 };
