@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "@felte/core": "^0.2.7",
+    "@felte/common": "^0.6.0",
     "@felte/reporter-svelte": "^0.3.20",
     "@felte/validator-zod": "^0.3.8",
     "@material/animation": "^13.0.0",

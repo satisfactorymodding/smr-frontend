@@ -8,7 +8,7 @@
   import { markdown } from '$lib/utils/markdown';
   import Textfield from '@smui/textfield';
   import HelperText from '@smui/textfield/helper-text';
-  import Button from '@smui/button';
+  import Button, { Label } from '@smui/button';
 
   export let onSubmit: (data: ModData) => void;
   export let initialValues: ModData = {
@@ -30,6 +30,16 @@
   });
 
   $: preview = ($data.full_description as string) || '';
+
+  const addAuthor = () => {
+    $data.authors.push({ role: 'editor', user_id: '' });
+    $data.authors = $data.authors;
+  };
+
+  const removeAuthor = (i: number) => {
+    $data.authors.splice(i, 1);
+    $data.authors = $data.authors;
+  };
 </script>
 
 <form use:form>
@@ -98,6 +108,32 @@
         <span class="validation-message">{message || ''}</span>
       </ValidationMessage>
     </div>
+
+    {#if editing}
+      <div class="grid grid-flow-row gap-2">
+        <div class="flex items-baseline">
+          <h4 class="mr-4">Authors</h4>
+          <Button type="button" on:click={addAuthor}>
+            <Label>Add</Label>
+          </Button>
+        </div>
+        {#each $data.authors as author, i}
+          <div class="flex items-baseline">
+            <Textfield
+              bind:value={$data.authors[i].user_id}
+              label="User ID"
+              class="mr-4 w-full"
+              disabled={author.role === 'creator'}
+            />
+            {#if author.role !== 'creator'}
+              <Button type="button" on:click={() => removeAuthor(i)} variant="raised">
+                <Label>Remove</Label>
+              </Button>
+            {/if}
+          </div>
+        {/each}
+      </div>
+    {/if}
 
     <div>
       <Button variant="outlined" type="submit">{submitText}</Button>

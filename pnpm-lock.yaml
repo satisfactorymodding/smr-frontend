@@ -4,6 +4,7 @@ specifiers:
   '@cfworker/json-schema': ^1.12.0
   '@commitlint/cli': ^15.0.0
   '@commitlint/config-conventional': ^15.0.0
+  '@felte/common': ^0.6.0
   '@felte/core': ^0.2.7
   '@felte/reporter-svelte': ^0.3.20
   '@felte/validator-zod': ^0.3.8
@@ -130,6 +131,7 @@ specifiers:
   zod: ^3.11.6
 
 dependencies:
+  '@felte/common': 0.6.0
   '@felte/core': 0.2.7
   '@felte/reporter-svelte': 0.3.20_svelte@3.46.2
   '@felte/validator-zod': 0.3.8_zod@3.11.6

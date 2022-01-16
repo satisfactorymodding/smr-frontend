@@ -7,6 +7,10 @@ export type ModData = {
   full_description?: string;
   logo?: string;
   source_url?: string;
+  authors?: {
+    role: string;
+    user_id: string;
+  }[];
 };
 
 export const modSchema = zod.object({
@@ -23,5 +27,13 @@ export const modSchema = zod.object({
   short_description: zod.string().min(16).max(128),
   full_description: zod.optional(zod.string()),
   logo: zod.optional(zod.any().refine((logo) => 'name' in logo && 'size' in logo && 'type' in logo)),
-  source_url: zod.string().url().optional().or(zod.literal(''))
+  source_url: zod.string().url().optional().or(zod.literal('')),
+  authors: zod.optional(
+    zod
+      .object({
+        role: zod.string(),
+        user_id: zod.string()
+      })
+      .array()
+  )
 });
