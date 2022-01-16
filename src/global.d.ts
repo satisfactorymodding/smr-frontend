@@ -14,3 +14,5 @@ declare module '$app/paths' {
   export const base: string;
   export const assets: string;
 }
+
+declare module 'cookieconsent/src/cookieconsent';

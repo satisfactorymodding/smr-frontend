@@ -7,7 +7,7 @@
   const guideQ = operationStore(GetGuideDocument, { guide: undefined });
 
   export const load = paramsToProps(async (input) => {
-    guideQ.variables.guide = input.page.params.guideId;
+    guideQ.variables.guide = input.params.guideId;
     return loadWaitForNoFetch({
       guide: guideQ
     })(input);
@@ -76,19 +76,19 @@
 {:else if $guide.error}
   <p>Oh no... {$guide.error.message}</p>
 {:else if $guide.data.getGuide}
-  <div class="grid gap-8 grid-auto-max xlx:grid-flow-row">
-    <div class="grid grid-cols-1 auto-rows-min gap-4">
-      <div class="flex flex-wrap h-auto justify-between">
-        <h1 class="text-4xl my-4 font-bold">{$guide.data.getGuide.name}</h1>
+  <div class="grid gap-6 xlx:grid-flow-row">
+    <div class="flex flex-wrap h-auto justify-between items-center">
+      <h1 class="text-4xl  font-bold">{$guide.data.getGuide.name}</h1>
 
-        <div>
-          {#if canUserEdit}
-            <Button variant="outlined" on:click={() => goto(base + '/guide/' + guideId + '/edit')}>Edit</Button>
-            <Button variant="outlined" on:click={() => deleteDialogOpen.set(true)}>Delete</Button>
-          {/if}
-        </div>
+      <div>
+        {#if canUserEdit}
+          <Button variant="outlined" on:click={() => goto(base + '/guide/' + guideId + '/edit')}>Edit</Button>
+          <Button variant="outlined" on:click={() => deleteDialogOpen.set(true)}>Delete</Button>
+        {/if}
       </div>
-      <Card>
+    </div>
+    <div class="grid grid-auto-max auto-rows-min gap-4">
+      <Card class="h-fit">
         <Content>
           <div class="markdown-content break-words">
             {#await markdown($guide.data.getGuide.guide) then guideRendered}
@@ -97,24 +97,26 @@
           </div>
         </Content>
       </Card>
-    </div>
-    <div class="grid grid-cols-1 auto-rows-min gap-8">
-      <GuideInfo guide={$guide.data.getGuide} />
-      <GuideAuthor author={$guide.data.getGuide.user} />
+      <div class="grid grid-cols-1 auto-rows-min gap-8">
+        <GuideInfo guide={$guide.data.getGuide} />
+        <GuideAuthor author={$guide.data.getGuide.user} />
+      </div>
     </div>
   </div>
 
-  <Dialog bind:open={$deleteDialogOpen}>
-    <Title>Delete Guide?</Title>
-    <DialogContent>
-      <div class="grid grid-flow-row gap-4">
-        <span>Are you sure you wish to delete this guide</span>
+  {#if canUserEdit}
+    <Dialog bind:open={$deleteDialogOpen}>
+      <Title>Delete Guide?</Title>
+      <DialogContent>
+        <div class="grid grid-flow-row gap-4">
+          <span>Are you sure you wish to delete this guide</span>
 
-        <Button variant="outlined" on:click={() => deleteDialogOpen.set(false)}>Cancel</Button>
-        <Button variant="outlined" on:click={() => deleteGuideFn()}>Delete</Button>
-      </div>
-    </DialogContent>
-  </Dialog>
+          <Button variant="outlined" on:click={() => deleteDialogOpen.set(false)}>Cancel</Button>
+          <Button variant="outlined" on:click={() => deleteGuideFn()}>Delete</Button>
+        </div>
+      </DialogContent>
+    </Dialog>
+  {/if}
 
   <Toast bind:running={errorToast}>
     <span>{errorMessage}</span>

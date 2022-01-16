@@ -12,15 +12,15 @@
 
 <Card>
   <Content>
-    <a href="{base}/admin/unapproved-mods">
+    <a href="{base}/admin/unapproved-mods" class="text-white">
       <h2>Unapproved Mods</h2>
     </a>
 
-    <a href="{base}/admin/unapproved-versions">
+    <a href="{base}/admin/unapproved-versions" class="text-white">
       <h2>Unapproved Versions</h2>
     </a>
 
-    <a href="{base}/admin/sml-versions">
+    <a href="{base}/admin/sml-versions" class="text-white">
       <h2>SML Versions</h2>
     </a>
   </Content>

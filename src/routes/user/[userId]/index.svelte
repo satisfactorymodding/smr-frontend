@@ -9,7 +9,7 @@
   const userQ = operationStore(GetUserDocument, { user: undefined });
 
   export const load = paramsToProps(async (input) => {
-    userQ.variables.user = input.page.params.userId;
+    userQ.variables.user = input.params.userId;
     return loadWaitForNoFetch({
       user: userQ
     })(input);
@@ -49,27 +49,27 @@
 {:else if $user.error}
   <p>Oh no... {$user.error.message}</p>
 {:else if $user.data.getUser}
-  <div class="grid gap-8 grid-auto-max xlx:grid-flow-row">
-    <div class="grid grid-cols-1 auto-rows-min gap-8">
-      <div class="flex flex-wrap h-auto justify-between">
-        <h1 class="text-4xl my-4 font-bold">{$user.data.getUser.username}</h1>
+  <div class="grid gap-6 xlx:grid-flow-row">
+    <div class="flex flex-wrap h-auto justify-between items-center">
+      <h1 class="text-4xl font-bold">{$user.data.getUser.username}</h1>
 
-        <div>
-          {#if $me && $user.data.getUser.id === $me.id}
-            <Button variant="outlined" href="{base}/settings">Settings</Button>
+      <div>
+        {#if $me && $user.data.getUser.id === $me.id}
+          <Button variant="outlined" href="{base}/settings">Settings</Button>
+        {/if}
+
+        <Button variant="outlined" on:click={() => (guidesTab = !guidesTab)}>
+          {#if !guidesTab}
+            Guides
+          {:else}
+            Mods
           {/if}
-
-          <Button variant="outlined" on:click={() => (guidesTab = !guidesTab)}>
-            {#if !guidesTab}
-              Guides
-            {:else}
-              Mods
-            {/if}
-          </Button>
-        </div>
+        </Button>
       </div>
+    </div>
+    <div class="grid grid-auto-max auto-rows-min gap-4">
       {#if !guidesTab}
-        <div class="grid 3xl:grid-cols-3 2xl:grid-cols-2 grid-cols-1 gap-4">
+        <div class="grid 3xl:grid-cols-3 2xl:grid-cols-2 grid-cols-1 gap-4 h-fit">
           {#each $user.data.getUser.mods as mod}
             <ModCard mod={mod.mod} />
           {/each}
@@ -80,7 +80,7 @@
           {/if}
         </div>
       {:else}
-        <div class="grid 3xl:grid-cols-3 2xl:grid-cols-2 grid-cols-1 gap-4">
+        <div class="grid 3xl:grid-cols-3 2xl:grid-cols-2 grid-cols-1 gap-4 h-fit">
           {#each $user.data.getUser.guides as guide}
             <GuideCard {guide} logo={$user.data.getUser.avatar} />
           {/each}
@@ -91,10 +91,10 @@
           {/if}
         </div>
       {/if}
-    </div>
-    <div class="grid grid-cols-1 auto-rows-min gap-8">
-      <UserAvatar avatar={$user.data.getUser.avatar} username={$user.data.getUser.username} />
-      <UserInfo user={$user.data.getUser} />
+      <div class="grid grid-cols-1 auto-rows-min gap-8">
+        <UserAvatar avatar={$user.data.getUser.avatar} username={$user.data.getUser.username} />
+        <UserInfo user={$user.data.getUser} />
+      </div>
     </div>
   </div>
 {:else}

@@ -31,7 +31,7 @@
   };
 </script>
 
-<Card>
+<Card class="h-fit">
   {#if $versions.fetching}
     <Content>Loading...</Content>
   {:else if $versions.error}

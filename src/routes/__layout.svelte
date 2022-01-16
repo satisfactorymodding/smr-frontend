@@ -29,10 +29,40 @@
   import { goto } from '$app/navigation';
   import { loginDialogOpen } from '$lib/stores/global';
   import Menu, { MenuComponentDev } from '@smui/menu';
+  import { onMount } from 'svelte';
+  import Switch from '@smui/switch';
+  import FormField from '@smui/form-field';
+
+  let root: HTMLElement;
+  onMount(async () => {
+    if (browser) {
+      root = document.body;
+
+      await import('cookieconsent/src/cookieconsent');
+
+      if ('cookieconsent' in window) {
+        window['cookieconsent'].initialise({
+          palette: {
+            popup: {
+              background: '#000'
+            },
+            button: {
+              background: '#f1d600'
+            }
+          },
+          theme: 'edgeless',
+          position: 'bottom-right'
+        });
+      }
+    }
+  });
+
+  let accessibility = false;
+  $: root && (accessibility ? root.classList.add('accessibility') : root.classList.remove('accessibility'));
 
   setClient(client);
 
-  $: currentPath = $page.path;
+  $: currentPath = $page.url.pathname;
   $: isAdmin = !$user ? false : $user.roles.approveMods || $user.roles.approveVersions || $user.roles.editSMLVersions;
 
   let open = false;
@@ -79,7 +109,14 @@
       </Section>
       {#if !hideTopElements}
         <Section align="end" toolbar>
-          <Button color="secondary" variant="outlined" class="mr-3" target="_blank" href="https://smm.ficsit.app">
+          <Button
+            color="secondary"
+            variant="outlined"
+            class="mr-3"
+            target="_blank"
+            rel="noopener"
+            href="https://smm.ficsit.app"
+          >
             <Label>Mod Manager</Label>
             <Icon class="material-icons">file_download</Icon>
           </Button>
@@ -185,11 +222,11 @@
               <Graphic class="material-icons">apps</Graphic>
               <Text>Tools</Text>
             </Item>
-            <Item href="https://discord.gg/xkVJ73E" target="_blank">
+            <Item href="https://discord.gg/xkVJ73E" target="_blank" rel="noopener">
               <Graphic class="material-icons">people</Graphic>
               <Text>Discord</Text>
             </Item>
-            <Item href="https://docs.ficsit.app/" target="_blank">
+            <Item href="https://docs.ficsit.app/" target="_blank" rel="noopener">
               <Graphic class="material-icons">find_in_page</Graphic>
               <Text>Docs</Text>
             </Item>
@@ -213,11 +250,17 @@
               <Text>API</Text>
             </Item>
             {#if hideTopElements}
-              <Item target="_blank" href="https://smm.ficsit.app">
+              <Item target="_blank" href="https://smm.ficsit.app" rel="noopener">
                 <Graphic class="material-icons">file_download</Graphic>
                 <Text>Mod Manager</Text>
               </Item>
             {/if}
+            <Item>
+              <FormField align="end">
+                <Switch bind:checked={accessibility} />
+                <span slot="label">Accessibility</span>
+              </FormField>
+            </Item>
           </List>
         </div>
       </Content>
@@ -227,7 +270,7 @@
       <Scrim fixed={false} />
     {/if}
 
-    <AppContent class="app-content w-full overflow-auto py-4 px-3">
+    <AppContent class="app-content w-full overflow-auto py-6 px-3">
       <main class="main-content">
         <slot />
       </main>

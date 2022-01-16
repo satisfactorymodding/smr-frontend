@@ -7,15 +7,15 @@ export const paramsToProps = (callback?: Load): Load => {
       return {
         ...(response || {}),
         props: {
-          ...(input.page.params || {}),
+          ...(input.params || {}),
           ...(response ? response?.props || {} : {})
         }
-      };
+      } as unknown;
     }
 
     return {
       props: {
-        ...(input.page.params || {})
+        ...(input.params || {})
       }
     };
   };

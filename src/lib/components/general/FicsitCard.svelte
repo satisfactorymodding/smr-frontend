@@ -31,7 +31,7 @@
     <div class="w-full flex flex-col justify-between">
       <Content class="flex flex-col pb-0">
         <div class="mb-2">
-          <a href="{link}/">
+          <a href="{link}/" class="text-white">
             <span class="text-xl break-words">{renderedName}</span>
           </a>
 

@@ -96,7 +96,7 @@
     const signInMethod = localStorage.getItem('sign.in.method');
     localStorage.removeItem('sign.in.method');
 
-    let queryParams = Object.fromEntries($page.query.entries());
+    let queryParams = Object.fromEntries($page.url.searchParams.entries());
     if (Object.keys(queryParams).length === 0) {
       queryParams = Object.fromEntries(new URLSearchParams(window.location.search));
     }

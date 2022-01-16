@@ -2,7 +2,7 @@ const colors = require('tailwindcss/colors');
 
 module.exports = {
   mode: 'jit',
-  purge: [
+  content: [
     "./src/**/*.{html,js,svelte,ts}",
   ],
   darkMode: 'class',
@@ -12,7 +12,7 @@ module.exports = {
         flow: ['Flow']
       },
       colors: {
-        gray: colors.trueGray,
+        gray: colors.neutral,
         lime: colors.lime,
       },
       screens: {

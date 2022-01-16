@@ -38,8 +38,6 @@ const config = {
 
     host: process.env.BASE_URL || 'http://localhost:3000',
 
-    ssr: true,
-
     // hydrate the <div id="svelte"> element in src/app.html
     target: '#svelte',
 

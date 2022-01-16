@@ -19,7 +19,7 @@
   export let newMod = false;
   export let showSearch = false;
 
-  let search = $storePage.query.get('q');
+  let search = $storePage.url.searchParams.get('q');
 
   // TODO Selectable
   const perPage = 40;
@@ -80,7 +80,7 @@
         <Icon class="material-icons">search</Icon>
         <Input bind:value={searchField} on:keypress={handleKeyDown} placeholder="Search" />
       </Paper>
-      <Fab on:click={() => goto(base + '/mods?q=' + search)} color="primary" mini class="solo-fab">
+      <Fab on:click={() => goto(base + '/mods?q=' + search)} color="primary" mini class="solo-fab" aria-label="Search">
         <Icon class="material-icons">arrow_forward</Icon>
       </Fab>
     </div>

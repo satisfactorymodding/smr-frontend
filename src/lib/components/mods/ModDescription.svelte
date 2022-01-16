@@ -8,7 +8,7 @@
   $: description = mod.full_description ? markdown(mod.full_description) : mod.short_description;
 </script>
 
-<Card>
+<Card class="h-fit">
   <Content>
     <div class="markdown-content break-words">
       {#await description then descriptionRendered}

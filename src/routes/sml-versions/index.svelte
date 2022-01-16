@@ -20,7 +20,10 @@
   const page = writable(1);
   let totalVersions: number;
 
-  page.subscribe((p) => ($versions.variables.offset = (p - 1) * perPage));
+  page.subscribe((p) => {
+    $versions.variables.offset = (p - 1) * perPage;
+    $versions.reexecute();
+  });
 
   $: totalVersions = $versions?.data?.getSMLVersions?.count;
 

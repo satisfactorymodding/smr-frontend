@@ -5,7 +5,7 @@
   export let changelog!: string;
 </script>
 
-<Card>
+<Card class="h-fit">
   <Content>
     <div class="markdown-content">
       {#await markdown(changelog) then changelogRendered}

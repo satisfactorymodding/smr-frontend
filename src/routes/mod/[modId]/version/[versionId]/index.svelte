@@ -8,7 +8,7 @@
   const versionQ = operationStore(GetModVersionDocument, { version: undefined });
 
   export const load = paramsToProps(async (input) => {
-    versionQ.variables.version = input.page.params.versionId;
+    versionQ.variables.version = input.params.versionId;
     return loadWaitForNoFetch({
       version: versionQ
     })(input);
@@ -79,58 +79,57 @@
 {:else if $version.error}
   <p>Oh no... {$version.error.message}</p>
 {:else if $version.data.getVersion}
-  <div class="grid gap-8 grid-auto-max xlx:grid-flow-row">
-    <div class="grid grid-cols-1 auto-rows-min gap-8">
-      <div class="flex flex-wrap h-auto justify-between">
-        <h1 class="text-4xl my-4 font-bold">
-          {$version.data.getVersion.mod.name}
-          Version {$version.data.getVersion.version}
-        </h1>
+  <div class="grid gap-6 xlx:grid-flow-row">
+    <div class="flex flex-wrap h-auto justify-between items-center">
+      <h1 class="text-4xl font-bold">
+        {$version.data.getVersion.mod.name}
+        Version {$version.data.getVersion.version}
+      </h1>
 
-        <div class="grid grid-flow-col gap-4">
-          {#if canUserEdit}
-            <Button
-              variant="outlined"
-              on:click={() => goto(base + '/mod/' + modId + '/version/' + versionId + '/edit')}
-            >
-              Edit
-            </Button>
-            <Button variant="outlined" on:click={() => deleteDialogOpen.set(true)}>Delete</Button>
-          {/if}
+      <div class="grid grid-flow-col gap-4">
+        {#if canUserEdit}
+          <Button variant="outlined" on:click={() => goto(base + '/mod/' + modId + '/version/' + versionId + '/edit')}>
+            Edit
+          </Button>
+          <Button variant="outlined" on:click={() => deleteDialogOpen.set(true)}>Delete</Button>
+        {/if}
 
-          <Button variant="outlined" href={API_REST + '/mod/' + modId + '/versions/' + versionId + '/download'}>
-            Download
-          </Button>
-          <!-- TODO SMM -->
-          <Button variant="outlined" href={base}>
-            <Label>Install</Label>
-            <Icon class="material-icons">download</Icon>
-          </Button>
+        <Button variant="outlined" href={API_REST + '/mod/' + modId + '/versions/' + versionId + '/download'}>
+          Download
+        </Button>
+        <!-- TODO SMM -->
+        <Button variant="outlined" href={base}>
+          <Label>Install</Label>
+          <Icon class="material-icons">download</Icon>
+        </Button>
 
-          <Button variant="outlined" href={base + '/mod/' + modId}>
-            <Label>Mod</Label>
-            <Icon class="material-icons">extension</Icon>
-          </Button>
-        </div>
+        <Button variant="outlined" href={base + '/mod/' + modId}>
+          <Label>Mod</Label>
+          <Icon class="material-icons">extension</Icon>
+        </Button>
       </div>
-      <VersionDescription changelog={$version.data.getVersion.changelog} />
     </div>
-    <div class="grid grid-cols-1 auto-rows-min gap-8">
-      <VersionInfo version={$version.data.getVersion} />
+    <div class="grid grid-auto-max auto-rows-min gap-4">
+      <VersionDescription changelog={$version.data.getVersion.changelog} />
+      <div class="grid grid-cols-1 auto-rows-min gap-8">
+        <VersionInfo version={$version.data.getVersion} />
+      </div>
     </div>
   </div>
 
-  <Dialog bind:open={$deleteDialogOpen}>
-    <Title id="simple-title">Delete Version?</Title>
-    <DialogContent>
-      <div class="grid grid-flow-row gap-4">
-        <span>Are you sure you wish to delete this version</span>
+  {#if canUserEdit}
+    <Dialog bind:open={$deleteDialogOpen}>
+      <Title id="simple-title">Delete Version?</Title>
+      <DialogContent>
+        <div class="grid grid-flow-row gap-4">
+          <span>Are you sure you wish to delete this version</span>
 
-        <Button variant="outlined" on:click={() => deleteDialogOpen.set(false)}>Cancel</Button>
-        <Button variant="outlined" on:click={() => deleteVersionFn()}>Delete</Button>
-      </div>
-    </DialogContent>
-  </Dialog>
+          <Button variant="outlined" on:click={() => deleteDialogOpen.set(false)}>Cancel</Button>
+          <Button variant="outlined" on:click={() => deleteVersionFn()}>Delete</Button>
+        </div>
+      </DialogContent>
+    </Dialog>
+  {/if}
 
   <Toast bind:running={errorToast}>
     <span>{errorMessage}</span>

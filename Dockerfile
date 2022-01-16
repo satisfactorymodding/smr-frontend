@@ -14,19 +14,27 @@ RUN pnpm install
 
 COPY . .
 
-RUN yarn run prepare && yarn run $CODEGEN && yarn run $BUILD
+RUN pnpm run prepare && pnpm run $CODEGEN && pnpm run $BUILD
 
+
+FROM ghcr.io/vilsol/yeet:latest as yeet
 
 FROM node:16-alpine
 
-RUN apk add --no-cache nginx bash
+COPY --from=yeet /yeet /yeet
+
+RUN npm i -g pnpm
+
+RUN apk add --no-cache bash
 
 WORKDIR /app
 
 COPY --from=build /app/build /app/build
 COPY --from=build /app/package.json /app/package.json
+COPY pnpm-lock.yaml pnpm-lock.yaml
 
-COPY docker/nginx.conf /etc/nginx/nginx.conf
+RUN pnpm install -P
+
 COPY docker/entrypoint.sh /entrypoint.sh
 
 EXPOSE 80
