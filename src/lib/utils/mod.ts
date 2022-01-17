@@ -1,5 +1,5 @@
-import satisfies from 'semver/functions/satisfies';
-import minVersion from 'semver/ranges/min-version';
+import satisfies from 'semver/functions/satisfies.js';
+import minVersion from 'semver/ranges/min-version.js';
 import type { Maybe, Version } from '$lib/generated';
 
 export const modStatus = (latestVersions?: {

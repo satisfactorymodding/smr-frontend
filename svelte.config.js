@@ -59,9 +59,8 @@ const config = {
       base: process.env.SVELTE_BASE_PATH || ''
     },
 
-    // TODO Fix prerender 404's
     prerender: {
-      onError: 'continue'
+      enabled: false
     }
   }
 };
