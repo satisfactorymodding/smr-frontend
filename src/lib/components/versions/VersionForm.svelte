@@ -11,7 +11,7 @@
   import Button from '@smui/button';
   import { VersionStabilities } from '$lib/generated';
   import Select, { Option } from '@smui/select';
-  import { prettyBytes } from '$lib/utils/formatting.js';
+  import { prettyBytes } from '$lib/utils/formatting';
 
   export let modReference: string;
   export let onSubmit: (data: VersionData) => Promise<void>;
