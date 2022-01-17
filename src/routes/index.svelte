@@ -38,7 +38,7 @@
 
 <div class="flex flex-col min-h-full">
   <div class="grid xl:grid-cols-2 grid-cols-1 gap-4 flex-1 mb-4 min-h-[40vh]">
-    <a href="https://discord.gg/xkVJ73E" rel="noopener" target="_blank">
+    <a href="https://discord.gg/xkVJ73E" rel="noopener" target="_blank" class="overflow-hidden">
       <Card class="h-full">
         <div class="relative h-full w-full">
           <div class="modding-banner" />
@@ -50,7 +50,7 @@
         </div>
       </Card>
     </a>
-    <a href="https://www.satisfactorygame.com/" rel="noopener" target="_blank">
+    <a href="https://www.satisfactorygame.com/" rel="noopener" target="_blank" class="overflow-hidden">
       <Card class="h-full">
         <div class="relative h-full w-full">
           <div class="css-banner" />
