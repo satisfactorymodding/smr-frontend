@@ -106,7 +106,7 @@
   <link rel="shortcut icon" href="{base}/assets/favicon.ico?v=69P26YMB35" />
   <meta name="msapplication-TileColor" content="#da8517" />
   <meta name="msapplication-config" content="{base}/static/assets/browserconfig.xml?v=69P26YMB35" />
-  <meta name="theme-color" content="#da8517" />
+  <meta name="theme-color" content="#ff6f00" />
 
   <link rel="preload" href="{base}/assets/fonts/flow-rounded.woff" as="font" type="font/woff" />
 </svelte:head>
@@ -291,7 +291,7 @@
     {/if}
 
     <AppContent class="app-content w-full overflow-auto py-6 px-3">
-      <main class="main-content min-h-full h-full">
+      <main class="main-content min-h-full">
         <slot />
       </main>
     </AppContent>

@@ -36,7 +36,7 @@
   <MetaDescriptors description="Satisfactory Mod Repository" title="Home" />
 </svelte:head>
 
-<div class="flex flex-col min-h-full">
+<div class="flex flex-col min-h-full" style="height: calc(100vh - 64px - 3rem)">
   <div class="grid xl:grid-cols-2 grid-cols-1 gap-4 flex-1 mb-4 min-h-[40vh]">
     <a href="https://discord.gg/xkVJ73E" rel="noopener" target="_blank" class="overflow-hidden">
       <Card class="h-full">
