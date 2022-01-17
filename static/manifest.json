@@ -1,7 +1,7 @@
 {
   "name": "Satisfactory Mod Repo",
   "short_name": "SMR",
-  "theme_color": "#da8517",
+  "theme_color": "#ff6f00",
   "background_color": "#da8517",
   "display": "standalone",
   "scope": "/",
