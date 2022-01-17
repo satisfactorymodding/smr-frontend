@@ -9,7 +9,7 @@
   export let logo = assets + '/images/no_image.png';
 </script>
 
-<FicsitCard name={guide.name} {logo} description={guide.short_description} link={base + `/guide/${guide.id}/`}>
+<FicsitCard name={guide.name} {logo} description={guide.short_description} link={base + `/guide/${guide.id}`}>
   <div slot="stats">
     <span><Icon class="material-icons align-middle text-sm">visibility</Icon>{prettyNumber(guide.views)}</span>
   </div>
