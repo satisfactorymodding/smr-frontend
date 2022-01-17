@@ -1,13 +1,13 @@
-const timestamp = 1642421935248;
+const timestamp = 1642424516620;
 const build = [
-  "/smr-frontend/main/_app/start-47b2cf89.js",
+  "/smr-frontend/main/_app/start-aa6fb4ca.js",
   "/smr-frontend/main/_app/pages/__layout.svelte-95e4af1d.js",
   "/smr-frontend/main/_app/assets/pages/__layout.svelte-f42a4516.css",
   "/smr-frontend/main/_app/error.svelte-fb8117b2.js",
-  "/smr-frontend/main/_app/pages/index.svelte-fb08187b.js",
+  "/smr-frontend/main/_app/pages/index.svelte-a159cc17.js",
   "/smr-frontend/main/_app/assets/pages/index.svelte-0da438cd.css",
   "/smr-frontend/main/_app/pages/privacy-policy/index.svelte-c71a542b.js",
-  "/smr-frontend/main/_app/assets/pages/privacy-policy/index.svelte-bcc48566.css",
+  "/smr-frontend/main/_app/assets/pages/tos/index.svelte-1ae42d62.css",
   "/smr-frontend/main/_app/pages/sml-versions/index.svelte-36a7b5c5.js",
   "/smr-frontend/main/_app/pages/new-guide/index.svelte-6a259019.js",
   "/smr-frontend/main/_app/pages/api-docs/index.svelte-2e2ab6de.js",
