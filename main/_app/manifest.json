@@ -1,6 +1,6 @@
 {
   ".svelte-kit/runtime/client/start.js": {
-    "file": "start-962e16aa.js",
+    "file": "start-47b2cf89.js",
     "src": ".svelte-kit/runtime/client/start.js",
     "isEntry": true,
     "imports": [
@@ -63,7 +63,7 @@
       "src/lib/utils/custom_protocol.ts"
     ],
     "css": [
-      "assets/pages/__layout.svelte-8b1bd71b.css"
+      "assets/pages/__layout.svelte-f42a4516.css"
     ]
   },
   ".svelte-kit/runtime/components/error.svelte": {
@@ -76,7 +76,7 @@
     ]
   },
   "src/routes/index.svelte": {
-    "file": "pages/index.svelte-8240af58.js",
+    "file": "pages/index.svelte-fb08187b.js",
     "src": "src/routes/index.svelte",
     "isEntry": true,
     "isDynamicEntry": true,
@@ -111,7 +111,7 @@
       "_paths-396f020f.js"
     ],
     "css": [
-      "assets/pages/api-docs/index.svelte-1c1e4dfd.css"
+      "assets/pages/privacy-policy/index.svelte-bcc48566.css"
     ]
   },
   "src/routes/sml-versions/index.svelte": {
@@ -163,7 +163,7 @@
       "_paths-396f020f.js"
     ],
     "css": [
-      "assets/pages/api-docs/index.svelte-1c1e4dfd.css"
+      "assets/pages/privacy-policy/index.svelte-bcc48566.css"
     ]
   },
   "src/routes/settings/index.svelte": {
@@ -575,7 +575,7 @@
       "_paths-396f020f.js"
     ],
     "css": [
-      "assets/pages/api-docs/index.svelte-1c1e4dfd.css"
+      "assets/pages/privacy-policy/index.svelte-bcc48566.css"
     ]
   },
   "_vendor-1ba4e540.js": {
@@ -691,7 +691,7 @@
       "_markdown-1c881021.js"
     ],
     "css": [
-      "assets/ModForm-cc1db5c2.css"
+      "assets/GuideForm-81c8f5a1.css"
     ]
   },
   "_forms-91d48c56.js": {
@@ -710,7 +710,7 @@
       "_paths-396f020f.js"
     ],
     "css": [
-      "assets/ModForm-cc1db5c2.css"
+      "assets/GuideForm-81c8f5a1.css"
     ]
   },
   "_GuideCard-7271a623.js": {
@@ -731,7 +731,7 @@
       "_graphql-a19cc583.js"
     ],
     "css": [
-      "assets/ModForm-cc1db5c2.css"
+      "assets/GuideForm-81c8f5a1.css"
     ]
   },
   "_routing-689f9c1f.js": {
@@ -756,7 +756,7 @@
       "_formatting-24701f16.js"
     ],
     "css": [
-      "assets/ModForm-cc1db5c2.css"
+      "assets/GuideForm-81c8f5a1.css"
     ]
   },
   "node_modules/.pnpm/cookieconsent@3.1.1/node_modules/cookieconsent/src/cookieconsent.js": {
