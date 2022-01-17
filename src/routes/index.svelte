@@ -29,7 +29,7 @@
     query(mods);
   }
 
-  const gridClasses = '3xl:grid-cols-4 2xl:grid-cols-3 lg:grid-cols-2 grid-cols-1';
+  const gridClasses = '3xl:grid-cols-4 lg:grid-cols-2 grid-cols-1';
 </script>
 
 <svelte:head>
@@ -37,7 +37,7 @@
 </svelte:head>
 
 <div class="flex flex-col min-h-full">
-  <div class="grid grid-cols-2 gap-4 flex-1 mb-4">
+  <div class="grid xl:grid-cols-2 grid-cols-1 gap-4 flex-1 mb-4 min-h-[50vh]">
     <a href="https://discord.gg/xkVJ73E" rel="noopener" target="_blank">
       <Card class="h-full">
         <div class="relative h-full w-full">
@@ -103,8 +103,15 @@
   }
 
   .centered-logo {
-    top: calc(50% - 10vh);
-    left: calc(50% - 10vw);
+    top: calc(50% - 5vh);
+    left: calc(50% - 25vw);
     width: 50%;
+  }
+
+  @media (min-width: 1280px) {
+    .centered-logo {
+      top: calc(50% - 10vh);
+      left: calc(50% - 10vw);
+    }
   }
 </style>

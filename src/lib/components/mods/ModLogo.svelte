@@ -14,8 +14,6 @@
     | undefined;
 
   $: logo = modLogo || assets + '/images/no_image.png';
-
-  // TODO Outdated Flag
 </script>
 
 <div class="relative overflow-hidden">
@@ -30,5 +28,5 @@
       <div class="mod-stripe">OUTDATED</div>
     </div>
   {/if}
-  <img class="rounded-lg sm:max-w-lg max-w-full" src={logo} alt="Logo for {modName}" />
+  <img class="rounded-lg sm:max-w-lg max-w-full w-full" src={logo} alt="Logo for {modName}" />
 </div>

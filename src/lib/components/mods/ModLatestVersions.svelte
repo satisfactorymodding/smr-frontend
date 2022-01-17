@@ -4,6 +4,7 @@
   import { base } from '$app/paths';
   import Card, { Content } from '@smui/card';
   import { Icon } from '@smui/common';
+  import { prettyDate } from '$lib/utils/formatting';
 
   type ILatestVersions = {
     alpha?: Pick<Version, 'id' | 'link' | 'version' | 'created_at'>;
@@ -36,7 +37,7 @@
               <a href="{base}/mod/{modId}/version/{latestVersions[stability].id}/" class="text-yellow-500 underline"
                 >Version {latestVersions[stability].version}</a
               >
-              <div>{latestVersions[stability].created_at}</div>
+              <div>{prettyDate(latestVersions[stability].created_at)}</div>
             </div>
             <div class="text-3xl w-14 h-14 p-2.5">
               <a

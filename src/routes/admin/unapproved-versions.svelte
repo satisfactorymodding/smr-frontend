@@ -9,6 +9,7 @@
   import Card, { Content } from '@smui/card';
   import DataTable, { Head, Body, Row, Cell } from '@smui/data-table';
   import Button from '@smui/button';
+  import { prettyDate } from '$lib/utils/formatting';
 
   // TODO Selectable
   const perPage = 20;
@@ -82,8 +83,7 @@
           <Row>
             <Cell>{version.mod.name}</Cell>
             <Cell>{version.version}</Cell>
-            <!-- TODO Pretty Date -->
-            <Cell>{version.created_at}</Cell>
+            <Cell>{prettyDate(version.created_at)}</Cell>
             <Cell>
               <div class="grid grid-flow-col gap-4">
                 <Button variant="outlined" on:click={() => approveVersion(version.id)}>Approve</Button>

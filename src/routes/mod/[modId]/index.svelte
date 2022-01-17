@@ -146,11 +146,3 @@
   <!-- TODO Better 404 -->
   404
 {/if}
-
-<style lang="postcss">
-  @media (min-width: 1279px) {
-    .grid-auto-max {
-      grid-template-columns: auto max-content;
-    }
-  }
-</style>

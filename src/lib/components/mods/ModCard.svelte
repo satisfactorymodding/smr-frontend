@@ -5,6 +5,7 @@
   import FicsitCard from '$lib/components/general/FicsitCard.svelte';
   import { installMod } from '$lib/stores/launcher';
   import { modStatus } from '$lib/utils/mod';
+  import { prettyNumber } from '$lib/utils/formatting';
 
   export let mod: Pick<Mod, 'id' | 'mod_reference' | 'name' | 'logo' | 'views' | 'downloads' | 'short_description'> & {
     latestVersions: {
@@ -25,8 +26,8 @@
   description={mod.short_description}
 >
   <div slot="stats">
-    <span><Icon class="material-icons align-middle text-sm">visibility</Icon>{mod.views}</span>
-    <span><Icon class="material-icons align-middle text-sm">download</Icon>{mod.downloads}</span>
+    <span><Icon class="material-icons align-middle text-sm mr-1">visibility</Icon>{prettyNumber(mod.views)}</span>
+    <span><Icon class="material-icons align-middle text-sm mr-1">download</Icon>{prettyNumber(mod.downloads)}</span>
   </div>
   <div slot="actions">
     {#if installable}

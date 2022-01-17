@@ -7,11 +7,11 @@
   import { trimNonSchema } from '$lib/utils/forms';
   import { markdown } from '$lib/utils/markdown';
   import { writable } from 'svelte/store';
-  import { formatBytes } from '$lib/utils/pretty';
   import Textfield from '@smui/textfield';
   import Button from '@smui/button';
   import { VersionStabilities } from '$lib/generated';
   import Select, { Option } from '@smui/select';
+  import { prettyBytes } from '$lib/utils/formatting.js';
 
   export let modReference: string;
   export let onSubmit: (data: VersionData) => Promise<void>;
@@ -66,7 +66,7 @@
       {#if $data.file}
         <div>
           <span><strong>File Type:</strong> {$data.file.type || 'Unknown'}</span><br />
-          <span><strong>File Size:</strong> {formatBytes($data.file.size)}</span>
+          <span><strong>File Size:</strong> {prettyBytes($data.file.size)}</span>
         </div>
       {/if}
 

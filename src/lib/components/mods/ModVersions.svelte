@@ -8,6 +8,7 @@
   import DataTable, { Head, Body, Row, Cell } from '@smui/data-table';
   import Button, { Label, Icon } from '@smui/button';
   import { installMod } from '$lib/stores/launcher';
+  import { prettyDate, prettyNumber, prettyBytes } from '$lib/utils/formatting';
 
   export let modId!: string;
 
@@ -55,9 +56,8 @@
             <Cell>{version.version}</Cell>
             <Cell>{version.stability}</Cell>
             <Cell>{version.sml_version}</Cell>
-            <Cell>{version.downloads}</Cell>
-            <!-- TODO Pretty Date -->
-            <Cell>{version.created_at}</Cell>
+            <Cell>{prettyNumber(version.downloads)}</Cell>
+            <Cell>{prettyDate(version.created_at)}</Cell>
             <Cell>
               <div class="grid grid-flow-col gap-4">
                 <Button variant="outlined" href={base + '/mod/' + modId + '/version/' + version.id}>View</Button>
@@ -75,8 +75,7 @@
           {#if expandedVersions.has(version.id)}
             <Row>
               <Cell colspan={6}>
-                <!-- TODO Pretty Bytes -->
-                <div class="col-span-3 p-2">Size: {version.size}</div>
+                <div class="col-span-3 p-2">Size: {prettyBytes(version.size)}</div>
                 <div class="col-span-3 p-2">Hash: {version.hash}</div>
 
                 <div class="col-span-6 p-2 markdown-content">
