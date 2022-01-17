@@ -37,7 +37,7 @@
 </svelte:head>
 
 <div class="flex flex-col min-h-full">
-  <div class="grid xl:grid-cols-2 grid-cols-1 gap-4 flex-1 mb-4 min-h-[50vh]">
+  <div class="grid xl:grid-cols-2 grid-cols-1 gap-4 flex-1 mb-4 min-h-[40vh]">
     <a href="https://discord.gg/xkVJ73E" rel="noopener" target="_blank">
       <Card class="h-full">
         <div class="relative h-full w-full">
