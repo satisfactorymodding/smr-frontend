@@ -111,7 +111,7 @@
       "_paths-396f020f.js"
     ],
     "css": [
-      "assets/pages/tos/index.svelte-1ae42d62.css"
+      "assets/pages/privacy-policy/index.svelte-bcc48566.css"
     ]
   },
   "src/routes/sml-versions/index.svelte": {
@@ -163,7 +163,7 @@
       "_paths-396f020f.js"
     ],
     "css": [
-      "assets/pages/tos/index.svelte-1ae42d62.css"
+      "assets/pages/privacy-policy/index.svelte-bcc48566.css"
     ]
   },
   "src/routes/settings/index.svelte": {
@@ -575,7 +575,7 @@
       "_paths-396f020f.js"
     ],
     "css": [
-      "assets/pages/tos/index.svelte-1ae42d62.css"
+      "assets/pages/privacy-policy/index.svelte-bcc48566.css"
     ]
   },
   "_vendor-1ba4e540.js": {
@@ -691,7 +691,7 @@
       "_markdown-1c881021.js"
     ],
     "css": [
-      "assets/ModForm-cc1db5c2.css"
+      "assets/VersionForm-3ddc908d.css"
     ]
   },
   "_forms-91d48c56.js": {
@@ -710,7 +710,7 @@
       "_paths-396f020f.js"
     ],
     "css": [
-      "assets/ModForm-cc1db5c2.css"
+      "assets/VersionForm-3ddc908d.css"
     ]
   },
   "_GuideCard-7271a623.js": {
@@ -731,7 +731,7 @@
       "_graphql-a19cc583.js"
     ],
     "css": [
-      "assets/ModForm-cc1db5c2.css"
+      "assets/VersionForm-3ddc908d.css"
     ]
   },
   "_routing-689f9c1f.js": {
@@ -756,7 +756,7 @@
       "_formatting-24701f16.js"
     ],
     "css": [
-      "assets/ModForm-cc1db5c2.css"
+      "assets/VersionForm-3ddc908d.css"
     ]
   },
   "node_modules/.pnpm/cookieconsent@3.1.1/node_modules/cookieconsent/src/cookieconsent.js": {
