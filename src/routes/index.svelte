@@ -1,8 +1,7 @@
 <script lang="ts" context="module">
-  import { operationStore, query } from '@urql/svelte';
+  import { operationStore } from '@urql/svelte';
   import { GetModsDocument, ModFields, Order } from '$lib/generated';
   import { loadWaitForNoFetch } from '$lib/utils/gql';
-  import { browser } from '$app/env';
 
   const modsQ = operationStore(GetModsDocument, {
     offset: 0,
@@ -25,10 +24,6 @@
 
   export let mods!: typeof modsQ;
 
-  if (browser) {
-    query(mods);
-  }
-
   const gridClasses = '3xl:grid-cols-4 lg:grid-cols-2 grid-cols-1';
 </script>
 
@@ -38,7 +33,7 @@
 
 <div class="flex flex-col min-h-full" style="height: calc(100vh - 64px - 3rem)">
   <div class="mb-4 min-h-[20vh]">
-    <a href="https://discord.gg/xkVJ73E" rel="noopener" target="_blank" class="overflow-hidden">
+    <a href="https://smm.ficsit.app" rel="noopener" target="_blank" class="overflow-hidden">
       <Card class="h-full">
         <div class="relative h-full w-full">
           <div class="modding-banner" />

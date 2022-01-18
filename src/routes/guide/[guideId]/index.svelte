@@ -15,7 +15,7 @@
 </script>
 
 <script lang="ts">
-  import { mutation, query } from '@urql/svelte';
+  import { mutation } from '@urql/svelte';
   import { DeleteGuideDocument } from '$lib/generated';
   import GuideInfo from '$lib/components/guides/GuideInfo.svelte';
   import GuideAuthor from '$lib/components/guides/GuideAuthor.svelte';
@@ -25,7 +25,6 @@
   import Toast from '$lib/components/general/Toast.svelte';
   import { markdown } from '$lib/utils/markdown';
   import { base } from '$app/paths';
-  import { browser } from '$app/env';
   import Dialog, { Title, Content as DialogContent } from '@smui/dialog';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
   import Card, { Content } from '@smui/card';
@@ -59,10 +58,6 @@
   };
 
   $: if (!errorToast) errorMessage = '';
-
-  if (browser) {
-    query(guide);
-  }
 </script>
 
 <svelte:head>

@@ -16,7 +16,7 @@
 
 <script lang="ts">
   import { DeleteModDocument } from '$lib/generated';
-  import { mutation, query } from '@urql/svelte';
+  import { mutation } from '@urql/svelte';
   import ModInfo from '$lib/components/mods/ModInfo.svelte';
   import ModLatestVersions from '$lib/components/mods/ModLatestVersions.svelte';
   import ModAuthors from '$lib/components/mods/ModAuthors.svelte';
@@ -28,7 +28,6 @@
   import { writable } from 'svelte/store';
   import Toast from '$lib/components/general/Toast.svelte';
   import { base } from '$app/paths';
-  import { browser } from '$app/env';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
   import Button from '@smui/button';
   import Dialog, { Title, Content as DialogContent } from '@smui/dialog';
@@ -63,10 +62,6 @@
       }
     });
   };
-
-  if (browser) {
-    query(mod);
-  }
 </script>
 
 <svelte:head>

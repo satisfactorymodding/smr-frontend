@@ -2,7 +2,7 @@
   import { assets } from '$app/paths';
   import Card, { Content, Actions } from '@smui/card';
   import IconButton, { Icon } from '@smui/icon-button';
-  import { goto } from '$app/navigation';
+  import { goto, prefetch } from '$app/navigation';
   import Image from '$lib/components/general/Image.svelte';
 
   export let name = '';
@@ -14,9 +14,30 @@
   $: renderedLogo = logo || assets + '/images/no_image.png';
   $: renderedName = name || (fake && 'Card Name');
   $: renderedDescription = description || (fake && 'Short card description');
+
+  let preloaded = false;
+  let timeoutHandle: number;
+  const onOver = () => {
+    if (preloaded) {
+      return;
+    }
+
+    timeoutHandle = setTimeout(() => {
+      preloaded = true;
+      prefetch(link);
+    }, 250) as unknown as number;
+  };
+
+  const onOut = () => {
+    if (preloaded) {
+      return;
+    }
+
+    clearTimeout(timeoutHandle);
+  };
 </script>
 
-<Card class="h-full overflow-hidden">
+<Card class="h-full overflow-hidden" on:mouseover={onOver} on:mouseout={onOut}>
   <div
     class:text-gray-500={fake}
     class:font-flow={fake}
@@ -26,12 +47,7 @@
       {#if fake}
         <div class="bg-gray-500 logo min-w-full min-h-full max-w-full max-h-full" />
       {:else}
-        <Image
-          crossorigin="anonymous"
-          src={renderedLogo}
-          alt="{renderedName} Logo"
-          class="logo max-w-full max-h-full"
-        />
+        <Image src={renderedLogo} alt="{renderedName} Logo" class="logo max-w-full max-h-full" />
       {/if}
     </div>
     <div class="w-full flex flex-col justify-between">

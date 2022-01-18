@@ -17,22 +17,16 @@
 </script>
 
 <script lang="ts">
-  import { query } from '@urql/svelte';
   import UserInfo from '$lib/components/users/UserInfo.svelte';
   import UserAvatar from '$lib/components/users/UserAvatar.svelte';
   import ModCard from '$lib/components/mods/ModCard.svelte';
   import GuideCard from '$lib/components/guides/GuideCard.svelte';
   import { user as me } from '$lib/stores/user';
   import { base } from '$app/paths';
-  import { browser } from '$app/env';
 
   export let user: typeof userQ;
 
   let guidesTab = false;
-
-  if (browser) {
-    query(user);
-  }
 </script>
 
 <svelte:head>

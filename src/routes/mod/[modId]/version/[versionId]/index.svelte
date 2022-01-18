@@ -16,7 +16,7 @@
 </script>
 
 <script lang="ts">
-  import { mutation, query } from '@urql/svelte';
+  import { mutation } from '@urql/svelte';
   import { DeleteVersionDocument } from '$lib/generated';
   import VersionDescription from '$lib/components/versions/VersionDescription.svelte';
   import VersionInfo from '$lib/components/versions/VersionInfo.svelte';
@@ -26,7 +26,6 @@
   import { goto } from '$app/navigation';
   import { user } from '$lib/stores/user';
   import { base } from '$app/paths';
-  import { browser } from '$app/env';
   import Button, { Label, Icon } from '@smui/button';
   import Dialog, { Title, Content as DialogContent } from '@smui/dialog';
   import { installMod } from '$lib/stores/launcher';
@@ -60,10 +59,6 @@
       }
     });
   };
-
-  if (browser) {
-    query(version);
-  }
 </script>
 
 <svelte:head>
