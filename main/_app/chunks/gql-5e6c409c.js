@@ -1,2 +1,0 @@
-import{K as c}from"./vendor-2ce7ccec.js";import{g as n}from"./global-7bf21905.js";const l=r=>async function(){{const s=Object.keys(r).map(o=>{const t=r[o];return c(n).query(t.query,t.variables,t.context).toPromise().then(e=>{t.set({...e,fetching:!1})}).catch(e=>{t.set({fetching:!1,data:void 0,error:e})}),t.set({fetching:!0}),[o,t]});return{props:Object.fromEntries(s)}}};export{l};
-//# sourceMappingURL=gql-5e6c409c.js.map
