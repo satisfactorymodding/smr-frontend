@@ -109,7 +109,7 @@
           <div class="flex absolute w-full h-full top-0 items-center justify-center">
             <img class="centered-logo" src={assets + '/images/sf_modding_logo.png'} alt="Satisfactory Modding Logo" />
           </div>
-          <div class="absolute left-0 bottom-0 pb-4 pl-4 text-gray-400">
+          <div class="absolute bottom-0 pb-4 px-4 w-full text-gray-400 text-center xl:text-left">
             <span>Community-run Modding Discord</span>
           </div>
         </div>
@@ -126,7 +126,7 @@
               alt="Satisfactory Logo"
             />
           </div>
-          <div class="absolute right-0 bottom-0 pb-4 pr-4 text-gray-300">
+          <div class="absolute bottom-0 pb-4 px-4 w-full text-gray-300 text-center xl:text-right">
             <span>Official Website</span>
           </div>
         </div>
