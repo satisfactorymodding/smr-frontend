@@ -19,20 +19,18 @@
   import LoginDialog from '$lib/components/auth/LoginDialog.svelte';
   import { setClient } from '@urql/svelte';
   import TopAppBar, { Row, Section, Title } from '@smui/top-app-bar';
-  import Drawer, { AppContent, Content, Scrim } from '@smui/drawer';
-  import List, { Item, Text, Graphic, Separator } from '@smui/list';
+  import { AppContent, Scrim } from '@smui/drawer';
+  import List, { Item, Text } from '@smui/list';
   import IconButton from '@smui/icon-button';
   import Button, { Label, Icon } from '@smui/button';
-  import { page } from '$app/stores';
   import { user, userToken } from '$lib/stores/user';
   import { browser } from '$app/env';
   import { goto } from '$app/navigation';
   import { loginDialogOpen } from '$lib/stores/global';
   import Menu, { MenuComponentDev } from '@smui/menu';
   import { onMount } from 'svelte';
-  import Switch from '@smui/switch';
-  import FormField from '@smui/form-field';
   import { customProtocolCheck, hasLauncher, pingLauncher } from '$lib/stores/launcher';
+  import Sidebar from '$lib/components/general/Sidebar.svelte';
 
   let root: HTMLElement;
   onMount(async () => {
@@ -56,7 +54,7 @@
         });
       }
 
-      customProtocolCheck.set(await import('../lib/utils/custom_protocol'));
+      customProtocolCheck.set(await import('$lib/thirdparty/custom_protocol'));
 
       if (localStorage.getItem('hasLauncher') && localStorage.getItem('hasLauncher').toLocaleLowerCase() === 'true') {
         hasLauncher.set(true);
@@ -75,7 +73,6 @@
 
   setClient(client);
 
-  $: currentPath = $page.url.pathname;
   $: isAdmin = !$user ? false : $user.roles.approveMods || $user.roles.approveVersions || $user.roles.editSMLVersions;
 
   let open = false;
@@ -186,105 +183,7 @@
   </TopAppBar>
 
   <div class="drawer-container">
-    <Drawer variant={drawerVariant} fixed={false} bind:open>
-      <Content>
-        <div class="drawer-content">
-          {#if hideTopElements}
-            <List>
-              {#if $user === null}
-                <Item on:click={() => loginDialogOpen.set(true)}>
-                  <Graphic class="material-icons">login</Graphic>
-                  <Text>Sign In</Text>
-                </Item>
-              {:else}
-                {#if isAdmin}
-                  <Item on:click={() => goto(base + '/admin')} activated={currentPath.startsWith('/admin')}>
-                    <Graphic class="material-icons">admin_panel_settings</Graphic>
-                    <Text>Admin</Text>
-                  </Item>
-                {/if}
-
-                <Item on:click={() => goto(base + '/user/' + $user.id)} activated={currentPath.startsWith('/user')}>
-                  <Graphic>
-                    <div class="rounded-full bg-cover w-7 h-7" style={`background-image: url("${$user.avatar}")`} />
-                  </Graphic>
-                  <Text>{$user.username}</Text>
-                </Item>
-
-                <Item on:click={() => userToken.set(null)}>
-                  <Graphic class="material-icons">logout</Graphic>
-                  <Text>Logout</Text>
-                </Item>
-              {/if}
-            </List>
-
-            <Separator />
-          {/if}
-
-          <List>
-            <Item href="{base}/" activated={currentPath === '/'}>
-              <Graphic class="material-icons">home</Graphic>
-              <Text>Home</Text>
-            </Item>
-            <Item href="{base}/mods" activated={currentPath.startsWith('/mods')}>
-              <Graphic class="material-icons">extension</Graphic>
-              <Text>Mods</Text>
-            </Item>
-            <Item href="{base}/guides" activated={currentPath.startsWith('/guides')}>
-              <Graphic class="material-icons">description</Graphic>
-              <Text>Guides</Text>
-            </Item>
-            <Item href="{base}/sml-versions" activated={currentPath.startsWith('/sml-versions')}>
-              <Graphic class="material-icons">lightbulb</Graphic>
-              <Text>SML Versions</Text>
-            </Item>
-            <Item href="{base}/tools" activated={currentPath.startsWith('/tools')}>
-              <Graphic class="material-icons">apps</Graphic>
-              <Text>Tools</Text>
-            </Item>
-            <Item href="https://discord.gg/xkVJ73E" target="_blank" rel="noopener">
-              <Graphic class="material-icons">people</Graphic>
-              <Text>Discord</Text>
-            </Item>
-            <Item href="https://docs.ficsit.app/" target="_blank" rel="noopener">
-              <Graphic class="material-icons">find_in_page</Graphic>
-              <Text>Docs</Text>
-            </Item>
-          </List>
-
-          <List>
-            <Item href="{base}/help" activated={currentPath.startsWith('/help')}>
-              <Graphic class="material-icons">help</Graphic>
-              <Text>Help</Text>
-            </Item>
-            <Item href="{base}/privacy-policy" activated={currentPath.startsWith('/privacy-policy')}>
-              <Graphic class="material-icons">policy</Graphic>
-              <Text>Privacy Policy</Text>
-            </Item>
-            <Item href="{base}/tos" activated={currentPath.startsWith('/tos')}>
-              <Graphic class="material-icons">gavel</Graphic>
-              <Text>Terms of Service</Text>
-            </Item>
-            <Item href="{base}/api-docs" activated={currentPath.startsWith('/api-docs')}>
-              <Graphic class="material-icons">api</Graphic>
-              <Text>API</Text>
-            </Item>
-            {#if hideTopElements}
-              <Item target="_blank" href="https://smm.ficsit.app" rel="noopener">
-                <Graphic class="material-icons">file_download</Graphic>
-                <Text>Mod Manager</Text>
-              </Item>
-            {/if}
-            <Item>
-              <FormField align="end">
-                <Switch bind:checked={accessibility} />
-                <span slot="label">Accessibility Font</span>
-              </FormField>
-            </Item>
-          </List>
-        </div>
-      </Content>
-    </Drawer>
+    <Sidebar bind:open bind:accessibility bind:drawerVariant bind:hideTopElements />
 
     {#if drawerVariant === 'modal'}
       <Scrim fixed={false} />
@@ -316,12 +215,5 @@
     height: 100%;
     overflow: hidden;
     position: relative;
-  }
-
-  .drawer-content {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 100%;
   }
 </style>

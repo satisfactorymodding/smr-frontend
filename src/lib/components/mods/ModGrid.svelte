@@ -107,13 +107,13 @@
   ];
 </script>
 
-<div class="ml-auto flex flex-wrap justify-between">
+<div class="ml-auto flex flex-wrap justify-between items-center mb-5">
   {#if newMod && $user !== null}
-    <Button variant="outlined" href="{base}/new-mod" class="mb-5">New Mod</Button>
+    <Button variant="outlined" href="{base}/new-mod">New Mod</Button>
   {/if}
 
   {#if showSearch}
-    <div class="search-container flex flex-wrap mb-5 sm:px-4">
+    <div class="search-container flex flex-wrap sm:px-4">
       <div class="mr-3">
         <Select bind:value={orderBy} label="Order By">
           {#each orderFields as orderField}
@@ -137,7 +137,7 @@
     </div>
   {/if}
 
-  <div class="mb-5">
+  <div>
     <PageControls totalPages={Math.ceil(totalMods / perPage)} currentPage={page} />
   </div>
 </div>

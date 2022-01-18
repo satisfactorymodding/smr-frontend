@@ -37,28 +37,41 @@
 </svelte:head>
 
 <div class="flex flex-col min-h-full" style="height: calc(100vh - 64px - 3rem)">
-  <div class="grid xl:grid-cols-2 grid-cols-1 gap-4 flex-1 mb-4 min-h-[40vh]">
+  <div class="mb-4 min-h-[20vh]">
     <a href="https://discord.gg/xkVJ73E" rel="noopener" target="_blank" class="overflow-hidden">
       <Card class="h-full">
         <div class="relative h-full w-full">
           <div class="modding-banner" />
-          <img
-            class="absolute centered-logo"
-            src={assets + '/images/sf_modding_logo.png'}
-            alt="Satisfactory Modding Logo"
-          />
+          <div class="flex absolute w-full h-full top-0 items-center justify-center">
+            <img class="h-1/2" src={assets + '/images/smm_icon.png'} alt="Satisfactory Mod Manager" />
+          </div>
         </div>
       </Card>
     </a>
-    <a href="https://www.satisfactorygame.com/" rel="noopener" target="_blank" class="overflow-hidden">
+  </div>
+
+  <div class="grid xl:grid-cols-2 grid-cols-1 gap-4 flex-1 mb-4">
+    <a href="https://discord.gg/xkVJ73E" rel="noopener" target="_blank" class="overflow-hidden min-h-[20vh]">
+      <Card class="h-full">
+        <div class="relative h-full w-full">
+          <div class="modding-banner" />
+          <div class="flex absolute w-full h-full top-0 items-center justify-center">
+            <img class="centered-logo" src={assets + '/images/sf_modding_logo.png'} alt="Satisfactory Modding Logo" />
+          </div>
+        </div>
+      </Card>
+    </a>
+    <a href="https://www.satisfactorygame.com/" rel="noopener" target="_blank" class="overflow-hidden min-h-[20vh]">
       <Card class="h-full">
         <div class="relative h-full w-full">
           <div class="css-banner" />
-          <img
-            class="absolute centered-logo"
-            src={assets + '/images/satisfactory_logo_full_color_small.png'}
-            alt="Satisfactory Logo"
-          />
+          <div class="flex absolute w-full h-full top-0 items-center justify-center">
+            <img
+              class="centered-logo"
+              src={assets + '/images/satisfactory_logo_full_color_small.png'}
+              alt="Satisfactory Logo"
+            />
+          </div>
         </div>
       </Card>
     </a>
@@ -103,15 +116,13 @@
   }
 
   .centered-logo {
-    top: calc(50% - 5vh);
-    left: calc(50% - 25vw);
-    width: 50%;
+    max-height: 50%;
+    max-width: 60%;
   }
 
   @media (min-width: 1280px) {
     .centered-logo {
-      top: calc(50% - 10vh);
-      left: calc(50% - 10vw);
+      max-height: 15vh;
     }
   }
 </style>

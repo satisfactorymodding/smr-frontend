@@ -3,6 +3,7 @@
   import Card, { Content, Actions } from '@smui/card';
   import IconButton, { Icon } from '@smui/icon-button';
   import { goto } from '$app/navigation';
+  import Image from '$lib/components/general/Image.svelte';
 
   export let name = '';
   export let logo = assets + '/images/no_image.png';
@@ -25,7 +26,12 @@
       {#if fake}
         <div class="bg-gray-500 logo min-w-full min-h-full max-w-full max-h-full" />
       {:else}
-        <img crossorigin="anonymous" src={renderedLogo} alt="{renderedName} Logo" class="logo max-w-full max-h-full" />
+        <Image
+          crossorigin="anonymous"
+          src={renderedLogo}
+          alt="{renderedName} Logo"
+          class="logo max-w-full max-h-full"
+        />
       {/if}
     </div>
     <div class="w-full flex flex-col justify-between">
