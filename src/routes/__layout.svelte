@@ -26,7 +26,7 @@
   import { user, userToken } from '$lib/stores/user';
   import { browser } from '$app/env';
   import { goto } from '$app/navigation';
-  import { loginDialogOpen } from '$lib/stores/global';
+  import { loginDialogOpen, onMobile } from '$lib/stores/global';
   import Menu, { MenuComponentDev } from '@smui/menu';
   import { onMount } from 'svelte';
   import { customProtocolCheck, hasLauncher, pingLauncher } from '$lib/stores/launcher';
@@ -79,15 +79,10 @@
   let drawerVariant: 'modal' | undefined = 'modal';
   let hideTopElements = true;
   if (browser) {
-    const mediaQuery = window.matchMedia('(min-width: 1280px)');
-
-    mediaQuery.addEventListener('change', (data) => {
-      drawerVariant = data.matches ? undefined : 'modal';
-      hideTopElements = !data.matches;
+    onMobile.subscribe((mobile) => {
+      drawerVariant = mobile ? 'modal' : undefined;
+      hideTopElements = mobile;
     });
-
-    drawerVariant = mediaQuery.matches ? undefined : 'modal';
-    hideTopElements = !mediaQuery.matches;
   }
 
   let menu: MenuComponentDev;
