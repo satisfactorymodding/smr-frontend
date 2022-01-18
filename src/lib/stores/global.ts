@@ -39,7 +39,7 @@ if (browser) {
   window.onkeyup = (ev) => {
     codeBuffer.push(ev.code);
     if (codeBuffer.length > easterCode.length) {
-      codeBuffer.unshift();
+      codeBuffer.shift();
     }
 
     if (codeBuffer.length == easterCode.length) {

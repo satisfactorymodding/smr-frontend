@@ -87,7 +87,7 @@
                   </span> mods!
                 </div>
                 <div class="text-md">Most are compatible with the</div>
-                <div class="text-md mb-4">latest version of satisfactory</div>
+                <div class="text-md mb-4">latest version of satisfactory.</div>
               </div>
             </div>
             <div class="flex absolute w-full h-full top-0 items-end justify-center">
