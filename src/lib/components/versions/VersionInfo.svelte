@@ -8,7 +8,7 @@
 
 <Card>
   <Content>
-    <div class="text-lg">
+    <div class="text-lg break-words">
       <h3 class="text-2xl my-4 font-bold">Info</h3>
       <span><strong>Created:</strong> {prettyDate(version.created_at)}</span><br />
       <span><strong>Downloads:</strong> {prettyNumber(version.downloads)}</span><br />
