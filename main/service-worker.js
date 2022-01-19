@@ -1,13 +1,13 @@
-const timestamp = 1642626423215;
+const timestamp = 1642627968316;
 const build = [
-  "/smr-frontend/main/_app/start-fc9d7913.js",
+  "/smr-frontend/main/_app/start-8c3085ca.js",
   "/smr-frontend/main/_app/pages/__layout.svelte-8ba64351.js",
   "/smr-frontend/main/_app/assets/pages/__layout.svelte-4d12a64e.css",
   "/smr-frontend/main/_app/error.svelte-7537853c.js",
   "/smr-frontend/main/_app/pages/index.svelte-8110a9ff.js",
   "/smr-frontend/main/_app/assets/pages/index.svelte-69682e12.css",
   "/smr-frontend/main/_app/pages/privacy-policy/index.svelte-b5deb3c9.js",
-  "/smr-frontend/main/_app/assets/pages/api-docs/index.svelte-1c1e4dfd.css",
+  "/smr-frontend/main/_app/assets/pages/privacy-policy/index.svelte-bcc48566.css",
   "/smr-frontend/main/_app/pages/sml-versions/index.svelte-fcf3e9c7.js",
   "/smr-frontend/main/_app/pages/new-guide/index.svelte-5775a071.js",
   "/smr-frontend/main/_app/pages/api-docs/index.svelte-e0ebfe19.js",
@@ -30,11 +30,11 @@ const build = [
   "/smr-frontend/main/_app/pages/user/_userId_/index.svelte-cbda10b5.js",
   "/smr-frontend/main/_app/pages/mod/_modId_/index.svelte-e3b97228.js",
   "/smr-frontend/main/_app/assets/pages/mod/_modId_/index.svelte-1e2ec0d7.css",
-  "/smr-frontend/main/_app/pages/mod/_modId_/new-version.svelte-05fad400.js",
+  "/smr-frontend/main/_app/pages/mod/_modId_/new-version.svelte-5a383fca.js",
   "/smr-frontend/main/_app/pages/mod/_modId_/version/_versionId_/index.svelte-c284c7d6.js",
-  "/smr-frontend/main/_app/pages/mod/_modId_/version/_versionId_/edit.svelte-647ae863.js",
+  "/smr-frontend/main/_app/pages/mod/_modId_/version/_versionId_/edit.svelte-178c3486.js",
   "/smr-frontend/main/_app/pages/mod/_modId_/version/_versionId_/view.svelte-8d3e7825.js",
-  "/smr-frontend/main/_app/pages/mod/_modId_/edit.svelte-a8215569.js",
+  "/smr-frontend/main/_app/pages/mod/_modId_/edit.svelte-ab28f96c.js",
   "/smr-frontend/main/_app/pages/tos/index.svelte-41cf48b4.js",
   "/smr-frontend/main/_app/chunks/vendor-2ce7ccec.js",
   "/smr-frontend/main/_app/chunks/singletons-4fc5a6de.js",
@@ -65,7 +65,7 @@ const build = [
   "/smr-frontend/main/_app/chunks/SMLVersionForm-c82b81fb.js",
   "/smr-frontend/main/_app/chunks/routing-689f9c1f.js",
   "/smr-frontend/main/_app/chunks/uplugin-6a735e2b.js",
-  "/smr-frontend/main/_app/chunks/VersionForm-98d72f87.js",
+  "/smr-frontend/main/_app/chunks/VersionForm-a2d4f733.js",
   "/smr-frontend/main/_app/chunks/cookieconsent-9a03ad46.js",
   "/smr-frontend/main/_app/chunks/custom_protocol-9a42c2ee.js"
 ];

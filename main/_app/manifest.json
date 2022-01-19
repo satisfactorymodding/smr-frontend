@@ -1,6 +1,6 @@
 {
   ".svelte-kit/runtime/client/start.js": {
-    "file": "start-fc9d7913.js",
+    "file": "start-8c3085ca.js",
     "src": ".svelte-kit/runtime/client/start.js",
     "isEntry": true,
     "imports": [
@@ -114,7 +114,7 @@
       "_paths-396f020f.js"
     ],
     "css": [
-      "assets/pages/api-docs/index.svelte-1c1e4dfd.css"
+      "assets/pages/privacy-policy/index.svelte-bcc48566.css"
     ]
   },
   "src/routes/sml-versions/index.svelte": {
@@ -166,7 +166,7 @@
       "_paths-396f020f.js"
     ],
     "css": [
-      "assets/pages/api-docs/index.svelte-1c1e4dfd.css"
+      "assets/pages/privacy-policy/index.svelte-bcc48566.css"
     ]
   },
   "src/routes/settings/index.svelte": {
@@ -479,7 +479,7 @@
     ]
   },
   "src/routes/mod/[modId]/new-version.svelte": {
-    "file": "pages/mod/_modId_/new-version.svelte-05fad400.js",
+    "file": "pages/mod/_modId_/new-version.svelte-5a383fca.js",
     "src": "src/routes/mod/[modId]/new-version.svelte",
     "isEntry": true,
     "isDynamicEntry": true,
@@ -488,7 +488,7 @@
       "_routing-689f9c1f.js",
       "_Toast-cfd5b391.js",
       "_navigation-ca50617e.js",
-      "_VersionForm-98d72f87.js",
+      "_VersionForm-a2d4f733.js",
       "_graphql-4793b2e5.js",
       "_paths-396f020f.js",
       "_MetaDescriptors-36bd2d25.js",
@@ -527,7 +527,7 @@
     ]
   },
   "src/routes/mod/[modId]/version/[versionId]/edit.svelte": {
-    "file": "pages/mod/_modId_/version/_versionId_/edit.svelte-647ae863.js",
+    "file": "pages/mod/_modId_/version/_versionId_/edit.svelte-178c3486.js",
     "src": "src/routes/mod/[modId]/version/[versionId]/edit.svelte",
     "isEntry": true,
     "isDynamicEntry": true,
@@ -537,7 +537,7 @@
       "_graphql-4793b2e5.js",
       "_Toast-cfd5b391.js",
       "_navigation-ca50617e.js",
-      "_VersionForm-98d72f87.js",
+      "_VersionForm-a2d4f733.js",
       "_paths-396f020f.js",
       "_MetaDescriptors-36bd2d25.js",
       "_singletons-4fc5a6de.js",
@@ -560,7 +560,7 @@
     ]
   },
   "src/routes/mod/[modId]/edit.svelte": {
-    "file": "pages/mod/_modId_/edit.svelte-a8215569.js",
+    "file": "pages/mod/_modId_/edit.svelte-ab28f96c.js",
     "src": "src/routes/mod/[modId]/edit.svelte",
     "isEntry": true,
     "isDynamicEntry": true,
@@ -591,7 +591,7 @@
       "_paths-396f020f.js"
     ],
     "css": [
-      "assets/pages/api-docs/index.svelte-1c1e4dfd.css"
+      "assets/pages/privacy-policy/index.svelte-bcc48566.css"
     ]
   },
   "_vendor-2ce7ccec.js": {
@@ -768,8 +768,8 @@
       "_vendor-2ce7ccec.js"
     ]
   },
-  "_VersionForm-98d72f87.js": {
-    "file": "chunks/VersionForm-98d72f87.js",
+  "_VersionForm-a2d4f733.js": {
+    "file": "chunks/VersionForm-a2d4f733.js",
     "imports": [
       "_vendor-2ce7ccec.js",
       "_uplugin-6a735e2b.js",
