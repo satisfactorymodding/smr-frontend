@@ -68,7 +68,7 @@
         </Card>
       </a>
     {:else}
-      <a href="https://smm.ficsit.app" rel="noopener" target="_blank" class="overflow-hidden">
+      <a href="/mods" class="overflow-hidden">
         <Card class="h-full">
           <div class="relative h-full w-full">
             <div class="smm-banner banner" />
