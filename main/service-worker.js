@@ -1,13 +1,13 @@
-const timestamp = 1642628197204;
+const timestamp = 1642633000503;
 const build = [
-  "/smr-frontend/main/_app/start-23e3ef03.js",
+  "/smr-frontend/main/_app/start-a3f90f05.js",
   "/smr-frontend/main/_app/pages/__layout.svelte-8ba64351.js",
   "/smr-frontend/main/_app/assets/pages/__layout.svelte-4d12a64e.css",
   "/smr-frontend/main/_app/error.svelte-7537853c.js",
   "/smr-frontend/main/_app/pages/index.svelte-fe493650.js",
   "/smr-frontend/main/_app/assets/pages/index.svelte-69682e12.css",
   "/smr-frontend/main/_app/pages/privacy-policy/index.svelte-b5deb3c9.js",
-  "/smr-frontend/main/_app/assets/pages/api-docs/index.svelte-1c1e4dfd.css",
+  "/smr-frontend/main/_app/assets/pages/privacy-policy/index.svelte-bcc48566.css",
   "/smr-frontend/main/_app/pages/sml-versions/index.svelte-fcf3e9c7.js",
   "/smr-frontend/main/_app/pages/new-guide/index.svelte-5775a071.js",
   "/smr-frontend/main/_app/pages/api-docs/index.svelte-e0ebfe19.js",
@@ -31,7 +31,7 @@ const build = [
   "/smr-frontend/main/_app/pages/mod/_modId_/index.svelte-e3b97228.js",
   "/smr-frontend/main/_app/assets/pages/mod/_modId_/index.svelte-1e2ec0d7.css",
   "/smr-frontend/main/_app/pages/mod/_modId_/new-version.svelte-5a383fca.js",
-  "/smr-frontend/main/_app/pages/mod/_modId_/version/_versionId_/index.svelte-c284c7d6.js",
+  "/smr-frontend/main/_app/pages/mod/_modId_/version/_versionId_/index.svelte-76f8eac6.js",
   "/smr-frontend/main/_app/pages/mod/_modId_/version/_versionId_/edit.svelte-178c3486.js",
   "/smr-frontend/main/_app/pages/mod/_modId_/version/_versionId_/view.svelte-8d3e7825.js",
   "/smr-frontend/main/_app/pages/mod/_modId_/edit.svelte-ab28f96c.js",
