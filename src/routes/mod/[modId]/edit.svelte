@@ -14,6 +14,7 @@
   import { base } from '$app/paths';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
   import Card, { Content } from '@smui/card';
+  import { get } from 'svelte/store';
 
   export let modId!: string;
 
@@ -28,7 +29,7 @@
 
   const onSubmit = (data: ModData) => {
     editMod({
-      modId: modId,
+      modId: get(mod).data.mod.id,
       mod: data
     }).then((value) => {
       if (value.error) {

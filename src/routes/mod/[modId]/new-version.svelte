@@ -17,7 +17,7 @@
     GetModReferenceDocument,
     UploadVersionPartDocument
   } from '$lib/generated';
-  import { writable } from 'svelte/store';
+  import { get, writable } from 'svelte/store';
   import { chunkedUpload } from '$lib/utils/chunked-upload';
   import type { UploadState } from '$lib/utils/chunked-upload';
   import { base } from '$app/paths';
@@ -66,19 +66,21 @@
     CheckVersionUploadStateDocument,
     {
       versionId: undefined,
-      modId
+      modId: undefined
     },
     {
       pause: true
     }
   );
 
+  $: $mod.data && (checkVersionUploadState.variables.modId = $mod.data.mod.id);
+
   query(checkVersionUploadState);
 
   const onSubmit = async (data: VersionData) => {
     return chunkedUpload(
       data.file,
-      modId,
+      get(mod).data.mod.id,
       {
         changelog: data.changelog,
         stability: data.stability
