@@ -3,7 +3,7 @@
   import { GetModsDocument, ModFields, Order } from '$lib/generated';
   import ModCard from './ModCard.svelte';
   import PageControls from '$lib/components/utils/PageControls.svelte';
-  import { writable } from 'svelte/store';
+  import { get, writable } from 'svelte/store';
   import { base } from '$app/paths';
   import Button from '@smui/button';
   import { Input } from '@smui/textfield';
@@ -15,6 +15,7 @@
   import { user } from '$lib/stores/user';
   import FicsitCard from '$lib/components/general/FicsitCard.svelte';
   import Select, { Option } from '@smui/select';
+  import { browser } from '$app/env';
 
   export let colCount: 4 | 5 = 4;
   export let newMod = false;
@@ -29,7 +30,7 @@
 
   const mods = operationStore(GetModsDocument, { offset: 0, limit: perPage, search, order, orderBy });
 
-  const page = writable(1);
+  const page = writable<number>(parseInt($storePage.url.searchParams.get('p'), 10) || 1);
   let totalMods: number;
 
   let searchField = search;
@@ -62,6 +63,7 @@
       if (searchField && searchField.length > 2) {
         if ((search === '' || search === null) && searchField !== '' && searchField !== null) {
           orderBy = ModFields.Search;
+          page.set(1);
         }
 
         search = searchField;
@@ -75,9 +77,28 @@
     }, 250) as unknown as number;
   }
 
+  const updateUrl = () => {
+    if (browser) {
+      const params = {};
+
+      params['p'] = get(page);
+
+      if (searchField !== '' && searchField !== null) {
+        params['q'] = searchField;
+      }
+
+      const resultQuery = Object.keys(params)
+        .map((key) => key + '=' + encodeURIComponent(params[key]))
+        .join('&');
+
+      goto(base + '/mods?' + resultQuery);
+    }
+  };
+
   page.subscribe((p) => {
     $mods.variables.offset = (p - 1) * perPage;
     $mods.reexecute();
+    updateUrl();
   });
 
   $: totalMods = $mods?.data?.getMods?.count || 0;
@@ -89,11 +110,11 @@
       ? '3xl:grid-cols-4 2xl:grid-cols-3 lg:grid-cols-2 grid-cols-1'
       : '3xl:grid-cols-3 2xl:grid-cols-2 grid-cols-1';
 
-  function handleKeyDown(event: CustomEvent | KeyboardEvent) {
+  const handleKeyDown = (event: CustomEvent | KeyboardEvent) => {
     if ((event as KeyboardEvent).key === 'Enter') {
-      goto(base + '/mods?q=' + search);
+      updateUrl();
     }
-  }
+  };
 
   $: orderFields = [
     ['Name', 'name'],

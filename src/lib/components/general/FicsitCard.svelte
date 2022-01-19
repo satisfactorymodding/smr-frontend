@@ -46,7 +46,7 @@
       {#if fake}
         <div class="bg-gray-500 logo min-w-full min-h-full max-w-full max-h-full" />
       {:else}
-        <img crossorigin="anonymous" src={renderedLogo} alt="{renderedName} Logo" class="logo max-w-full max-h-full" />
+        <img src={renderedLogo} alt="{renderedName} Logo" class="logo max-w-full max-h-full" />
       {/if}
     </div>
     <div class="w-full flex flex-col justify-between">
