@@ -108,10 +108,10 @@
 </script>
 
 <svelte:head>
-  {#if !$mod.fetching && !$mod.error && $mod.data.getMod}
+  {#if !$mod.fetching && !$mod.error && $mod.data.mod}
     <MetaDescriptors
-      description="Creating a new version of mod {$mod.data.getMod.name}"
-      title="New version of mod {$mod.data.getMod.name}"
+      description="Creating a new version of mod {$mod.data.mod.name}"
+      title="New version of mod {$mod.data.mod.name}"
     />
   {/if}
 </svelte:head>
@@ -121,7 +121,7 @@
   {#if $mod.fetching}
     ...
   {:else if !$mod.error}
-    {$mod.data.getMod.name}
+    {$mod.data.mod.name}
   {/if}
 </h1>
 
@@ -132,7 +132,7 @@
     {:else if $mod.error}
       <p>Oh no... {$mod.error.message}</p>
     {:else}
-      <VersionForm {onSubmit} modReference={$mod.data.getMod.mod_reference} />
+      <VersionForm {onSubmit} modReference={$mod.data.mod.mod_reference} />
 
       {#if $uploadStatus}
         <div class="relative pt-4">
