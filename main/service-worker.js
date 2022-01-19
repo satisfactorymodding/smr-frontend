@@ -1,6 +1,6 @@
-const timestamp = 1642618337318;
+const timestamp = 1642623442300;
 const build = [
-  "/smr-frontend/main/_app/start-af14653c.js",
+  "/smr-frontend/main/_app/start-9e9f7387.js",
   "/smr-frontend/main/_app/pages/__layout.svelte-ef1f1c73.js",
   "/smr-frontend/main/_app/assets/pages/__layout.svelte-4d12a64e.css",
   "/smr-frontend/main/_app/error.svelte-7537853c.js",
@@ -33,6 +33,7 @@ const build = [
   "/smr-frontend/main/_app/pages/mod/_modId_/new-version.svelte-3ed904a5.js",
   "/smr-frontend/main/_app/pages/mod/_modId_/version/_versionId_/index.svelte-f6a3acd5.js",
   "/smr-frontend/main/_app/pages/mod/_modId_/version/_versionId_/edit.svelte-6efdf540.js",
+  "/smr-frontend/main/_app/pages/mod/_modId_/version/_versionId_/view.svelte-8d3e7825.js",
   "/smr-frontend/main/_app/pages/mod/_modId_/edit.svelte-4f940b8b.js",
   "/smr-frontend/main/_app/pages/tos/index.svelte-41cf48b4.js",
   "/smr-frontend/main/_app/chunks/vendor-2ce7ccec.js",
