@@ -1,4 +1,4 @@
-const timestamp = 1642549988876;
+const timestamp = 1642616042787;
 const build = [
   "/smr-frontend/main/_app/start-45d8d804.js",
   "/smr-frontend/main/_app/pages/__layout.svelte-ef1f1c73.js",
@@ -57,7 +57,7 @@ const build = [
   "/smr-frontend/main/_app/chunks/PageControls-db7d2016.js",
   "/smr-frontend/main/_app/chunks/markdown-b4f4b87c.js",
   "/smr-frontend/main/_app/chunks/GuideForm-f289792a.js",
-  "/smr-frontend/main/_app/assets/GuideForm-81c8f5a1.css",
+  "/smr-frontend/main/_app/assets/ModForm-cc1db5c2.css",
   "/smr-frontend/main/_app/chunks/forms-fd19d773.js",
   "/smr-frontend/main/_app/chunks/ModForm-c6d1ff96.js",
   "/smr-frontend/main/_app/chunks/GuideCard-5c5b231e.js",
@@ -132,7 +132,7 @@ worker.addEventListener("fetch", (event) => {
   const isDevServerRequest = url.hostname === self.location.hostname && url.port !== self.location.port;
   const isStaticAsset = url.host === self.location.host && staticAssets.has(url.pathname);
   const skipBecauseUncached = event.request.cache === "only-if-cached" && !isStaticAsset;
-  if (isHttp && !isDevServerRequest && !skipBecauseUncached) {
+  if (isHttp && !isDevServerRequest && !skipBecauseUncached && staticAssets) {
     event.respondWith((async () => {
       const cachedAsset = isStaticAsset && await caches.match(event.request);
       return cachedAsset || fetchAndCache(event.request);
