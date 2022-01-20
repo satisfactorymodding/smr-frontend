@@ -1,2 +1,0 @@
-import{b1 as s}from"./vendor-2ce7ccec.js";const a=(o,i)=>Object.fromEntries(Object.entries(o).map(t=>{if(Object.keys(i.shape).indexOf(t[0])>=0){let e=t[1];if(typeof e=="object"){let r=i.shape[t[0]];if(r instanceof s&&(r=r.unwrap()),Array.isArray(e)){const c=r.element;for(let n=0;n<e.length;n++)e[n]=a(e[n],c)}else e=a(e,r)}return[t[0],e]}}).filter(t=>!!t));export{a as t};
-//# sourceMappingURL=forms-fd19d773.js.map
