@@ -11,6 +11,7 @@
 </script>
 
 {#if description}
+  <meta name="description" content={description} />
   <meta property="description" content={description} />
   <meta property="og:description" content={description} />
 {/if}

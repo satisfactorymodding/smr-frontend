@@ -149,7 +149,7 @@
 
         <Item>
           <FormField align="end">
-            <Switch bind:checked={accessibility} />
+            <Switch bind:checked={accessibility} aria-label="Accessibility Font" />
             <span slot="label">Accessibility Font</span>
           </FormField>
         </Item>
