@@ -54,6 +54,12 @@
       icon: 'find_in_page',
       label: 'Docs',
       external: true
+    },
+    {
+      url: 'https://forums.ficsit.app/',
+      icon: 'forum',
+      label: 'Forums',
+      external: true
     }
   ];
 
@@ -77,6 +83,12 @@
       url: base + '/api-docs',
       icon: 'api',
       label: 'API'
+    },
+    {
+      url: 'https://github.com/satisfactorymodding',
+      icon: 'source',
+      label: 'Github',
+      external: true
     }
   ];
 </script>
@@ -134,10 +146,17 @@
 
       <List>
         {#each bottom as item}
-          <Item href={item.url} activated={currentPath === item.url} on:mouseover={() => prefetch(item.url)}>
-            <Graphic class="material-icons">{item.icon}</Graphic>
-            <Text>{item.label}</Text>
-          </Item>
+          {#if !item.external}
+            <Item href={item.url} activated={currentPath === item.url} on:mouseover={() => prefetch(item.url)}>
+              <Graphic class="material-icons">{item.icon}</Graphic>
+              <Text>{item.label}</Text>
+            </Item>
+          {:else}
+            <Item href={item.url} target="_blank" rel="noopener">
+              <Graphic class="material-icons">{item.icon}</Graphic>
+              <Text>{item.label}</Text>
+            </Item>
+          {/if}
         {/each}
 
         {#if hideTopElements}

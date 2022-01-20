@@ -34,10 +34,7 @@
     validateSchema: versionSchema,
     onSubmit: (data) => {
       disabled = true;
-      onSubmit({
-        ...trimNonSchema(data, versionSchema),
-        file: data.file
-      } as VersionData).then(() => (disabled = false));
+      onSubmit(trimNonSchema(data, versionSchema)).then(() => (disabled = false));
     }
   });
 

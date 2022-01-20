@@ -18,7 +18,7 @@ export const trimNonSchema = <T, K extends T>(data: K, schema: ZodObject<ZodRawS
               for (let i = 0; i < value.length; i++) {
                 value[i] = trimNonSchema(value[i], arrayType as ZodObject<ZodRawShape>);
               }
-            } else {
+            } else if (value.constructor.name !== 'File') {
               value = trimNonSchema(value, objSchema as ZodObject<ZodRawShape>);
             }
           }
