@@ -25,7 +25,7 @@
   import ModVersions from '$lib/components/mods/ModVersions.svelte';
   import { user } from '$lib/stores/user';
   import { goto } from '$app/navigation';
-  import { writable } from 'svelte/store';
+  import { get, writable } from 'svelte/store';
   import Toast from '$lib/components/general/Toast.svelte';
   import { base } from '$app/paths';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
@@ -51,7 +51,7 @@
   const deleteDialogOpen = writable<boolean>(false);
 
   const deleteModFn = () => {
-    deleteMod({ modId }).then((value) => {
+    deleteMod({ modId: get(mod).data.mod.id }).then((value) => {
       if (value.error) {
         console.error(value.error.message);
         errorMessage = 'Error deleting mod: ' + value.error.message;
