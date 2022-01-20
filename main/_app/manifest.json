@@ -1,6 +1,6 @@
 {
   ".svelte-kit/runtime/client/start.js": {
-    "file": "start-73529b86.js",
+    "file": "start-23a7203f.js",
     "src": ".svelte-kit/runtime/client/start.js",
     "isEntry": true,
     "imports": [
@@ -65,7 +65,7 @@
       "src/lib/thirdparty/custom_protocol.ts"
     ],
     "css": [
-      "assets/pages/__layout.svelte-4d12a64e.css"
+      "assets/pages/__layout.svelte-8a110f8f.css"
     ]
   },
   ".svelte-kit/runtime/components/error.svelte": {
@@ -78,13 +78,13 @@
     ]
   },
   "src/routes/index.svelte": {
-    "file": "pages/index.svelte-4b3c7839.js",
+    "file": "pages/index.svelte-98488e6f.js",
     "src": "src/routes/index.svelte",
     "isEntry": true,
     "isDynamicEntry": true,
     "imports": [
       "_vendor-2ce7ccec.js",
-      "_gql-c9d2d060.js",
+      "_gql-5ed15b90.js",
       "_graphql-4793b2e5.js",
       "_MetaDescriptors-a70b0a0c.js",
       "_FicsitCard-ef5f643f.js",
@@ -328,13 +328,13 @@
     ]
   },
   "src/routes/guide/[guideId]/index.svelte": {
-    "file": "pages/guide/_guideId_/index.svelte-6abb10af.js",
+    "file": "pages/guide/_guideId_/index.svelte-3c792ca3.js",
     "src": "src/routes/guide/[guideId]/index.svelte",
     "isEntry": true,
     "isDynamicEntry": true,
     "imports": [
       "_vendor-2ce7ccec.js",
-      "_gql-c9d2d060.js",
+      "_gql-5ed15b90.js",
       "_graphql-4793b2e5.js",
       "_routing-689f9c1f.js",
       "_formatting-24701f16.js",
@@ -426,14 +426,14 @@
     ]
   },
   "src/routes/user/[userId]/index.svelte": {
-    "file": "pages/user/_userId_/index.svelte-2cb2af42.js",
+    "file": "pages/user/_userId_/index.svelte-97657bb3.js",
     "src": "src/routes/user/[userId]/index.svelte",
     "isEntry": true,
     "isDynamicEntry": true,
     "imports": [
       "_vendor-2ce7ccec.js",
       "_MetaDescriptors-a70b0a0c.js",
-      "_gql-c9d2d060.js",
+      "_gql-5ed15b90.js",
       "_graphql-4793b2e5.js",
       "_routing-689f9c1f.js",
       "_formatting-24701f16.js",
@@ -451,13 +451,13 @@
     ]
   },
   "src/routes/mod/[modId]/index.svelte": {
-    "file": "pages/mod/_modId_/index.svelte-f2e63e7e.js",
+    "file": "pages/mod/_modId_/index.svelte-29d1549e.js",
     "src": "src/routes/mod/[modId]/index.svelte",
     "isEntry": true,
     "isDynamicEntry": true,
     "imports": [
       "_vendor-2ce7ccec.js",
-      "_gql-c9d2d060.js",
+      "_gql-5ed15b90.js",
       "_graphql-4793b2e5.js",
       "_routing-689f9c1f.js",
       "_formatting-24701f16.js",
@@ -503,14 +503,14 @@
     ]
   },
   "src/routes/mod/[modId]/version/[versionId]/index.svelte": {
-    "file": "pages/mod/_modId_/version/_versionId_/index.svelte-83adf720.js",
+    "file": "pages/mod/_modId_/version/_versionId_/index.svelte-cabdb3d4.js",
     "src": "src/routes/mod/[modId]/version/[versionId]/index.svelte",
     "isEntry": true,
     "isDynamicEntry": true,
     "imports": [
       "_vendor-2ce7ccec.js",
       "_MetaDescriptors-a70b0a0c.js",
-      "_gql-c9d2d060.js",
+      "_gql-5ed15b90.js",
       "_graphql-4793b2e5.js",
       "_routing-689f9c1f.js",
       "_markdown-b4f4b87c.js",
@@ -648,8 +648,8 @@
       "_vendor-2ce7ccec.js"
     ]
   },
-  "_gql-c9d2d060.js": {
-    "file": "chunks/gql-c9d2d060.js",
+  "_gql-5ed15b90.js": {
+    "file": "chunks/gql-5ed15b90.js",
     "imports": [
       "_vendor-2ce7ccec.js",
       "_global-8916fa42.js"
@@ -714,7 +714,7 @@
       "_markdown-b4f4b87c.js"
     ],
     "css": [
-      "assets/GuideForm-81c8f5a1.css"
+      "assets/ModForm-cc1db5c2.css"
     ]
   },
   "_forms-fd19d773.js": {
@@ -733,7 +733,7 @@
       "_paths-396f020f.js"
     ],
     "css": [
-      "assets/GuideForm-81c8f5a1.css"
+      "assets/ModForm-cc1db5c2.css"
     ]
   },
   "_GuideCard-8b996351.js": {
@@ -754,7 +754,7 @@
       "_graphql-4793b2e5.js"
     ],
     "css": [
-      "assets/GuideForm-81c8f5a1.css"
+      "assets/ModForm-cc1db5c2.css"
     ]
   },
   "_routing-689f9c1f.js": {
@@ -779,7 +779,7 @@
       "_formatting-24701f16.js"
     ],
     "css": [
-      "assets/GuideForm-81c8f5a1.css"
+      "assets/ModForm-cc1db5c2.css"
     ]
   },
   "node_modules/.pnpm/cookieconsent@3.1.1/node_modules/cookieconsent/src/cookieconsent.js": {
