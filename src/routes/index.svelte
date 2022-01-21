@@ -50,12 +50,12 @@
               <div class="text-center">
                 <div class="text-4xl mb-2">Satisfactory Mod Manager</div>
                 <div class="text-xl mb-4">
-                  Windows - Linux - Epic - Steam{#if $easterEgg}{' - Doggo'}{/if}
+                  Windows - Linux - Epic - Steam
+                  {#if $easterEgg}{' - Doggo'}{/if}
                 </div>
-                <Button variant="unelevated" class="2xl:h-1/2 h-1/3 py-3 px-14 mb-1">
+                <div class="2xl:h-1/2 h-1/3 flex justify-center">
                   <img class="h-full" src={assets + '/images/smm_icon_white.png'} alt="Satisfactory Mod Manager" />
-                </Button>
-                <div class="text-xs text-gray-400">Download Now</div>
+                </div>
               </div>
               {#if $easterEgg}
                 <img class="h-full flipper-3" src={assets + '/images/smm_hand.png'} alt="Ficsit Minion" />
