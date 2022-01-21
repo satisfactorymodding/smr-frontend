@@ -1,13 +1,13 @@
-const timestamp = 1642787138101;
+const timestamp = 1642789166822;
 const build = [
-  "/smr-frontend/main/_app/start-8412938b.js",
+  "/smr-frontend/main/_app/start-5143f8bd.js",
   "/smr-frontend/main/_app/pages/__layout.svelte-802ecb22.js",
-  "/smr-frontend/main/_app/assets/pages/__layout.svelte-aace41fa.css",
+  "/smr-frontend/main/_app/assets/pages/__layout.svelte-4e695d49.css",
   "/smr-frontend/main/_app/error.svelte-7537853c.js",
-  "/smr-frontend/main/_app/pages/index.svelte-755ccc3f.js",
+  "/smr-frontend/main/_app/pages/index.svelte-5f24b5ec.js",
   "/smr-frontend/main/_app/assets/pages/index.svelte-69682e12.css",
   "/smr-frontend/main/_app/pages/privacy-policy/index.svelte-ecca06c8.js",
-  "/smr-frontend/main/_app/assets/pages/tos/index.svelte-1ae42d62.css",
+  "/smr-frontend/main/_app/assets/pages/privacy-policy/index.svelte-bcc48566.css",
   "/smr-frontend/main/_app/pages/sml-versions/index.svelte-d398a950.js",
   "/smr-frontend/main/_app/pages/new-guide/index.svelte-f5663314.js",
   "/smr-frontend/main/_app/pages/api-docs/index.svelte-27bfcf91.js",
@@ -58,7 +58,7 @@ const build = [
   "/smr-frontend/main/_app/chunks/PageControls-db7d2016.js",
   "/smr-frontend/main/_app/chunks/markdown-b4f4b87c.js",
   "/smr-frontend/main/_app/chunks/GuideForm-f2d97594.js",
-  "/smr-frontend/main/_app/assets/VersionForm-3ddc908d.css",
+  "/smr-frontend/main/_app/assets/GuideForm-81c8f5a1.css",
   "/smr-frontend/main/_app/chunks/forms-a065d303.js",
   "/smr-frontend/main/_app/chunks/ModForm-4d522c47.js",
   "/smr-frontend/main/_app/chunks/GuideCard-8b996351.js",

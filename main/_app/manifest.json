@@ -1,6 +1,6 @@
 {
   ".svelte-kit/runtime/client/start.js": {
-    "file": "start-8412938b.js",
+    "file": "start-5143f8bd.js",
     "src": ".svelte-kit/runtime/client/start.js",
     "isEntry": true,
     "imports": [
@@ -65,7 +65,7 @@
       "src/lib/thirdparty/custom_protocol.ts"
     ],
     "css": [
-      "assets/pages/__layout.svelte-aace41fa.css"
+      "assets/pages/__layout.svelte-4e695d49.css"
     ]
   },
   ".svelte-kit/runtime/components/error.svelte": {
@@ -78,7 +78,7 @@
     ]
   },
   "src/routes/index.svelte": {
-    "file": "pages/index.svelte-755ccc3f.js",
+    "file": "pages/index.svelte-5f24b5ec.js",
     "src": "src/routes/index.svelte",
     "isEntry": true,
     "isDynamicEntry": true,
@@ -114,7 +114,7 @@
       "_paths-396f020f.js"
     ],
     "css": [
-      "assets/pages/tos/index.svelte-1ae42d62.css"
+      "assets/pages/privacy-policy/index.svelte-bcc48566.css"
     ]
   },
   "src/routes/sml-versions/index.svelte": {
@@ -166,7 +166,7 @@
       "_paths-396f020f.js"
     ],
     "css": [
-      "assets/pages/tos/index.svelte-1ae42d62.css"
+      "assets/pages/privacy-policy/index.svelte-bcc48566.css"
     ]
   },
   "src/routes/settings/index.svelte": {
@@ -591,7 +591,7 @@
       "_paths-396f020f.js"
     ],
     "css": [
-      "assets/pages/tos/index.svelte-1ae42d62.css"
+      "assets/pages/privacy-policy/index.svelte-bcc48566.css"
     ]
   },
   "_vendor-2ce7ccec.js": {
@@ -714,7 +714,7 @@
       "_markdown-b4f4b87c.js"
     ],
     "css": [
-      "assets/VersionForm-3ddc908d.css"
+      "assets/GuideForm-81c8f5a1.css"
     ]
   },
   "_forms-a065d303.js": {
@@ -733,7 +733,7 @@
       "_paths-396f020f.js"
     ],
     "css": [
-      "assets/VersionForm-3ddc908d.css"
+      "assets/GuideForm-81c8f5a1.css"
     ]
   },
   "_GuideCard-8b996351.js": {
@@ -754,7 +754,7 @@
       "_graphql-4793b2e5.js"
     ],
     "css": [
-      "assets/VersionForm-3ddc908d.css"
+      "assets/GuideForm-81c8f5a1.css"
     ]
   },
   "_routing-689f9c1f.js": {
@@ -779,7 +779,7 @@
       "_formatting-24701f16.js"
     ],
     "css": [
-      "assets/VersionForm-3ddc908d.css"
+      "assets/GuideForm-81c8f5a1.css"
     ]
   },
   "node_modules/.pnpm/cookieconsent@3.1.1/node_modules/cookieconsent/src/cookieconsent.js": {
