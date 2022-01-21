@@ -34,7 +34,7 @@
 </svelte:head>
 
 <div class="flex flex-col min-h-full" style="height: calc(100vh - 64px - 3rem)">
-  <div class="mb-4 min-h-[20vh] overflow-hidden">
+  <div class="mb-4 min-h-[25vh] overflow-hidden">
     {#if !$onMobile}
       <a href="https://smm.ficsit.app" rel="noopener" target="_blank">
         <Card class="h-full">
@@ -102,7 +102,7 @@
   </div>
 
   <div class="grid xl:grid-cols-2 grid-cols-1 gap-4 flex-1 mb-4">
-    <a href="https://discord.gg/xkVJ73E" rel="noopener" target="_blank" class="overflow-hidden min-h-[20vh]">
+    <a href="https://discord.gg/xkVJ73E" rel="noopener" target="_blank" class="overflow-hidden min-h-[25vh]">
       <Card class="h-full">
         <div class="relative h-full w-full">
           <div class="modding-banner banner" />
@@ -115,7 +115,7 @@
         </div>
       </Card>
     </a>
-    <a href="https://www.satisfactorygame.com/" rel="noopener" target="_blank" class="overflow-hidden min-h-[20vh]">
+    <a href="https://www.satisfactorygame.com/" rel="noopener" target="_blank" class="overflow-hidden min-h-[25vh]">
       <Card class="h-full">
         <div class="relative h-full w-full">
           <div class="css-banner banner" />
