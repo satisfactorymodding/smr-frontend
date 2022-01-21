@@ -104,7 +104,7 @@
         </Button>
       </div>
     </div>
-    <div class="grid grid-auto-max auto-rows-min gap-4">
+    <div class="grid grid-auto-max auto-cols-fr gap-4">
       <VersionDescription changelog={$version.data.getVersion.changelog} />
       <div class="grid grid-cols-1 auto-rows-min gap-8">
         <VersionInfo version={$version.data.getVersion} />

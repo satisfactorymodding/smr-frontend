@@ -82,7 +82,7 @@
         {/if}
       </div>
     </div>
-    <div class="grid grid-auto-max auto-rows-min gap-4">
+    <div class="grid grid-auto-max auto-cols-fr gap-4">
       <Card class="h-fit">
         <Content>
           <div class="markdown-content break-words">

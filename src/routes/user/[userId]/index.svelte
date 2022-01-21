@@ -61,7 +61,7 @@
         </Button>
       </div>
     </div>
-    <div class="grid grid-auto-max auto-rows-min gap-4">
+    <div class="grid grid-auto-max auto-cols-fr gap-4">
       {#if !guidesTab}
         <div class="grid 3xl:grid-cols-3 2xl:grid-cols-2 grid-cols-1 gap-4 h-fit">
           {#each $user.data.getUser.mods as mod}

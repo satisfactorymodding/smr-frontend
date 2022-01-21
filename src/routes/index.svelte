@@ -34,9 +34,9 @@
 </svelte:head>
 
 <div class="flex flex-col min-h-full" style="height: calc(100vh - 64px - 3rem)">
-  <div class="mb-4 min-h-[20vh]">
+  <div class="mb-4 min-h-[20vh] overflow-hidden">
     {#if !$onMobile}
-      <a href="https://smm.ficsit.app" rel="noopener" target="_blank" class="overflow-hidden">
+      <a href="https://smm.ficsit.app" rel="noopener" target="_blank">
         <Card class="h-full">
           <div class="relative h-full w-full">
             <div class="banner smm-banner" />
