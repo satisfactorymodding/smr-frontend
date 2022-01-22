@@ -5,6 +5,13 @@
   import { initializeGraphQLClient } from '$lib/core';
   import type { Client } from '@urql/svelte';
   import { gqlClient } from '$lib/stores/global';
+  import { browser } from '$app/env';
+
+  let gTag = undefined;
+  if (browser) {
+    gTag = import.meta.env.VITE_GOOGLE_SITE_TAG as string;
+    window['gTag'] = gTag;
+  }
 
   let client: Client;
 
@@ -24,7 +31,6 @@
   import IconButton from '@smui/icon-button';
   import Button, { Label, Icon } from '@smui/button';
   import { user, userToken } from '$lib/stores/user';
-  import { browser } from '$app/env';
   import { goto } from '$app/navigation';
   import { loginDialogOpen, onMobile } from '$lib/stores/global';
   import Menu, { MenuComponentDev } from '@smui/menu';
@@ -101,6 +107,22 @@
   <meta name="theme-color" content="#ff6f00" />
 
   <link rel="preload" href="{base}/assets/fonts/flow-rounded.woff" as="font" type="font/woff" />
+
+  {#if gTag}
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id={gTag}"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+
+      gtag('js', new Date());
+
+      gtag('config', window['gTag']);
+    </script>
+  {/if}
 </svelte:head>
 
 <div class="app-container">
