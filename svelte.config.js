@@ -36,8 +36,6 @@ const config = {
       fallback: 'index.html'
     }),
 
-    host: process.env.BASE_URL || 'http://localhost:3000',
-
     // hydrate the <div id="svelte"> element in src/app.html
     target: '#svelte',
 
@@ -115,10 +113,6 @@ const config = {
 
     paths: {
       base: process.env.SVELTE_BASE_PATH || ''
-    },
-
-    prerender: {
-      enabled: false
     }
   }
 };
