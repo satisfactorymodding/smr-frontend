@@ -132,7 +132,6 @@ specifiers:
   urql: ^2.0.6
   vite: ^2.7.12
   wonka: ^4.0.15
-  yallist: ^4.0.0
   zod: ^3.11.6
 
 dependencies:
@@ -191,7 +190,6 @@ dependencies:
   semver: 7.3.5
   socket.io-client: 4.4.1
   wonka: 4.0.15
-  yallist: 4.0.0
   zod: 3.11.6
 
 devDependencies:
