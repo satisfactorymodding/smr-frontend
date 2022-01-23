@@ -96,10 +96,10 @@ const config = {
               if (id.includes('jszip')) {
                 return 'jszip';
               }
-              if (id.includes('zod') || id.includes('felte')) {
+              if (id.includes('zod') || id.includes('felte') || id.includes('@smui/textfield') || id.includes('@smui/select') || id.includes('@smui/data-table') || id.includes('@smui/menu') || id.includes('@smui/floating-label')) {
                 return 'forms';
               }
-              if (id.includes('marked') || id.includes('prismjs') || id.includes('dompurify') || id.includes('jsdom')) {
+              if (id.includes('marked') || id.includes('prismjs') || id.includes('dompurify') || id.includes('jsdom') || id.includes('@cfworker/json-schema')) {
                 return 'extras';
               }
               if (id.includes('node_modules')) {
