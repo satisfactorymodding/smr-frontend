@@ -1,2 +1,0 @@
-import{a6 as r}from"./vendor-ec5ada1e.js";const c=r(!1),f=r(void 0);let n;n=window.matchMedia("(min-width: 1280px)"),n.addEventListener("change",e=>{s&&s.set(!e.matches)});const s=r(n&&!n.matches),l=r(!1);{const e=["ArrowUp","ArrowUp","ArrowDown","ArrowDown","ArrowLeft","ArrowRight","ArrowLeft","ArrowRight","KeyB","KeyA","Space"],t=[];window.onkeyup=i=>{if(t.push(i.code),t.length>e.length&&t.shift(),t.length==e.length){let a=!0;for(let o=0;o<e.length;o++)if(e[o]!==t[o]){a=!1;break}a&&l.set(!0)}}}export{l as e,f as g,c as l,s as o};
-//# sourceMappingURL=global-5ff8cc03.js.map

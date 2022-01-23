@@ -1,0 +1,2 @@
+import{R as r}from"./vendor-3e0baac1.js";const c=r(!1),f=r(void 0);let n;n=window.matchMedia("(min-width: 1280px)"),n.addEventListener("change",e=>{a&&a.set(!e.matches)});const a=r(n&&!n.matches),l=r(!1);{const e=["ArrowUp","ArrowUp","ArrowDown","ArrowDown","ArrowLeft","ArrowRight","ArrowLeft","ArrowRight","KeyB","KeyA","Space"],t=[];window.onkeyup=i=>{if(t.push(i.code),t.length>e.length&&t.shift(),t.length==e.length){let s=!0;for(let o=0;o<e.length;o++)if(e[o]!==t[o]){s=!1;break}s&&l.set(!0)}}}export{l as e,f as g,c as l,a as o};
+//# sourceMappingURL=global-d4d94a15.js.map
