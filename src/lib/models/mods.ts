@@ -11,6 +11,7 @@ export type ModData = {
     role: string;
     user_id: string;
   }[];
+  hidden: boolean;
 };
 
 export const modSchema = zod.object({
@@ -35,5 +36,6 @@ export const modSchema = zod.object({
         user_id: zod.string()
       })
       .array()
-  )
+  ),
+  hidden: zod.boolean()
 });

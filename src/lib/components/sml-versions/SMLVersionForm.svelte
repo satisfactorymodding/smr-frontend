@@ -27,7 +27,7 @@
     initialValues: initialValues,
     extend: [validator, svelteReporter],
     validateSchema: smlVersionSchema,
-    onSubmit: (data) => onSubmit(trimNonSchema(data, smlVersionSchema))
+    onSubmit: (data: SMLVersionData) => onSubmit(trimNonSchema(data, smlVersionSchema))
   });
 
   $: preview = ($data.changelog as string) || '';

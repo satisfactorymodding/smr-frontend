@@ -32,7 +32,7 @@
     initialValues: initialValues as VersionData,
     extend: [validator, svelteReporter],
     validateSchema: versionSchema,
-    onSubmit: (data) => {
+    onSubmit: (data: VersionData) => {
       disabled = true;
       onSubmit(trimNonSchema(data, versionSchema)).then(() => (disabled = false));
     }

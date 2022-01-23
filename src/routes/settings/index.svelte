@@ -40,7 +40,7 @@
         },
         extend: [validator, svelteReporter],
         validateSchema: userSchema,
-        onSubmit: (data) => {
+        onSubmit: (data: { username: string; avatar: unknown }) => {
           updateUser({
             user: trimNonSchema(data, userSchema),
             userId: $user.id

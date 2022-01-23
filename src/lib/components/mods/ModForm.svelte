@@ -10,6 +10,8 @@
   import HelperText from '@smui/textfield/helper-text';
   import Button, { Label } from '@smui/button';
   import ModAuthor from '$lib/components/mods/ModAuthor.svelte';
+  import FormField from '@smui/form-field';
+  import Switch from '@smui/switch';
 
   export let onSubmit: (data: ModData) => void;
   export let initialValues: ModData = {
@@ -17,7 +19,8 @@
     mod_reference: '',
     name: '',
     short_description: '',
-    source_url: ''
+    source_url: '',
+    hidden: false
   };
   export let submitText = 'Create';
 
@@ -27,7 +30,7 @@
     initialValues: initialValues,
     extend: [validator, svelteReporter],
     validateSchema: modSchema,
-    onSubmit: (data) => onSubmit(trimNonSchema(data, modSchema))
+    onSubmit: (data: ModData) => onSubmit(trimNonSchema(data, modSchema))
   });
 
   $: preview = ($data.full_description as string) || '';
@@ -113,6 +116,16 @@
     <div class="grid grid-flow-row gap-2">
       <Textfield bind:value={$data.source_url} label="Source URL" />
       <ValidationMessage for="source_url" let:messages={message}>
+        <span class="validation-message">{message || ''}</span>
+      </ValidationMessage>
+    </div>
+
+    <div class="grid grid-flow-row gap-2">
+      <FormField>
+        <Switch bind:checked={$data.hidden} />
+        <span slot="label">Hidden</span>
+      </FormField>
+      <ValidationMessage for="hidden" let:messages={message}>
         <span class="validation-message">{message || ''}</span>
       </ValidationMessage>
     </div>

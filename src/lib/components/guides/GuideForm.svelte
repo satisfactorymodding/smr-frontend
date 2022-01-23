@@ -21,7 +21,7 @@
     initialValues: initialValues,
     extend: [validator, svelteReporter],
     validateSchema: guideSchema,
-    onSubmit: (data) => onSubmit(trimNonSchema(data, guideSchema))
+    onSubmit: (data: GuideData) => onSubmit(trimNonSchema(data, guideSchema))
   });
 
   $: preview = ($data.guide as string) || '';
