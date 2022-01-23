@@ -3,6 +3,7 @@ const tailwindCSS = require('tailwindcss');
 const tailwindCSSNesting = require('tailwindcss/nesting');
 // ^ Just for now, will merge to tailwindcss. Check https://blog.tailwindcss.com/just-in-time-the-next-generation-of-tailwind-css
 const autoprefixer = require('autoprefixer');
+const importUrl = require('postcss-import-url');
 
 module.exports = {
   plugins: [
@@ -13,6 +14,9 @@ module.exports = {
       }
     }),
 
+    importUrl({
+      modernBrowser: true
+    }),
     tailwindCSSNesting(),
     tailwindCSS(),
     autoprefixer,
