@@ -5,12 +5,12 @@
   import { goto, prefetch } from '$app/navigation';
 
   export let name = '';
-  export let logo = assets + '/images/no_image.png';
+  export let logo = assets + '/images/no_image.webp';
   export let description = '';
   export let link = '/';
   export let fake = false;
 
-  $: renderedLogo = logo || assets + '/images/no_image.png';
+  $: renderedLogo = logo || assets + '/images/no_image.webp';
   $: renderedName = name || (fake && 'Card Name');
   $: renderedDescription = description || (fake && 'Short card description');
 

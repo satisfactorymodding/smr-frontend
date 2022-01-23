@@ -4,7 +4,7 @@
   export let avatar!: string;
   export let username!: string;
 
-  $: userAvatar = avatar || assets + '/images/no_image.png';
+  $: userAvatar = avatar || assets + '/images/no_image.webp';
 </script>
 
 <div>

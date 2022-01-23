@@ -13,7 +13,7 @@
       }
     | undefined;
 
-  $: logo = modLogo || assets + '/images/no_image.png';
+  $: logo = modLogo || assets + '/images/no_image.webp';
 </script>
 
 <div class="relative overflow-hidden">

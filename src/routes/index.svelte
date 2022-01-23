@@ -42,10 +42,10 @@
             <div class="banner smm-banner" />
             <div class="flex absolute w-full h-full top-0 items-center justify-center">
               {#if $easterEgg}
-                <img class="h-full flipper-1" src={assets + '/images/smm_hand.png'} alt="Ficsit Minion" />
-                <img class="h-full flipper-2" src={assets + '/images/smm_hand.png'} alt="Ficsit Minion" />
+                <img class="h-full flipper-1" src={assets + '/images/smm_hand.webp'} alt="Ficsit Minion" />
+                <img class="h-full flipper-2" src={assets + '/images/smm_hand.webp'} alt="Ficsit Minion" />
               {:else}
-                <img class="h-full flipped" src={assets + '/images/smm_hand.png'} alt="Ficsit Minion" />
+                <img class="h-full flipped" src={assets + '/images/smm_hand.webp'} alt="Ficsit Minion" />
               {/if}
               <div class="text-center">
                 <div class="text-4xl mb-2">Satisfactory Mod Manager</div>
@@ -54,14 +54,14 @@
                   {#if $easterEgg}{' - Doggo'}{/if}
                 </div>
                 <div class="2xl:h-1/2 h-1/3 flex justify-center">
-                  <img class="h-full" src={assets + '/images/smm_icon_white.png'} alt="Satisfactory Mod Manager" />
+                  <img class="h-full" src={assets + '/images/smm_icon_white.webp'} alt="Satisfactory Mod Manager" />
                 </div>
               </div>
               {#if $easterEgg}
-                <img class="h-full flipper-3" src={assets + '/images/smm_hand.png'} alt="Ficsit Minion" />
-                <img class="h-full flipper-4" src={assets + '/images/smm_hand.png'} alt="Ficsit Minion" />
+                <img class="h-full flipper-3" src={assets + '/images/smm_hand.webp'} alt="Ficsit Minion" />
+                <img class="h-full flipper-4" src={assets + '/images/smm_hand.webp'} alt="Ficsit Minion" />
               {:else}
-                <img class="h-full" src={assets + '/images/smm_hand.png'} alt="Ficsit Minion" />
+                <img class="h-full" src={assets + '/images/smm_hand.webp'} alt="Ficsit Minion" />
               {/if}
             </div>
           </div>
@@ -73,7 +73,7 @@
           <div class="relative h-full w-full">
             <div class="smm-banner banner" />
             <div class="flex absolute w-full h-full top-0 items-center justify-end text-center">
-              <img class="h-full" src={assets + '/images/mods_mobile.png'} alt="Ficsit Minion" />
+              <img class="h-full" src={assets + '/images/mods_mobile.webp'} alt="Ficsit Minion" />
             </div>
             <div class="flex absolute w-full h-4/5 top-0 items-center pl-8">
               <div>
@@ -107,7 +107,7 @@
         <div class="relative h-full w-full">
           <div class="modding-banner banner" />
           <div class="flex absolute w-full h-full top-0 items-center justify-center">
-            <img class="centered-logo" src={assets + '/images/sf_modding_logo.png'} alt="Satisfactory Modding Logo" />
+            <img class="centered-logo" src={assets + '/images/sf_modding_logo.webp'} alt="Satisfactory Modding Logo" />
           </div>
           <div class="absolute bottom-0 pb-4 px-4 w-full text-gray-400 text-center xl:text-left">
             <span>Community-run Modding Discord</span>
@@ -122,7 +122,7 @@
           <div class="flex absolute w-full h-full top-0 items-center justify-center">
             <img
               class="centered-logo"
-              src={assets + '/images/satisfactory_logo_full_color_small.png'}
+              src={assets + '/images/satisfactory_logo_full_color_small.webp'}
               alt="Satisfactory Logo"
             />
           </div>
@@ -153,19 +153,19 @@
 
 <style lang="postcss">
   .smm-banner {
-    background-image: url('/images/smm_background.jpg');
+    background-image: url('/images/smm_background.webp');
     filter: blur(8px);
     -webkit-filter: blur(8px);
   }
 
   .modding-banner {
-    background-image: url('/images/bg_nologo.jpg');
+    background-image: url('/images/bg_nologo.webp');
     filter: blur(8px);
     -webkit-filter: blur(8px);
   }
 
   .css-banner {
-    background-image: url('/images/Satisfactory_KeyArt_1_1024x1024_NoLogo.jpg');
+    background-image: url('/images/Satisfactory_KeyArt_1_1024x1024_NoLogo.webp');
     filter: blur(8px) brightness(0.5);
     -webkit-filter: blur(8px) brightness(0.5);
   }

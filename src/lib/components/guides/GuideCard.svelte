@@ -6,7 +6,7 @@
   import { prettyNumber } from '$lib/utils/formatting';
 
   export let guide: Pick<Guide, 'id' | 'name' | 'views' | 'short_description'>;
-  export let logo = assets + '/images/no_image.png';
+  export let logo = assets + '/images/no_image.webp';
 </script>
 
 <FicsitCard name={guide.name} {logo} description={guide.short_description} link={base + `/guide/${guide.id}`}>

@@ -12,7 +12,7 @@ export const modSchema = (mod: Pick<Mod, 'name' | 'logo' | 'short_description'>)
   return {
     '@context': 'https://schema.org',
     '@type': 'CreativeWork',
-    image: mod.logo || assets + '/images/no_image.png',
+    image: mod.logo || assets + '/images/no_image.webp',
     name: mod.name,
     description: mod.short_description
   };
