@@ -190,6 +190,7 @@ dependencies:
   prismjs: 1.26.0
   semver: 7.3.5
   socket.io-client: 4.4.1
+  tslib: 2.3.1
   wonka: 4.0.15
   zod: 3.11.6
 
@@ -267,7 +268,6 @@ devDependencies:
   svelte-check: 2.3.0_7ff82f86d2b584ac3c0682d6a10f68b9
   svelte-preprocess: 4.10.2_608c594ab12bc3595290e63e403d651b
   tailwindcss: 3.0.15_ef48b3b8837f8a23677bffe8f9cd866d
-  tslib: 2.3.1
   typescript: 4.5.5
   urql: 2.0.6_graphql@16.2.0
   vite: 2.7.13
