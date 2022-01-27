@@ -114,7 +114,7 @@
       "_paths-396f020f.js"
     ],
     "css": [
-      "assets/pages/privacy-policy/index.svelte-bcc48566.css"
+      "assets/pages/api-docs/index.svelte-1c1e4dfd.css"
     ]
   },
   "src/routes/sml-versions/index.svelte": {
@@ -170,7 +170,7 @@
       "_paths-396f020f.js"
     ],
     "css": [
-      "assets/pages/privacy-policy/index.svelte-bcc48566.css"
+      "assets/pages/api-docs/index.svelte-1c1e4dfd.css"
     ]
   },
   "src/routes/settings/index.svelte": {
@@ -621,7 +621,7 @@
       "_paths-396f020f.js"
     ],
     "css": [
-      "assets/pages/privacy-policy/index.svelte-bcc48566.css"
+      "assets/pages/api-docs/index.svelte-1c1e4dfd.css"
     ]
   },
   "_vendor-3e0baac1.js": {
@@ -764,7 +764,7 @@
       "_markdown-e391b8a1.js"
     ],
     "css": [
-      "assets/GuideForm-81c8f5a1.css"
+      "assets/VersionForm-3ddc908d.css"
     ]
   },
   "_forms-3ac04b20.js": {
@@ -784,7 +784,7 @@
       "_paths-396f020f.js"
     ],
     "css": [
-      "assets/GuideForm-81c8f5a1.css"
+      "assets/VersionForm-3ddc908d.css"
     ]
   },
   "_GuideCard-255465fa.js": {
@@ -806,7 +806,7 @@
       "_graphql-b763070c.js"
     ],
     "css": [
-      "assets/GuideForm-81c8f5a1.css"
+      "assets/VersionForm-3ddc908d.css"
     ]
   },
   "_routing-689f9c1f.js": {
@@ -834,7 +834,7 @@
       "_formatting-24701f16.js"
     ],
     "css": [
-      "assets/GuideForm-81c8f5a1.css"
+      "assets/VersionForm-3ddc908d.css"
     ]
   },
   "src/lib/thirdparty/custom_protocol.ts": {
