@@ -1,4 +1,4 @@
-<script context="module" lang="ts">
+<script lang="ts" context="module">
   import { operationStore } from '@urql/svelte';
   import { GetModsDocument, ModFields, Order } from '$lib/generated';
   import { loadWaitForNoFetch } from '$lib/utils/gql';
