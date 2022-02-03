@@ -41,9 +41,9 @@
     {#if !$onMobile}
       <a href="https://smm.ficsit.app" rel="noopener" target="_blank">
         <Card class="h-full">
-          <div class="relative w-full h-full">
+          <div class="relative h-full w-full">
             <div class="banner smm-banner" />
-            <div class="flex absolute top-0 justify-center items-center w-full h-full">
+            <div class="flex absolute w-full h-full top-0 items-center justify-center">
               {#if $easterEgg}
                 <img class="h-full flipper-1" src={assets + '/images/smm_hand.webp'} alt="Ficsit Minion" />
                 <img class="h-full flipper-2" src={assets + '/images/smm_hand.webp'} alt="Ficsit Minion" />
@@ -51,12 +51,12 @@
                 <img class="h-full flipped" src={assets + '/images/smm_hand.webp'} alt="Ficsit Minion" />
               {/if}
               <div class="text-center">
-                <div class="mb-2 text-4xl">Satisfactory Mod Manager</div>
-                <div class="mb-4 text-xl">
+                <div class="text-4xl mb-2">Satisfactory Mod Manager</div>
+                <div class="text-xl mb-4">
                   Windows - Linux - Epic - Steam
                   {#if $easterEgg || $doggoNeedsPats}{' - Doggo'}{/if}
                 </div>
-                <div class="flex justify-center h-1/3 2xl:h-1/2">
+                <div class="2xl:h-1/2 h-1/3 flex justify-center">
                   <img class="h-full" src={assets + '/images/smm_icon_white.webp'} alt="Satisfactory Mod Manager" />
                 </div>
               </div>
@@ -73,15 +73,15 @@
     {:else}
       <a href="/mods" class="overflow-hidden">
         <Card class="h-full">
-          <div class="relative w-full h-full">
+          <div class="relative h-full w-full">
             <div class="smm-banner banner" />
-            <div class="flex absolute top-0 justify-end items-center w-full h-full text-center">
+            <div class="flex absolute w-full h-full top-0 items-center justify-end text-center">
               <img class="h-full" src={assets + '/images/mods_mobile.webp'} alt="Ficsit Minion" />
             </div>
-            <div class="flex absolute top-0 items-center pl-8 w-full h-4/5">
+            <div class="flex absolute w-full h-4/5 top-0 items-center pl-8">
               <div>
                 <div class="text-md">
-                  We have over <span class="font-bold text-amber-600">
+                  We have over <span class="text-amber-600 font-bold">
                     {#if $mods.fetching || $mods.error}
                       ...
                     {:else}
@@ -90,11 +90,11 @@
                   </span> mods!
                 </div>
                 <div class="text-md">Most are compatible with the</div>
-                <div class="mb-4 text-md">latest version of satisfactory.</div>
+                <div class="text-md mb-4">latest version of satisfactory.</div>
               </div>
             </div>
-            <div class="flex absolute top-0 justify-center items-end w-full h-full">
-              <Button variant="unelevated" class="px-14 py-3 w-full h-1/4" style="background: #5a7b78; color: white">
+            <div class="flex absolute w-full h-full top-0 items-end justify-center">
+              <Button variant="unelevated" class="h-1/4 py-3 px-14 w-full" style="background: #5a7b78; color: white">
                 Take a look!
               </Button>
             </div>
@@ -104,32 +104,32 @@
     {/if}
   </div>
 
-  <div class="grid flex-1 grid-cols-1 gap-4 mb-4 xl:grid-cols-2">
-    <a class="overflow-hidden min-h-[25vh]" href="https://discord.gg/xkVJ73E" rel="noopener" target="_blank">
+  <div class="grid xl:grid-cols-2 grid-cols-1 gap-4 flex-1 mb-4">
+    <a href="https://discord.gg/xkVJ73E" rel="noopener" target="_blank" class="overflow-hidden min-h-[25vh]">
       <Card class="h-full">
-        <div class="relative w-full h-full">
+        <div class="relative h-full w-full">
           <div class="modding-banner banner" />
-          <div class="flex absolute top-0 justify-center items-center w-full h-full">
-            <img alt="Satisfactory Modding Logo" class="centered-logo" src={assets + '/images/sf_modding_logo.webp'} />
+          <div class="flex absolute w-full h-full top-0 items-center justify-center">
+            <img class="centered-logo" src={assets + '/images/sf_modding_logo.webp'} alt="Satisfactory Modding Logo" />
           </div>
-          <div class="absolute bottom-0 px-4 pb-4 w-full text-center text-gray-400 xl:text-left">
+          <div class="absolute bottom-0 pb-4 px-4 w-full text-gray-400 text-center xl:text-left">
             <span>Community-run Modding Discord</span>
           </div>
         </div>
       </Card>
     </a>
-    <a class="overflow-hidden min-h-[25vh]" href="https://www.satisfactorygame.com/" rel="noopener" target="_blank">
+    <a href="https://www.satisfactorygame.com/" rel="noopener" target="_blank" class="overflow-hidden min-h-[25vh]">
       <Card class="h-full">
-        <div class="relative w-full h-full">
+        <div class="relative h-full w-full">
           <div class="css-banner banner" />
-          <div class="flex absolute top-0 justify-center items-center w-full h-full">
+          <div class="flex absolute w-full h-full top-0 items-center justify-center">
             <img
-              alt="Satisfactory Logo"
               class="centered-logo"
               src={assets + '/images/satisfactory_logo_full_color_small.webp'}
+              alt="Satisfactory Logo"
             />
           </div>
-          <div class="absolute bottom-0 px-4 pb-4 w-full text-center text-gray-300 xl:text-right">
+          <div class="absolute bottom-0 pb-4 px-4 w-full text-gray-300 text-center xl:text-right">
             <span>Official Website</span>
           </div>
         </div>
