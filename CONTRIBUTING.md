@@ -74,7 +74,7 @@ When you've opened up your Pull Request we do a few more things:
 
   1. we build via `pnpm graphql-codegen:prod && pnpm build`
   1. we lint the code again (you can sneak stuff in, husky is imperfect in enforcement!)
-  1. if that all passes we deploy to our github page!
+  1. if that all passes we deploy to our GitHub page!
 
 ## Wrap Up
 
