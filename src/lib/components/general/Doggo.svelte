@@ -7,10 +7,10 @@
   const x = spring<number>(-2000, { stiffness: 0.004, damping: 0.25, precision: 1 });
   const y = spring<number>(-1000, { stiffness: 0.004, damping: 0.25, precision: 1 });
 
-  let last_mouse = { x: -1000, y: 0 };
+  let last_mouse = { clientX: -1000, clientY: 0 };
 
-  $: actual_mouse_x = last_mouse.x - 350;
-  $: actual_mouse_y = last_mouse.y - 100;
+  $: actual_mouse_x = last_mouse.clientX - 350;
+  $: actual_mouse_y = last_mouse.clientY - 100;
   $: dx = Math.abs($x - actual_mouse_x);
   $: dy = Math.abs($y - actual_mouse_y);
   $: isClose = dx < 80 && dy < 40;
@@ -46,10 +46,12 @@
       src={sprite}
       alt="Doggo!"
       style="width: 200px;
-                height: auto;
-                position: absolute;
-                offset-position: center left;
-                translate: {$x}px {$y}px;"
+                  height: auto;
+                  position: absolute;
+                    top: {$y}px;
+                    left: {$x}px;
+                    z-index: 69;
+                  "
     />
   {/if}
 </div>
