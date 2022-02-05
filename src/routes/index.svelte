@@ -34,7 +34,7 @@
   <MetaDescriptors description="Satisfactory Mod Repository" title="Home" />
 </svelte:head>
 
-<Doggo dogVisible={$doggoNeedsPats} />
+<Doggo dogVisible={doggoNeedsPats} />
 
 <div class="flex flex-col min-h-full" style="height: calc(100vh - 64px - 3rem)">
   <div class="mb-4 min-h-[25vh] overflow-hidden">

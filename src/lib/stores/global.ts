@@ -56,7 +56,7 @@ if (browser) {
     }
 
     if (ev.code == 'KeyD') {
-      doggoNeedsPats.update((n) => !n);
+      doggoNeedsPats.set(true);
     }
   };
 }
