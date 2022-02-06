@@ -19,10 +19,11 @@
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
   import FicsitCard from '$lib/components/general/FicsitCard.svelte';
   import ModCard from '$lib/components/mods/ModCard.svelte';
+  import Doggo from '$lib/components/general/Doggo.svelte';
   import Card from '@smui/card';
   import { assets } from '$app/paths';
   import Button from '@smui/button';
-  import { onMobile, easterEgg } from '$lib/stores/global';
+  import { onMobile, easterEgg, doggoNeedsPats } from '$lib/stores/global';
 
   export let mods!: typeof modsQ;
 
@@ -32,6 +33,8 @@
 <svelte:head>
   <MetaDescriptors description="Satisfactory Mod Repository" title="Home" />
 </svelte:head>
+
+<Doggo dogVisible={doggoNeedsPats} />
 
 <div class="flex flex-col min-h-full" style="height: calc(100vh - 64px - 3rem)">
   <div class="mb-4 min-h-[25vh] overflow-hidden">
@@ -51,7 +54,7 @@
                 <div class="text-4xl mb-2">Satisfactory Mod Manager</div>
                 <div class="text-xl mb-4">
                   Windows - Linux - Epic - Steam
-                  {#if $easterEgg}{' - Doggo'}{/if}
+                  {#if $easterEgg || $doggoNeedsPats}{' - Doggo'}{/if}
                 </div>
                 <div class="2xl:h-1/2 h-1/3 flex justify-center">
                   <img class="h-full" src={assets + '/images/smm_icon_white.webp'} alt="Satisfactory Mod Manager" />

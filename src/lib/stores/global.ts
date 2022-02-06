@@ -16,7 +16,7 @@ if (browser) {
 }
 
 export const onMobile = writable<boolean>(mobileQuery && !mobileQuery.matches);
-
+export const doggoNeedsPats = writable<boolean>(false);
 export const easterEgg = writable<boolean>(false);
 
 if (browser) {
@@ -53,6 +53,10 @@ if (browser) {
       if (valid) {
         easterEgg.set(true);
       }
+    }
+
+    if (ev.code == 'KeyD') {
+      doggoNeedsPats.set(true);
     }
   };
 }
