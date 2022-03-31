@@ -1,6 +1,6 @@
 {
   ".svelte-kit/runtime/client/start.js": {
-    "file": "start-984bdfd5.js",
+    "file": "start-d47ce140.js",
     "src": ".svelte-kit/runtime/client/start.js",
     "isEntry": true,
     "imports": [
@@ -42,7 +42,7 @@
     ]
   },
   "src/routes/__layout.svelte": {
-    "file": "pages/__layout.svelte-7781efbd.js",
+    "file": "pages/__layout.svelte-f4999b39.js",
     "src": "src/routes/__layout.svelte",
     "isEntry": true,
     "isDynamicEntry": true,
@@ -65,7 +65,7 @@
       "src/lib/thirdparty/custom_protocol.ts"
     ],
     "css": [
-      "assets/pages/__layout.svelte-37446ea1.css"
+      "assets/pages/__layout.svelte-0a1582e1.css"
     ]
   },
   ".svelte-kit/runtime/components/error.svelte": {
@@ -114,7 +114,7 @@
       "_paths-396f020f.js"
     ],
     "css": [
-      "assets/pages/tos/index.svelte-1ae42d62.css"
+      "assets/pages/privacy-policy/index.svelte-bcc48566.css"
     ]
   },
   "src/routes/sml-versions/index.svelte": {
@@ -170,7 +170,7 @@
       "_paths-396f020f.js"
     ],
     "css": [
-      "assets/pages/tos/index.svelte-1ae42d62.css"
+      "assets/pages/privacy-policy/index.svelte-bcc48566.css"
     ]
   },
   "src/routes/settings/index.svelte": {
@@ -621,7 +621,7 @@
       "_paths-396f020f.js"
     ],
     "css": [
-      "assets/pages/tos/index.svelte-1ae42d62.css"
+      "assets/pages/privacy-policy/index.svelte-bcc48566.css"
     ]
   },
   "_vendor-c539ab3b.js": {
@@ -764,7 +764,7 @@
       "_markdown-e391b8a1.js"
     ],
     "css": [
-      "assets/ModForm-cc1db5c2.css"
+      "assets/GuideForm-81c8f5a1.css"
     ]
   },
   "_forms-82642707.js": {
@@ -784,7 +784,7 @@
       "_paths-396f020f.js"
     ],
     "css": [
-      "assets/ModForm-cc1db5c2.css"
+      "assets/GuideForm-81c8f5a1.css"
     ]
   },
   "_GuideCard-878ce7dd.js": {
@@ -806,7 +806,7 @@
       "_graphql-b763070c.js"
     ],
     "css": [
-      "assets/ModForm-cc1db5c2.css"
+      "assets/GuideForm-81c8f5a1.css"
     ]
   },
   "_routing-689f9c1f.js": {
@@ -834,7 +834,7 @@
       "_formatting-24701f16.js"
     ],
     "css": [
-      "assets/ModForm-cc1db5c2.css"
+      "assets/GuideForm-81c8f5a1.css"
     ]
   },
   "src/lib/thirdparty/custom_protocol.ts": {
