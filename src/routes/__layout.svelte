@@ -77,6 +77,9 @@
   let accessibility = false;
   $: root && (accessibility ? root.classList.add('accessibility') : root.classList.remove('accessibility'));
 
+  let inAccessibility = false;
+  $: root && (inAccessibility ? root.classList.add('in-accessibility') : root.classList.remove('in-accessibility'));
+
   setClient(client);
 
   $: isAdmin = !$user ? false : $user.roles.approveMods || $user.roles.approveVersions || $user.roles.editSMLVersions;
@@ -200,7 +203,7 @@
   </TopAppBar>
 
   <div class="drawer-container">
-    <Sidebar bind:open bind:accessibility bind:drawerVariant bind:hideTopElements />
+    <Sidebar bind:open bind:accessibility bind:inAccessibility bind:drawerVariant bind:hideTopElements />
 
     {#if drawerVariant === 'modal'}
       <Scrim fixed={false} />
