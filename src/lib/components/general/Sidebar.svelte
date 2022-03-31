@@ -174,7 +174,7 @@
           </FormField>
         </Item>
 
-        <Item>
+        <Item class="rainbow-bg">
           <FormField align="end">
             <Switch bind:checked={inAccessibility} aria-label="Accessibility Font" />
             <span slot="label">In-Accessibility Font</span>
