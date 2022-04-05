@@ -13,7 +13,6 @@
   export let drawerVariant: 'modal' | 'dismissible';
   export let hideTopElements: boolean;
   export let accessibility: boolean;
-  export let inAccessibility: boolean;
 
   $: currentPath = $page.url.pathname;
   $: isAdmin = !$user ? false : $user.roles.approveMods || $user.roles.approveVersions || $user.roles.editSMLVersions;
@@ -171,13 +170,6 @@
           <FormField align="end">
             <Switch bind:checked={accessibility} aria-label="Accessibility Font" />
             <span slot="label">Accessibility Font</span>
-          </FormField>
-        </Item>
-
-        <Item class="rainbow-bg">
-          <FormField align="end">
-            <Switch bind:checked={inAccessibility} aria-label="Accessibility Font" />
-            <span slot="label">In-Accessibility Font</span>
           </FormField>
         </Item>
       </List>
