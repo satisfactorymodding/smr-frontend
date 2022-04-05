@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    
+	<link rel="modulepreload" href="/smr-frontend/april-fools-2022/_app/start-30d8a9ac.js">
+	<link rel="modulepreload" href="/smr-frontend/april-fools-2022/_app/chunks/vendor-c539ab3b.js">
+	<link rel="modulepreload" href="/smr-frontend/april-fools-2022/_app/chunks/preload-helper-ccc3ab58.js">
+	<link rel="modulepreload" href="/smr-frontend/april-fools-2022/_app/chunks/singletons-d19c42e4.js">
+	<link rel="modulepreload" href="/smr-frontend/april-fools-2022/_app/chunks/paths-396f020f.js">
+			<script type="module">
+				import { start } from "/smr-frontend/april-fools-2022/_app/start-30d8a9ac.js";
+				start({
+					target: document.querySelector("#svelte"),
+					paths: {"base":"/smr-frontend/april-fools-2022","assets":"/smr-frontend/april-fools-2022"},
+					session: {},
+					route: true,
+					spa: true,
+					trailing_slash: "never",
+					hydrate: null
+				});
+			</script>
+			<script>
+				if ('serviceWorker' in navigator) {
+					navigator.serviceWorker.register('/smr-frontend/april-fools-2022/service-worker.js');
+				}
+			</script>
+  </head>
+  <body>
+    <div id="svelte"></div>
+  </body>
+</html>
