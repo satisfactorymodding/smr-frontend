@@ -13,6 +13,12 @@ query GetMod($mod: String!) {
       alpha {
         id
         link
+        links
+          {
+            platform
+            side
+            link
+          }
         version
         created_at
         sml_version
@@ -20,6 +26,12 @@ query GetMod($mod: String!) {
       beta {
         id
         link
+        links
+          {
+            platform
+            side
+            link
+          }
         version
         created_at
         sml_version
@@ -27,6 +39,12 @@ query GetMod($mod: String!) {
       release {
         id
         link
+        links
+          {
+            platform
+            side
+            link
+          }
         version
         created_at
         sml_version
