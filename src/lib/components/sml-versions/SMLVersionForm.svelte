@@ -4,7 +4,7 @@
   import { svelteReporter, ValidationMessage } from '@felte/reporter-svelte';
   import { trimNonSchema } from '$lib/utils/forms';
   import { markdown } from '$lib/utils/markdown';
-  import type { SMLVersionData } from '$lib/models/sml-versions';
+  import type { SMLVersionData, SMLLinksData } from '$lib/models/sml-versions';
   import { smlVersionSchema } from '$lib/models/sml-versions';
   import Textfield from '@smui/textfield';
   import Button from '@smui/button';
@@ -12,6 +12,13 @@
   import Select, { Option } from '@smui/select';
 
   export let onSubmit: (data: SMLVersionData) => void;
+
+  export let smlLinks: SMLLinksData = {
+    platform: '',
+    side: '',
+    link: '',
+  };
+
   export let initialValues: SMLVersionData = {
     link: '',
     bootstrap_version: '',
@@ -19,6 +26,7 @@
     changelog: '',
     satisfactory_version: 0,
     stability: VersionStabilities.Alpha,
+    links: smlLinks,
     version: ''
   };
   export let submitText = 'Create';
@@ -31,6 +39,7 @@
   });
 
   $: preview = ($data.changelog as string) || '';
+
 </script>
 
 <form use:form>
@@ -97,10 +106,41 @@
     </div>
 
     <div class="grid grid-flow-row gap-2">
-      <Textfield bind:value={$data.link} label="Link" required />
+      {#each $data.links as data_links, j}
+        <div class="form-group">
+          <div>
+            <label for={`data_links[${j}].platform`}>Platform</label>
+            <select
+              id={`data_links[${j}].platform`}
+              name={`data_links[${j}].platform`}
+              bind:value={$data.links[j].platform}>
+              <option>Windows</option>
+              <option>Linux</option>
+            </select>
+      
+            <label for={`data_links[${j}].side`}>Server/Client</label>
+            <select
+              id={`data_links[${j}].side`}
+              name={`data_links[${j}].side`}
+              bind:value={$data.links[j].side}>
+              <option>Client</option>
+              <option>Server</option>
+            </select>
+
+            <input
+              name={`data_links[${j}].link`}
+              placeholder="URL"
+              bind:value={$data.links[j].link}
+            />
+          </div>
+        </div>
+      {/each}
+
+      <!--<Textfield bind:value={$data.link} label="Link" required />
       <ValidationMessage for="link" let:messages={message}>
         <span class="validation-message">{message || ''}</span>
-      </ValidationMessage>
+      </ValidationMessage>-->
+
     </div>
 
     <div>
