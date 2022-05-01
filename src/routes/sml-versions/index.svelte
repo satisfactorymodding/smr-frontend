@@ -77,9 +77,12 @@
             <Cell>{version.satisfactory_version}</Cell>
             <Cell>{prettyDate(version.date)}</Cell>
             <Cell>
-              <div class="grid grid-flow-col gap-4">
-                <Button variant="outlined" href={version.link}>View</Button>
-              </div>
+                <div class="grid grid-flow-col gap-4">
+                {#each version.links as smllinks}
+                  <Button variant="outlined" href={smllinks.link}>{smllinks.platform} {smllinks.side}</Button>
+                {/each}
+                <!--<Button variant="outlined" href={version.link}>View</Button>-->
+                </div>
             </Cell>
           </Row>
 
