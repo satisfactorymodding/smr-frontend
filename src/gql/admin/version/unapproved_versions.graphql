@@ -6,12 +6,11 @@ query GetUnapprovedVersions($filter: VersionFilter) {
       version
       stability
       link
-      links
-        {
-          platform
-          side
-          link
-        }
+      links {
+        platform
+        side
+        link
+      }
       changelog
       created_at
 

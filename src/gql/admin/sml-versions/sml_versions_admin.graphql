@@ -5,12 +5,11 @@ query GetSMLVersionsAdmin($filter: SMLVersionFilter) {
       version
       stability
       link
-      links
-        {
-          platform
-          side
-          link
-        }
+      links {
+        platform
+        side
+        link
+      }
       changelog
       created_at
       date
