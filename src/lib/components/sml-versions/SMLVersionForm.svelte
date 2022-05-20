@@ -4,8 +4,8 @@
   import { svelteReporter, ValidationMessage } from '@felte/reporter-svelte';
   import { trimNonSchema } from '$lib/utils/forms';
   import { markdown } from '$lib/utils/markdown';
-  import type { SMLVersionData, SMLLinksData } from '$lib/models/sml-versions';
-  import { smlVersionSchema } from '$lib/models/sml-versions';
+  import type { SMLVersionData } from '$lib/models/sml-versions';
+  import { smlVersionSchema, smlLinksSchema } from '$lib/models/sml-versions';
   import Textfield from '@smui/textfield';
   import Button from '@smui/button';
   import { VersionStabilities } from '$lib/generated';
@@ -13,33 +13,36 @@
 
   export let onSubmit: (data: SMLVersionData) => void;
 
-  export let smlLinks: SMLLinksData = {
-    platform: '',
-    side: '',
-    link: '',
-  };
-
   export let initialValues: SMLVersionData = {
     link: '',
-    bootstrap_version: '',
+    bootstrap_version: '0.0.0',
     date: '',
     changelog: '',
     satisfactory_version: 0,
     stability: VersionStabilities.Alpha,
-    links: smlLinks,
+    links: [{ SMLVersionLinkID: '', platform: '', side: '', link: '' }],
     version: ''
   };
   export let submitText = 'Create';
 
-  const { form, data } = createForm<SMLVersionData>({
+  const { form, data, addField, unsetField } = createForm<SMLVersionData>({
     initialValues: initialValues,
     extend: [validator, svelteReporter],
     validateSchema: smlVersionSchema,
     onSubmit: (data: SMLVersionData) => onSubmit(trimNonSchema(data, smlVersionSchema))
   });
 
-  $: preview = ($data.changelog as string) || '';
+  $: links = $data.links;
 
+  function removeLinks(index) {
+    return () => unsetField(`links.${index}`);
+  }
+
+  function addLinks(index) {
+    return () => addField(`links`, { SMLVersionLinkID: '', platform: '', side: '', link: '' }, index);
+  }
+
+  $: preview = ($data.changelog as string) || '';
 </script>
 
 <form use:form>
@@ -65,15 +68,12 @@
       </ValidationMessage>
     </div>
 
-    <div class="grid grid-flow-row gap-2">
-      <Select bind:value={$data.stability} label="Stability">
+    <div>
+      <Select type="radio" bind:value={$data.stability} label="Stability">
         <Option value="alpha">Alpha</Option>
         <Option value="beta">Beta</Option>
         <Option value="release">Release</Option>
       </Select>
-      <ValidationMessage for="stability" let:messages={message}>
-        <span class="validation-message">{message || ''}</span>
-      </ValidationMessage>
     </div>
 
     <div class="grid gap-6 split">
@@ -99,48 +99,59 @@
     </div>
 
     <div class="grid grid-flow-row gap-2">
-      <Textfield bind:value={$data.date} label="Date and Time" required />
-      <ValidationMessage for="date" let:messages={message}>
+      {#each links as data_link, index}
+        <div class="gap-6">
+
+          <Select bind:value={links[index].platform} label="Platform">
+            <Option value="Windows">Windows</Option>
+            <Option value="Linux">Linux</Option>
+          </Select>
+
+          <Select bind:value={links[index].platform} label="Client/Server">
+            <Option value="Client">Client</Option>
+            <Option value="Server">Server</Option>
+          </Select>
+
+          <!-- For Dean's Radio Buttons
+
+          <label>
+            Windows
+            <input id={`links[${index}].platform`} name={`links[${index}].platform`} value="Windows" type="radio" />
+          </label>
+          <label>
+            Linux
+            <input id={`links[${index}].platform`} name={`links[${index}].platform`} value="Linux" type="radio" />
+          </label>
+
+          <label>
+            <input id={`links[${index}].side`} name={`links[${index}].side`} value="Client" type="radio" />
+            Client
+          </label>
+          <label>
+            <input id={`links[${index}].side`} name={`links[${index}].side`} value="Server" type="radio" />
+            Server
+          </label>
+
+        -->
+
+          <Textfield name={`links[${index}].link`} placeholder="URL" bind:value={links[index].link} />
+
+          <Button type="button" on:click={addLinks(index + 1)}> Add </Button>
+          <Button type="button" on:click={removeLinks(index)}> Remove </Button>
+        </div>
+      {/each}
+
+      <Textfield bind:value={$data.link} label="Link" required />
+      <ValidationMessage for="link" let:messages={message}>
         <span class="validation-message">{message || ''}</span>
       </ValidationMessage>
     </div>
 
     <div class="grid grid-flow-row gap-2">
-      {#each $data.links as data_links, j}
-        <div class="form-group">
-          <div>
-            <label for={`data_links[${j}].platform`}>Platform</label>
-            <select
-              id={`data_links[${j}].platform`}
-              name={`data_links[${j}].platform`}
-              bind:value={$data.links[j].platform}>
-              <option>Windows</option>
-              <option>Linux</option>
-            </select>
-      
-            <label for={`data_links[${j}].side`}>Server/Client</label>
-            <select
-              id={`data_links[${j}].side`}
-              name={`data_links[${j}].side`}
-              bind:value={$data.links[j].side}>
-              <option>Client</option>
-              <option>Server</option>
-            </select>
-
-            <input
-              name={`data_links[${j}].link`}
-              placeholder="URL"
-              bind:value={$data.links[j].link}
-            />
-          </div>
-        </div>
-      {/each}
-
-      <!--<Textfield bind:value={$data.link} label="Link" required />
-      <ValidationMessage for="link" let:messages={message}>
+      <Textfield bind:value={$data.date} label="Date and Time" required />
+      <ValidationMessage for="date" let:messages={message}>
         <span class="validation-message">{message || ''}</span>
-      </ValidationMessage>-->
-
+      </ValidationMessage>
     </div>
 
     <div>

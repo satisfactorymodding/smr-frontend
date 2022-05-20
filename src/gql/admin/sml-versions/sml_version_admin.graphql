@@ -4,6 +4,14 @@ query GetSMLVersionAdmin($smlVersionID: SMLVersionID!) {
     version
     stability
     link
+<<<<<<< staging
+=======
+    links {
+      platform
+      side
+      link
+    }
+>>>>>>> SML Version Form modifications for dediservers
     changelog
     created_at
     date
