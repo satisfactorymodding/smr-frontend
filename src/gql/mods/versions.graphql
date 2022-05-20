@@ -13,12 +13,11 @@ query GetModVersions($mod: ModID!, $limit: Int!, $offset: Int!) {
       link
       hash
       size
-      links
-        {
-          platform
-          side
-          link
-        }
+      links {
+        platform
+        side
+        link
+      }
     }
   }
 }
