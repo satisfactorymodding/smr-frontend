@@ -10,6 +10,16 @@ query GetModVersion($version: VersionID!) {
     link
     hash
     size
+<<<<<<< staging
+=======
+    links {
+      platform
+      side
+      link
+      hash
+      size
+    }
+>>>>>>> starting of ModPlatform
     mod {
       id
       mod_reference
