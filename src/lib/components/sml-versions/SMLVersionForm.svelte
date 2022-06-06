@@ -5,13 +5,15 @@
   import { trimNonSchema } from '$lib/utils/forms';
   import { markdown } from '$lib/utils/markdown';
   import type { SMLVersionData } from '$lib/models/sml-versions';
-  import { smlVersionSchema, smlLinksSchema } from '$lib/models/sml-versions';
+  import { smlVersionSchema } from '$lib/models/sml-versions';
   import Textfield from '@smui/textfield';
   import Button from '@smui/button';
   import { VersionStabilities } from '$lib/generated';
   import Select, { Option } from '@smui/select';
 
   export let onSubmit: (data: SMLVersionData) => void;
+
+  export let editing = false;
 
   export let initialValues: SMLVersionData = {
     link: '',
@@ -61,12 +63,14 @@
       </ValidationMessage>
     </div>
 
-    <div class="grid grid-flow-row gap-2">
-      <Textfield bind:value={$data.bootstrap_version} label="Bootstrap Version" required />
-      <ValidationMessage for="bootstrap_version" let:messages={message}>
-        <span class="validation-message">{message || ''}</span>
-      </ValidationMessage>
-    </div>
+    {#if $data.bootstrap_version !== '0.0.0'}
+      <div class="grid grid-flow-row gap-2">
+        <Textfield bind:value={$data.bootstrap_version} label="Bootstrap Version" required />
+        <ValidationMessage for="bootstrap_version" let:messages={message}>
+          <span class="validation-message">{message || ''}</span>
+        </ValidationMessage>
+      </div>
+    {/if}
 
     <div>
       <Select type="radio" bind:value={$data.stability} label="Stability">
@@ -101,18 +105,13 @@
     <div class="grid grid-flow-row gap-2">
       {#each links as data_link, index}
         <div class="gap-6">
-
           <Select bind:value={links[index].platform} label="Platform">
-            <Option value="Windows">Windows</Option>
-            <Option value="Linux">Linux</Option>
+            <Option value="win64">Windows</Option>
+            <Option value="linux">Linux</Option>
           </Select>
 
-          <Select bind:value={links[index].platform} label="Client/Server">
-            <Option value="Client">Client</Option>
-            <Option value="Server">Server</Option>
-          </Select>
-
-          <!-- For Dean's Radio Buttons
+          <!--
+          For Dean's Radio Buttons
 
           <label>
             Windows
@@ -132,19 +131,27 @@
             Server
           </label>
 
-        -->
+          -->
 
           <Textfield name={`links[${index}].link`} placeholder="URL" bind:value={links[index].link} />
 
-          <Button type="button" on:click={addLinks(index + 1)}> Add </Button>
-          <Button type="button" on:click={removeLinks(index)}> Remove </Button>
+          {#if !editing}
+            {#if index === $data.links.length - 1}
+              <Button type="button" on:click={add}>Add</Button>
+            {/if}
+            {#if $data.links.length !== 1}
+              <Button type="button" on:click={remove(index)}>Remove</Button>
+            {/if}
+          {/if}
         </div>
       {/each}
 
-      <Textfield bind:value={$data.link} label="Link" required />
-      <ValidationMessage for="link" let:messages={message}>
-        <span class="validation-message">{message || ''}</span>
-      </ValidationMessage>
+      {#if $data.link.length !== 0}
+        <Textfield bind:value={$data.link} label="Link" />
+        <ValidationMessage for="link" let:messages={message}>
+          <span class="validation-message">{message || ''}</span>
+        </ValidationMessage>
+      {/if}
     </div>
 
     <div class="grid grid-flow-row gap-2">
