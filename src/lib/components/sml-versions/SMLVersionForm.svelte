@@ -25,7 +25,7 @@
   };
   export let submitText = 'Create';
 
-  const { form, data, addField, unsetField } = createForm<SMLVersionData>({
+  const { form, data } = createForm<SMLVersionData>({
     initialValues: initialValues,
     extend: [validator, svelteReporter],
     validateSchema: smlVersionSchema,
@@ -38,9 +38,9 @@
     $data.links = $data.links.concat({ SMLVersionLinkID: '', platform: '', link: '' });
   };
 
-  function addLinks(index) {
-    return () => addField(`links`, { SMLVersionLinkID: '', platform: '', side: '', link: '' }, index);
-  }
+  const remove = (i) => () => {
+    $data.links = $data.links.filter((u, index) => index !== i);
+  };
 
   $: preview = ($data.changelog as string) || '';
 </script>
