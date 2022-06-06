@@ -9,7 +9,6 @@ query GetSMLVersionsAdmin($filter: SMLVersionFilter) {
 =======
       links {
         platform
-        side
         link
       }
 >>>>>>> SML Version Form modifications for dediservers

@@ -8,7 +8,6 @@ query GetSMLVersionAdmin($smlVersionID: SMLVersionID!) {
 =======
     links {
       platform
-      side
       link
     }
 >>>>>>> SML Version Form modifications for dediservers

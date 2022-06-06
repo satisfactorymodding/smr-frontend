@@ -17,7 +17,6 @@ query GetMod($mod: String!) {
 =======
         links {
           platform
-          side
           link
         }
 >>>>>>> starting of ModPlatform
@@ -32,7 +31,6 @@ query GetMod($mod: String!) {
 =======
         links {
           platform
-          side
           link
         }
 >>>>>>> starting of ModPlatform
@@ -47,7 +45,6 @@ query GetMod($mod: String!) {
 =======
         links {
           platform
-          side
           link
         }
 >>>>>>> starting of ModPlatform

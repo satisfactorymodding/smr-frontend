@@ -10,7 +10,6 @@ query GetUnapprovedVersions($filter: VersionFilter) {
 =======
       links {
         platform
-        side
         link
       }
 >>>>>>> SML Version Form modifications for dediservers

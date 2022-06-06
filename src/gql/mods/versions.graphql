@@ -17,7 +17,6 @@ query GetModVersions($mod: ModID!, $limit: Int!, $offset: Int!) {
 =======
       links {
         platform
-        side
         link
       }
 >>>>>>> starting of ModPlatform

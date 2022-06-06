@@ -20,7 +20,7 @@
     changelog: '',
     satisfactory_version: 0,
     stability: VersionStabilities.Alpha,
-    links: [{ SMLVersionLinkID: '', platform: '', side: '', link: '' }],
+    links: [{ SMLVersionLinkID: '', platform: '', link: '' }],
     version: ''
   };
   export let submitText = 'Create';
@@ -34,9 +34,9 @@
 
   $: links = $data.links;
 
-  function removeLinks(index) {
-    return () => unsetField(`links.${index}`);
-  }
+  const add = () => {
+    $data.links = $data.links.concat({ SMLVersionLinkID: '', platform: '', link: '' });
+  };
 
   function addLinks(index) {
     return () => addField(`links`, { SMLVersionLinkID: '', platform: '', side: '', link: '' }, index);
