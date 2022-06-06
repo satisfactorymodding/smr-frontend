@@ -8,7 +8,6 @@ query GetUnapprovedVersions($filter: VersionFilter) {
       link
       links {
         platform
-        side
         link
       }
       changelog

@@ -12,7 +12,6 @@ query GetModVersion($version: VersionID!) {
     size
     links {
       platform
-      side
       link
       hash
       size

@@ -7,7 +7,6 @@ query GetSMLVersionsAdmin($filter: SMLVersionFilter) {
       link
       links {
         platform
-        side
         link
       }
       changelog

@@ -6,7 +6,6 @@ query GetSMLVersionAdmin($smlVersionID: SMLVersionID!) {
     link
     links {
       platform
-      side
       link
     }
     changelog

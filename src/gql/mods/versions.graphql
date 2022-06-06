@@ -15,7 +15,6 @@ query GetModVersions($mod: ModID!, $limit: Int!, $offset: Int!) {
       size
       links {
         platform
-        side
         link
       }
     }
