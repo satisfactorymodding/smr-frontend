@@ -8,6 +8,7 @@ query GetSMLVersionsAdmin($filter: SMLVersionFilter) {
 <<<<<<< staging
 =======
       links {
+        SMLVersionLinkID
         platform
         link
       }

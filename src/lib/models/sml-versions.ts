@@ -4,7 +4,6 @@ import type { VersionStabilities } from '$lib/generated';
 export type SMLLinkData = {
   SMLVersionLinkID: string;
   platform: string;
-  //side: string;
   link: string;
 };
 
@@ -14,7 +13,7 @@ export type SMLVersionData = {
   bootstrap_version?: string;
   stability: VersionStabilities;
   link: string;
-  links: [SMLLinkData];
+  links: SMLLinkData[];
   changelog: string;
   date: string;
 };
@@ -25,7 +24,6 @@ const versionRegex =
 export const smlLinksSchema = zod.object({
   SMLVersionLinkID: zod.string(),
   platform: zod.string(),
-  //side: zod.string(),
   link: zod.string().url()
 });
 

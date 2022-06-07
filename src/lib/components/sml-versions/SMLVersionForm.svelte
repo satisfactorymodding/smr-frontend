@@ -39,7 +39,7 @@
     changelog: '',
     satisfactory_version: 0,
     stability: VersionStabilities.Alpha,
-    links: [{ SMLVersionLinkID: '', platform: '', link: '' }],
+    links: [{SMLVersionLinkID: '', platform: '', link: ''}],
     version: ''
   };
   export let submitText = 'Create';
