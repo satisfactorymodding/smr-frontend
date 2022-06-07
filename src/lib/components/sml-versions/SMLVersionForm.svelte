@@ -10,10 +10,27 @@
   import Button from '@smui/button';
   import { VersionStabilities } from '$lib/generated';
   import Select, { Option } from '@smui/select';
+  //import Radio from '@smui/radio';
+  //import FormField from '@smui/form-field';
 
   export let onSubmit: (data: SMLVersionData) => void;
 
   export let editing = false;
+
+  export let modplatforms = [
+    {
+      name: 'Windows Client',
+      type: 'Win64Client',
+    },
+    {
+      name: 'Windows Server',
+      type: 'Win64Server',
+    },
+    {
+      name: 'Linux Server',
+      type: 'LinuxServer',
+    }
+  ]
 
   export let initialValues: SMLVersionData = {
     link: '',
@@ -37,7 +54,7 @@
   $: links = $data.links;
 
   const add = () => {
-    $data.links = $data.links.concat({ SMLVersionLinkID: '', platform: '', link: '' });
+    $data.links = $data.links.concat({SMLVersionLinkID: '', platform: '', link: ''});
   };
 
   const remove = (i) => () => {
@@ -131,7 +148,11 @@
             Server
           </label>
 
-          -->
+          <!--<Radio bind:value={links[index].platform} label="Platform">
+            <Option value="win64client">Windows Client</Option>
+            <Option value="linuxserver">Linux Server</Option>
+            <Option value="win64server">Windows Server</Option>
+          </Radio>-->
 
           <Textfield name={`links[${index}].link`} placeholder="URL" bind:value={links[index].link} />
 
