@@ -5,6 +5,7 @@ query GetSMLVersionAdmin($smlVersionID: SMLVersionID!) {
     stability
     link
     links {
+      SMLVersionLinkID
       platform
       link
     }
