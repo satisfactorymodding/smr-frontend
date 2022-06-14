@@ -10,27 +10,10 @@
   import Button from '@smui/button';
   import { VersionStabilities } from '$lib/generated';
   import Select, { Option } from '@smui/select';
-  //import Radio from '@smui/radio';
-  //import FormField from '@smui/form-field';
 
   export let onSubmit: (data: SMLVersionData) => void;
 
   export let editing = false;
-
-  export let modplatforms = [
-    {
-      name: 'Windows Client',
-      type: 'Win64Client',
-    },
-    {
-      name: 'Windows Server',
-      type: 'Win64Server',
-    },
-    {
-      name: 'Linux Server',
-      type: 'LinuxServer',
-    }
-  ]
 
   export let initialValues: SMLVersionData = {
     link: '',
@@ -39,7 +22,7 @@
     changelog: '',
     satisfactory_version: 0,
     stability: VersionStabilities.Alpha,
-    links: [{SMLVersionLinkID: '', platform: '', link: ''}],
+    links: [{ SMLVersionLinkID: '', platform: '', link: '' }],
     version: ''
   };
   export let submitText = 'Create';
@@ -54,7 +37,7 @@
   $: links = $data.links;
 
   const add = () => {
-    $data.links = $data.links.concat({SMLVersionLinkID: '', platform: '', link: ''});
+    $data.links = $data.links.concat({ SMLVersionLinkID: '', platform: '', link: '' });
   };
 
   const remove = (i) => () => {
@@ -123,8 +106,9 @@
       {#each links as data_link, index}
         <div class="gap-6">
           <Select bind:value={links[index].platform} label="Platform">
-            <Option value="win64">Windows</Option>
-            <Option value="linux">Linux</Option>
+            <Option value="WindowsNoEditor">Windows Client</Option>
+            <Option value="WindowsServer">Windows Server</Option>
+            <Option value="LinuxServer">Linux Server</Option>
           </Select>
 
           <!--
@@ -167,12 +151,10 @@
         </div>
       {/each}
 
-      {#if $data.link.length !== 0}
         <Textfield bind:value={$data.link} label="Link" />
         <ValidationMessage for="link" let:messages={message}>
           <span class="validation-message">{message || ''}</span>
         </ValidationMessage>
-      {/if}
     </div>
 
     <div class="grid grid-flow-row gap-2">
