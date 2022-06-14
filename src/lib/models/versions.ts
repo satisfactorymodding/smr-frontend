@@ -67,13 +67,13 @@ const validateModZip = async (
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       .loadAsync(file as any)
       .then((zip) => {
-        const uPluginJsonFile = zip.file(modReference + '.uplugin');
+        const uPluginJsonFile = zip.file('WindowsNoEditor/' + modReference + '.uplugin');
         if (uPluginJsonFile) {
           return validateUPluginJsonModZip(zip, uPluginJsonFile, modReference);
         }
 
         return {
-          message: modReference + '.uplugin missing from mod'
+          message: 'WindowsNoEditor/' + modReference + '.uplugin missing from mod'
         };
       })
       .catch((err) => {
