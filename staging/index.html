@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    
+	<link rel="modulepreload" href="/smr-frontend/staging/_app/start-ae8a2e61.js">
+	<link rel="modulepreload" href="/smr-frontend/staging/_app/chunks/vendor-c539ab3b.js">
+	<link rel="modulepreload" href="/smr-frontend/staging/_app/chunks/preload-helper-6d4a2016.js">
+	<link rel="modulepreload" href="/smr-frontend/staging/_app/chunks/singletons-d19c42e4.js">
+	<link rel="modulepreload" href="/smr-frontend/staging/_app/chunks/paths-396f020f.js">
+			<script type="module">
+				import { start } from "/smr-frontend/staging/_app/start-ae8a2e61.js";
+				start({
+					target: document.querySelector("#svelte"),
+					paths: {"base":"/smr-frontend/staging","assets":"/smr-frontend/staging"},
+					session: {},
+					route: true,
+					spa: true,
+					trailing_slash: "never",
+					hydrate: null
+				});
+			</script>
+			<script>
+				if ('serviceWorker' in navigator) {
+					navigator.serviceWorker.register('/smr-frontend/staging/service-worker.js');
+				}
+			</script>
+  </head>
+  <body>
+    <div id="svelte"></div>
+  </body>
+</html>
