@@ -8,6 +8,7 @@
   import { smlVersionSchema } from '$lib/models/sml-versions';
   import Textfield from '@smui/textfield';
   import Button from '@smui/button';
+  import Radio from '@smui/radio';
   import { VersionStabilities } from '$lib/generated';
   import Select, { Option } from '@smui/select';
 
@@ -72,12 +73,10 @@
       </div>
     {/if}
 
-    <div>
-      <Select type="radio" bind:value={$data.stability} label="Stability">
-        <Option value="alpha">Alpha</Option>
-        <Option value="beta">Beta</Option>
-        <Option value="release">Release</Option>
-      </Select>
+    <div class="grid grid-flow-row gap-2 auto-rows-max">
+      <Radio bind:group={$data.stability} value="alpha"/>Alpha
+      <Radio bind:group={$data.stability} value="beta"/>Beta
+      <Radio bind:group={$data.stability} value="release"/>Release
     </div>
 
     <div class="grid gap-6 split">
@@ -104,41 +103,14 @@
 
     <div class="grid grid-flow-row gap-2">
       {#each links as data_link, index}
-        <div class="gap-6">
+        <div class="gap-6 auto-rows-max">
           <Select bind:value={links[index].platform} label="Platform">
             <Option value="WindowsNoEditor">Windows Client</Option>
             <Option value="WindowsServer">Windows Server</Option>
             <Option value="LinuxServer">Linux Server</Option>
           </Select>
 
-          <!--
-          For Dean's Radio Buttons
-
-          <label>
-            Windows
-            <input id={`links[${index}].platform`} name={`links[${index}].platform`} value="Windows" type="radio" />
-          </label>
-          <label>
-            Linux
-            <input id={`links[${index}].platform`} name={`links[${index}].platform`} value="Linux" type="radio" />
-          </label>
-
-          <label>
-            <input id={`links[${index}].side`} name={`links[${index}].side`} value="Client" type="radio" />
-            Client
-          </label>
-          <label>
-            <input id={`links[${index}].side`} name={`links[${index}].side`} value="Server" type="radio" />
-            Server
-          </label>
-
-          <!--<Radio bind:value={links[index].platform} label="Platform">
-            <Option value="win64client">Windows Client</Option>
-            <Option value="linuxserver">Linux Server</Option>
-            <Option value="win64server">Windows Server</Option>
-          </Radio>-->
-
-          <Textfield name={`links[${index}].link`} placeholder="URL" bind:value={links[index].link} />
+          <Textfield name={`links[${index}].link`} placeholder="URL" bind:value={links[index].link} style="min-width: 850px;" label="URL" />
 
           {#if !editing}
             {#if index === $data.links.length - 1}
