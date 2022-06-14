@@ -84,7 +84,6 @@
   <div class="grid gap-6 xlx:grid-flow-row">
     <div class="flex flex-wrap h-auto justify-between items-center">
       <h1 class="text-4xl font-bold">{$mod.data.mod.name}</h1>
-
       <div>
         {#if canUserEdit}
           <Button variant="outlined" on:click={() => goto(base + '/mod/' + modId + '/edit')}>Edit</Button>
@@ -111,7 +110,7 @@
         <ModLogo
           modLogo={$mod.data.mod.logo}
           modName={$mod.data.mod.name}
-          latestVersions={$mod.data.mod.latestVersions}
+          compatibility={$mod.data.mod.compatibility}
         />
         <ModInfo mod={$mod.data.mod} />
         <ModLatestVersions modId={$mod.data.mod.id} latestVersions={$mod.data.mod.latestVersions} />

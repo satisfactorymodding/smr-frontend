@@ -28,7 +28,10 @@ export const initializeGraphQLClient = (fetch?: LoadInput['fetch']): Client => {
           UserMod: () => null,
           GetGuides: () => null,
           OAuthOptions: () => null,
-          UserRoles: () => null
+          UserRoles: () => null,
+          Compatibility: () => null,
+          CompatibilityInfoInput: () => null,
+          CompatibilityInfo: () => null
         },
         updates: {
           Mutation: {
