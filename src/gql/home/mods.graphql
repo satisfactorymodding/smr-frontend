@@ -26,6 +26,16 @@ query GetMods($offset: Int!, $limit: Int!, $search: String, $order: Order, $orde
           sml_version
         }
       }
+      compatibility {
+        EA {
+          note
+          state
+        }
+        EXP {
+          note
+          state
+        }
+      }
     }
   }
 }
