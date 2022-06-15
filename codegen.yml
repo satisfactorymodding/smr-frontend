@@ -1,5 +1,5 @@
 overwrite: true
-schema: "https://api.ficsit.app/v2/query"
+schema: ${SCHEMA_PATH:https://api.ficsit.app/v2/query}
 documents: "src/**/*.graphql"
 generates:
   ./src/lib/generated/graphql.ts:
