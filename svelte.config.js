@@ -1,9 +1,10 @@
 import sveltePreprocess from 'svelte-preprocess';
 import adapterNode from '@sveltejs/adapter-node';
 import adapterStatic from '@sveltejs/adapter-static';
+import { terser } from 'rollup-plugin-terser';
 
 const mode = process.env.NODE_ENV || 'development';
-const dev = mode === 'development';
+const dev = mode === 'development' || process.env.RUNTIME === 'development';
 process.env.TAILWIND_MODE = dev ? 'watch' : 'build';
 
 /** @type {import('@sveltejs/kit').Config} */
@@ -35,9 +36,6 @@ const config = {
       assets: 'build/static',
       fallback: 'index.html'
     }),
-
-    // hydrate the <div id="svelte"> element in src/app.html
-    target: '#svelte',
 
     vite: {
       ssr: {
@@ -106,7 +104,15 @@ const config = {
                 return 'vendor';
               }
             }
-          }
+          },
+          plugins: [
+            terser({
+              format: {
+                comments: false
+              },
+              compress: false
+            })
+          ]
         }
       }
     },

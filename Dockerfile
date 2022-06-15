@@ -1,7 +1,6 @@
 FROM node:16-alpine as build
 
-ARG CODEGEN=graphql-codegen:prod
-ARG BUILD=build
+ARG NODE_ENV_ARG=production
 
 RUN npm i -g pnpm
 
@@ -10,11 +9,11 @@ WORKDIR /app
 COPY package.json package.json
 COPY pnpm-lock.yaml pnpm-lock.yaml
 
-RUN pnpm install
+RUN pnpm install --ignore-scripts
 
 COPY . .
 
-RUN pnpm run prepare && pnpm run $CODEGEN && pnpm run $BUILD
+RUN NODE_ENV=$NODE_ENV_ARG set -o allexport; set -ex; source .env.$NODE_ENV_ARG; set +o allexport && pnpm run prepare && pnpm run graphql-codegen && pnpm run build:$NODE_ENV_ARG
 
 
 FROM ghcr.io/vilsol/yeet:v0.5.3 as yeet
@@ -33,7 +32,7 @@ COPY --from=build /app/build /app/build
 COPY --from=build /app/package.json /app/package.json
 COPY pnpm-lock.yaml pnpm-lock.yaml
 
-RUN pnpm install -P
+RUN pnpm install -P --ignore-scripts
 
 COPY docker/entrypoint.sh /entrypoint.sh
 
