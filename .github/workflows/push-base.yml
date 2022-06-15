@@ -82,7 +82,7 @@ jobs:
       - name: Lint
         run: |
           set -o allexport; source .env.${{ inputs.env }}; set +o allexport
-          pnpm graphql-codegen && pnpm check && pnpm lint
+          pnpm exec svelte-kit sync && pnpm graphql-codegen && pnpm check && pnpm lint
         env:
           NODE_ENV: ${{ inputs.env }}
 
