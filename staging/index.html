@@ -6,31 +6,33 @@
 
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
-    
-	<link rel="modulepreload" href="/smr-frontend/staging/_app/start-ae8a2e61.js">
-	<link rel="modulepreload" href="/smr-frontend/staging/_app/chunks/vendor-c539ab3b.js">
-	<link rel="modulepreload" href="/smr-frontend/staging/_app/chunks/preload-helper-6d4a2016.js">
-	<link rel="modulepreload" href="/smr-frontend/staging/_app/chunks/singletons-d19c42e4.js">
-	<link rel="modulepreload" href="/smr-frontend/staging/_app/chunks/paths-396f020f.js">
-			<script type="module">
-				import { start } from "/smr-frontend/staging/_app/start-ae8a2e61.js";
-				start({
-					target: document.querySelector("#svelte"),
-					paths: {"base":"/smr-frontend/staging","assets":"/smr-frontend/staging"},
-					session: {},
-					route: true,
-					spa: true,
-					trailing_slash: "never",
-					hydrate: null
-				});
-			</script>
+    <meta http-equiv="content-security-policy" content="">
+	<link rel="modulepreload" href="/smr-frontend/staging/_app/immutable/start-220f6a30.js">
+	<link rel="modulepreload" href="/smr-frontend/staging/_app/immutable/chunks/vendor-856b0c89.js">
+	<link rel="modulepreload" href="/smr-frontend/staging/_app/immutable/chunks/paths-396f020f.js">
+	<link rel="modulepreload" href="/smr-frontend/staging/_app/immutable/chunks/preload-helper-bb9ec52f.js">
+	<link rel="modulepreload" href="/smr-frontend/staging/_app/immutable/chunks/singletons-d1fb5791.js">
 			<script>
-				if ('serviceWorker' in navigator) {
-					navigator.serviceWorker.register('/smr-frontend/staging/service-worker.js');
-				}
-			</script>
+		if ('serviceWorker' in navigator) {
+			addEventListener('load', () => {
+				navigator.serviceWorker.register('/smr-frontend/staging/service-worker.js');
+			});
+		}
+	</script>
   </head>
   <body>
-    <div id="svelte"></div>
+    <div>
+		<script type="module" data-sveltekit-hydrate="45h">
+		import { start } from "/smr-frontend/staging/_app/immutable/start-220f6a30.js";
+		start({
+			target: document.querySelector('[data-sveltekit-hydrate="45h"]').parentNode,
+			paths: {"base":"/smr-frontend/staging","assets":"/smr-frontend/staging"},
+			session: {},
+			route: true,
+			spa: true,
+			trailing_slash: "never",
+			hydrate: null
+		});
+	</script></div>
   </body>
 </html>
