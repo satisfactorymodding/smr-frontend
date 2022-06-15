@@ -170,4 +170,4 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
-            BUILD=build:${{ inputs.env }}
+            NODE_ENV_ARG=${{ inputs.env }}

@@ -4,3 +4,4 @@ Dockerfile
 /build
 /.svelte-kit
 /.husky
+/.pnpm-store
