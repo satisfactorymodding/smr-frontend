@@ -37,9 +37,6 @@ const config = {
       fallback: 'index.html'
     }),
 
-    // hydrate the <div id="svelte"> element in src/app.html
-    target: '#svelte',
-
     vite: {
       ssr: {
         noExternal: [

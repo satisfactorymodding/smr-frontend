@@ -1,7 +1,7 @@
 <script lang="ts" context="module">
-  import type { LoadInput } from '@sveltejs/kit/types/page';
+  import type { LoadEvent } from '@sveltejs/kit';
 
-  export async function load(input: LoadInput) {
+  export async function load(input: LoadEvent) {
     return {
       status: 302,
       redirect: '/mod/' + input.params.modId + '/version/' + input.params.versionId
