@@ -16,8 +16,12 @@ query GetModVersions($mod: ModID!, $limit: Int!, $offset: Int!) {
 <<<<<<< staging
 =======
       links {
+        id
+        ModVersionLinkID
         platform
         link
+        hash
+        size
       }
 >>>>>>> starting of ModPlatform
     }

@@ -16,8 +16,12 @@ query GetMod($mod: String!) {
 <<<<<<< staging
 =======
         links {
+          id
+          ModVersionLinkID
           platform
           link
+          hash
+          size
         }
 >>>>>>> starting of ModPlatform
         version
@@ -30,8 +34,12 @@ query GetMod($mod: String!) {
 <<<<<<< staging
 =======
         links {
+          id
+          ModVersionLinkID
           platform
           link
+          hash
+          size
         }
 >>>>>>> starting of ModPlatform
         version
@@ -44,8 +52,12 @@ query GetMod($mod: String!) {
 <<<<<<< staging
 =======
         links {
+          id
+          ModVersionLinkID
           platform
           link
+          hash
+          size
         }
 >>>>>>> starting of ModPlatform
         version
