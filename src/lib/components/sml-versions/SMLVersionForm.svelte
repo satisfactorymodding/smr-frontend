@@ -23,7 +23,7 @@
     changelog: '',
     satisfactory_version: 0,
     stability: VersionStabilities.Alpha,
-    links: [{ SMLVersionLinkID: '', platform: '', link: '' }],
+    links: [{ id: '', SMLVersionLinkID: '', platform: '', link: '' }],
     version: ''
   };
   export let submitText = 'Create';
@@ -38,12 +38,32 @@
   $: links = $data.links;
 
   const add = () => {
-    $data.links = $data.links.concat({ SMLVersionLinkID: '', platform: '', link: '' });
+    $data.links = $data.links.concat({ id: '', SMLVersionLinkID: '', platform: '', link: '' });
   };
 
   const remove = (i) => () => {
-    $data.links = $data.links.filter((u, index) => index !== i);
+    $data.links = $data.links.filter((_, index) => index !== i);
   };
+
+	function isAdd(index) {
+    if (index !== $data.links.length - 1) {
+      return true
+    }
+    else
+    {
+      return false
+    }
+	}
+
+  function isDel() {
+    if ($data.links.length == 1) {
+      return true
+    }
+    else
+    {
+      return false
+    }
+	}
 
   $: preview = ($data.changelog as string) || '';
 </script>
@@ -73,10 +93,10 @@
       </div>
     {/if}
 
-    <div class="grid grid-flow-row gap-2 auto-rows-max">
-      <Radio bind:group={$data.stability} value="alpha"/>Alpha
-      <Radio bind:group={$data.stability} value="beta"/>Beta
-      <Radio bind:group={$data.stability} value="release"/>Release
+    <div class="grid grid-flow-col gap-2">
+      <div><Radio bind:group={$data.stability} value="alpha" label="Alpha"/>Alpha</div>
+      <div><Radio bind:group={$data.stability} value="beta"/>Beta</div>
+      <div><Radio bind:group={$data.stability} value="release"/>Release</div>
     </div>
 
     <div class="grid gap-6 split">
@@ -104,21 +124,20 @@
     <div class="grid grid-flow-row gap-2">
       {#each links as data_link, index}
         <div class="gap-6 auto-rows-max">
-          <Select bind:value={links[index].platform} label="Platform">
+          <Select bind:value={data_link.platform} label="Platform">
             <Option value="WindowsNoEditor">Windows Client</Option>
             <Option value="WindowsServer">Windows Server</Option>
             <Option value="LinuxServer">Linux Server</Option>
           </Select>
 
-          <Textfield name={`links[${index}].link`} placeholder="URL" bind:value={links[index].link} style="min-width: 850px;" label="URL" />
+          <Textfield name={`data_link.link`} placeholder="URL" bind:value={data_link.link} style="min-width: 850px;" label="URL" />
+          <ValidationMessage for="data_link.link" let:messages={message}>
+            <span class="validation-message">{message || ''}</span>
+          </ValidationMessage>
 
           {#if !editing}
-            {#if index === $data.links.length - 1}
-              <Button type="button" on:click={add}>Add</Button>
-            {/if}
-            {#if $data.links.length !== 1}
-              <Button type="button" on:click={remove(index)}>Remove</Button>
-            {/if}
+              <Button type="button" disabled='{isAdd(index)}' on:click={add}>Add</Button>
+              <Button type="button" disabled='{isDel()}' on:click={remove(index)}>Remove</Button>
           {/if}
         </div>
       {/each}

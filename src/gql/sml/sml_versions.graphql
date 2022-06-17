@@ -10,6 +10,7 @@ query GetSMLVersions($limit: Int!, $offset: Int!) {
 <<<<<<< staging
 =======
       links {
+        id
         SMLVersionLinkID
         platform
         link
