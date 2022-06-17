@@ -78,7 +78,7 @@
             <Cell>{prettyDate(version.date)}</Cell>
             <Cell>
               <div class="grid grid-flow-col gap-4">
-                <Button variant="outlined" href={version.link}>View</Button>-->
+                <Button variant="outlined" href={version.link}>View</Button>
               </div>
             </Cell>
           </Row>

@@ -8,6 +8,7 @@ query GetSMLVersions($limit: Int!, $offset: Int!) {
       changelog
       link
       links {
+        id
         SMLVersionLinkID
         platform
         link
