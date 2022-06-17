@@ -14,8 +14,12 @@ query GetMod($mod: String!) {
         id
         link
         links {
+          id
+          ModVersionLinkID
           platform
           link
+          hash
+          size
         }
         version
         created_at
@@ -25,8 +29,12 @@ query GetMod($mod: String!) {
         id
         link
         links {
+          id
+          ModVersionLinkID
           platform
           link
+          hash
+          size
         }
         version
         created_at
@@ -36,8 +44,12 @@ query GetMod($mod: String!) {
         id
         link
         links {
+          id
+          ModVersionLinkID
           platform
           link
+          hash
+          size
         }
         version
         created_at
