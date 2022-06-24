@@ -16,6 +16,7 @@
   export let modReference: string;
   export let onSubmit: (data: VersionData) => Promise<void>;
   export let initialValues: Omit<VersionData, 'file'> = {
+    arch: [{ id: '', ModVersionLinkID: '', platform: '', asset: '', hash: '', size: 0 }],
     changelog: '',
     stability: VersionStabilities.Alpha
   };
