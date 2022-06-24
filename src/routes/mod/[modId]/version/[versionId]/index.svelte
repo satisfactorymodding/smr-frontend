@@ -94,26 +94,28 @@
           </Button>
           <Button variant="outlined" on:click={() => deleteDialogOpen.set(true)}>Delete</Button>
         {/if}
-        {#if ($version.data.getVersion.arch.length != 0)}
-        <Button variant="outlined" on:click={() => menu.setOpen(true)}>
-          <Label>Actions</Label>
-        </Button>
-        <Menu bind:this={menu}>
-          <List>
-            {#each $version.data.getVersion.arch as arch, index}
-            <Item>
-              <Button variant="outlined" href={API_REST + '/mod/' + modId + '/versions/' + versionId + '/' + arch.platform + '/download'}
-                >Download {prettyArch(arch.platform)}</Button
-              >
-            </Item>
-            {/each}
-          </List>
-        </Menu>
+        {#if $version.data.getVersion.arch.length != 0}
+          <Button variant="outlined" on:click={() => menu.setOpen(true)}>
+            <Label>Actions</Label>
+          </Button>
+          <Menu bind:this={menu}>
+            <List>
+              {#each $version.data.getVersion.arch as arch, index}
+                <Item>
+                  <Button
+                    variant="outlined"
+                    href={API_REST + '/mod/' + modId + '/versions/' + versionId + '/' + arch.platform + '/download'}
+                    >Download {prettyArch(arch.platform)}</Button
+                  >
+                </Item>
+              {/each}
+            </List>
+          </Menu>
         {:else}
-        <Button variant="outlined" href={base + '/mod/' + modId + '/version/' + versionId}>View</Button>
-        <Button variant="outlined" href={API_REST + '/mod/' + modId + '/versions/' + versionId + '/download'}
-          >Download</Button
-        >
+          <Button variant="outlined" href={base + '/mod/' + modId + '/version/' + versionId}>View</Button>
+          <Button variant="outlined" href={API_REST + '/mod/' + modId + '/versions/' + versionId + '/download'}
+            >Download</Button
+          >
         {/if}
         <Button variant="outlined" on:click={() => installMod($version.data.getMod.mod_reference)}>
           <Label>Install</Label>

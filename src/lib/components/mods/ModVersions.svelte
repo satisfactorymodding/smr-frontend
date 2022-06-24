@@ -64,29 +64,38 @@
             <Cell>{prettyDate(version.created_at)}</Cell>
             <Cell>
               <div class="grid grid-flow-col gap-4">
-                {#if (version.arch.length != 0)}
-                <Button variant="outlined" on:click={() => menu.setOpen(true)}>
-                  <Label>Actions</Label>
-                </Button>
-                <Menu bind:this={menu}>
-                  <List>
-                    <Item>
-                      <Button variant="outlined" href={base + '/mod/' + modId + '/version/' + version.id}>View</Button>
-                    </Item>
-                    {#each version.arch as arch, _}
-                    <Item>
-                      <Button variant="outlined" href={API_REST + '/mod/' + modId + '/versions/' + version.id + '/' + arch.platform + '/download'}
-                        >Download {prettyArch(arch.platform)}</Button
-                      >
-                    </Item>
-                    {/each}
-                  </List>
-                </Menu>
+                {#if version.arch.length != 0}
+                  <Button variant="outlined" on:click={() => menu.setOpen(true)}>
+                    <Label>Actions</Label>
+                  </Button>
+                  <Menu bind:this={menu}>
+                    <List>
+                      <Item>
+                        <Button variant="outlined" href={base + '/mod/' + modId + '/version/' + version.id}>View</Button
+                        >
+                      </Item>
+                      {#each version.arch as arch, _}
+                        <Item>
+                          <Button
+                            variant="outlined"
+                            href={API_REST +
+                              '/mod/' +
+                              modId +
+                              '/versions/' +
+                              version.id +
+                              '/' +
+                              arch.platform +
+                              '/download'}>Download {prettyArch(arch.platform)}</Button
+                          >
+                        </Item>
+                      {/each}
+                    </List>
+                  </Menu>
                 {:else}
-                <Button variant="outlined" href={base + '/mod/' + modId + '/version/' + version.id}>View</Button>
-                <Button variant="outlined" href={API_REST + '/mod/' + modId + '/versions/' + version.id + '/download'}
-                  >Download</Button
-                >
+                  <Button variant="outlined" href={base + '/mod/' + modId + '/version/' + version.id}>View</Button>
+                  <Button variant="outlined" href={API_REST + '/mod/' + modId + '/versions/' + version.id + '/download'}
+                    >Download</Button
+                  >
                 {/if}
                 <Button variant="outlined" on:click={() => installMod($versions.data.getMod.mod_reference)}>
                   <Label>Install</Label>

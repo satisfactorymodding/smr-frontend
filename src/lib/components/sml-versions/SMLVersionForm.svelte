@@ -43,25 +43,21 @@
     $data.arch = $data.arch.filter((_, index) => index != i);
   };
 
-	function isAdd(index) {
+  function isAdd(index) {
     if (index != $data.arch.length - 1) {
-      return true
+      return true;
+    } else {
+      return false;
     }
-    else
-    {
-      return false
-    }
-	}
+  }
 
   function isDel() {
     if ($data.arch.length == 1) {
-      return true
+      return true;
+    } else {
+      return false;
     }
-    else
-    {
-      return false
-    }
-	}
+  }
 
   $: preview = ($data.changelog as string) || '';
 </script>
@@ -92,9 +88,9 @@
     {/if}
 
     <div class="grid grid-flow-col gap-2">
-      <div><Radio bind:group={$data.stability} value="alpha" label="Alpha"/>Alpha</div>
-      <div><Radio bind:group={$data.stability} value="beta"/>Beta</div>
-      <div><Radio bind:group={$data.stability} value="release"/>Release</div>
+      <div><Radio bind:group={$data.stability} value="alpha" label="Alpha" />Alpha</div>
+      <div><Radio bind:group={$data.stability} value="beta" />Beta</div>
+      <div><Radio bind:group={$data.stability} value="release" />Release</div>
     </div>
 
     <div class="grid gap-6 split">
@@ -128,22 +124,28 @@
             <Option value="LinuxServer">Linux Server</Option>
           </Select>
 
-          <Textfield name={`data_link.link`} placeholder="URL" bind:value={data_link.link} style="min-width: 850px;" label="URL" />
+          <Textfield
+            name={`data_link.link`}
+            placeholder="URL"
+            bind:value={data_link.link}
+            style="min-width: 850px;"
+            label="URL"
+          />
           <ValidationMessage for="data_link.link" let:messages={message}>
             <span class="validation-message">{message || ''}</span>
           </ValidationMessage>
 
           {#if !editing}
-              <Button type="button" disabled='{isAdd(index)}' on:click={add}>Add</Button>
-              <Button type="button" disabled='{isDel()}' on:click={remove(index)}>Remove</Button>
+            <Button type="button" disabled={isAdd(index)} on:click={add}>Add</Button>
+            <Button type="button" disabled={isDel()} on:click={remove(index)}>Remove</Button>
           {/if}
         </div>
       {/each}
 
-        <Textfield bind:value={$data.link} label="Link" />
-        <ValidationMessage for="link" let:messages={message}>
-          <span class="validation-message">{message || ''}</span>
-        </ValidationMessage>
+      <Textfield bind:value={$data.link} label="Link" />
+      <ValidationMessage for="link" let:messages={message}>
+        <span class="validation-message">{message || ''}</span>
+      </ValidationMessage>
     </div>
 
     <div class="grid grid-flow-row gap-2">
