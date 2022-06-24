@@ -23,7 +23,7 @@
     changelog: '',
     satisfactory_version: 0,
     stability: VersionStabilities.Alpha,
-    links: [{ id: '', SMLVersionLinkID: '', platform: '', link: '' }],
+    arch: [{ id: '', SMLVersionLinkID: '', platform: '', link: '' }],
     version: ''
   };
   export let submitText = 'Create';
@@ -35,18 +35,16 @@
     onSubmit: (data: SMLVersionData) => onSubmit(trimNonSchema(data, smlVersionSchema))
   });
 
-  $: links = $data.links;
-
   const add = () => {
-    $data.links = $data.links.concat({ id: '', SMLVersionLinkID: '', platform: '', link: '' });
+    $data.arch = $data.arch.concat({ id: '', SMLVersionLinkID: '', platform: '', link: '' });
   };
 
   const remove = (i) => () => {
-    $data.links = $data.links.filter((_, index) => index !== i);
+    $data.arch = $data.arch.filter((_, index) => index != i);
   };
 
 	function isAdd(index) {
-    if (index !== $data.links.length - 1) {
+    if (index != $data.arch.length - 1) {
       return true
     }
     else
@@ -56,7 +54,7 @@
 	}
 
   function isDel() {
-    if ($data.links.length == 1) {
+    if ($data.arch.length == 1) {
       return true
     }
     else
@@ -122,7 +120,7 @@
     </div>
 
     <div class="grid grid-flow-row gap-2">
-      {#each links as data_link, index}
+      {#each $data.arch as data_link, index}
         <div class="gap-6 auto-rows-max">
           <Select bind:value={data_link.platform} label="Platform">
             <Option value="WindowsNoEditor">Windows Client</Option>

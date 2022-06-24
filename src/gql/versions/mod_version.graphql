@@ -10,11 +10,11 @@ query GetModVersion($version: VersionID!) {
     link
     hash
     size
-    links {
+    arch {
         id
         ModVersionLinkID
         platform
-        link
+        asset
         hash
         size
     }

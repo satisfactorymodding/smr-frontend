@@ -7,7 +7,7 @@ query GetSMLVersions($limit: Int!, $offset: Int!) {
       stability
       changelog
       link
-      links {
+      arch {
         id
         SMLVersionLinkID
         platform
