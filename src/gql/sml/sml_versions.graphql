@@ -7,19 +7,12 @@ query GetSMLVersions($limit: Int!, $offset: Int!) {
       stability
       changelog
       link
-<<<<<<< staging
-<<<<<<< staging
-=======
-      links {
-=======
       arch {
->>>>>>> SML/Mod Links > Arch
         id
         SMLVersionLinkID
         platform
         link
       }
->>>>>>> SML Version Form modifications for dediservers
       date
       satisfactory_version
     }

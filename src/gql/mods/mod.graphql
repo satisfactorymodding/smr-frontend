@@ -13,13 +13,7 @@ query GetMod($mod: String!) {
       alpha {
         id
         link
-<<<<<<< staging
-<<<<<<< staging
-=======
-        links {
-=======
         arch {
->>>>>>> SML/Mod Links > Arch
           id
           ModVersionLinkID
           platform
@@ -27,7 +21,6 @@ query GetMod($mod: String!) {
           hash
           size
         }
->>>>>>> starting of ModPlatform
         version
         created_at
         sml_version
@@ -35,13 +28,7 @@ query GetMod($mod: String!) {
       beta {
         id
         link
-<<<<<<< staging
-<<<<<<< staging
-=======
-        links {
-=======
         arch {
->>>>>>> SML/Mod Links > Arch
           id
           ModVersionLinkID
           platform
@@ -49,7 +36,6 @@ query GetMod($mod: String!) {
           hash
           size
         }
->>>>>>> starting of ModPlatform
         version
         created_at
         sml_version
@@ -57,13 +43,7 @@ query GetMod($mod: String!) {
       release {
         id
         link
-<<<<<<< staging
-<<<<<<< staging
-=======
-        links {
-=======
         arch {
->>>>>>> SML/Mod Links > Arch
           id
           ModVersionLinkID
           platform
@@ -71,7 +51,6 @@ query GetMod($mod: String!) {
           hash
           size
         }
->>>>>>> starting of ModPlatform
         version
         created_at
         sml_version
