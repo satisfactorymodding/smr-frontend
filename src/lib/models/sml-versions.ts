@@ -14,7 +14,7 @@ export type SMLVersionData = {
   bootstrap_version?: string;
   stability: VersionStabilities;
   link: string;
-  links: SMLLinkData[];
+  arch: SMLLinkData[];
   changelog: string;
   date: string;
 };
@@ -35,7 +35,7 @@ export const smlVersionSchema = zod.object({
   bootstrap_version: zod.string().regex(versionRegex),
   stability: zod.string(),
   link: zod.string().url(),
-  links: zod.array(smlLinksSchema),
+  arch: zod.array(smlLinksSchema),
   changelog: zod.string(),
   date: zod.string()
 });

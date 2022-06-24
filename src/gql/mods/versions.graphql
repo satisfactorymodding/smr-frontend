@@ -14,12 +14,16 @@ query GetModVersions($mod: ModID!, $limit: Int!, $offset: Int!) {
       hash
       size
 <<<<<<< staging
+<<<<<<< staging
 =======
       links {
+=======
+      arch {
+>>>>>>> SML/Mod Links > Arch
         id
         ModVersionLinkID
         platform
-        link
+        asset
         hash
         size
       }

@@ -14,12 +14,16 @@ query GetMod($mod: String!) {
         id
         link
 <<<<<<< staging
+<<<<<<< staging
 =======
         links {
+=======
+        arch {
+>>>>>>> SML/Mod Links > Arch
           id
           ModVersionLinkID
           platform
-          link
+          asset
           hash
           size
         }
@@ -32,12 +36,16 @@ query GetMod($mod: String!) {
         id
         link
 <<<<<<< staging
+<<<<<<< staging
 =======
         links {
+=======
+        arch {
+>>>>>>> SML/Mod Links > Arch
           id
           ModVersionLinkID
           platform
-          link
+          asset
           hash
           size
         }
@@ -50,12 +58,16 @@ query GetMod($mod: String!) {
         id
         link
 <<<<<<< staging
+<<<<<<< staging
 =======
         links {
+=======
+        arch {
+>>>>>>> SML/Mod Links > Arch
           id
           ModVersionLinkID
           platform
-          link
+          asset
           hash
           size
         }

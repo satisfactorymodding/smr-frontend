@@ -6,8 +6,12 @@ query GetSMLVersionsAdmin($filter: SMLVersionFilter) {
       stability
       link
 <<<<<<< staging
+<<<<<<< staging
 =======
       links {
+=======
+      arch {
+>>>>>>> SML/Mod Links > Arch
         id
         SMLVersionLinkID
         platform

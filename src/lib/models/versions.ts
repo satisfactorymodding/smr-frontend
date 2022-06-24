@@ -10,6 +10,7 @@ export type VersionData = {
   file: File;
   changelog: string;
   stability: VersionStabilities;
+  arch: ModLinkData[];
 };
 
 export type VersionMetadata = {
@@ -22,6 +23,15 @@ export type VersionMetadata = {
     }[];
   };
   objects: string[];
+};
+
+export type ModLinkData = {
+  id: string;
+  ModVersionLinkID: string;
+  platform: string;
+  asset: string;
+  hash: string;
+  size: number;
 };
 
 export const constructVersionSchema = (
@@ -119,7 +129,7 @@ const validateUPluginJsonModZip = async (
 
       return {
         uplugin: parsed,
-        objects: Object.keys(zip.files).filter((f) => f.endsWith('.dll') || f.endsWith('.pak'))
+        objects: Object.keys(zip.files).filter((f) => f.endsWith('.so') || f.endsWith('.dll') || f.endsWith('.pak'))
       };
     })
     .catch((err) => {

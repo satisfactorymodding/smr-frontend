@@ -8,8 +8,12 @@ query GetSMLVersions($limit: Int!, $offset: Int!) {
       changelog
       link
 <<<<<<< staging
+<<<<<<< staging
 =======
       links {
+=======
+      arch {
+>>>>>>> SML/Mod Links > Arch
         id
         SMLVersionLinkID
         platform

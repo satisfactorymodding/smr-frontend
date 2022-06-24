@@ -7,10 +7,14 @@ query GetUnapprovedVersions($filter: VersionFilter) {
       stability
       link
 <<<<<<< staging
+<<<<<<< staging
 =======
       links {
+=======
+      arch {
+>>>>>>> SML/Mod Links > Arch
         platform
-        link
+        asset
       }
 >>>>>>> SML Version Form modifications for dediservers
       changelog

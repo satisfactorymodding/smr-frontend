@@ -11,12 +11,16 @@ query GetModVersion($version: VersionID!) {
     hash
     size
 <<<<<<< staging
+<<<<<<< staging
 =======
     links {
+=======
+    arch {
+>>>>>>> SML/Mod Links > Arch
         id
         ModVersionLinkID
         platform
-        link
+        asset
         hash
         size
     }
