@@ -30,8 +30,8 @@ export type ModLinkData = {
   ModVersionLinkID: string;
   platform: string;
   asset: string;
-  hash: string;
-  size: number;
+  hash?: string;
+  size?: number;
 };
 
 export const constructVersionSchema = (

@@ -87,10 +87,15 @@
       </div>
     {/if}
 
-    <div class="grid grid-flow-col gap-2">
-      <div><Radio bind:group={$data.stability} value="alpha" label="Alpha" />Alpha</div>
-      <div><Radio bind:group={$data.stability} value="beta" />Beta</div>
-      <div><Radio bind:group={$data.stability} value="release" />Release</div>
+    <div class="grid grid-flow-row gap-2">
+      <Select bind:value={$data.stability} label="Stability">
+        <Option value="alpha">Alpha</Option>
+        <Option value="beta">Beta</Option>
+        <Option value="release">Release</Option>
+      </Select>
+      <ValidationMessage for="stability" let:messages={message}>
+        <span class="validation-message">{message || ''}</span>
+      </ValidationMessage>
     </div>
 
     <div class="grid gap-6 split">
@@ -120,7 +125,7 @@
         <div class="gap-6 auto-rows-max">
           <Select bind:value={data_link.platform} label="Platform">
             <Option value="WindowsNoEditor">Windows Client</Option>
-            <Option value="WindowsServer">Windows Server</Option>
+            <Option value="Win64Server">Windows Server</Option>
             <Option value="LinuxServer">Linux Server</Option>
           </Select>
 
