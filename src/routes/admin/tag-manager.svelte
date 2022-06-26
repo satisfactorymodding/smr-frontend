@@ -60,7 +60,6 @@
       // Create new tag & update tag.id with new DB id or re-fetch all tags
       try {
         const result = await createTagQuery({ tagName: tag.name });
-        console.log(result);
         if (result.data) {
           tag.id = result.data.createTag.id;
           success = true;

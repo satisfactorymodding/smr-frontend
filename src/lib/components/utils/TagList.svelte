@@ -101,8 +101,8 @@
     return false;
   }
 
-  function newTagKeydown(err: CustomEvent<KeyboardEvent>) {
-    let e = err.detail;
+  function newTagKeydown(err: any) {
+    let e = err as KeyboardEvent;
     if (e.code == 'Backspace') {
       if (newTag.value == '') {
         setTagText(tags.pop().name);
@@ -145,7 +145,7 @@
       </Chip>
     </Set>
   {:else}
-    <Textfield class="tags overflow-visible" bind:lineRipple={lineRippleA} bind:input={inputA}>
+    <Textfield class="tags overflow-visible" bind:lineRipple={lineRippleA} bind:input={inputA} style="z-index: 9999">
       <FloatingLabel
         class="pb-2"
         for="input-manual-a"
@@ -175,13 +175,7 @@
             if (newTagContainer && !newTagContainer.contains(document.activeElement)) surface.setOpen(false);
           }, 200)}
       >
-        <MenuSurface
-          bind:this={surface}
-          managed={true}
-          anchorCorner="BOTTOM_LEFT"
-          anchorElement={newTag}
-          style="z-index: 9999"
-        >
+        <MenuSurface bind:this={surface} managed={true} anchorCorner="BOTTOM_LEFT" anchorElement={newTag}>
           <div style="margin: 1rem">
             <h1>Available Tags</h1>
             <div class="flex flex-wrap m-1">
@@ -208,8 +202,11 @@
             class={shake ? 'shake' : ''}
             bind:this={inputA}
             on:keydown={newTagKeydown}
-            bind:value={newTagText}
-            on:input={() => updateTags()}
+            on:input={(e) => {
+              newTagText = newTag.value;
+              updateTags();
+              e.preventDefault();
+            }}
           />
         </div>
       </div>
