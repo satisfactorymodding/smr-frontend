@@ -111,7 +111,7 @@
     </div>
 
     <div class="grid grid-flow-row gap-2">
-      <TagList editable=true bind:tags={tags} />
+      <TagList editable={true} bind:tags={tags} />
     </div>
 
     <div class="grid grid-flow-row gap-2">

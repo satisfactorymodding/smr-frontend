@@ -10,13 +10,13 @@
     import {noop} from "svelte/internal";
     import {CreateTagDocument, DeleteTagDocument, GetTagsDocument, UpdateTagDocument} from "$lib/generated";
     import type {Tag} from "$lib/generated";
+    import type {SnackbarComponentDev} from "@smui/snackbar";
 
     let tags : Tag[] = []
-    let accordion : Accordion
     let panels = {}
     let nameFields = {}
     let snackbarTagChangeSavedText = ""
-    let snackbarTagChangeSaved
+    let snackbarTagChangeSaved : SnackbarComponentDev
     let tagNegativeID = -1
 
     const tagsQuery = operationStore(GetTagsDocument);
@@ -77,7 +77,7 @@
         } else {
             // Update existing tag
             try {
-                success = (await updateTagQuery({tagID: tag.id, tagName: tag.name})).data as boolean
+                success = (await updateTagQuery({tagID: tag.id, tagName: tag.name})).data.updateTag != null
             } catch {noop()}
             if (!success) {
                 snackbarTagChangeSavedText = `Failed to update Tag '${tag.name}'!`
@@ -98,7 +98,7 @@
             var success = false
             try {
                 const result = await deleteTagQuery({tagID: tag.id})
-                success = result.data as boolean
+                success = result.data.deleteTag
             } catch {
                 success = false
             }
@@ -119,7 +119,7 @@
             requestAnimationFrame(function () {
                 panel.style.height = 0 + 'px';
             });
-            panel.addEventListener("transitionend", e => {
+            panel.addEventListener("transitionend", (e : TransitionEvent) => {
                 if (e.propertyName == "height") {
                     panel.classList.remove("smui-accordion__panel--removed")
                     panel.style.height = "auto"
@@ -162,7 +162,7 @@
 {:else if tagsQuery.error}
     <h1>Failed to load tags: {$tagsQuery.error.message}</h1>
 {:else}
-    <Accordion bind:this={accordion}>
+    <Accordion>
         {#each tags as tag}
             <Panel bind:this={panels[tag.id]}>
                 <Header>
@@ -199,6 +199,6 @@
     </Accordion>
 {/if}
 
-<Snackbar bind:this={snackbarTagChangeSaved} timeoutMs=4000>
+<Snackbar bind:this={snackbarTagChangeSaved} timeoutMs={4000}>
     <Label>{snackbarTagChangeSavedText}</Label>
 </Snackbar>

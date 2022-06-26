@@ -8,18 +8,16 @@
     import Textfield, {Input} from '@smui/textfield';
     import FloatingLabel from '@smui/floating-label';
     import LineRipple from '@smui/line-ripple';
+    import type {InputComponentDev} from "@smui/textfield";
+    import type {LineRippleComponentDev} from "@smui/line-ripple";
 
     const getAllTags = operationStore(GetTagsDocument);
 
     export let tags : Tag[] = []
     export let editable = false
 
-    let rootElem;
-
-    let inputA;
-    let floatingLabelA;
-    let lineRippleA;
-    let textfieldA;
+    let inputA : InputComponentDev;
+    let lineRippleA : LineRippleComponentDev;
 
     let shake = false
 
@@ -43,7 +41,7 @@
 
     if (editable) {
         query(getAllTags);
-        getAllTags.subscribe((data) => {
+        getAllTags.subscribe(() => {
             if (!getAllTags.fetching && !getAllTags.error) {
                 allTags = getAllTags.data.getTags
                 updateTags()
@@ -74,14 +72,6 @@
     export function setTextRange(el : HTMLInputElement, start : number, end : number) : void {
         el.focus();
         if (typeof window.getSelection != "undefined" && typeof document.createRange != "undefined") {
-            /*const range = document.createRange();
-            range.selectNodeContents(el);
-            range.collapse(false);
-            range.setStart(el.firstChild, start)
-            range.setEnd(el.firstChild, end)
-            const sel = window.getSelection();
-            sel.removeAllRanges();
-            sel.addRange(range);*/
             el.setSelectionRange(start, end)
         }
     }
@@ -89,24 +79,8 @@
     export function placeCaretAtEnd(el : HTMLInputElement) : void {
         el.focus();
         if (typeof window.getSelection != "undefined" && typeof document.createRange != "undefined") {
-            /*const range = document.createRange();
-            range.selectNodeContents(el);
-            range.collapse(false);
-            const sel = window.getSelection();
-            sel.removeAllRanges();
-            sel.addRange(range);*/
             el.setSelectionRange(el.value.length, el.value.length);
-        } /*else if (typeof (document.body as HTMLInputElement).createTextRange != "undefined") {
-            const textRange = document.body.createTextRange();
-            textRange.moveToElementText(el);
-            textRange.collapse(false);
-            textRange.select();
-        }*/
-    }
-
-    async function removeTag(tagId : string) {
-        tags = tags.filter(tag => tag.id != tagId)
-        tags = tags
+        }
     }
 
     function addTag(newTag : string|Tag) {
@@ -127,7 +101,8 @@
         return false
     }
 
-    function newTagKeydown(e : KeyboardEvent) {
+    function newTagKeydown(err : CustomEvent<KeyboardEvent>) {
+        let e = err.detail
         if (e.code == "Backspace") {
             if (newTag.value == "") {
                 setTagText(tags.pop().name)
@@ -157,19 +132,12 @@
             }
         }
     }
-
-    function getFocus() {
-       /*if (newTag && !newTag.contains(document.activeElement)) {
-            newTag.focus()
-            placeCaretAtEnd(newTag)
-        }*/
-    }
 </script>
 
-<div class="tags" on:click={getFocus} bind:this={rootElem} on:focusin={() => focused = true} on:focusout={() => focused = false}>
+<div class="tags" on:focusin={() => focused = true} on:focusout={() => focused = false}>
 {#if !editable}
     <Set class="tagList" chips={tags} let:chip key={tag => tag.name} nonInteractive>
-        <Chip {chip} shouldRemoveOnTrailingIconClick={true} on:SMUIChip:removal={() => {updateTags(); setTimeout(() => getFocus(), 100)}}>
+        <Chip {chip} shouldRemoveOnTrailingIconClick={true} on:SMUIChip:removal={() => updateTags()}>
             <Text>{chip.name}</Text>
             {#if editable}
                 <TrailingAction icon$class="material-icons">cancel</TrailingAction>
@@ -181,18 +149,13 @@
             class="tags overflow-visible"
             bind:lineRipple={lineRippleA}
             bind:input={inputA}
-
-            bind:this={textfieldA}
-
-            on:click={getFocus}
     >
         <FloatingLabel
                 class="pb-2"
-                bind:this={floatingLabelA}
                 for="input-manual-a"
                 slot="label"
                 floatAbove={(newTag && newTag.value.length > 0) || focused || tags.length > 0}
-                float>Tags</FloatingLabel
+                >Tags</FloatingLabel
         >
         <Set class="tagList" chips={tags} let:chip key={tag => tag.name} nonInteractive>
             <Chip {chip} shouldRemoveOnTrailingIconClick={true} on:SMUIChip:removal={() => {updateTags()}}>
@@ -208,29 +171,22 @@
                     <h1>Available Tags</h1>
                     <div class="flex flex-wrap m-1">
                         <Set chips={filteredTagsMatched} let:chip key={tag => tag.name}>
-                            <!--Wrapper-->
-                                <Chip {chip} on:SMUIChip:interaction={() => addTag(chip.name)}>
-                                    <Text>{chip.name}</Text>
-                                </Chip>
-                                <!--Tooltip xPos="start">{chip.description}</Tooltip>
-                            </Wrapper-->
+                            <Chip {chip} on:SMUIChip:interaction={() => addTag(chip.name)}>
+                                <Text>{chip.name}</Text>
+                            </Chip>
                         </Set>
                     </div>
                     <div class="flex flex-wrap m-1">
                         <Set chips={filteredTagsUnmatched} let:chip key={tag => tag.name}>
-                            <!--Wrapper-->
-                                <Chip {chip} on:SMUIChip:interaction={() => addTag(chip.name)}>
-                                    <Text>{chip.name}</Text>
-                                </Chip>
-                                <!--Tooltip xPos="start">{chip.description}</Tooltip>
-                            </Wrapper-->
+                            <Chip {chip} on:SMUIChip:interaction={() => addTag(chip.name)}>
+                                <Text>{chip.name}</Text>
+                            </Chip>
                         </Set>
                     </div>
                 </div>
             </MenuSurface>
             <div id="newTagScroll">
-                <!--span type="text" id="newTag" spellcheck="false" contenteditable="true"  role="textbox" class:shake bind:this={newTag} on:keydown={newTagKeydown} on:input={() => newTagText = newTag.textContent}></span-->
-                <Input id="input-manual-a" spellcheck="false" autocomplete="off" class={shake ? "shake" : ""} bind:this={inputA} on:keydown={newTagKeydown} on:input={() => {newTagText = newTag.value; updateTags();}} />
+                <Input id="input-manual-a" spellcheck="false" autocomplete="off" class={shake ? "shake" : ""} bind:this={inputA} on:keydown={newTagKeydown} bind:value={newTagText} on:input={() => updateTags()} />
             </div>
         </div>
         <LineRipple bind:this={lineRippleA} slot="ripple" />
@@ -244,11 +200,6 @@
         flex-wrap: wrap;
     }
 
-    .tagList {
-        background-color: blue;
-        flex: auto;
-    }
-
     #newTagContainer {
         display: flex;
         flex: 1;
@@ -259,15 +210,6 @@
     #newTagScroll {
         display: flex;
         min-width: 9rem;
-        width: 100%;
-    }
-
-    #newTag {
-        @apply p-3 mt-auto mb-auto;
-        overflow: auto;
-        border: none;
-        outline: none;
-        background: transparent;
         width: 100%;
     }
 </style>
