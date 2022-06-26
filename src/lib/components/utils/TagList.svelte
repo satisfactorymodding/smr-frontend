@@ -8,8 +8,6 @@
     import Textfield, {Input} from '@smui/textfield';
     import FloatingLabel from '@smui/floating-label';
     import LineRipple from '@smui/line-ripple';
-    import NotchedOutline from '@smui/notched-outline';
-    import Test from "./Test.svelte";
 
     const getAllTags = operationStore(GetTagsDocument);
 
