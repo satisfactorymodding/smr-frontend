@@ -15,7 +15,7 @@ mutation EditMod($modId: ModID!, $mod: UpdateMod!) {
         avatar
       }
     }
-    tags{
+    tags {
       id
       name
     }

@@ -39,5 +39,5 @@ export const modSchema = zod.object({
       .array()
   ),
   hidden: zod.boolean(),
-  tagIDs: zod.optional(zod.string().array()),
+  tagIDs: zod.optional(zod.string().array())
 });

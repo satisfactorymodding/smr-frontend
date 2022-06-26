@@ -2,7 +2,7 @@
   import type { Mod } from '$lib/generated';
   import Card, { Content } from '@smui/card';
   import { prettyDate, prettyNumber } from '$lib/utils/formatting';
-  import TagList from "$lib/components/utils/TagList.svelte";
+  import TagList from '$lib/components/utils/TagList.svelte';
 
   export let mod!: Pick<Mod, 'source_url' | 'created_at' | 'views' | 'downloads' | 'mod_reference' | 'tags'>;
 </script>
