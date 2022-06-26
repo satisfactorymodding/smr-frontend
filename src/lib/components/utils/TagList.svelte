@@ -41,13 +41,15 @@
 
     if (!tags) tags = [];
 
-    query(getAllTags);
-    getAllTags.subscribe((data) => {
-        if (!getAllTags.fetching && !getAllTags.error) {
-            allTags = getAllTags.data.getTags
-            updateTags()
-        }
-    })
+    if (editable) {
+        query(getAllTags);
+        getAllTags.subscribe((data) => {
+            if (!getAllTags.fetching && !getAllTags.error) {
+                allTags = getAllTags.data.getTags
+                updateTags()
+            }
+        })
+    }
 
     function setTagText(text : string) {
         newTagText = text

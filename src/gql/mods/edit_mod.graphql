@@ -1,5 +1,5 @@
 mutation EditMod($modId: ModID!, $mod: UpdateMod!) {
-  updateMod(modId: $modId, mod: <w>) {
+  updateMod(modId: $modId, mod: $mod) {
     id
     name
     full_description

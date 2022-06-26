@@ -48,6 +48,7 @@ specifiers:
   '@material/rtl': ^14.0.0
   '@material/select': ^14.0.0
   '@material/shape': ^14.0.0
+  '@material/snackbar': ^14.0.0
   '@material/switch': ^14.0.0
   '@material/textfield': ^14.0.0
   '@material/theme': ^14.0.0
@@ -55,6 +56,7 @@ specifiers:
   '@material/top-app-bar': ^14.0.0
   '@material/touch-target': ^14.0.0
   '@material/typography': ^14.0.0
+  '@smui-extra/accordion': 6.0.0-beta.16
   '@smui/button': 6.0.0-beta.16
   '@smui/card': 6.0.0-beta.16
   '@smui/chips': 6.0.0-beta.16
@@ -76,6 +78,7 @@ specifiers:
   '@smui/paper': 6.0.0-beta.16
   '@smui/ripple': 6.0.0-beta.16
   '@smui/select': 6.0.0-beta.16
+  '@smui/snackbar': 6.0.0-beta.16
   '@smui/switch': 6.0.0-beta.16
   '@smui/textfield': 6.0.0-beta.16
   '@smui/top-app-bar': 6.0.0-beta.16
@@ -174,6 +177,7 @@ dependencies:
   '@material/rtl': 14.0.0
   '@material/select': 14.0.0
   '@material/shape': 14.0.0
+  '@material/snackbar': 14.0.0
   '@material/switch': 14.0.0
   '@material/textfield': 14.0.0
   '@material/theme': 14.0.0
@@ -217,6 +221,7 @@ devDependencies:
   '@graphql-codegen/typescript-urql': 3.5.12_ubrtutz2urcxyhwqr2zvlqjzha
   '@graphql-codegen/urql-introspection': 2.1.1_graphql@16.5.0
   '@graphql-typed-document-node/core': 3.1.1_graphql@16.5.0
+  '@smui-extra/accordion': 6.0.0-beta.16_dg7s4kx4gpzom5ifrkhkr632g4
   '@smui/button': 6.0.0-beta.16_dg7s4kx4gpzom5ifrkhkr632g4
   '@smui/card': 6.0.0-beta.16_dg7s4kx4gpzom5ifrkhkr632g4
   '@smui/chips': 6.0.0-beta.16_dg7s4kx4gpzom5ifrkhkr632g4
@@ -238,6 +243,7 @@ devDependencies:
   '@smui/paper': 6.0.0-beta.16_dg7s4kx4gpzom5ifrkhkr632g4
   '@smui/ripple': 6.0.0-beta.16_dg7s4kx4gpzom5ifrkhkr632g4
   '@smui/select': 6.0.0-beta.16_dg7s4kx4gpzom5ifrkhkr632g4
+  '@smui/snackbar': 6.0.0-beta.16_dg7s4kx4gpzom5ifrkhkr632g4
   '@smui/switch': 6.0.0-beta.16_dg7s4kx4gpzom5ifrkhkr632g4
   '@smui/textfield': 6.0.0-beta.16_dg7s4kx4gpzom5ifrkhkr632g4
   '@smui/top-app-bar': 6.0.0-beta.16_dg7s4kx4gpzom5ifrkhkr632g4
@@ -2593,6 +2599,42 @@ packages:
       tslib: 2.4.0
     dev: false
 
+  /@material/snackbar/13.0.0:
+    resolution: {integrity: sha512-z59aYCeMWWEbsUU04QDZN4CxzCCOp3OIc5tzrdqnY3qRq4wwApxncf7RKKKSU2K6WTEWfdHHOc7aNX8kqlDmUg==}
+    dependencies:
+      '@material/animation': 13.0.0
+      '@material/base': 13.0.0
+      '@material/button': 13.0.0
+      '@material/dom': 13.0.0
+      '@material/elevation': 13.0.0
+      '@material/feature-targeting': 13.0.0
+      '@material/icon-button': 13.0.0
+      '@material/ripple': 13.0.0
+      '@material/rtl': 13.0.0
+      '@material/shape': 13.0.0
+      '@material/theme': 13.0.0
+      '@material/typography': 13.0.0
+      tslib: 2.4.0
+    dev: true
+
+  /@material/snackbar/14.0.0:
+    resolution: {integrity: sha512-28uQBj9bw7BalNarK9j8/aVW4Ys5aRaGHoWH+CeYvAjqQUJkrYoqM52aiKhBwqrjBPMJHk1aXthe3YbzMBm6vA==}
+    dependencies:
+      '@material/animation': 14.0.0
+      '@material/base': 14.0.0
+      '@material/button': 14.0.0
+      '@material/dom': 14.0.0
+      '@material/elevation': 14.0.0
+      '@material/feature-targeting': 14.0.0
+      '@material/icon-button': 14.0.0
+      '@material/ripple': 14.0.0
+      '@material/rtl': 14.0.0
+      '@material/shape': 14.0.0
+      '@material/theme': 14.0.0
+      '@material/typography': 14.0.0
+      tslib: 2.4.0
+    dev: false
+
   /@material/switch/13.0.0:
     resolution: {integrity: sha512-zbdo6nKEOAx24ILCBobZlQqU2WZ+KuPgdAc1VTI1q1BCKN3rDIfm9RnsCuYiZa9iaq4UUgdYuhH8KVEYGP7Lrw==}
     dependencies:
@@ -2813,6 +2855,24 @@ packages:
   /@sindresorhus/is/0.14.0:
     resolution: {integrity: sha512-9NET910DNaIPngYnLLPeg+Ogzqsi9uM4mSboU5y6p8S5DzMTVEsJZrawi+BoDNUVBa2DhJqQYUFvMDfgU062LQ==}
     engines: {node: '>=6'}
+    dev: true
+
+  /@smui-extra/accordion/6.0.0-beta.16_dg7s4kx4gpzom5ifrkhkr632g4:
+    resolution: {integrity: sha512-p1gBhIyg3a8EXZWOsDPKURneqIssWsg5g72bp+TYvRWqN/e1X2CPnpiYwxWivl+k8A0h2u3rRvQiQnD08R0TlA==}
+    dependencies:
+      '@material/animation': 13.0.0
+      '@material/elevation': 13.0.0
+      '@material/feature-targeting': 13.0.0
+      '@material/ripple': 13.0.0
+      '@material/theme': 13.0.0
+      '@material/typography': 13.0.0
+      '@smui/common': 6.0.0-beta.16_dg7s4kx4gpzom5ifrkhkr632g4
+      '@smui/paper': 6.0.0-beta.16_dg7s4kx4gpzom5ifrkhkr632g4
+      '@smui/ripple': 6.0.0-beta.16_dg7s4kx4gpzom5ifrkhkr632g4
+      svelte2tsx: 0.5.10_dg7s4kx4gpzom5ifrkhkr632g4
+    transitivePeerDependencies:
+      - svelte
+      - typescript
     dev: true
 
   /@smui/button/6.0.0-beta.16_dg7s4kx4gpzom5ifrkhkr632g4:
@@ -3100,6 +3160,22 @@ packages:
       '@smui/menu': 6.0.0-beta.16_dg7s4kx4gpzom5ifrkhkr632g4
       '@smui/menu-surface': 6.0.0-beta.16_dg7s4kx4gpzom5ifrkhkr632g4
       '@smui/notched-outline': 6.0.0-beta.16_dg7s4kx4gpzom5ifrkhkr632g4
+      '@smui/ripple': 6.0.0-beta.16_dg7s4kx4gpzom5ifrkhkr632g4
+      svelte2tsx: 0.5.10_dg7s4kx4gpzom5ifrkhkr632g4
+    transitivePeerDependencies:
+      - svelte
+      - typescript
+    dev: true
+
+  /@smui/snackbar/6.0.0-beta.16_dg7s4kx4gpzom5ifrkhkr632g4:
+    resolution: {integrity: sha512-px509mEoSZYa0QoVD/PyecsX9duXH0pfnhrWe1HrQ4A7NzqFBgFsbt+N7z6C84LVQYZ5GNZ2E6YVMrPMm+CvZw==}
+    dependencies:
+      '@material/dom': 13.0.0
+      '@material/feature-targeting': 13.0.0
+      '@material/snackbar': 13.0.0
+      '@smui/button': 6.0.0-beta.16_dg7s4kx4gpzom5ifrkhkr632g4
+      '@smui/common': 6.0.0-beta.16_dg7s4kx4gpzom5ifrkhkr632g4
+      '@smui/icon-button': 6.0.0-beta.16_dg7s4kx4gpzom5ifrkhkr632g4
       '@smui/ripple': 6.0.0-beta.16_dg7s4kx4gpzom5ifrkhkr632g4
       svelte2tsx: 0.5.10_dg7s4kx4gpzom5ifrkhkr632g4
     transitivePeerDependencies:
