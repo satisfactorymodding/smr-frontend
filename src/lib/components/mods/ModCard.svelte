@@ -7,10 +7,11 @@
   import { prettyNumber } from '$lib/utils/formatting';
   import OutdatedBanner from '$lib/components/mods/compatibility/OutdatedBanner.svelte';
   import CompatibilityButton from '$lib/components/mods/compatibility/CompatibilityButton.svelte';
+  import TagList from '$lib/components/utils/TagList.svelte';
 
   export let mod: Pick<
     Mod,
-    'id' | 'mod_reference' | 'name' | 'logo' | 'views' | 'downloads' | 'short_description' | 'compatibility'
+    'id' | 'mod_reference' | 'name' | 'logo' | 'views' | 'downloads' | 'short_description' | 'compatibility' | 'tags'
   > & {
     latestVersions: {
       alpha?: Maybe<Pick<Version, 'id' | 'sml_version'>>;
@@ -32,6 +33,9 @@
   <div slot="stats">
     <span><Icon class="material-icons align-middle text-sm mr-1">visibility</Icon>{prettyNumber(mod.views)}</span>
     <span><Icon class="material-icons align-middle text-sm mr-1">download</Icon>{prettyNumber(mod.downloads)}</span>
+  </div>
+  <div slot="tags">
+    <TagList tags={mod.tags} />
   </div>
   <div slot="actions">
     {#if installable}

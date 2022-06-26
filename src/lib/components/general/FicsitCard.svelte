@@ -63,6 +63,8 @@
               {/if}
             </slot>
           </h5>
+
+          <slot name="tags" />
         </div>
 
         <div class:font-flow={fake} class="break-words">
