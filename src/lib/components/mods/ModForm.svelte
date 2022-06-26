@@ -12,6 +12,7 @@
   import ModAuthor from '$lib/components/mods/ModAuthor.svelte';
   import FormField from '@smui/form-field';
   import Switch from '@smui/switch';
+  import TagList from "$lib/components/utils/TagList.svelte";
 
   export let onSubmit: (data: ModData) => void;
   export let initialValues: ModData = {
@@ -20,11 +21,22 @@
     name: '',
     short_description: '',
     source_url: '',
-    hidden: false
+    hidden: false,
+    tagIDs: [],
   };
   export let submitText = 'Create';
 
   export let editing = false;
+
+  let tags = [];
+  $: {
+    if ($data["tags"]) {
+      tags = $data["tags"]
+      delete $data["tags"]
+    }
+    $data.tagIDs = []
+    tags.forEach(tag => $data.tagIDs.push(tag.id))
+  }
 
   const { form, data } = createForm<ModData>({
     initialValues: initialValues,
@@ -96,6 +108,10 @@
           <div class="markdown-content right">{@html previewRendered}</div>
         {/await}
       </div>
+    </div>
+
+    <div class="grid grid-flow-row gap-2">
+      <TagList editable=true bind:tags={tags} />
     </div>
 
     <div class="grid grid-flow-row gap-2">

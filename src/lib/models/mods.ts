@@ -12,6 +12,7 @@ export type ModData = {
     user_id: string;
   }[];
   hidden: boolean;
+  tagIDs?: string[];
 };
 
 export const modSchema = zod.object({
@@ -37,5 +38,6 @@ export const modSchema = zod.object({
       })
       .array()
   ),
-  hidden: zod.boolean()
+  hidden: zod.boolean(),
+  tagIDs: zod.optional(zod.string().array()),
 });
