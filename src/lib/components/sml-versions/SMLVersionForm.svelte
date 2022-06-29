@@ -8,7 +8,6 @@
   import { smlVersionSchema } from '$lib/models/sml-versions';
   import Textfield from '@smui/textfield';
   import Button from '@smui/button';
-  import Radio from '@smui/radio';
   import { VersionStabilities } from '$lib/generated';
   import Select, { Option } from '@smui/select';
 
@@ -23,7 +22,7 @@
     changelog: '',
     satisfactory_version: 0,
     stability: VersionStabilities.Alpha,
-    arch: [{ id: '', SMLVersionLinkID: '', platform: '', link: '' }],
+    arch: [{ id: '', SMLVersionArchID: '', platform: '', link: '' }],
     version: ''
   };
   export let submitText = 'Create';
@@ -36,28 +35,12 @@
   });
 
   const add = () => {
-    $data.arch = $data.arch.concat({ id: '', SMLVersionLinkID: '', platform: '', link: '' });
+    $data.arch = $data.arch.concat({ id: '', SMLVersionArchID: '', platform: '', link: '' });
   };
 
   const remove = (i) => () => {
     $data.arch = $data.arch.filter((_, index) => index != i);
   };
-
-  function isAdd(index) {
-    if (index != $data.arch.length - 1) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  function isDel() {
-    if ($data.arch.length == 1) {
-      return true;
-    } else {
-      return false;
-    }
-  }
 
   $: preview = ($data.changelog as string) || '';
 </script>
@@ -125,7 +108,7 @@
         <div class="gap-6 auto-rows-max">
           <Select bind:value={data_link.platform} label="Platform">
             <Option value="WindowsNoEditor">Windows Client</Option>
-            <Option value="Win64Server">Windows Server</Option>
+            <Option value="WindowsServer">Windows Server</Option>
             <Option value="LinuxServer">Linux Server</Option>
           </Select>
 
@@ -141,8 +124,8 @@
           </ValidationMessage>
 
           {#if !editing}
-            <Button type="button" disabled={isAdd(index)} on:click={add}>Add</Button>
-            <Button type="button" disabled={isDel()} on:click={remove(index)}>Remove</Button>
+            <Button type="button" on:click={add}>Add</Button>
+            <Button type="button" disabled={$data.arch.length == 1} on:click={remove(index)}>Remove</Button>
           {/if}
         </div>
       {/each}

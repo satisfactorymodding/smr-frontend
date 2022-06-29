@@ -1,9 +1,9 @@
 import * as zod from 'zod';
 import type { VersionStabilities } from '$lib/generated';
 
-export type SMLLinkData = {
+export type SMLArchData = {
   id: string;
-  SMLVersionLinkID: string;
+  SMLVersionArchID: string;
   platform: string;
   link: string;
 };
@@ -14,7 +14,7 @@ export type SMLVersionData = {
   bootstrap_version?: string;
   stability: VersionStabilities;
   link: string;
-  arch: SMLLinkData[];
+  arch: SMLArchData[];
   changelog: string;
   date: string;
 };
@@ -24,7 +24,7 @@ const versionRegex =
 
 export const smlLinksSchema = zod.object({
   id: zod.string(),
-  SMLVersionLinkID: zod.string(),
+  SMLVersionArchID: zod.string(),
   platform: zod.string(),
   link: zod.string().url()
 });

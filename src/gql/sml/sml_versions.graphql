@@ -9,7 +9,7 @@ query GetSMLVersions($limit: Int!, $offset: Int!) {
       link
       arch {
         id
-        SMLVersionLinkID
+        SMLVersionArchID
         platform
         link
       }

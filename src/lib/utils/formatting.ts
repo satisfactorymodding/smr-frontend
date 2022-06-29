@@ -27,11 +27,11 @@ export const prettyBytes = (bytes: number, decimals = 2) => {
 export const prettyArch = (platform: string) => {
   switch (platform) {
     case 'WindowsNoEditor':
-      return 'Client';
+      return 'Windows Client';
     case 'WindowsServer':
       return 'Windows Server';
     case 'LinuxServer':
-      return 'LinuxServer';
+      return 'Linux Server';
   }
 
   return platform;

@@ -10,7 +10,7 @@ export type VersionData = {
   file: File;
   changelog: string;
   stability: VersionStabilities;
-  arch: ModLinkData[];
+  arch: modArchData[];
 };
 
 export type VersionMetadata = {
@@ -25,9 +25,9 @@ export type VersionMetadata = {
   objects: string[];
 };
 
-export type ModLinkData = {
+export type modArchData = {
   id: string;
-  ModVersionLinkID: string;
+  ModVersionArchID: string;
   platform: string;
   asset: string;
   hash?: string;

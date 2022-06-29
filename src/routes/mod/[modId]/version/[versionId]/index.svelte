@@ -100,7 +100,7 @@
           </Button>
           <Menu bind:this={menu}>
             <List>
-              {#each $version.data.getVersion.arch as arch, index}
+              {#each $version.data.getVersion.arch as arch}
                 <Item>
                   <Button
                     variant="outlined"
@@ -117,7 +117,7 @@
             >Download</Button
           >
         {/if}
-        <Button variant="outlined" on:click={() => installMod($version.data.getMod.mod_reference)}>
+        <Button variant="outlined" on:click={() => installMod(version.data.getVersion.mod.mod_reference)}>
           <Label>Install</Label>
           <Icon class="material-icons">download</Icon>
         </Button>
