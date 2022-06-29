@@ -67,7 +67,7 @@
     {:else if $smlVersion.error}
       <p>Oh no... {$smlVersion.error.message}</p>
     {:else}
-      <SMLVersionForm {onSubmit} {initialValues} submitText="Save" />
+      <SMLVersionForm {onSubmit} {initialValues} editing submitText="Save" />
     {/if}
   </Content>
 </Card>

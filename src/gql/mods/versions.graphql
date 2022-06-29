@@ -13,6 +13,14 @@ query GetModVersions($mod: ModID!, $limit: Int!, $offset: Int!) {
       link
       hash
       size
+      arch {
+        id
+        ModVersionArchID
+        platform
+        asset
+        hash
+        size
+      }
     }
   }
 }

@@ -10,6 +10,7 @@ export type VersionData = {
   file: File;
   changelog: string;
   stability: VersionStabilities;
+  arch: modArchData[];
 };
 
 export type VersionMetadata = {
@@ -22,6 +23,15 @@ export type VersionMetadata = {
     }[];
   };
   objects: string[];
+};
+
+export type modArchData = {
+  id: string;
+  ModVersionArchID: string;
+  platform: string;
+  asset: string;
+  hash?: string;
+  size?: number;
 };
 
 export const constructVersionSchema = (
@@ -67,13 +77,13 @@ const validateModZip = async (
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       .loadAsync(file as any)
       .then((zip) => {
-        const uPluginJsonFile = zip.file(modReference + '.uplugin');
+        const uPluginJsonFile = zip.file('WindowsNoEditor/' + modReference + '.uplugin');
         if (uPluginJsonFile) {
           return validateUPluginJsonModZip(zip, uPluginJsonFile, modReference);
         }
 
         return {
-          message: modReference + '.uplugin missing from mod'
+          message: 'WindowsNoEditor/' + modReference + '.uplugin missing from mod'
         };
       })
       .catch((err) => {
@@ -119,7 +129,7 @@ const validateUPluginJsonModZip = async (
 
       return {
         uplugin: parsed,
-        objects: Object.keys(zip.files).filter((f) => f.endsWith('.dll') || f.endsWith('.pak'))
+        objects: Object.keys(zip.files).filter((f) => f.endsWith('.so') || f.endsWith('.dll') || f.endsWith('.pak'))
       };
     })
     .catch((err) => {
