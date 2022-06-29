@@ -71,7 +71,6 @@ specifiers:
   '@smui/menu-surface': 6.0.0-beta.16
   '@smui/notched-outline': 6.0.0-beta.16
   '@smui/paper': 6.0.0-beta.16
-  '@smui/radio': 6.0.0-beta.16
   '@smui/ripple': 6.0.0-beta.16
   '@smui/select': 6.0.0-beta.16
   '@smui/switch': 6.0.0-beta.16
@@ -233,7 +232,6 @@ devDependencies:
   '@smui/menu-surface': 6.0.0-beta.16_lvfi2wesz6u4l5rfbnetbucfmm
   '@smui/notched-outline': 6.0.0-beta.16_lvfi2wesz6u4l5rfbnetbucfmm
   '@smui/paper': 6.0.0-beta.16_lvfi2wesz6u4l5rfbnetbucfmm
-  '@smui/radio': 6.0.0-beta.16_lvfi2wesz6u4l5rfbnetbucfmm
   '@smui/ripple': 6.0.0-beta.16_lvfi2wesz6u4l5rfbnetbucfmm
   '@smui/select': 6.0.0-beta.16_lvfi2wesz6u4l5rfbnetbucfmm
   '@smui/switch': 6.0.0-beta.16_lvfi2wesz6u4l5rfbnetbucfmm
@@ -2468,20 +2466,6 @@ packages:
       tslib: 2.4.0
     dev: false
 
-  /@material/radio/13.0.0:
-    resolution: {integrity: sha512-6jeZ+dKSzBB/j2IZ7RjFl5mrB+EWnpv/x+U9w6ENLCdueM4+LKUqBAc2fC2WMycsqgoFnlB0xsO/sG+kN0J6fw==}
-    dependencies:
-      '@material/animation': 13.0.0
-      '@material/base': 13.0.0
-      '@material/density': 13.0.0
-      '@material/dom': 13.0.0
-      '@material/feature-targeting': 13.0.0
-      '@material/ripple': 13.0.0
-      '@material/theme': 13.0.0
-      '@material/touch-target': 13.0.0
-      tslib: 2.4.0
-    dev: true
-
   /@material/ripple/13.0.0:
     resolution: {integrity: sha512-hx4B40hB2rRfsGwf1jwo2GGlYDq0yUQjcMcMmXfQipPJNpQhy8ylmXKc1DBjmWf7EQ/MgbfCSYwPrYXrbGP31w==}
     dependencies:
@@ -3044,18 +3028,6 @@ packages:
       '@material/theme': 13.0.0
       '@material/typography': 13.0.0
       '@smui/common': 6.0.0-beta.16_lvfi2wesz6u4l5rfbnetbucfmm
-      svelte2tsx: 0.5.10_lvfi2wesz6u4l5rfbnetbucfmm
-    transitivePeerDependencies:
-      - svelte
-      - typescript
-    dev: true
-
-  /@smui/radio/6.0.0-beta.16_lvfi2wesz6u4l5rfbnetbucfmm:
-    resolution: {integrity: sha512-wuHhhaAqgj8a1RWVUHXMAk4sDcmxfkHzvfOemVm7izl5YrR+215+HconkBVPDA1e/2j37jOBeIJ/bgus2TSSWQ==}
-    dependencies:
-      '@material/radio': 13.0.0
-      '@smui/common': 6.0.0-beta.16_lvfi2wesz6u4l5rfbnetbucfmm
-      '@smui/ripple': 6.0.0-beta.16_lvfi2wesz6u4l5rfbnetbucfmm
       svelte2tsx: 0.5.10_lvfi2wesz6u4l5rfbnetbucfmm
     transitivePeerDependencies:
       - svelte
