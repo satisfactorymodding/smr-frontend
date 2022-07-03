@@ -9,6 +9,7 @@
   <div>Early Access: <CompatibilityStateText state={compatibility.EA.state} /></div>
   {#if compatibility.EA.note}
     {compatibility.EA.note}
+    <br />
   {/if}
   <br />
   <div>Experimental: <CompatibilityStateText state={compatibility.EXP.state} /></div>

@@ -5,15 +5,31 @@
   export let compatibility: CompatibilityInfoInput;
   export let logo = false;
 
+  function Worst(compatibility: CompatibilityInfoInput): CompatibilityState {
+    const EA = compatibility.EA.state;
+    if (EA == CompatibilityState.Broken) {
+      // Broken is always the worst
+      return EA;
+    }
+    if (EA == CompatibilityState.Works) {
+      return compatibility.EXP.state; // Anything other than Works is worse
+    }
+    if (compatibility.EXP.state != CompatibilityState.Works) {
+      // If it's not better then it is the worst
+      return compatibility.EXP.state;
+    }
+    return EA;
+  }
+
   let CSSClass = '';
   if (compatibility) {
-    switch (compatibility.EXP.state) {
+    const worst = Worst(compatibility);
+    CSSClass += 'mod-outdated-stripe';
+    switch (worst) {
       case CompatibilityState.Broken:
-        CSSClass += 'mod-outdated-stripe';
         CSSClass += ' mod-broken';
         break;
       case CompatibilityState.Damaged:
-        CSSClass += 'mod-outdated-stripe';
         CSSClass += ' mod-damaged';
         break;
     }
@@ -23,6 +39,4 @@
   }
 </script>
 
-<div class={CSSClass}>
-  <!--    <div class="mod-inset"/>-->
-</div>
+<div class={CSSClass} />

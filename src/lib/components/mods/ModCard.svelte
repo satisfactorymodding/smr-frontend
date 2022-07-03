@@ -32,6 +32,7 @@
   <div slot="stats">
     <span><Icon class="material-icons align-middle text-sm mr-1">visibility</Icon>{prettyNumber(mod.views)}</span>
     <span><Icon class="material-icons align-middle text-sm mr-1">download</Icon>{prettyNumber(mod.downloads)}</span>
+    <CompatibilityButton compatibility={mod.compatibility} />
   </div>
   <div slot="actions">
     {#if installable}
@@ -39,7 +40,6 @@
         download
       </IconButton>
     {/if}
-    <CompatibilityButton compatibility={mod.compatibility} />
   </div>
   <div slot="outer">
     <OutdatedBanner compatibility={mod.compatibility} />
