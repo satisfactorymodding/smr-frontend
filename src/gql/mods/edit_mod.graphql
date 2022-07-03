@@ -15,6 +15,16 @@ mutation EditMod($modId: ModID!, $mod: UpdateMod!) {
         avatar
       }
     }
+    compatibility {
+      EA {
+        state
+        note
+      }
+      EXP {
+        state
+        note
+      }
+    }
     tags {
       id
       name

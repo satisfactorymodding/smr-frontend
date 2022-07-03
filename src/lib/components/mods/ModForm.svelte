@@ -13,6 +13,8 @@
   import FormField from '@smui/form-field';
   import Switch from '@smui/switch';
   import TagList from '$lib/components/utils/TagList.svelte';
+  import { CompatibilityState } from '$lib/generated';
+  import ModCompatibility from '$lib/components/mods/compatibility/ModCompatibilityEdit.svelte';
 
   export let onSubmit: (data: ModData) => void;
   export let initialValues: ModData = {
@@ -22,7 +24,15 @@
     short_description: '',
     source_url: '',
     hidden: false,
-    tagIDs: []
+    tagIDs: [],
+    compatibility: {
+      EA: {
+        state: CompatibilityState.Works
+      },
+      EXP: {
+        state: CompatibilityState.Works
+      }
+    }
   };
   export let submitText = 'Create';
 
@@ -145,6 +155,8 @@
         <span class="validation-message">{message || ''}</span>
       </ValidationMessage>
     </div>
+
+    <ModCompatibility bind:compatibilityInfo={$data.compatibility} />
 
     {#if editing}
       <div class="grid grid-flow-row gap-2">

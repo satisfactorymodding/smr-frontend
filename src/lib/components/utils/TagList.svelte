@@ -101,7 +101,7 @@
     return false;
   }
 
-  function newTagKeydown(err: any) {
+  function newTagKeydown(err) {
     let e = err as KeyboardEvent;
     if (e.code == 'Backspace') {
       if (newTag.value == '') {

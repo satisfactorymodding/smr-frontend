@@ -32,6 +32,7 @@
   import Button from '@smui/button';
   import Dialog, { Title, Content as DialogContent } from '@smui/dialog';
   import { modSchema, serializeSchema } from '$lib/utils/schema';
+  import EditCompatibilityForm from '../../../lib/components/mods/compatibility/EditCompatibilityForm.svelte';
 
   export let modId!: string;
   export let mod: typeof modQ;
@@ -47,8 +48,10 @@
 
   $: canUserEdit =
     $user?.roles?.deleteContent || $mod?.data?.mod?.authors?.findIndex((author) => author.user_id == $user?.id) >= 0;
+  $: canUserEditCompatibility = $user?.roles?.editAnyModCompatibility;
 
   const deleteDialogOpen = writable<boolean>(false);
+  const editCompatibilityOpen = writable<boolean>(false);
 
   const deleteModFn = () => {
     deleteMod({ modId: get(mod).data.mod.id }).then((value) => {
@@ -90,6 +93,9 @@
           <Button variant="outlined" on:click={() => deleteDialogOpen.set(true)}>Delete</Button>
           <Button variant="outlined" on:click={() => goto(base + '/mod/' + modId + '/new-version')}>New Version</Button>
         {/if}
+        {#if canUserEditCompatibility}
+          <Button variant="outlined" on:click={() => editCompatibilityOpen.set(true)}>Compatibility</Button>
+        {/if}
 
         <Button variant="outlined" on:click={() => (versionsTab = !versionsTab)}>
           {#if !versionsTab}
@@ -129,6 +135,19 @@
           <Button variant="outlined" on:click={() => deleteDialogOpen.set(false)}>Cancel</Button>
           <Button variant="outlined" on:click={() => deleteModFn()}>Delete</Button>
         </div>
+      </DialogContent>
+    </Dialog>
+  {/if}
+
+  {#if canUserEditCompatibility}
+    <Dialog bind:open={$editCompatibilityOpen}>
+      <Title>Edit Compatibilty</Title>
+      <DialogContent>
+        <EditCompatibilityForm
+          modId={$mod.data.mod.id}
+          mod={$mod.data.mod}
+          on:submit={() => editCompatibilityOpen.set(false)}
+        />
       </DialogContent>
     </Dialog>
   {/if}
