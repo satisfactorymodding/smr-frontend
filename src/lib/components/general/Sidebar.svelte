@@ -87,7 +87,7 @@
     {
       url: 'https://github.com/satisfactorymodding',
       icon: 'source',
-      label: 'Github',
+      label: 'GitHub',
       external: true
     }
   ];
