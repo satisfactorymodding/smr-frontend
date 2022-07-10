@@ -21,10 +21,11 @@ export const modSchema = zod.object({
     .min(3)
     .max(32)
     .regex(/^([a-zA-Z][a-zA-Z0-9_]*)$/)
-    .refine(async () => {
-      // TODO Check if mod reference exists
-      return true;
-    }),
+    .refine(
+      async () =>
+        // TODO Check if mod reference exists
+        true
+    ),
   short_description: zod.string().min(16).max(128),
   full_description: zod.optional(zod.string()),
   logo: zod.optional(zod.any().refine((logo) => 'name' in logo && 'size' in logo && 'type' in logo)),

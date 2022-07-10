@@ -33,8 +33,7 @@
   {#if !$user.fetching && !$user.error && $user.data.getUser}
     <MetaDescriptors
       description="{$user.data.getUser.username} profile"
-      title="{$user.data.getUser.username} profile"
-    />
+      title="{$user.data.getUser.username} profile" />
   {/if}
 </svelte:head>
 

@@ -65,8 +65,7 @@
   {#if !$version.fetching && !$version.error && $version.data.getVersion}
     <MetaDescriptors
       description="Information for mod version {$version.data.getVersion.mod.name} {$version.data.getVersion.version}"
-      title="Mod version {$version.data.getVersion.mod.name} {$version.data.getVersion.version}"
-    />
+      title="Mod version {$version.data.getVersion.mod.name} {$version.data.getVersion.version}" />
   {/if}
 </svelte:head>
 

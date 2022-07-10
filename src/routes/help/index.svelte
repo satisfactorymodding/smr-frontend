@@ -416,8 +416,7 @@ This line is way far down
           placeholder="enter your <mod>.uplugin"
           rows="23"
           class="markdownEditor"
-          bind:value={uPluginJsonInput}
-        />
+          bind:value={uPluginJsonInput} />
         {#if uPluginJsonInput !== ''}
           {#await upluginErrors}
             <p>Loading...</p>

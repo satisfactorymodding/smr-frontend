@@ -27,8 +27,7 @@
     title="Compatibility issues"
     on:click={() => {
       open = true;
-    }}
-  >
+    }}>
     warning
   </IconButton>
 

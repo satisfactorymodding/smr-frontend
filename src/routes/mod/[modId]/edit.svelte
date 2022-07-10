@@ -43,7 +43,9 @@
     });
   };
 
-  $: if (!errorToast) errorMessage = '';
+  $: if (!errorToast) {
+    errorMessage = '';
+  }
 
   $: initialValues = $mod.data
     ? {
@@ -60,8 +62,7 @@
     <MetaDescriptors
       description="Editing mod {$mod.data.mod.name}"
       title="Edit mod {$mod.data.mod.name}"
-      image={$mod.data.mod.logo}
-    />
+      image={$mod.data.mod.logo} />
   {/if}
 </svelte:head>
 

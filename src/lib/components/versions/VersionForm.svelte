@@ -32,9 +32,9 @@
     initialValues: initialValues as VersionData,
     extend: [validator, svelteReporter],
     validateSchema: versionSchema,
-    onSubmit: (data: VersionData) => {
+    onSubmit: (submitted: VersionData) => {
       disabled = true;
-      onSubmit(trimNonSchema(data, versionSchema)).then(() => (disabled = false));
+      onSubmit(trimNonSchema(submitted, versionSchema)).then(() => (disabled = false));
     }
   });
 
@@ -127,8 +127,7 @@
           bind:value={$data.changelog}
           label="Changelog"
           required
-          input$rows={10}
-        />
+          input$rows={10} />
         <ValidationMessage for="changelog" let:messages={message}>
           <span class="validation-message">{message || ''}</span>
         </ValidationMessage>

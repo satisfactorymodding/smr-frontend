@@ -26,7 +26,7 @@ const connectToLauncher = () => {
 const open = (link: string, fallback?: () => void) => {
   if (browser) {
     new Promise(() => {
-      get(customProtocolCheck)['protocolCheck'](link, () => {
+      get(customProtocolCheck).protocolCheck(link, () => {
         hasLauncher.set(false);
         if (fallback) {
           fallback();

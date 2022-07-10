@@ -27,7 +27,7 @@
     initialValues: initialValues,
     extend: [validator, svelteReporter],
     validateSchema: smlVersionSchema,
-    onSubmit: (data: SMLVersionData) => onSubmit(trimNonSchema(data, smlVersionSchema))
+    onSubmit: (submitted: SMLVersionData) => onSubmit(trimNonSchema(submitted, smlVersionSchema))
   });
 
   $: preview = ($data.changelog as string) || '';
@@ -75,8 +75,7 @@
           bind:value={$data.changelog}
           label="Changelog"
           required
-          input$rows={10}
-        />
+          input$rows={10} />
         <ValidationMessage for="changelog" let:messages={message}>
           <span class="validation-message">{message || ''}</span>
         </ValidationMessage>

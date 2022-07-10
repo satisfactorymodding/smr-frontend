@@ -42,7 +42,9 @@
     });
   };
 
-  $: if (!errorToast) errorMessage = '';
+  $: if (!errorToast) {
+    errorMessage = '';
+  }
 
   $: initialValues = $smlVersion.data
     ? {
