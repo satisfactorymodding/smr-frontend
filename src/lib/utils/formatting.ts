@@ -6,9 +6,7 @@ export const prettyDate = (date: Date | string) => {
   return date.toLocaleString();
 };
 
-export const prettyNumber = (n: number) => {
-  return n.toLocaleString();
-};
+export const prettyNumber = (n: number) => n.toLocaleString();
 
 export const prettyBytes = (bytes: number, decimals = 2) => {
   if (bytes === 0) {

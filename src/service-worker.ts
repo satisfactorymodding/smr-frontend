@@ -26,7 +26,9 @@ worker.addEventListener('activate', (event) => {
     caches.keys().then(async (keys) => {
       // delete old caches
       for (const key of keys) {
-        if (key !== FILES) await caches.delete(key);
+        if (key !== FILES) {
+          await caches.delete(key);
+        }
       }
 
       worker.clients.claim();
@@ -47,14 +49,18 @@ async function fetchAndCache(request: Request) {
     return response;
   } catch (err) {
     const response = await cache.match(request);
-    if (response) return response;
+    if (response) {
+      return response;
+    }
 
     throw err;
   }
 }
 
 worker.addEventListener('fetch', (event) => {
-  if (event.request.method !== 'GET' || event.request.headers.has('range')) return;
+  if (event.request.method !== 'GET' || event.request.headers.has('range')) {
+    return;
+  }
 
   const url = new URL(event.request.url);
 

@@ -93,8 +93,7 @@
   <title>Tools - SMR</title>
   <MetaDescriptors
     description="A collection of useful tools for Satisfactory, such as recipe calculators and save editors"
-    title="Tools"
-  />
+    title="Tools" />
 </svelte:head>
 
 <h1 class="text-4xl my-4 font-bold">Tools</h1>

@@ -40,9 +40,9 @@
         },
         extend: [validator, svelteReporter],
         validateSchema: userSchema,
-        onSubmit: (data: { username: string; avatar: unknown }) => {
+        onSubmit: (submitted: { username: string; avatar: unknown }) => {
           updateUser({
-            user: trimNonSchema(data, userSchema),
+            user: trimNonSchema(submitted, userSchema),
             userId: $user.id
           }).then((value) => {
             if (value.error) {
@@ -62,7 +62,9 @@
     }
   }
 
-  $: if (!errorToast) errorMessage = '';
+  $: if (!errorToast) {
+    errorMessage = '';
+  }
 </script>
 
 <svelte:head>
@@ -86,8 +88,7 @@
               name="avatar"
               type="file"
               accept="image/png,image/jpeg,image/gif"
-              placeholder="Avatar"
-            />
+              placeholder="Avatar" />
             <ValidationMessage for="avatar" let:messages={message}>
               <span class="validation-message">{message || ''}</span>
             </ValidationMessage>

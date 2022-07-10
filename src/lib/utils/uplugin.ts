@@ -8,6 +8,24 @@ fetch(API_BASE + '/static/uplugin-json-schema.json')
   .then((response) => response.json())
   .then((json) => resolver(new Validator(json)));
 
+const resolveValue = (object: unknown, path: string) => {
+  const parser = new RegExp(`\\['?(.+?)'?\\]|\\.([^\\.\\[\\]]+)`, `gm`);
+
+  try {
+    let value = object;
+    let key = parser.exec(path);
+    while (key !== null) {
+      value = value[key[1] || key[2]];
+      key = parser.exec(path);
+    }
+    return value;
+  } catch (e) {
+    // Ignore exception
+  }
+
+  return undefined;
+};
+
 export const validateUPluginJson = async (input: string): Promise<string[]> => {
   const validator = await uPluginValidator;
 
@@ -41,22 +59,4 @@ export const validateUPluginJson = async (input: string): Promise<string[]> => {
   } catch (e) {
     return ['Invalid JSON'];
   }
-};
-
-const resolveValue = (object: unknown, path: string) => {
-  const parser = new RegExp(`\\['?(.+?)'?\\]|\\.([^\\.\\[\\]]+)`, `gm`);
-
-  try {
-    let value = object;
-    let key = parser.exec(path);
-    while (key !== null) {
-      value = value[key[1] || key[2]];
-      key = parser.exec(path);
-    }
-    return value;
-  } catch (e) {
-    // Ignore exception
-  }
-
-  return undefined;
 };

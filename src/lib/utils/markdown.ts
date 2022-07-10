@@ -23,11 +23,10 @@ if (!browser) {
   resolver(DOMPurify.sanitize);
 }
 
-export const markdown = (md: string): Promise<string> => {
-  return sanitizer.then((s) => {
+export const markdown = (md: string): Promise<string> =>
+  sanitizer.then((s) => {
     const sanitized = s(marked(md));
     const parsed = new DOMParser().parseFromString(sanitized, 'text/html');
     Prism.highlightAllUnder(parsed.body);
     return parsed.body.innerHTML;
   });
-};

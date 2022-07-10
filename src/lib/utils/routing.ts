@@ -1,7 +1,8 @@
 import type { Load } from '@sveltejs/kit';
 
-export const paramsToProps = (callback?: Load): Load => {
-  return async (input) => {
+export const paramsToProps =
+  (callback?: Load): Load =>
+  async (input) => {
     if (callback) {
       const response = await callback(input);
       return {
@@ -19,4 +20,3 @@ export const paramsToProps = (callback?: Load): Load => {
       }
     };
   };
-};

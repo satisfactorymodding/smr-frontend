@@ -54,7 +54,7 @@
     initialValues: initialValues,
     extend: [validator, svelteReporter],
     validateSchema: modSchema,
-    onSubmit: (data: ModData) => onSubmit(trimNonSchema(data, modSchema))
+    onSubmit: (submitted: ModData) => onSubmit(trimNonSchema(submitted, modSchema))
   });
 
   $: preview = ($data.full_description as string) || '';
@@ -108,8 +108,7 @@
           bind:value={$data.full_description}
           label="Full Description"
           required
-          input$rows={10}
-        />
+          input$rows={10} />
         <ValidationMessage for="full_description" let:messages={message}>
           <span class="validation-message">{message || ''}</span>
         </ValidationMessage>
@@ -134,8 +133,7 @@
         name="logo"
         type="file"
         accept="image/png,image/jpeg,image/gif"
-        placeholder="Logo"
-      />
+        placeholder="Logo" />
       <ValidationMessage for="logo" let:messages={message}>
         <span class="validation-message">{message || ''}</span>
       </ValidationMessage>
@@ -177,8 +175,7 @@
               bind:value={$data.authors[i].user_id}
               label="User ID"
               class="mr-4 w-full"
-              disabled={author.role === 'creator'}
-            />
+              disabled={author.role === 'creator'} />
             {#if author.role !== 'creator'}
               <Button type="button" on:click={() => removeAuthor(i)} variant="raised">
                 <Label>Remove</Label>
