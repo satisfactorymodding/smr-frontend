@@ -5,24 +5,33 @@
   export let compatibility: CompatibilityInfoInput;
   export let logo = false;
 
-  let CSSClass = '';
-  if (compatibility) {
-    switch (compatibility.EXP.state) {
-      case CompatibilityState.Broken:
-        CSSClass += 'mod-outdated-stripe';
-        CSSClass += ' mod-broken';
-        break;
-      case CompatibilityState.Damaged:
-        CSSClass += 'mod-outdated-stripe';
-        CSSClass += ' mod-damaged';
-        break;
+  function Worst(input: CompatibilityInfoInput): CompatibilityState {
+    const EA = input.EA.state;
+    if (EA == CompatibilityState.Broken) {
+      // Broken is always the worst
+      return EA;
     }
+    if (EA == CompatibilityState.Works) {
+      return input.EXP.state; // Anything other than Works is worse
+    }
+    if (input.EXP.state != CompatibilityState.Works) {
+      // If it's not better then it is the worst
+      return input.EXP.state;
+    }
+    return EA;
   }
-  if (logo) {
-    CSSClass += ' mod-logo-outdated';
+
+  let worst = CompatibilityState.Works;
+  if (compatibility) {
+    worst = Worst(compatibility);
   }
+  const works = worst === CompatibilityState.Works;
 </script>
 
-<div class={CSSClass}>
-  <!--    <div class="mod-inset"/>-->
-</div>
+{#if !works}
+  <div
+    class="mod-outdated-stripe"
+    class:mod-damaged={worst === CompatibilityState.Damaged}
+    class:mod-broken={worst === CompatibilityState.Broken}
+    class:mod-logo-outdated={logo} />
+{/if}
