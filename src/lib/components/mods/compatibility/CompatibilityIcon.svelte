@@ -5,17 +5,16 @@
   export let compatibility!: CompatibilityInput;
   export let EXP = false;
   let iconText = 'public';
-  let CSSClass = 'mod-state-works';
   if (EXP) {
     iconText = 'science';
   }
-  if (compatibility) {
-    if (compatibility.state == CompatibilityState.Damaged) {
-      CSSClass = 'mod-state-damaged';
-    } else if (compatibility.state == CompatibilityState.Broken) {
-      CSSClass = 'mod-state-broken';
-    }
-  }
 </script>
 
-<p class="material-icons align-middle {CSSClass}">{iconText}</p>
+<p
+  class="material-icons"
+  class:mod-state-works={compatibility.state === CompatibilityState.Works}
+  class:mod-state-damaged={compatibility.state === CompatibilityState.Damaged}
+  class:mod-state-broken={compatibility.state === CompatibilityState.Broken}
+>
+  {iconText}
+</p>

@@ -21,22 +21,18 @@
     return EA;
   }
 
-  let CSSClass = '';
+  let worst = CompatibilityState.Works;
   if (compatibility) {
-    const worst = Worst(compatibility);
-    CSSClass += 'mod-outdated-stripe';
-    switch (worst) {
-      case CompatibilityState.Broken:
-        CSSClass += ' mod-broken';
-        break;
-      case CompatibilityState.Damaged:
-        CSSClass += ' mod-damaged';
-        break;
-    }
+    worst = Worst(compatibility);
   }
-  if (logo) {
-    CSSClass += ' mod-logo-outdated';
-  }
+  const works = worst === CompatibilityState.Works;
 </script>
 
-<div class={CSSClass} />
+{#if !works}
+  <div
+    class="mod-outdated-stripe"
+    class:mod-damaged={worst === CompatibilityState.Damaged}
+    class:mod-broken={worst === CompatibilityState.Broken}
+    class:mod-logo-outdated={logo}
+  />
+{/if}
