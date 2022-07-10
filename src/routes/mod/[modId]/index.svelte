@@ -69,8 +69,7 @@
     <MetaDescriptors
       description={$mod.data.mod.short_description}
       title={$mod.data.mod.name}
-      image={$mod.data.mod.logo}
-    />
+      image={$mod.data.mod.logo} />
 
     {@html serializeSchema(modSchema($mod.data.mod))}
   {/if}
@@ -110,8 +109,7 @@
         <ModLogo
           modLogo={$mod.data.mod.logo}
           modName={$mod.data.mod.name}
-          compatibility={$mod.data.mod.compatibility}
-        />
+          compatibility={$mod.data.mod.compatibility} />
         <ModInfo mod={$mod.data.mod} />
         <ModLatestVersions modId={$mod.data.mod.id} latestVersions={$mod.data.mod.latestVersions} />
         <ModAuthors authors={$mod.data.mod.authors} />

@@ -27,8 +27,7 @@
   name={mod.name}
   link={base + '/mod/' + mod.mod_reference}
   logo={mod.logo}
-  description={mod.short_description}
->
+  description={mod.short_description}>
   <div slot="stats">
     <span><Icon class="material-icons align-middle text-sm mr-1">visibility</Icon>{prettyNumber(mod.views)}</span>
     <span><Icon class="material-icons align-middle text-sm mr-1">download</Icon>{prettyNumber(mod.downloads)}</span>

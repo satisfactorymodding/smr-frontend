@@ -62,8 +62,7 @@
               <div class="grid grid-flow-col gap-4">
                 <Button variant="outlined" href={base + '/mod/' + modId + '/version/' + version.id}>View</Button>
                 <Button variant="outlined" href={API_REST + '/mod/' + modId + '/versions/' + version.id + '/download'}
-                  >Download</Button
-                >
+                  >Download</Button>
                 <Button variant="outlined" on:click={() => installMod($versions.data.getMod.mod_reference)}>
                   <Label>Install</Label>
                   <Icon class="material-icons">download</Icon>

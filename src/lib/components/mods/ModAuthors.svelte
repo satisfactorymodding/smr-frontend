@@ -20,8 +20,7 @@
           <div class="grid grid-flow-col auto-cols-max gap-x-4">
             <div
               class="rounded-full bg-cover w-14 h-14"
-              style={`background-image: url("${author.user.avatar || assets + '/images/no_image.webp'}")`}
-            />
+              style={`background-image: url("${author.user.avatar || assets + '/images/no_image.webp'}")`} />
             <div class="grid grid-flow-row">
               <a href="{base}/user/{author.user.id}/" class="text-yellow-500 underline">{author.user.username}</a>
               <div>{author.role.charAt(0).toUpperCase() + author.role.slice(1).toLowerCase()}</div>

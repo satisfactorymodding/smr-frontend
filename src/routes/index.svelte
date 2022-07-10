@@ -126,8 +126,7 @@
             <img
               class="centered-logo"
               src={assets + '/images/satisfactory_logo_full_color_small.webp'}
-              alt="Satisfactory Logo"
-            />
+              alt="Satisfactory Logo" />
           </div>
           <div class="absolute bottom-0 pb-4 px-4 w-full text-gray-300 text-center xl:text-right">
             <span>Official Website</span>

@@ -9,15 +9,17 @@ export const gqlClient = writable<undefined | Client>(undefined);
 let mobileQuery: MediaQueryList;
 if (browser) {
   mobileQuery = window.matchMedia('(min-width: 1280px)');
-
-  mobileQuery.addEventListener('change', (data) => {
-    onMobile && onMobile.set(!data.matches);
-  });
 }
 
 export const onMobile = writable<boolean>(mobileQuery && !mobileQuery.matches);
 export const doggoNeedsPats = writable<boolean>(false);
 export const easterEgg = writable<boolean>(false);
+
+if (browser) {
+  mobileQuery.addEventListener('change', (data) => {
+    onMobile && onMobile.set(!data.matches);
+  });
+}
 
 if (browser) {
   const easterCode = [

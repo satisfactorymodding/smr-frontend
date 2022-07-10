@@ -101,8 +101,8 @@
       queryParams = Object.fromEntries(new URLSearchParams(window.location.search));
     }
 
-    const code = queryParams['code'];
-    const state = queryParams['state'];
+    const code = queryParams.code;
+    const state = queryParams.state;
 
     if (signInMethod && code && state) {
       signingIn = true;
