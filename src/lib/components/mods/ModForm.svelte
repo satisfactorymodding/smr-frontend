@@ -42,9 +42,10 @@
 
   let tags = [];
   $: {
-    if ($data['tags']) {
-      tags = $data['tags'];
-      delete $data['tags'];
+    const anyData = $data;
+    if (anyData.tags) {
+      tags = anyData.tags;
+      delete anyData.tags;
     }
     $data.tagIDs = [];
     tags.forEach((tag) => $data.tagIDs.push(tag.id));

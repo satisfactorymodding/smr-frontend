@@ -15,7 +15,7 @@
 
   async function onSubmit(e) {
     e.preventDefault();
-    let success = (
+    const success = (
       await updateCompatibility({
         modId,
         compatibility: mod.compatibility

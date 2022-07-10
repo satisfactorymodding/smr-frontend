@@ -144,8 +144,7 @@
         <EditCompatibilityForm
           modId={$mod.data.mod.id}
           mod={$mod.data.mod}
-          on:submit={() => editCompatibilityOpen.set(false)}
-        />
+          on:submit={() => editCompatibilityOpen.set(false)} />
       </DialogContent>
     </Dialog>
   {/if}

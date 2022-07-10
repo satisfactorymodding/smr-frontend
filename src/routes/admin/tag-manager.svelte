@@ -13,8 +13,8 @@
   import type { SnackbarComponentDev } from '@smui/snackbar';
 
   let tags: Tag[] = [];
-  let panels = {};
-  let nameFields = {};
+  const panels = {};
+  const nameFields = {};
   let snackbarTagChangeSavedText = '';
   let snackbarTagChangeSaved: SnackbarComponentDev;
   let tagNegativeID = -1;
@@ -29,7 +29,7 @@
 
   tagsQuery.subscribe(() => {
     const data = $tagsQuery.data;
-    tags = (data && (data['getTags'] as Tag[])) || [];
+    tags = (data && (data.getTags as Tag[])) || [];
   });
   query(tagsQuery);
 
@@ -40,9 +40,9 @@
       tags = tags;
       setTimeout(() => {
         panels[tag.id].setOpen(true);
-        var field = nameFields[tag.id];
+        const field = nameFields[tag.id];
         field.focus();
-        let input = field.getElement().querySelectorAll('input')[0] as HTMLInputElement;
+        const input = field.getElement().querySelectorAll('input')[0] as HTMLInputElement;
         input.select();
       }, 0);
     } else {
@@ -53,9 +53,11 @@
 
   async function tagChange(tag: Tag) {
     // ignore "New Tag"
-    if (tag.name == 'New Tag') return;
+    if (tag.name == 'New Tag') {
+      return;
+    }
 
-    var success = false;
+    let success = false;
     if (tag.id < 0) {
       // Create new tag & update tag.id with new DB id or re-fetch all tags
       try {
@@ -96,7 +98,7 @@
   async function deleteTag(tag: Tag) {
     if (tag.name != 'New Tag') {
       // Remove tag
-      var success = false;
+      let success = false;
       try {
         const result = await deleteTagQuery({ tagID: tag.id });
         success = result.data.deleteTag;
@@ -112,28 +114,24 @@
     }
 
     // Remove tag animation
-    let panelRemoveAnimation = () => {
-      let panel = panels[tag.id].getElement();
-      let startHeight = panel.scrollHeight;
+    const panelRemoveAnimation = () => {
+      const panel = panels[tag.id].getElement();
+      const startHeight = panel.scrollHeight;
       panel.classList.add('smui-accordion__panel--removed');
       panel.style.height = startHeight + 'px';
-      requestAnimationFrame(function () {
-        panel.style.height = 0 + 'px';
-      });
+      requestAnimationFrame(() => (panel.style.height = 0 + 'px'));
       panel.addEventListener('transitionend', (e: TransitionEvent) => {
         if (e.propertyName == 'height') {
           panel.classList.remove('smui-accordion__panel--removed');
           panel.style.height = 'auto';
-          tags = tags.filter((t) => {
-            return t.id != tag.id;
-          });
+          tags = tags.filter((t) => t.id != tag.id);
         }
       });
     };
 
     let isPanelOpen = false;
-    for (let key in panels) {
-      let panelP = panels[key];
+    for (const key in panels) {
+      const panelP = panels[key];
       if (panelP?.isOpen()) {
         panelP.setOpen(false);
         if (!isPanelOpen) {
@@ -177,8 +175,7 @@
             on:click={(e) => {
               e.stopPropagation();
               deleteTag(tag);
-            }}
-          >
+            }}>
             <ButtonIcon class="material-icons">delete_forever</ButtonIcon>
           </IconButton>
         </Header>
@@ -187,8 +184,7 @@
             bind:value={tag.name}
             label="Tag-Name"
             bind:this={nameFields[tag.id]}
-            on:change={() => tagChange(tag)}
-          >
+            on:change={() => tagChange(tag)}>
             <HelperText slot="helper">Human-Readable name of the tag that is shown in UI</HelperText>
           </Textfield>
           <!--Textfield

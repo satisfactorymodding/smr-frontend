@@ -16,9 +16,13 @@
       note: ''
     }
   };
+
+  $: compatibilityInfo = compatibilityInfoEdit;
+
   onMount(() => {
-    if (compatibilityInfo != null) compatibilityInfoEdit = compatibilityInfo;
-    $: compatibilityInfo = compatibilityInfoEdit;
+    if (compatibilityInfo != null) {
+      compatibilityInfoEdit = compatibilityInfo;
+    }
   });
 </script>
 

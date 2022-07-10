@@ -2,13 +2,14 @@
   import type { Mod } from '$lib/generated';
   import Card, { Content } from '@smui/card';
   import { prettyDate, prettyNumber } from '$lib/utils/formatting';
-  
+
   import TagList from '$lib/components/utils/TagList.svelte';
   import CompatibilityButton from './compatibility/CompatibilityButton.svelte';
 
-  export let mod!: Pick<Mod, 'source_url' | 'created_at' | 'views' | 'downloads' | 'mod_reference' | 'tags'>;
-
-  export let mod!: Pick<Mod, 'source_url' | 'created_at' | 'views' | 'downloads' | 'mod_reference' | 'compatibility'>;
+  export let mod!: Pick<
+    Mod,
+    'source_url' | 'created_at' | 'views' | 'downloads' | 'mod_reference' | 'compatibility' | 'tags'
+  >;
 </script>
 
 <Card>

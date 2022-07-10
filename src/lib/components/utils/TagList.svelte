@@ -34,10 +34,29 @@
   let focused = false;
 
   $: {
-    if (inputA) newTag = inputA.getElement();
+    if (inputA) {
+      newTag = inputA.getElement();
+    }
   }
 
-  if (!tags) tags = [];
+  if (!tags) {
+    tags = [];
+  }
+
+  function filterAvailableTags(tagList: Tag[], currentTags: Tag[], filterText: string): [Tag[], Tag[]] {
+    if (!tagList || !currentTags) {
+      return [tagList, tagList];
+    }
+    let unfiltered = tagList.filter((tag) => !currentTags.find((t) => t.id == tag.id));
+    const filtered = unfiltered.filter((tag) => !newTag || tag.name.startsWith(filterText));
+    unfiltered = unfiltered.filter((tag) => filtered.findIndex((t) => t.id === tag.id) === -1);
+    return [filtered, unfiltered];
+  }
+
+  function updateTags() {
+    tags = tags;
+    [filteredTagsMatched, filteredTagsUnmatched] = filterAvailableTags(allTags, tags, newTagText);
+  }
 
   if (editable) {
     query(getAllTags);
@@ -54,21 +73,6 @@
     newTag.value = newTagText;
   }
 
-  function filterAvailableTags(tagList: Tag[], currentTags: Tag[], filterText: string): [Tag[], Tag[]] {
-    if (!tagList || !currentTags) return [tagList, tagList];
-    var unfiltered = tagList.filter((tag) => !currentTags.find((t) => t.id == tag.id));
-    var filtered = unfiltered.filter((tag) => {
-      return !newTag || tag.name.startsWith(filterText);
-    });
-    unfiltered = unfiltered.filter((tag) => filtered.findIndex((t) => t.id === tag.id) === -1);
-    return [filtered, unfiltered];
-  }
-
-  function updateTags() {
-    tags = tags;
-    [filteredTagsMatched, filteredTagsUnmatched] = filterAvailableTags(allTags, tags, newTagText);
-  }
-
   export function setTextRange(el: HTMLInputElement, start: number, end: number): void {
     el.focus();
     if (typeof window.getSelection != 'undefined' && typeof document.createRange != 'undefined') {
@@ -83,13 +87,15 @@
     }
   }
 
-  function addTag(newTag: string | Tag) {
-    if (!allTags) return false;
-    let tagToAdd = allTags.find((tag) => {
-      if (typeof newTag == 'string') {
-        return newTag == tag.name || newTag == tag.id;
+  function addTag(newTagObj: string | Tag) {
+    if (!allTags) {
+      return false;
+    }
+    const tagToAdd = allTags.find((tag) => {
+      if (typeof newTagObj == 'string') {
+        return newTagObj == tag.name || newTagObj == tag.id;
       } else {
-        return newTag.id == tag.id;
+        return newTagObj.id == tag.id;
       }
     }) as Tag;
     if (tagToAdd && !tags.find((tag) => tag.id == tagToAdd.id)) {
@@ -102,7 +108,7 @@
   }
 
   function newTagKeydown(err) {
-    let e = err as KeyboardEvent;
+    const e = err as KeyboardEvent;
     if (e.code == 'Backspace') {
       if (newTag.value == '') {
         setTagText(tags.pop().name);
@@ -150,16 +156,14 @@
         class="pb-2"
         for="input-manual-a"
         slot="label"
-        floatAbove={(newTag && newTag.value.length > 0) || focused || tags.length > 0}>Tags</FloatingLabel
-      >
+        floatAbove={(newTag && newTag.value.length > 0) || focused || tags.length > 0}>Tags</FloatingLabel>
       <Set class="tagList" chips={tags} let:chip key={(tag) => tag.name} nonInteractive>
         <Chip
           {chip}
           shouldRemoveOnTrailingIconClick={true}
           on:SMUIChip:removal={() => {
             updateTags();
-          }}
-        >
+          }}>
           <Text>{chip.name}</Text>
           {#if editable}
             <TrailingAction icon$class="material-icons" type="button">cancel</TrailingAction>
@@ -170,11 +174,13 @@
         id="newTagContainer"
         bind:this={newTagContainer}
         on:focusin={() => surface.setOpen(true)}
-        on:focusout={() =>
+        on:focusout={() => {
           setTimeout(() => {
-            if (newTagContainer && !newTagContainer.contains(document.activeElement)) surface.setOpen(false);
-          }, 200)}
-      >
+            if (newTagContainer && !newTagContainer.contains(document.activeElement)) {
+              surface.setOpen(false);
+            }
+          }, 200);
+        }}>
         <MenuSurface bind:this={surface} managed={true} anchorCorner="BOTTOM_LEFT" anchorElement={newTag}>
           <div style="margin: 1rem">
             <h1>Available Tags</h1>
@@ -206,8 +212,7 @@
               newTagText = newTag.value;
               updateTags();
               e.preventDefault();
-            }}
-          />
+            }} />
         </div>
       </div>
       <LineRipple bind:this={lineRippleA} slot="ripple" />
