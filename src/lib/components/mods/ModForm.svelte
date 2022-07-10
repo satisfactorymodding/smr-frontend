@@ -27,10 +27,12 @@
     tagIDs: [],
     compatibility: {
       EA: {
-        state: CompatibilityState.Works
+        state: CompatibilityState.Works,
+        note: ''
       },
       EXP: {
-        state: CompatibilityState.Works
+        state: CompatibilityState.Works,
+        note: ''
       }
     }
   };
