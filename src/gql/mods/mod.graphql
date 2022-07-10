@@ -53,5 +53,9 @@ query GetMod($mod: String!) {
         state
       }
     }
+    tags {
+      id
+      name
+    }
   }
 }

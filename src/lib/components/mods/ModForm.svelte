@@ -12,6 +12,9 @@
   import ModAuthor from '$lib/components/mods/ModAuthor.svelte';
   import FormField from '@smui/form-field';
   import Switch from '@smui/switch';
+  import TagList from '$lib/components/utils/TagList.svelte';
+  import { CompatibilityState } from '$lib/generated';
+  import ModCompatibility from '$lib/components/mods/compatibility/ModCompatibilityEdit.svelte';
 
   export let onSubmit: (data: ModData) => void;
   export let initialValues: ModData = {
@@ -20,11 +23,33 @@
     name: '',
     short_description: '',
     source_url: '',
-    hidden: false
+    hidden: false,
+    tagIDs: [],
+    compatibility: {
+      EA: {
+        state: CompatibilityState.Works,
+        note: ''
+      },
+      EXP: {
+        state: CompatibilityState.Works,
+        note: ''
+      }
+    }
   };
   export let submitText = 'Create';
 
   export let editing = false;
+
+  let tags = [];
+  $: {
+    const anyData = $data;
+    if (anyData.tags) {
+      tags = anyData.tags;
+      delete anyData.tags;
+    }
+    $data.tagIDs = [];
+    tags.forEach((tag) => $data.tagIDs.push(tag.id));
+  }
 
   const { form, data } = createForm<ModData>({
     initialValues: initialValues,
@@ -98,6 +123,10 @@
     </div>
 
     <div class="grid grid-flow-row gap-2">
+      <TagList editable={true} bind:tags />
+    </div>
+
+    <div class="grid grid-flow-row gap-2">
       <label for="logo">Logo:</label>
       <input
         id="logo"
@@ -127,6 +156,8 @@
         <span class="validation-message">{message || ''}</span>
       </ValidationMessage>
     </div>
+
+    <ModCompatibility bind:compatibilityInfo={$data.compatibility} />
 
     {#if editing}
       <div class="grid grid-flow-row gap-2">

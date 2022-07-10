@@ -16,6 +16,7 @@ query GetMe {
       editUsers
       editSMLVersions
       editBootstrapVersions
+      editAnyModCompatibility
     }
   }
 }

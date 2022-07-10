@@ -1,4 +1,5 @@
 import * as zod from 'zod';
+import type { CompatibilityState, Tag } from '$lib/generated';
 
 export type ModData = {
   name: string;
@@ -11,7 +12,19 @@ export type ModData = {
     role: string;
     user_id: string;
   }[];
+  compatibility?: {
+    EA: {
+      state: CompatibilityState;
+      note?: string;
+    };
+    EXP: {
+      state: CompatibilityState;
+      note?: string;
+    };
+  };
   hidden: boolean;
+  tagIDs?: string[];
+  tags?: Tag[];
 };
 
 export const modSchema = zod.object({
@@ -38,5 +51,18 @@ export const modSchema = zod.object({
       })
       .array()
   ),
-  hidden: zod.boolean()
+  compatibility: zod.optional(
+    zod.object({
+      EA: zod.object({
+        state: zod.string(),
+        note: zod.ostring()
+      }),
+      EXP: zod.object({
+        state: zod.string(),
+        note: zod.ostring()
+      })
+    })
+  ),
+  hidden: zod.boolean(),
+  tagIDs: zod.optional(zod.string().array())
 });

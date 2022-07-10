@@ -1,0 +1,6 @@
+mutation UpdateTag($tagID: TagID!, $tagName: TagName!) {
+  updateTag(tagID: $tagID, NewName: $tagName) {
+    id
+    name
+  }
+}

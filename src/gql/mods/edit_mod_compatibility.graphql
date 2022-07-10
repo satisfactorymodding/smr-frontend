@@ -1,0 +1,3 @@
+mutation EditModCompatibility($modId: ModID!, $compatibility: CompatibilityInfoInput!) {
+  updateModCompatibility(modId: $modId, compatibility: $compatibility)
+}
