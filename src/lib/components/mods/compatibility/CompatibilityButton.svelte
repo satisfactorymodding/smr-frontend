@@ -14,8 +14,7 @@
     title="Compatibility information"
     on:click={() => {
       open = true;
-    }}
-  >
+    }}>
     <CompatibilityIcon compatibility={compatibility.EA} />
     <CompatibilityIcon compatibility={compatibility.EXP} EXP={true} />
   </Button>
