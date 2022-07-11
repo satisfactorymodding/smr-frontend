@@ -1,7 +1,7 @@
 <script lang="ts">
   import { createForm } from 'felte';
   import { validator } from '@felte/validator-zod';
-  import { svelteReporter, ValidationMessage } from '@felte/reporter-svelte';
+  import { reporter, ValidationMessage } from '@felte/reporter-svelte';
   import type { ModData } from '$lib/models/mods';
   import { modSchema } from '$lib/models/mods';
   import { trimNonSchema } from '$lib/utils/forms';
@@ -28,15 +28,14 @@
 
   const { form, data } = createForm<ModData>({
     initialValues: initialValues,
-    extend: [validator, svelteReporter],
-    validateSchema: modSchema,
+    extend: [validator({ schema: modSchema }), reporter],
     onSubmit: (submitted: ModData) => onSubmit(trimNonSchema(submitted, modSchema))
   });
 
   $: preview = ($data.full_description as string) || '';
 
   const addAuthor = () => {
-    $data.authors.push({ role: 'editor', user_id: '' });
+    $data.authors.push({ role: 'editor', user_id: '', key: '' });
     $data.authors = $data.authors;
   };
 
