@@ -52,6 +52,7 @@ specifiers:
   '@material/top-app-bar': ^14.0.0
   '@material/touch-target': ^14.0.0
   '@material/typography': ^14.0.0
+  '@smui-extra/accordion': 6.0.0-beta.16
   '@smui/button': 6.0.0-beta.16
   '@smui/card': 6.0.0-beta.16
   '@smui/circular-progress': 6.0.0-beta.16
@@ -214,6 +215,7 @@ devDependencies:
   '@graphql-codegen/typescript-urql': 3.6.1_ubrtutz2urcxyhwqr2zvlqjzha
   '@graphql-codegen/urql-introspection': 2.2.0_graphql@16.5.0
   '@graphql-typed-document-node/core': 3.1.1_graphql@16.5.0
+  '@smui-extra/accordion': 6.0.0-beta.16_uslzfc62di2n2otc2tvfklnwji
   '@smui/button': 6.0.0-beta.16_uslzfc62di2n2otc2tvfklnwji
   '@smui/card': 6.0.0-beta.16_uslzfc62di2n2otc2tvfklnwji
   '@smui/circular-progress': 6.0.0-beta.16_uslzfc62di2n2otc2tvfklnwji
@@ -2741,6 +2743,24 @@ packages:
     dependencies:
       estree-walker: 2.0.2
       picomatch: 2.3.1
+    dev: true
+
+  /@smui-extra/accordion/6.0.0-beta.16_uslzfc62di2n2otc2tvfklnwji:
+    resolution: {integrity: sha512-p1gBhIyg3a8EXZWOsDPKURneqIssWsg5g72bp+TYvRWqN/e1X2CPnpiYwxWivl+k8A0h2u3rRvQiQnD08R0TlA==}
+    dependencies:
+      '@material/animation': 13.0.0
+      '@material/elevation': 13.0.0
+      '@material/feature-targeting': 13.0.0
+      '@material/ripple': 13.0.0
+      '@material/theme': 13.0.0
+      '@material/typography': 13.0.0
+      '@smui/common': 6.0.0-beta.16_uslzfc62di2n2otc2tvfklnwji
+      '@smui/paper': 6.0.0-beta.16_uslzfc62di2n2otc2tvfklnwji
+      '@smui/ripple': 6.0.0-beta.16_uslzfc62di2n2otc2tvfklnwji
+      svelte2tsx: 0.5.11_uslzfc62di2n2otc2tvfklnwji
+    transitivePeerDependencies:
+      - svelte
+      - typescript
     dev: true
 
   /@smui/button/6.0.0-beta.16_uslzfc62di2n2otc2tvfklnwji:
