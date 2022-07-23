@@ -14,12 +14,33 @@
     [AnnouncementImportance.Warning]: 'bg-yellow-400',
     [AnnouncementImportance.Fix]: 'bg-orange-600'
   };
+  const monospacePrefix = 'monotext:';
 
   export let message: string;
   export let importance: AnnouncementImportance;
+
+  // Enables making monospace announcements
+  $: isMonospace = message.startsWith(monospacePrefix);
+  $: finalMessage = isMonospace ? message.replaceAll(monospacePrefix, '') : message;
 </script>
 
-<div class="p-1 {backgroundColors[importance]}">
-  <Icon class="material-icons text-2xl align-middle">{iconNames[importance]}</Icon>
-  <span class="align-middle text-l"><b>{importance}:</b> {message}</span>
+<div class="{backgroundColors[importance]} max-h-64 overflow-hidden">
+  <div class="p-1 striped">
+    <Icon class="material-icons text-2xl align-middle">{iconNames[importance]}</Icon>
+    <div class="align-middle text-l inline-block whitespace-pre" class:font-mono={isMonospace}>
+      <b>{importance}: </b>{finalMessage}
+    </div>
+  </div>
 </div>
+
+<style>
+  .striped {
+    background: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 14px,
+      rgba(60, 60, 60, 0.1) 14px,
+      rgba(60, 60, 60, 0.1) 28px
+    );
+  }
+</style>

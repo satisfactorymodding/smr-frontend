@@ -133,7 +133,6 @@
 
 <div class="app-container">
   <TopAppBar variant="static">
-    <AnnouncementHeader />
     <Row>
       <Section>
         {#if drawerVariant === 'modal'}
@@ -202,6 +201,8 @@
         </Section>
       {/if}
     </Row>
+
+    <AnnouncementHeader />
   </TopAppBar>
 
   <div class="drawer-container">
