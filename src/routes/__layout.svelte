@@ -40,6 +40,7 @@
   import { onMount } from 'svelte';
   import { customProtocolCheck, hasLauncher, pingLauncher } from '$lib/stores/launcher';
   import Sidebar from '$lib/components/general/Sidebar.svelte';
+  import AnnouncementHeader from '$lib/components/announcements/AnnouncementHeader.svelte';
 
   let root: HTMLElement;
   onMount(async () => {
@@ -200,6 +201,8 @@
         </Section>
       {/if}
     </Row>
+
+    <AnnouncementHeader />
   </TopAppBar>
 
   <div class="drawer-container">
