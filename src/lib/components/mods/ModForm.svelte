@@ -12,6 +12,8 @@
   import ModAuthor from '$lib/components/mods/ModAuthor.svelte';
   import FormField from '@smui/form-field';
   import Switch from '@smui/switch';
+  import { CompatibilityState } from '$lib/generated';
+  import ModCompatibility from '$lib/components/mods/compatibility/ModCompatibilityEdit.svelte';
 
   export let onSubmit: (data: ModData) => void;
   export let initialValues: ModData = {
@@ -20,7 +22,17 @@
     name: '',
     short_description: '',
     source_url: '',
-    hidden: false
+    hidden: false,
+    compatibility: {
+      EA: {
+        state: CompatibilityState.Works,
+        note: ''
+      },
+      EXP: {
+        state: CompatibilityState.Works,
+        note: ''
+      }
+    }
   };
   export let submitText = 'Create';
 
@@ -43,6 +55,8 @@
     $data.authors.splice(i, 1);
     $data.authors = $data.authors;
   };
+
+  let editCompatibility = false;
 </script>
 
 <form use:form>
@@ -126,6 +140,16 @@
         <span class="validation-message">{message || ''}</span>
       </ValidationMessage>
     </div>
+
+    <div>
+      <FormField align="start">
+        <Switch bind:checked={editCompatibility} on:SMUISwitch:change={() => ($data.compatibility = null)} />
+        <span>Edit compatibility information</span>
+      </FormField>
+    </div>
+    {#if editCompatibility}
+      <ModCompatibility bind:compatibilityInfo={$data.compatibility} />
+    {/if}
 
     {#if editing}
       <div class="grid grid-flow-row gap-2">

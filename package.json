@@ -95,6 +95,7 @@
     "@graphql-codegen/typescript-urql": "^3.6.1",
     "@graphql-codegen/urql-introspection": "2.2.0",
     "@graphql-typed-document-node/core": "^3.1.1",
+    "@smui-extra/accordion": "6.0.0-beta.16",
     "@smui/button": "6.0.0-beta.16",
     "@smui/card": "6.0.0-beta.16",
     "@smui/circular-progress": "6.0.0-beta.16",
