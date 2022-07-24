@@ -56,6 +56,8 @@ $ pnpm run dev
 
 And head to [localhost:3000](http://localhost:3000) to see it running.
 
+If you need to sign in, use the login button which will eventually redirect you to `ficsit.dev`. Then copy the `token` cookie over (like from Chrome dev tools -> Application -> Cookies) and insert it in your `localhost:3000` page (again using dev tools) and refresh.
+
 ## Committing Changes
 
 Our repo is designed to help you throughout your contribution to maintain our code and commits in a way that allows for automatic deployment. To that end we have a few steps that occur for each change you submit.
