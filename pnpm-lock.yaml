@@ -120,9 +120,7 @@ specifiers:
   prettier: ~2.7.1
   prettier-plugin-svelte: ^2.7.0
   prismjs: ^1.28.0
-  react: ^18.2.0
   rimraf: ^3.0.2
-  rollup: ^2.77.0
   rollup-plugin-terser: ^7.0.2
   schema-dts: ^1.1.0
   semver: ^7.3.7
@@ -192,8 +190,6 @@ dependencies:
   jszip: 3.10.0
   marked: 4.0.17
   prismjs: 1.28.0
-  react: 18.2.0
-  rollup: 2.77.0
   semver: 7.3.7
   socket.io-client: 4.5.1
   tslib: 2.4.0
@@ -269,7 +265,7 @@ devDependencies:
   prettier: 2.7.1
   prettier-plugin-svelte: 2.7.0_o3ioganyptcsrh6x4hnxvjkpqi
   rimraf: 3.0.2
-  rollup-plugin-terser: 7.0.2_rollup@2.77.0
+  rollup-plugin-terser: 7.0.2
   schema-dts: 1.1.0_typescript@4.7.4
   smui-theme: 6.0.0-beta.16
   svelte: 3.49.0
@@ -277,7 +273,7 @@ devDependencies:
   svelte-preprocess: 4.10.7_6avtyouqcdws46kxwsvk4vhxre
   tailwindcss: 3.1.5
   typescript: 4.7.4
-  urql: 2.2.2_aez2jvt6lsvokp3l4ousdbdxf4
+  urql: 2.2.2_graphql@16.5.0
   vite: 2.9.14
 
 packages:
@@ -5336,6 +5332,7 @@ packages:
     engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
     os: [darwin]
     requiresBuild: true
+    dev: true
     optional: true
 
   /function-bind/1.1.1:
@@ -6042,6 +6039,7 @@ packages:
 
   /js-tokens/4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}
+    dev: true
 
   /js-yaml/4.1.0:
     resolution: {integrity: sha512-wpxZs9NoxZaJESJGIZTyDEaYpl0FKSA+FB9aJiyemKhMwkxQg63h4T1KJgUGHpTqPDNRcmmYLugrRjJlBtWvRA==}
@@ -6389,6 +6387,7 @@ packages:
     hasBin: true
     dependencies:
       js-tokens: 4.0.0
+    dev: true
 
   /lower-case-first/2.0.2:
     resolution: {integrity: sha512-EVm/rR94FJTZi3zefZ82fLWab+GX14LJN4HrWBcuo6Evmsl9hEfnqxgcHCKb9q+mNf6EVdsjx/qucYFIIB84pg==}
@@ -7778,12 +7777,6 @@ packages:
       safe-buffer: 5.2.1
     dev: true
 
-  /react/18.2.0:
-    resolution: {integrity: sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==}
-    engines: {node: '>=0.10.0'}
-    dependencies:
-      loose-envify: 1.4.0
-
   /read-cache/1.0.0:
     resolution: {integrity: sha512-Owdv/Ft7IjOgm/i0xvNDZ1LrRANRfew4b2prF3OWMQLxLfu3bS8FVhCsrSCMK4lR56Y9ya+AThoTpDCTxCmpRA==}
     dependencies:
@@ -7992,14 +7985,13 @@ packages:
       glob: 7.2.3
     dev: true
 
-  /rollup-plugin-terser/7.0.2_rollup@2.77.0:
+  /rollup-plugin-terser/7.0.2:
     resolution: {integrity: sha512-w3iIaU4OxcF52UUXiZNsNeuXIMDvFrr+ZXK6bFZ0Q60qyVfq4uLptoS4bbq3paG3x216eQllFZX7zt6TIImguQ==}
     peerDependencies:
       rollup: ^2.0.0
     dependencies:
       '@babel/code-frame': 7.18.6
       jest-worker: 26.6.2
-      rollup: 2.77.0
       serialize-javascript: 4.0.0
       terser: 5.14.1
     dev: true
@@ -8010,6 +8002,7 @@ packages:
     hasBin: true
     optionalDependencies:
       fsevents: 2.3.2
+    dev: true
 
   /run-async/2.4.1:
     resolution: {integrity: sha512-tvVnVv01b8c1RrA6Ep7JkStj85Guv/YrMcwqYQnwjsAS2cTmmPGBBjAjpCW7RrSodNSoE2/qg9O4bceNvUuDgQ==}
@@ -8907,7 +8900,7 @@ packages:
       querystring: 0.2.0
     dev: true
 
-  /urql/2.2.2_aez2jvt6lsvokp3l4ousdbdxf4:
+  /urql/2.2.2_graphql@16.5.0:
     resolution: {integrity: sha512-jaVhDxWS2gfJLWWupFXtRkTCuGeRX+b9v19PU6TnKIJ7VP+xyrgpNHghHcTBGo58F+rxvCXVNEvSvdlKFMiHhg==}
     peerDependencies:
       graphql: ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
@@ -8915,7 +8908,6 @@ packages:
     dependencies:
       '@urql/core': 2.6.0_graphql@16.5.0
       graphql: 16.5.0
-      react: 18.2.0
       wonka: 4.0.15
     dev: true
 
