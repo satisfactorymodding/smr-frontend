@@ -1,6 +1,6 @@
 {
   ".svelte-kit/runtime/client/start.js": {
-    "file": "immutable/start-1540509c.js",
+    "file": "immutable/start-42d9d104.js",
     "src": ".svelte-kit/runtime/client/start.js",
     "isEntry": true,
     "imports": [
@@ -42,7 +42,7 @@
     ]
   },
   "src/routes/__layout.svelte": {
-    "file": "immutable/pages/__layout.svelte-f9cc5659.js",
+    "file": "immutable/pages/__layout.svelte-ff8539b7.js",
     "src": "src/routes/__layout.svelte",
     "isEntry": true,
     "isDynamicEntry": true,
@@ -65,7 +65,7 @@
       "src/lib/thirdparty/custom_protocol.ts"
     ],
     "css": [
-      "immutable/assets/pages/__layout.svelte-38433913.css"
+      "immutable/assets/pages/__layout.svelte-67dfde20.css"
     ]
   },
   ".svelte-kit/runtime/components/error.svelte": {
@@ -199,7 +199,7 @@
       "_paths-1c47712a.js"
     ],
     "css": [
-      "immutable/assets/pages/api-docs/index.svelte-1c1e4dfd.css"
+      "immutable/assets/pages/privacy-policy/index.svelte-bcc48566.css"
     ]
   },
   "src/routes/guide/[guideId]/edit.svelte": {
@@ -532,7 +532,7 @@
       "_paths-1c47712a.js"
     ],
     "css": [
-      "immutable/assets/pages/api-docs/index.svelte-1c1e4dfd.css"
+      "immutable/assets/pages/privacy-policy/index.svelte-bcc48566.css"
     ]
   },
   "src/routes/settings/index.svelte": {
@@ -599,7 +599,7 @@
       "_paths-1c47712a.js"
     ],
     "css": [
-      "immutable/assets/pages/api-docs/index.svelte-1c1e4dfd.css"
+      "immutable/assets/pages/privacy-policy/index.svelte-bcc48566.css"
     ]
   },
   "src/routes/user/[userId]/index.svelte": {
@@ -718,7 +718,7 @@
       "_graphql-8819e72c.js"
     ],
     "css": [
-      "immutable/assets/SMLVersionForm-1cc6d1a4.css"
+      "immutable/assets/VersionForm-3ddc908d.css"
     ]
   },
   "_forms-2903de53.js": {
@@ -754,7 +754,7 @@
       "_markdown-6a2ff7f0.js"
     ],
     "css": [
-      "immutable/assets/SMLVersionForm-1cc6d1a4.css"
+      "immutable/assets/VersionForm-3ddc908d.css"
     ]
   },
   "_gql-d96f7ff1.js": {
@@ -823,7 +823,7 @@
       "_ModCompatibilityEdit-e972ffff.js"
     ],
     "css": [
-      "immutable/assets/SMLVersionForm-1cc6d1a4.css"
+      "immutable/assets/VersionForm-3ddc908d.css"
     ]
   },
   "_ModCompatibilityEdit-e972ffff.js": {
@@ -847,7 +847,7 @@
       "_formatting-b1e7d458.js"
     ],
     "css": [
-      "immutable/assets/SMLVersionForm-1cc6d1a4.css"
+      "immutable/assets/VersionForm-3ddc908d.css"
     ]
   },
   "src/lib/thirdparty/custom_protocol.ts": {
