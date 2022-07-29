@@ -12,7 +12,7 @@
     [AnnouncementImportance.Info]: 'bg-sky-500',
     [AnnouncementImportance.Alert]: 'bg-red-600',
     [AnnouncementImportance.Warning]: 'bg-yellow-400',
-    [AnnouncementImportance.Fix]: 'bg-orange-600'
+    [AnnouncementImportance.Fix]: 'bg-green-600'
   };
   const monospacePrefix = 'monotext:';
 
@@ -25,9 +25,12 @@
 </script>
 
 <div class="{backgroundColors[importance]} max-h-64 overflow-hidden">
-  <div class="p-1 striped">
+  <div class="p-1 striped text-black">
     <Icon class="material-icons text-2xl align-middle">{iconNames[importance]}</Icon>
-    <div class="align-middle text-l inline-block whitespace-pre" class:font-mono={isMonospace}>
+    <div
+      class="align-middle text-l inline-block break-words max-w-full"
+      class:font-mono={isMonospace}
+      class:whitespace-pre={isMonospace}>
       <b>{importance}: </b>{finalMessage}
     </div>
   </div>

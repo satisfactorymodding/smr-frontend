@@ -201,8 +201,6 @@
         </Section>
       {/if}
     </Row>
-
-    <AnnouncementHeader />
   </TopAppBar>
 
   <div class="drawer-container">
@@ -212,8 +210,9 @@
       <Scrim fixed={false} />
     {/if}
 
-    <AppContent class="app-content w-full overflow-auto py-6 px-3">
-      <main class="main-content min-h-full">
+    <AppContent class="app-content w-full overflow-auto">
+      <AnnouncementHeader />
+      <main class="main-content min-h-100% py-6 px-3">
         <slot />
       </main>
     </AppContent>
