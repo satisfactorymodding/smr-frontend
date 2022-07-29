@@ -4,7 +4,7 @@
 
   export let compatibility!: CompatibilityInput;
   export let EXP = false;
-  let iconText = 'public';
+  let iconText = 'rocket_launch';
   if (EXP) {
     iconText = 'science';
   }
