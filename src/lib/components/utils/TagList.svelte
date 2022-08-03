@@ -1,7 +1,7 @@
 <script lang="ts">
   import { GetTagsDocument } from '$lib/generated/graphql';
   import type { Tag } from '$lib/generated/graphql';
-  import Chip, { Set, TrailingAction, Text } from '@smui/chips';
+  import Chip, { Set, Text } from '@smui/chips';
   import MenuSurface from '@smui/menu-surface';
   import { operationStore, query } from '@urql/svelte';
   import type { MenuSurfaceComponentDev } from '@smui/menu-surface/src/MenuSurface.types';
@@ -33,15 +33,7 @@
 
   let focused = false;
 
-  $: {
-    if (inputA) {
-      newTag = inputA.getElement();
-    }
-  }
-
-  if (!tags) {
-    tags = [];
-  }
+  $: newTag = inputA?.getElement();
 
   function filterAvailableTags(tagList: Tag[], currentTags: Tag[], filterText: string): [Tag[], Tag[]] {
     if (!tagList || !currentTags) {
@@ -107,8 +99,10 @@
     return false;
   }
 
-  function newTagKeydown(err) {
-    const e = err as KeyboardEvent;
+  function newTagKeydown(e: Event) {
+    if (!(e instanceof KeyboardEvent)) {
+      return;
+    }
     if (e.code == 'Backspace') {
       if (newTag.value == '') {
         setTagText(tags.pop().name);
@@ -138,18 +132,33 @@
       }
     }
   }
+
+  function onFocusLost() {
+    setTimeout(() => {
+      if (newTagContainer && !newTagContainer.contains(document.activeElement)) {
+        surface.setOpen(false);
+      }
+    }, 200);
+  }
+
+  function onInput(e: Event) {
+    newTagText = newTag.value;
+    updateTags();
+    e.preventDefault();
+  }
 </script>
 
 <div class="tags" on:focusin={() => (focused = true)} on:focusout={() => (focused = false)}>
   {#if !editable}
-    <Set class="tagList" chips={tags} let:chip key={(tag) => tag.name} nonInteractive>
-      <Chip {chip} shouldRemoveOnTrailingIconClick={true} on:SMUIChip:removal={() => updateTags()}>
-        <Text>{chip.name}</Text>
-        {#if editable}
-          <TrailingAction icon$class="material-icons">cancel</TrailingAction>
-        {/if}
-      </Chip>
-    </Set>
+    {#if tags.length > 0}
+      <div class="flex flex-row flex-wrap text-sm gap-1">
+        {#each tags as tag}
+          <div class="text-neutral-300 lowercase">
+            <span class="text-orange-500">#</span>{tag.name}
+          </div>
+        {/each}
+      </div>
+    {/if}
   {:else}
     <Textfield class="tags overflow-visible" bind:lineRipple={lineRippleA} bind:input={inputA} style="z-index: 9999">
       <FloatingLabel
@@ -157,85 +166,53 @@
         for="input-manual-a"
         slot="label"
         floatAbove={(newTag && newTag.value.length > 0) || focused || tags.length > 0}>Tags</FloatingLabel>
-      <Set class="tagList" chips={tags} let:chip key={(tag) => tag.name} nonInteractive>
-        <Chip
-          {chip}
-          shouldRemoveOnTrailingIconClick={true}
-          on:SMUIChip:removal={() => {
-            updateTags();
-          }}>
-          <Text>{chip.name}</Text>
-          {#if editable}
-            <TrailingAction icon$class="material-icons" type="button">cancel</TrailingAction>
-          {/if}
-        </Chip>
-      </Set>
-      <div
-        id="newTagContainer"
-        bind:this={newTagContainer}
-        on:focusin={() => surface.setOpen(true)}
-        on:focusout={() => {
-          setTimeout(() => {
-            if (newTagContainer && !newTagContainer.contains(document.activeElement)) {
-              surface.setOpen(false);
-            }
-          }, 200);
-        }}>
-        <MenuSurface bind:this={surface} managed={true} anchorCorner="BOTTOM_LEFT" anchorElement={newTag}>
-          <div style="margin: 1rem">
-            <h1>Available Tags</h1>
-            <div class="flex flex-wrap m-1">
-              <Set chips={filteredTagsMatched} let:chip key={(tag) => tag.name}>
-                <Chip {chip} on:SMUIChip:interaction={() => addTag(chip.name)}>
-                  <Text>{chip.name}</Text>
-                </Chip>
-              </Set>
-            </div>
-            <div class="flex flex-wrap m-1">
-              <Set chips={filteredTagsUnmatched} let:chip key={(tag) => tag.name}>
-                <Chip {chip} on:SMUIChip:interaction={() => addTag(chip.name)}>
-                  <Text>{chip.name}</Text>
-                </Chip>
-              </Set>
-            </div>
+      <div class="flex flex-row flex-wrap text-sm gap-1 mr-2">
+        {#each tags as tag}
+          <div class="text-neutral-300 whitespace-nowrap flex">
+            <span class="text-orange-500">#</span>
+            <p>{tag.name}</p>
           </div>
-        </MenuSurface>
-        <div id="newTagScroll">
+        {/each}
+        <div
+          id="newTagContainer"
+          class="text-neutral-300 whitespace-nowrap flex"
+          bind:this={newTagContainer}
+          on:focusin={() => surface.setOpen(true)}
+          on:focusout={onFocusLost}>
+          <MenuSurface bind:this={surface} managed={true} anchorCorner="BOTTOM_LEFT" anchorElement={newTag}>
+            <div style="margin: 1rem">
+              <h1>Available Tags</h1>
+              <div class="flex flex-wrap m-1">
+                <Set chips={filteredTagsMatched} let:chip key={(tag) => tag.name}>
+                  <Chip {chip} on:SMUIChip:interaction={() => addTag(chip.name)}>
+                    <Text>{chip.name}</Text>
+                  </Chip>
+                </Set>
+              </div>
+              <div class="flex flex-wrap m-1">
+                <Set chips={filteredTagsUnmatched} let:chip key={(tag) => tag.name}>
+                  <Chip {chip} on:SMUIChip:interaction={() => addTag(chip.name)}>
+                    <Text>{chip.name}</Text>
+                  </Chip>
+                </Set>
+              </div>
+            </div>
+          </MenuSurface>
+          {#if focused}
+            <span class="text-orange-500">#</span>
+          {/if}
           <Input
             id="input-manual-a"
             spellcheck="false"
             autocomplete="off"
-            class={shake ? 'shake' : ''}
+            class="inline text-sm text-neutral-300 {shake ? 'shake' : ''}"
+            style="height: initial"
             bind:this={inputA}
             on:keydown={newTagKeydown}
-            on:input={(e) => {
-              newTagText = newTag.value;
-              updateTags();
-              e.preventDefault();
-            }} />
+            on:input={onInput} />
         </div>
       </div>
       <LineRipple bind:this={lineRippleA} slot="ripple" />
     </Textfield>
   {/if}
 </div>
-
-<style lang="scss">
-  .tags {
-    display: flex;
-    flex-wrap: wrap;
-  }
-
-  #newTagContainer {
-    display: flex;
-    flex: 1;
-    max-width: 100%;
-    width: 100%;
-  }
-
-  #newTagScroll {
-    display: flex;
-    min-width: 9rem;
-    width: 100%;
-  }
-</style>

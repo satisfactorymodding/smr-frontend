@@ -1,6 +1,5 @@
 <script lang="ts">
   import Accordion, { Panel, Header, Content } from '@smui-extra/accordion';
-  import { onMount } from 'svelte';
   import Textfield from '@smui/textfield';
   import HelperText from '@smui/textfield/helper-text';
   import Button, { Label, Icon } from '@smui/button';
@@ -154,10 +153,6 @@
     snackbarTagChangeSaved.open();
     setTimeout(() => snackbarTagChangeSaved.close(), 2000);
   }
-
-  onMount(async () => {
-    //tags = await getTags() as Tag_Base[]
-  });
 </script>
 
 {#if $tagsQuery.fetching}

@@ -47,8 +47,7 @@
       tags = anyData.tags;
       delete anyData.tags;
     }
-    $data.tagIDs = [];
-    tags.forEach((tag) => $data.tagIDs.push(tag.id));
+    $data.tagIDs = tags.map((tag) => tag.id);
   }
 
   const { form, data } = createForm<ModData>({
