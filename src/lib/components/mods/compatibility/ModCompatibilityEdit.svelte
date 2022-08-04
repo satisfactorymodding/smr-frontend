@@ -16,12 +16,16 @@
       note: ''
     }
   };
+  let rendered = false;
 
-  $: compatibilityInfo = compatibilityInfoEdit;
+  $: if (rendered) {
+    compatibilityInfo = compatibilityInfoEdit;
+  }
 
   onMount(() => {
     if (compatibilityInfo != null) {
       compatibilityInfoEdit = compatibilityInfo;
+      rendered = true;
     }
   });
 </script>
