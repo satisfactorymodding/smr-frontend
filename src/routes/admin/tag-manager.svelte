@@ -153,6 +153,11 @@
     snackbarTagChangeSaved.open();
     setTimeout(() => snackbarTagChangeSaved.close(), 2000);
   }
+
+  function onDeleteClick(e: Event, tag: Tag) {
+    e.stopPropagation();
+    deleteTag(tag);
+  }
 </script>
 
 {#if $tagsQuery.fetching}
@@ -165,12 +170,7 @@
       <Panel bind:this={panels[tag.id]}>
         <Header>
           {tag.name}
-          <IconButton
-            slot="icon"
-            on:click={(e) => {
-              e.stopPropagation();
-              deleteTag(tag);
-            }}>
+          <IconButton slot="icon" on:click={(e) => onDeleteClick(e, tag)}>
             <ButtonIcon class="material-icons">delete_forever</ButtonIcon>
           </IconButton>
         </Header>
@@ -182,16 +182,6 @@
             on:change={() => tagChange(tag)}>
             <HelperText slot="helper">Human-Readable name of the tag that is shown in UI</HelperText>
           </Textfield>
-          <!--Textfield
-                            style="width: 100%;"
-                            helperLine$style="width: 100%;"
-                            textarea
-                            bind:value={tag.description}
-                            label="Tag-Description"
-                            on:change={() => tagChange(tag)}
-                    >
-                        <HelperText slot="helper">Markdown formatted description of the tag</HelperText>
-                    </Textfield-->
         </Content>
       </Panel>
     {/each}
