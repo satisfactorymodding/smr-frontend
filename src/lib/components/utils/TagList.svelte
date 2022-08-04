@@ -99,6 +99,11 @@
     return false;
   }
 
+  function deleteTag(tag: Tag) {
+    tags = tags.filter((v) => v != tag);
+    updateTags();
+  }
+
   function newTagKeydown(e: Event) {
     if (!(e instanceof KeyboardEvent)) {
       return;
@@ -168,8 +173,12 @@
         floatAbove={(newTag && newTag.value.length > 0) || focused || tags.length > 0}>Tags</FloatingLabel>
       <div class="flex flex-row flex-wrap text-sm gap-1 mr-2">
         {#each tags as tag}
-          <div class="text-neutral-300 whitespace-nowrap flex">
-            <span class="text-orange-500">#</span>
+          <div class="text-neutral-300 whitespace-nowrap flex removable-tag">
+            <span class="hashtag text-orange-500">#</span>
+            <span class="cancel">
+              <i class="material-icons mdc-chip__icon mdc-chip__icon--trailing" on:click={() => deleteTag(tag)}
+                >cancel</i>
+            </span>
             <p>{tag.name}</p>
           </div>
         {/each}
@@ -216,3 +225,27 @@
     </Textfield>
   {/if}
 </div>
+
+<style lang="scss">
+  .removable-tag {
+    .cancel {
+      display: none;
+      cursor: pointer;
+
+      i {
+        padding: 0;
+        margin: 0;
+      }
+    }
+
+    &:hover {
+      .hashtag {
+        display: none;
+      }
+
+      .cancel {
+        display: initial;
+      }
+    }
+  }
+</style>
