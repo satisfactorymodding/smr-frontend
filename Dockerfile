@@ -1,4 +1,4 @@
-FROM node:16-alpine as build
+FROM node:18-alpine as build
 
 ARG NODE_ENV_ARG=production
 
@@ -18,7 +18,7 @@ RUN NODE_ENV=$NODE_ENV_ARG set -o allexport; set -ex; source .env.$NODE_ENV_ARG;
 
 FROM ghcr.io/vilsol/yeet:v0.5.3 as yeet
 
-FROM node:16-alpine
+FROM node:18-alpine
 
 COPY --from=yeet /yeet /yeet
 

@@ -1,7 +1,7 @@
 <script lang="ts">
   import { createForm } from 'felte';
   import { validator } from '@felte/validator-zod';
-  import { svelteReporter, ValidationMessage } from '@felte/reporter-svelte';
+  import { reporter, ValidationMessage } from '@felte/reporter-svelte';
   import type { GuideData } from '$lib/models/guides';
   import { guideSchema } from '$lib/models/guides';
   import { trimNonSchema } from '$lib/utils/forms';
@@ -19,8 +19,7 @@
 
   const { form, data } = createForm<GuideData>({
     initialValues: initialValues,
-    extend: [validator, svelteReporter],
-    validateSchema: guideSchema,
+    extend: [validator({ schema: guideSchema }), reporter],
     onSubmit: (submitted: GuideData) => onSubmit(trimNonSchema(submitted, guideSchema))
   });
 

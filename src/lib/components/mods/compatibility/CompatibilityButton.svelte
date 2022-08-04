@@ -11,6 +11,8 @@
 
 {#if compatibility}
   <Button
+    --mdc-text-button-container-height="20px"
+    class="min-w-0 m-0"
     title="Compatibility information"
     on:click={() => {
       open = true;

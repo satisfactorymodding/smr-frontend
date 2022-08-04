@@ -1,7 +1,7 @@
 <script lang="ts">
   import { createForm } from 'felte';
   import { validator } from '@felte/validator-zod';
-  import { svelteReporter, ValidationMessage } from '@felte/reporter-svelte';
+  import { reporter, ValidationMessage } from '@felte/reporter-svelte';
   import { trimNonSchema } from '$lib/utils/forms';
   import { markdown } from '$lib/utils/markdown';
   import type { SMLVersionData } from '$lib/models/sml-versions';
@@ -25,8 +25,7 @@
 
   const { form, data } = createForm<SMLVersionData>({
     initialValues: initialValues,
-    extend: [validator, svelteReporter],
-    validateSchema: smlVersionSchema,
+    extend: [validator({ schema: smlVersionSchema }), reporter],
     onSubmit: (submitted: SMLVersionData) => onSubmit(trimNonSchema(submitted, smlVersionSchema))
   });
 

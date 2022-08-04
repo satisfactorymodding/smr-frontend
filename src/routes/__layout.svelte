@@ -40,6 +40,7 @@
   import { onMount } from 'svelte';
   import { customProtocolCheck, hasLauncher, pingLauncher } from '$lib/stores/launcher';
   import Sidebar from '$lib/components/general/Sidebar.svelte';
+  import AnnouncementHeader from '$lib/components/announcements/AnnouncementHeader.svelte';
 
   let root: HTMLElement;
   onMount(async () => {
@@ -209,8 +210,9 @@
       <Scrim fixed={false} />
     {/if}
 
-    <AppContent class="app-content w-full overflow-auto py-6 px-3">
-      <main class="main-content min-h-full">
+    <AppContent class="app-content w-full overflow-auto">
+      <AnnouncementHeader />
+      <main class="main-content min-h-100% py-6 px-3">
         <slot />
       </main>
     </AppContent>

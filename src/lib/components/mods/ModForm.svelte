@@ -1,7 +1,7 @@
 <script lang="ts">
   import { createForm } from 'felte';
   import { validator } from '@felte/validator-zod';
-  import { svelteReporter, ValidationMessage } from '@felte/reporter-svelte';
+  import { reporter, ValidationMessage } from '@felte/reporter-svelte';
   import type { ModData } from '$lib/models/mods';
   import { modSchema } from '$lib/models/mods';
   import { trimNonSchema } from '$lib/utils/forms';
@@ -52,15 +52,22 @@
 
   const { form, data } = createForm<ModData>({
     initialValues: initialValues,
-    extend: [validator, svelteReporter],
-    validateSchema: modSchema,
+    extend: [validator({ schema: modSchema }), reporter],
     onSubmit: (submitted: ModData) => onSubmit(trimNonSchema(submitted, modSchema))
   });
+
+  // The GQL type NewMod does not have a compatibility field.
+  // We remove the field from the data so that the GQL request is valid
+  $: {
+    if (!editing) {
+      delete $data.compatibility;
+    }
+  }
 
   $: preview = ($data.full_description as string) || '';
 
   const addAuthor = () => {
-    $data.authors.push({ role: 'editor', user_id: '' });
+    $data.authors.push({ role: 'editor', user_id: '', key: '' });
     $data.authors = $data.authors;
   };
 
@@ -68,6 +75,8 @@
     $data.authors.splice(i, 1);
     $data.authors = $data.authors;
   };
+
+  let editCompatibility = false;
 </script>
 
 <form use:form>
@@ -155,10 +164,18 @@
         <span class="validation-message">{message || ''}</span>
       </ValidationMessage>
     </div>
-
-    <ModCompatibility bind:compatibilityInfo={$data.compatibility} />
-
     {#if editing}
+      <div>
+        <FormField align="start">
+          <Switch bind:checked={editCompatibility} on:SMUISwitch:change={() => ($data.compatibility = null)} />
+          <span>Edit compatibility information</span>
+        </FormField>
+      </div>
+
+      {#if editCompatibility}
+        <ModCompatibility bind:compatibilityInfo={$data.compatibility} />
+      {/if}
+
       <div class="grid grid-flow-row gap-2">
         <div class="flex items-baseline">
           <h4 class="mr-4">Authors</h4>
