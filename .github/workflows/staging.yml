@@ -1,0 +1,15 @@
+name: staging
+
+on:
+  push:
+    branches-ignore:
+      - main
+  pull_request:
+    branches-ignore:
+      - main
+
+jobs:
+  staging:
+    uses: ./.github/workflows/push-base.yml
+    with:
+      env: staging

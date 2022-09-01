@@ -27,8 +27,8 @@
     query: UpdateVersionDocument
   });
 
-  const onSubmit = async (data: VersionData) => {
-    return editVersion({
+  const onSubmit = async (data: VersionData) =>
+    editVersion({
       versionId: versionId,
       version: data
     }).then((value) => {
@@ -41,9 +41,10 @@
         return goto(base + '/mod/' + modId + '/version/' + versionId);
       }
     });
-  };
 
-  $: if (!errorToast) errorMessage = '';
+  $: if (!errorToast) {
+    errorMessage = '';
+  }
 
   $: initialValues = $version.data
     ? {
@@ -59,8 +60,7 @@
   {#if !$version.fetching && !$version.error && $version.data.getVersion}
     <MetaDescriptors
       description="Editing mod version {$version.data.getVersion.mod.name} {$version.data.getVersion.version}"
-      title="Edit mod version {$version.data.getVersion.mod.name} {$version.data.getVersion.version}"
-    />
+      title="Edit mod version {$version.data.getVersion.mod.name} {$version.data.getVersion.version}" />
   {/if}
 </svelte:head>
 
@@ -78,8 +78,7 @@
         {initialValues}
         modReference={$version.data.getVersion.mod.mod_reference}
         editing={true}
-        submitText="Save"
-      />
+        submitText="Save" />
     {/if}
   </Content>
 </Card>

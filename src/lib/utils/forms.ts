@@ -1,8 +1,8 @@
 import type { ZodArray, ZodObject, ZodRawShape, ZodTypeAny } from 'zod';
 import { ZodOptional } from 'zod';
 
-export const trimNonSchema = <T, K extends T>(data: K, schema: ZodObject<ZodRawShape>): T => {
-  return Object.fromEntries(
+export const trimNonSchema = <T, K extends T>(data: K, schema: ZodObject<ZodRawShape>): T =>
+  Object.fromEntries(
     Object.entries(data)
       .map((o) => {
         if (Object.keys(schema.shape).indexOf(o[0]) >= 0) {
@@ -16,7 +16,9 @@ export const trimNonSchema = <T, K extends T>(data: K, schema: ZodObject<ZodRawS
             if (Array.isArray(value)) {
               const arrayType = (objSchema as ZodArray<ZodTypeAny>).element;
               for (let i = 0; i < value.length; i++) {
-                value[i] = trimNonSchema(value[i], arrayType as ZodObject<ZodRawShape>);
+                if (typeof value[i] === 'object') {
+                  value[i] = trimNonSchema(value[i], arrayType as ZodObject<ZodRawShape>);
+                }
               }
             } else if (value.constructor.name !== 'File') {
               value = trimNonSchema(value, objSchema as ZodObject<ZodRawShape>);
@@ -30,4 +32,3 @@ export const trimNonSchema = <T, K extends T>(data: K, schema: ZodObject<ZodRawS
       })
       .filter((val) => !!val)
   ) as T;
-};

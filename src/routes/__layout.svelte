@@ -7,10 +7,12 @@
   import { gqlClient } from '$lib/stores/global';
   import { browser } from '$app/env';
 
-  let gTag = undefined;
+  let gTag: unknown;
   if (browser) {
     gTag = import.meta.env.VITE_GOOGLE_SITE_TAG as string;
-    window['gTag'] = gTag;
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    window.gTag = gTag;
   }
 
   let client: Client;
@@ -33,10 +35,12 @@
   import { user, userToken } from '$lib/stores/user';
   import { goto } from '$app/navigation';
   import { loginDialogOpen, onMobile } from '$lib/stores/global';
-  import Menu, { MenuComponentDev } from '@smui/menu';
+  import type { MenuComponentDev } from '@smui/menu';
+  import Menu from '@smui/menu';
   import { onMount } from 'svelte';
   import { customProtocolCheck, hasLauncher, pingLauncher } from '$lib/stores/launcher';
   import Sidebar from '$lib/components/general/Sidebar.svelte';
+  import AnnouncementHeader from '$lib/components/announcements/AnnouncementHeader.svelte';
 
   let root: HTMLElement;
   onMount(async () => {
@@ -46,7 +50,9 @@
       await import('cookieconsent/src/cookieconsent');
 
       if ('cookieconsent' in window) {
-        window['cookieconsent'].initialise({
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        window.cookieconsent.initialise({
           palette: {
             popup: {
               background: '#000'
@@ -148,8 +154,7 @@
               class="mr-3"
               target="_blank"
               rel="noopener"
-              href="https://smm.ficsit.app"
-            >
+              href="https://smm.ficsit.app">
               <Label>Mod Manager</Label>
               <Icon class="material-icons">file_download</Icon>
             </Button>
@@ -173,8 +178,7 @@
                 variant="outlined"
                 color="secondary"
                 on:click={() => menu.setOpen(true)}
-                class="grid grid-flow-col"
-              >
+                class="grid grid-flow-col">
                 <div class="mr-3">{$user.username}</div>
                 <div class="rounded-full bg-cover w-7 h-7" style={`background-image: url("${$user.avatar}")`} />
               </Button>
@@ -206,8 +210,9 @@
       <Scrim fixed={false} />
     {/if}
 
-    <AppContent class="app-content w-full overflow-auto py-6 px-3">
-      <main class="main-content min-h-full">
+    <AppContent class="app-content w-full overflow-auto">
+      <AnnouncementHeader />
+      <main class="main-content min-h-100% py-6 px-3">
         <slot />
       </main>
     </AppContent>

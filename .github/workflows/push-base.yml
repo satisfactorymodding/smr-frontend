@@ -1,6 +1,15 @@
-name: push
+name: Base
 
-on: [ push, pull_request ]
+on:
+  workflow_call:
+    inputs:
+      env:
+        required: true
+        type: string
+
+env:
+  NODE_VERSION: "18"
+  PNPM_VERSION: "7.5.0"
 
 jobs:
   build:
@@ -11,14 +20,13 @@ jobs:
       matrix:
         action: [ "build:node", "build:static" ]
     steps:
-
       - name: Checkout
         uses: actions/checkout@v2
 
       - name: Setup nodejs
         uses: actions/setup-node@v1
         with:
-          node-version: 16
+          node-version: ${{ env.NODE_VERSION }}
 
       - name: Cache pnpm modules
         uses: actions/cache@v2
@@ -26,31 +34,34 @@ jobs:
           cache-name: cache-pnpm-modules
         with:
           path: ~/.pnpm-store
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-16-${{ hashFiles('**/package.json') }}
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ env.NODE_VERSION }}-${{ hashFiles('**/package.json') }}
           restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-16-
+            ${{ runner.os }}-build-${{ env.cache-name }}-${{ env.NODE_VERSION }}-
 
       - name: Install dependencies
-        uses: pnpm/action-setup@v1.2.1
+        uses: pnpm/action-setup@v2.2.2
         with:
-          version: 5.17.2
+          version: ${{ env.PNPM_VERSION }}
           run_install: true
 
       - name: Build
-        run: pnpm graphql-codegen:prod && pnpm ${{ matrix.action }}
+        run: |
+          set -o allexport; source .env.${{ inputs.env }}; set +o allexport
+          pnpm graphql-codegen && pnpm ${{ matrix.action }}
+        env:
+          NODE_ENV: ${{ inputs.env }}
 
   lint:
     name: Lint
     runs-on: ubuntu-latest
     steps:
-
       - name: Checkout
         uses: actions/checkout@v2
 
       - name: Setup nodejs
         uses: actions/setup-node@v1
         with:
-          node-version: 16
+          node-version: ${{ env.NODE_VERSION }}
 
       - name: Cache pnpm modules
         uses: actions/cache@v2
@@ -58,18 +69,22 @@ jobs:
           cache-name: cache-pnpm-modules
         with:
           path: ~/.pnpm-store
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-16-${{ hashFiles('**/package.json') }}
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ env.NODE_VERSION }}-${{ hashFiles('**/package.json') }}
           restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-16-
+            ${{ runner.os }}-build-${{ env.cache-name }}-${{ env.NODE_VERSION }}-
 
       - name: Install dependencies
-        uses: pnpm/action-setup@v1.2.1
+        uses: pnpm/action-setup@v2.2.2
         with:
-          version: 5.17.2
+          version: ${{ env.PNPM_VERSION }}
           run_install: true
 
       - name: Lint
-        run: pnpm graphql-codegen:prod && pnpm check && pnpm lint
+        run: |
+          set -o allexport; source .env.${{ inputs.env }}; set +o allexport
+          pnpm exec svelte-kit sync && pnpm graphql-codegen && pnpm check && pnpm lint
+        env:
+          NODE_ENV: ${{ inputs.env }}
 
   pages:
     name: Pages
@@ -79,14 +94,13 @@ jobs:
       - lint
     if: ${{ github.event_name != 'pull_request' }}
     steps:
-
       - name: Checkout
         uses: actions/checkout@v2
 
       - name: Setup nodejs
         uses: actions/setup-node@v1
         with:
-          node-version: 16
+          node-version: ${{ env.NODE_VERSION }}
 
       - name: Cache pnpm modules
         uses: actions/cache@v2
@@ -94,23 +108,26 @@ jobs:
           cache-name: cache-pnpm-modules
         with:
           path: ~/.pnpm-store
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-16-${{ hashFiles('**/package.json') }}
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ env.NODE_VERSION }}-${{ hashFiles('**/package.json') }}
           restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-16-
+            ${{ runner.os }}-build-${{ env.cache-name }}-${{ env.NODE_VERSION }}-
 
       - name: Install dependencies
-        uses: pnpm/action-setup@v1.2.1
+        uses: pnpm/action-setup@v2.2.2
         with:
-          version: 5.17.2
+          version: ${{ env.PNPM_VERSION }}
           run_install: true
 
       - name: Inject slug/short variables
         uses: rlespinasse/github-slug-action@v3.x
 
       - name: Build
-        run: pnpm graphql-codegen:prod && pnpm build:static
+        run: |
+          set -o allexport; source .env.${{ inputs.env }}; set +o allexport
+          pnpm graphql-codegen && pnpm build:static
         env:
           SVELTE_BASE_PATH: "/${{ env.GITHUB_REPOSITORY_NAME_PART_SLUG }}/${{ env.GITHUB_REF_SLUG }}"
+          NODE_ENV: ${{ inputs.env }}
 
       - name: Deploy to pages
         uses: JamesIves/github-pages-deploy-action@4.1.0
@@ -122,15 +139,10 @@ jobs:
   image:
     name: Image
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        target: [ "staging", "production" ]
     needs:
       - build
       - lint
     steps:
-
       - name: Checkout
         uses: actions/checkout@v2
 
@@ -148,7 +160,6 @@ jobs:
           images: ghcr.io/${{ github.repository }}
           flavor: |
             latest=false
-            suffix=-${{ matrix.target }}
 
       - name: Build and push
         uses: docker/build-push-action@v2
@@ -158,4 +169,4 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
-            BUILD=build:${{ matrix.target }}
+            NODE_ENV_ARG=${{ inputs.env }}

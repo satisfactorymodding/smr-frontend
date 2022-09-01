@@ -32,6 +32,7 @@
   import Button from '@smui/button';
   import Dialog, { Title, Content as DialogContent } from '@smui/dialog';
   import { modSchema, serializeSchema } from '$lib/utils/schema';
+  import EditCompatibilityForm from '../../../lib/components/mods/compatibility/EditCompatibilityForm.svelte';
 
   export let modId!: string;
   export let mod: typeof modQ;
@@ -47,8 +48,10 @@
 
   $: canUserEdit =
     $user?.roles?.deleteContent || $mod?.data?.mod?.authors?.findIndex((author) => author.user_id == $user?.id) >= 0;
+  $: canUserEditCompatibility = $user?.roles?.editAnyModCompatibility;
 
   const deleteDialogOpen = writable<boolean>(false);
+  const editCompatibilityOpen = writable<boolean>(false);
 
   const deleteModFn = () => {
     deleteMod({ modId: get(mod).data.mod.id }).then((value) => {
@@ -69,8 +72,7 @@
     <MetaDescriptors
       description={$mod.data.mod.short_description}
       title={$mod.data.mod.name}
-      image={$mod.data.mod.logo}
-    />
+      image={$mod.data.mod.logo} />
 
     {@html serializeSchema(modSchema($mod.data.mod))}
   {/if}
@@ -84,12 +86,14 @@
   <div class="grid gap-6 xlx:grid-flow-row">
     <div class="flex flex-wrap h-auto justify-between items-center">
       <h1 class="text-4xl font-bold">{$mod.data.mod.name}</h1>
-
       <div>
         {#if canUserEdit}
           <Button variant="outlined" on:click={() => goto(base + '/mod/' + modId + '/edit')}>Edit</Button>
           <Button variant="outlined" on:click={() => deleteDialogOpen.set(true)}>Delete</Button>
           <Button variant="outlined" on:click={() => goto(base + '/mod/' + modId + '/new-version')}>New Version</Button>
+        {/if}
+        {#if canUserEditCompatibility}
+          <Button variant="outlined" on:click={() => editCompatibilityOpen.set(true)}>Compatibility</Button>
         {/if}
 
         <Button variant="outlined" on:click={() => (versionsTab = !versionsTab)}>
@@ -111,8 +115,7 @@
         <ModLogo
           modLogo={$mod.data.mod.logo}
           modName={$mod.data.mod.name}
-          latestVersions={$mod.data.mod.latestVersions}
-        />
+          compatibility={$mod.data.mod.compatibility} />
         <ModInfo mod={$mod.data.mod} />
         <ModLatestVersions modId={$mod.data.mod.id} latestVersions={$mod.data.mod.latestVersions} />
         <ModAuthors authors={$mod.data.mod.authors} />
@@ -130,6 +133,18 @@
           <Button variant="outlined" on:click={() => deleteDialogOpen.set(false)}>Cancel</Button>
           <Button variant="outlined" on:click={() => deleteModFn()}>Delete</Button>
         </div>
+      </DialogContent>
+    </Dialog>
+  {/if}
+
+  {#if canUserEditCompatibility}
+    <Dialog bind:open={$editCompatibilityOpen}>
+      <Title>Edit Compatibilty</Title>
+      <DialogContent>
+        <EditCompatibilityForm
+          modId={$mod.data.mod.id}
+          mod={$mod.data.mod}
+          on:submit={() => editCompatibilityOpen.set(false)} />
       </DialogContent>
     </Dialog>
   {/if}

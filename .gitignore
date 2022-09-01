@@ -305,3 +305,4 @@ $RECYCLE.BIN/
 /graphql.schema.json
 /.svelte-kit
 /static/smui.css
+/.pnpm-store

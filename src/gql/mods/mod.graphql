@@ -43,5 +43,15 @@ query GetMod($mod: String!) {
         avatar
       }
     }
+    compatibility {
+      EA {
+        note
+        state
+      }
+      EXP {
+        note
+        state
+      }
+    }
   }
 }

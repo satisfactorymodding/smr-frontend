@@ -2,8 +2,8 @@
   import { page } from '$app/stores';
   import { base } from '$app/paths';
 
-  let baseUrl = $page.url.host;
-  let route = $page.url.pathname;
+  const baseUrl = $page.url.host;
+  const route = $page.url.pathname;
 
   export let description: string | undefined = undefined;
   export let image: string | undefined = undefined;

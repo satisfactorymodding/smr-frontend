@@ -15,8 +15,8 @@ interface SMRAuthState {
   token: string | null;
 }
 
-export const initializeGraphQLClient = (fetch?: LoadInput['fetch']): Client => {
-  return createClient({
+export const initializeGraphQLClient = (fetch?: LoadInput['fetch']): Client =>
+  createClient({
     url: API_GRAPHQL,
     fetch,
     exchanges: [
@@ -28,7 +28,9 @@ export const initializeGraphQLClient = (fetch?: LoadInput['fetch']): Client => {
           UserMod: () => null,
           GetGuides: () => null,
           OAuthOptions: () => null,
-          UserRoles: () => null
+          UserRoles: () => null,
+          Compatibility: () => null,
+          CompatibilityInfo: () => null
         },
         updates: {
           Mutation: {
@@ -114,11 +116,9 @@ export const initializeGraphQLClient = (fetch?: LoadInput['fetch']): Client => {
             }
           };
         },
-        getAuth: async (): Promise<SMRAuthState | null> => {
-          return {
-            token: get(userToken)
-          };
-        },
+        getAuth: async (): Promise<SMRAuthState | null> => ({
+          token: get(userToken)
+        }),
         didAuthError({ error }): boolean {
           return error.message.indexOf('user not logged in') >= 0;
         }
@@ -129,4 +129,3 @@ export const initializeGraphQLClient = (fetch?: LoadInput['fetch']): Client => {
       multipartFetchExchange
     ]
   });
-};

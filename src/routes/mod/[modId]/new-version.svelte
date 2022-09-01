@@ -77,8 +77,8 @@
 
   query(checkVersionUploadState);
 
-  const onSubmit = async (data: VersionData) => {
-    return chunkedUpload(
+  const onSubmit = async (data: VersionData) =>
+    chunkedUpload(
       data.file,
       get(mod).data.mod.id,
       {
@@ -104,17 +104,17 @@
         errorToast = true;
         uploadStatus.set('');
       });
-  };
 
-  $: if (!errorToast) errorMessage = '';
+  $: if (!errorToast) {
+    errorMessage = '';
+  }
 </script>
 
 <svelte:head>
   {#if !$mod.fetching && !$mod.error && $mod.data.mod}
     <MetaDescriptors
       description="Creating a new version of mod {$mod.data.mod.name}"
-      title="New version of mod {$mod.data.mod.name}"
-    />
+      title="New version of mod {$mod.data.mod.name}" />
   {/if}
 </svelte:head>
 
@@ -141,8 +141,7 @@
           <div class="flex mb-2 items-center justify-between">
             <div>
               <span
-                class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-white bg-yellow-600"
-              >
+                class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-white bg-yellow-600">
                 {$uploadStatus}
               </span>
             </div>
@@ -153,8 +152,7 @@
           <div class="overflow-hidden h-2 mb-4 text-xs flex rounded bg-gray-600">
             <div
               style="width: {$uploadPercent.toFixed(0)}%"
-              class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-yellow-600"
-            />
+              class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-yellow-600" />
           </div>
         </div>
       {/if}

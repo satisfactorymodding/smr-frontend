@@ -6,8 +6,8 @@ import { gqlClient } from '$lib/stores/global';
 
 // Pretend you didn't see this file
 
-export const loadWaitForNoFetch = (queries: { [key: string]: OperationStore }): Load => {
-  return async function () {
+export const loadWaitForNoFetch = (queries: { [key: string]: OperationStore }): Load =>
+  async function () {
     // If on the browser, initialize queries and start fetching, but instantly return out
     if (browser) {
       const result = Object.keys(queries).map((key) => {
@@ -20,10 +20,10 @@ export const loadWaitForNoFetch = (queries: { [key: string]: OperationStore }): 
           .then((data) => {
             // Update query fields without calling set
             query.update((value) => {
-              (value as unknown)['fetching'] = false;
+              (value as unknown).fetching = false;
               if (data) {
-                (value as unknown)['data'] = data.data;
-                (value as unknown)['error'] = data.error;
+                (value as unknown).data = data.data;
+                (value as unknown).error = data.error;
               }
               return value;
             });
@@ -39,9 +39,9 @@ export const loadWaitForNoFetch = (queries: { [key: string]: OperationStore }): 
           .catch((err) => {
             // Update query fields without calling set
             query.update((value) => {
-              (value as unknown)['fetching'] = false;
-              (value as unknown)['data'] = undefined;
-              (value as unknown)['error'] = err;
+              (value as unknown).fetching = false;
+              (value as unknown).data = undefined;
+              (value as unknown).error = err;
               return value;
             });
 
@@ -56,7 +56,7 @@ export const loadWaitForNoFetch = (queries: { [key: string]: OperationStore }): 
 
         // Update query fields without calling set
         query.update((value) => {
-          (value as unknown)['fetching'] = true;
+          (value as unknown).fetching = true;
           return value;
         });
 
@@ -91,4 +91,3 @@ export const loadWaitForNoFetch = (queries: { [key: string]: OperationStore }): 
       )
     };
   };
-};

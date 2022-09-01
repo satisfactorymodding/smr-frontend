@@ -5,7 +5,7 @@
   import { goto } from '$app/navigation';
   import { createForm } from 'felte';
   import { validator } from '@felte/validator-zod';
-  import { svelteReporter, ValidationMessage } from '@felte/reporter-svelte';
+  import { reporter, ValidationMessage } from '@felte/reporter-svelte';
   import { trimNonSchema } from '$lib/utils/forms';
   import { user } from '$lib/stores/user';
   import * as zod from 'zod';
@@ -34,15 +34,14 @@
 
   $: {
     if ($user) {
-      const createdForm = createForm({
+      const createdForm = createForm<{ username: string }>({
         initialValues: {
           username: $user.username
         },
-        extend: [validator, svelteReporter],
-        validateSchema: userSchema,
-        onSubmit: (data: { username: string; avatar: unknown }) => {
+        extend: [validator({ schema: userSchema }), reporter],
+        onSubmit: (submitted: { username: string; avatar: unknown }) => {
           updateUser({
-            user: trimNonSchema(data, userSchema),
+            user: trimNonSchema(submitted, userSchema),
             userId: $user.id
           }).then((value) => {
             if (value.error) {
@@ -62,7 +61,9 @@
     }
   }
 
-  $: if (!errorToast) errorMessage = '';
+  $: if (!errorToast) {
+    errorMessage = '';
+  }
 </script>
 
 <svelte:head>
@@ -86,8 +87,7 @@
               name="avatar"
               type="file"
               accept="image/png,image/jpeg,image/gif"
-              placeholder="Avatar"
-            />
+              placeholder="Avatar" />
             <ValidationMessage for="avatar" let:messages={message}>
               <span class="validation-message">{message || ''}</span>
             </ValidationMessage>

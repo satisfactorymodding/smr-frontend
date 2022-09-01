@@ -42,15 +42,12 @@
     if (patting) {
       sprite = assets + '/images/dog_boing.gif';
       actual_mouse_x = 3000;
-      await new Promise((resolve) => setTimeout(resolve, 700));
-      reset();
-    }
-
-    function reset() {
-      $dogVisible = false;
-      $x = -2000;
-      $y = -1000;
-      patting = false;
+      setTimeout(() => {
+        $dogVisible = false;
+        $x = -2000;
+        $y = -1000;
+        patting = false;
+      }, 700);
     }
   }
 </script>
@@ -70,8 +67,7 @@ Art by Zago#5322 (discord)/ZagoTheSpider (youtube)"
                         top: {$y}px;
                         left: {$x}px;
                         z-index: 69;
-                      "
-  />
+                      " />
 {/if}
 
 <style lang="postcss">

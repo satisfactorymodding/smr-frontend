@@ -30,3 +30,4 @@ schema.graphql
 svelte.config.js
 tailwind.config.cjs
 tsconfig.json
+.pnpm-store

@@ -1,4 +1,5 @@
 import * as zod from 'zod';
+import type { CompatibilityState } from '$lib/generated';
 
 export type ModData = {
   name: string;
@@ -11,6 +12,16 @@ export type ModData = {
     role: string;
     user_id: string;
   }[];
+  compatibility?: {
+    EA: {
+      state: CompatibilityState;
+      note?: string;
+    };
+    EXP: {
+      state: CompatibilityState;
+      note?: string;
+    };
+  };
   hidden: boolean;
 };
 
@@ -21,10 +32,11 @@ export const modSchema = zod.object({
     .min(3)
     .max(32)
     .regex(/^([a-zA-Z][a-zA-Z0-9_]*)$/)
-    .refine(async () => {
-      // TODO Check if mod reference exists
-      return true;
-    }),
+    .refine(
+      async () =>
+        // TODO Check if mod reference exists
+        true
+    ),
   short_description: zod.string().min(16).max(128),
   full_description: zod.optional(zod.string()),
   logo: zod.optional(zod.any().refine((logo) => 'name' in logo && 'size' in logo && 'type' in logo)),
@@ -36,6 +48,18 @@ export const modSchema = zod.object({
         user_id: zod.string()
       })
       .array()
+  ),
+  compatibility: zod.optional(
+    zod.object({
+      EA: zod.object({
+        state: zod.string(),
+        note: zod.ostring()
+      }),
+      EXP: zod.object({
+        state: zod.string(),
+        note: zod.ostring()
+      })
+    })
   ),
   hidden: zod.boolean()
 });
