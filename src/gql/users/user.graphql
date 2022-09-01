@@ -30,6 +30,16 @@ query GetUser($user: UserID!) {
             sml_version
           }
         }
+        compatibility {
+          EA {
+            state
+            note
+          }
+          EXP {
+            state
+            note
+          }
+        }
       }
     }
     guides {
