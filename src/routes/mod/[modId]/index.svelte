@@ -48,7 +48,7 @@
 
   $: canUserEdit =
     $user?.roles?.deleteContent || $mod?.data?.mod?.authors?.findIndex((author) => author.user_id == $user?.id) >= 0;
-  $: canUserEditCompatibility = $user?.roles?.editAnyModCompatibility;
+  $: canUserEditCompatibility = $user?.roles?.editAnyModCompatibility || canUserEdit;
 
   const deleteDialogOpen = writable<boolean>(false);
   const editCompatibilityOpen = writable<boolean>(false);

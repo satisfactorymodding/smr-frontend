@@ -3,40 +3,33 @@
   import { CompatibilityState } from '$lib/generated';
   import type { CompatibilityInfo } from '$lib/generated';
   import CompatibilityEdit from '$lib/components/mods/compatibility/CompatibilityEdit.svelte';
-  import { onMount } from 'svelte';
 
-  export let compatibilityInfo: CompatibilityInfo = null;
-  let compatibilityInfoEdit: CompatibilityInfo = {
-    EA: {
-      state: CompatibilityState.Works,
-      note: ''
-    },
-    EXP: {
-      state: CompatibilityState.Works,
-      note: ''
-    }
-  };
-
-  $: compatibilityInfo = compatibilityInfoEdit;
-
-  onMount(() => {
-    if (compatibilityInfo != null) {
-      compatibilityInfoEdit = compatibilityInfo;
-    }
-  });
+  export let compatibilityInfo: CompatibilityInfo = undefined;
+  if (compatibilityInfo == null) {
+    compatibilityInfo = {
+      EA: {
+        state: CompatibilityState.Works,
+        note: ''
+      },
+      EXP: {
+        state: CompatibilityState.Works,
+        note: ''
+      }
+    };
+  }
 </script>
 
 <Accordion>
   <Panel>
     <Header>Early Access - Compatibility</Header>
     <Content>
-      <CompatibilityEdit bind:compatibility={compatibilityInfoEdit.EA} />
+      <CompatibilityEdit bind:compatibility={compatibilityInfo.EA} />
     </Content>
   </Panel>
   <Panel>
     <Header>Experimental - Compatibility</Header>
     <Content>
-      <CompatibilityEdit bind:compatibility={compatibilityInfoEdit.EXP} />
+      <CompatibilityEdit bind:compatibility={compatibilityInfo.EXP} />
     </Content>
   </Panel>
 </Accordion>
