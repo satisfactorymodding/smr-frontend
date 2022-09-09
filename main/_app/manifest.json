@@ -1,6 +1,6 @@
 {
   ".svelte-kit/runtime/client/start.js": {
-    "file": "immutable/start-1aaf2a32.js",
+    "file": "immutable/start-91a8ace8.js",
     "src": ".svelte-kit/runtime/client/start.js",
     "isEntry": true,
     "imports": [
@@ -42,7 +42,7 @@
     ]
   },
   "src/routes/__layout.svelte": {
-    "file": "immutable/pages/__layout.svelte-0ed9cf3c.js",
+    "file": "immutable/pages/__layout.svelte-881b0c80.js",
     "src": "src/routes/__layout.svelte",
     "isEntry": true,
     "isDynamicEntry": true,
@@ -540,7 +540,7 @@
     ]
   },
   "src/routes/settings/index.svelte": {
-    "file": "immutable/pages/settings/index.svelte-03f769f7.js",
+    "file": "immutable/pages/settings/index.svelte-a33ca1a0.js",
     "src": "src/routes/settings/index.svelte",
     "isEntry": true,
     "isDynamicEntry": true,
@@ -724,7 +724,7 @@
       "_graphql-f19d0585.js"
     ],
     "css": [
-      "immutable/assets/SMLVersionForm-1cc6d1a4.css"
+      "immutable/assets/VersionForm-3ddc908d.css"
     ]
   },
   "_forms-2903de53.js": {
@@ -760,7 +760,7 @@
       "_markdown-6a2ff7f0.js"
     ],
     "css": [
-      "immutable/assets/SMLVersionForm-1cc6d1a4.css"
+      "immutable/assets/VersionForm-3ddc908d.css"
     ]
   },
   "_gql-d96f7ff1.js": {
@@ -830,7 +830,7 @@
       "_ModCompatibilityEdit-13c30fdc.js"
     ],
     "css": [
-      "immutable/assets/SMLVersionForm-1cc6d1a4.css"
+      "immutable/assets/VersionForm-3ddc908d.css"
     ]
   },
   "_ModCompatibilityEdit-13c30fdc.js": {
@@ -854,7 +854,7 @@
       "_formatting-b1e7d458.js"
     ],
     "css": [
-      "immutable/assets/SMLVersionForm-1cc6d1a4.css"
+      "immutable/assets/VersionForm-3ddc908d.css"
     ]
   },
   "src/lib/thirdparty/custom_protocol.ts": {
