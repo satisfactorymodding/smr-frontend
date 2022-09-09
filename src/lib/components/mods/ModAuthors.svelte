@@ -5,7 +5,7 @@
 
   export let authors: Array<
     Pick<UserMod, 'role'> & {
-      user: Pick<User, 'id' | 'username' | 'avatar'>;
+      user?: Pick<User, 'id' | 'username' | 'avatar'>;
     }
   >;
 </script>
