@@ -104,8 +104,7 @@
                   <Button
                     variant="outlined"
                     href={API_REST + '/mod/' + modId + '/versions/' + versionId + '/' + arch.platform + '/download'}
-                    >Download {prettyArch(arch.platform)}</Button
-                  >
+                    >Download {prettyArch(arch.platform)}</Button>
                 </Item>
               {/each}
             </List>
@@ -113,8 +112,7 @@
         {:else}
           <Button variant="outlined" href={base + '/mod/' + modId + '/version/' + versionId}>View</Button>
           <Button variant="outlined" href={API_REST + '/mod/' + modId + '/versions/' + versionId + '/download'}
-            >Download</Button
-          >
+            >Download</Button>
         {/if}
         <Button variant="outlined" on:click={() => installMod(version.data.getVersion.mod.mod_reference)}>
           <Label>Install</Label>

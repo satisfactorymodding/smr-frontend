@@ -73,7 +73,6 @@
     "jsdom": "^20.0.0",
     "jszip": "^3.10.0",
     "marked": "^4.0.17",
-    "mdc-radio": "link:@material/radio/mdc-radio",
     "prismjs": "^1.28.0",
     "semver": "^7.3.7",
     "socket.io-client": "^4.5.1",
