@@ -6,13 +6,6 @@ import type { ZodObject, ZodRawShape } from 'zod';
 import type { File } from '$lib/models/file';
 import type { VersionStabilities } from '$lib/generated';
 
-export type VersionData = {
-  file: File;
-  changelog: string;
-  stability: VersionStabilities;
-  arch: modArchData[];
-};
-
 export type VersionMetadata = {
   uplugin: {
     Version: string;
@@ -34,64 +27,11 @@ export type modArchData = {
   size?: number;
 };
 
-export const constructVersionSchema = (
-  modReference: string,
-  modMetadata: Writable<VersionMetadata>
-): ZodObject<ZodRawShape> => {
-  return zod.object({
-    file: zod.optional(
-      zod.any().superRefine(async (file, ctx) => {
-        if (!('name' in file && 'size' in file && 'type' in file)) {
-          ctx.addIssue({
-            message: 'Unknown file error',
-            code: zod.ZodIssueCode.custom
-          });
-          return;
-        }
-
-        const result = await validateModZip(file, modReference);
-
-        if ('message' in result) {
-          ctx.addIssue({
-            message: result.message as string,
-            code: zod.ZodIssueCode.custom
-          });
-          return;
-        }
-
-        modMetadata.set(result as VersionMetadata);
-      })
-    ),
-    changelog: zod.string(),
-    stability: zod.string()
-  });
-};
-
-const validateModZip = async (
-  file: unknown,
-  modReference: string
-): Promise<{ [key: string]: unknown } | VersionMetadata> => {
-  const zipper = new JSZip();
-  return (
-    zipper
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      .loadAsync(file as any)
-      .then((zip) => {
-        const uPluginJsonFile = zip.file('WindowsNoEditor/' + modReference + '.uplugin');
-        if (uPluginJsonFile) {
-          return validateUPluginJsonModZip(zip, uPluginJsonFile, modReference);
-        }
-
-        return {
-          message: 'WindowsNoEditor/' + modReference + '.uplugin missing from mod'
-        };
-      })
-      .catch((err) => {
-        return {
-          message: 'invalid zip/smod file: ' + err
-        };
-      })
-  );
+export type VersionData = {
+  file: File;
+  changelog: string;
+  stability: VersionStabilities;
+  arch: modArchData[];
 };
 
 const validateUPluginJsonModZip = async (

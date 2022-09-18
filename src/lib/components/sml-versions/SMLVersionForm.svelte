@@ -115,8 +115,7 @@
             placeholder="URL"
             bind:value={data_link.link}
             style="min-width: 850px;"
-            label="URL"
-          />
+            label="URL" />
           <ValidationMessage for="data_link.link" let:messages={message}>
             <span class="validation-message">{message || ''}</span>
           </ValidationMessage>
