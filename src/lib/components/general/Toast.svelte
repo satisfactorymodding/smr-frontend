@@ -6,7 +6,7 @@
   export let running = false;
   export let background = 'bg-red-800';
 
-  let currentTimeout = undefined;
+  let currentTimeout: undefined | ReturnType<typeof setTimeout>;
 
   $: {
     if (currentTimeout) {
@@ -27,8 +27,7 @@
       <div
         class="{background} bottom-0 pointer-events-auto flex absolute py-2 px-4 z-30 mb-4 content-between mx-auto rounded items-center shadow-sm h-12"
         in:scale={{ duration: 100, easing: quadIn }}
-        out:fade={{ duration: 100, easing: quadOut, delay: 150 }}
-      >
+        out:fade={{ duration: 100, easing: quadOut, delay: 150 }}>
         <slot />
       </div>
     </div>

@@ -1,7 +1,7 @@
 <script lang="ts">
   import { createForm } from 'felte';
   import { validator } from '@felte/validator-zod';
-  import { svelteReporter, ValidationMessage } from '@felte/reporter-svelte';
+  import { reporter, ValidationMessage } from '@felte/reporter-svelte';
   import type { VersionData, VersionMetadata } from '$lib/models/versions';
   import { constructVersionSchema } from '$lib/models/versions';
   import { trimNonSchema } from '$lib/utils/forms';
@@ -31,11 +31,10 @@
   const versionSchema = constructVersionSchema(modReference, modMeta);
   const { form, data } = createForm<VersionData>({
     initialValues: initialValues as VersionData,
-    extend: [validator, svelteReporter],
-    validateSchema: versionSchema,
-    onSubmit: (data: VersionData) => {
+    extend: [validator({ schema: versionSchema }), reporter],
+    onSubmit: (submitted: VersionData) => {
       disabled = true;
-      onSubmit(trimNonSchema(data, versionSchema)).then(() => (disabled = false));
+      onSubmit(trimNonSchema(submitted, versionSchema)).then(() => (disabled = false));
     }
   });
 
@@ -128,8 +127,7 @@
           bind:value={$data.changelog}
           label="Changelog"
           required
-          input$rows={10}
-        />
+          input$rows={10} />
         <ValidationMessage for="changelog" let:messages={message}>
           <span class="validation-message">{message || ''}</span>
         </ValidationMessage>

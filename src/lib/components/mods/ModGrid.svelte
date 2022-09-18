@@ -79,19 +79,10 @@
 
   const updateUrl = () => {
     if (browser) {
-      const params = {};
-
-      params['p'] = get(page);
-
-      if (searchField !== '' && searchField !== null) {
-        params['q'] = searchField;
-      }
-
-      const resultQuery = Object.keys(params)
-        .map((key) => key + '=' + encodeURIComponent(params[key]))
-        .join('&');
-
-      goto(base + '/mods?' + resultQuery);
+      const url = new URL(window.location.origin + window.location.pathname);
+      url.searchParams.append('p', get(page).toString());
+      searchField !== '' && searchField !== null && url.searchParams.append('q', searchField);
+      goto(url.toString());
     }
   };
 

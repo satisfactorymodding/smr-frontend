@@ -1,7 +1,7 @@
 <script lang="ts">
   import { createForm } from 'felte';
   import { validator } from '@felte/validator-zod';
-  import { svelteReporter, ValidationMessage } from '@felte/reporter-svelte';
+  import { reporter, ValidationMessage } from '@felte/reporter-svelte';
   import { trimNonSchema } from '$lib/utils/forms';
   import { markdown } from '$lib/utils/markdown';
   import type { SMLVersionData } from '$lib/models/sml-versions';
@@ -29,9 +29,8 @@
 
   const { form, data } = createForm<SMLVersionData>({
     initialValues: initialValues,
-    extend: [validator, svelteReporter],
-    validateSchema: smlVersionSchema,
-    onSubmit: (data: SMLVersionData) => onSubmit(trimNonSchema(data, smlVersionSchema))
+    extend: [validator({ schema: smlVersionSchema }), reporter],
+    onSubmit: (submitted: SMLVersionData) => onSubmit(trimNonSchema(submitted, smlVersionSchema))
   });
 
   const add = () => {
@@ -89,8 +88,7 @@
           bind:value={$data.changelog}
           label="Changelog"
           required
-          input$rows={10}
-        />
+          input$rows={10} />
         <ValidationMessage for="changelog" let:messages={message}>
           <span class="validation-message">{message || ''}</span>
         </ValidationMessage>

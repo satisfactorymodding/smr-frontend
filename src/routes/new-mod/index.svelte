@@ -31,7 +31,9 @@
     });
   };
 
-  $: if (!errorToast) errorMessage = '';
+  $: if (!errorToast) {
+    errorMessage = '';
+  }
 </script>
 
 <svelte:head>

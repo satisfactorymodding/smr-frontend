@@ -90,8 +90,7 @@
                 <Button variant="outlined" on:click={() => denyVersion(version.id)}>Deny</Button>
                 <Button
                   variant="outlined"
-                  href={API_REST + '/mod/' + version.mod_id + '/versions/' + version.id + '/download'}
-                >
+                  href={API_REST + '/mod/' + version.mod_id + '/versions/' + version.id + '/download'}>
                   Download
                 </Button>
                 <Button variant="outlined" href={base + '/mod/' + version.mod_id + '/version/' + version.id}>

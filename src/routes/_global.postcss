@@ -193,8 +193,8 @@ body.accessibility {
   height: 100%;
   position: absolute;
   top: 0;
-  clip-path: polygon(-10% 90%, 10% 110%, 110% 10%, 90% -10%);
   box-shadow: inset 0 0 70px 20px rgba(32, 15, 0, 0.75);
+  clip-path: polygon(70% 0%, 100% 0%, 100% 70%, 100% 70%);
 }
 
 .mod-damaged {
@@ -203,29 +203,12 @@ body.accessibility {
 }
 
 .mod-broken {
-  top: -40%;
-  width: 140%;
-  height: 140%;
   opacity: 50%;
   background: repeating-linear-gradient(to top right, transparent, transparent 4%, red 4%, red 8%);
 }
 
 .mod-logo-outdated {
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  transform: rotate(0);
-}
-
-.mod-broken-button {
-  color: red !important;
-  font-size: 50px;
-}
-
-.mod-damaged-button {
-  color: darkorange !important;
-  font-size: 40px;
+  clip-path: polygon(37% 0%, 100% 0%, 100% 63%, 100% 63%);
 }
 
 .mod-state {
@@ -248,4 +231,8 @@ body.accessibility {
   .grid-auto-max {
     grid-template-columns: minmax(0, 100%) fit-content(30%);
   }
+}
+
+.mdc-dialog .mdc-dialog__scrim {
+  background-color: rgba(0, 0, 0, 70%);
 }
