@@ -34,7 +34,7 @@
   });
 
   const add = () => {
-    $data.arch = $data.arch.concat({ id: '', SMLVersionArchID: '', platform: '', link: '' });
+    $data.arch = $data.arch.concat();
   };
 
   const remove = (i) => () => {
