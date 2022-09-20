@@ -33,12 +33,14 @@
     onSubmit: (submitted: SMLVersionData) => onSubmit(trimNonSchema(submitted, smlVersionSchema))
   });
 
-  const add = () => {
-    $data.arch = $data.arch.concat();
+  const addArch = () => {
+    $data.arch.push({ id: '', SMLVersionArchID: '', platform: '', link: '', key: '' });
+    $data.arch = $data.arch;
   };
 
-  const remove = (i) => () => {
-    $data.arch = $data.arch.filter((_, index) => index != i);
+  const removeArch = (i: number) => {
+    $data.arch.splice(i, 1);
+    $data.arch = $data.arch;
   };
 
   $: preview = ($data.changelog as string) || '';
@@ -102,7 +104,7 @@
     </div>
 
     <div class="grid grid-flow-row gap-2">
-      {#each $data.arch as data_link, index}
+      {#each $data.arch as data_link, i}
         <div class="gap-6 auto-rows-max">
           <Select bind:value={data_link.platform} label="Platform">
             <Option value="WindowsNoEditor">Windows Client</Option>
@@ -121,8 +123,8 @@
           </ValidationMessage>
 
           {#if !editing}
-            <Button type="button" on:click={add}>Add</Button>
-            <Button type="button" disabled={$data.arch.length == 1} on:click={remove(index)}>Remove</Button>
+            <Button type="button" on:click={addArch}>Add</Button>
+            <Button type="button" disabled={$data.arch.length == 1} on:click={() => removeArch(i)}>Remove</Button>
           {/if}
         </div>
       {/each}

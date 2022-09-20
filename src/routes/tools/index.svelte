@@ -85,6 +85,14 @@
       description:
         'Factory tool collection, with main tool called "factory planner" with detailed, realtime stats for production and consumption, overclocking and much more.',
       link: 'https://toolbox.satisfactory.lucek.io/'
+    },
+    {
+      name: 'Satisfactory 3D Map',
+      author: 'Moritz',
+      logo: '',
+      description:
+        'Shows all objects within a savegame in 3D and provides a simple version of the game world for spatial context. Additionally, all properties and values of objects are shown.',
+      link: 'https://github.com/moritz-h/satisfactory-3d-map'
     }
   ];
 </script>
