@@ -22,7 +22,7 @@
     changelog: '',
     satisfactory_version: 0,
     stability: VersionStabilities.Alpha,
-    arch: [{ id: '', SMLVersionArchID: '', platform: '', link: '' }],
+    arch: [{ SMLVersionArchID: '', platform: '', link: '' }],
     version: ''
   };
   export let submitText = 'Create';
@@ -34,7 +34,7 @@
   });
 
   const addArch = () => {
-    $data.arch.push({ id: '', SMLVersionArchID: '', platform: '', link: '', key: '' });
+    $data.arch.push({ SMLVersionArchID: '', platform: '', link: '', key: '' });
     $data.arch = $data.arch;
   };
 
