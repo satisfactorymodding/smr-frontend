@@ -1,5 +1,5 @@
 import * as zod from 'zod';
-import type { VersionStabilities } from '$lib/generated';
+import type { UpdateSmlArch, VersionStabilities } from '$lib/generated';
 
 export type SMLVersionData = {
   version: string;
@@ -9,6 +9,7 @@ export type SMLVersionData = {
   link: string;
   changelog: string;
   date: string;
+  arch: UpdateSmlArch[];
 };
 
 const versionRegex =

@@ -19,7 +19,8 @@
     changelog: '',
     satisfactory_version: 0,
     stability: VersionStabilities.Alpha,
-    version: ''
+    version: '',
+    arch: []
   };
   export let submitText = 'Create';
 
