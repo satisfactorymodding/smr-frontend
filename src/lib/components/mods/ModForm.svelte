@@ -12,6 +12,7 @@
   import ModAuthor from '$lib/components/mods/ModAuthor.svelte';
   import FormField from '@smui/form-field';
   import Switch from '@smui/switch';
+  import TagList from '$lib/components/utils/TagList.svelte';
   import { CompatibilityState } from '$lib/generated';
   import ModCompatibility from '$lib/components/mods/compatibility/ModCompatibilityEdit.svelte';
 
@@ -23,6 +24,7 @@
     short_description: '',
     source_url: '',
     hidden: false,
+    tagIDs: [],
     compatibility: {
       EA: {
         state: CompatibilityState.Works,
@@ -37,6 +39,16 @@
   export let submitText = 'Create';
 
   export let editing = false;
+
+  let tags = [];
+  $: {
+    const anyData = $data;
+    if (anyData.tags) {
+      tags = anyData.tags;
+      delete anyData.tags;
+    }
+    $data.tagIDs = tags.map((tag) => tag.id);
+  }
 
   const { form, data } = createForm<ModData>({
     initialValues: initialValues,
@@ -118,6 +130,10 @@
           <div class="markdown-content right">{@html previewRendered}</div>
         {/await}
       </div>
+    </div>
+
+    <div class="grid grid-flow-row gap-2">
+      <TagList editable={true} bind:tags />
     </div>
 
     <div class="grid grid-flow-row gap-2">
