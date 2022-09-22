@@ -13,7 +13,7 @@
 
   const dispatch = createEventDispatcher();
 
-  async function onSubmit(e) {
+  async function onSubmit(e: Event) {
     e.preventDefault();
     const success = (
       await updateCompatibility({
