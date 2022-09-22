@@ -33,20 +33,21 @@
   let data: Writable<{ username: string }>;
 
   $: {
-    if ($user) {
+    if ($user && !data) {
       const createdForm = createForm<{ username: string }>({
         initialValues: {
           username: $user.username
         },
         extend: [validator({ schema: userSchema }), reporter],
         onSubmit: (submitted: { username: string; avatar: unknown }) => {
+          console.log('submitted', submitted);
           updateUser({
             user: trimNonSchema(submitted, userSchema),
             userId: $user.id
           }).then((value) => {
             if (value.error) {
               console.error(value.error.message);
-              errorMessage = 'Error editing guide: ' + value.error.message;
+              errorMessage = 'Error editing user: ' + value.error.message;
               errorToast = true;
             } else {
               // TODO Toast or something

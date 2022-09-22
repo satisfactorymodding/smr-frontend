@@ -77,6 +77,8 @@
   };
 
   let editCompatibility = false;
+  $: $data.compatibility = $data.compatibility ? $data.compatibility : undefined;
+  const originalCompatibility = $data.compatibility;
 </script>
 
 <form use:form>
@@ -167,7 +169,11 @@
     {#if editing}
       <div>
         <FormField align="start">
-          <Switch bind:checked={editCompatibility} on:SMUISwitch:change={() => ($data.compatibility = null)} />
+          <Switch
+            bind:checked={editCompatibility}
+            on:SMUISwitch:change={() => {
+              $data.compatibility = editCompatibility ? originalCompatibility : undefined;
+            }} />
           <span>Edit compatibility information</span>
         </FormField>
       </div>
