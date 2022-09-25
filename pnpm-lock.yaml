@@ -23,6 +23,7 @@ specifiers:
   '@material/button': ^14.0.0
   '@material/card': ^14.0.0
   '@material/checkbox': ^14.0.0
+  '@material/chips': ^14.0.0
   '@material/circular-progress': ^14.0.0
   '@material/data-table': ^14.0.0
   '@material/density': ^14.0.0
@@ -31,6 +32,7 @@ specifiers:
   '@material/drawer': ^14.0.0
   '@material/elevation': ^14.0.0
   '@material/fab': ^14.0.0
+  '@material/feature-targeting': ^14.0.0
   '@material/floating-label': ^14.0.0
   '@material/focus-ring': ^14.0.0
   '@material/form-field': ^14.0.0
@@ -45,6 +47,7 @@ specifiers:
   '@material/rtl': ^14.0.0
   '@material/select': ^14.0.0
   '@material/shape': ^14.0.0
+  '@material/snackbar': ^14.0.0
   '@material/switch': ^14.0.0
   '@material/textfield': ^14.0.0
   '@material/theme': ^14.0.0
@@ -55,6 +58,7 @@ specifiers:
   '@smui-extra/accordion': 6.0.0-beta.16
   '@smui/button': 6.0.0-beta.16
   '@smui/card': 6.0.0-beta.16
+  '@smui/chips': 6.0.0-beta.16
   '@smui/circular-progress': 6.0.0-beta.16
   '@smui/common': 6.0.0-beta.16
   '@smui/data-table': 6.0.0-beta.16
@@ -73,6 +77,7 @@ specifiers:
   '@smui/paper': 6.0.0-beta.16
   '@smui/ripple': 6.0.0-beta.16
   '@smui/select': 6.0.0-beta.16
+  '@smui/snackbar': 6.0.0-beta.16
   '@smui/switch': 6.0.0-beta.16
   '@smui/textfield': 6.0.0-beta.16
   '@smui/top-app-bar': 6.0.0-beta.16
@@ -146,6 +151,7 @@ dependencies:
   '@material/button': 14.0.0
   '@material/card': 14.0.0
   '@material/checkbox': 14.0.0
+  '@material/chips': 14.0.0
   '@material/circular-progress': 14.0.0
   '@material/data-table': 14.0.0
   '@material/density': 14.0.0
@@ -154,6 +160,7 @@ dependencies:
   '@material/drawer': 14.0.0
   '@material/elevation': 14.0.0
   '@material/fab': 14.0.0
+  '@material/feature-targeting': 14.0.0
   '@material/floating-label': 14.0.0
   '@material/focus-ring': 14.0.0
   '@material/form-field': 14.0.0
@@ -168,6 +175,7 @@ dependencies:
   '@material/rtl': 14.0.0
   '@material/select': 14.0.0
   '@material/shape': 14.0.0
+  '@material/snackbar': 14.0.0
   '@material/switch': 14.0.0
   '@material/textfield': 14.0.0
   '@material/theme': 14.0.0
@@ -214,6 +222,7 @@ devDependencies:
   '@smui-extra/accordion': 6.0.0-beta.16_uslzfc62di2n2otc2tvfklnwji
   '@smui/button': 6.0.0-beta.16_uslzfc62di2n2otc2tvfklnwji
   '@smui/card': 6.0.0-beta.16_uslzfc62di2n2otc2tvfklnwji
+  '@smui/chips': 6.0.0-beta.16_uslzfc62di2n2otc2tvfklnwji
   '@smui/circular-progress': 6.0.0-beta.16_uslzfc62di2n2otc2tvfklnwji
   '@smui/common': 6.0.0-beta.16_uslzfc62di2n2otc2tvfklnwji
   '@smui/data-table': 6.0.0-beta.16_uslzfc62di2n2otc2tvfklnwji
@@ -232,6 +241,7 @@ devDependencies:
   '@smui/paper': 6.0.0-beta.16_uslzfc62di2n2otc2tvfklnwji
   '@smui/ripple': 6.0.0-beta.16_uslzfc62di2n2otc2tvfklnwji
   '@smui/select': 6.0.0-beta.16_uslzfc62di2n2otc2tvfklnwji
+  '@smui/snackbar': 6.0.0-beta.16_uslzfc62di2n2otc2tvfklnwji
   '@smui/switch': 6.0.0-beta.16_uslzfc62di2n2otc2tvfklnwji
   '@smui/textfield': 6.0.0-beta.16_uslzfc62di2n2otc2tvfklnwji
   '@smui/top-app-bar': 6.0.0-beta.16_uslzfc62di2n2otc2tvfklnwji
@@ -1934,6 +1944,47 @@ packages:
       tslib: 2.4.0
     dev: false
 
+  /@material/chips/13.0.0:
+    resolution: {integrity: sha512-Ov4runDbrROUpMqKyCi3lpknfrLzGwtV+/rfYIgTYUkEVpCHXHddxXxcjP4zqh3QLXnE6ma92PLGcxCb/zzogQ==}
+    dependencies:
+      '@material/animation': 13.0.0
+      '@material/base': 13.0.0
+      '@material/checkbox': 13.0.0
+      '@material/density': 13.0.0
+      '@material/dom': 13.0.0
+      '@material/elevation': 13.0.0
+      '@material/feature-targeting': 13.0.0
+      '@material/ripple': 13.0.0
+      '@material/rtl': 13.0.0
+      '@material/shape': 13.0.0
+      '@material/theme': 13.0.0
+      '@material/tokens': 13.0.0
+      '@material/touch-target': 13.0.0
+      '@material/typography': 13.0.0
+      tslib: 2.4.0
+    dev: true
+
+  /@material/chips/14.0.0:
+    resolution: {integrity: sha512-SfZX/Ovdq4NgjdtIr/N1O3fEHisZC+t8G8629OV/NrniSS6rKOa+q1mImzna8R4pfuYO+7nT5nZewQpL/JSYaQ==}
+    dependencies:
+      '@material/animation': 14.0.0
+      '@material/base': 14.0.0
+      '@material/checkbox': 14.0.0
+      '@material/density': 14.0.0
+      '@material/dom': 14.0.0
+      '@material/elevation': 14.0.0
+      '@material/feature-targeting': 14.0.0
+      '@material/focus-ring': 14.0.0
+      '@material/ripple': 14.0.0
+      '@material/rtl': 14.0.0
+      '@material/shape': 14.0.0
+      '@material/theme': 14.0.0
+      '@material/tokens': 14.0.0
+      '@material/touch-target': 14.0.0
+      '@material/typography': 14.0.0
+      tslib: 2.4.0
+    dev: false
+
   /@material/circular-progress/13.0.0:
     resolution: {integrity: sha512-jSbr0ywY2N6s05tyqTXl/cG339C+qU3ck3FwXUq5SJup8CWT0AoJ8EG/CD10CEhNH8nH9Iwstve95oNgIt8G4g==}
     dependencies:
@@ -2542,6 +2593,42 @@ packages:
       tslib: 2.4.0
     dev: false
 
+  /@material/snackbar/13.0.0:
+    resolution: {integrity: sha512-z59aYCeMWWEbsUU04QDZN4CxzCCOp3OIc5tzrdqnY3qRq4wwApxncf7RKKKSU2K6WTEWfdHHOc7aNX8kqlDmUg==}
+    dependencies:
+      '@material/animation': 13.0.0
+      '@material/base': 13.0.0
+      '@material/button': 13.0.0
+      '@material/dom': 13.0.0
+      '@material/elevation': 13.0.0
+      '@material/feature-targeting': 13.0.0
+      '@material/icon-button': 13.0.0
+      '@material/ripple': 13.0.0
+      '@material/rtl': 13.0.0
+      '@material/shape': 13.0.0
+      '@material/theme': 13.0.0
+      '@material/typography': 13.0.0
+      tslib: 2.4.0
+    dev: true
+
+  /@material/snackbar/14.0.0:
+    resolution: {integrity: sha512-28uQBj9bw7BalNarK9j8/aVW4Ys5aRaGHoWH+CeYvAjqQUJkrYoqM52aiKhBwqrjBPMJHk1aXthe3YbzMBm6vA==}
+    dependencies:
+      '@material/animation': 14.0.0
+      '@material/base': 14.0.0
+      '@material/button': 14.0.0
+      '@material/dom': 14.0.0
+      '@material/elevation': 14.0.0
+      '@material/feature-targeting': 14.0.0
+      '@material/icon-button': 14.0.0
+      '@material/ripple': 14.0.0
+      '@material/rtl': 14.0.0
+      '@material/shape': 14.0.0
+      '@material/theme': 14.0.0
+      '@material/typography': 14.0.0
+      tslib: 2.4.0
+    dev: false
+
   /@material/switch/13.0.0:
     resolution: {integrity: sha512-zbdo6nKEOAx24ILCBobZlQqU2WZ+KuPgdAc1VTI1q1BCKN3rDIfm9RnsCuYiZa9iaq4UUgdYuhH8KVEYGP7Lrw==}
     dependencies:
@@ -2801,6 +2888,20 @@ packages:
       - typescript
     dev: true
 
+  /@smui/chips/6.0.0-beta.16_uslzfc62di2n2otc2tvfklnwji:
+    resolution: {integrity: sha512-mfkVFAna0qsyYcyKL8LuqGxIteclKDm4PJ+yXUUk3VbsUcKFFf6FZqvM0xsjZt4QIKkrnDaALtCOviheHQNH7A==}
+    dependencies:
+      '@material/chips': 13.0.0
+      '@material/dom': 13.0.0
+      '@material/rtl': 13.0.0
+      '@smui/common': 6.0.0-beta.16_uslzfc62di2n2otc2tvfklnwji
+      '@smui/ripple': 6.0.0-beta.16_uslzfc62di2n2otc2tvfklnwji
+      svelte2tsx: 0.5.11_uslzfc62di2n2otc2tvfklnwji
+    transitivePeerDependencies:
+      - svelte
+      - typescript
+    dev: true
+
   /@smui/circular-progress/6.0.0-beta.16_uslzfc62di2n2otc2tvfklnwji:
     resolution: {integrity: sha512-d4iLP6pZFB2hbXA04ykBI8fAOHRd8kdvEZnPbFDbyV97BqXVuuQP+TMlqL0a/NppDD9gaC09ZWnGaijlpEAfHg==}
     dependencies:
@@ -3030,6 +3131,22 @@ packages:
       '@smui/menu': 6.0.0-beta.16_uslzfc62di2n2otc2tvfklnwji
       '@smui/menu-surface': 6.0.0-beta.16_uslzfc62di2n2otc2tvfklnwji
       '@smui/notched-outline': 6.0.0-beta.16_uslzfc62di2n2otc2tvfklnwji
+      '@smui/ripple': 6.0.0-beta.16_uslzfc62di2n2otc2tvfklnwji
+      svelte2tsx: 0.5.11_uslzfc62di2n2otc2tvfklnwji
+    transitivePeerDependencies:
+      - svelte
+      - typescript
+    dev: true
+
+  /@smui/snackbar/6.0.0-beta.16_uslzfc62di2n2otc2tvfklnwji:
+    resolution: {integrity: sha512-px509mEoSZYa0QoVD/PyecsX9duXH0pfnhrWe1HrQ4A7NzqFBgFsbt+N7z6C84LVQYZ5GNZ2E6YVMrPMm+CvZw==}
+    dependencies:
+      '@material/dom': 13.0.0
+      '@material/feature-targeting': 13.0.0
+      '@material/snackbar': 13.0.0
+      '@smui/button': 6.0.0-beta.16_uslzfc62di2n2otc2tvfklnwji
+      '@smui/common': 6.0.0-beta.16_uslzfc62di2n2otc2tvfklnwji
+      '@smui/icon-button': 6.0.0-beta.16_uslzfc62di2n2otc2tvfklnwji
       '@smui/ripple': 6.0.0-beta.16_uslzfc62di2n2otc2tvfklnwji
       svelte2tsx: 0.5.11_uslzfc62di2n2otc2tvfklnwji
     transitivePeerDependencies:

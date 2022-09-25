@@ -22,8 +22,8 @@
     changelog: '',
     satisfactory_version: 0,
     stability: VersionStabilities.Alpha,
-    arch: [{ smlVersionID: '', platform: '', link: '' }],
-    version: ''
+    version: '',
+    arch: [{ smlVersionID: '', platform: '', link: '' }]
   };
   export let submitText = 'Create';
 

@@ -47,10 +47,10 @@
   }
 
   $: initialValues = $smlVersion.data
-    ? {
+    ? ({
         ...$smlVersion.data.getSMLVersion,
         logo: undefined
-      }
+      } as unknown as SMLVersionData)
     : undefined;
 
   query(smlVersion);

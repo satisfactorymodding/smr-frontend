@@ -36,6 +36,10 @@ query GetMods($offset: Int!, $limit: Int!, $search: String, $order: Order, $orde
           state
         }
       }
+      tags {
+        id
+        name
+      }
     }
   }
 }
