@@ -33,7 +33,7 @@
     }).then((value) => {
       if (value.error) {
         console.error(value.error.message);
-        errorMessage = 'Error editing sMLVersion: ' + value.error.message;
+        errorMessage = 'Error editing SMLVersion: ' + value.error.message;
         errorToast = true;
       } else {
         // TODO Toast or something

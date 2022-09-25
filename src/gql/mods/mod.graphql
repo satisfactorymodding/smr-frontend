@@ -14,8 +14,7 @@ query GetMod($mod: String!) {
         id
         link
         arch {
-          id
-          ModVersionArchID
+          ModVersionID
           platform
           asset
           hash
@@ -29,8 +28,7 @@ query GetMod($mod: String!) {
         id
         link
         arch {
-          id
-          ModVersionArchID
+          ModVersionID
           platform
           asset
           hash
@@ -44,8 +42,7 @@ query GetMod($mod: String!) {
         id
         link
         arch {
-          id
-          ModVersionArchID
+          ModVersionID
           platform
           asset
           hash
