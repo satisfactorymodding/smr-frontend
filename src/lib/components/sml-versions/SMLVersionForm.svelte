@@ -23,7 +23,7 @@
     satisfactory_version: 0,
     stability: VersionStabilities.Alpha,
     version: '',
-    arch: [{ smlVersionID: '', platform: '', link: '' }]
+    arch: [{ platform: '', link: '' }]
   };
   export let submitText = 'Create';
 
@@ -34,7 +34,7 @@
   });
 
   const addArch = () => {
-    $data.arch.push({ smlVersionID: '', platform: '', link: '', key: '' });
+    $data.arch.push({ platform: '', link: '', key: '' });
     $data.arch = $data.arch;
   };
 
