@@ -28,7 +28,11 @@
   import { base } from '$app/paths';
   import Button, { Label, Icon } from '@smui/button';
   import Dialog, { Title, Content as DialogContent } from '@smui/dialog';
+  import type { MenuComponentDev } from '@smui/menu';
+  import Menu from '@smui/menu';
+  import List, { Item } from '@smui/list';
   import { installMod } from '$lib/stores/launcher';
+  import { prettyArch } from '$lib/utils/formatting';
 
   export let modId!: string;
   export let versionId!: string;
@@ -36,6 +40,7 @@
 
   let errorMessage = '';
   let errorToast = false;
+  let menu: MenuComponentDev;
 
   const deleteVersion = mutation({
     query: DeleteVersionDocument
@@ -88,10 +93,27 @@
           </Button>
           <Button variant="outlined" on:click={() => deleteDialogOpen.set(true)}>Delete</Button>
         {/if}
-
-        <Button variant="outlined" href={API_REST + '/mod/' + modId + '/versions/' + versionId + '/download'}>
-          Download
-        </Button>
+        {#if $version.data.getVersion.arch.length != 0}
+          <Button variant="outlined" on:click={() => menu.setOpen(true)}>
+            <Label>Actions</Label>
+          </Button>
+          <Menu bind:this={menu}>
+            <List>
+              {#each $version.data.getVersion.arch as arch}
+                <Item>
+                  <Button
+                    variant="outlined"
+                    href={API_REST + '/mod/' + modId + '/versions/' + versionId + '/' + arch.platform + '/download'}
+                    >Download {prettyArch(arch.platform)}</Button>
+                </Item>
+              {/each}
+            </List>
+          </Menu>
+        {:else}
+          <Button variant="outlined" href={base + '/mod/' + modId + '/version/' + versionId}>View</Button>
+          <Button variant="outlined" href={API_REST + '/mod/' + modId + '/versions/' + versionId + '/download'}
+            >Download</Button>
+        {/if}
         <Button variant="outlined" on:click={() => installMod(version.data.getVersion.mod.mod_reference)}>
           <Label>Install</Label>
           <Icon class="material-icons">download</Icon>

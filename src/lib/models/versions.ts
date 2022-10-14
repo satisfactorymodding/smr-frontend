@@ -6,12 +6,6 @@ import type { ZodObject, ZodRawShape } from 'zod';
 import type { File } from '$lib/models/file';
 import type { VersionStabilities } from '$lib/generated';
 
-export type VersionData = {
-  file: File;
-  changelog: string;
-  stability: VersionStabilities;
-};
-
 export type VersionMetadata = {
   uplugin: {
     Version: string;
@@ -22,6 +16,21 @@ export type VersionMetadata = {
     }[];
   };
   objects: string[];
+};
+
+export type modArchData = {
+  ModVersionID: string;
+  platform: string;
+  asset: string;
+  hash?: string;
+  size?: number;
+};
+
+export type VersionData = {
+  file: File;
+  changelog: string;
+  stability: VersionStabilities;
+  arch: modArchData[];
 };
 
 const validateUPluginJsonModZip = async (
@@ -59,7 +68,7 @@ const validateUPluginJsonModZip = async (
 
       return {
         uplugin: parsed,
-        objects: Object.keys(zip.files).filter((f) => f.endsWith('.dll') || f.endsWith('.pak'))
+        objects: Object.keys(zip.files).filter((f) => f.endsWith('.so') || f.endsWith('.dll') || f.endsWith('.pak'))
       };
     })
     .catch((err) => ({
@@ -76,13 +85,13 @@ const validateModZip = async (
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       .loadAsync(file as any)
       .then((zip) => {
-        const uPluginJsonFile = zip.file(modReference + '.uplugin');
+        const uPluginJsonFile = zip.file('WindowsNoEditor/' + modReference + '.uplugin');
         if (uPluginJsonFile) {
           return validateUPluginJsonModZip(zip, uPluginJsonFile, modReference);
         }
 
         return {
-          message: modReference + '.uplugin missing from mod'
+          message: 'WindowsNoEditor/' + modReference + '.uplugin missing from mod'
         };
       })
       .catch((err) => ({
