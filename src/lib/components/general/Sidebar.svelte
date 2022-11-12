@@ -70,6 +70,11 @@
       label: 'Help'
     },
     {
+      url: base + '/content-policy',
+      icon: 'verified_user',
+      label: 'Content Policy'
+    },
+    {
       url: base + '/privacy-policy',
       icon: 'policy',
       label: 'Privacy Policy'
