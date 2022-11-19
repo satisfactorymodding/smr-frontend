@@ -1,6 +1,6 @@
 {
   ".svelte-kit/runtime/client/start.js": {
-    "file": "immutable/start-91a8ace8.js",
+    "file": "immutable/start-00ebe672.js",
     "src": ".svelte-kit/runtime/client/start.js",
     "isEntry": true,
     "imports": [
@@ -19,6 +19,7 @@
       "src/routes/admin/unapproved-mods.svelte",
       "src/routes/admin/unapproved-versions.svelte",
       "src/routes/api-docs/index.svelte",
+      "src/routes/content-policy/index.svelte",
       "src/routes/guide/[guideId]/edit.svelte",
       "src/routes/guide/[guideId]/index.svelte",
       "src/routes/guides/index.svelte",
@@ -42,7 +43,7 @@
     ]
   },
   "src/routes/__layout.svelte": {
-    "file": "immutable/pages/__layout.svelte-881b0c80.js",
+    "file": "immutable/pages/__layout.svelte-c1ee05d4.js",
     "src": "src/routes/__layout.svelte",
     "isEntry": true,
     "isDynamicEntry": true,
@@ -65,7 +66,7 @@
       "src/lib/thirdparty/custom_protocol.ts"
     ],
     "css": [
-      "immutable/assets/pages/__layout.svelte-ca00d198.css"
+      "immutable/assets/pages/__layout.svelte-49afd6ef.css"
     ]
   },
   ".svelte-kit/runtime/components/error.svelte": {
@@ -199,7 +200,22 @@
       "_paths-1c47712a.js"
     ],
     "css": [
-      "immutable/assets/pages/api-docs/index.svelte-1c1e4dfd.css"
+      "immutable/assets/pages/privacy-policy/index.svelte-bcc48566.css"
+    ]
+  },
+  "src/routes/content-policy/index.svelte": {
+    "file": "immutable/pages/content-policy/index.svelte-60ccf8e6.js",
+    "src": "src/routes/content-policy/index.svelte",
+    "isEntry": true,
+    "isDynamicEntry": true,
+    "imports": [
+      "_vendor-93f46a94.js",
+      "_MetaDescriptors-5ea9952a.js",
+      "_stores-84e1d086.js",
+      "_paths-1c47712a.js"
+    ],
+    "css": [
+      "immutable/assets/pages/privacy-policy/index.svelte-bcc48566.css"
     ]
   },
   "src/routes/guide/[guideId]/edit.svelte": {
@@ -366,7 +382,7 @@
     ]
   },
   "src/routes/mod/[modId]/new-version.svelte": {
-    "file": "immutable/pages/mod/_modId_/new-version.svelte-9ceb2f3d.js",
+    "file": "immutable/pages/mod/_modId_/new-version.svelte-85ca9fa4.js",
     "src": "src/routes/mod/[modId]/new-version.svelte",
     "isEntry": true,
     "isDynamicEntry": true,
@@ -375,7 +391,7 @@
       "_routing-c6322149.js",
       "_Toast-a853093a.js",
       "_navigation-ce539261.js",
-      "_VersionForm-78ea34d4.js",
+      "_VersionForm-62ee3168.js",
       "_graphql-f19d0585.js",
       "_paths-1c47712a.js",
       "_MetaDescriptors-5ea9952a.js",
@@ -393,7 +409,7 @@
     ]
   },
   "src/routes/mod/[modId]/version/[versionId]/edit.svelte": {
-    "file": "immutable/pages/mod/_modId_/version/_versionId_/edit.svelte-96bcb7cb.js",
+    "file": "immutable/pages/mod/_modId_/version/_versionId_/edit.svelte-677575da.js",
     "src": "src/routes/mod/[modId]/version/[versionId]/edit.svelte",
     "isEntry": true,
     "isDynamicEntry": true,
@@ -403,7 +419,7 @@
       "_graphql-f19d0585.js",
       "_Toast-a853093a.js",
       "_navigation-ce539261.js",
-      "_VersionForm-78ea34d4.js",
+      "_VersionForm-62ee3168.js",
       "_paths-1c47712a.js",
       "_MetaDescriptors-5ea9952a.js",
       "_singletons-cdeec3fd.js",
@@ -536,7 +552,7 @@
       "_paths-1c47712a.js"
     ],
     "css": [
-      "immutable/assets/pages/api-docs/index.svelte-1c1e4dfd.css"
+      "immutable/assets/pages/privacy-policy/index.svelte-bcc48566.css"
     ]
   },
   "src/routes/settings/index.svelte": {
@@ -603,7 +619,7 @@
       "_paths-1c47712a.js"
     ],
     "css": [
-      "immutable/assets/pages/api-docs/index.svelte-1c1e4dfd.css"
+      "immutable/assets/pages/privacy-policy/index.svelte-bcc48566.css"
     ]
   },
   "src/routes/user/[userId]/index.svelte": {
@@ -724,7 +740,7 @@
       "_graphql-f19d0585.js"
     ],
     "css": [
-      "immutable/assets/VersionForm-3ddc908d.css"
+      "immutable/assets/ModForm-cc1db5c2.css"
     ]
   },
   "_forms-2903de53.js": {
@@ -760,7 +776,7 @@
       "_markdown-6a2ff7f0.js"
     ],
     "css": [
-      "immutable/assets/VersionForm-3ddc908d.css"
+      "immutable/assets/ModForm-cc1db5c2.css"
     ]
   },
   "_gql-d96f7ff1.js": {
@@ -830,7 +846,7 @@
       "_ModCompatibilityEdit-13c30fdc.js"
     ],
     "css": [
-      "immutable/assets/VersionForm-3ddc908d.css"
+      "immutable/assets/ModForm-cc1db5c2.css"
     ]
   },
   "_ModCompatibilityEdit-13c30fdc.js": {
@@ -841,8 +857,8 @@
       "_forms-5fcb6172.js"
     ]
   },
-  "_VersionForm-78ea34d4.js": {
-    "file": "immutable/chunks/VersionForm-78ea34d4.js",
+  "_VersionForm-62ee3168.js": {
+    "file": "immutable/chunks/VersionForm-62ee3168.js",
     "imports": [
       "_vendor-93f46a94.js",
       "_forms-5fcb6172.js",
@@ -854,7 +870,7 @@
       "_formatting-b1e7d458.js"
     ],
     "css": [
-      "immutable/assets/VersionForm-3ddc908d.css"
+      "immutable/assets/VersionForm-a85b24ef.css"
     ]
   },
   "src/lib/thirdparty/custom_protocol.ts": {
