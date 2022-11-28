@@ -66,6 +66,25 @@ const validateUPluginJsonModZip = async (
         };
       }
 
+      const uPluginLinuxServer = zip.file('LinuxServer/' + modReference + '.uplugin');
+      const uPluginWin64Server = zip.file('WindowsServer/' + modReference + '.uplugin');
+
+      if (uPluginLinuxServer.length != 0) {
+        if (uPluginJsonFile != uPluginLinuxServer) {
+          return {
+            message: 'LinuxServer uPlugin does not match WindowsNoEditor uPlugin'
+          };
+        }
+      }
+
+      if (uPluginWin64Server.length != 0) {
+        if (uPluginJsonFile != uPluginWin64Server) {
+          return {
+            message: 'WindowsServer uPlugin does not match WindowsNoEditor uPlugin'
+          };
+        }
+      }
+
       return {
         uplugin: parsed,
         objects: Object.keys(zip.files).filter((f) => f.endsWith('.so') || f.endsWith('.dll') || f.endsWith('.pak'))
