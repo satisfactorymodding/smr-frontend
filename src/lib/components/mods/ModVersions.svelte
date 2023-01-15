@@ -7,7 +7,7 @@
   import Card, { Content } from '@smui/card';
   import DataTable, { Head, Body, Row, Cell } from '@smui/data-table';
   import Menu from '@smui/menu';
-  import List, { Item, Separator, Text } from '@smui/list';
+  import List, { Item } from '@smui/list';
   import Button, { Group, GroupItem, Label, Icon } from '@smui/button';
   import { installMod } from '$lib/stores/launcher';
   import { prettyDate, prettyNumber, prettyBytes, prettyArch } from '$lib/utils/formatting';
