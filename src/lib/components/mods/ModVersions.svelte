@@ -4,8 +4,7 @@
   import { API_REST } from '$lib/core';
   import { markdown } from '$lib/utils/markdown';
   import { base } from '$app/paths';
-  import Card from '@smui/card';
-  import * as CardContent from '@smui/card';
+  import Card, {Content} from '@smui/card';
   import DataTable, { Head, Body, Row, Cell } from '@smui/data-table';
   import type { MenuComponentDev } from '@smui/menu';
   import Menu from '@smui/menu';
@@ -41,9 +40,9 @@
 
 <Card class="h-fit">
   {#if $versions.fetching}
-    <CardContent.Content>Loading...</CardContent.Content>
+    <Content>Loading...</Content>
   {:else if $versions.error}
-    <CardContent.Content>Oh no... {$versions.error.message}</CardContent.Content>
+    <Content>Oh no... {$versions.error.message}</Content>
   {:else}
     <DataTable 
     class="max-w-full"
