@@ -4,14 +4,13 @@
   import { API_REST } from '$lib/core';
   import { markdown } from '$lib/utils/markdown';
   import { base } from '$app/paths';
-  import Card, {Content} from '@smui/card';
+  import Card, { Content } from '@smui/card';
   import DataTable, { Head, Body, Row, Cell } from '@smui/data-table';
   import Menu from '@smui/menu';
   import List, { Item, Separator, Text } from '@smui/list';
   import Button, { Group, GroupItem, Label, Icon } from '@smui/button';
   import { installMod } from '$lib/stores/launcher';
   import { prettyDate, prettyNumber, prettyBytes, prettyArch } from '$lib/utils/formatting';
-
 
   export let modId!: string;
 
@@ -43,11 +42,7 @@
   {:else if $versions.error}
     <Content>Oh no... {$versions.error.message}</Content>
   {:else}
-    <DataTable 
-    class="max-w-full"
-    container$class="!overflow-visible"
-    table$class="!overflow-visible"
-    >
+    <DataTable class="max-w-full" container$class="!overflow-visible" table$class="!overflow-visible">
       <Head>
         <Row>
           <Cell>Version</Cell>
@@ -66,34 +61,25 @@
             <Cell>{version.sml_version}</Cell>
             <Cell>{prettyNumber(version.downloads)}</Cell>
             <Cell>{prettyDate(version.created_at)}</Cell>
-            <Cell
-                class="!overflow-visible"
-            >
+            <Cell class="!overflow-visible">
               <div class="grid grid-flow-col gap-4">
                 {#if version.arch.length != 0}
-
-                <Group variant="outlined">
-                    <Button variant="outlined"
-                    href={API_REST +
-                        '/mod/' +
-                        modId +
-                        '/versions/' +
-                        version.id +
-                        '/download'}
-                    >
+                  <Group variant="outlined">
+                    <Button
+                      variant="outlined"
+                      href={API_REST + '/mod/' + modId + '/versions/' + version.id + '/download'}>
                       <Label>Download</Label>
                     </Button>
                     <div use:GroupItem>
                       <Button
                         on:click={() => menus[i].setOpen(true)}
                         variant="outlined"
-                        style="padding: 0; min-width: 36px;"
-                      >
+                        style="padding: 0; min-width: 36px;">
                         <Icon class="material-icons" style="margin: 0;">arrow_drop_down</Icon>
                       </Button>
                       <Menu bind:this={menus[i]} anchorCorner="TOP_LEFT">
                         <List>
-                            {#each version.arch as arch, _}
+                          {#each version.arch as arch, _}
                             <Item>
                               <Button
                                 class="w-full"
