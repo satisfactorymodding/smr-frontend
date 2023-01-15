@@ -67,6 +67,7 @@
                 on:click|stopPropagation={() => {
                   /*block table row expansion*/
                 }}>
+                <Button variant="outlined" href={base + '/mod/' + modId + '/version/' + version.id}>View</Button>
                 {#if version.arch.length != 0}
                   <Group variant="outlined">
                     <Button
@@ -107,7 +108,7 @@
                   <Button variant="outlined" href={API_REST + '/mod/' + modId + '/versions/' + version.id + '/download'}
                     >Download</Button>
                 {/if}
-                <Button variant="outlined" href={base + '/mod/' + modId + '/version/' + version.id}>View</Button>
+
                 <Button variant="outlined" on:click={() => installMod($versions.data.getMod.mod_reference)}>
                   <Label>Install</Label>
                   <Icon class="material-icons">download</Icon>
