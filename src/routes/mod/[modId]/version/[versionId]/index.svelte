@@ -98,7 +98,7 @@
             <Label>Download</Label>
             <Icon class="material-icons" style="margin: 0;">arrow_drop_down</Icon>
           </Button>
-          <Menu bind:this={menu} anchorCorner="TOP_LEFT">
+          <Menu bind:this={menu} anchorCorner="BOTTOM_LEFT">
             <List>
               {#each $version.data.getVersion.arch as arch}
                 <Item>
