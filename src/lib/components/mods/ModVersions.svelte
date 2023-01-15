@@ -6,7 +6,6 @@
   import { base } from '$app/paths';
   import Card, {Content} from '@smui/card';
   import DataTable, { Head, Body, Row, Cell } from '@smui/data-table';
-  import type { MenuComponentDev } from '@smui/menu';
   import Menu from '@smui/menu';
   import List, { Item, Separator, Text } from '@smui/list';
   import Button, { Group, GroupItem, Label, Icon } from '@smui/button';
@@ -17,7 +16,7 @@
   export let modId!: string;
 
   let expandedVersions = new Set<string>();
-  let menu: MenuComponentDev;
+  const menus = [];
 
   // TODO Pagination
   const versions = operationStore(GetModVersionsDocument, {
@@ -60,7 +59,7 @@
         </Row>
       </Head>
       <Body>
-        {#each $versions.data.getMod.versions as version}
+        {#each $versions.data.getMod.versions as version, i}
           <Row on:click={() => toggleRow(version.id)}>
             <Cell>{version.version}</Cell>
             <Cell>{version.stability}</Cell>
@@ -86,13 +85,13 @@
                     </Button>
                     <div use:GroupItem>
                       <Button
-                        on:click={() => menu.setOpen(true)}
+                        on:click={() => menus[i].setOpen(true)}
                         variant="outlined"
                         style="padding: 0; min-width: 36px;"
                       >
                         <Icon class="material-icons" style="margin: 0;">arrow_drop_down</Icon>
                       </Button>
-                      <Menu bind:this={menu} anchorCorner="TOP_LEFT">
+                      <Menu bind:this={menus[i]} anchorCorner="TOP_LEFT">
                         <List>
                             {#each version.arch as arch, _}
                             <Item>
