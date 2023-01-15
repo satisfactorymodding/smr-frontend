@@ -9,11 +9,11 @@
   import DataTable, { Head, Body, Row, Cell } from '@smui/data-table';
   import type { MenuComponentDev } from '@smui/menu';
   import Menu from '@smui/menu';
-  import List, { Item } from '@smui/list';
-  import Button, { Label, Icon } from '@smui/button';
+  import List, { Item, Separator, Text } from '@smui/list';
+  import Button, { Group, GroupItem, Label, Icon } from '@smui/button';
   import { installMod } from '$lib/stores/launcher';
   import { prettyDate, prettyNumber, prettyBytes, prettyArch } from '$lib/utils/formatting';
-  import { Modal, Content, Trigger } from 'sv-popup';
+
 
   export let modId!: string;
 
@@ -45,7 +45,11 @@
   {:else if $versions.error}
     <CardContent.Content>Oh no... {$versions.error.message}</CardContent.Content>
   {:else}
-    <DataTable class="max-w-full">
+    <DataTable 
+    class="max-w-full"
+    container$class="!overflow-visible"
+    table$class="!overflow-visible"
+    >
       <Head>
         <Row>
           <Cell>Version</Cell>
@@ -64,42 +68,52 @@
             <Cell>{version.sml_version}</Cell>
             <Cell>{prettyNumber(version.downloads)}</Cell>
             <Cell>{prettyDate(version.created_at)}</Cell>
-            <Cell>
+            <Cell
+                class="!overflow-visible"
+            >
               <div class="grid grid-flow-col gap-4">
                 {#if version.arch.length != 0}
-                  <Modal small={true}>
-                    <!-- whatever you want in the popped-up modal -->
-                    <Content>
-                      <div class="modal-content">
-                        <Menu bind:this={menu} open={true} class="w-full" style="zindex:-1;">
-                          <List>
-                            {#each version.arch as arch, _}
-                              <Item>
-                                <Button
-                                  class="w-full"
-                                  variant="outlined"
-                                  href={API_REST +
-                                    '/mod/' +
-                                    modId +
-                                    '/versions/' +
-                                    version.id +
-                                    '/' +
-                                    arch.platform +
-                                    '/download'}>Download {prettyArch(arch.platform)}</Button>
-                              </Item>
-                            {/each}
-                          </List>
-                        </Menu>
-                      </div>
-                    </Content>
 
-                    <!-- button, link, or any element that triggers popup on click -->
-                    <div class="download-button-trigger">
-                      <Trigger>
-                        <Button variant="outlined">Download</Button>
-                      </Trigger>
+                <Group variant="outlined">
+                    <Button variant="outlined"
+                    href={API_REST +
+                        '/mod/' +
+                        modId +
+                        '/versions/' +
+                        version.id +
+                        '/download'}
+                    >
+                      <Label>Download</Label>
+                    </Button>
+                    <div use:GroupItem>
+                      <Button
+                        on:click={() => menu.setOpen(true)}
+                        variant="outlined"
+                        style="padding: 0; min-width: 36px;"
+                      >
+                        <Icon class="material-icons" style="margin: 0;">arrow_drop_down</Icon>
+                      </Button>
+                      <Menu bind:this={menu} anchorCorner="TOP_LEFT">
+                        <List>
+                            {#each version.arch as arch, _}
+                            <Item>
+                              <Button
+                                class="w-full"
+                                variant="outlined"
+                                href={API_REST +
+                                  '/mod/' +
+                                  modId +
+                                  '/versions/' +
+                                  version.id +
+                                  '/' +
+                                  arch.platform +
+                                  '/download'}>Download {prettyArch(arch.platform)}</Button>
+                            </Item>
+                          {/each}
+                        </List>
+                      </Menu>
                     </div>
-                  </Modal>
+                  </Group>
                 {:else}
                   <Button variant="outlined" href={base + '/mod/' + modId + '/version/' + version.id}>View</Button>
                   <Button variant="outlined" href={API_REST + '/mod/' + modId + '/versions/' + version.id + '/download'}
@@ -133,15 +147,3 @@
     </DataTable>
   {/if}
 </Card>
-
-<style>
-  .modal-content {
-    z-index: -1;
-  }
-
-  .download-button-trigger {
-    display: -ms-inline-grid;
-    max-width: fit-content;
-    width: 95px;
-  }
-</style>
