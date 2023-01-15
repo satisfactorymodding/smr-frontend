@@ -4,7 +4,8 @@
   import { API_REST } from '$lib/core';
   import { markdown } from '$lib/utils/markdown';
   import { base } from '$app/paths';
-  import Card, { Content } from '@smui/card';
+  import Card from '@smui/card';
+  import * as CardContent from '@smui/card';
   import DataTable, { Head, Body, Row, Cell } from '@smui/data-table';
   import type { MenuComponentDev } from '@smui/menu';
   import Menu from '@smui/menu';
@@ -12,6 +13,7 @@
   import Button, { Label, Icon } from '@smui/button';
   import { installMod } from '$lib/stores/launcher';
   import { prettyDate, prettyNumber, prettyBytes, prettyArch } from '$lib/utils/formatting';
+  import { Modal, Content, Trigger } from 'sv-popup';
 
   export let modId!: string;
 
@@ -39,9 +41,9 @@
 
 <Card class="h-fit">
   {#if $versions.fetching}
-    <Content>Loading...</Content>
+    <CardContent.Content>Loading...</CardContent.Content>
   {:else if $versions.error}
-    <Content>Oh no... {$versions.error.message}</Content>
+    <CardContent.Content>Oh no... {$versions.error.message}</CardContent.Content>
   {:else}
     <DataTable class="max-w-full">
       <Head>
@@ -65,36 +67,45 @@
             <Cell>
               <div class="grid grid-flow-col gap-4">
                 {#if version.arch.length != 0}
-                  <Button variant="outlined" on:click={() => menu.setOpen(true)}>
-                    <Label>Actions</Label>
-                  </Button>
-                  <Menu bind:this={menu}>
-                    <List>
-                      <Item>
-                        <Button variant="outlined" href={base + '/mod/' + modId + '/version/' + version.id}
-                          >View</Button>
-                      </Item>
-                      {#each version.arch as arch, _}
-                        <Item>
-                          <Button
-                            variant="outlined"
-                            href={API_REST +
-                              '/mod/' +
-                              modId +
-                              '/versions/' +
-                              version.id +
-                              '/' +
-                              arch.platform +
-                              '/download'}>Download {prettyArch(arch.platform)}</Button>
-                        </Item>
-                      {/each}
-                    </List>
-                  </Menu>
+                  <Modal small={true}>
+                    <!-- whatever you want in the popped-up modal -->
+                    <Content>
+                      <div class="modal-content">
+                        <Menu bind:this={menu} open={true} class="w-full" style="zindex:-1;">
+                          <List>
+                            {#each version.arch as arch, _}
+                              <Item>
+                                <Button
+                                  class="w-full"
+                                  variant="outlined"
+                                  href={API_REST +
+                                    '/mod/' +
+                                    modId +
+                                    '/versions/' +
+                                    version.id +
+                                    '/' +
+                                    arch.platform +
+                                    '/download'}>Download {prettyArch(arch.platform)}</Button>
+                              </Item>
+                            {/each}
+                          </List>
+                        </Menu>
+                      </div>
+                    </Content>
+
+                    <!-- button, link, or any element that triggers popup on click -->
+                    <div class="download-button-trigger">
+                      <Trigger>
+                        <Button variant="outlined">Download</Button>
+                      </Trigger>
+                    </div>
+                  </Modal>
                 {:else}
                   <Button variant="outlined" href={base + '/mod/' + modId + '/version/' + version.id}>View</Button>
                   <Button variant="outlined" href={API_REST + '/mod/' + modId + '/versions/' + version.id + '/download'}
                     >Download</Button>
                 {/if}
+                <Button variant="outlined" href={base + '/mod/' + modId + '/version/' + version.id}>View</Button>
                 <Button variant="outlined" on:click={() => installMod($versions.data.getMod.mod_reference)}>
                   <Label>Install</Label>
                   <Icon class="material-icons">download</Icon>
@@ -122,3 +133,15 @@
     </DataTable>
   {/if}
 </Card>
+
+<style>
+  .modal-content {
+    z-index: -1;
+  }
+
+  .download-button-trigger {
+    display: -ms-inline-grid;
+    max-width: fit-content;
+    width: 95px;
+  }
+</style>
