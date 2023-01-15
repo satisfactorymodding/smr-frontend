@@ -62,12 +62,17 @@
             <Cell>{prettyNumber(version.downloads)}</Cell>
             <Cell>{prettyDate(version.created_at)}</Cell>
             <Cell class="!overflow-visible">
-              <div class="grid grid-flow-col gap-4">
+              <div
+                class="grid grid-flow-col gap-4"
+                on:click|stopPropagation={() => {
+                  /*block table row expansion*/
+                }}>
                 {#if version.arch.length != 0}
                   <Group variant="outlined">
                     <Button
                       variant="outlined"
-                      href={API_REST + '/mod/' + modId + '/versions/' + version.id + '/download'}>
+                      href={API_REST + '/mod/' + modId + '/versions/' + version.id + '/download'}
+                      class="flex-grow">
                       <Label>Download</Label>
                     </Button>
                     <div use:GroupItem>
@@ -99,7 +104,6 @@
                     </div>
                   </Group>
                 {:else}
-                  <Button variant="outlined" href={base + '/mod/' + modId + '/version/' + version.id}>View</Button>
                   <Button variant="outlined" href={API_REST + '/mod/' + modId + '/versions/' + version.id + '/download'}
                     >Download</Button>
                 {/if}
