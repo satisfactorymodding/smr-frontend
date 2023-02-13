@@ -66,25 +66,6 @@ const validateUPluginJsonModZip = async (
         };
       }
 
-      const uPluginLinuxServer = await zip.file('LinuxServer/' + modReference + '.uplugin')?.async('string');
-      const uPluginWin64Server = await zip.file('WindowsServer/' + modReference + '.uplugin')?.async('string');
-
-      if (uPluginLinuxServer.length != 0) {
-        if (uPluginJson != uPluginLinuxServer) {
-          return {
-            message: 'LinuxServer uPlugin does not match WindowsNoEditor uPlugin'
-          };
-        }
-      }
-
-      if (uPluginWin64Server.length != 0) {
-        if (uPluginJson != uPluginWin64Server) {
-          return {
-            message: 'WindowsServer uPlugin does not match WindowsNoEditor uPlugin'
-          };
-        }
-      }
-
       return {
         uplugin: parsed,
         objects: Object.keys(zip.files).filter((f) => f.endsWith('.so') || f.endsWith('.dll') || f.endsWith('.pak'))
@@ -103,14 +84,43 @@ const validateModZip = async (
     zipper
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       .loadAsync(file as any)
-      .then((zip) => {
-        const uPluginJsonFile = zip.file('WindowsNoEditor/' + modReference + '.uplugin');
-        if (uPluginJsonFile) {
-          return validateUPluginJsonModZip(zip, uPluginJsonFile, modReference);
+      .then(async (zip) => {
+        const strPlatforms = ['WindowsNoClient', 'WindowsServer', 'LinuxServer'];
+        const uPlugins: Array<JSZip.JSZipObject | null> = [];
+
+        for (const strPlatform of strPlatforms) {
+          uPlugins.push(zip.file(strPlatform + '/' + modReference + '.uplugin'));
+        }
+
+        for (const uPlugin of uPlugins) {
+          if (!uPlugin) {
+            continue;
+          }
+          for (const compare of uPlugins) {
+            if (!compare) {
+              continue;
+            }
+
+            const uPluginJson = await uPlugin.async('string');
+            const compareJson = await compare.async('string');
+
+            if (uPluginJson !== compareJson) {
+              return {
+                message:
+                  uPlugin.name.split('/', 1) + ' uPlugin does not match ' + compare.name.split('/', 1) + ' uPlugin'
+              };
+            }
+          }
+        }
+
+        for (const uPlugin of uPlugins) {
+          if (uPlugin) {
+            return validateUPluginJsonModZip(zip, uPlugin, modReference);
+          }
         }
 
         return {
-          message: 'WindowsNoEditor/' + modReference + '.uplugin missing from mod'
+          message: modReference + '.uplugin missing from mod'
         };
       })
       .catch((err) => ({
