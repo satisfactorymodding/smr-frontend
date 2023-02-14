@@ -11,10 +11,7 @@
   const hash_toggle: boolean[] = [];
   for (let i = 0; version.arch.length < i; i++) {
     hash_toggle.push(true);
-  };
-
-  
-
+  }
 </script>
 
 <Card>
