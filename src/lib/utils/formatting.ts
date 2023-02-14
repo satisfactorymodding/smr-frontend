@@ -8,7 +8,7 @@ export const prettyDate = (date: Date | string) => {
 
 export const prettyNumber = (n: number) => n.toLocaleString();
 
-export const prettyHash = (toggle: boolean, hash: string): string => toggle ? hash.substr(0, 7) + '...' : hash;
+export const prettyHash = (toggle: boolean, hash: string): string => (toggle ? hash.substr(0, 7) + '...' : hash);
 
 export const prettyBytes = (bytes: number, decimals = 2) => {
   if (bytes === 0) {
