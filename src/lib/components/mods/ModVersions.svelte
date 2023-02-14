@@ -11,7 +11,7 @@
   import List, { Item } from '@smui/list';
   import Button, { Label, Icon } from '@smui/button';
   import { installMod } from '$lib/stores/launcher';
-  import { prettyDate, prettyNumber, prettyBytes, prettyArch } from '$lib/utils/formatting';
+  import { prettyDate, prettyNumber, prettyBytes, prettyArch, prettyHash } from '$lib/utils/formatting';
 
   export let modId!: string;
 
@@ -106,8 +106,18 @@
           {#if expandedVersions.has(version.id)}
             <Row>
               <Cell colspan={6}>
-                <div class="col-span-3 p-2">Size: {prettyBytes(version.size)}</div>
-                <div class="col-span-3 p-2">Hash: {version.hash}</div>
+                {#if version.arch.length != 0}
+                  <hr style="col-span-3; margin-top: 10px; margin-bottom: 10px; vertical-align: middle;" />
+                  {#each version.arch as arch, _}
+                    <div class="col-span-3">Platform: {prettyArch(arch.platform)}</div>
+                    <div class="col-span-3">Size: {prettyBytes(arch.size)}</div>
+                    <div class="col-span-3">Hash: {prettyHash(false, arch.hash)}</div>
+                    <hr style="col-span-3; margin-top: 10px; margin-bottom: 10px; vertical-align: middle;" />
+                  {/each}
+                {:else}
+                  <div class="col-span-3 p-2">Size: {prettyBytes(version.size)}</div>
+                  <div class="col-span-3 p-2">Hash: {version.hash}</div>
+                {/if}
 
                 <div class="col-span-6 p-2 markdown-content">
                   {#await markdown(version.changelog) then changelogRendered}

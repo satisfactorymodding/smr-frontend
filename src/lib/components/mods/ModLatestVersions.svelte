@@ -4,12 +4,12 @@
   import { base } from '$app/paths';
   import Card, { Content } from '@smui/card';
   import { Icon } from '@smui/common';
-  import { prettyDate } from '$lib/utils/formatting';
+  import { prettyArch, prettyBytes, prettyDate } from '$lib/utils/formatting';
 
   type ILatestVersions = {
-    alpha?: Pick<Version, 'id' | 'link' | 'version' | 'created_at'>;
-    beta?: Pick<Version, 'id' | 'link' | 'version' | 'created_at'>;
-    release?: Pick<Version, 'id' | 'link' | 'version' | 'created_at'>;
+    alpha?: Pick<Version, 'id' | 'link' | 'version' | 'created_at' | 'arch'>;
+    beta?: Pick<Version, 'id' | 'link' | 'version' | 'created_at' | 'arch'>;
+    release?: Pick<Version, 'id' | 'link' | 'version' | 'created_at' | 'arch'>;
   };
 
   const stabilities = {
@@ -37,13 +37,32 @@
               <a href="{base}/mod/{modId}/version/{latestVersions[stability].id}/" class="text-yellow-500 underline"
                 >Version {latestVersions[stability].version}</a>
               <div>{prettyDate(latestVersions[stability].created_at)}</div>
-            </div>
-            <div class="text-3xl w-14 h-14 p-2.5">
-              <a
-                href={API_REST + '/mod/' + modId + '/versions/' + latestVersions[stability].id + '/download'}
-                class="text-yellow-500 underline">
-                <Icon class="material-icons">download</Icon>
-              </a>
+              {#if latestVersions[stability].arch.length != 0}
+                <div class="text-2xl text-lg break-words">
+                  {#each latestVersions[stability].arch as arch, _}
+                    <div>
+                      <a
+                        href={API_REST +
+                          '/mod/' +
+                          modId +
+                          '/versions/' +
+                          latestVersions[stability].id +
+                          '/platform/' +
+                          arch.platform +
+                          '/download'}
+                        class="text-yellow-500 underline"
+                        ><Icon class="material-icons" style="height:5px;">download</Icon></a>
+                      {prettyArch(arch.platform)} - {prettyBytes(arch.size)}
+                    </div>
+                  {/each}
+                </div>
+              {:else}
+                <a
+                  href={API_REST + '/mod/' + modId + '/versions/' + latestVersions[stability].id + '/download'}
+                  class="text-yellow-500 underline">
+                  <Icon class="material-icons">download</Icon>
+                </a>
+              {/if}
             </div>
           </div>
         {/if}
