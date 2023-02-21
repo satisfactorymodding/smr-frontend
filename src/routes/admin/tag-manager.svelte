@@ -11,6 +11,7 @@
   import type { Tag } from '$lib/generated';
   import type { SnackbarComponentDev } from '@smui/snackbar';
 
+  const characterLimit = 24;
   let tags: Tag[] = [];
   const panels = {};
   const nameFields = {};
@@ -179,7 +180,8 @@
             bind:value={tag.name}
             label="Tag-Name"
             bind:this={nameFields[tag.id]}
-            on:change={() => tagChange(tag)}>
+            on:change={() => tagChange(tag)}
+            input$maxLength={characterLimit}>
             <HelperText slot="helper">Human-Readable name of the tag that is shown in UI</HelperText>
           </Textfield>
         </Content>

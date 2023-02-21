@@ -19,13 +19,13 @@
   let inputA: InputComponentDev;
   let lineRippleA: LineRippleComponentDev;
 
-  let shake = false;
+  const shake = false;
 
   let allTags: Tag[] = [];
   let filteredTagsMatched: Tag[] = [];
   let filteredTagsUnmatched: Tag[] = [];
 
-  let newTagText: string;
+  let newTagText = '';
 
   let newTag: HTMLInputElement;
   let newTagContainer: HTMLElement = null;
@@ -36,11 +36,13 @@
   $: newTag = inputA?.getElement();
 
   function filterAvailableTags(tagList: Tag[], currentTags: Tag[], filterText: string): [Tag[], Tag[]] {
-    if (!tagList || !currentTags) {
-      return [tagList, tagList];
+    if (!tagList || !currentTags || !filterText) {
+      return [tagList, []];
     }
+    console.log(filterText);
+    filterText = filterText.toLowerCase();
     let unfiltered = tagList.filter((tag) => !currentTags.find((t) => t.id == tag.id));
-    const filtered = unfiltered.filter((tag) => !newTag || tag.name.startsWith(filterText));
+    const filtered = unfiltered.filter((tag) => !newTag || tag.name.toLowerCase().includes(filterText));
     unfiltered = unfiltered.filter((tag) => filtered.findIndex((t) => t.id === tag.id) === -1);
     return [filtered, unfiltered];
   }
@@ -58,25 +60,6 @@
         updateTags();
       }
     });
-  }
-
-  function setTagText(text: string) {
-    newTagText = text;
-    newTag.value = newTagText;
-  }
-
-  export function setTextRange(el: HTMLInputElement, start: number, end: number): void {
-    el.focus();
-    if (typeof window.getSelection != 'undefined' && typeof document.createRange != 'undefined') {
-      el.setSelectionRange(start, end);
-    }
-  }
-
-  export function placeCaretAtEnd(el: HTMLInputElement): void {
-    el.focus();
-    if (typeof window.getSelection != 'undefined' && typeof document.createRange != 'undefined') {
-      el.setSelectionRange(el.value.length, el.value.length);
-    }
   }
 
   function addTag(newTagObj: string | Tag) {
@@ -104,40 +87,6 @@
     updateTags();
   }
 
-  function newTagKeydown(e: Event) {
-    if (!(e instanceof KeyboardEvent)) {
-      return;
-    }
-    if (e.code == 'Backspace') {
-      if (newTag.value == '') {
-        setTagText(tags.pop().name);
-        placeCaretAtEnd(newTag);
-        tags = tags;
-        e.preventDefault();
-        updateTags();
-      }
-    } else if (e.code == 'Enter') {
-      e.preventDefault();
-      if (addTag(newTag.value)) {
-        setTagText('');
-        updateTags();
-      } else {
-        shake = true;
-        setTimeout(() => (shake = false), 500);
-      }
-    } else {
-      const newText = newTagText + e.key;
-      const [available] = filterAvailableTags(allTags, tags, newText);
-      if (available && available.length > 0) {
-        newTag.value = available[0].name;
-        setTextRange(newTag, newTagText.length + 1, newTag.value.length);
-        e.preventDefault();
-        newTagText = newText;
-        updateTags();
-      }
-    }
-  }
-
   function onFocusLost() {
     setTimeout(() => {
       if (newTagContainer && !newTagContainer.contains(document.activeElement)) {
@@ -146,14 +95,21 @@
     }, 200);
   }
 
-  function onInput(e: Event) {
-    newTagText = newTag.value;
+  function onInput(e) {
+    //on:input is thrown before the inner text of the input is updated.
+    // The following if-else ensure the text we search with is up-to-date
+    if (e.data) {
+      newTagText += e.data;
+    } else {
+      newTagText = newTagText.substring(0, newTagText.length - 1);
+    }
     updateTags();
     e.preventDefault();
   }
+  updateTags();
 </script>
 
-<div class="tags" on:focusin={() => (focused = true)} on:focusout={() => (focused = false)}>
+<div class="" on:focusin={() => (focused = true)} on:focusout={() => (focused = false)}>
   {#if !editable}
     {#if tags.length > 0}
       <div class="flex flex-row flex-wrap text-sm gap-1">
@@ -165,15 +121,17 @@
       </div>
     {/if}
   {:else}
-    <Textfield class="tags overflow-visible" bind:lineRipple={lineRippleA} bind:input={inputA} style="z-index: 9999">
+    <Textfield class="tags overflow-scroll" bind:lineRipple={lineRippleA} bind:input={inputA} style="z-index: 9999">
       <FloatingLabel
         class="pb-2"
         for="input-manual-a"
         slot="label"
-        floatAbove={(newTag && newTag.value.length > 0) || focused || tags.length > 0}>Tags</FloatingLabel>
+        floatAbove={(newTag && newTag.value.length > 0) || focused || tags.length > 0}>
+        Tags
+      </FloatingLabel>
       <div class="flex flex-row flex-wrap text-sm gap-1 mr-2">
         {#each tags as tag}
-          <div class="text-neutral-300 whitespace-nowrap flex removable-tag">
+          <div class="text-neutral-300 flex removable-tag">
             <span class="hashtag text-orange-500">#</span>
             <span class="cancel">
               <i class="material-icons mdc-chip__icon mdc-chip__icon--trailing" on:click={() => deleteTag(tag)}
@@ -184,27 +142,31 @@
         {/each}
         <div
           id="newTagContainer"
-          class="text-neutral-300 whitespace-nowrap flex"
+          class="text-neutral-300 flex"
           bind:this={newTagContainer}
           on:focusin={() => surface.setOpen(true)}
           on:focusout={onFocusLost}>
           <MenuSurface bind:this={surface} managed={true} anchorCorner="BOTTOM_LEFT" anchorElement={newTag}>
             <div style="margin: 1rem">
               <h1>Available Tags</h1>
-              <div class="flex flex-wrap m-1">
-                <Set chips={filteredTagsMatched} let:chip key={(tag) => tag.name}>
-                  <Chip {chip} on:SMUIChip:interaction={() => addTag(chip.name)}>
-                    <Text>{chip.name}</Text>
-                  </Chip>
-                </Set>
-              </div>
-              <div class="flex flex-wrap m-1">
-                <Set chips={filteredTagsUnmatched} let:chip key={(tag) => tag.name}>
-                  <Chip {chip} on:SMUIChip:interaction={() => addTag(chip.name)}>
-                    <Text>{chip.name}</Text>
-                  </Chip>
-                </Set>
-              </div>
+              {#if filteredTagsMatched.length > 0}
+                <div class="flex flex-nowrap m-1">
+                  <Set chips={filteredTagsMatched} let:chip key={(tag) => tag.name}>
+                    <Chip {chip} on:SMUIChip:interaction={() => addTag(chip.name)}>
+                      <Text>{chip.name}</Text>
+                    </Chip>
+                  </Set>
+                </div>
+              {/if}
+              {#if filteredTagsUnmatched.length > 0}
+                <div class="flex flex-nowrap m-1">
+                  <Set class="unmatched-tag" chips={filteredTagsUnmatched} let:chip key={(tag) => tag.name}>
+                    <Chip {chip} on:SMUIChip:interaction={() => addTag(chip.name)}>
+                      <Text>{chip.name}</Text>
+                    </Chip>
+                  </Set>
+                </div>
+              {/if}
             </div>
           </MenuSurface>
           {#if focused}
@@ -217,7 +179,7 @@
             class="inline text-sm text-neutral-300 {shake ? 'shake' : ''}"
             style="height: initial"
             bind:this={inputA}
-            on:keydown={newTagKeydown}
+            bind:value={newTagText}
             on:input={onInput} />
         </div>
       </div>
@@ -247,5 +209,9 @@
         display: initial;
       }
     }
+  }
+
+  .tags {
+    max-width: 50%;
   }
 </style>
