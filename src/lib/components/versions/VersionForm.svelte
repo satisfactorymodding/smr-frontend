@@ -84,6 +84,8 @@
             {/if}
           </p>
 
+          <span><strong>Targets:</strong> {$modMeta.targets.join(', ')}<br /></span>
+
           {#if $modMeta.uplugin.Plugins !== undefined}
             <p>
               <strong>Dependencies:</strong><br />
