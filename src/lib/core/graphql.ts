@@ -8,14 +8,14 @@ import { API_GRAPHQL } from './api';
 import { userToken } from '$lib/stores/user';
 import { authExchange } from '@urql/exchange-auth';
 import type { Operation } from '@urql/core';
-import type { LoadInput } from '@sveltejs/kit/types/page';
+import type { LoadEvent } from '@sveltejs/kit';
 import { get } from 'svelte/store';
 
 interface SMRAuthState {
   token: string | null;
 }
 
-export const initializeGraphQLClient = (fetch?: LoadInput['fetch']): Client =>
+export const initializeGraphQLClient = (fetch?: LoadEvent['fetch']): Client =>
   createClient({
     url: API_GRAPHQL,
     fetch,

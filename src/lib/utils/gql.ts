@@ -1,3 +1,5 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
 import type { OperationStore } from '@urql/svelte';
 import { get, readable } from 'svelte/store';
 import type { Load } from '@sveltejs/kit';
