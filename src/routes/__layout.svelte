@@ -35,7 +35,6 @@
   import { user, userToken } from '$lib/stores/user';
   import { goto } from '$app/navigation';
   import { loginDialogOpen, onMobile } from '$lib/stores/global';
-  import type { MenuComponentDev } from '@smui/menu';
   import Menu from '@smui/menu';
   import { onMount } from 'svelte';
   import { customProtocolCheck, hasLauncher, pingLauncher } from '$lib/stores/launcher';
@@ -97,7 +96,7 @@
     });
   }
 
-  let menu: MenuComponentDev;
+  let menu: Menu;
 </script>
 
 <svelte:head>

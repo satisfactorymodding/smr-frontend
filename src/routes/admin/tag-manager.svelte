@@ -9,13 +9,12 @@
   import { noop } from 'svelte/internal';
   import { CreateTagDocument, DeleteTagDocument, GetTagsDocument, UpdateTagDocument } from '$lib/generated';
   import type { Tag } from '$lib/generated';
-  import type { SnackbarComponentDev } from '@smui/snackbar';
 
   let tags: Tag[] = [];
   const panels = {};
   const nameFields = {};
   let snackbarTagChangeSavedText = '';
-  let snackbarTagChangeSaved: SnackbarComponentDev;
+  let snackbarTagChangeSaved: Snackbar;
   let tagNegativeID = -1;
 
   const tagsQuery = operationStore(GetTagsDocument);

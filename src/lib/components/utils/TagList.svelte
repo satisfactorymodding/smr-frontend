@@ -4,20 +4,17 @@
   import Chip, { Set, Text } from '@smui/chips';
   import MenuSurface from '@smui/menu-surface';
   import { operationStore, query } from '@urql/svelte';
-  import type { MenuSurfaceComponentDev } from '@smui/menu-surface/src/MenuSurface.types';
   import Textfield, { Input } from '@smui/textfield';
   import FloatingLabel from '@smui/floating-label';
   import LineRipple from '@smui/line-ripple';
-  import type { InputComponentDev } from '@smui/textfield';
-  import type { LineRippleComponentDev } from '@smui/line-ripple';
 
   const getAllTags = operationStore(GetTagsDocument);
 
   export let tags: Tag[] = [];
   export let editable = false;
 
-  let inputA: InputComponentDev;
-  let lineRippleA: LineRippleComponentDev;
+  let inputA: Input;
+  let lineRippleA: LineRipple;
 
   let shake = false;
 
@@ -29,7 +26,7 @@
 
   let newTag: HTMLInputElement;
   let newTagContainer: HTMLElement = null;
-  let surface: MenuSurfaceComponentDev;
+  let surface: MenuSurface;
 
   let focused = false;
 

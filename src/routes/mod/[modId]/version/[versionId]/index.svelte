@@ -28,7 +28,6 @@
   import { base } from '$app/paths';
   import Button, { Label, Icon } from '@smui/button';
   import Dialog, { Title, Content as DialogContent } from '@smui/dialog';
-  import type { MenuComponentDev } from '@smui/menu';
   import Menu from '@smui/menu';
   import List, { Item } from '@smui/list';
   import { installMod } from '$lib/stores/launcher';
@@ -40,7 +39,7 @@
 
   let errorMessage = '';
   let errorToast = false;
-  let menu: MenuComponentDev;
+  let menu: Menu;
 
   const deleteVersion = mutation({
     query: DeleteVersionDocument
