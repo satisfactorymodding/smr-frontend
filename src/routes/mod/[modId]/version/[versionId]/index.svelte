@@ -1,22 +1,24 @@
 <script lang="ts" context="module">
   import { paramsToProps } from '$lib/utils/routing';
-  import { operationStore } from '@urql/svelte';
-  import { GetModVersionDocument } from '$lib/generated';
+  import { queryStore } from '@urql/svelte';
+  import { GetModVersionDocument, type GetModVersionQuery } from '$lib/generated';
   import { loadWaitForNoFetch } from '$lib/utils/gql';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
+  import { initializeGraphQLClient } from '$lib/core';
 
-  const versionQ = operationStore(GetModVersionDocument, { version: undefined });
+  export const load = paramsToProps(async (input) => ({
+    props: loadWaitForNoFetch({
+      version: queryStore({
+        query: GetModVersionDocument,
 
-  export const load = paramsToProps(async (input) => {
-    versionQ.variables.version = input.params.versionId;
-    return loadWaitForNoFetch({
-      version: versionQ
-    })(input);
-  });
+        client: initializeGraphQLClient(input.fetch),
+        variables: { version: input.params.versionId }
+      })
+    })
+  }));
 </script>
 
 <script lang="ts">
-  import { mutation } from '@urql/svelte';
   import { DeleteVersionDocument } from '$lib/generated';
   import VersionDescription from '$lib/components/versions/VersionDescription.svelte';
   import VersionInfo from '$lib/components/versions/VersionInfo.svelte';
@@ -32,18 +34,18 @@
   import List, { Item } from '@smui/list';
   import { installMod } from '$lib/stores/launcher';
   import { prettyArch } from '$lib/utils/formatting';
+  import type { OperationResultStore } from '@urql/svelte/dist/types/common';
+  import { getContextClient } from '@urql/svelte';
 
   export let modId!: string;
   export let versionId!: string;
-  export let version: typeof versionQ;
+  export let version: OperationResultStore<GetModVersionQuery>;
+
+  const client = getContextClient();
 
   let errorMessage = '';
   let errorToast = false;
   let menu: Menu;
-
-  const deleteVersion = mutation({
-    query: DeleteVersionDocument
-  });
 
   $: canUserEdit =
     $user?.roles?.deleteContent ||
@@ -52,16 +54,19 @@
   const deleteDialogOpen = writable<boolean>(false);
 
   const deleteVersionFn = () => {
-    deleteVersion({ versionId }).then((value) => {
-      if (value.error) {
-        console.error(value.error.message);
-        errorMessage = 'Error deleting version: ' + value.error.message;
-        errorToast = true;
-      } else {
-        // TODO Toast or something
-        goto(base + '/mod/' + modId);
-      }
-    });
+    client
+      .mutation(DeleteVersionDocument, { versionId })
+      .toPromise()
+      .then((value) => {
+        if (value.error) {
+          console.error(value.error.message);
+          errorMessage = 'Error deleting version: ' + value.error.message;
+          errorToast = true;
+        } else {
+          // TODO Toast or something
+          goto(base + '/mod/' + modId);
+        }
+      });
   };
 </script>
 
@@ -115,7 +120,7 @@
           <Button variant="outlined" href={API_REST + '/mod/' + modId + '/versions/' + versionId + '/download'}
             >Download</Button>
         {/if}
-        <Button variant="outlined" on:click={() => installMod(version.data.getVersion.mod.mod_reference)}>
+        <Button variant="outlined" on:click={() => installMod($version.data.getVersion.mod.mod_reference)}>
           <Label>Install</Label>
           <Icon class="material-icons">download</Icon>
         </Button>

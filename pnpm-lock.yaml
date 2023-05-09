@@ -122,26 +122,26 @@ dependencies:
     specifier: ^14.0.0
     version: 14.0.0
   '@urql/core':
-    specifier: ^2.6.0
-    version: 2.6.0(graphql@16.6.0)
+    specifier: ^3.0.0
+    version: 3.0.0(graphql@16.6.0)
   '@urql/exchange-auth':
-    specifier: ^0.1.7
-    version: 0.1.7(graphql@16.6.0)
+    specifier: ^1.0.0
+    version: 1.0.0(graphql@16.6.0)
   '@urql/exchange-graphcache':
-    specifier: ^4.4.3
-    version: 4.4.3(graphql@16.6.0)
+    specifier: ^6.0.0
+    version: 6.0.0(graphql@16.6.0)
   '@urql/exchange-multipart-fetch':
-    specifier: ^0.1.14
-    version: 0.1.14(graphql@16.6.0)
+    specifier: ^1.0.0
+    version: 1.0.0(graphql@16.6.0)
   '@urql/exchange-persisted-fetch':
-    specifier: ^1.3.4
-    version: 1.3.4(graphql@16.6.0)
+    specifier: ^2.0.0
+    version: 2.0.0(graphql@16.6.0)
   '@urql/introspection':
-    specifier: ^0.3.3
-    version: 0.3.3(graphql@16.6.0)
+    specifier: ^1.0.0
+    version: 1.0.0(graphql@16.6.0)
   '@urql/svelte':
-    specifier: ^1.3.3
-    version: 1.3.3(graphql@16.6.0)(svelte@3.59.1)
+    specifier: ^2.0.0
+    version: 2.0.0(graphql@16.6.0)(svelte@3.59.1)
   custom-protocol-check:
     specifier: ^1.4.0
     version: 1.4.0
@@ -418,13 +418,24 @@ devDependencies:
     specifier: ^4.7.4
     version: 4.7.4
   urql:
-    specifier: ^2.2.2
-    version: 2.2.2(graphql@16.6.0)(react@18.2.0)
+    specifier: ^3.0.0
+    version: 3.0.0(graphql@16.6.0)(react@18.2.0)
   vite:
     specifier: ^2.9.14
     version: 2.9.14
 
 packages:
+
+  /@0no-co/graphql.web@1.0.1(graphql@16.6.0):
+    resolution: {integrity: sha512-6Yaxyv6rOwRkLIvFaL0NrLDgfNqC/Ng9QOPmTmlqW4mORXMEKmh5NYGkIvvt5Yw8fZesnMAqkj8cIqTj8f40cQ==}
+    peerDependencies:
+      graphql: ^14.0.0 || ^15.0.0 || ^16.0.0
+    peerDependenciesMeta:
+      graphql:
+        optional: true
+    dependencies:
+      graphql: 16.6.0
+    dev: false
 
   /@alloc/quick-lru@5.2.0:
     resolution: {integrity: sha512-UrcABB+4bUrFABwbluTIBErXwvbsU/V7TZWfmbgJfbkwiBuziS9gxdODUyuiecfdGQ85jglMW6juS3+z5TsKLw==}
@@ -3320,46 +3331,67 @@ packages:
       '@graphql-typed-document-node/core': 3.2.0(graphql@16.6.0)
       graphql: 16.6.0
       wonka: 4.0.15
-
-  /@urql/exchange-auth@0.1.7(graphql@16.6.0):
-    resolution: {integrity: sha512-4Bmmi6YMW1YjZnTdr0Gfp9IoIY1fpNGq/fo1XHWEFEYe+IEOEDQhKT1CyhztyvvKpFw2C46D32MJRWJHQUPo/g==}
-    peerDependencies:
-      graphql: ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
-    dependencies:
-      '@urql/core': 2.6.0(graphql@16.6.0)
-      graphql: 16.6.0
-      wonka: 4.0.15
     dev: false
 
-  /@urql/exchange-graphcache@4.4.3(graphql@16.6.0):
-    resolution: {integrity: sha512-EPXRCzq929RjVDym4NP4mO6bsyGE6J1JzUxE9vpm04VjZtK90Ag4bgftFdkHsMHh4ydvokLKQjCRVqGxKEBnEg==}
+  /@urql/core@3.0.0(graphql@16.6.0):
+    resolution: {integrity: sha512-C9nVn3+hhht8K0MEr9zLUgzoapkoX7X0crwMB72LrMqerhBjvEEuTngEFlZfALRwOzHjUNXBT9ZVgyzt6cKRhA==}
     peerDependencies:
       graphql: ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
     dependencies:
-      '@urql/core': 2.6.0(graphql@16.6.0)
+      '@graphql-typed-document-node/core': 3.2.0(graphql@16.6.0)
       graphql: 16.6.0
-      wonka: 4.0.15
+      wonka: 6.3.2
+
+  /@urql/core@4.0.7(graphql@16.6.0):
+    resolution: {integrity: sha512-UtZ9oSbSFODXzFydgLCXpAQz26KGT1d6uEfcylKphiRWNXSWZi8k7vhJXNceNm/Dn0MiZ+kaaJHKcnGY1jvHRQ==}
+    dependencies:
+      '@0no-co/graphql.web': 1.0.1(graphql@16.6.0)
+      wonka: 6.3.2
+    transitivePeerDependencies:
+      - graphql
     dev: false
 
-  /@urql/exchange-multipart-fetch@0.1.14(graphql@16.6.0):
-    resolution: {integrity: sha512-JdffZtfsJHQ4v0IevimPWbteXT1C5OH3PPbNJrbLigC9aCZB9dp2ZOjMXTvpP+3SIjJRFRguuRaL7hAGB04vgw==}
+  /@urql/exchange-auth@1.0.0(graphql@16.6.0):
+    resolution: {integrity: sha512-79hqPQab+ifeINOxvQykvqub4ixWHBEIagN4U67ijcHGMfp3c4yEWRk4IJMPwF+OMT7LrRFuv+jRIZTQn/9VwQ==}
     peerDependencies:
       graphql: ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
     dependencies:
-      '@urql/core': 2.6.0(graphql@16.6.0)
+      '@urql/core': 3.0.0(graphql@16.6.0)
+      graphql: 16.6.0
+      wonka: 6.3.2
+    dev: false
+
+  /@urql/exchange-graphcache@6.0.0(graphql@16.6.0):
+    resolution: {integrity: sha512-Muz1KBJw3ISLi8Y8Ty3yMBa+lIea0IdXpvoFJwdO+XWPVMCshlyAiCbzgRI4wa0V7DbN1Q+sCEPZZOi682dfww==}
+    dependencies:
+      '@0no-co/graphql.web': 1.0.1(graphql@16.6.0)
+      '@urql/core': 4.0.7(graphql@16.6.0)
+      wonka: 6.3.2
+    transitivePeerDependencies:
+      - graphql
+    dev: false
+
+  /@urql/exchange-multipart-fetch@1.0.0(graphql@16.6.0):
+    resolution: {integrity: sha512-hPSrGjzfjhexUbvZOkwKk9G8b06PHHCbo0J2PFyA+yy0tNxRACX4/pSHfztcaRS3VyfbTQtWRQ/QSuUlYMVvzg==}
+    deprecated: This package is now obsolete and `@urql/core` now supports GraphQL Multipart Requests (File Uploads) natively.
+    peerDependencies:
+      graphql: ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
+    dependencies:
+      '@urql/core': 3.0.0(graphql@16.6.0)
       extract-files: 11.0.0
       graphql: 16.6.0
-      wonka: 4.0.15
+      wonka: 6.3.2
     dev: false
 
-  /@urql/exchange-persisted-fetch@1.3.4(graphql@16.6.0):
-    resolution: {integrity: sha512-7v6O3wk2MxCa9D22SO3iUxAq+F05cqLp7CxbHH3ImVBE9DnFdVwNI/RZkN8RxZD+kfraAOz0CW+UsoKF5LKOhA==}
+  /@urql/exchange-persisted-fetch@2.0.0(graphql@16.6.0):
+    resolution: {integrity: sha512-Cb6VJ3kt/ucpvuzUXHvkNhfFWZudqwZ63w9xs/Sr5Ck/vkjnXNa8YkwmPJRXBPkRRyS7++n4yGMsPtl8Aa1OlA==}
+    deprecated: 'This package is obsolete in `@urql/core@^4` and has been replaced by `@urql/exchange-persisted`. (See: https://github.com/urql-graphql/urql/tree/main/exchanges/persisted)'
     peerDependencies:
       graphql: ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
     dependencies:
-      '@urql/core': 2.6.0(graphql@16.6.0)
+      '@urql/core': 3.0.0(graphql@16.6.0)
       graphql: 16.6.0
-      wonka: 4.0.15
+      wonka: 6.3.2
     dev: false
 
   /@urql/introspection@0.3.3(graphql@16.6.0):
@@ -3368,9 +3400,18 @@ packages:
       graphql: ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
     dependencies:
       graphql: 16.6.0
+    dev: true
 
-  /@urql/svelte@1.3.3(graphql@16.6.0)(svelte@3.59.1):
-    resolution: {integrity: sha512-5XbKcEfvMBYrQfuKjCzLgcT46XW4RoVTeOM5VPmAwk7mD709kgL8LXOSF/9A+fTLOByncMxKTp/9lkI8HKCBkA==}
+  /@urql/introspection@1.0.0(graphql@16.6.0):
+    resolution: {integrity: sha512-LV4MNqslkGqdlmAjpmVuyewQ6sQZ1CAaHXsiP7IaNKWKKlnpluxjiQnhLy3V1uhqIcJe/Ni/+sHIq78EvpkJNw==}
+    peerDependencies:
+      graphql: ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
+    dependencies:
+      graphql: 16.6.0
+    dev: false
+
+  /@urql/svelte@2.0.0(graphql@16.6.0)(svelte@3.59.1):
+    resolution: {integrity: sha512-CEQfsH3rJKrzXZ7QJdAusFpA7Vc+2sKae4GXXT1Y4BBeYJtBV/6mSnsIq2WOeWNAE0jRbZHMStXm18tFTtWG+A==}
     peerDependencies:
       graphql: ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
       svelte: ^3.0.0
@@ -8980,16 +9021,16 @@ packages:
     resolution: {integrity: sha512-Qp95D4TPJl1kC9SKigDcqgyM2VDVO4RiJc2d4qe5GrYm+zbIQCWWKAFaJNQ4BhdFeDGwBmAxqJBwWSJDb9T3BQ==}
     dev: true
 
-  /urql@2.2.2(graphql@16.6.0)(react@18.2.0):
-    resolution: {integrity: sha512-jaVhDxWS2gfJLWWupFXtRkTCuGeRX+b9v19PU6TnKIJ7VP+xyrgpNHghHcTBGo58F+rxvCXVNEvSvdlKFMiHhg==}
+  /urql@3.0.0(graphql@16.6.0)(react@18.2.0):
+    resolution: {integrity: sha512-M80hPO/xdKEqHh9V3ZgljyayNvT/bw7QBMbWIAovcQPbLukFJCKKHVAnFWUhXPIO6pMjKKZjjjHflHmwo1eunQ==}
     peerDependencies:
       graphql: ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
       react: '>= 16.8.0'
     dependencies:
-      '@urql/core': 2.6.0(graphql@16.6.0)
+      '@urql/core': 3.0.0(graphql@16.6.0)
       graphql: 16.6.0
       react: 18.2.0
-      wonka: 4.0.15
+      wonka: 6.3.2
     dev: true
 
   /util-deprecate@1.0.2:
@@ -9140,6 +9181,10 @@ packages:
 
   /wonka@4.0.15:
     resolution: {integrity: sha512-U0IUQHKXXn6PFo9nqsHphVCE5m3IntqZNB9Jjn7EB1lrR7YTDY3YWgFvEvwniTzXSvOH/XMzAZaIfJF/LvHYXg==}
+    dev: false
+
+  /wonka@6.3.2:
+    resolution: {integrity: sha512-2xXbQ1LnwNS7egVm1HPhW2FyKrekolzhpM3mCwXdQr55gO+tAiY76rhb32OL9kKsW8taj++iP7C6hxlVzbnvrw==}
 
   /word-wrap@1.2.3:
     resolution: {integrity: sha512-Hz/mrNwitNRh/HUAtM/VT/5VH+ygD6DV7mYKZAtHOrbs8U7lvPS6xf7EJKMF0uW1KJCl0H701g3ZGus+muE5vQ==}

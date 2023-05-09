@@ -5,13 +5,14 @@ export const paramsToProps =
   async (input) => {
     if (callback) {
       const response = await callback(input);
-      return {
+      const x = {
         ...(response || {}),
         props: {
           ...(input.params || {}),
-          ...(response ? response?.props || {} : {})
+          ...(response ? (await response?.props) || {} : {})
         }
       } as unknown;
+      return x;
     }
 
     return {

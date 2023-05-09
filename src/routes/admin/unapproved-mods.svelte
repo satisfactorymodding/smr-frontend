@@ -1,7 +1,6 @@
 <script lang="ts">
   import { ApproveModDocument, DenyModDocument, GetUnapprovedModsDocument } from '$lib/generated';
-  import { mutation, operationStore, query } from '@urql/svelte';
-  import { writable } from 'svelte/store';
+  import { getContextClient, queryStore } from '@urql/svelte';
   import PageControls from '$lib/components/utils/PageControls.svelte';
   import { base } from '$app/paths';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
@@ -10,44 +9,45 @@
   import Button from '@smui/button';
   import { prettyDate } from '$lib/utils/formatting';
 
+  const client = getContextClient();
+
   // TODO Selectable
   const perPage = 20;
 
-  const mods = operationStore(GetUnapprovedModsDocument, {
-    filter: {
-      offset: 0,
-      limit: perPage
+  const page = 1;
+
+  $: mods = queryStore({
+    query: GetUnapprovedModsDocument,
+    client,
+    variables: {
+      filter: {
+        offset: (page - 1) * perPage,
+        limit: perPage
+      }
     }
   });
 
-  const page = writable(1);
-  let totalMods: number;
-
-  page.subscribe((p) => ($mods.variables.filter.offset = (p - 1) * perPage));
-
   $: totalMods = $mods?.data?.getUnapprovedMods?.count;
 
-  const approveModMut = mutation({
-    query: ApproveModDocument
-  });
-
   const approveMod = (modId: string) => {
-    approveModMut({ modId }).then(() => {
-      mods.reexecute();
-    });
+    client
+      .mutation(ApproveModDocument, { modId })
+      .toPromise()
+      .then(() => {
+        mods.pause();
+        mods.resume();
+      });
   };
-
-  const denyModMut = mutation({
-    query: DenyModDocument
-  });
 
   const denyMod = (modId: string) => {
-    denyModMut({ modId }).then(() => {
-      mods.reexecute();
-    });
+    client
+      .mutation(DenyModDocument, { modId })
+      .toPromise()
+      .then(() => {
+        mods.pause();
+        mods.resume();
+      });
   };
-
-  query(mods);
 </script>
 
 <svelte:head>

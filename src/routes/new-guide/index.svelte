@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { mutation } from '@urql/svelte';
+  import { getContextClient } from '@urql/svelte';
   import { NewGuideDocument } from '$lib/generated';
   import Toast from '$lib/components/general/Toast.svelte';
   import { goto } from '$app/navigation';
@@ -12,23 +12,24 @@
   let errorMessage = '';
   let errorToast = false;
 
-  const newGuide = mutation({
-    query: NewGuideDocument
-  });
+  const client = getContextClient();
 
   const onSubmit = (data: GuideData) => {
-    newGuide({
-      guide: data
-    }).then((value) => {
-      if (value.error) {
-        console.error(value.error.message);
-        errorMessage = 'Error creating guide: ' + value.error.message;
-        errorToast = true;
-      } else {
-        // TODO Toast or something
-        goto(base + '/guide/' + value.data.createGuide.id);
-      }
-    });
+    client
+      .mutation(NewGuideDocument, {
+        guide: data
+      })
+      .toPromise()
+      .then((value) => {
+        if (value.error) {
+          console.error(value.error.message);
+          errorMessage = 'Error creating guide: ' + value.error.message;
+          errorToast = true;
+        } else {
+          // TODO Toast or something
+          goto(base + '/guide/' + value.data.createGuide.id);
+        }
+      });
   };
 
   $: if (!errorToast) {

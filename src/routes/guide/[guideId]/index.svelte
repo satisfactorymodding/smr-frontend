@@ -1,21 +1,22 @@
 <script lang="ts" context="module">
   import { paramsToProps } from '$lib/utils/routing';
-  import { operationStore } from '@urql/svelte';
-  import { GetGuideDocument } from '$lib/generated';
+  import { queryStore } from '@urql/svelte';
+  import { GetGuideDocument, type GetGuideQuery } from '$lib/generated';
   import { loadWaitForNoFetch } from '$lib/utils/gql';
+  import { initializeGraphQLClient } from '$lib/core';
 
-  const guideQ = operationStore(GetGuideDocument, { guide: undefined });
-
-  export const load = paramsToProps(async (input) => {
-    guideQ.variables.guide = input.params.guideId;
-    return loadWaitForNoFetch({
-      guide: guideQ
-    })(input);
-  });
+  export const load = paramsToProps(async (input) => ({
+    props: loadWaitForNoFetch({
+      guide: queryStore({
+        query: GetGuideDocument,
+        client: initializeGraphQLClient(input.fetch),
+        variables: { guide: input.params.guideId }
+      })
+    })
+  }));
 </script>
 
 <script lang="ts">
-  import { mutation } from '@urql/svelte';
   import { DeleteGuideDocument } from '$lib/generated';
   import GuideInfo from '$lib/components/guides/GuideInfo.svelte';
   import GuideAuthor from '$lib/components/guides/GuideAuthor.svelte';
@@ -29,32 +30,35 @@
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
   import Card, { Content } from '@smui/card';
   import Button from '@smui/button';
+  import type { OperationResultStore } from '@urql/svelte/dist/types/common';
+  import { getContextClient } from '@urql/svelte';
 
   export let guideId!: string;
-  export let guide: typeof guideQ;
+  export let guide: OperationResultStore<GetGuideQuery>;
+
+  const client = getContextClient();
 
   let errorMessage = '';
   let errorToast = false;
-
-  const deleteGuide = mutation({
-    query: DeleteGuideDocument
-  });
 
   $: canUserEdit = $user?.roles?.deleteContent || $user?.id === $guide?.data?.getGuide?.user?.id;
 
   const deleteDialogOpen = writable<boolean>(false);
 
   const deleteGuideFn = () => {
-    deleteGuide({ guideId }).then((value) => {
-      if (value.error) {
-        console.error(value.error.message);
-        errorMessage = 'Error deleting guide: ' + value.error.message;
-        errorToast = true;
-      } else {
-        // TODO Toast or something
-        goto(base + '/guides');
-      }
-    });
+    client
+      .mutation(DeleteGuideDocument, { guideId })
+      .toPromise()
+      .then((value) => {
+        if (value.error) {
+          console.error(value.error.message);
+          errorMessage = 'Error deleting guide: ' + value.error.message;
+          errorToast = true;
+        } else {
+          // TODO Toast or something
+          goto(base + '/guides');
+        }
+      });
   };
 
   $: if (!errorToast) {

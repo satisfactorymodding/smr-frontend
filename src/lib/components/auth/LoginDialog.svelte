@@ -8,7 +8,7 @@
     OAuthGoogleDocument,
     LogoutDocument
   } from '$lib/generated';
-  import { mutation, operationStore, query } from '@urql/svelte';
+  import { getContextClient, queryStore } from '@urql/svelte';
   import { browser } from '$app/env';
   import { page } from '$app/stores';
   import { goto } from '$app/navigation';
@@ -19,16 +19,16 @@
   import Button from '@smui/button';
   import CircularProgress from '@smui/circular-progress';
 
-  const logoutMutation = mutation({
-    query: LogoutDocument
-  });
+  const client = getContextClient();
 
   if (browser) {
-    const getMe = operationStore(GetMeDocument, undefined, {
+    const getMe = queryStore({
+      query: GetMeDocument,
+      client,
+      variables: {},
+      requestPolicy: 'network-only',
       pause: true
     });
-
-    query(getMe);
 
     let first = true;
     userToken.subscribe((token) => {
@@ -39,9 +39,11 @@
           expires: oneMonth
         });
       } else if (!first) {
-        logoutMutation(undefined, {
-          requestPolicy: 'network-only'
-        })
+        client
+          .mutation(LogoutDocument, undefined, {
+            requestPolicy: 'network-only'
+          })
+          .toPromise()
           .catch()
           .then(() => {
             cookie.remove('token');
@@ -51,12 +53,8 @@
       first = false;
 
       if (token) {
-        getMe.reexecute({
-          requestPolicy: 'network-only',
-          fetchOptions: {
-            cache: 'no-cache'
-          }
-        });
+        getMe.pause();
+        getMe.resume();
 
         const unsub = getMe.subscribe((response) => {
           if (!response.fetching) {
@@ -77,15 +75,9 @@
   }
 
   const signInMethods = {
-    github: mutation({
-      query: OAuthGithubDocument
-    }),
-    google: mutation({
-      query: OAuthGoogleDocument
-    }),
-    facebook: mutation({
-      query: OAuthFacebookDocument
-    })
+    github: OAuthGithubDocument,
+    google: OAuthGoogleDocument,
+    facebook: OAuthFacebookDocument
   };
 
   let errorMessage = '';
@@ -108,10 +100,12 @@
       signingIn = true;
       loginDialogOpen.set(true);
 
-      signInMethods[signInMethod as 'github' | 'google' | 'facebook']({
-        code,
-        state
-      })
+      client
+        .mutation(signInMethods[signInMethod as 'github' | 'google' | 'facebook'], {
+          code,
+          state
+        })
+        .toPromise()
         .then((result) => {
           if (result.error) {
             console.error(result.error.message);
@@ -127,17 +121,16 @@
     }
   }
 
-  const oauthOptions = operationStore(
-    GetOAuthOptionsDocument,
-    { callback_url: '' },
-    {
-      requestPolicy: 'network-only'
-    }
-  );
+  const oauthOptions = queryStore({
+    query: GetOAuthOptionsDocument,
+    client,
+    variables: { callback_url: browser ? encodeURIComponent(window.location.origin + window.location.pathname) : '' },
+    requestPolicy: 'network-only'
+  });
 
   $: if ($loginDialogOpen) {
-    oauthOptions.variables.callback_url = encodeURIComponent(window.location.origin + window.location.pathname);
-    query(oauthOptions);
+    oauthOptions.pause();
+    oauthOptions.resume();
   }
 
   const goTo = (service: string, url: string) => {

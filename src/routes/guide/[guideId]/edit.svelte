@@ -6,7 +6,7 @@
 </script>
 
 <script lang="ts">
-  import { mutation, operationStore, query } from '@urql/svelte';
+  import { getContextClient, queryStore } from '@urql/svelte';
   import { EditGuideDocument, GetGuideDocument } from '$lib/generated';
   import Toast from '$lib/components/general/Toast.svelte';
   import { goto } from '$app/navigation';
@@ -17,36 +17,39 @@
 
   export let guideId!: string;
 
+  const client = getContextClient();
+
   let errorMessage = '';
   let errorToast = false;
 
-  const guide = operationStore(GetGuideDocument, { guide: guideId });
-
-  const editGuide = mutation({
-    query: EditGuideDocument
+  const guide = queryStore({
+    query: GetGuideDocument,
+    client,
+    variables: { guide: guideId }
   });
 
   const onSubmit = (data: GuideData) => {
-    editGuide({
-      guideId: guideId,
-      guide: data
-    }).then((value) => {
-      if (value.error) {
-        console.error(value.error.message);
-        errorMessage = 'Error editing guide: ' + value.error.message;
-        errorToast = true;
-      } else {
-        // TODO Toast or something
-        goto(base + '/guide/' + value.data.updateGuide.id);
-      }
-    });
+    client
+      .mutation(EditGuideDocument, {
+        guideId: guideId,
+        guide: data
+      })
+      .toPromise()
+      .then((value) => {
+        if (value.error) {
+          console.error(value.error.message);
+          errorMessage = 'Error editing guide: ' + value.error.message;
+          errorToast = true;
+        } else {
+          // TODO Toast or something
+          goto(base + '/guide/' + value.data.updateGuide.id);
+        }
+      });
   };
 
   $: if (!errorToast) {
     errorMessage = '';
   }
-
-  query(guide);
 </script>
 
 <svelte:head>

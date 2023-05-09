@@ -1,19 +1,21 @@
 <script lang="ts" context="module">
   import { paramsToProps } from '$lib/utils/routing';
-  import { operationStore } from '@urql/svelte';
-  import { GetUserDocument } from '$lib/generated';
+  import { queryStore } from '@urql/svelte';
+  import { GetUserDocument, type GetUserQuery } from '$lib/generated';
   import { loadWaitForNoFetch } from '$lib/utils/gql';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
   import Button from '@smui/button';
+  import { initializeGraphQLClient } from '$lib/core';
 
-  const userQ = operationStore(GetUserDocument, { user: undefined });
-
-  export const load = paramsToProps(async (input) => {
-    userQ.variables.user = input.params.userId;
-    return loadWaitForNoFetch({
-      user: userQ
-    })(input);
-  });
+  export const load = paramsToProps(async (input) => ({
+    props: loadWaitForNoFetch({
+      user: queryStore({
+        query: GetUserDocument,
+        client: initializeGraphQLClient(input.fetch),
+        variables: { user: input.params.userId }
+      })
+    })
+  }));
 </script>
 
 <script lang="ts">
@@ -23,8 +25,9 @@
   import GuideCard from '$lib/components/guides/GuideCard.svelte';
   import { user as me } from '$lib/stores/user';
   import { base } from '$app/paths';
+  import type { OperationResultStore } from '@urql/svelte/dist/types/common';
 
-  export let user: typeof userQ;
+  export let user: OperationResultStore<GetUserQuery>;
 
   let guidesTab = false;
 </script>

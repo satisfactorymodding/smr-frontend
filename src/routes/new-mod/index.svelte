@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { mutation } from '@urql/svelte';
+  import { getContextClient } from '@urql/svelte';
   import { NewModDocument } from '$lib/generated';
   import Toast from '$lib/components/general/Toast.svelte';
   import { goto } from '$app/navigation';
@@ -12,23 +12,24 @@
   let errorMessage = '';
   let errorToast = false;
 
-  const newMod = mutation({
-    query: NewModDocument
-  });
+  const client = getContextClient();
 
   const onSubmit = (data: ModData) => {
-    newMod({
-      mod: data
-    }).then((value) => {
-      if (value.error) {
-        console.error(value.error.message);
-        errorMessage = 'Error creating mod: ' + value.error.message;
-        errorToast = true;
-      } else {
-        // TODO Toast or something
-        goto(base + '/mod/' + value.data.createMod.id);
-      }
-    });
+    client
+      .mutation(NewModDocument, {
+        mod: data
+      })
+      .toPromise()
+      .then((value) => {
+        if (value.error) {
+          console.error(value.error.message);
+          errorMessage = 'Error creating mod: ' + value.error.message;
+          errorToast = true;
+        } else {
+          // TODO Toast or something
+          goto(base + '/mod/' + value.data.createMod.id);
+        }
+      });
   };
 
   $: if (!errorToast) {

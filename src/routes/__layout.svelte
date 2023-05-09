@@ -26,7 +26,7 @@
 
 <script lang="ts">
   import LoginDialog from '$lib/components/auth/LoginDialog.svelte';
-  import { setClient } from '@urql/svelte';
+  import { setContextClient } from '@urql/svelte';
   import TopAppBar, { Row, Section, Title } from '@smui/top-app-bar';
   import { AppContent, Scrim } from '@smui/drawer';
   import List, { Item, Text } from '@smui/list';
@@ -82,7 +82,7 @@
   let accessibility = false;
   $: root && (accessibility ? root.classList.add('accessibility') : root.classList.remove('accessibility'));
 
-  setClient(client);
+  setContextClient(client);
 
   $: isAdmin = !$user ? false : $user.roles.approveMods || $user.roles.approveVersions || $user.roles.editSMLVersions;
 

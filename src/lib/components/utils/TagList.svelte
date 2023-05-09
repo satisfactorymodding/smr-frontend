@@ -3,12 +3,18 @@
   import type { Tag } from '$lib/generated/graphql';
   import Chip, { Set, Text } from '@smui/chips';
   import MenuSurface from '@smui/menu-surface';
-  import { operationStore, query } from '@urql/svelte';
+  import { queryStore, getContextClient } from '@urql/svelte';
   import Textfield, { Input } from '@smui/textfield';
   import FloatingLabel from '@smui/floating-label';
   import LineRipple from '@smui/line-ripple';
 
-  const getAllTags = operationStore(GetTagsDocument);
+  const client = getContextClient();
+
+  const getAllTags = queryStore({
+    query: GetTagsDocument,
+    client,
+    variables: {}
+  });
 
   export let tags: Tag[] = [];
   export let editable = false;
@@ -47,14 +53,11 @@
     [filteredTagsMatched, filteredTagsUnmatched] = filterAvailableTags(allTags, tags, newTagText);
   }
 
-  if (editable) {
-    query(getAllTags);
-    getAllTags.subscribe(() => {
-      if (!getAllTags.fetching && !getAllTags.error) {
-        allTags = getAllTags.data.getTags;
-        updateTags();
-      }
-    });
+  $: if (editable) {
+    if (!$getAllTags.fetching && !$getAllTags.error) {
+      allTags = $getAllTags.data?.getTags || [];
+      updateTags();
+    }
   }
 
   function setTagText(text: string) {

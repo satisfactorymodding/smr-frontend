@@ -5,10 +5,12 @@
   import Button, { Label, Icon } from '@smui/button';
   import Snackbar from '@smui/snackbar';
   import IconButton, { Icon as ButtonIcon } from '@smui/icon-button';
-  import { mutation, operationStore, query } from '@urql/svelte';
+  import { getContextClient, queryStore } from '@urql/svelte';
   import { noop } from 'svelte/internal';
   import { CreateTagDocument, DeleteTagDocument, GetTagsDocument, UpdateTagDocument } from '$lib/generated';
   import type { Tag } from '$lib/generated';
+
+  const client = getContextClient();
 
   let tags: Tag[] = [];
   const panels = {};
@@ -17,19 +19,13 @@
   let snackbarTagChangeSaved: Snackbar;
   let tagNegativeID = -1;
 
-  const tagsQuery = operationStore(GetTagsDocument);
-
-  const deleteTagQuery = mutation({ query: DeleteTagDocument });
-
-  const createTagQuery = mutation({ query: CreateTagDocument });
-
-  const updateTagQuery = mutation({ query: UpdateTagDocument });
-
-  tagsQuery.subscribe(() => {
-    const data = $tagsQuery.data;
-    tags = (data && (data.getTags as Tag[])) || [];
+  const tagsQuery = queryStore({
+    query: GetTagsDocument,
+    client,
+    variables: {}
   });
-  query(tagsQuery);
+
+  $: tags = $tagsQuery.data?.getTags || [];
 
   function newTag() {
     if (!tags.find((tag) => tag.name == 'New Tag')) {
@@ -59,7 +55,7 @@
     if (tag.id < 0) {
       // Create new tag & update tag.id with new DB id or re-fetch all tags
       try {
-        const result = await createTagQuery({ tagName: tag.name });
+        const result = await client.mutation(CreateTagDocument, { tagName: tag.name }).toPromise();
         if (result.data) {
           tag.id = result.data.createTag.id;
           success = true;
@@ -76,7 +72,9 @@
     } else {
       // Update existing tag
       try {
-        success = (await updateTagQuery({ tagID: tag.id, tagName: tag.name })).data.updateTag != null;
+        success =
+          (await client.mutation(UpdateTagDocument, { tagID: tag.id, tagName: tag.name }).toPromise()).data.updateTag !=
+          null;
       } catch {
         noop();
       }
@@ -98,7 +96,7 @@
       // Remove tag
       let success = false;
       try {
-        const result = await deleteTagQuery({ tagID: tag.id });
+        const result = await client.mutation(DeleteTagDocument, { tagID: tag.id }).toPromise();
         success = result.data.deleteTag;
       } catch {
         success = false;
@@ -161,7 +159,7 @@
 
 {#if $tagsQuery.fetching}
   <h1>Loading tags...</h1>
-{:else if tagsQuery.error}
+{:else if $tagsQuery.error}
   <h1>Failed to load tags: {$tagsQuery.error.message}</h1>
 {:else}
   <Accordion>

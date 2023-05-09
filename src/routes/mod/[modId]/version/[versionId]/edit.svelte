@@ -5,7 +5,7 @@
 </script>
 
 <script lang="ts">
-  import { mutation, operationStore, query } from '@urql/svelte';
+  import { queryStore, getContextClient } from '@urql/svelte';
   import { GetModVersionDocument, UpdateVersionDocument } from '$lib/generated';
   import Toast from '$lib/components/general/Toast.svelte';
   import { goto } from '$app/navigation';
@@ -15,32 +15,37 @@
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
   import Card, { Content } from '@smui/card';
 
+  const client = getContextClient();
+
   export let modId!: string;
   export let versionId!: string;
 
   let errorMessage = '';
   let errorToast = false;
 
-  const version = operationStore(GetModVersionDocument, { version: versionId });
-
-  const editVersion = mutation({
-    query: UpdateVersionDocument
+  const version = queryStore({
+    query: GetModVersionDocument,
+    client,
+    variables: { version: versionId }
   });
 
   const onSubmit = async (data: VersionData) =>
-    editVersion({
-      versionId: versionId,
-      version: data
-    }).then((value) => {
-      if (value.error) {
-        console.error(value.error.message);
-        errorMessage = 'Error editing version: ' + value.error.message;
-        errorToast = true;
-      } else {
-        // TODO Toast or something
-        return goto(base + '/mod/' + modId + '/version/' + versionId);
-      }
-    });
+    client
+      .mutation(UpdateVersionDocument, {
+        versionId: versionId,
+        version: data
+      })
+      .toPromise()
+      .then((value) => {
+        if (value.error) {
+          console.error(value.error.message);
+          errorMessage = 'Error editing version: ' + value.error.message;
+          errorToast = true;
+        } else {
+          // TODO Toast or something
+          return goto(base + '/mod/' + modId + '/version/' + versionId);
+        }
+      });
 
   $: if (!errorToast) {
     errorMessage = '';
@@ -53,8 +58,6 @@
         logo: undefined
       }
     : undefined;
-
-  query(version);
 </script>
 
 <svelte:head>

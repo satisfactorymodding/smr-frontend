@@ -5,7 +5,7 @@
 </script>
 
 <script lang="ts">
-  import { mutation, operationStore, query } from '@urql/svelte';
+  import { getContextClient, queryStore } from '@urql/svelte';
   import { GetSmlVersionAdminDocument, UpdateSmlVersionDocument } from '$lib/generated';
   import Toast from '$lib/components/general/Toast.svelte';
   import { goto } from '$app/navigation';
@@ -15,31 +15,36 @@
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
   import Card, { Content } from '@smui/card';
 
+  const client = getContextClient();
+
   export let smlVersionId!: string;
 
   let errorMessage = '';
   let errorToast = false;
 
-  const smlVersion = operationStore(GetSmlVersionAdminDocument, { smlVersionID: smlVersionId });
-
-  const editSMLVersion = mutation({
-    query: UpdateSmlVersionDocument
+  const smlVersion = queryStore({
+    query: GetSmlVersionAdminDocument,
+    client,
+    variables: { smlVersionID: smlVersionId }
   });
 
   const onSubmit = (data: SMLVersionData) => {
-    editSMLVersion({
-      smlVersionID: smlVersionId,
-      smlVersion: data
-    }).then((value) => {
-      if (value.error) {
-        console.error(value.error.message);
-        errorMessage = 'Error editing SMLVersion: ' + value.error.message;
-        errorToast = true;
-      } else {
-        // TODO Toast or something
-        goto(base + '/admin/sml-versions');
-      }
-    });
+    client
+      .mutation(UpdateSmlVersionDocument, {
+        smlVersionID: smlVersionId,
+        smlVersion: data
+      })
+      .toPromise()
+      .then((value) => {
+        if (value.error) {
+          console.error(value.error.message);
+          errorMessage = 'Error editing SMLVersion: ' + value.error.message;
+          errorToast = true;
+        } else {
+          // TODO Toast or something
+          goto(base + '/admin/sml-versions');
+        }
+      });
   };
 
   $: if (!errorToast) {
@@ -52,8 +57,6 @@
         logo: undefined
       } as unknown as SMLVersionData)
     : undefined;
-
-  query(smlVersion);
 </script>
 
 <svelte:head>

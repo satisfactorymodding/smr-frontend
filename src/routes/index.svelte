@@ -1,17 +1,23 @@
 <script lang="ts" context="module">
-  import { operationStore } from '@urql/svelte';
-  import { GetModsDocument, ModFields, Order } from '$lib/generated';
+  import { queryStore } from '@urql/svelte';
+  import { GetModsDocument, ModFields, Order, type GetModsQuery } from '$lib/generated';
   import { loadWaitForNoFetch } from '$lib/utils/gql';
+  import type { Load } from '@sveltejs/kit';
+  import { initializeGraphQLClient } from '$lib/core';
 
-  const modsQ = operationStore(GetModsDocument, {
-    offset: 0,
-    limit: 4,
-    order: Order.Desc,
-    orderBy: ModFields.LastVersionDate
-  });
-
-  export const load = loadWaitForNoFetch({
-    mods: modsQ
+  export const load: Load = async ({ fetch }) => ({
+    props: loadWaitForNoFetch({
+      mods: queryStore({
+        query: GetModsDocument,
+        client: initializeGraphQLClient(fetch),
+        variables: {
+          offset: 0,
+          limit: 4,
+          order: Order.Desc,
+          orderBy: ModFields.LastVersionDate
+        }
+      })
+    })
   });
 </script>
 
@@ -24,8 +30,8 @@
   import { assets } from '$app/paths';
   import Button from '@smui/button';
   import { onMobile, easterEgg, doggoNeedsPats } from '$lib/stores/global';
-
-  export let mods!: typeof modsQ;
+  import type { OperationResultStore } from '@urql/svelte/dist/types/common';
+  export let mods!: OperationResultStore<GetModsQuery>;
 
   const gridClasses = '3xl:grid-cols-4 lg:grid-cols-2 grid-cols-1';
 </script>

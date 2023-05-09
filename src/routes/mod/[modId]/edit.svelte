@@ -5,7 +5,7 @@
 </script>
 
 <script lang="ts">
-  import { mutation, operationStore, query } from '@urql/svelte';
+  import { getContextClient, queryStore } from '@urql/svelte';
   import { EditModDocument, GetModDocument } from '$lib/generated';
   import Toast from '$lib/components/general/Toast.svelte';
   import { goto } from '$app/navigation';
@@ -16,31 +16,36 @@
   import Card, { Content } from '@smui/card';
   import { get } from 'svelte/store';
 
+  const client = getContextClient();
+
   export let modId!: string;
 
   let errorMessage = '';
   let errorToast = false;
 
-  const mod = operationStore(GetModDocument, { mod: modId });
-
-  const editMod = mutation({
-    query: EditModDocument
+  const mod = queryStore({
+    query: GetModDocument,
+    client,
+    variables: { mod: modId }
   });
 
   const onSubmit = (data: ModData) => {
-    editMod({
-      modId: get(mod).data.mod.id,
-      mod: data
-    }).then((value) => {
-      if (value.error) {
-        console.error(value.error.message);
-        errorMessage = 'Error editing mod: ' + value.error.message;
-        errorToast = true;
-      } else {
-        // TODO Toast or something
-        goto(base + '/mod/' + value.data.updateMod.id);
-      }
-    });
+    client
+      .mutation(EditModDocument, {
+        modId: get(mod).data.mod.id,
+        mod: data
+      })
+      .toPromise()
+      .then((value) => {
+        if (value.error) {
+          console.error(value.error.message);
+          errorMessage = 'Error editing mod: ' + value.error.message;
+          errorToast = true;
+        } else {
+          // TODO Toast or something
+          goto(base + '/mod/' + value.data.updateMod.id);
+        }
+      });
   };
 
   $: if (!errorToast) {
@@ -53,8 +58,6 @@
         logo: undefined
       }
     : undefined;
-
-  query(mod);
 </script>
 
 <svelte:head>

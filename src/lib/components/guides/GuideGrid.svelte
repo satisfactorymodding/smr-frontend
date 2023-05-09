@@ -1,9 +1,8 @@
 <script lang="ts">
-  import { operationStore, query } from '@urql/svelte';
+  import { queryStore, getContextClient } from '@urql/svelte';
   import { GetGuidesDocument } from '$lib/generated';
   import GuideCard from './GuideCard.svelte';
   import PageControls from '$lib/components/utils/PageControls.svelte';
-  import { writable } from 'svelte/store';
   import { base } from '$app/paths';
   import Button from '@smui/button';
   import { user } from '$lib/stores/user';
@@ -12,22 +11,21 @@
   export let colCount: 4 | 5 = 4;
   export let newGuide = false;
 
+  const client = getContextClient();
+
   // TODO Selectable
   const perPage = 40;
 
-  const guides = operationStore(GetGuidesDocument, { offset: 0, limit: perPage });
+  const page = 1;
 
-  const page = writable(1);
-  let totalGuides: number;
-
-  page.subscribe((p) => {
-    $guides.variables.offset = (p - 1) * perPage;
-    $guides.reexecute();
+  $: guides = queryStore({
+    query: GetGuidesDocument,
+    client,
+    variables: { offset: (page - 1) * perPage, limit: perPage }
   });
 
+  let totalGuides: number;
   $: totalGuides = $guides?.data?.getGuides?.count || 0;
-
-  query(guides);
 
   $: gridClasses =
     colCount == 4
