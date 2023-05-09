@@ -16,7 +16,7 @@
   import AnnouncementHeader from '$lib/components/announcements/AnnouncementHeader.svelte';
   import { base } from '$app/paths';
   import { browser } from '$app/environment';
-  import { env } from '$env/dynamic/public';
+  import { PUBLIC_GOOGLE_SITE_TAG } from '$env/static/public';
   import type { LayoutData } from './$types';
 
   export let data: LayoutData;
@@ -25,7 +25,7 @@
 
   let gTag: unknown;
   if (browser) {
-    gTag = env.VITE_GOOGLE_SITE_TAG as string;
+    gTag = PUBLIC_GOOGLE_SITE_TAG as string;
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     window.gTag = gTag;
