@@ -30,7 +30,7 @@
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
   import Card, { Content } from '@smui/card';
   import Button from '@smui/button';
-  import type { OperationResultStore } from '@urql/svelte/dist/types/common';
+  import type { OperationResultStore } from '@urql/svelte';
   import { getContextClient } from '@urql/svelte';
 
   export let guideId!: string;

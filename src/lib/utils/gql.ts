@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
-import type { OperationResultStore } from '@urql/svelte/dist/types/common';
+import type { OperationResultStore } from '@urql/svelte';
 import { browser } from '$app/env';
 
 // Pretend you didn't see this file

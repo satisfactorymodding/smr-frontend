@@ -34,7 +34,7 @@
   import Dialog, { Title, Content as DialogContent } from '@smui/dialog';
   import { modSchema, serializeSchema } from '$lib/utils/schema';
   import EditCompatibilityForm from '$lib/components/mods/compatibility/EditCompatibilityForm.svelte';
-  import type { OperationResultStore } from '@urql/svelte/dist/types/common';
+  import type { OperationResultStore } from '@urql/svelte';
   import { getContextClient } from '@urql/svelte';
 
   export let modId!: string;

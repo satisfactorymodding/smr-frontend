@@ -25,7 +25,7 @@
   import GuideCard from '$lib/components/guides/GuideCard.svelte';
   import { user as me } from '$lib/stores/user';
   import { base } from '$app/paths';
-  import type { OperationResultStore } from '@urql/svelte/dist/types/common';
+  import type { OperationResultStore } from '@urql/svelte';
 
   export let user: OperationResultStore<GetUserQuery>;
 

@@ -30,7 +30,7 @@
   import { assets } from '$app/paths';
   import Button from '@smui/button';
   import { onMobile, easterEgg, doggoNeedsPats } from '$lib/stores/global';
-  import type { OperationResultStore } from '@urql/svelte/dist/types/common';
+  import type { OperationResultStore } from '@urql/svelte';
   export let mods!: OperationResultStore<GetModsQuery>;
 
   const gridClasses = '3xl:grid-cols-4 lg:grid-cols-2 grid-cols-1';

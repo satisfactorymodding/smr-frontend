@@ -34,7 +34,7 @@
   import List, { Item } from '@smui/list';
   import { installMod } from '$lib/stores/launcher';
   import { prettyArch } from '$lib/utils/formatting';
-  import type { OperationResultStore } from '@urql/svelte/dist/types/common';
+  import type { OperationResultStore } from '@urql/svelte';
   import { getContextClient } from '@urql/svelte';
 
   export let modId!: string;
