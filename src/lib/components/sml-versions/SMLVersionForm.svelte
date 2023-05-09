@@ -17,7 +17,6 @@
 
   export let initialValues: SMLVersionData = {
     link: '',
-    bootstrap_version: '0.0.0',
     date: new Date().toISOString(),
     changelog: '',
     satisfactory_version: 0,
@@ -60,7 +59,7 @@
       </ValidationMessage>
     </div>
 
-    {#if $data.bootstrap_version !== '0.0.0'}
+    {#if $data.bootstrap_version !== undefined && $data.bootstrap_version !== null}
       <div class="grid grid-flow-row gap-2">
         <Textfield bind:value={$data.bootstrap_version} label="Bootstrap Version" required />
         <ValidationMessage for="bootstrap_version" let:messages={message}>

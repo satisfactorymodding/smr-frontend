@@ -28,7 +28,7 @@ export const smlTargetSchema = zod.object({
 export const smlVersionSchema = zod.object({
   version: zod.string().regex(versionRegex),
   satisfactory_version: zod.number(),
-  bootstrap_version: zod.string().regex(versionRegex),
+  bootstrap_version: zod.string().regex(versionRegex).optional(),
   stability: zod.string(),
   link: zod.string().url(),
   targets: zod.array(smlTargetSchema).superRefine((targets, ctx) => {
