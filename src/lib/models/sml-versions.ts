@@ -31,7 +31,17 @@ export const smlVersionSchema = zod.object({
   bootstrap_version: zod.string().regex(versionRegex),
   stability: zod.string(),
   link: zod.string().url(),
-  targets: zod.array(smlTargetSchema),
+  targets: zod.array(smlTargetSchema).superRefine((targets, ctx) => {
+    for (let i = 0; i < targets.length; i += 1) {
+      if (targets.findIndex((t) => t.targetName == targets[i].targetName) !== i) {
+        ctx.addIssue({
+          code: zod.ZodIssueCode.custom,
+          message: 'Targets must be unique',
+          path: [i, 'targetName']
+        });
+      }
+    }
+  }),
   changelog: zod.string(),
   date: zod.string()
 });

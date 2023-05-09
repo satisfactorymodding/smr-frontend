@@ -104,29 +104,35 @@
     <span>Targets:</span>
     <div class="grid grid-flow-row gap-2">
       {#each $data.targets as target, i}
-        <div class="gap-6 auto-rows-max">
-          <Select bind:value={target.targetName} label="Platform">
-            <Option value="WindowsNoEditor">Windows Client</Option>
-            <Option value="WindowsServer">Windows Server</Option>
-            <Option value="LinuxServer">Linux Server</Option>
-          </Select>
-
-          <Textfield
-            name={`data_link.link`}
-            placeholder="URL"
-            bind:value={target.targetName}
-            style="min-width: 850px;"
-            label="URL" />
-          <ValidationMessage for="data_link.link" let:messages={message}>
-            <span class="validation-message">{message || ''}</span>
-          </ValidationMessage>
-
-          {#if !editing}
-            <Button type="button" on:click={addTarget}>Add</Button>
-            <Button type="button" disabled={$data.targets.length == 1} on:click={() => removeTarget(i)}>Remove</Button>
-          {/if}
+        <div class="flex content-center gap-2">
+          <div>
+            <Select bind:value={target.targetName} label="Platform">
+              <Option value="WindowsNoEditor">Windows Client</Option>
+              <Option value="WindowsServer">Windows Server</Option>
+              <Option value="LinuxServer">Linux Server</Option>
+              <svelte:fragment slot="helperText">
+                <ValidationMessage for="targets.{i}.targetName" let:messages={message}>
+                  <span class="validation-message">{message || ''}</span>
+                </ValidationMessage>
+              </svelte:fragment>
+            </Select>
+          </div>
+          <div class="grow">
+            <Textfield placeholder="URL" bind:value={target.link} label="URL" class="w-full">
+              <svelte:fragment slot="helperText">
+                <ValidationMessage for="targets.{i}.link" let:messages={message}>
+                  <span class="validation-message">{message || ''}</span>
+                </ValidationMessage>
+              </svelte:fragment>
+            </Textfield>
+          </div>
+          <Button type="button" disabled={$data.targets.length == 1} on:click={() => removeTarget(i)} class="h-full"
+            >Remove</Button>
         </div>
       {/each}
+      {#if !editing}
+        <Button type="button" on:click={addTarget}>Add target</Button>
+      {/if}
 
       <Textfield bind:value={$data.link} label="Link" />
       <ValidationMessage for="link" let:messages={message}>
