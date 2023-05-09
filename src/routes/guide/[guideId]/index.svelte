@@ -75,7 +75,7 @@
 {:else if $guide.data.getGuide}
   <div class="grid gap-6 xlx:grid-flow-row">
     <div class="flex flex-wrap h-auto justify-between items-center">
-      <h1 class="text-4xl  font-bold">{$guide.data.getGuide.name}</h1>
+      <h1 class="text-4xl font-bold">{$guide.data.getGuide.name}</h1>
 
       <div>
         {#if canUserEdit}
