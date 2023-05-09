@@ -1,6 +1,6 @@
 import DOMPurify from 'dompurify';
 import { marked } from 'marked';
-import { browser } from '$app/env';
+import { browser } from '$app/environment';
 import Prism from 'prismjs';
 import 'prismjs/components/prism-c.js';
 import 'prismjs/components/prism-cpp.js';

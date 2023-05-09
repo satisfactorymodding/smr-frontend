@@ -5,10 +5,10 @@ import { persistedExchange } from '@urql/exchange-persisted';
 import { API_GRAPHQL } from './api';
 import { userToken } from '$lib/stores/user';
 import { authExchange } from '@urql/exchange-auth';
-import type { LoadInput } from '@sveltejs/kit/types/page';
+import type { LoadEvent } from '@sveltejs/kit';
 import { get } from 'svelte/store';
 
-export const initializeGraphQLClient = (fetch?: LoadInput['fetch']): Client =>
+export const initializeGraphQLClient = (fetch?: LoadEvent['fetch']): Client =>
   createClient({
     url: API_GRAPHQL,
     fetch,
@@ -95,7 +95,7 @@ export const initializeGraphQLClient = (fetch?: LoadInput['fetch']): Client =>
           didAuthError(error) {
             return error.message.indexOf('user not logged in') >= 0;
           },
-          refreshAuth() {
+          async refreshAuth() {
             // Token cannot be refreshed currently
           }
         };

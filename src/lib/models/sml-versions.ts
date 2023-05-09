@@ -12,7 +12,6 @@ export type SMLVersionData = {
   bootstrap_version?: string;
   stability: VersionStabilities;
   link: string;
-  arch: SMLArchData[];
   changelog: string;
   date: string;
   arch: UpdateSmlArch[];

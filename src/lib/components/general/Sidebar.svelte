@@ -3,7 +3,7 @@
   import FormField from '@smui/form-field';
   import Drawer, { Content } from '@smui/drawer';
   import List, { Item, Text, Graphic, Separator } from '@smui/list';
-  import { goto, prefetch } from '$app/navigation';
+  import { goto, preloadData } from '$app/navigation';
   import { base } from '$app/paths';
   import { page } from '$app/stores';
   import { user, userToken } from '$lib/stores/user';
@@ -131,7 +131,7 @@
       <List>
         {#each top as item}
           {#if !item.external}
-            <Item href={item.url} activated={currentPath === item.url} on:mouseover={() => prefetch(item.url)}>
+            <Item href={item.url} activated={currentPath === item.url} on:mouseover={() => preloadData(item.url)}>
               <Graphic class="material-icons">{item.icon}</Graphic>
               <Text>{item.label}</Text>
             </Item>
@@ -147,7 +147,7 @@
       <List>
         {#each bottom as item}
           {#if !item.external}
-            <Item href={item.url} activated={currentPath === item.url} on:mouseover={() => prefetch(item.url)}>
+            <Item href={item.url} activated={currentPath === item.url} on:mouseover={() => preloadData(item.url)}>
               <Graphic class="material-icons">{item.icon}</Graphic>
               <Text>{item.label}</Text>
             </Item>

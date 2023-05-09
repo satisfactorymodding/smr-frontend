@@ -15,7 +15,7 @@
   import Sidebar from '$lib/components/general/Sidebar.svelte';
   import AnnouncementHeader from '$lib/components/announcements/AnnouncementHeader.svelte';
   import { base } from '$app/paths';
-  import { browser } from '$app/env';
+  import { browser } from '$app/environment';
   import { env } from '$env/dynamic/public';
   import type { LayoutData } from './$types';
 

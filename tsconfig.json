@@ -6,14 +6,6 @@
 		"skipLibCheck": true,
 		"forceConsistentCasingInFileNames": true,
 		"allowJs": true,
-		"checkJs": true,
-		"paths": {
-			"$app/*": [".svelte-kit/runtime/app/*"],
-			"$lib": ["src/lib"],
-			"$lib/*": ["src/lib/*"]
-		}
-	},
-	"include": [
-		"src/**/*.d.ts",
-	]
+		"checkJs": true
+	}
 }

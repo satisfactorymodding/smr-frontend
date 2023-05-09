@@ -9,7 +9,7 @@
     LogoutDocument
   } from '$lib/generated';
   import { getContextClient, queryStore } from '@urql/svelte';
-  import { browser } from '$app/env';
+  import { browser } from '$app/environment';
   import { page } from '$app/stores';
   import { goto } from '$app/navigation';
   import Toast from '../general/Toast.svelte';

@@ -14,7 +14,7 @@
   import { user } from '$lib/stores/user';
   import FicsitCard from '$lib/components/general/FicsitCard.svelte';
   import Select, { Option } from '@smui/select';
-  import { browser } from '$app/env';
+  import { browser } from '$app/environment';
 
   export let colCount: 4 | 5 = 4;
   export let newMod = false;
@@ -66,7 +66,7 @@
     const url = new URL(window.location.origin + window.location.pathname);
     url.searchParams.append('p', page.toString());
     searchField !== '' && searchField !== null && url.searchParams.append('q', searchField);
-    goto(url.toString(), { keepfocus: true });
+    goto(url.toString(), { keepFocus: true });
   }
 
   $: totalMods = $mods?.data?.getMods?.count || 0;
