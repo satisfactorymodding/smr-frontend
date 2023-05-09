@@ -1,9 +1,3 @@
-<script lang="ts" context="module">
-  import { paramsToProps } from '$lib/utils/routing';
-
-  export const load = paramsToProps();
-</script>
-
 <script lang="ts">
   import { getContextClient, queryStore } from '@urql/svelte';
   import Toast from '$lib/components/general/Toast.svelte';
@@ -17,8 +11,11 @@
   import { base } from '$app/paths';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
   import Card, { Content } from '@smui/card';
+  import type { PageData } from './$types';
 
-  export let modId!: string;
+  export let data: PageData;
+
+  const { modId } = data;
 
   const client = getContextClient();
 
@@ -48,13 +45,13 @@
     variables: { mod: modId }
   });
 
-  const onSubmit = async (data: VersionData) =>
+  const onSubmit = async (versionData: VersionData) =>
     chunkedUpload(
-      data.file,
+      versionData.file,
       $mod.data.mod.id,
       {
-        changelog: data.changelog,
-        stability: data.stability
+        changelog: versionData.changelog,
+        stability: versionData.stability
       },
       uploadState,
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment

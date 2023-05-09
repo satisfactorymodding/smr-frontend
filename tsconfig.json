@@ -8,10 +8,10 @@
 		"allowJs": true,
 		"checkJs": true,
 		"paths": {
-			"$app/*": [".svelte/dev/runtime/app/*", ".svelte/build/runtime/app/*"],
-            "$lib": ["src/lib"],
-            "$lib/*": ["src/lib/*"]
-        }
+			"$app/*": [".svelte-kit/runtime/app/*"],
+			"$lib": ["src/lib"],
+			"$lib/*": ["src/lib/*"]
+		}
 	},
 	"include": [
 		"src/**/*.d.ts",

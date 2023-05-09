@@ -1,33 +1,17 @@
-<script lang="ts" context="module">
-  import { paramsToProps } from '$lib/utils/routing';
-  import { queryStore } from '@urql/svelte';
-  import { GetUserDocument, type GetUserQuery } from '$lib/generated';
-  import { loadWaitForNoFetch } from '$lib/utils/gql';
-  import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
-  import Button from '@smui/button';
-  import { initializeGraphQLClient } from '$lib/core';
-
-  export const load = paramsToProps(async (input) => ({
-    props: loadWaitForNoFetch({
-      user: queryStore({
-        query: GetUserDocument,
-        client: initializeGraphQLClient(input.fetch),
-        variables: { user: input.params.userId }
-      })
-    })
-  }));
-</script>
-
 <script lang="ts">
+  import Button from '@smui/button';
   import UserInfo from '$lib/components/users/UserInfo.svelte';
   import UserAvatar from '$lib/components/users/UserAvatar.svelte';
   import ModCard from '$lib/components/mods/ModCard.svelte';
   import GuideCard from '$lib/components/guides/GuideCard.svelte';
+  import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
   import { user as me } from '$lib/stores/user';
   import { base } from '$app/paths';
-  import type { OperationResultStore } from '@urql/svelte';
+  import type { PageData } from './$types';
 
-  export let user: OperationResultStore<GetUserQuery>;
+  export let data: PageData;
+
+  const { user } = data;
 
   let guidesTab = false;
 </script>

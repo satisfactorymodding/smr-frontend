@@ -1,21 +1,3 @@
-<script lang="ts" context="module">
-  import { paramsToProps } from '$lib/utils/routing';
-  import { queryStore } from '@urql/svelte';
-  import { GetModDocument, type GetModQuery } from '$lib/generated';
-  import { loadWaitForNoFetch } from '$lib/utils/gql';
-  import { initializeGraphQLClient } from '$lib/core';
-
-  export const load = paramsToProps(async (input) => ({
-    props: loadWaitForNoFetch({
-      mod: queryStore({
-        query: GetModDocument,
-        client: initializeGraphQLClient(input.fetch),
-        variables: { mod: input.params.modId }
-      })
-    })
-  }));
-</script>
-
 <script lang="ts">
   import { DeleteModDocument } from '$lib/generated';
   import ModInfo from '$lib/components/mods/ModInfo.svelte';
@@ -34,11 +16,12 @@
   import Dialog, { Title, Content as DialogContent } from '@smui/dialog';
   import { modSchema, serializeSchema } from '$lib/utils/schema';
   import EditCompatibilityForm from '$lib/components/mods/compatibility/EditCompatibilityForm.svelte';
-  import type { OperationResultStore } from '@urql/svelte';
   import { getContextClient } from '@urql/svelte';
+  import type { PageData } from './$types';
 
-  export let modId!: string;
-  export let mod: OperationResultStore<GetModQuery>;
+  export let data: PageData;
+
+  const { modId, mod } = data;
 
   const client = getContextClient();
 

@@ -1,9 +1,3 @@
-<script lang="ts" context="module">
-  import { paramsToProps } from '$lib/utils/routing';
-
-  export const load = paramsToProps();
-</script>
-
 <script lang="ts">
   import { getContextClient, queryStore } from '@urql/svelte';
   import { EditModDocument, GetModDocument } from '$lib/generated';
@@ -15,10 +9,13 @@
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
   import Card, { Content } from '@smui/card';
   import { get } from 'svelte/store';
+  import type { PageData } from './$types';
+
+  export let data: PageData;
+
+  const { modId } = data;
 
   const client = getContextClient();
-
-  export let modId!: string;
 
   let errorMessage = '';
   let errorToast = false;
@@ -29,11 +26,11 @@
     variables: { mod: modId }
   });
 
-  const onSubmit = (data: ModData) => {
+  const onSubmit = (modData: ModData) => {
     client
       .mutation(EditModDocument, {
         modId: get(mod).data.mod.id,
-        mod: data
+        mod: modData
       })
       .toPromise()
       .then((value) => {

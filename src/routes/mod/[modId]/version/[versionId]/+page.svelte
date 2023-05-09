@@ -1,27 +1,8 @@
-<script lang="ts" context="module">
-  import { paramsToProps } from '$lib/utils/routing';
-  import { queryStore } from '@urql/svelte';
-  import { GetModVersionDocument, type GetModVersionQuery } from '$lib/generated';
-  import { loadWaitForNoFetch } from '$lib/utils/gql';
-  import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
-  import { initializeGraphQLClient } from '$lib/core';
-
-  export const load = paramsToProps(async (input) => ({
-    props: loadWaitForNoFetch({
-      version: queryStore({
-        query: GetModVersionDocument,
-
-        client: initializeGraphQLClient(input.fetch),
-        variables: { version: input.params.versionId }
-      })
-    })
-  }));
-</script>
-
 <script lang="ts">
   import { DeleteVersionDocument } from '$lib/generated';
   import VersionDescription from '$lib/components/versions/VersionDescription.svelte';
   import VersionInfo from '$lib/components/versions/VersionInfo.svelte';
+  import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
   import { API_REST } from '$lib/core';
   import Toast from '$lib/components/general/Toast.svelte';
   import { writable } from 'svelte/store';
@@ -34,12 +15,12 @@
   import List, { Item } from '@smui/list';
   import { installMod } from '$lib/stores/launcher';
   import { prettyArch } from '$lib/utils/formatting';
-  import type { OperationResultStore } from '@urql/svelte';
   import { getContextClient } from '@urql/svelte';
+  import type { PageData } from './$types';
 
-  export let modId!: string;
-  export let versionId!: string;
-  export let version: OperationResultStore<GetModVersionQuery>;
+  export let data: PageData;
+
+  const { modId, versionId, version } = data;
 
   const client = getContextClient();
 

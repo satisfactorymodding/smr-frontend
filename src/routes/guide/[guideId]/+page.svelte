@@ -1,21 +1,3 @@
-<script lang="ts" context="module">
-  import { paramsToProps } from '$lib/utils/routing';
-  import { queryStore } from '@urql/svelte';
-  import { GetGuideDocument, type GetGuideQuery } from '$lib/generated';
-  import { loadWaitForNoFetch } from '$lib/utils/gql';
-  import { initializeGraphQLClient } from '$lib/core';
-
-  export const load = paramsToProps(async (input) => ({
-    props: loadWaitForNoFetch({
-      guide: queryStore({
-        query: GetGuideDocument,
-        client: initializeGraphQLClient(input.fetch),
-        variables: { guide: input.params.guideId }
-      })
-    })
-  }));
-</script>
-
 <script lang="ts">
   import { DeleteGuideDocument } from '$lib/generated';
   import GuideInfo from '$lib/components/guides/GuideInfo.svelte';
@@ -30,11 +12,12 @@
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
   import Card, { Content } from '@smui/card';
   import Button from '@smui/button';
-  import type { OperationResultStore } from '@urql/svelte';
   import { getContextClient } from '@urql/svelte';
+  import type { PageData } from './$types';
 
-  export let guideId!: string;
-  export let guide: OperationResultStore<GetGuideQuery>;
+  export let data: PageData;
+
+  const { guideId, guide } = data;
 
   const client = getContextClient();
 

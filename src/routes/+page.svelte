@@ -1,26 +1,3 @@
-<script lang="ts" context="module">
-  import { queryStore } from '@urql/svelte';
-  import { GetModsDocument, ModFields, Order, type GetModsQuery } from '$lib/generated';
-  import { loadWaitForNoFetch } from '$lib/utils/gql';
-  import type { Load } from '@sveltejs/kit';
-  import { initializeGraphQLClient } from '$lib/core';
-
-  export const load: Load = async ({ fetch }) => ({
-    props: loadWaitForNoFetch({
-      mods: queryStore({
-        query: GetModsDocument,
-        client: initializeGraphQLClient(fetch),
-        variables: {
-          offset: 0,
-          limit: 4,
-          order: Order.Desc,
-          orderBy: ModFields.LastVersionDate
-        }
-      })
-    })
-  });
-</script>
-
 <script lang="ts">
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
   import FicsitCard from '$lib/components/general/FicsitCard.svelte';
@@ -30,8 +7,11 @@
   import { assets } from '$app/paths';
   import Button from '@smui/button';
   import { onMobile, easterEgg, doggoNeedsPats } from '$lib/stores/global';
-  import type { OperationResultStore } from '@urql/svelte';
-  export let mods!: OperationResultStore<GetModsQuery>;
+  import type { PageData } from './$types';
+
+  export let data: PageData;
+
+  const { mods } = data;
 
   const gridClasses = '3xl:grid-cols-4 lg:grid-cols-2 grid-cols-1';
 </script>

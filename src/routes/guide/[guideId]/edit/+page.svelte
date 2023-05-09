@@ -1,21 +1,18 @@
-<script lang="ts" context="module">
-  import { paramsToProps } from '$lib/utils/routing';
-  import Card, { Content } from '@smui/card';
-
-  export const load = paramsToProps();
-</script>
-
 <script lang="ts">
   import { getContextClient, queryStore } from '@urql/svelte';
   import { EditGuideDocument, GetGuideDocument } from '$lib/generated';
   import Toast from '$lib/components/general/Toast.svelte';
   import { goto } from '$app/navigation';
   import GuideForm from '$lib/components/guides/GuideForm.svelte';
+  import Card, { Content } from '@smui/card';
   import type { GuideData } from '$lib/models/guides';
   import { base } from '$app/paths';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
+  import type { PageData } from './$types';
 
-  export let guideId!: string;
+  export let data: PageData;
+
+  const { guideId } = data;
 
   const client = getContextClient();
 
@@ -28,11 +25,11 @@
     variables: { guide: guideId }
   });
 
-  const onSubmit = (data: GuideData) => {
+  const onSubmit = (guideData: GuideData) => {
     client
       .mutation(EditGuideDocument, {
         guideId: guideId,
-        guide: data
+        guide: guideData
       })
       .toPromise()
       .then((value) => {

@@ -1,9 +1,3 @@
-<script lang="ts" context="module">
-  import { paramsToProps } from '$lib/utils/routing';
-
-  export const load = paramsToProps();
-</script>
-
 <script lang="ts">
   import { getContextClient, queryStore } from '@urql/svelte';
   import { GetSmlVersionAdminDocument, UpdateSmlVersionDocument } from '$lib/generated';
@@ -14,10 +8,13 @@
   import { base } from '$app/paths';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
   import Card, { Content } from '@smui/card';
+  import type { PageData } from './$types';
+
+  export let data: PageData;
+
+  const { smlVersionId } = data;
 
   const client = getContextClient();
-
-  export let smlVersionId!: string;
 
   let errorMessage = '';
   let errorToast = false;
@@ -28,11 +25,11 @@
     variables: { smlVersionID: smlVersionId }
   });
 
-  const onSubmit = (data: SMLVersionData) => {
+  const onSubmit = (smlVersionData: SMLVersionData) => {
     client
       .mutation(UpdateSmlVersionDocument, {
         smlVersionID: smlVersionId,
-        smlVersion: data
+        smlVersion: smlVersionData
       })
       .toPromise()
       .then((value) => {
