@@ -1,5 +1,5 @@
 import { sveltekit } from '@sveltejs/kit/vite';
-import { terser } from 'rollup-plugin-terser';
+import terser from '@rollup/plugin-terser';
 
 const mode = process.env.NODE_ENV || 'development';
 const dev = mode === 'development' || process.env.RUNTIME === 'development';
