@@ -10,7 +10,7 @@
   import List, { Item } from '@smui/list';
   import Button, { Group, GroupItem, Label, Icon } from '@smui/button';
   import { installMod } from '$lib/stores/launcher';
-  import { prettyDate, prettyNumber, prettyBytes, prettyArch } from '$lib/utils/formatting';
+  import { prettyDate, prettyNumber, prettyBytes, prettyTarget } from '$lib/utils/formatting';
 
   export let modId!: string;
 
@@ -68,7 +68,7 @@
                   /*block table row expansion*/
                 }}>
                 <Button variant="outlined" href={base + '/mod/' + modId + '/version/' + version.id}>View</Button>
-                {#if version.arch.length != 0}
+                {#if version.targets.length != 0}
                   <Group variant="outlined">
                     <Button
                       variant="outlined"
@@ -85,7 +85,7 @@
                       </Button>
                       <Menu bind:this={menus[i]} anchorCorner="TOP_LEFT">
                         <List>
-                          {#each version.arch as arch, _}
+                          {#each version.targets as target, _}
                             <Item>
                               <Button
                                 class="w-full"
@@ -96,8 +96,8 @@
                                   '/versions/' +
                                   version.id +
                                   '/' +
-                                  arch.platform +
-                                  '/download'}>Download {prettyArch(arch.platform)}</Button>
+                                  target.targetName +
+                                  '/download'}>Download {prettyTarget(target.targetName)}</Button>
                             </Item>
                           {/each}
                         </List>

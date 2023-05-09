@@ -18,29 +18,27 @@
   export let initialValues: SMLVersionData = {
     link: '',
     bootstrap_version: '0.0.0',
-    date: '',
+    date: new Date().toISOString(),
     changelog: '',
     satisfactory_version: 0,
     stability: VersionStabilities.Alpha,
     version: '',
-    arch: [{ platform: '', link: '' }]
+    targets: [{ targetName: 'WindowsNoEditor', link: '' }]
   };
   export let submitText = 'Create';
 
-  const { form, data } = createForm<SMLVersionData>({
+  const { form, data, addField, unsetField } = createForm<SMLVersionData>({
     initialValues: initialValues,
     extend: [validator({ schema: smlVersionSchema }), reporter],
     onSubmit: (submitted: SMLVersionData) => onSubmit(trimNonSchema(submitted, smlVersionSchema))
   });
 
-  const addArch = () => {
-    $data.arch.push({ platform: '', link: '', key: '' });
-    $data.arch = $data.arch;
+  const addTarget = () => {
+    addField('targets', { targetName: '', link: '' });
   };
 
-  const removeArch = (i: number) => {
-    $data.arch.splice(i, 1);
-    $data.arch = $data.arch;
+  const removeTarget = (i: number) => {
+    unsetField(`targets.${i}`);
   };
 
   $: preview = ($data.changelog as string) || '';
@@ -103,10 +101,11 @@
       </div>
     </div>
 
+    <span>Targets:</span>
     <div class="grid grid-flow-row gap-2">
-      {#each $data.arch as data_link, i}
+      {#each $data.targets as target, i}
         <div class="gap-6 auto-rows-max">
-          <Select bind:value={data_link.platform} label="Platform">
+          <Select bind:value={target.targetName} label="Platform">
             <Option value="WindowsNoEditor">Windows Client</Option>
             <Option value="WindowsServer">Windows Server</Option>
             <Option value="LinuxServer">Linux Server</Option>
@@ -115,7 +114,7 @@
           <Textfield
             name={`data_link.link`}
             placeholder="URL"
-            bind:value={data_link.link}
+            bind:value={target.targetName}
             style="min-width: 850px;"
             label="URL" />
           <ValidationMessage for="data_link.link" let:messages={message}>
@@ -123,8 +122,8 @@
           </ValidationMessage>
 
           {#if !editing}
-            <Button type="button" on:click={addArch}>Add</Button>
-            <Button type="button" disabled={$data.arch.length == 1} on:click={() => removeArch(i)}>Remove</Button>
+            <Button type="button" on:click={addTarget}>Add</Button>
+            <Button type="button" disabled={$data.targets.length == 1} on:click={() => removeTarget(i)}>Remove</Button>
           {/if}
         </div>
       {/each}

@@ -6,9 +6,9 @@ query GetUnapprovedVersions($filter: VersionFilter) {
       version
       stability
       link
-      arch {
-        platform
-        asset
+      targets {
+        targetName
+        link
       }
       changelog
       created_at

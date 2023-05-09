@@ -22,9 +22,10 @@ export const prettyBytes = (bytes: number, decimals = 2) => {
   return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
 };
 
-export const prettyArch = (platform: string) => {
-  switch (platform) {
+export const prettyTarget = (target: string) => {
+  switch (target) {
     case 'WindowsNoEditor':
+    case 'Windows':
       return 'Windows Client';
     case 'WindowsServer':
       return 'Windows Server';
@@ -32,5 +33,5 @@ export const prettyArch = (platform: string) => {
       return 'Linux Server';
   }
 
-  return platform;
+  return target;
 };

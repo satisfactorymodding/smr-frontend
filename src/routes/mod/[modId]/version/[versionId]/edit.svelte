@@ -49,7 +49,6 @@
   $: initialValues = $version.data
     ? {
         ...$version.data.getVersion,
-        ...$version.data.getVersion.arch,
         logo: undefined
       }
     : undefined;
