@@ -7,9 +7,7 @@
   import type { MenuSurfaceComponentDev } from '@smui/menu-surface/src/MenuSurface.types';
   import Textfield, { Input } from '@smui/textfield';
   import FloatingLabel from '@smui/floating-label';
-  import LineRipple from '@smui/line-ripple';
   import type { InputComponentDev } from '@smui/textfield';
-  import type { LineRippleComponentDev } from '@smui/line-ripple';
 
   const getAllTags = operationStore(GetTagsDocument);
 
@@ -17,7 +15,6 @@
   export let editable = false;
 
   let inputA: InputComponentDev;
-  let lineRippleA: LineRippleComponentDev;
 
   const shake = false;
 
@@ -109,7 +106,7 @@
   updateTags();
 </script>
 
-<div class="" on:focusin={() => (focused = true)} on:focusout={() => (focused = false)}>
+<div class="tagHolder" on:focusin={() => (focused = true)} on:focusout={() => (focused = false)}>
   {#if !editable}
     {#if tags.length > 0}
       <div class="flex flex-row flex-wrap text-sm gap-1">
@@ -121,7 +118,7 @@
       </div>
     {/if}
   {:else}
-    <Textfield class="tags overflow-scroll" bind:lineRipple={lineRippleA} bind:input={inputA} style="z-index: 9999">
+    <Textfield class="tags" bind:input={inputA} style="z-index: 9999">
       <FloatingLabel
         class="pb-2"
         for="input-manual-a"
@@ -140,51 +137,47 @@
             <p>{tag.name}</p>
           </div>
         {/each}
-        <div
-          id="newTagContainer"
-          class="text-neutral-300 flex"
-          bind:this={newTagContainer}
-          on:focusin={() => surface.setOpen(true)}
-          on:focusout={onFocusLost}>
-          <MenuSurface bind:this={surface} managed={true} anchorCorner="BOTTOM_LEFT" anchorElement={newTag}>
-            <div style="margin: 1rem">
-              <h1>Available Tags</h1>
-              {#if filteredTagsMatched.length > 0}
-                <div class="flex flex-nowrap m-1">
-                  <Set chips={filteredTagsMatched} let:chip key={(tag) => tag.name}>
-                    <Chip {chip} on:SMUIChip:interaction={() => addTag(chip.name)}>
-                      <Text>{chip.name}</Text>
-                    </Chip>
-                  </Set>
-                </div>
-              {/if}
-              {#if filteredTagsUnmatched.length > 0}
-                <div class="flex flex-nowrap m-1">
-                  <Set class="unmatched-tag" chips={filteredTagsUnmatched} let:chip key={(tag) => tag.name}>
-                    <Chip {chip} on:SMUIChip:interaction={() => addTag(chip.name)}>
-                      <Text>{chip.name}</Text>
-                    </Chip>
-                  </Set>
-                </div>
-              {/if}
-            </div>
-          </MenuSurface>
-          {#if focused}
-            <span class="text-orange-500">#</span>
-          {/if}
-          <Input
-            id="input-manual-a"
-            spellcheck="false"
-            autocomplete="off"
-            class="inline text-sm text-neutral-300 {shake ? 'shake' : ''}"
-            style="height: initial"
-            bind:this={inputA}
-            bind:value={newTagText}
-            on:input={onInput} />
-        </div>
       </div>
-      <LineRipple bind:this={lineRippleA} slot="ripple" />
+      <div
+        id="newTagContainer"
+        class="text-neutral-300 flex"
+        bind:this={newTagContainer}
+        on:focusin={() => surface.setOpen(true)}
+        on:focusout={onFocusLost}>
+        <Input
+          id="input-manual-a"
+          spellcheck="false"
+          autocomplete="off"
+          class="addTag inline text-sm text-neutral-300 {shake ? 'shake' : ''}"
+          style="height: initial"
+          bind:this={inputA}
+          bind:value={newTagText}
+          on:input={onInput} />
+      </div>
     </Textfield>
+    <MenuSurface bind:this={surface} managed={true} anchorCorner="BOTTOM_LEFT" anchorElement={newTag}>
+      <div style="margin: 1rem">
+        <h1>Available Tags</h1>
+        {#if filteredTagsMatched.length > 0}
+          <div class="flex flex-nowrap m-1">
+            <Set chips={filteredTagsMatched} let:chip key={(tag) => tag.name}>
+              <Chip {chip} on:SMUIChip:interaction={() => addTag(chip.name)}>
+                <Text>{chip.name}</Text>
+              </Chip>
+            </Set>
+          </div>
+        {/if}
+        {#if filteredTagsUnmatched.length > 0}
+          <div class="flex flex-nowrap m-1">
+            <Set class="unmatched-tag" chips={filteredTagsUnmatched} let:chip key={(tag) => tag.name}>
+              <Chip {chip} on:SMUIChip:interaction={() => addTag(chip.name)}>
+                <Text>{chip.name}</Text>
+              </Chip>
+            </Set>
+          </div>
+        {/if}
+      </div>
+    </MenuSurface>
   {/if}
 </div>
 
@@ -211,7 +204,33 @@
     }
   }
 
-  .tags {
-    max-width: 50%;
+  :global(.tags) {
+    overflow-y: visible;
+  }
+
+  .tagHolder {
+    min-width: 100px;
+    max-width: 400px;
+    overflow-y: visible;
+
+    /* width */
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+      background: #888;
+    }
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+      background: #555;
+    }
   }
 </style>
