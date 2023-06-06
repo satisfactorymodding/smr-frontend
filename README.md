@@ -10,6 +10,12 @@ This project uses [pnpm](https://pnpm.js.org/):
 pnpm install
 ```
 
+After switching branches you should regenerate the graphql files as the schema may have changed:
+
+```shell
+pnpm graphql-codegen
+```
+
 ### Running
 
 The `dev` script executes several processes:
