@@ -2,6 +2,8 @@
 
 ## Development
 
+See [Contributing](CONTRIBUTING.md) for more information.
+
 ### Setup
 
 This project uses [pnpm](https://pnpm.js.org/):

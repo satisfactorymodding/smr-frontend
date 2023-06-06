@@ -8,9 +8,9 @@ Hello there! In order to simplify the process of contributing, we're putting thi
 
 At the highest level you must at least have:
 
-  * [NodeJS](https://nodejs.org/en/)
-  * [pnpm](https://pnpm.io/)
-  * terminal
+* [NodeJS](https://nodejs.org/en/)
+* [pnpm](https://pnpm.io/)
+* terminal
 
 ### pnpm installation
 
