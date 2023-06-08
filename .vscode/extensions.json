@@ -3,6 +3,7 @@
     "svelte.svelte-vscode",
     "streetsidesoftware.code-spell-checker",
     "dbaeumer.vscode-eslint",
-    "csstools.postcss"
+    "csstools.postcss",
+    "vunguyentuan.vscode-postcss"
   ]
 }
