@@ -9,7 +9,7 @@ on:
 
 env:
   NODE_VERSION: "18"
-  PNPM_VERSION: "7.5.0"
+  PNPM_VERSION: "8.6.1"
 
 jobs:
   build:
