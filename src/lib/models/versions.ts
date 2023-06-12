@@ -94,7 +94,7 @@ const validateModZip = async (
             message:
               'Mod contains ' +
               modReference +
-              '.uplugin files in the root directory. New uploads must use the multi-target format.'
+              '.uplugin files in the root directory. New uploads must use the multi-target format. Read more on the docs: https://docs.ficsit.app/satisfactory-modding/latest/Development/UpdatingToDedi.html'
           };
         }
 
