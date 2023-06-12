@@ -1,10 +1,10 @@
 <script lang="ts">
   import type { Version } from '$lib/generated';
-  import { API_REST } from '$lib/core';
   import { base } from '$app/paths';
   import Card, { Content } from '@smui/card';
   import { Icon } from '@smui/common';
   import { prettyDate } from '$lib/utils/formatting';
+  import { installMod } from '$lib/stores/launcher';
 
   type ILatestVersions = {
     alpha?: Pick<Version, 'id' | 'link' | 'version' | 'created_at'>;
@@ -40,7 +40,9 @@
             </div>
             <div class="text-3xl w-14 h-14 p-2.5">
               <a
-                href={API_REST + '/mod/' + modId + '/versions/' + latestVersions[stability].id + '/download'}
+                href="#top"
+                on:click={() => installMod(modId)}
+                title="Install via Satisfactory Mod Manager"
                 class="text-yellow-500 underline">
                 <Icon class="material-icons">download</Icon>
               </a>
