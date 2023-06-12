@@ -1,15 +1,40 @@
 <script lang="ts">
-  import type { Version } from '$lib/generated';
+  import type { Version, VersionTarget } from '$lib/generated';
   import { base } from '$app/paths';
   import Card, { Content } from '@smui/card';
   import { Icon } from '@smui/common';
+  import 'iconify-icon'
   import { prettyDate } from '$lib/utils/formatting';
   import { installMod } from '$lib/stores/launcher';
+  import DataTable, { Body, Row, Cell } from '@smui/data-table';
+
+  type IVersion = Pick<Version, 'id' | 'link' | 'version' | 'created_at'> & {
+    targets?: Pick<VersionTarget, 'targetName' | 'size' | 'hash'>[];
+  };
 
   type ILatestVersions = {
-    alpha?: Pick<Version, 'id' | 'link' | 'version' | 'created_at'>;
-    beta?: Pick<Version, 'id' | 'link' | 'version' | 'created_at'>;
-    release?: Pick<Version, 'id' | 'link' | 'version' | 'created_at'>;
+    alpha?: IVersion;
+    beta?: IVersion;
+    release?: IVersion;
+  };
+ 
+  function checkTarget(targets, selectedTarget: string) {
+    let found = false
+    if (targets.length != 0){ //support for pre-dedi
+      targets.forEach((target) => {
+        if (target.targetName === selectedTarget) { 
+          found = true
+        };
+      });
+    } else {
+      if ((selectedTarget === 'WindowsNoEditor') || (selectedTarget === 'Windows')) {
+        found = true
+      };
+    };
+    if (!found) {
+      return 'cancel'
+    };
+    return 'checkmark' 
   };
 
   const stabilities = {
@@ -29,6 +54,10 @@
 
       {#each Object.keys(stabilities) as stability}
         {#if latestVersions[stability]}
+          <script>
+            let targetCheck = latestVersions[stability].targets
+          </script>          
+
           <div class="version">
             <div class="text-4xl w-14 h-14 p-2.5" title={`Latest ${stability} release`}>
               <Icon class="material-icons">{stabilities[stability]}</Icon>
@@ -47,6 +76,27 @@
                 <Icon class="material-icons">download</Icon>
               </a>
             </div>
+          </div>
+          <div class="col-span-1">
+            <DataTable table$aria-label="Available Releases" style="max-width: 100%; table-layout: fixed;">
+              <Body>
+                <Row>
+                  <Cell class="center" style="width: 33%;"></Cell>
+                  <Cell class="center" style="width: 33%;">Client</Cell>
+                  <Cell class="center" style="width: 34%;">Server</Cell>
+                </Row>
+                <Row>
+                  <Cell class="center" style="width: 33%;">Windows</Cell>
+                  <Cell class="center" style="width: 33%;"><Icon class="material-icons">{checkTarget(latestVersions[stability].targets, 'WindowsNoEditor')}</Icon></Cell>
+                  <Cell class="center" style="width: 34%;"><Icon class="material-icons">{checkTarget(latestVersions[stability].targets, 'WindowsServer')}</Icon></Cell>
+                </Row>
+                <Row>
+                  <Cell class="center" style="width: 33%;">Linux</Cell>
+                  <Cell class="center" style="width: 33%;">N/A</Cell>
+                  <Cell class="center" style="width: 34%;"><Icon class="material-icons">{checkTarget(latestVersions[stability].targets, 'LinuxServer')}</Icon></Cell>
+                </Row>
+              </Body>
+            </DataTable>
           </div>
         {/if}
       {/each}
