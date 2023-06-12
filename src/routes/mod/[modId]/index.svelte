@@ -116,8 +116,8 @@
           modLogo={$mod.data.mod.logo}
           modName={$mod.data.mod.name}
           compatibility={$mod.data.mod.compatibility} />
-        <ModInfo mod={$mod.data.mod} />
         <ModLatestVersions modId={$mod.data.mod.id} latestVersions={$mod.data.mod.latestVersions} />
+        <ModInfo mod={$mod.data.mod} />
         <ModAuthors authors={$mod.data.mod.authors} />
       </div>
     </div>
