@@ -2,7 +2,7 @@
   import { assets } from '$app/paths';
   import Card, { Content, Actions } from '@smui/card';
   import IconButton, { Icon } from '@smui/icon-button';
-  import { goto, prefetch } from '$app/navigation';
+  import { prefetch } from '$app/navigation';
 
   export let name = '';
   export let logo = assets + '/images/no_image.webp';
@@ -41,12 +41,14 @@
     class:text-gray-500={fake}
     class:font-flow={fake}
     class="grid grid-max-auto sm:grid-cols-2 grid-cols-1 justify-items-center">
-    <div class="cursor-pointer card-image-container" on:click={() => goto(link)}>
-      {#if fake}
-        <div class="bg-gray-500 logo min-w-full min-h-full max-w-full max-h-full" />
-      {:else}
-        <img src={renderedLogo} alt="{renderedName} Logo" class="logo max-w-full max-h-full" />
-      {/if}
+    <div class="cursor-pointer card-image-container">
+      <a href={link}>
+        {#if fake}
+          <div class="bg-gray-500 logo min-w-full min-h-full max-w-full max-h-full" />
+        {:else}
+          <img src={renderedLogo} alt="{renderedName} Logo" class="logo max-w-full max-h-full" />
+        {/if}
+      </a>
     </div>
     <div class="w-full flex flex-col justify-between">
       <Content class="flex flex-col pb-0">
