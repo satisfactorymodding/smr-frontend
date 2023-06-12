@@ -30,12 +30,12 @@
       {#each Object.keys(stabilities) as stability}
         {#if latestVersions[stability]}
           <div class="version">
-            <div class="text-4xl w-14 h-14 p-2.5">
+            <div class="text-4xl w-14 h-14 p-2.5" title={`Latest ${stability} release`}>
               <Icon class="material-icons">{stabilities[stability]}</Icon>
             </div>
             <div class="grid grid-flow-row">
               <a href="{base}/mod/{modId}/version/{latestVersions[stability].id}/" class="text-yellow-500 underline"
-                >Version {latestVersions[stability].version}</a>
+                >Version {latestVersions[stability].version} ({stability})</a>
               <div>{prettyDate(latestVersions[stability].created_at)}</div>
             </div>
             <div class="text-3xl w-14 h-14 p-2.5">
