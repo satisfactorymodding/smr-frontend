@@ -3,7 +3,7 @@
   import { base } from '$app/paths';
   import Card, { Content } from '@smui/card';
   import { Icon } from '@smui/common';
-  import 'iconify-icon'
+  import 'iconify-icon';
   import { prettyDate } from '$lib/utils/formatting';
   import { installMod } from '$lib/stores/launcher';
   import DataTable, { Body, Row, Cell } from '@smui/data-table';
@@ -17,25 +17,26 @@
     beta?: IVersion;
     release?: IVersion;
   };
- 
+
   function checkTarget(targets, selectedTarget: string) {
-    let found = false
-    if (targets.length != 0){ //support for pre-dedi
+    let found = false;
+    if (targets.length != 0) {
+      //support for pre-dedi
       targets.forEach((target) => {
-        if (target.targetName === selectedTarget) { 
-          found = true
-        };
+        if (target.targetName === selectedTarget) {
+          found = true;
+        }
       });
     } else {
-      if ((selectedTarget === 'WindowsNoEditor') || (selectedTarget === 'Windows')) {
-        found = true
-      };
-    };
+      if (selectedTarget === 'WindowsNoEditor' || selectedTarget === 'Windows') {
+        found = true;
+      }
+    }
     if (!found) {
-      return 'cancel'
-    };
-    return 'checkmark' 
-  };
+      return 'cancel';
+    }
+    return 'checkmark';
+  }
 
   const stabilities = {
     release: 'new_releases',
@@ -55,8 +56,8 @@
       {#each Object.keys(stabilities) as stability}
         {#if latestVersions[stability]}
           <script>
-            let targetCheck = latestVersions[stability].targets
-          </script>          
+            let targetCheck = latestVersions[stability].targets;
+          </script>
 
           <div class="version">
             <div class="text-4xl w-14 h-14 p-2.5" title={`Latest ${stability} release`}>
@@ -81,19 +82,27 @@
             <DataTable table$aria-label="Available Releases" style="max-width: 100%; table-layout: fixed;">
               <Body>
                 <Row>
-                  <Cell class="center" style="width: 33%;"></Cell>
+                  <Cell class="center" style="width: 33%;" />
                   <Cell class="center" style="width: 33%;">Client</Cell>
                   <Cell class="center" style="width: 34%;">Server</Cell>
                 </Row>
                 <Row>
                   <Cell class="center" style="width: 33%;">Windows</Cell>
-                  <Cell class="center" style="width: 33%;"><Icon class="material-icons">{checkTarget(latestVersions[stability].targets, 'WindowsNoEditor')}</Icon></Cell>
-                  <Cell class="center" style="width: 34%;"><Icon class="material-icons">{checkTarget(latestVersions[stability].targets, 'WindowsServer')}</Icon></Cell>
+                  <Cell class="center" style="width: 33%;"
+                    ><Icon class="material-icons"
+                      >{checkTarget(latestVersions[stability].targets, 'WindowsNoEditor')}</Icon
+                    ></Cell>
+                  <Cell class="center" style="width: 34%;"
+                    ><Icon class="material-icons"
+                      >{checkTarget(latestVersions[stability].targets, 'WindowsServer')}</Icon
+                    ></Cell>
                 </Row>
                 <Row>
                   <Cell class="center" style="width: 33%;">Linux</Cell>
                   <Cell class="center" style="width: 33%;">N/A</Cell>
-                  <Cell class="center" style="width: 34%;"><Icon class="material-icons">{checkTarget(latestVersions[stability].targets, 'LinuxServer')}</Icon></Cell>
+                  <Cell class="center" style="width: 34%;"
+                    ><Icon class="material-icons">{checkTarget(latestVersions[stability].targets, 'LinuxServer')}</Icon
+                    ></Cell>
                 </Row>
               </Body>
             </DataTable>
