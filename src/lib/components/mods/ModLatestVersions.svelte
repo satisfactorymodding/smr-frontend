@@ -64,45 +64,45 @@
                 >Version {latestVersions[stability].version} ({stability})</a>
               <div>{prettyDate(latestVersions[stability].created_at)}</div>
             </div>
-            <div class="text-3xl w-14 h-14 p-2.5">
+            <div class="text-1xl w-48 h-14 p-2.5">
               <a
                 href="#top"
                 on:click={() => installMod(modId)}
                 title="Install via Satisfactory Mod Manager"
-                class="text-yellow-500 underline">
-                <Icon class="material-icons">download</Icon>
+                class="text-yellow-500">
+                <Icon class="material-icons" style="font-size: 18px;">download</Icon> <u>Download</u>
               </a>
             </div>
           </div>
-          <div class="col-span-1">
-            <DataTable table$aria-label="Available Releases" style="max-width: 100%; table-layout: fixed;">
-              <Body>
-                <Row>
-                  <Cell class="center" style="width: 33%;" />
-                  <Cell class="center" style="width: 33%;">Client</Cell>
-                  <Cell class="center" style="width: 34%;">Server</Cell>
-                </Row>
-                <Row>
-                  <Cell class="center" style="width: 33%;">Windows</Cell>
-                  <Cell class="center" style="width: 33%;"
-                    ><Icon class="material-icons"
-                      >{checkTarget(latestVersions[stability].targets, 'WindowsNoEditor')}</Icon
-                    ></Cell>
-                  <Cell class="center" style="width: 34%;"
-                    ><Icon class="material-icons"
-                      >{checkTarget(latestVersions[stability].targets, 'WindowsServer')}</Icon
-                    ></Cell>
-                </Row>
-                <Row>
-                  <Cell class="center" style="width: 33%;">Linux</Cell>
-                  <Cell class="center" style="width: 33%;">N/A</Cell>
-                  <Cell class="center" style="width: 34%;"
-                    ><Icon class="material-icons">{checkTarget(latestVersions[stability].targets, 'LinuxServer')}</Icon
-                    ></Cell>
-                </Row>
-              </Body>
-            </DataTable>
-          </div>
+          <DataTable
+            table$aria-label="Available Releases"
+            class="max-w-auto align-self-center"
+            container$class="!overflow-visible"
+            table$class="!overflow-visible">
+            <Body>
+              <Row>
+                <Cell style="width: 33%;" />
+                <Cell style="width: 33%;">Client</Cell>
+                <Cell style="width: 34%;">Server</Cell>
+              </Row>
+              <Row>
+                <Cell>Windows</Cell>
+                <Cell><Icon class="material-icons"
+                    >{checkTarget(latestVersions[stability].targets, 'WindowsNoEditor')}</Icon
+                  ></Cell>
+                <Cell
+                  ><Icon class="material-icons">{checkTarget(latestVersions[stability].targets, 'WindowsServer')}</Icon
+                  ></Cell>
+              </Row>
+              <Row>
+                <Cell>Linux</Cell>
+                <Cell>N/A</Cell>
+                <Cell
+                  ><Icon class="material-icons">{checkTarget(latestVersions[stability].targets, 'LinuxServer')}</Icon
+                  ></Cell>
+              </Row>
+            </Body>
+          </DataTable>
         {/if}
       {/each}
     </div>
