@@ -21,13 +21,13 @@
   function checkTarget(targets, selectedTarget: string) {
     let found = false;
     if (targets.length != 0) {
-      //support for pre-dedi
       targets.forEach((target) => {
         if (target.targetName === selectedTarget) {
           found = true;
         }
       });
     } else {
+      //support for pre-dedi builds/releases
       if (selectedTarget === 'WindowsNoEditor' || selectedTarget === 'Windows') {
         found = true;
       }
@@ -55,10 +55,6 @@
 
       {#each Object.keys(stabilities) as stability}
         {#if latestVersions[stability]}
-          <script>
-            let targetCheck = latestVersions[stability].targets;
-          </script>
-
           <div class="version">
             <div class="text-4xl w-14 h-14 p-2.5" title={`Latest ${stability} release`}>
               <Icon class="material-icons">{stabilities[stability]}</Icon>
