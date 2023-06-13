@@ -18,7 +18,7 @@
     release?: IVersion;
   };
 
-  function checkTarget(targets, selectedTarget: string) {
+  function checkTarget(targets: VersionTarget[], selectedTarget: string) {
     let found = false;
     if (targets.length != 0) {
       targets.forEach((target) => {
