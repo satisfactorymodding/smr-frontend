@@ -110,11 +110,9 @@
               {#each latestVersions[stability].dependencies as dependency}
                 <Row>
                   <Cell>
-                    {#if dependency.mod_id === 'SML'}
-                      <a href="{base}/sml-versions" class="text-yellow-500"><u>{dependency.mod_id}</u></a>
-                    {:else}
-                      <a href="{base}/mod/{dependency.mod_id}" class="text-yellow-500"><u>{dependency.mod_id}</u></a>
-                    {/if}
+                    <a
+                      href={dependency.mod_id === 'SML' ? `${base}/sml-versions` : `${base}/mod/${dependency.mod_id}`}
+                      class="text-yellow-500"><u>{dependency.mod_id}</u></a>
                   </Cell>
                   <Cell>{dependency.condition}</Cell>
                 </Row>
