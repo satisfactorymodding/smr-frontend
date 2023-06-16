@@ -1,6 +1,6 @@
 {
   ".svelte-kit/runtime/client/start.js": {
-    "file": "immutable/start-fbbd38b4.js",
+    "file": "immutable/start-e0d2af66.js",
     "src": ".svelte-kit/runtime/client/start.js",
     "isEntry": true,
     "imports": [
@@ -66,7 +66,7 @@
       "src/lib/thirdparty/custom_protocol.ts"
     ],
     "css": [
-      "immutable/assets/pages/__layout.svelte-e5edd662.css"
+      "immutable/assets/pages/__layout.svelte-c5e39dfd.css"
     ]
   },
   ".svelte-kit/runtime/components/error.svelte": {
@@ -200,7 +200,7 @@
       "_paths-1c47712a.js"
     ],
     "css": [
-      "immutable/assets/pages/tos/index.svelte-1ae42d62.css"
+      "immutable/assets/pages/api-docs/index.svelte-1c1e4dfd.css"
     ]
   },
   "src/routes/content-policy/index.svelte": {
@@ -215,7 +215,7 @@
       "_paths-1c47712a.js"
     ],
     "css": [
-      "immutable/assets/pages/tos/index.svelte-1ae42d62.css"
+      "immutable/assets/pages/api-docs/index.svelte-1c1e4dfd.css"
     ]
   },
   "src/routes/guide/[guideId]/edit.svelte": {
@@ -301,7 +301,7 @@
     ]
   },
   "src/routes/index.svelte": {
-    "file": "immutable/pages/index.svelte-f296490c.js",
+    "file": "immutable/pages/index.svelte-875ee04f.js",
     "src": "src/routes/index.svelte",
     "isEntry": true,
     "isDynamicEntry": true,
@@ -552,7 +552,7 @@
       "_paths-1c47712a.js"
     ],
     "css": [
-      "immutable/assets/pages/tos/index.svelte-1ae42d62.css"
+      "immutable/assets/pages/api-docs/index.svelte-1c1e4dfd.css"
     ]
   },
   "src/routes/settings/index.svelte": {
@@ -619,7 +619,7 @@
       "_paths-1c47712a.js"
     ],
     "css": [
-      "immutable/assets/pages/tos/index.svelte-1ae42d62.css"
+      "immutable/assets/pages/api-docs/index.svelte-1c1e4dfd.css"
     ]
   },
   "src/routes/user/[userId]/index.svelte": {
@@ -740,7 +740,7 @@
       "_graphql-f19d0585.js"
     ],
     "css": [
-      "immutable/assets/ModForm-cc1db5c2.css"
+      "immutable/assets/GuideForm-81c8f5a1.css"
     ]
   },
   "_forms-2903de53.js": {
@@ -776,7 +776,7 @@
       "_markdown-6a2ff7f0.js"
     ],
     "css": [
-      "immutable/assets/ModForm-cc1db5c2.css"
+      "immutable/assets/GuideForm-81c8f5a1.css"
     ]
   },
   "_gql-d96f7ff1.js": {
@@ -846,7 +846,7 @@
       "_ModCompatibilityEdit-13c30fdc.js"
     ],
     "css": [
-      "immutable/assets/ModForm-cc1db5c2.css"
+      "immutable/assets/GuideForm-81c8f5a1.css"
     ]
   },
   "_ModCompatibilityEdit-13c30fdc.js": {
