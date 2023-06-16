@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Version, VersionTarget } from '$lib/generated';
+  import type { Version, VersionDependency, VersionTarget } from '$lib/generated';
   import { base } from '$app/paths';
   import Card, { Content } from '@smui/card';
   import { Icon } from '@smui/common';
@@ -10,7 +10,7 @@
 
   type IVersion = Pick<Version, 'id' | 'link' | 'version' | 'created_at'> & {
     targets?: Pick<VersionTarget, 'targetName' | 'size' | 'hash'>[];
-  };
+  } & { dependencies?: Pick<VersionDependency, 'mod_id' | 'condition'>[] };
 
   type ILatestVersions = {
     alpha?: IVersion;
@@ -64,13 +64,13 @@
                 >Version {latestVersions[stability].version} ({stability})</a>
               <div>{prettyDate(latestVersions[stability].created_at)}</div>
             </div>
-            <div class="text-1xl w-48 h-14 p-2.5">
+            <div class="text-1xl w-auto h-auto p-2.5">
               <a
                 href="#top"
                 on:click={() => installMod(modId)}
                 title="Install via Satisfactory Mod Manager"
                 class="text-yellow-500">
-                <Icon class="material-icons" style="font-size: 18px;">download</Icon> <u>Download</u>
+                <Icon class="material-icons" style="font-size: 118x;">download</Icon> <u>Download</u>
               </a>
             </div>
           </div>
@@ -87,7 +87,8 @@
               </Row>
               <Row>
                 <Cell>Windows</Cell>
-                <Cell><Icon class="material-icons"
+                <Cell
+                  ><Icon class="material-icons"
                     >{checkTarget(latestVersions[stability].targets, 'WindowsNoEditor')}</Icon
                   ></Cell>
                 <Cell
@@ -101,6 +102,30 @@
                   ><Icon class="material-icons">{checkTarget(latestVersions[stability].targets, 'LinuxServer')}</Icon
                   ></Cell>
               </Row>
+            </Body>
+          </DataTable>
+          <DataTable
+            table$aria-label="Mod Dependency"
+            class="max-w-auto align-self-center"
+            container$class="!overflow-visible"
+            table$class="!overflow-visible">
+            <Body>
+              <Row>
+                <Cell>Mod Dependency:</Cell>
+                <Cell>Version Range</Cell>
+              </Row>
+              {#each latestVersions[stability].dependencies as dependency}
+                <Row>
+                  <Cell>
+                    {#if dependency.mod_id === 'SML'}
+                      <a href="{base}/sml-versions" class="text-yellow-500"><u>{dependency.mod_id}</u></a>
+                    {:else}
+                      <a href="{base}/mod/{dependency.mod_id}" class="text-yellow-500"><u>{dependency.mod_id}</u></a>
+                    {/if}
+                  </Cell>
+                  <Cell>{dependency.condition}</Cell>
+                </Row>
+              {/each}
             </Body>
           </DataTable>
         {/if}
