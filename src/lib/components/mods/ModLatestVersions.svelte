@@ -20,22 +20,15 @@
 
   function checkTarget(targets: VersionTarget[], selectedTarget: string) {
     let found = false;
-    if (targets.length != 0) {
-      targets.forEach((target) => {
-        if (target.targetName === selectedTarget) {
-          found = true;
-        }
-      });
+
+    const fromBeforeDedicatedServerSupport = targets.length == 0;
+    if (fromBeforeDedicatedServerSupport) {
+      found = ['WindowsNoEditor', 'Windows'].includes(selectedTarget);
     } else {
-      //support for pre-dedi builds/releases
-      if (selectedTarget === 'WindowsNoEditor' || selectedTarget === 'Windows') {
-        found = true;
-      }
+      found = targets.some((target) => target.targetName === selectedTarget);
     }
-    if (!found) {
-      return 'cancel';
-    }
-    return 'checkmark';
+
+    return found ? 'checkmark' : 'cancel';
   }
 
   const stabilities = {
