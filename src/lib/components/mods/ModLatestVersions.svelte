@@ -63,7 +63,7 @@
                 on:click={() => installMod(modId)}
                 title="Install via Satisfactory Mod Manager"
                 class="text-yellow-500">
-                <Icon class="material-icons" style="font-size: 118x;">download</Icon> <u>Download</u>
+                <Icon class="material-icons align-middle" style="font-size: 118x;">download</Icon> <u>Download</u>
               </a>
             </div>
           </div>
