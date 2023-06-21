@@ -56,7 +56,7 @@
                 >Version {latestVersions[stability].version} ({stability})</a>
               <div>{prettyDate(latestVersions[stability].created_at)}</div>
             </div>
-            <div class="text-1xl w-auto h-auto p-2.5">
+            <div class="text-1xl col-span-3 w-auto h-auto p-2.5">
               <a
                 href="#top"
                 on:click={() => installMod(modId)}
@@ -66,60 +66,67 @@
               </a>
             </div>
           </div>
-          <DataTable
-            table$aria-label="Available Releases"
-            class="max-w-auto align-self-center"
-            container$class="!overflow-visible"
-            table$class="!overflow-visible">
-            <Body>
-              <Row>
-                <Cell style="width: 33%;" />
-                <Cell style="width: 33%;">Client</Cell>
-                <Cell style="width: 34%;">Server</Cell>
-              </Row>
-              <Row>
-                <Cell>Windows</Cell>
-                <Cell
-                  ><Icon class="material-icons"
-                    >{checkTarget(latestVersions[stability].targets, 'WindowsNoEditor')}</Icon
-                  ></Cell>
-                <Cell
-                  ><Icon class="material-icons">{checkTarget(latestVersions[stability].targets, 'WindowsServer')}</Icon
-                  ></Cell>
-              </Row>
-              <Row>
-                <Cell>Linux</Cell>
-                <Cell>N/A</Cell>
-                <Cell
-                  ><Icon class="material-icons">{checkTarget(latestVersions[stability].targets, 'LinuxServer')}</Icon
-                  ></Cell>
-              </Row>
-            </Body>
-          </DataTable>
-          <DataTable
-            table$aria-label="Mod Dependency"
-            class="max-w-auto align-self-center"
-            container$class="!overflow-visible"
-            table$class="!overflow-visible">
-            <Body>
-              <Row>
-                <Cell>Mod Dependency:</Cell>
-                <Cell>Version Range</Cell>
-              </Row>
-              {#each latestVersions[stability].dependencies as dependency}
+          <div class="grid grid-flow-row">
+            <DataTable
+              table$aria-label="Available Releases"
+              class="max-w-auto"
+              container$class="!overflow-visible"
+              table$class="!overflow-visible">
+              <Body>
                 <Row>
-                  <Cell>
-                    {#if dependency.mod_id === 'SML'}
-                      <a href="{base}/sml-versions" class="text-yellow-500"><u>{dependency.mod_id}</u></a>
-                    {:else}
-                      <a href="{base}/mod/{dependency.mod_id}" class="text-yellow-500"><u>{dependency.mod_id}</u></a>
-                    {/if}
-                  </Cell>
-                  <Cell>{dependency.condition}</Cell>
+                  <Cell style="width: 33%;" />
+                  <Cell style="width: 33%;"><div class="text-center">Client</div></Cell>
+                  <Cell style="width: 34%;"><div class="text-center">Server</div></Cell>
                 </Row>
-              {/each}
-            </Body>
-          </DataTable>
+                <Row>
+                  <Cell>Windows</Cell>
+                  <Cell
+                    ><div class="text-center"><Icon class="material-icons text-center" style="width: 20px"
+                      >{checkTarget(latestVersions[stability].targets, 'WindowsNoEditor')}</Icon
+                    ></div></Cell>
+                  <Cell
+                    ><div class="text-center"><Icon class="material-icons text-center" style="width: 20px"
+                      >{checkTarget(latestVersions[stability].targets, 'WindowsServer')}</Icon
+                    ></div></Cell>
+                </Row>
+                <Row>
+                  <Cell>Linux</Cell>
+                  <Cell><div class="text-center">N/A</div></Cell>
+                  <Cell
+                    ><div class="text-center"><Icon class="material-icons text-center" style="width: 20px"
+                      >{checkTarget(latestVersions[stability].targets, 'LinuxServer')}</Icon
+                    ></div></Cell>
+                </Row>
+              </Body>
+            </DataTable>
+          </div>
+          <div class="grid grid-flow-row">
+            <DataTable
+              table$aria-label="Mod Dependency"
+              class="max-w-auto"
+              container$class="!overflow-visible"
+              table$class="!overflow-visible">
+              <Body>
+                <Row>
+                  <Cell>Mod Dependency:</Cell>
+                  <Cell><div class="text-center">Version Range</div></Cell>
+                </Row>
+                {#each latestVersions[stability].dependencies as dependency}
+                  <Row>
+                    <Cell>
+                      {#if dependency.mod_id === 'SML'}
+                        <a href="{base}/sml-versions" class="text-yellow-500"><u>{dependency.mod_id}</u></a>
+                      {:else}
+                        <a href="{base}/mod/{dependency.mod_id}" class="text-yellow-500"
+                          ><u>{dependency.mod_id}</u></a>
+                      {/if}
+                    </Cell>
+                    <Cell><div class="text-center">{dependency.condition}</div></Cell>
+                  </Row>
+                {/each}
+              </Body>
+            </DataTable>
+          </div>
         {/if}
       {/each}
     </div>
