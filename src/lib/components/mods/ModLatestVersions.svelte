@@ -81,21 +81,24 @@
                 <Row>
                   <Cell>Windows</Cell>
                   <Cell
-                    ><div class="text-center"><Icon class="material-icons text-center" style="width: 20px"
-                      >{checkTarget(latestVersions[stability].targets, 'WindowsNoEditor')}</Icon
-                    ></div></Cell>
+                    ><div class="text-center">
+                      <Icon class="material-icons text-center" style="width: 20px"
+                        >{checkTarget(latestVersions[stability].targets, 'WindowsNoEditor')}</Icon>
+                    </div></Cell>
                   <Cell
-                    ><div class="text-center"><Icon class="material-icons text-center" style="width: 20px"
-                      >{checkTarget(latestVersions[stability].targets, 'WindowsServer')}</Icon
-                    ></div></Cell>
+                    ><div class="text-center">
+                      <Icon class="material-icons text-center" style="width: 20px"
+                        >{checkTarget(latestVersions[stability].targets, 'WindowsServer')}</Icon>
+                    </div></Cell>
                 </Row>
                 <Row>
                   <Cell>Linux</Cell>
                   <Cell><div class="text-center">N/A</div></Cell>
                   <Cell
-                    ><div class="text-center"><Icon class="material-icons text-center" style="width: 20px"
-                      >{checkTarget(latestVersions[stability].targets, 'LinuxServer')}</Icon
-                    ></div></Cell>
+                    ><div class="text-center">
+                      <Icon class="material-icons text-center" style="width: 20px"
+                        >{checkTarget(latestVersions[stability].targets, 'LinuxServer')}</Icon>
+                    </div></Cell>
                 </Row>
               </Body>
             </DataTable>
@@ -117,8 +120,7 @@
                       {#if dependency.mod_id === 'SML'}
                         <a href="{base}/sml-versions" class="text-yellow-500"><u>{dependency.mod_id}</u></a>
                       {:else}
-                        <a href="{base}/mod/{dependency.mod_id}" class="text-yellow-500"
-                          ><u>{dependency.mod_id}</u></a>
+                        <a href="{base}/mod/{dependency.mod_id}" class="text-yellow-500"><u>{dependency.mod_id}</u></a>
                       {/if}
                     </Cell>
                     <Cell><div class="text-center">{dependency.condition}</div></Cell>
