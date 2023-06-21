@@ -3,7 +3,6 @@
   import { base } from '$app/paths';
   import Card, { Content } from '@smui/card';
   import { Icon } from '@smui/common';
-  import 'iconify-icon';
   import { prettyDate } from '$lib/utils/formatting';
   import { installMod } from '$lib/stores/launcher';
   import DataTable, { Body, Row, Cell } from '@smui/data-table';
