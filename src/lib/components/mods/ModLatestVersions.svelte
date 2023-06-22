@@ -74,9 +74,9 @@
               table$class="!overflow-visible">
               <Body>
                 <Row>
-                  <Cell style="width: 33%;" />
-                  <Cell style="width: 33%;"><div class="text-center">Client</div></Cell>
-                  <Cell style="width: 34%;"><div class="text-center">Server</div></Cell>
+                  <Cell style="width: 20%;" />
+                  <Cell style="width: 40%;"><div class="text-center">Client</div></Cell>
+                  <Cell style="width: 40%;"><div class="text-center">Server</div></Cell>
                 </Row>
                 <Row>
                   <Cell>Windows</Cell>
