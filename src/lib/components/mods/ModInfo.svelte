@@ -4,7 +4,6 @@
   import { prettyDate, prettyNumber } from '$lib/utils/formatting';
 
   import TagList from '$lib/components/utils/TagList.svelte';
-  import CompatibilityButton from './compatibility/CompatibilityButton.svelte';
 
   export let mod!: Pick<
     Mod,
@@ -32,9 +31,6 @@
       <span><strong>Views:</strong> {prettyNumber(mod.views)}</span><br />
       <span><strong>Downloads:</strong> {prettyNumber(mod.downloads)}</span><br />
       <span><strong>Reference:</strong> {mod.mod_reference}</span><br />
-      {#if mod.compatibility}
-        <span><strong>Compatibility:</strong><CompatibilityButton compatibility={mod.compatibility} /> </span><br />
-      {/if}
     </div>
   </Content>
 </Card>

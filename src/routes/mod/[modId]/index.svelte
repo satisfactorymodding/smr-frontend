@@ -33,6 +33,7 @@
   import Dialog, { Title, Content as DialogContent } from '@smui/dialog';
   import { modSchema, serializeSchema } from '$lib/utils/schema';
   import EditCompatibilityForm from '../../../lib/components/mods/compatibility/EditCompatibilityForm.svelte';
+  import CompatibilityGrid from '../../../lib/components/mods/compatibility/CompatibilityGrid.svelte';
 
   export let modId!: string;
   export let mod: typeof modQ;
@@ -117,6 +118,9 @@
           modName={$mod.data.mod.name}
           compatibility={$mod.data.mod.compatibility} />
         <ModLatestVersions modId={$mod.data.mod.id} latestVersions={$mod.data.mod.latestVersions} />
+        {#if $mod.data.mod.compatibility}
+          <span><CompatibilityGrid compatibility={$mod.data.mod.compatibility} /></span>
+        {/if}
         <ModInfo mod={$mod.data.mod} />
         <ModAuthors authors={$mod.data.mod.authors} />
       </div>
