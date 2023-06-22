@@ -19,12 +19,10 @@
     table$class="!overflow-visible">
     <Body>
       <Row>
-        <Cell style="width: 20%;"><strong>Compatibility:</strong></Cell>
-        <Cell style="width: 40%;"><div class="text-center">Early Access</div></Cell>
-        <Cell style="width: 40%;"><div class="text-center">Experimental</div></Cell>
+        <Cell style="width: 50%;"><div class="text-center">Early Access</div></Cell>
+        <Cell style="width: 50%;"><div class="text-center">Experimental</div></Cell>
       </Row>
       <Row>
-        <Cell>General:</Cell>
         <Cell
           ><div class="text-center">
             <Button
@@ -51,47 +49,17 @@
           </div></Cell>
       </Row>
       <Row>
-        <Cell>Multiplayer:</Cell>
-        <Cell
-          ><div class="text-center">
-            <Button
-              --mdc-text-button-container-height="20px"
-              class="min-w-0 m-0"
-              title="Compatibility information"
-              on:click={() => {
-                open = true;
-              }}>
-              <CompatibilityStateText state={compatibility.EA.state} />
-            </Button>
-          </div></Cell>
-        <Cell
-          ><div class="text-center">
-            <Button
-              --mdc-text-button-container-height="20px"
-              class="min-w-0 m-0"
-              title="Compatibility information"
-              on:click={() => {
-                open = true;
-              }}>
-              <CompatibilityStateText state={compatibility.EXP.state} />
-            </Button>
-          </div></Cell>
-      </Row>
-      <Row>
-        <Cell>Notes:</Cell>
         <Cell
           >{#if compatibility.EA.note}
-            <div class="word-wrap">
               {#await markdown(compatibility.EA.note) then rendered}
-                {@html rendered}
+              <span style="padding: 2px; white-space:normal">{@html rendered}</span>
               {/await}
-            </div>
           {/if}</Cell>
         <Cell>
           {#if compatibility.EXP.note}
-            <div>
+            <div style="height: auto;">
               {#await markdown(compatibility.EXP.note) then rendered}
-                <p>{@html rendered}</p>
+              <span style="padding: 2px; white-space:normal">{@html rendered}</span>
               {/await}
             </div>
           {/if}</Cell>
@@ -105,9 +73,3 @@
     </Content>
   </Dialog>
 {/if}
-
-<style type="text/css">
-  p {
-    word-wrap: break-word;
-  }
-</style>
