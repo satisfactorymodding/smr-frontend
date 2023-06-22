@@ -51,15 +51,15 @@
       <Row>
         <Cell
           >{#if compatibility.EA.note}
-              {#await markdown(compatibility.EA.note) then rendered}
+            {#await markdown(compatibility.EA.note) then rendered}
               <span style="padding: 2px; white-space:normal">{@html rendered}</span>
-              {/await}
+            {/await}
           {/if}</Cell>
         <Cell>
           {#if compatibility.EXP.note}
             <div style="height: auto;">
               {#await markdown(compatibility.EXP.note) then rendered}
-              <span style="padding: 2px; white-space:normal">{@html rendered}</span>
+                <span style="padding: 2px; white-space:normal">{@html rendered}</span>
               {/await}
             </div>
           {/if}</Cell>
