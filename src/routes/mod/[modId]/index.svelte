@@ -113,10 +113,12 @@
         <ModVersions modId={$mod.data.mod.id} />
       {/if}
       <div class="grid grid-cols-1 auto-rows-min gap-8">
-        <ModLogo
-          modLogo={$mod.data.mod.logo}
-          modName={$mod.data.mod.name}
-          compatibility={$mod.data.mod.compatibility} />
+        <div class="m-auto">
+          <ModLogo
+            modLogo={$mod.data.mod.logo}
+            modName={$mod.data.mod.name}
+            compatibility={$mod.data.mod.compatibility} />
+        </div>
         <ModLatestVersions modId={$mod.data.mod.id} latestVersions={$mod.data.mod.latestVersions} />
         <span><CompatibilityGrid compatibility={$mod.data.mod.compatibility} /></span>
         <ModInfo mod={$mod.data.mod} />
