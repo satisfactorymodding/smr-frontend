@@ -32,8 +32,12 @@
       </span>
       <span style="white-space: pre-line"
         ><strong>Source:</strong>
-        <a class="underline text-yellow-500" href={mod.source_url}>{urlWrap(mod.source_url)}</a></span
-      ><br />
+        {#if mod?.source_url}
+          <a class="underline text-yellow-500" href={mod.source_url}>{urlWrap(mod.source_url)}</a>
+        {:else}
+          (No source URL provided by mod author)
+        {/if}
+      </span><br />
       <span><strong>Created:</strong> {prettyDate(mod.created_at)}</span><br />
       <span><strong>Views:</strong> {prettyNumber(mod.views)}</span><br />
       <span><strong>Downloads:</strong> {prettyNumber(mod.downloads)}</span><br />
