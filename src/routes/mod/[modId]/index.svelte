@@ -120,7 +120,7 @@
             compatibility={$mod.data.mod.compatibility} />
         </div>
         <ModLatestVersions modId={$mod.data.mod.id} latestVersions={$mod.data.mod.latestVersions} />
-        <span><CompatibilityGrid compatibility={$mod.data.mod.compatibility} /></span>
+        <CompatibilityGrid compatibility={$mod.data.mod.compatibility} />
         <ModInfo mod={$mod.data.mod} />
         <ModAuthors authors={$mod.data.mod.authors} />
       </div>

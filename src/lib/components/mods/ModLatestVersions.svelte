@@ -111,7 +111,7 @@
               table$class="!overflow-visible">
               <Body>
                 <Row>
-                  <Cell>Mod Dependency:</Cell>
+                  <Cell>Mod Dependency</Cell>
                   <Cell><div class="text-center">Version Range</div></Cell>
                 </Row>
                 {#each latestVersions[stability].dependencies as dependency}
