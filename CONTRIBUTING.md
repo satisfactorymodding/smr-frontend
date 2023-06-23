@@ -10,7 +10,7 @@ At the highest level you must at least have:
 
 * [NodeJS](https://nodejs.org/en/)
 * [pnpm](https://pnpm.io/)
-* terminal
+* terminal (Bash is suggested but not required.)
 
 ### pnpm installation
 
@@ -61,6 +61,9 @@ If you need to sign in, use the login button which will eventually redirect you 
 ## Committing Changes
 
 Our repo is designed to help you throughout your contribution to maintain our code and commits in a way that allows for automatic deployment. To that end we have a few steps that occur for each change you submit.
+
+You may need to run `pnpm format` to format your code before it will pass the commit hooks
+because the linters cares about file line endings and Git may switch them around on you.
 
 ### On Your Local
 
