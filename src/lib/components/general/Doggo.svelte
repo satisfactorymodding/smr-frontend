@@ -59,7 +59,8 @@
     class={'h-full doggo-flipper' + (isLookingRight ? '-R' : '-L')}
     src={sprite}
     alt="Doggo!"
-    title="Click to pat doggo!
+    title="Click and hold to pat doggo!
+Release to run doggo off!
 Art by Zago#5322 (discord)/ZagoTheSpider (youtube)"
     style="width: 200px;
                       height: auto;

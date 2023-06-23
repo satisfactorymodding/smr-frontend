@@ -39,6 +39,8 @@ Now you're good to go!
 
 ## Local Development
 
+See the [Readme](README.md) for how to point your local frontend to the staging or production API.
+
 After you've installed everything, start the project via:
 
 ```sh

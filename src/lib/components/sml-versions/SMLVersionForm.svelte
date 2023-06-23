@@ -70,9 +70,9 @@
 
     <div class="grid grid-flow-row gap-2">
       <Select bind:value={$data.stability} label="Stability">
+        <Option value="release">Release</Option>
         <Option value="alpha">Alpha</Option>
         <Option value="beta">Beta</Option>
-        <Option value="release">Release</Option>
       </Select>
       <ValidationMessage for="stability" let:messages={message}>
         <span class="validation-message">{message || ''}</span>

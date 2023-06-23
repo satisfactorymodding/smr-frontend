@@ -14,6 +14,7 @@
   class="material-icons text-base"
   class:mod-state-works={compatibility?.state === CompatibilityState.Works}
   class:mod-state-damaged={compatibility?.state === CompatibilityState.Damaged}
-  class:mod-state-broken={compatibility?.state === CompatibilityState.Broken}>
+  class:mod-state-broken={compatibility?.state === CompatibilityState.Broken}
+  class:mod-state-unknown={!compatibility}>
   {iconText}
 </p>

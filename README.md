@@ -2,12 +2,20 @@
 
 ## Development
 
+See [Contributing](CONTRIBUTING.md) for more information.
+
 ### Setup
 
 This project uses [pnpm](https://pnpm.js.org/):
 
 ```shell
 pnpm install
+```
+
+After switching branches you should regenerate the graphql files as the schema may have changed:
+
+```shell
+pnpm graphql-codegen
 ```
 
 ### Running
