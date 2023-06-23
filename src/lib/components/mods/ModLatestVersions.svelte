@@ -17,7 +17,7 @@
     release?: IVersion;
   };
 
-  function checkTarget(targets: VersionTarget[], selectedTarget: string) {
+  async function getTargetData(targets: VersionTarget[], selectedTarget: string) {
     let found = false;
 
     const fromBeforeDedicatedServerSupport = targets.length == 0;
@@ -27,7 +27,12 @@
       found = targets.some((target) => target.targetName === selectedTarget);
     }
 
-    return found ? 'checkmark' : 'cancel';
+    return {
+      glyph: found ? 'checkmark' : 'cancel',
+      tooltip: found
+        ? `This version supports the ${selectedTarget} target`
+        : `This version lacks files for the ${selectedTarget} target`
+    };
   }
 
   const stabilities = {
@@ -82,22 +87,31 @@
                   <Cell>Windows</Cell>
                   <Cell
                     ><div class="text-center">
-                      <Icon class="material-icons text-center" style="width: 20px"
-                        >{checkTarget(latestVersions[stability].targets, 'WindowsNoEditor')}</Icon>
+                      {#await getTargetData(latestVersions[stability].targets, 'WindowsNoEditor') then support}
+                        <Icon class="material-icons text-center" style="width: 20px" title={support.tooltip}
+                          >{support.glyph}</Icon>
+                      {/await}
                     </div></Cell>
                   <Cell
                     ><div class="text-center">
-                      <Icon class="material-icons text-center" style="width: 20px"
-                        >{checkTarget(latestVersions[stability].targets, 'WindowsServer')}</Icon>
+                      {#await getTargetData(latestVersions[stability].targets, 'WindowsServer') then support}
+                        <Icon class="material-icons text-center" style="width: 20px" title={support.tooltip}
+                          >{support.glyph}</Icon>
+                      {/await}
                     </div></Cell>
                 </Row>
                 <Row>
                   <Cell>Linux</Cell>
-                  <Cell><div class="text-center">N/A</div></Cell>
+                  <Cell
+                    ><div class="text-center" title="There is no Client distribution of Satisfactory for Linux">
+                      N/A
+                    </div></Cell>
                   <Cell
                     ><div class="text-center">
-                      <Icon class="material-icons text-center" style="width: 20px"
-                        >{checkTarget(latestVersions[stability].targets, 'LinuxServer')}</Icon>
+                      {#await getTargetData(latestVersions[stability].targets, 'LinuxServer') then support}
+                        <Icon class="material-icons text-center" style="width: 20px" title={support.tooltip}
+                          >{support.glyph}</Icon>
+                      {/await}
                     </div></Cell>
                 </Row>
               </Body>
@@ -118,6 +132,7 @@
                   <Row>
                     <Cell>
                       <a
+                        title="Click to view mod page"
                         href={dependency.mod_id === 'SML' ? `${base}/sml-versions` : `${base}/mod/${dependency.mod_id}`}
                         class="text-yellow-500"><u>{dependency.mod_id}</u></a>
                     </Cell>
