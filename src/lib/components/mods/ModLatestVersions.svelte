@@ -4,9 +4,9 @@
   import { Icon } from '@smui/common';
   import { prettyDate } from '$lib/utils/formatting';
   import { installMod } from '$lib/stores/launcher';
-  import DataTable, { Body, Row, Cell } from '@smui/data-table';
   import VersionTargetSupportGrid from '../versions/VersionTargetSupportGrid.svelte';
   import type { IVersion } from '$lib/models/versions';
+  import VersionDependenciesGrid from '../versions/VersionDependenciesGrid.svelte';
 
   type ILatestVersions = {
     alpha?: IVersion;
@@ -51,31 +51,7 @@
             </div>
           </div>
           <VersionTargetSupportGrid version={latestVersions[stability]} />
-          <div class="grid grid-flow-row">
-            <DataTable
-              table$aria-label="Mod Dependency"
-              class="max-w-auto"
-              container$class="!overflow-visible"
-              table$class="!overflow-visible">
-              <Body>
-                <Row>
-                  <Cell>Mod Dependency</Cell>
-                  <Cell><div class="text-center">Version Range</div></Cell>
-                </Row>
-                {#each latestVersions[stability].dependencies as dependency}
-                  <Row>
-                    <Cell>
-                      <a
-                        title="Click to view mod page"
-                        href={dependency.mod_id === 'SML' ? `${base}/sml-versions` : `${base}/mod/${dependency.mod_id}`}
-                        class="text-yellow-500"><u>{dependency.mod_id}</u></a>
-                    </Cell>
-                    <Cell><div class="text-center">{dependency.condition}</div></Cell>
-                  </Row>
-                {/each}
-              </Body>
-            </DataTable>
-          </div>
+          <VersionDependenciesGrid version={latestVersions[stability]} />
         {/if}
       {/each}
     </div>

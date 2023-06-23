@@ -1,8 +1,8 @@
 <script lang="ts">
   import type { VersionTarget } from '$lib/generated';
+  import type { IVersion } from '$lib/models/versions';
   import { Icon } from '@smui/common';
   import DataTable, { Body, Row, Cell } from '@smui/data-table';
-  import type { IVersion } from '$lib/models/versions';
 
   export let version!: IVersion;
   const targets = version.targets as VersionTarget[];
