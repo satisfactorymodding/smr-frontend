@@ -31,6 +31,7 @@
 {#if !works}
   <div
     class="mod-outdated-stripe"
+    style="max-width: inherit;"
     class:mod-damaged={worst === CompatibilityState.Damaged}
     class:mod-broken={worst === CompatibilityState.Broken}
     class:mod-logo-outdated={logo} />
