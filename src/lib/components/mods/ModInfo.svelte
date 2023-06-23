@@ -22,7 +22,14 @@
   <Content>
     <div class="text-lg break-words">
       <h3 class="text-2xl my-4 font-bold">Info</h3>
-      <span><strong>Tags:</strong><TagList tags={mod.tags} /></span>
+      <span
+        ><strong>Tags:</strong>
+        {#if mod?.tags?.length == 0}
+          <div class="tags">(No tags assigned)</div>
+        {:else}
+          <TagList tags={mod.tags} />
+        {/if}
+      </span>
       <span style="white-space: pre-line"
         ><strong>Source:</strong>
         <a class="underline text-yellow-500" href={mod.source_url}>{urlWrap(mod.source_url)}</a></span
