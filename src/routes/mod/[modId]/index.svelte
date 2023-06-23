@@ -118,9 +118,7 @@
           modName={$mod.data.mod.name}
           compatibility={$mod.data.mod.compatibility} />
         <ModLatestVersions modId={$mod.data.mod.id} latestVersions={$mod.data.mod.latestVersions} />
-        {#if $mod.data.mod.compatibility}
-          <span><CompatibilityGrid compatibility={$mod.data.mod.compatibility} /></span>
-        {/if}
+        <span><CompatibilityGrid compatibility={$mod.data.mod.compatibility} /></span>
         <ModInfo mod={$mod.data.mod} />
         <ModAuthors authors={$mod.data.mod.authors} />
       </div>

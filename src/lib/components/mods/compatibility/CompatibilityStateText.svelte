@@ -1,8 +1,9 @@
 <script lang="ts">
   import type { CompatibilityState } from '$lib/generated';
-  export let state: CompatibilityState;
+  export let state: CompatibilityState = null;
 
-  const classForState = (s: CompatibilityState): string => `mod-state-${s.toString().toLowerCase()}`;
+  const textForState = state ?? 'Unknown';
+  const classForState = (s: string): string => `mod-state-${s.toString().toLowerCase()}`;
 </script>
 
-<p class="{classForState(state)} mod-state">{state}</p>
+<p class="{classForState(textForState)} mod-state">{textForState}</p>
