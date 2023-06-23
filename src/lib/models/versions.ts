@@ -4,7 +4,7 @@ import { validateUPluginJson } from '$lib/utils/uplugin';
 import type { Writable } from 'svelte/store';
 import type { ZodObject, ZodRawShape } from 'zod';
 import type { File } from '$lib/models/file';
-import type { VersionStabilities } from '$lib/generated';
+import type { Version, VersionDependency, VersionTarget, VersionStabilities } from '$lib/generated';
 
 export type VersionData = {
   file: File;
@@ -24,6 +24,10 @@ export type VersionMetadata = {
   objects: string[];
   targets: string[];
 };
+
+export type IVersion = Pick<Version, 'id' | 'link' | 'version' | 'created_at'> & {
+  targets?: Pick<VersionTarget, 'targetName' | 'size' | 'hash'>[];
+} & { dependencies?: Pick<VersionDependency, 'mod_id' | 'condition'>[] };
 
 // TODO UE5: WindowsNoEditor -> Windows
 const ALLOWED_TARGETS = ['WindowsNoEditor', 'WindowsServer', 'LinuxServer'];

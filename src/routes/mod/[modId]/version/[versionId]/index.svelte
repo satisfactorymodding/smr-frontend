@@ -33,6 +33,7 @@
   import List, { Item } from '@smui/list';
   import { installMod } from '$lib/stores/launcher';
   import { prettyTarget } from '$lib/utils/formatting';
+  import VersionTargetSupportGrid from '$lib/components/versions/VersionTargetSupportGrid.svelte';
 
   export let modId!: string;
   export let versionId!: string;
@@ -131,6 +132,7 @@
       <VersionDescription changelog={$version.data.getVersion.changelog} />
       <div class="grid grid-cols-1 auto-rows-min gap-8">
         <VersionInfo version={$version.data.getVersion} />
+        <VersionTargetSupportGrid version={$version.data.getVersion} />
       </div>
     </div>
   </div>

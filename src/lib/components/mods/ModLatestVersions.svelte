@@ -1,39 +1,18 @@
 <script lang="ts">
-  import type { Version, VersionDependency, VersionTarget } from '$lib/generated';
   import { base } from '$app/paths';
   import Card, { Content } from '@smui/card';
   import { Icon } from '@smui/common';
   import { prettyDate } from '$lib/utils/formatting';
   import { installMod } from '$lib/stores/launcher';
   import DataTable, { Body, Row, Cell } from '@smui/data-table';
-
-  type IVersion = Pick<Version, 'id' | 'link' | 'version' | 'created_at'> & {
-    targets?: Pick<VersionTarget, 'targetName' | 'size' | 'hash'>[];
-  } & { dependencies?: Pick<VersionDependency, 'mod_id' | 'condition'>[] };
+  import VersionTargetSupportGrid from '../versions/VersionTargetSupportGrid.svelte';
+  import type { IVersion } from '$lib/models/versions';
 
   type ILatestVersions = {
     alpha?: IVersion;
     beta?: IVersion;
     release?: IVersion;
   };
-
-  async function getTargetData(targets: VersionTarget[], selectedTarget: string) {
-    let found = false;
-
-    const fromBeforeDedicatedServerSupport = targets.length == 0;
-    if (fromBeforeDedicatedServerSupport) {
-      found = ['WindowsNoEditor', 'Windows'].includes(selectedTarget);
-    } else {
-      found = targets.some((target) => target.targetName === selectedTarget);
-    }
-
-    return {
-      glyph: found ? 'checkmark' : 'cancel',
-      tooltip: found
-        ? `This version supports the ${selectedTarget} target`
-        : `This version lacks files for the ${selectedTarget} target`
-    };
-  }
 
   const stabilities = {
     release: 'new_releases',
@@ -71,52 +50,7 @@
               </a>
             </div>
           </div>
-          <div class="grid grid-flow-row">
-            <DataTable
-              table$aria-label="Available Releases"
-              class="max-w-auto"
-              container$class="!overflow-visible"
-              table$class="!overflow-visible">
-              <Body>
-                <Row>
-                  <Cell style="width: 20%;" />
-                  <Cell style="width: 40%;"><div class="text-center">Client</div></Cell>
-                  <Cell style="width: 40%;"><div class="text-center">Server</div></Cell>
-                </Row>
-                <Row>
-                  <Cell>Windows</Cell>
-                  <Cell
-                    ><div class="text-center">
-                      {#await getTargetData(latestVersions[stability].targets, 'WindowsNoEditor') then support}
-                        <Icon class="material-icons text-center" style="width: 20px" title={support.tooltip}
-                          >{support.glyph}</Icon>
-                      {/await}
-                    </div></Cell>
-                  <Cell
-                    ><div class="text-center">
-                      {#await getTargetData(latestVersions[stability].targets, 'WindowsServer') then support}
-                        <Icon class="material-icons text-center" style="width: 20px" title={support.tooltip}
-                          >{support.glyph}</Icon>
-                      {/await}
-                    </div></Cell>
-                </Row>
-                <Row>
-                  <Cell>Linux</Cell>
-                  <Cell
-                    ><div class="text-center" title="There is no Client distribution of Satisfactory for Linux">
-                      N/A
-                    </div></Cell>
-                  <Cell
-                    ><div class="text-center">
-                      {#await getTargetData(latestVersions[stability].targets, 'LinuxServer') then support}
-                        <Icon class="material-icons text-center" style="width: 20px" title={support.tooltip}
-                          >{support.glyph}</Icon>
-                      {/await}
-                    </div></Cell>
-                </Row>
-              </Body>
-            </DataTable>
-          </div>
+          <VersionTargetSupportGrid version={latestVersions[stability]} />
           <div class="grid grid-flow-row">
             <DataTable
               table$aria-label="Mod Dependency"
