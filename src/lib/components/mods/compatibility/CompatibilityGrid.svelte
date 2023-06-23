@@ -6,6 +6,7 @@
   import Button from '@smui/button';
   import DataTable, { Body, Row, Cell } from '@smui/data-table';
   import { markdown } from '../../../utils/markdown';
+  import CompatibilityIcon from './CompatibilityIcon.svelte';
   let open = false;
 
   export let compatibility: CompatibilityInfoInput;
@@ -19,8 +20,8 @@
     table$class="!overflow-visible">
     <Body>
       <Row>
-        <Cell style="width: 50%;"><div class="text-center">Early Access</div></Cell>
-        <Cell style="width: 50%;"><div class="text-center">Experimental</div></Cell>
+        <Cell style="width: 50%;"><div class="text-center"><CompatibilityIcon /> Early Access</div></Cell>
+        <Cell style="width: 50%;"><div class="text-center"><CompatibilityIcon EXP={true} /> Experimental</div></Cell>
       </Row>
       <Row>
         <Cell
