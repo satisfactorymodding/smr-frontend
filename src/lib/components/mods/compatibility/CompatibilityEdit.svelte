@@ -17,5 +17,5 @@
 </Select>
 <br />
 <Textfield textarea bind:value={compatibility.note} label="Note">
-  <HelperText slot="helper">A small description regarding the compatibility.</HelperText>
+  <HelperText slot="helper">A small description regarding the compatibility.<br />Markdown supported.</HelperText>
 </Textfield>
