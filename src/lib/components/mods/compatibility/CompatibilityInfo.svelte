@@ -36,6 +36,7 @@
       {/await}
     </div>
   {/if}
+  <br />
   <div>Experimental: <CompatibilityStateText state={compatibility?.EXP?.state} /></div>
   <div class="compatibility-state-description">
     {compatibilityStateDescriptions[compatibility?.EXP?.state || 'Unknown']}
