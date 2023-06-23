@@ -94,7 +94,7 @@
           <Button variant="outlined" on:click={() => goto(base + '/mod/' + modId + '/new-version')}>New Version</Button>
         {/if}
         {#if canUserEditCompatibility}
-          <Button variant="outlined" on:click={() => editCompatibilityOpen.set(true)}>Compatibility</Button>
+          <Button variant="outlined" on:click={() => editCompatibilityOpen.set(true)}>Edit Compatibility</Button>
         {/if}
 
         <Button variant="outlined" on:click={() => (versionsTab = !versionsTab)}>
