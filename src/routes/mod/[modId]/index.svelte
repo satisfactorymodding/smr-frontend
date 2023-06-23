@@ -143,7 +143,7 @@
 
   {#if canUserEditCompatibility}
     <Dialog bind:open={$editCompatibilityOpen}>
-      <Title>Edit Compatibilty</Title>
+      <Title>Edit Compatibility</Title>
       <DialogContent>
         <EditCompatibilityForm
           modId={$mod.data.mod.id}
