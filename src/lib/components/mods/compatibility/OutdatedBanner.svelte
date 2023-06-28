@@ -22,10 +22,12 @@
   }
 
   let worst = CompatibilityState.Works;
-  if (compatibility) {
+  $: if (compatibility) {
     worst = Worst(compatibility);
+  } else {
+    worst = CompatibilityState.Works;
   }
-  const works = worst === CompatibilityState.Works;
+  $: works = worst === CompatibilityState.Works;
 </script>
 
 {#if !works}
