@@ -13,18 +13,10 @@ const config = {
     strictPort: true
   },
   ssr: {
-    noExternal: [
-      'node-fetch',
-      '@urql/svelte',
-      '@cfworker/json-schema',
-      'dompurify',
-      'custom-protocol-check',
-      '@felte/common',
-      /^@smui(?:-extra)?\//
-    ]
+    noExternal: ['node-fetch', '@cfworker/json-schema', 'dompurify', 'custom-protocol-check']
   },
   optimizeDeps: {
-    exclude: ['@urql/svelte', 'custom-protocol-check']
+    exclude: ['custom-protocol-check']
   },
   mode,
   build: {

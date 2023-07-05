@@ -7,6 +7,7 @@ query GetUnapprovedVersions($filter: VersionFilter) {
       stability
       link
       arch {
+        id
         platform
         asset
       }
