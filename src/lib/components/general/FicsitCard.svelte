@@ -2,7 +2,7 @@
   import { assets } from '$app/paths';
   import Card, { Content, Actions } from '@smui/card';
   import IconButton, { Icon } from '@smui/icon-button';
-  import { goto, prefetch } from '$app/navigation';
+  import { goto, preloadData } from '$app/navigation';
 
   export let name = '';
   export let logo = assets + '/images/no_image.webp';
@@ -23,7 +23,7 @@
 
     timeoutHandle = setTimeout(() => {
       preloaded = true;
-      prefetch(link);
+      preloadData(link);
     }, 250) as unknown as number;
   };
 

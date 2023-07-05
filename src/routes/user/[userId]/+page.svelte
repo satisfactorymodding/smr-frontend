@@ -1,30 +1,17 @@
-<script lang="ts" context="module">
-  import { paramsToProps } from '$lib/utils/routing';
-  import { operationStore } from '@urql/svelte';
-  import { GetUserDocument } from '$lib/generated';
-  import { loadWaitForNoFetch } from '$lib/utils/gql';
-  import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
-  import Button from '@smui/button';
-
-  const userQ = operationStore(GetUserDocument, { user: undefined });
-
-  export const load = paramsToProps(async (input) => {
-    userQ.variables.user = input.params.userId;
-    return loadWaitForNoFetch({
-      user: userQ
-    })(input);
-  });
-</script>
-
 <script lang="ts">
+  import Button from '@smui/button';
   import UserInfo from '$lib/components/users/UserInfo.svelte';
   import UserAvatar from '$lib/components/users/UserAvatar.svelte';
   import ModCard from '$lib/components/mods/ModCard.svelte';
   import GuideCard from '$lib/components/guides/GuideCard.svelte';
+  import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
   import { user as me } from '$lib/stores/user';
   import { base } from '$app/paths';
+  import type { PageData } from './$types';
 
-  export let user: typeof userQ;
+  export let data: PageData;
+
+  const { user } = data;
 
   let guidesTab = false;
 </script>

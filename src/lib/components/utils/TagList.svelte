@@ -3,21 +3,24 @@
   import type { Tag } from '$lib/generated/graphql';
   import Chip, { Set, Text } from '@smui/chips';
   import MenuSurface from '@smui/menu-surface';
-  import { operationStore, query } from '@urql/svelte';
-  import type { MenuSurfaceComponentDev } from '@smui/menu-surface/src/MenuSurface.types';
+  import { queryStore, getContextClient } from '@urql/svelte';
   import Textfield, { Input } from '@smui/textfield';
   import FloatingLabel from '@smui/floating-label';
   import LineRipple from '@smui/line-ripple';
-  import type { InputComponentDev } from '@smui/textfield';
-  import type { LineRippleComponentDev } from '@smui/line-ripple';
 
-  const getAllTags = operationStore(GetTagsDocument);
+  const client = getContextClient();
+
+  const getAllTags = queryStore({
+    query: GetTagsDocument,
+    client,
+    variables: {}
+  });
 
   export let tags: Tag[] = [];
   export let editable = false;
 
-  let inputA: InputComponentDev;
-  let lineRippleA: LineRippleComponentDev;
+  let inputA: Input;
+  let lineRippleA: LineRipple;
 
   let shake = false;
 
@@ -29,7 +32,7 @@
 
   let newTag: HTMLInputElement;
   let newTagContainer: HTMLElement = null;
-  let surface: MenuSurfaceComponentDev;
+  let surface: MenuSurface;
 
   let focused = false;
 
@@ -50,14 +53,11 @@
     [filteredTagsMatched, filteredTagsUnmatched] = filterAvailableTags(allTags, tags, newTagText);
   }
 
-  if (editable) {
-    query(getAllTags);
-    getAllTags.subscribe(() => {
-      if (!getAllTags.fetching && !getAllTags.error) {
-        allTags = getAllTags.data.getTags;
-        updateTags();
-      }
-    });
+  $: if (editable) {
+    if (!$getAllTags.fetching && !$getAllTags.error) {
+      allTags = $getAllTags.data?.getTags || [];
+      updateTags();
+    }
   }
 
   function setTagText(text: string) {

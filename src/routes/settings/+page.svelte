@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { mutation } from '@urql/svelte';
+  import { getContextClient } from '@urql/svelte';
   import { UpdateUserDocument } from '$lib/generated';
   import Toast from '$lib/components/general/Toast.svelte';
   import { goto } from '$app/navigation';
@@ -20,9 +20,7 @@
   let errorMessage = '';
   let errorToast = false;
 
-  const updateUser = mutation({
-    query: UpdateUserDocument
-  });
+  const client = getContextClient();
 
   export const userSchema = zod.object({
     avatar: zod.optional(zod.any().refine((logo) => 'name' in logo && 'size' in logo && 'type' in logo)),
@@ -41,19 +39,22 @@
         extend: [validator({ schema: userSchema }), reporter],
         onSubmit: (submitted: { username: string; avatar: unknown }) => {
           console.log('submitted', submitted);
-          updateUser({
-            user: trimNonSchema(submitted, userSchema),
-            userId: $user.id
-          }).then((value) => {
-            if (value.error) {
-              console.error(value.error.message);
-              errorMessage = 'Error editing user: ' + value.error.message;
-              errorToast = true;
-            } else {
-              // TODO Toast or something
-              goto(base + '/user/' + value.data.updateUser.id);
-            }
-          });
+          client
+            .mutation(UpdateUserDocument, {
+              user: trimNonSchema(submitted, userSchema),
+              userId: $user.id
+            })
+            .toPromise()
+            .then((value) => {
+              if (value.error) {
+                console.error(value.error.message);
+                errorMessage = 'Error editing user: ' + value.error.message;
+                errorToast = true;
+              } else {
+                // TODO Toast or something
+                goto(base + '/user/' + value.data.updateUser.id);
+              }
+            });
         }
       });
 

@@ -1,22 +1,5 @@
-<script lang="ts" context="module">
-  import { paramsToProps } from '$lib/utils/routing';
-  import { operationStore } from '@urql/svelte';
-  import { GetModDocument } from '$lib/generated';
-  import { loadWaitForNoFetch } from '$lib/utils/gql';
-
-  const modQ = operationStore(GetModDocument, { mod: undefined });
-
-  export const load = paramsToProps(async (input) => {
-    modQ.variables.mod = input.params.modId;
-    return loadWaitForNoFetch({
-      mod: modQ
-    })(input);
-  });
-</script>
-
 <script lang="ts">
   import { DeleteModDocument } from '$lib/generated';
-  import { mutation } from '@urql/svelte';
   import ModInfo from '$lib/components/mods/ModInfo.svelte';
   import ModLatestVersions from '$lib/components/mods/ModLatestVersions.svelte';
   import ModAuthors from '$lib/components/mods/ModAuthors.svelte';
@@ -25,26 +8,27 @@
   import ModVersions from '$lib/components/mods/ModVersions.svelte';
   import { user } from '$lib/stores/user';
   import { goto } from '$app/navigation';
-  import { get, writable } from 'svelte/store';
+  import { writable } from 'svelte/store';
   import Toast from '$lib/components/general/Toast.svelte';
   import { base } from '$app/paths';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
   import Button from '@smui/button';
   import Dialog, { Title, Content as DialogContent } from '@smui/dialog';
   import { modSchema, serializeSchema } from '$lib/utils/schema';
-  import EditCompatibilityForm from '../../../lib/components/mods/compatibility/EditCompatibilityForm.svelte';
+  import EditCompatibilityForm from '$lib/components/mods/compatibility/EditCompatibilityForm.svelte';
+  import { getContextClient } from '@urql/svelte';
+  import type { PageData } from './$types';
 
-  export let modId!: string;
-  export let mod: typeof modQ;
+  export let data: PageData;
+
+  const { modId, mod } = data;
+
+  const client = getContextClient();
 
   let versionsTab = false;
 
   let errorMessage = '';
   let errorToast = false;
-
-  const deleteMod = mutation({
-    query: DeleteModDocument
-  });
 
   $: canUserEdit =
     $user?.roles?.deleteContent || $mod?.data?.mod?.authors?.findIndex((author) => author.user_id == $user?.id) >= 0;
@@ -54,16 +38,19 @@
   const editCompatibilityOpen = writable<boolean>(false);
 
   const deleteModFn = () => {
-    deleteMod({ modId: get(mod).data.mod.id }).then((value) => {
-      if (value.error) {
-        console.error(value.error.message);
-        errorMessage = 'Error deleting mod: ' + value.error.message;
-        errorToast = true;
-      } else {
-        // TODO Toast or something
-        goto(base + '/mods');
-      }
-    });
+    client
+      .mutation(DeleteModDocument, { modId: $mod.data.mod.id })
+      .toPromise()
+      .then((value) => {
+        if (value.error) {
+          console.error(value.error.message);
+          errorMessage = 'Error deleting mod: ' + value.error.message;
+          errorToast = true;
+        } else {
+          // TODO Toast or something
+          goto(base + '/mods');
+        }
+      });
   };
 </script>
 

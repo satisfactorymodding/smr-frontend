@@ -1,9 +1,8 @@
 <script lang="ts">
-  import { operationStore, query } from '@urql/svelte';
+  import { queryStore, getContextClient } from '@urql/svelte';
   import { GetModsDocument, ModFields, Order } from '$lib/generated';
   import ModCard from './ModCard.svelte';
   import PageControls from '$lib/components/utils/PageControls.svelte';
-  import { get, writable } from 'svelte/store';
   import { base } from '$app/paths';
   import Button from '@smui/button';
   import { Input } from '@smui/textfield';
@@ -15,11 +14,13 @@
   import { user } from '$lib/stores/user';
   import FicsitCard from '$lib/components/general/FicsitCard.svelte';
   import Select, { Option } from '@smui/select';
-  import { browser } from '$app/env';
+  import { browser } from '$app/environment';
 
   export let colCount: 4 | 5 = 4;
   export let newMod = false;
   export let showSearch = false;
+
+  const client = getContextClient();
 
   let search = $storePage.url.searchParams.get('q');
 
@@ -28,33 +29,17 @@
   let order: Order = Order.Desc;
   let orderBy: ModFields = ModFields.LastVersionDate;
 
-  const mods = operationStore(GetModsDocument, { offset: 0, limit: perPage, search, order, orderBy });
+  let page = parseInt($storePage.url.searchParams.get('p'), 10) || 1;
 
-  const page = writable<number>(parseInt($storePage.url.searchParams.get('p'), 10) || 1);
+  $: mods = queryStore({
+    query: GetModsDocument,
+    client,
+    variables: { offset: (page - 1) * perPage, limit: perPage, search, order, orderBy }
+  });
+
   let totalMods: number;
 
   let searchField = search;
-  $: {
-    let changed = false;
-    if ($mods.variables.search !== search) {
-      changed = true;
-      $mods.variables.search = search;
-    }
-
-    if ($mods.variables.order !== order) {
-      changed = true;
-      $mods.variables.order = order;
-    }
-
-    if ($mods.variables.orderBy !== orderBy && orderBy) {
-      changed = true;
-      $mods.variables.orderBy = orderBy;
-    }
-
-    if (changed) {
-      $mods.reexecute();
-    }
-  }
 
   let timer: number;
   $: {
@@ -63,7 +48,7 @@
       if (searchField && searchField.length > 2) {
         if ((search === '' || search === null) && searchField !== '' && searchField !== null) {
           orderBy = ModFields.Search;
-          page.set(1);
+          page = 1;
         }
 
         search = searchField;
@@ -77,35 +62,19 @@
     }, 250) as unknown as number;
   }
 
-  const updateUrl = () => {
-    if (browser) {
-      const url = new URL(window.location.origin + window.location.pathname);
-      url.searchParams.append('p', get(page).toString());
-      searchField !== '' && searchField !== null && url.searchParams.append('q', searchField);
-      goto(url.toString());
-    }
-  };
-
-  page.subscribe((p) => {
-    $mods.variables.offset = (p - 1) * perPage;
-    $mods.reexecute();
-    updateUrl();
-  });
+  $: if (browser) {
+    const url = new URL(window.location.origin + window.location.pathname);
+    url.searchParams.append('p', page.toString());
+    searchField !== '' && searchField !== null && url.searchParams.append('q', searchField);
+    goto(url.toString(), { keepFocus: true });
+  }
 
   $: totalMods = $mods?.data?.getMods?.count || 0;
-
-  query(mods);
 
   $: gridClasses =
     colCount == 4
       ? '3xl:grid-cols-4 2xl:grid-cols-3 lg:grid-cols-2 grid-cols-1'
       : '3xl:grid-cols-3 2xl:grid-cols-2 grid-cols-1';
-
-  const handleKeyDown = (event: CustomEvent | KeyboardEvent) => {
-    if ((event as KeyboardEvent).key === 'Enter') {
-      updateUrl();
-    }
-  };
 
   $: orderFields = [
     ['Name', 'name'],
@@ -141,7 +110,7 @@
       </div>
       <Paper class="search-paper mr-3" elevation={6}>
         <Icon class="material-icons">search</Icon>
-        <Input bind:value={searchField} on:keypress={handleKeyDown} placeholder="Search" />
+        <Input bind:value={searchField} placeholder="Search" />
       </Paper>
       <Fab on:click={() => goto(base + '/mods?q=' + search)} color="primary" mini class="solo-fab" aria-label="Search">
         <Icon class="material-icons">arrow_forward</Icon>

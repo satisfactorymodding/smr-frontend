@@ -1,52 +1,52 @@
-<script lang="ts" context="module">
-  import { paramsToProps } from '$lib/utils/routing';
-  import Card, { Content } from '@smui/card';
-
-  export const load = paramsToProps();
-</script>
-
 <script lang="ts">
-  import { mutation, operationStore, query } from '@urql/svelte';
+  import { getContextClient, queryStore } from '@urql/svelte';
   import { EditGuideDocument, GetGuideDocument } from '$lib/generated';
   import Toast from '$lib/components/general/Toast.svelte';
   import { goto } from '$app/navigation';
   import GuideForm from '$lib/components/guides/GuideForm.svelte';
+  import Card, { Content } from '@smui/card';
   import type { GuideData } from '$lib/models/guides';
   import { base } from '$app/paths';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
+  import type { PageData } from './$types';
 
-  export let guideId!: string;
+  export let data: PageData;
+
+  const { guideId } = data;
+
+  const client = getContextClient();
 
   let errorMessage = '';
   let errorToast = false;
 
-  const guide = operationStore(GetGuideDocument, { guide: guideId });
-
-  const editGuide = mutation({
-    query: EditGuideDocument
+  const guide = queryStore({
+    query: GetGuideDocument,
+    client,
+    variables: { guide: guideId }
   });
 
-  const onSubmit = (data: GuideData) => {
-    editGuide({
-      guideId: guideId,
-      guide: data
-    }).then((value) => {
-      if (value.error) {
-        console.error(value.error.message);
-        errorMessage = 'Error editing guide: ' + value.error.message;
-        errorToast = true;
-      } else {
-        // TODO Toast or something
-        goto(base + '/guide/' + value.data.updateGuide.id);
-      }
-    });
+  const onSubmit = (guideData: GuideData) => {
+    client
+      .mutation(EditGuideDocument, {
+        guideId: guideId,
+        guide: guideData
+      })
+      .toPromise()
+      .then((value) => {
+        if (value.error) {
+          console.error(value.error.message);
+          errorMessage = 'Error editing guide: ' + value.error.message;
+          errorToast = true;
+        } else {
+          // TODO Toast or something
+          goto(base + '/guide/' + value.data.updateGuide.id);
+        }
+      });
   };
 
   $: if (!errorToast) {
     errorMessage = '';
   }
-
-  query(guide);
 </script>
 
 <svelte:head>

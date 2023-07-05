@@ -1,32 +1,6 @@
-<script lang="ts" context="module">
-  import type { Load } from '@sveltejs/kit';
-  import './_global.postcss';
-  import { base } from '$app/paths';
-  import { initializeGraphQLClient } from '$lib/core';
-  import type { Client } from '@urql/svelte';
-  import { gqlClient } from '$lib/stores/global';
-  import { browser } from '$app/env';
-
-  let gTag: unknown;
-  if (browser) {
-    gTag = import.meta.env.VITE_GOOGLE_SITE_TAG as string;
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    window.gTag = gTag;
-  }
-
-  let client: Client;
-
-  export const load: Load = async ({ fetch }) => {
-    client = initializeGraphQLClient(fetch);
-    gqlClient.set(client);
-    return {};
-  };
-</script>
-
 <script lang="ts">
   import LoginDialog from '$lib/components/auth/LoginDialog.svelte';
-  import { setClient } from '@urql/svelte';
+  import { setContextClient } from '@urql/svelte';
   import TopAppBar, { Row, Section, Title } from '@smui/top-app-bar';
   import { AppContent, Scrim } from '@smui/drawer';
   import List, { Item, Text } from '@smui/list';
@@ -35,12 +9,27 @@
   import { user, userToken } from '$lib/stores/user';
   import { goto } from '$app/navigation';
   import { loginDialogOpen, onMobile } from '$lib/stores/global';
-  import type { MenuComponentDev } from '@smui/menu';
   import Menu from '@smui/menu';
   import { onMount } from 'svelte';
   import { customProtocolCheck, hasLauncher, pingLauncher } from '$lib/stores/launcher';
   import Sidebar from '$lib/components/general/Sidebar.svelte';
   import AnnouncementHeader from '$lib/components/announcements/AnnouncementHeader.svelte';
+  import { base } from '$app/paths';
+  import { browser } from '$app/environment';
+  import { PUBLIC_GOOGLE_SITE_TAG } from '$env/static/public';
+  import type { LayoutData } from './$types';
+
+  export let data: LayoutData;
+
+  const { client } = data;
+
+  let gTag: unknown;
+  if (browser) {
+    gTag = PUBLIC_GOOGLE_SITE_TAG as string;
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    window.gTag = gTag;
+  }
 
   let root: HTMLElement;
   onMount(async () => {
@@ -83,7 +72,7 @@
   let accessibility = false;
   $: root && (accessibility ? root.classList.add('accessibility') : root.classList.remove('accessibility'));
 
-  setClient(client);
+  setContextClient(client);
 
   $: isAdmin = !$user ? false : $user.roles.approveMods || $user.roles.approveVersions || $user.roles.editSMLVersions;
 
@@ -97,7 +86,7 @@
     });
   }
 
-  let menu: MenuComponentDev;
+  let menu: Menu;
 </script>
 
 <svelte:head>

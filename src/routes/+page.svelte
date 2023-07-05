@@ -1,20 +1,3 @@
-<script lang="ts" context="module">
-  import { operationStore } from '@urql/svelte';
-  import { GetModsDocument, ModFields, Order } from '$lib/generated';
-  import { loadWaitForNoFetch } from '$lib/utils/gql';
-
-  const modsQ = operationStore(GetModsDocument, {
-    offset: 0,
-    limit: 4,
-    order: Order.Desc,
-    orderBy: ModFields.LastVersionDate
-  });
-
-  export const load = loadWaitForNoFetch({
-    mods: modsQ
-  });
-</script>
-
 <script lang="ts">
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
   import FicsitCard from '$lib/components/general/FicsitCard.svelte';
@@ -24,8 +7,11 @@
   import { assets } from '$app/paths';
   import Button from '@smui/button';
   import { onMobile, easterEgg, doggoNeedsPats } from '$lib/stores/global';
+  import type { PageData } from './$types';
 
-  export let mods!: typeof modsQ;
+  export let data: PageData;
+
+  const { mods } = data;
 
   const gridClasses = '3xl:grid-cols-4 lg:grid-cols-2 grid-cols-1';
 </script>

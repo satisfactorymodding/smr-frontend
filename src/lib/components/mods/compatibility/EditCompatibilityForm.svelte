@@ -2,24 +2,26 @@
   import ModCompatibilityEdit from './ModCompatibilityEdit.svelte';
   import type { ModData } from '$lib/models/mods';
   import { EditModCompatibilityDocument } from '$lib/generated';
-  import { mutation } from '@urql/svelte';
+  import { getContextClient } from '@urql/svelte';
   import { createEventDispatcher } from 'svelte';
   import Button from '@smui/button';
 
   export let modId: string;
   export let mod: ModData;
 
-  const updateCompatibility = mutation({ query: EditModCompatibilityDocument });
+  const client = getContextClient();
 
   const dispatch = createEventDispatcher();
 
   async function onSubmit(e: Event) {
     e.preventDefault();
     const success = (
-      await updateCompatibility({
-        modId,
-        compatibility: mod.compatibility
-      })
+      await client
+        .mutation(EditModCompatibilityDocument, {
+          modId,
+          compatibility: mod.compatibility
+        })
+        .toPromise()
     ).data.updateModCompatibility;
     if (success) {
       dispatch('submit');

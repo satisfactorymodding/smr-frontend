@@ -1,6 +1,6 @@
 <script lang="ts">
   import { GetModVersionsDocument } from '$lib/generated';
-  import { operationStore, query } from '@urql/svelte';
+  import { queryStore, getContextClient } from '@urql/svelte';
   import { API_REST } from '$lib/core';
   import { markdown } from '$lib/utils/markdown';
   import { base } from '$app/paths';
@@ -14,17 +14,21 @@
 
   export let modId!: string;
 
+  const client = getContextClient();
+
   let expandedVersions = new Set<string>();
   const menus = [];
 
   // TODO Pagination
-  const versions = operationStore(GetModVersionsDocument, {
-    mod: modId,
-    limit: 100,
-    offset: 0
+  const versions = queryStore({
+    query: GetModVersionsDocument,
+    client,
+    variables: {
+      mod: modId,
+      limit: 100,
+      offset: 0
+    }
   });
-
-  query(versions);
 
   const toggleRow = (versionId: string) => {
     if (expandedVersions.has(versionId)) {

@@ -1,21 +1,4 @@
-<script lang="ts" context="module">
-  import { paramsToProps } from '$lib/utils/routing';
-  import { operationStore } from '@urql/svelte';
-  import { GetGuideDocument } from '$lib/generated';
-  import { loadWaitForNoFetch } from '$lib/utils/gql';
-
-  const guideQ = operationStore(GetGuideDocument, { guide: undefined });
-
-  export const load = paramsToProps(async (input) => {
-    guideQ.variables.guide = input.params.guideId;
-    return loadWaitForNoFetch({
-      guide: guideQ
-    })(input);
-  });
-</script>
-
 <script lang="ts">
-  import { mutation } from '@urql/svelte';
   import { DeleteGuideDocument } from '$lib/generated';
   import GuideInfo from '$lib/components/guides/GuideInfo.svelte';
   import GuideAuthor from '$lib/components/guides/GuideAuthor.svelte';
@@ -29,32 +12,36 @@
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
   import Card, { Content } from '@smui/card';
   import Button from '@smui/button';
+  import { getContextClient } from '@urql/svelte';
+  import type { PageData } from './$types';
 
-  export let guideId!: string;
-  export let guide: typeof guideQ;
+  export let data: PageData;
+
+  const { guideId, guide } = data;
+
+  const client = getContextClient();
 
   let errorMessage = '';
   let errorToast = false;
-
-  const deleteGuide = mutation({
-    query: DeleteGuideDocument
-  });
 
   $: canUserEdit = $user?.roles?.deleteContent || $user?.id === $guide?.data?.getGuide?.user?.id;
 
   const deleteDialogOpen = writable<boolean>(false);
 
   const deleteGuideFn = () => {
-    deleteGuide({ guideId }).then((value) => {
-      if (value.error) {
-        console.error(value.error.message);
-        errorMessage = 'Error deleting guide: ' + value.error.message;
-        errorToast = true;
-      } else {
-        // TODO Toast or something
-        goto(base + '/guides');
-      }
-    });
+    client
+      .mutation(DeleteGuideDocument, { guideId })
+      .toPromise()
+      .then((value) => {
+        if (value.error) {
+          console.error(value.error.message);
+          errorMessage = 'Error deleting guide: ' + value.error.message;
+          errorToast = true;
+        } else {
+          // TODO Toast or something
+          goto(base + '/guides');
+        }
+      });
   };
 
   $: if (!errorToast) {
@@ -75,7 +62,7 @@
 {:else if $guide.data.getGuide}
   <div class="grid gap-6 xlx:grid-flow-row">
     <div class="flex flex-wrap h-auto justify-between items-center">
-      <h1 class="text-4xl  font-bold">{$guide.data.getGuide.name}</h1>
+      <h1 class="text-4xl font-bold">{$guide.data.getGuide.name}</h1>
 
       <div>
         {#if canUserEdit}

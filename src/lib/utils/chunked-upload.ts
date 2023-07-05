@@ -1,16 +1,18 @@
 /* eslint-disable */
 
 import type { File } from '$lib/models/file';
-import type { ExecuteMutation, OperationStore } from '@urql/svelte';
-import type {
-  CheckVersionUploadStateQuery,
-  CreateVersionMutation,
-  Exact,
-  FinalizeCreateVersionMutation,
-  NewVersion,
-  UploadVersionPartMutation
+import type { Client } from 'urql';
+import {
+  CheckVersionUploadStateDocument,
+  FinalizeCreateVersionDocument,
+  type Exact,
+  type NewVersion,
+  CreateVersionDocument,
+  UploadVersionPartDocument,
+  type CheckVersionUploadStateQuery
 } from '$lib/generated';
 import type { Writable } from 'svelte/store';
+import { queryStore } from '@urql/svelte';
 
 export type UploadState = {
   total: number;
@@ -24,22 +26,7 @@ export const chunkedUpload = async (
   modId: string,
   version: NewVersion,
   state: Writable<UploadState>,
-  gql: {
-    createVersion: ExecuteMutation<CreateVersionMutation, Exact<{ modId: any }>>;
-    uploadVersionPart: ExecuteMutation<
-      UploadVersionPartMutation,
-      Exact<{ modId: any; versionId: any; part: number; file: any }>
-    >;
-    finalizeCreateVersion: ExecuteMutation<
-      FinalizeCreateVersionMutation,
-      Exact<{ modId: any; versionId: any; version: NewVersion }>
-    >;
-    checkVersionUploadState: OperationStore<
-      CheckVersionUploadStateQuery,
-      Exact<{ modId: any; versionId: any }>,
-      CheckVersionUploadStateQuery
-    >;
-  }
+  client: Client
 ): Promise<ChunkedResponse> => {
   const chunkSize = 10000000; // ~ 10MB
 
@@ -50,12 +37,14 @@ export const chunkedUpload = async (
     .reverse();
 
   const upload = (chunk: Blob, chunkId: number, versionID: string) => {
-    return gql.uploadVersionPart({
-      modId: modId,
-      versionId: versionID,
-      part: chunkId,
-      file: chunk
-    });
+    return client
+      .mutation(UploadVersionPartDocument, {
+        modId: modId,
+        versionId: versionID,
+        part: chunkId,
+        file: chunk
+      })
+      .toPromise();
   };
 
   const threadsQuantity = 10;
@@ -103,8 +92,9 @@ export const chunkedUpload = async (
     ]);
   };
 
-  return gql
-    .createVersion({ modId })
+  return client
+    .mutation(CreateVersionDocument, { modId })
+    .toPromise()
     .then(async (data) => {
       state.set({
         total: chunksQuantity,
@@ -118,29 +108,33 @@ export const chunkedUpload = async (
     .then((versionID) => {
       console.log('Finalizing', { versionID });
 
-      return gql
-        .finalizeCreateVersion({
-          modId: modId,
-          versionId: versionID,
-          version: version
-        })
+      return client
+        .mutation(FinalizeCreateVersionDocument, { modId, versionId: versionID, version })
+        .toPromise()
         .then(() => {
           return new Promise<ChunkedResponse>((resolve, reject) => {
             let tries = 0;
+            let checkVersionUploadState = queryStore({
+              query: CheckVersionUploadStateDocument,
+              client,
+              variables: {
+                modId: modId,
+                versionId: versionID
+              },
+              requestPolicy: 'network-only'
+            });
             const interval = setInterval(() => {
               if (tries == 60) {
                 clearInterval(interval);
                 return reject(new Error('Timed out waiting for mod processing'));
               }
 
-              gql.checkVersionUploadState.reexecute({
-                requestPolicy: 'network-only'
-              });
+              checkVersionUploadState.pause();
+              checkVersionUploadState.resume();
               tries++;
             }, 10000);
 
-            gql.checkVersionUploadState.variables.versionId = versionID;
-            const sub = gql.checkVersionUploadState.subscribe((data) => {
+            const unsub = checkVersionUploadState.subscribe((data) => {
               if (data.fetching) {
                 return;
               }
@@ -148,27 +142,15 @@ export const chunkedUpload = async (
               if (data.error) {
                 clearInterval(interval);
                 reject(new Error(data.error.message));
-                setTimeout(sub);
+                setTimeout(unsub);
                 return;
               }
 
-              if (!data.data) {
+              if (!data.data?.checkVersionUploadState?.version?.id) {
                 return;
               }
 
-              if (!data.data.checkVersionUploadState) {
-                return;
-              }
-
-              if (!data.data.checkVersionUploadState.version) {
-                return;
-              }
-
-              if (!data.data.checkVersionUploadState.version.id) {
-                return;
-              }
-
-              sub();
+              unsub();
               clearInterval(interval);
               resolve(data.data.checkVersionUploadState);
             });

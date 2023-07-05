@@ -1,10 +1,7 @@
 import { writable } from 'svelte/store';
-import type { Client } from '@urql/svelte';
-import { browser } from '$app/env';
+import { browser } from '$app/environment';
 
 export const loginDialogOpen = writable<boolean>(false);
-
-export const gqlClient = writable<undefined | Client>(undefined);
 
 let mobileQuery: MediaQueryList;
 if (browser) {

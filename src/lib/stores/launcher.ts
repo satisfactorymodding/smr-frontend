@@ -1,5 +1,5 @@
 import { get, writable } from 'svelte/store';
-import { browser } from '$app/env';
+import { browser } from '$app/environment';
 import { io } from 'socket.io-client';
 
 export const customProtocolCheck = writable<unknown | null>(null);
@@ -26,6 +26,8 @@ const connectToLauncher = () => {
 const open = (link: string, fallback?: () => void) => {
   if (browser) {
     new Promise(() => {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       get(customProtocolCheck).protocolCheck(link, () => {
         hasLauncher.set(false);
         if (fallback) {

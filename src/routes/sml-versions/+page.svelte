@@ -1,7 +1,6 @@
 <script lang="ts">
   import { GetSmlVersionsDocument } from '$lib/generated';
-  import { operationStore, query } from '@urql/svelte';
-  import { writable } from 'svelte/store';
+  import { getContextClient, queryStore } from '@urql/svelte';
   import PageControls from '$lib/components/utils/PageControls.svelte';
   import { markdown } from '$lib/utils/markdown';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
@@ -10,25 +9,26 @@
   import Button from '@smui/button';
   import { prettyDate } from '$lib/utils/formatting';
 
+  const client = getContextClient();
+
   let expandedVersions = new Set<string>();
 
   // TODO Selectable
   const perPage = 20;
 
+  const page = 1;
+
   // TODO Pagination
-  const versions = operationStore(GetSmlVersionsDocument, { offset: 0, limit: perPage });
-
-  const page = writable(1);
-  let totalVersions: number;
-
-  page.subscribe((p) => {
-    $versions.variables.offset = (p - 1) * perPage;
-    $versions.reexecute();
+  $: versions = queryStore({
+    query: GetSmlVersionsDocument,
+    client,
+    variables: {
+      offset: (page - 1) * perPage,
+      limit: perPage
+    }
   });
 
   $: totalVersions = $versions?.data?.getSMLVersions?.count;
-
-  query(versions);
 
   const toggleRow = (versionId: string) => {
     if (expandedVersions.has(versionId)) {

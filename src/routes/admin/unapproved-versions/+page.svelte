@@ -1,7 +1,6 @@
 <script lang="ts">
   import { ApproveVersionDocument, DenyVersionDocument, GetUnapprovedVersionsDocument } from '$lib/generated';
-  import { mutation, operationStore, query } from '@urql/svelte';
-  import { writable } from 'svelte/store';
+  import { getContextClient, queryStore } from '@urql/svelte';
   import PageControls from '$lib/components/utils/PageControls.svelte';
   import { API_REST } from '$lib/core';
   import { base } from '$app/paths';
@@ -11,44 +10,45 @@
   import Button from '@smui/button';
   import { prettyDate } from '$lib/utils/formatting';
 
+  const client = getContextClient();
+
   // TODO Selectable
   const perPage = 20;
 
-  const versions = operationStore(GetUnapprovedVersionsDocument, {
-    filter: {
-      offset: 0,
-      limit: perPage
+  const page = 1;
+
+  $: versions = queryStore({
+    query: GetUnapprovedVersionsDocument,
+    client,
+    variables: {
+      filter: {
+        offset: (page - 1) * perPage,
+        limit: perPage
+      }
     }
   });
 
-  const page = writable(1);
-  let totalVersions: number;
-
-  page.subscribe((p) => ($versions.variables.filter.offset = (p - 1) * perPage));
-
   $: totalVersions = $versions?.data?.getUnapprovedVersions?.count;
 
-  const approveVersionMut = mutation({
-    query: ApproveVersionDocument
-  });
-
   const approveVersion = (versionId: string) => {
-    approveVersionMut({ versionId }).then(() => {
-      versions.reexecute();
-    });
+    client
+      .mutation(ApproveVersionDocument, { versionId })
+      .toPromise()
+      .then(() => {
+        versions.pause();
+        versions.resume();
+      });
   };
-
-  const denyVersionMut = mutation({
-    query: DenyVersionDocument
-  });
 
   const denyVersion = (versionId: string) => {
-    denyVersionMut({ versionId }).then(() => {
-      versions.reexecute();
-    });
+    client
+      .mutation(DenyVersionDocument, { versionId })
+      .toPromise()
+      .then(() => {
+        versions.pause();
+        versions.resume();
+      });
   };
-
-  query(versions);
 </script>
 
 <svelte:head>

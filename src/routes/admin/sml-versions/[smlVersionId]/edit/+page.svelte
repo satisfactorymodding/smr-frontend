@@ -1,11 +1,5 @@
-<script lang="ts" context="module">
-  import { paramsToProps } from '$lib/utils/routing';
-
-  export const load = paramsToProps();
-</script>
-
 <script lang="ts">
-  import { mutation, operationStore, query } from '@urql/svelte';
+  import { getContextClient, queryStore } from '@urql/svelte';
   import { GetSmlVersionAdminDocument, UpdateSmlVersionDocument } from '$lib/generated';
   import Toast from '$lib/components/general/Toast.svelte';
   import { goto } from '$app/navigation';
@@ -14,32 +8,40 @@
   import { base } from '$app/paths';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
   import Card, { Content } from '@smui/card';
+  import type { PageData } from './$types';
 
-  export let smlVersionId!: string;
+  export let data: PageData;
+
+  const { smlVersionId } = data;
+
+  const client = getContextClient();
 
   let errorMessage = '';
   let errorToast = false;
 
-  const smlVersion = operationStore(GetSmlVersionAdminDocument, { smlVersionID: smlVersionId });
-
-  const editSMLVersion = mutation({
-    query: UpdateSmlVersionDocument
+  const smlVersion = queryStore({
+    query: GetSmlVersionAdminDocument,
+    client,
+    variables: { smlVersionID: smlVersionId }
   });
 
-  const onSubmit = (data: SMLVersionData) => {
-    editSMLVersion({
-      smlVersionID: smlVersionId,
-      smlVersion: data
-    }).then((value) => {
-      if (value.error) {
-        console.error(value.error.message);
-        errorMessage = 'Error editing SMLVersion: ' + value.error.message;
-        errorToast = true;
-      } else {
-        // TODO Toast or something
-        goto(base + '/admin/sml-versions');
-      }
-    });
+  const onSubmit = (smlVersionData: SMLVersionData) => {
+    client
+      .mutation(UpdateSmlVersionDocument, {
+        smlVersionID: smlVersionId,
+        smlVersion: smlVersionData
+      })
+      .toPromise()
+      .then((value) => {
+        if (value.error) {
+          console.error(value.error.message);
+          errorMessage = 'Error editing SMLVersion: ' + value.error.message;
+          errorToast = true;
+        } else {
+          // TODO Toast or something
+          goto(base + '/admin/sml-versions');
+        }
+      });
   };
 
   $: if (!errorToast) {
@@ -52,8 +54,6 @@
         logo: undefined
       } as unknown as SMLVersionData)
     : undefined;
-
-  query(smlVersion);
 </script>
 
 <svelte:head>

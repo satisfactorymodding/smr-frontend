@@ -1,7 +1,6 @@
 <script lang="ts">
   import { DeleteSmlVersionDocument, GetSmlVersionsAdminDocument } from '$lib/generated';
-  import { mutation, operationStore, query } from '@urql/svelte';
-  import { writable } from 'svelte/store';
+  import { getContextClient, queryStore } from '@urql/svelte';
   import PageControls from '$lib/components/utils/PageControls.svelte';
   import { base } from '$app/paths';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
@@ -10,34 +9,35 @@
   import Button from '@smui/button';
   import { prettyDate } from '$lib/utils/formatting';
 
+  const client = getContextClient();
+
   // TODO Selectable
   const perPage = 20;
 
-  const versions = operationStore(GetSmlVersionsAdminDocument, {
-    filter: {
-      offset: 0,
-      limit: perPage
+  const page = 1;
+
+  $: versions = queryStore({
+    query: GetSmlVersionsAdminDocument,
+    client,
+    variables: {
+      filter: {
+        offset: (page - 1) * perPage,
+        limit: perPage
+      }
     }
   });
 
-  const page = writable(1);
-  let totalVersions: number;
-
-  page.subscribe((p) => ($versions.variables.filter.offset = (p - 1) * perPage));
-
   $: totalVersions = $versions?.data?.getSMLVersions?.count;
 
-  const deleteVersionMut = mutation({
-    query: DeleteSmlVersionDocument
-  });
-
   const deleteVersion = (smlVersionID: string) => {
-    deleteVersionMut({ smlVersionID }).then(() => {
-      versions.reexecute();
-    });
+    client
+      .mutation(DeleteSmlVersionDocument, { smlVersionID })
+      .toPromise()
+      .then(() => {
+        versions.pause();
+        versions.resume();
+      });
   };
-
-  query(versions);
 </script>
 
 <svelte:head>

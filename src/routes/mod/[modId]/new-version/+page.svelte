@@ -1,30 +1,23 @@
-<script lang="ts" context="module">
-  import { paramsToProps } from '$lib/utils/routing';
-
-  export const load = paramsToProps();
-</script>
-
 <script lang="ts">
-  import { mutation, operationStore, query } from '@urql/svelte';
+  import { getContextClient, queryStore } from '@urql/svelte';
   import Toast from '$lib/components/general/Toast.svelte';
   import { goto } from '$app/navigation';
   import type { VersionData } from '$lib/models/versions';
   import VersionForm from '$lib/components/versions/VersionForm.svelte';
-  import {
-    CheckVersionUploadStateDocument,
-    CreateVersionDocument,
-    FinalizeCreateVersionDocument,
-    GetModReferenceDocument,
-    UploadVersionPartDocument
-  } from '$lib/generated';
-  import { get, writable } from 'svelte/store';
+  import { GetModReferenceDocument } from '$lib/generated';
+  import { writable } from 'svelte/store';
   import { chunkedUpload } from '$lib/utils/chunked-upload';
   import type { UploadState } from '$lib/utils/chunked-upload';
   import { base } from '$app/paths';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
   import Card, { Content } from '@smui/card';
+  import type { PageData } from './$types';
 
-  export let modId!: string;
+  export let data: PageData;
+
+  const { modId } = data;
+
+  const client = getContextClient();
 
   const uploadStatus = writable<undefined | string>('');
   const uploadPercent = writable<number>(0);
@@ -46,52 +39,24 @@
   let errorMessage = '';
   let errorToast = false;
 
-  const mod = operationStore(GetModReferenceDocument, { mod: modId });
-
-  query(mod);
-
-  const createVersion = mutation({
-    query: CreateVersionDocument
+  const mod = queryStore({
+    query: GetModReferenceDocument,
+    client,
+    variables: { mod: modId }
   });
 
-  const uploadVersionPart = mutation({
-    query: UploadVersionPartDocument
-  });
-
-  const finalizeCreateVersion = mutation({
-    query: FinalizeCreateVersionDocument
-  });
-
-  const checkVersionUploadState = operationStore(
-    CheckVersionUploadStateDocument,
-    {
-      versionId: undefined,
-      modId: undefined
-    },
-    {
-      pause: true
-    }
-  );
-
-  $: $mod.data && (checkVersionUploadState.variables.modId = $mod.data.mod.id);
-
-  query(checkVersionUploadState);
-
-  const onSubmit = async (data: VersionData) =>
+  const onSubmit = async (versionData: VersionData) =>
     chunkedUpload(
-      data.file,
-      get(mod).data.mod.id,
+      versionData.file,
+      $mod.data.mod.id,
       {
-        changelog: data.changelog,
-        stability: data.stability
+        changelog: versionData.changelog,
+        stability: versionData.stability
       },
       uploadState,
-      {
-        createVersion,
-        uploadVersionPart,
-        finalizeCreateVersion,
-        checkVersionUploadState
-      }
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      client
     )
       .then((success) => {
         console.log({ success });

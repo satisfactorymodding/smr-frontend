@@ -1,10 +1,15 @@
 <script lang="ts">
-  import { operationStore, query } from '@urql/svelte';
+  import { getContextClient, queryStore } from '@urql/svelte';
   import { AnnouncementImportance, GetAnnouncementsDocument } from '$lib/generated';
   import AnnouncementRow from './AnnouncementRow.svelte';
 
-  const announcements = operationStore(GetAnnouncementsDocument, {});
-  query($announcements);
+  const client = getContextClient();
+
+  const announcements = queryStore({
+    query: GetAnnouncementsDocument,
+    client,
+    variables: {}
+  });
 </script>
 
 {#if $announcements.fetching}

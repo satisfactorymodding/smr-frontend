@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { mutation } from '@urql/svelte';
+  import { getContextClient } from '@urql/svelte';
   import { NewSmlVersionDocument } from '$lib/generated';
   import Toast from '$lib/components/general/Toast.svelte';
   import { goto } from '$app/navigation';
@@ -9,26 +9,27 @@
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
   import Card, { Content } from '@smui/card';
 
+  const client = getContextClient();
+
   let errorMessage = '';
   let errorToast = false;
 
-  const newVersion = mutation({
-    query: NewSmlVersionDocument
-  });
-
   const onSubmit = (data: SMLVersionData) => {
-    newVersion({
-      smlVersion: data
-    }).then((value) => {
-      if (value.error) {
-        console.error(value.error.message);
-        errorMessage = 'Error creating SML Version: ' + value.error.message;
-        errorToast = true;
-      } else {
-        // TODO Toast or something
-        goto(base + '/admin/sml-versions');
-      }
-    });
+    client
+      .mutation(NewSmlVersionDocument, {
+        smlVersion: data
+      })
+      .toPromise()
+      .then((value) => {
+        if (value.error) {
+          console.error(value.error.message);
+          errorMessage = 'Error creating SML Version: ' + value.error.message;
+          errorToast = true;
+        } else {
+          // TODO Toast or something
+          goto(base + '/admin/sml-versions');
+        }
+      });
   };
 
   $: if (!errorToast) {

@@ -1,18 +1,17 @@
 <script lang="ts">
-  import { operationStore, query } from '@urql/svelte';
+  import { queryStore, getContextClient } from '@urql/svelte';
   import { GetUserDocument } from '$lib/generated';
   import { assets } from '$app/paths';
 
   export let id: string;
 
-  const user = operationStore(GetUserDocument, { user: id });
+  const client = getContextClient();
 
-  $: {
-    $user.variables.user = id;
-    $user.reexecute();
-  }
-
-  query(user);
+  $: user = queryStore({
+    query: GetUserDocument,
+    client,
+    variables: { user: id }
+  });
 </script>
 
 {#if $user.fetching}
