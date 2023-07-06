@@ -13,7 +13,7 @@ RUN pnpm install --ignore-scripts
 
 COPY . .
 
-RUN NODE_ENV=$NODE_ENV_ARG set -o allexport; set -ex; source .env.$NODE_ENV_ARG; set +o allexport && pnpm run prepare && pnpm run graphql-codegen && pnpm run build:$NODE_ENV_ARG
+RUN NODE_ENV=$NODE_ENV_ARG set -o allexport; set -ex; source .env.$NODE_ENV_ARG; set +o allexport && pnpm run prepare && pnpm run graphql-codegen && pnpm run translations && pnpm run build:$NODE_ENV_ARG
 
 
 FROM ghcr.io/vilsol/yeet:v0.5.3 as yeet
