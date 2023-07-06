@@ -2,6 +2,8 @@ FROM node:18-alpine as build
 
 ARG NODE_ENV_ARG=production
 
+RUN apk add --no-cache curl unzip
+
 RUN npm i -g pnpm
 
 WORKDIR /app
