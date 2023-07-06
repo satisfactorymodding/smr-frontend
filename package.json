@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "scripts": {
     "adapt": "svelte-kit adapt",
-    "build": "run-s build:static build:node",
+    "build": "run-s translations build:static build:node",
     "build:staging": "cross-env NODE_ENV=staging run-s build:static build:node",
     "build:production": "cross-env NODE_ENV=production run-s build:static build:node",
     "build:node": "rimraf .svelte build/node && cross-env SVELTE_ADAPTER=node vite build",
