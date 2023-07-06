@@ -16,12 +16,38 @@
   import AnnouncementHeader from '$lib/components/announcements/AnnouncementHeader.svelte';
   import { base } from '$app/paths';
   import { browser } from '$app/environment';
-  import { PUBLIC_GOOGLE_SITE_TAG } from '$env/static/public';
+  import { PUBLIC_GOOGLE_SITE_TAG, PUBLIC_TOLGEE_API_URL, PUBLIC_TOLGEE_API_KEY } from '$env/static/public';
   import type { LayoutData } from './$types';
+  import { TolgeeProvider, Tolgee, DevTools, FormatSimple } from '@tolgee/svelte';
+  import TranslationDropdown from '$lib/components/general/TranslationDropdown.svelte';
+
+  import enCommon from '../i18n/common/en.json';
+  import deCommon from '../i18n/common/de.json';
+  import frCommon from '../i18n/common/fr.json';
+  import lvCommon from '../i18n/common/lv.json';
 
   export let data: LayoutData;
 
   const { client } = data;
+
+  const tolgee = Tolgee()
+    .use(DevTools())
+    .use(FormatSimple())
+    .init({
+      defaultNs: 'common',
+
+      language: 'en',
+
+      apiUrl: PUBLIC_TOLGEE_API_URL,
+      apiKey: PUBLIC_TOLGEE_API_KEY,
+
+      staticData: {
+        'en:common': enCommon,
+        'de:common': deCommon,
+        'fr:common': frCommon,
+        'lv:common': lvCommon
+      }
+    });
 
   let gTag: unknown;
   if (browser) {
@@ -120,95 +146,99 @@
   {/if}
 </svelte:head>
 
-<div class="app-container">
-  <TopAppBar variant="static">
-    <Row>
-      <Section>
-        {#if drawerVariant === 'modal'}
-          <IconButton class="material-icons" on:click={() => (open = !open)}>menu</IconButton>
-        {/if}
-        <Title>FICSIT Augmentation Database</Title>
-      </Section>
-      {#if !hideTopElements}
-        <Section align="end" toolbar>
-          {#if $hasLauncher}
-            <Button color="secondary" variant="outlined" class="mr-3" on:click={pingLauncher}>
-              <Label>Launcher Detected</Label>
-              <Icon class="material-icons">file_download</Icon>
-            </Button>
-          {:else}
-            <Button
-              color="secondary"
-              variant="outlined"
-              class="mr-3"
-              target="_blank"
-              rel="noopener"
-              href="https://smm.ficsit.app">
-              <Label>Mod Manager</Label>
-              <Icon class="material-icons">file_download</Icon>
-            </Button>
+<TolgeeProvider {tolgee}>
+  <div class="app-container">
+    <TopAppBar variant="static">
+      <Row>
+        <Section>
+          {#if drawerVariant === 'modal'}
+            <IconButton class="material-icons" on:click={() => (open = !open)}>menu</IconButton>
           {/if}
+          <Title>FICSIT Augmentation Database</Title>
+        </Section>
+        {#if !hideTopElements}
+          <Section align="end" toolbar>
+            <TranslationDropdown />
 
-          {#if $user === null}
-            <Button color="secondary" variant="outlined" on:click={() => loginDialogOpen.set(true)}>
-              <Label>Sign In</Label>
-              <Icon class="material-icons">login</Icon>
-            </Button>
-          {:else}
-            {#if isAdmin}
-              <Button color="secondary" variant="outlined" class="mr-3" on:click={() => goto(base + '/admin')}>
-                <Label>Admin</Label>
-                <Icon class="material-icons">admin_panel_settings</Icon>
+            {#if $hasLauncher}
+              <Button color="secondary" variant="outlined" class="mr-3" on:click={pingLauncher}>
+                <Label>Launcher Detected</Label>
+                <Icon class="material-icons">file_download</Icon>
+              </Button>
+            {:else}
+              <Button
+                color="secondary"
+                variant="outlined"
+                class="mr-3"
+                target="_blank"
+                rel="noopener"
+                href="https://smm.ficsit.app">
+                <Label>Mod Manager</Label>
+                <Icon class="material-icons">file_download</Icon>
               </Button>
             {/if}
 
-            <div>
-              <Button
-                variant="outlined"
-                color="secondary"
-                on:click={() => menu.setOpen(true)}
-                class="grid grid-flow-col">
-                <div class="mr-3">{$user.username}</div>
-                <div class="rounded-full bg-cover w-7 h-7" style={`background-image: url("${$user.avatar}")`} />
+            {#if $user === null}
+              <Button color="secondary" variant="outlined" on:click={() => loginDialogOpen.set(true)}>
+                <Label>Sign In</Label>
+                <Icon class="material-icons">login</Icon>
               </Button>
+            {:else}
+              {#if isAdmin}
+                <Button color="secondary" variant="outlined" class="mr-3" on:click={() => goto(base + '/admin')}>
+                  <Label>Admin</Label>
+                  <Icon class="material-icons">admin_panel_settings</Icon>
+                </Button>
+              {/if}
 
-              <Menu bind:this={menu}>
-                <List>
-                  <Item on:SMUI:action={() => goto(base + '/user/' + $user.id)}>
-                    <Text>Profile</Text>
-                  </Item>
-                  <Item on:SMUI:action={() => goto(base + '/settings')}>
-                    <Text>Settings</Text>
-                  </Item>
-                  <Item on:SMUI:action={() => userToken.set(null)}>
-                    <Text>Logout</Text>
-                  </Item>
-                </List>
-              </Menu>
-            </div>
-          {/if}
-        </Section>
+              <div>
+                <Button
+                  variant="outlined"
+                  color="secondary"
+                  on:click={() => menu.setOpen(true)}
+                  class="grid grid-flow-col">
+                  <div class="mr-3">{$user.username}</div>
+                  <div class="rounded-full bg-cover w-7 h-7" style={`background-image: url("${$user.avatar}")`} />
+                </Button>
+
+                <Menu bind:this={menu}>
+                  <List>
+                    <Item on:SMUI:action={() => goto(base + '/user/' + $user.id)}>
+                      <Text>Profile</Text>
+                    </Item>
+                    <Item on:SMUI:action={() => goto(base + '/settings')}>
+                      <Text>Settings</Text>
+                    </Item>
+                    <Item on:SMUI:action={() => userToken.set(null)}>
+                      <Text>Logout</Text>
+                    </Item>
+                  </List>
+                </Menu>
+              </div>
+            {/if}
+          </Section>
+        {/if}
+      </Row>
+    </TopAppBar>
+
+    <div class="drawer-container">
+      <Sidebar bind:open bind:accessibility bind:drawerVariant bind:hideTopElements />
+
+      {#if drawerVariant === 'modal'}
+        <Scrim fixed={false} />
       {/if}
-    </Row>
-  </TopAppBar>
 
-  <div class="drawer-container">
-    <Sidebar bind:open bind:accessibility bind:drawerVariant bind:hideTopElements />
-
-    {#if drawerVariant === 'modal'}
-      <Scrim fixed={false} />
-    {/if}
-
-    <AppContent class="app-content w-full overflow-auto">
-      <AnnouncementHeader />
-      <main class="main-content min-h-100% py-6 px-3">
-        <slot />
-      </main>
-    </AppContent>
+      <AppContent class="app-content w-full overflow-auto">
+        <AnnouncementHeader />
+        <main class="main-content min-h-100% py-6 px-3">
+          <slot />
+        </main>
+      </AppContent>
+    </div>
   </div>
-</div>
 
-<LoginDialog />
+  <LoginDialog />
+</TolgeeProvider>
 
 <style lang="postcss">
   .app-container {

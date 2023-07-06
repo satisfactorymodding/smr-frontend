@@ -31,3 +31,4 @@ svelte.config.js
 tailwind.config.cjs
 tsconfig.json
 .pnpm-store
+src/i18n

@@ -121,6 +121,9 @@ dependencies:
   '@material/typography':
     specifier: ^14.0.0
     version: 14.0.0
+  '@tolgee/svelte':
+    specifier: ^5.9.12
+    version: 5.9.12(svelte@3.59.1)
   '@urql/core':
     specifier: ^4.0.7
     version: 4.0.7(graphql@16.6.0)
@@ -3592,6 +3595,25 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
+
+  /@tolgee/core@5.8.5:
+    resolution: {integrity: sha512-fG0A6G8IAiCxQQkhw0ve9YPEzmMkMJABFtDZ/NCNABMV1ICrm00sPCw95YjtnDcmJ1OuL4tH8PhQmOnbaA6RNg==}
+    dev: false
+
+  /@tolgee/svelte@5.9.12(svelte@3.59.1):
+    resolution: {integrity: sha512-NCiL9heYX1ylVv2mxrJjvdvzVsl58XGA+V/ZcDcLwqTTt2bg1uVjXyy5yoKiNtI0TA8sUuYSMmsMpmanwPzFYQ==}
+    peerDependencies:
+      svelte: ^3.29.0 || ^4.0.0
+    dependencies:
+      '@tolgee/web': 5.9.12
+      svelte: 3.59.1
+    dev: false
+
+  /@tolgee/web@5.9.12:
+    resolution: {integrity: sha512-sDAMZ9s8xFh45OdhZmmyx2PEfzLpGTshRDVfRGH1X9j4cqiNzTOmPjpyPAzobQ1GX7YMpep5yxEDnaV6OZAe4g==}
+    dependencies:
+      '@tolgee/core': 5.8.5
+    dev: false
 
   /@tootallnate/once@2.0.0:
     resolution: {integrity: sha512-XCuKFP5PS55gnMVu3dty8KPatLqUoy/ZYzDzAGCQ8JNFCkLXzmI7vNHCR+XpbZaMWQK/vQubr7PkYq8g470J/A==}

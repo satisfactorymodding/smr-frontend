@@ -8,10 +8,13 @@
   import Button from '@smui/button';
   import { onMobile, easterEgg, doggoNeedsPats } from '$lib/stores/global';
   import type { PageData } from './$types';
+  import { getTranslate } from '@tolgee/svelte';
 
   export let data: PageData;
 
   const { mods } = data;
+
+  export const { t } = getTranslate();
 
   const gridClasses = '3xl:grid-cols-4 lg:grid-cols-2 grid-cols-1';
 </script>
@@ -37,7 +40,7 @@
                 <img class="h-full flipped" src={assets + '/images/smm_hand.webp'} alt="Ficsit Minion" />
               {/if}
               <div class="text-center">
-                <div class="text-4xl mb-2">Satisfactory Mod Manager</div>
+                <div class="text-4xl mb-2">{$t('home.satisfactory-mod-manager')}</div>
                 <div class="text-xl mb-4">
                   Windows - Linux - Epic - Steam
                   {#if $easterEgg || $doggoNeedsPats}{' - Doggo'}{/if}

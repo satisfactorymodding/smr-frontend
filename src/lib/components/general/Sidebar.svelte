@@ -8,86 +8,89 @@
   import { page } from '$app/stores';
   import { user, userToken } from '$lib/stores/user';
   import { loginDialogOpen } from '$lib/stores/global';
+  import { getTranslate } from '@tolgee/svelte';
 
   export let open: boolean;
   export let drawerVariant: 'modal' | 'dismissible';
   export let hideTopElements: boolean;
   export let accessibility: boolean;
 
+  export const { t } = getTranslate();
+
   $: currentPath = $page.url.pathname;
   $: isAdmin = !$user ? false : $user.roles.approveMods || $user.roles.approveVersions || $user.roles.editSMLVersions;
 
-  const top = [
+  $: top = [
     {
       url: base + '/',
       icon: 'home',
-      label: 'Home'
+      label: $t('sidebar.home')
     },
     {
       url: base + '/mods',
       icon: 'extension',
-      label: 'Mods'
+      label: $t('sidebar.mods')
     },
     {
       url: base + '/guides',
       icon: 'description',
-      label: 'Guides'
+      label: $t('sidebar.guides')
     },
     {
       url: base + '/sml-versions',
       icon: 'lightbulb',
-      label: 'SML Versions'
+      label: $t('sidebar.sml-versions')
     },
     {
       url: base + '/tools',
       icon: 'apps',
-      label: 'Tools'
+      label: $t('sidebar.tools')
     },
     {
       url: 'https://discord.gg/xkVJ73E',
       icon: 'people',
-      label: 'Discord',
+      label: $t('sidebar.discord'),
       external: true
     },
     {
       url: 'https://docs.ficsit.app/',
       icon: 'find_in_page',
-      label: 'Docs',
+      label: $t('sidebar.docs'),
       external: true
     },
     {
       url: 'https://forums.ficsit.app/',
       icon: 'forum',
-      label: 'Forums',
+      label: $t('sidebar.forums'),
       external: true
     }
   ];
 
-  const bottom = [
+  $: bottom = [
     {
       url: base + '/help',
       icon: 'help',
-      label: 'Help'
+      label: $t('sidebar.help')
     },
     {
       url: base + '/privacy-policy',
       icon: 'policy',
-      label: 'Privacy Policy'
+      label: $t('sidebar.privacy-policy')
     },
     {
       url: base + '/tos',
       icon: 'gavel',
-      label: 'Terms of Service'
+      label: $t('sidebar.tos')
     },
     {
       url: base + '/api-docs',
       icon: 'api',
-      label: 'API'
+      label: $t('sidebar.api')
     },
     {
       url: 'https://github.com/satisfactorymodding',
       icon: 'source',
-      label: 'GitHub',
+      label: $t('sidebar.github'),
       external: true
     }
   ];
