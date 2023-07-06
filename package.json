@@ -21,7 +21,7 @@
     "start": "svelte-kit start",
     "format": "prettier --write --plugin-search-dir=. . && eslint . --fix --ext .ts,.svelte",
     "smui-theme": "smui-theme compile static/smui.css -i src/theme -i ./node_modules",
-    "translations": "bash ./download_translations.sh"
+    "translations": "sh ./download_translations.sh"
   },
   "dependencies": {
     "@felte/core": "^1.3.7",
