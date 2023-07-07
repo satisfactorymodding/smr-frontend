@@ -73,6 +73,11 @@
       label: $t('sidebar.help')
     },
     {
+      url: base + '/content-policy',
+      icon: 'verified_user',
+      label: 'Content Policy'
+    },
+    {
       url: base + '/privacy-policy',
       icon: 'policy',
       label: $t('sidebar.privacy-policy')

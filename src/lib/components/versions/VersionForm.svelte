@@ -140,6 +140,10 @@
       </div>
     </div>
 
+    <div class="text-muted">
+      By uploading this version you agree to the <a href="/content-policy">Content Policy</a>.
+    </div>
+
     <div>
       <Button variant="outlined" type="submit" {disabled}>{submitText}</Button>
     </div>
@@ -154,5 +158,9 @@
       max-height: 75vh;
       overflow: auto;
     }
+  }
+
+  a {
+    @apply underline text-yellow-500;
   }
 </style>
