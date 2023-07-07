@@ -6,9 +6,10 @@
   import { base } from '$app/paths';
   import Card, { Content } from '@smui/card';
   import DataTable, { Head, Body, Row, Cell } from '@smui/data-table';
+  import type { MenuComponentDev } from '@smui/menu';
   import Menu from '@smui/menu';
   import List, { Item } from '@smui/list';
-  import Button, { Group, GroupItem, Label, Icon } from '@smui/button';
+  import Button, { Label, Icon } from '@smui/button';
   import { installMod } from '$lib/stores/launcher';
   import { prettyDate, prettyNumber, prettyBytes, prettyArch } from '$lib/utils/formatting';
 
@@ -17,7 +18,7 @@
   const client = getContextClient();
 
   let expandedVersions = new Set<string>();
-  const menus = [];
+  let menu: MenuComponentDev;
 
   // TODO Pagination
   const versions = queryStore({
@@ -46,7 +47,7 @@
   {:else if $versions.error}
     <Content>Oh no... {$versions.error.message}</Content>
   {:else}
-    <DataTable class="max-w-full" container$class="!overflow-visible" table$class="!overflow-visible">
+    <DataTable class="max-w-full">
       <Head>
         <Row>
           <Cell>Version</Cell>
@@ -58,61 +59,46 @@
         </Row>
       </Head>
       <Body>
-        {#each $versions.data.getMod.versions as version, i}
+        {#each $versions.data.getMod.versions as version}
           <Row on:click={() => toggleRow(version.id)}>
             <Cell>{version.version}</Cell>
             <Cell>{version.stability}</Cell>
             <Cell>{version.sml_version}</Cell>
             <Cell>{prettyNumber(version.downloads)}</Cell>
             <Cell>{prettyDate(version.created_at)}</Cell>
-            <Cell class="!overflow-visible">
-              <div
-                class="grid grid-flow-col gap-4"
-                on:click|stopPropagation={() => {
-                  /*block table row expansion*/
-                }}>
-                <Button variant="outlined" href={base + '/mod/' + modId + '/version/' + version.id}>View</Button>
+            <Cell>
+              <div class="grid grid-flow-col gap-4">
                 {#if version.arch.length != 0}
-                  <Group variant="outlined">
-                    <Button
-                      variant="outlined"
-                      href={API_REST + '/mod/' + modId + '/versions/' + version.id + '/download'}
-                      class="flex-grow">
-                      <Label>Download</Label>
-                    </Button>
-                    <div use:GroupItem>
-                      <Button
-                        on:click={() => menus[i].setOpen(true)}
-                        variant="outlined"
-                        style="padding: 0; min-width: 36px;">
-                        <Icon class="material-icons" style="margin: 0;">arrow_drop_down</Icon>
-                      </Button>
-                      <Menu bind:this={menus[i]} anchorCorner="TOP_LEFT">
-                        <List>
-                          {#each version.arch as arch, _}
-                            <Item>
-                              <Button
-                                class="w-full"
-                                variant="outlined"
-                                href={API_REST +
-                                  '/mod/' +
-                                  modId +
-                                  '/versions/' +
-                                  version.id +
-                                  '/' +
-                                  arch.platform +
-                                  '/download'}>Download {prettyArch(arch.platform)}</Button>
-                            </Item>
-                          {/each}
-                        </List>
-                      </Menu>
-                    </div>
-                  </Group>
+                  <Button variant="outlined" on:click={() => menu.setOpen(true)}>
+                    <Label>Actions</Label>
+                  </Button>
+                  <Menu bind:this={menu}>
+                    <List>
+                      <Item>
+                        <Button variant="outlined" href={base + '/mod/' + modId + '/version/' + version.id}
+                          >View</Button>
+                      </Item>
+                      {#each version.arch as arch, _}
+                        <Item>
+                          <Button
+                            variant="outlined"
+                            href={API_REST +
+                              '/mod/' +
+                              modId +
+                              '/versions/' +
+                              version.id +
+                              '/' +
+                              arch.platform +
+                              '/download'}>Download {prettyArch(arch.platform)}</Button>
+                        </Item>
+                      {/each}
+                    </List>
+                  </Menu>
                 {:else}
+                  <Button variant="outlined" href={base + '/mod/' + modId + '/version/' + version.id}>View</Button>
                   <Button variant="outlined" href={API_REST + '/mod/' + modId + '/versions/' + version.id + '/download'}
                     >Download</Button>
                 {/if}
-
                 <Button variant="outlined" on:click={() => installMod($versions.data.getMod.mod_reference)}>
                   <Label>Install</Label>
                   <Icon class="material-icons">download</Icon>
