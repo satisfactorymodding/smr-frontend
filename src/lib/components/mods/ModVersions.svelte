@@ -6,19 +6,15 @@
   import { base } from '$app/paths';
   import Card, { Content } from '@smui/card';
   import DataTable, { Head, Body, Row, Cell } from '@smui/data-table';
-  import type { MenuComponentDev } from '@smui/menu';
-  import Menu from '@smui/menu';
-  import List, { Item } from '@smui/list';
   import Button, { Label, Icon } from '@smui/button';
   import { installMod } from '$lib/stores/launcher';
-  import { prettyDate, prettyNumber, prettyBytes, prettyArch } from '$lib/utils/formatting';
+  import { prettyDate, prettyNumber, prettyBytes } from '$lib/utils/formatting';
 
   export let modId!: string;
 
   const client = getContextClient();
 
   let expandedVersions = new Set<string>();
-  let menu: MenuComponentDev;
 
   // TODO Pagination
   const versions = queryStore({
@@ -68,37 +64,9 @@
             <Cell>{prettyDate(version.created_at)}</Cell>
             <Cell>
               <div class="grid grid-flow-col gap-4">
-                {#if version.arch.length != 0}
-                  <Button variant="outlined" on:click={() => menu.setOpen(true)}>
-                    <Label>Actions</Label>
-                  </Button>
-                  <Menu bind:this={menu}>
-                    <List>
-                      <Item>
-                        <Button variant="outlined" href={base + '/mod/' + modId + '/version/' + version.id}
-                          >View</Button>
-                      </Item>
-                      {#each version.arch as arch, _}
-                        <Item>
-                          <Button
-                            variant="outlined"
-                            href={API_REST +
-                              '/mod/' +
-                              modId +
-                              '/versions/' +
-                              version.id +
-                              '/' +
-                              arch.platform +
-                              '/download'}>Download {prettyArch(arch.platform)}</Button>
-                        </Item>
-                      {/each}
-                    </List>
-                  </Menu>
-                {:else}
-                  <Button variant="outlined" href={base + '/mod/' + modId + '/version/' + version.id}>View</Button>
-                  <Button variant="outlined" href={API_REST + '/mod/' + modId + '/versions/' + version.id + '/download'}
-                    >Download</Button>
-                {/if}
+                <Button variant="outlined" href={base + '/mod/' + modId + '/version/' + version.id}>View</Button>
+                <Button variant="outlined" href={API_REST + '/mod/' + modId + '/versions/' + version.id + '/download'}
+                  >Download</Button>
                 <Button variant="outlined" on:click={() => installMod($versions.data.getMod.mod_reference)}>
                   <Label>Install</Label>
                   <Icon class="material-icons">download</Icon>

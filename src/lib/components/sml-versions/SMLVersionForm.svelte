@@ -12,18 +12,14 @@
   import Select, { Option } from '@smui/select';
 
   export let onSubmit: (data: SMLVersionData) => void;
-
-  export let editing = false;
-
   export let initialValues: SMLVersionData = {
     link: '',
-    bootstrap_version: '0.0.0',
+    bootstrap_version: '',
     date: '',
     changelog: '',
     satisfactory_version: 0,
     stability: VersionStabilities.Alpha,
-    version: '',
-    arch: [{ platform: '', link: '' }]
+    version: ''
   };
   export let submitText = 'Create';
 
@@ -32,16 +28,6 @@
     extend: [validator({ schema: smlVersionSchema }), reporter],
     onSubmit: (submitted: SMLVersionData) => onSubmit(trimNonSchema(submitted, smlVersionSchema))
   });
-
-  const addArch = () => {
-    $data.arch.push({ platform: '', link: '', key: '' });
-    $data.arch = $data.arch;
-  };
-
-  const removeArch = (i: number) => {
-    $data.arch.splice(i, 1);
-    $data.arch = $data.arch;
-  };
 
   $: preview = ($data.changelog as string) || '';
 </script>
@@ -62,14 +48,12 @@
       </ValidationMessage>
     </div>
 
-    {#if $data.bootstrap_version !== '0.0.0'}
-      <div class="grid grid-flow-row gap-2">
-        <Textfield bind:value={$data.bootstrap_version} label="Bootstrap Version" required />
-        <ValidationMessage for="bootstrap_version" let:messages={message}>
-          <span class="validation-message">{message || ''}</span>
-        </ValidationMessage>
-      </div>
-    {/if}
+    <div class="grid grid-flow-row gap-2">
+      <Textfield bind:value={$data.bootstrap_version} label="Bootstrap Version" required />
+      <ValidationMessage for="bootstrap_version" let:messages={message}>
+        <span class="validation-message">{message || ''}</span>
+      </ValidationMessage>
+    </div>
 
     <div class="grid grid-flow-row gap-2">
       <Select bind:value={$data.stability} label="Stability">
@@ -104,40 +88,15 @@
     </div>
 
     <div class="grid grid-flow-row gap-2">
-      {#each $data.arch as data_link, i}
-        <div class="gap-6 auto-rows-max">
-          <Select bind:value={data_link.platform} label="Platform">
-            <Option value="WindowsNoEditor">Windows Client</Option>
-            <Option value="WindowsServer">Windows Server</Option>
-            <Option value="LinuxServer">Linux Server</Option>
-          </Select>
-
-          <Textfield
-            name={`data_link.link`}
-            placeholder="URL"
-            bind:value={data_link.link}
-            style="min-width: 850px;"
-            label="URL" />
-          <ValidationMessage for="data_link.link" let:messages={message}>
-            <span class="validation-message">{message || ''}</span>
-          </ValidationMessage>
-
-          {#if !editing}
-            <Button type="button" on:click={addArch}>Add</Button>
-            <Button type="button" disabled={$data.arch.length == 1} on:click={() => removeArch(i)}>Remove</Button>
-          {/if}
-        </div>
-      {/each}
-
-      <Textfield bind:value={$data.link} label="Link" />
-      <ValidationMessage for="link" let:messages={message}>
+      <Textfield bind:value={$data.date} label="Date and Time" required />
+      <ValidationMessage for="date" let:messages={message}>
         <span class="validation-message">{message || ''}</span>
       </ValidationMessage>
     </div>
 
     <div class="grid grid-flow-row gap-2">
-      <Textfield bind:value={$data.date} label="Date and Time" required />
-      <ValidationMessage for="date" let:messages={message}>
+      <Textfield bind:value={$data.link} label="Link" required />
+      <ValidationMessage for="link" let:messages={message}>
         <span class="validation-message">{message || ''}</span>
       </ValidationMessage>
     </div>

@@ -7,11 +7,6 @@ query GetSMLVersions($limit: Int!, $offset: Int!) {
       stability
       changelog
       link
-      arch {
-        id
-        platform
-        link
-      }
       date
       satisfactory_version
     }

@@ -23,7 +23,7 @@
       .then((value) => {
         if (value.error) {
           console.error(value.error.message);
-          errorMessage = 'Error creating SML Version: ' + value.error.message;
+          errorMessage = 'Error creating mod: ' + value.error.message;
           errorToast = true;
         } else {
           // TODO Toast or something

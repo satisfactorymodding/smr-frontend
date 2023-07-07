@@ -4,11 +4,6 @@ query GetSMLVersionAdmin($smlVersionID: SMLVersionID!) {
     version
     stability
     link
-    arch {
-      id
-      platform
-      link
-    }
     changelog
     created_at
     date
