@@ -1,2 +1,0 @@
-import{Z as c}from"./forms-5fcb6172.js";const n=(f,o)=>Object.fromEntries(Object.entries(f).map(t=>{if(Object.keys(o.shape).indexOf(t[0])>=0){let e=t[1];if(typeof e=="object"){let r=o.shape[t[0]];if(r instanceof c&&(r=r.unwrap()),Array.isArray(e)){const s=r.element;for(let i=0;i<e.length;i++)typeof e[i]=="object"&&(e[i]=n(e[i],s))}else e.constructor.name!=="File"&&(e=n(e,r))}return[t[0],e]}}).filter(t=>!!t));export{n as t};
-//# sourceMappingURL=forms-2903de53.js.map

@@ -7,32 +7,37 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
     <meta http-equiv="content-security-policy" content="">
-	<link rel="modulepreload" href="/smr-frontend/main/_app/immutable/start-e0d2af66.js">
-	<link rel="modulepreload" href="/smr-frontend/main/_app/immutable/chunks/vendor-93f46a94.js">
-	<link rel="modulepreload" href="/smr-frontend/main/_app/immutable/chunks/paths-1c47712a.js">
-	<link rel="modulepreload" href="/smr-frontend/main/_app/immutable/chunks/preload-helper-f72398ae.js">
-	<link rel="modulepreload" href="/smr-frontend/main/_app/immutable/chunks/singletons-cdeec3fd.js">
-			<script>
-		if ('serviceWorker' in navigator) {
-			addEventListener('load', function () {
-				navigator.serviceWorker.register('/smr-frontend/main/service-worker.js');
-			});
-		}
-	</script>
+		<link rel="modulepreload" href="/smr-frontend/main/_app/immutable/entry/start.7fc00026.js">
+		<link rel="modulepreload" href="/smr-frontend/main/_app/immutable/chunks/vendor.d26e534c.js">
+		<link rel="modulepreload" href="/smr-frontend/main/_app/immutable/entry/app.e38f5ac4.js">
+		<link rel="modulepreload" href="/smr-frontend/main/_app/immutable/chunks/preload-helper.12267524.js">
   </head>
   <body>
     <div>
-		<script type="module" data-sveltekit-hydrate="45h">
-		import { start } from "/smr-frontend/main/_app/immutable/start-e0d2af66.js";
-		start({
-			target: document.querySelector('[data-sveltekit-hydrate="45h"]').parentNode,
-			paths: {"base":"/smr-frontend/main","assets":"/smr-frontend/main"},
-			session: {},
-			route: true,
-			spa: true,
-			trailing_slash: "never",
-			hydrate: null
-		});
-	</script></div>
+			<script>
+				{
+					__sveltekit_3nulnf = {
+						assets: "/smr-frontend/main",
+						base: "/smr-frontend/main",
+						env: {"PUBLIC_BACKEND_API_BASE":"https://api.ficsit.app","PUBLIC_BASE_URL":"https://ficsit.app","PUBLIC_GOOGLE_SITE_TAG":"UA-138769351-2","PUBLIC_TOLGEE_API_URL":"https://translate.ficsit.app","PUBLIC_TOLGEE_API_KEY":"tgpak_gjptqytrm5sgyy3ohfwdk2junf2wemtbnezts2lig5yte"}
+					};
+
+					const element = document.currentScript.parentElement;
+
+					Promise.all([
+						import("/smr-frontend/main/_app/immutable/entry/start.7fc00026.js"),
+						import("/smr-frontend/main/_app/immutable/entry/app.e38f5ac4.js")
+					]).then(([kit, app]) => {
+						kit.start(app, element);
+					});
+
+					if ('serviceWorker' in navigator) {
+						addEventListener('load', function () {
+							navigator.serviceWorker.register('/smr-frontend/main/service-worker.js');
+						});
+					}
+				}
+			</script>
+		</div>
   </body>
 </html>
