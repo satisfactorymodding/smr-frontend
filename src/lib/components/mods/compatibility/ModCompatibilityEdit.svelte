@@ -3,6 +3,7 @@
   import { CompatibilityState } from '$lib/generated';
   import type { CompatibilityInfo } from '$lib/generated';
   import CompatibilityEdit from '$lib/components/mods/compatibility/CompatibilityEdit.svelte';
+  import { getTranslate } from "@tolgee/svelte";
 
   export let compatibilityInfo: CompatibilityInfo = undefined;
   if (compatibilityInfo == null) {
@@ -17,17 +18,19 @@
       }
     };
   }
+
+  export const { t } = getTranslate();
 </script>
 
 <Accordion>
   <Panel>
-    <Header>Early Access - Compatibility</Header>
+    <Header>{ $t('early-access') } - { $t('compatibility') }</Header>
     <Content>
       <CompatibilityEdit bind:compatibility={compatibilityInfo.EA} />
     </Content>
   </Panel>
   <Panel>
-    <Header>Experimental - Compatibility</Header>
+    <Header>{ $t('experimental') } - { $t('compatibility') }</Header>
     <Content>
       <CompatibilityEdit bind:compatibility={compatibilityInfo.EXP} />
     </Content>

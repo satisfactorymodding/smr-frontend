@@ -8,6 +8,9 @@
   import { markdown } from '$lib/utils/markdown';
   import Textfield from '@smui/textfield';
   import Button from '@smui/button';
+  import { getTranslate } from "@tolgee/svelte";
+
+  export const { t } = getTranslate();
 
   export let onSubmit: (data: GuideData) => void;
   export let initialValues: GuideData | undefined = {
@@ -15,7 +18,7 @@
     guide: '',
     short_description: ''
   };
-  export let submitText = 'Create';
+  export let submitText = $t('entry.create');
 
   const { form, data } = createForm<GuideData>({
     initialValues: initialValues,
@@ -29,14 +32,14 @@
 <form use:form>
   <div class="grid grid-flow-row gap-6">
     <div class="grid grid-flow-row gap-2">
-      <Textfield bind:value={$data.name} label="Name" required />
+      <Textfield bind:value={$data.name} label={$t('entry.name')} required />
       <ValidationMessage for="name" let:messages={message}>
         <span class="validation-message">{message || ''}</span>
       </ValidationMessage>
     </div>
 
     <div class="grid grid-flow-row gap-2">
-      <Textfield bind:value={$data.short_description} label="Short Description" required />
+      <Textfield bind:value={$data.short_description} label={$t('entry.short-description')} required />
       <ValidationMessage for="short_description" let:messages={message}>
         <span class="validation-message">{message || ''}</span>
       </ValidationMessage>
@@ -44,13 +47,13 @@
 
     <div class="grid gap-6 split">
       <div class="grid grid-flow-row gap-2 auto-rows-max">
-        <Textfield textarea class="vertical-textarea" bind:value={$data.guide} label="Guide" required input$rows={10} />
+        <Textfield textarea class="vertical-textarea" bind:value={$data.guide} label={$t('guide')} required input$rows={10} />
         <ValidationMessage for="guide" let:messages={message}>
           <span class="validation-message">{message || ''}</span>
         </ValidationMessage>
       </div>
       <div class="grid grid-flow-row gap-2 auto-rows-max">
-        <span>Preview:</span>
+        <span>{$t('preview')}:</span>
         {#await markdown(preview) then previewRendered}
           <div class="markdown-content right">{@html previewRendered}</div>
         {/await}

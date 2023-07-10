@@ -18,8 +18,11 @@
   import Dialog, { Title, Content } from '@smui/dialog';
   import Button from '@smui/button';
   import CircularProgress from '@smui/circular-progress';
+  import { getTranslate } from "@tolgee/svelte";
 
   const client = getContextClient();
+
+  export const { t } = getTranslate();
 
   if (browser) {
     const getMe = queryStore({
@@ -140,28 +143,28 @@
 </script>
 
 <Dialog bind:open={$loginDialogOpen}>
-  <Title>Login / Sign Up</Title>
+  <Title>{ $t('user.sign-in') } / { $t('user.sign-up') }</Title>
   <Content>
     <div class="grid grid-flow-row gap-4">
       {#if signingIn}
-        <p>Logging in...</p>
+        <p>{ $t('user.logging-in') }...</p>
         <div class="flex justify-center">
           <CircularProgress class="h-10 w-10" indeterminate />
         </div>
       {:else if $oauthOptions.fetching}
         <!-- TODO Placeholders -->
-        <p>Loading...</p>
+        <p>{ $t('loading') }...</p>
       {:else if $oauthOptions.error}
         <p>Oh no... {$oauthOptions.error.message}</p>
       {:else}
         <Button variant="outlined" on:click={() => goTo('github', $oauthOptions.data.getOAuthOptions.github)}>
-          Sign in with Github
+          { $t('login-dialog.sign-in-with-github') }
         </Button>
         <Button variant="outlined" on:click={() => goTo('google', $oauthOptions.data.getOAuthOptions.google)}>
-          Sign in with Google
+          { $t('login-dialog.sign-in-with-google') }
         </Button>
         <Button variant="outlined" on:click={() => goTo('facebook', $oauthOptions.data.getOAuthOptions.facebook)}>
-          Sign in with Facebook
+          { $t('login-dialog.sign-in-with-facebook') }
         </Button>
       {/if}
     </div>

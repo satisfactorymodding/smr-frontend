@@ -11,6 +11,7 @@ if (browser) {
 export const onMobile = writable<boolean>(mobileQuery && !mobileQuery.matches);
 export const doggoNeedsPats = writable<boolean>(false);
 export const easterEgg = writable<boolean>(false);
+export const sidebarOpen = writable<boolean>(false);
 
 if (browser) {
   mobileQuery.addEventListener('change', (data) => {

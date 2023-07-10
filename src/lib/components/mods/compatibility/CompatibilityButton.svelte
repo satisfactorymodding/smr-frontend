@@ -4,15 +4,18 @@
   import CompatibilityInfo from '$lib/components/mods/compatibility/CompatibilityInfo.svelte';
   import Button from '@smui/button';
   import CompatibilityIcon from './CompatibilityIcon.svelte';
+  import { getTranslate } from "@tolgee/svelte";
   let open = false;
 
   export let compatibility: CompatibilityInfoInput;
+
+  export const { t } = getTranslate();
 </script>
 
 <Button
   --mdc-text-button-container-height="20px"
   class="min-w-0 m-0"
-  title="Compatibility information (click to view more info)"
+  title={$t('compatibility-info.button')}
   on:click={() => {
     open = true;
   }}>
@@ -21,7 +24,7 @@
 </Button>
 
 <Dialog bind:open>
-  <Title>Compatibility Information</Title>
+  <Title>{$t('compatibility-info')}</Title>
   <Content>
     <CompatibilityInfo {compatibility} />
   </Content>

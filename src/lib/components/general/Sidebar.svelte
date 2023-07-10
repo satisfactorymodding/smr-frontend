@@ -49,7 +49,7 @@
     {
       url: 'https://discord.gg/xkVJ73E',
       icon: 'people',
-      label: $t('sidebar.discord'),
+      label: $t('discord'),
       external: true
     },
     {
@@ -75,7 +75,7 @@
     {
       url: base + '/content-policy',
       icon: 'verified_user',
-      label: 'Content Policy'
+      label: $t('content-policy')
     },
     {
       url: base + '/privacy-policy',
@@ -109,7 +109,7 @@
           {#if $user === null}
             <Item on:click={() => loginDialogOpen.set(true)}>
               <Graphic class="material-icons">login</Graphic>
-              <Text>Sign In</Text>
+              <Text>{ $t('user.sign-in') }</Text>
             </Item>
           {:else}
             {#if isAdmin}
@@ -128,7 +128,7 @@
 
             <Item on:click={() => userToken.set(null)}>
               <Graphic class="material-icons">logout</Graphic>
-              <Text>Logout</Text>
+              <Text>{ $t('user.logout') }</Text>
             </Item>
           {/if}
         </List>
@@ -170,14 +170,14 @@
         {#if hideTopElements}
           <Item target="_blank" href="https://smm.ficsit.app" rel="noopener">
             <Graphic class="material-icons">file_download</Graphic>
-            <Text>Mod Manager</Text>
+            <Text>{ $t('sidebar.mod-manager') }</Text>
           </Item>
         {/if}
 
         <Item>
           <FormField align="end">
             <Switch bind:checked={accessibility} aria-label="Accessibility Font" />
-            <span slot="label">Accessibility Font</span>
+            <span slot="label">{ $t('sidebar.accessibility-font') }</span>
           </FormField>
         </Item>
       </List>

@@ -15,6 +15,7 @@
   import FicsitCard from '$lib/components/general/FicsitCard.svelte';
   import Select, { Option } from '@smui/select';
   import { browser } from '$app/environment';
+  import { getTranslate } from "@tolgee/svelte";
 
   export let colCount: 4 | 5 = 4;
   export let newMod = false;
@@ -76,36 +77,38 @@
       ? '3xl:grid-cols-4 2xl:grid-cols-3 lg:grid-cols-2 grid-cols-1'
       : '3xl:grid-cols-3 2xl:grid-cols-2 grid-cols-1';
 
+  export const { t } = getTranslate();
+
   $: orderFields = [
-    ['Name', 'name'],
-    ['Views', 'views'],
-    ['Downloads', 'downloads'],
-    ['Hotness (Views)', 'hotness'],
-    ['Popularity (Downloads)', 'popularity'],
-    ['Creation Date', 'created_at'],
-    ['Last Version', 'last_version_date'],
-    ...(search !== '' && search !== null ? [['Search', 'search']] : [])
+    [$t('sort-order.name'), 'name'],
+    [$t('sort-order.views'), 'views'],
+    [$t('sort-order.downloads'), 'downloads'],
+    [$t('sort-order.hotness'), 'hotness'],
+    [$t('sort-order.popularity'), 'popularity'],
+    [$t('sort-order.created_at'), 'created_at'],
+    [$t('sort-order.last_version_date'), 'last_version_date'],
+    ...(search !== '' && search !== null ? [[$t('sort-order.search'), 'search']] : [])
   ];
 </script>
 
 <div class="ml-auto flex flex-wrap justify-between items-center mb-5">
   {#if newMod && $user !== null}
-    <Button variant="outlined" href="{base}/new-mod">New Mod</Button>
+    <Button variant="outlined" href="{base}/new-mod">{ $t('mods.new') }</Button>
   {/if}
 
   {#if showSearch}
     <div class="search-container flex flex-wrap sm:px-4">
       <div class="mr-3">
-        <Select bind:value={orderBy} label="Order By">
+        <Select bind:value={orderBy} label={ $t('order-by') }>
           {#each orderFields as orderField}
             <Option value={orderField[1]}>{orderField[0]}</Option>
           {/each}
         </Select>
       </div>
       <div class="mr-3">
-        <Select bind:value={order} label="Order">
-          <Option value="asc">Ascending</Option>
-          <Option value="desc">Descending</Option>
+        <Select bind:value={order} label={ $t('order') }>
+          <Option value="asc">{ $t('ascending') }</Option>
+          <Option value="desc">{ $t('descending') }</Option>
         </Select>
       </div>
       <Paper class="search-paper mr-3" elevation={6}>

@@ -70,21 +70,20 @@
             <div class="flex absolute w-full h-4/5 top-0 items-center pl-8">
               <div>
                 <div class="text-md">
-                  We have over <span class="text-amber-600 font-bold">
+                  { $t('home.banner.we-have-over') } <span class="text-amber-600 font-bold">
                     {#if $mods.fetching || $mods.error}
                       ...
                     {:else}
                       {$mods.data.getMods.count}
                     {/if}
-                  </span> mods!
+                  </span> { $t('home.banner.mods') }!
                 </div>
-                <div class="text-md">Most are compatible with the</div>
-                <div class="text-md mb-4">latest version of satisfactory.</div>
+                <div class="text-md max-w-prose">{ $t('home.banner.most-are-compatible') }</div>
               </div>
             </div>
             <div class="flex absolute w-full h-full top-0 items-end justify-center">
               <Button variant="unelevated" class="h-1/4 py-3 px-14 w-full" style="background: #5a7b78; color: white">
-                Take a look!
+                { $t('home.banner.take-a-look') }
               </Button>
             </div>
           </div>
@@ -102,7 +101,7 @@
             <img class="centered-logo" src={assets + '/images/sf_modding_logo.webp'} alt="Satisfactory Modding Logo" />
           </div>
           <div class="absolute bottom-0 pb-4 px-4 w-full text-gray-400 text-center xl:text-left">
-            <span>Community-run Modding Discord</span>
+            <span>{ $t('home.banner.community-run-discord') }</span>
           </div>
         </div>
       </Card>
@@ -118,7 +117,7 @@
               alt="Satisfactory Logo" />
           </div>
           <div class="absolute bottom-0 pb-4 px-4 w-full text-gray-300 text-center xl:text-right">
-            <span>Official Website</span>
+            <span>{ $t('home.banner.official-website') }</span>
           </div>
         </div>
       </Card>
@@ -132,7 +131,7 @@
       {/each}
     </div>
   {:else if $mods.error}
-    <p>Oh no... {$mods.error.message}</p>
+    <p>{ $t('error.oh-no') } {$mods.error.message}</p>
   {:else}
     <div class="grid {gridClasses} gap-4">
       {#each $mods.data.getMods.mods as mod}
