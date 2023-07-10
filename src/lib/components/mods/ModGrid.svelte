@@ -29,6 +29,10 @@
   let order: Order = Order.Desc;
   let orderBy: ModFields = ModFields.LastVersionDate;
 
+  if (search) {
+    orderBy = ModFields.Search;
+  }
+
   let page = parseInt($storePage.url.searchParams.get('p'), 10) || 1;
 
   $: mods = queryStore({
