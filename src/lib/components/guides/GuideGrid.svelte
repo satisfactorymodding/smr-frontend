@@ -7,7 +7,7 @@
   import Button from '@smui/button';
   import { user } from '$lib/stores/user';
   import FicsitCard from '$lib/components/general/FicsitCard.svelte';
-  import { getTranslate } from "@tolgee/svelte";
+  import { getTranslate } from '@tolgee/svelte';
 
   export let colCount: 4 | 5 = 4;
   export let newGuide = false;
@@ -38,7 +38,7 @@
 
 <div class="mb-5 ml-auto flex justify-between">
   {#if newGuide && $user !== null}
-    <Button variant="outlined" href="{base}/new-guide">{ $t('guides.new') }</Button>
+    <Button variant="outlined" href="{base}/new-guide">{$t('guides.new')}</Button>
   {/if}
 
   <div>
@@ -53,7 +53,7 @@
     {/each}
   </div>
 {:else if $guides.error}
-  <p>{ $t('error.oh-no') } {$guides.error.message}</p>
+  <p>{$t('error.oh-no')} {$guides.error.message}</p>
 {:else}
   <div class="grid {gridClasses} gap-4">
     {#each $guides.data.getGuides.guides as guide}

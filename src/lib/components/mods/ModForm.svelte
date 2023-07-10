@@ -15,7 +15,7 @@
   import TagList from '$lib/components/utils/TagList.svelte';
   import { CompatibilityState } from '$lib/generated';
   import ModCompatibility from '$lib/components/mods/compatibility/ModCompatibilityEdit.svelte';
-  import { getTranslate } from "@tolgee/svelte";
+  import { getTranslate } from '@tolgee/svelte';
 
   export const { t } = getTranslate();
 
@@ -87,17 +87,17 @@
 <form use:form>
   <div class="grid grid-flow-row gap-6">
     <div class="grid grid-flow-row gap-2">
-      <Textfield bind:value={$data.name} label={ $t('entry.name') } required />
+      <Textfield bind:value={$data.name} label={$t('entry.name')} required />
       <ValidationMessage for="name" let:messages={message}>
         <span class="validation-message">{message || ''}</span>
       </ValidationMessage>
     </div>
 
     <div class="grid grid-flow-row gap-2">
-      <Textfield bind:value={$data.mod_reference} label={ $t('mod.reference') } required disabled={editing}>
+      <Textfield bind:value={$data.mod_reference} label={$t('mod.reference')} required disabled={editing}>
         <HelperText persistent={!editing} slot="helper">
           {#if !editing}
-            { $t('mod.reference-warning') }
+            {$t('mod.reference-warning')}
           {/if}
         </HelperText>
       </Textfield>
@@ -107,7 +107,7 @@
     </div>
 
     <div class="grid grid-flow-row gap-2">
-      <Textfield bind:value={$data.short_description} label={ $t('entry.short-description') } required />
+      <Textfield bind:value={$data.short_description} label={$t('entry.short-description')} required />
       <ValidationMessage for="short_description" let:messages={message}>
         <span class="validation-message">{message || ''}</span>
       </ValidationMessage>
@@ -119,7 +119,7 @@
           textarea
           class="vertical-textarea"
           bind:value={$data.full_description}
-          label={ $t('entry.full-description') }
+          label={$t('entry.full-description')}
           required
           input$rows={10} />
         <ValidationMessage for="full_description" let:messages={message}>
@@ -127,7 +127,7 @@
         </ValidationMessage>
       </div>
       <div class="grid grid-flow-row gap-2 auto-rows-max">
-        <span>{ $t('preview') }:</span>
+        <span>{$t('preview')}:</span>
         {#await markdown(preview) then previewRendered}
           <div class="markdown-content right">{@html previewRendered}</div>
         {/await}
@@ -139,7 +139,7 @@
     </div>
 
     <div class="grid grid-flow-row gap-2">
-      <label for="logo">{ $t('logo') }:</label>
+      <label for="logo">{$t('logo')}:</label>
       <input
         id="logo"
         class="base-input"
@@ -153,7 +153,7 @@
     </div>
 
     <div class="grid grid-flow-row gap-2">
-      <Textfield bind:value={$data.source_url} label={ $t('entry.source-url') } />
+      <Textfield bind:value={$data.source_url} label={$t('entry.source-url')} />
       <ValidationMessage for="source_url" let:messages={message}>
         <span class="validation-message">{message || ''}</span>
       </ValidationMessage>
@@ -162,7 +162,7 @@
     <div class="grid grid-flow-row gap-2">
       <FormField>
         <Switch bind:checked={$data.hidden} />
-        <span slot="label">{ $t('entry.hidden') }</span>
+        <span slot="label">{$t('entry.hidden')}</span>
       </FormField>
       <ValidationMessage for="hidden" let:messages={message}>
         <span class="validation-message">{message || ''}</span>
@@ -176,7 +176,7 @@
             on:SMUISwitch:change={() => {
               $data.compatibility = editCompatibility ? originalCompatibility : undefined;
             }} />
-          <span>{ $t('compatibility-info.edit') }</span>
+          <span>{$t('compatibility-info.edit')}</span>
         </FormField>
       </div>
 
@@ -186,9 +186,9 @@
 
       <div class="grid grid-flow-row gap-2">
         <div class="flex items-baseline">
-          <h4 class="mr-4">{ $t('authors') }</h4>
+          <h4 class="mr-4">{$t('authors')}</h4>
           <Button type="button" on:click={addAuthor}>
-            <Label>{ $t('add') }</Label>
+            <Label>{$t('add')}</Label>
           </Button>
         </div>
         {#each $data.authors as author, i}
@@ -203,7 +203,7 @@
               disabled={author.role === 'creator'} />
             {#if author.role !== 'creator'}
               <Button type="button" on:click={() => removeAuthor(i)} variant="raised">
-                <Label>{ $t('remove') }</Label>
+                <Label>{$t('remove')}</Label>
               </Button>
             {/if}
           </div>

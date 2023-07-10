@@ -8,7 +8,7 @@
   import { markdown } from '$lib/utils/markdown';
   import Textfield from '@smui/textfield';
   import Button from '@smui/button';
-  import { getTranslate } from "@tolgee/svelte";
+  import { getTranslate } from '@tolgee/svelte';
 
   export const { t } = getTranslate();
 
@@ -47,7 +47,13 @@
 
     <div class="grid gap-6 split">
       <div class="grid grid-flow-row gap-2 auto-rows-max">
-        <Textfield textarea class="vertical-textarea" bind:value={$data.guide} label={$t('guide')} required input$rows={10} />
+        <Textfield
+          textarea
+          class="vertical-textarea"
+          bind:value={$data.guide}
+          label={$t('guide')}
+          required
+          input$rows={10} />
         <ValidationMessage for="guide" let:messages={message}>
           <span class="validation-message">{message || ''}</span>
         </ValidationMessage>

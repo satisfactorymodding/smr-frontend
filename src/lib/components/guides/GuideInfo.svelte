@@ -2,7 +2,7 @@
   import type { Guide } from '$lib/generated';
   import Card, { Content } from '@smui/card';
   import { prettyDate } from '$lib/utils/formatting';
-  import { getTranslate } from "@tolgee/svelte";
+  import { getTranslate } from '@tolgee/svelte';
 
   export let guide!: Pick<Guide, 'created_at'>;
 
@@ -12,8 +12,8 @@
 <Card>
   <Content>
     <div class="text-lg">
-      <h3 class="text-2xl my-4 font-bold">{ $t('entry.info') }</h3>
-      <span><strong>{ $t('entry.created-at') }:</strong> {prettyDate(guide.created_at)}</span><br />
+      <h3 class="text-2xl my-4 font-bold">{$t('entry.info')}</h3>
+      <span><strong>{$t('entry.created-at')}:</strong> {prettyDate(guide.created_at)}</span><br />
     </div>
   </Content>
 </Card>

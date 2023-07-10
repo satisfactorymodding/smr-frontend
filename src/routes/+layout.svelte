@@ -2,7 +2,7 @@
   import LoginDialog from '$lib/components/auth/LoginDialog.svelte';
   import { setContextClient } from '@urql/svelte';
   import { AppContent, Scrim } from '@smui/drawer';
-  import { onMobile, sidebarOpen } from "$lib/stores/global";
+  import { onMobile, sidebarOpen } from '$lib/stores/global';
   import { onMount } from 'svelte';
   import { customProtocolCheck, hasLauncher } from '$lib/stores/launcher';
   import Sidebar from '$lib/components/general/Sidebar.svelte';
@@ -17,7 +17,7 @@
   import deCommon from '../i18n/common/de.json';
   import frCommon from '../i18n/common/fr.json';
   import lvCommon from '../i18n/common/lv.json';
-  import TopBar from "$lib/components/general/TopBar.svelte";
+  import TopBar from '$lib/components/general/TopBar.svelte';
 
   export let data: LayoutData;
 

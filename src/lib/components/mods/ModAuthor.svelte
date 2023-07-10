@@ -2,7 +2,7 @@
   import { queryStore, getContextClient } from '@urql/svelte';
   import { GetUserDocument } from '$lib/generated';
   import { assets } from '$app/paths';
-  import { getTranslate } from "@tolgee/svelte";
+  import { getTranslate } from '@tolgee/svelte';
 
   export let id: string;
 
@@ -18,9 +18,9 @@
 </script>
 
 {#if $user.fetching}
-  <p class="mr-2">{ $t('loading') }...</p>
+  <p class="mr-2">{$t('loading')}...</p>
 {:else if $user.error}
-  <p class="mr-2">{ $t('error.oh-no') }... {$user.error.message}</p>
+  <p class="mr-2">{$t('error.oh-no')}... {$user.error.message}</p>
 {:else if $user.data.getUser}
   <div class="grid grid-flow-col auto-cols-max gap-x-2 mr-2">
     <div

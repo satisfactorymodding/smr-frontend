@@ -4,7 +4,7 @@
   import Select, { Option } from '@smui/select';
   import type { Compatibility } from '$lib/generated';
   import { CompatibilityState } from '$lib/generated';
-  import { getTranslate } from "@tolgee/svelte";
+  import { getTranslate } from '@tolgee/svelte';
 
   export let compatibility: Compatibility = {
     state: CompatibilityState.Works
@@ -20,5 +20,5 @@
 </Select>
 <br />
 <Textfield textarea bind:value={compatibility.note} label="Note">
-  <HelperText slot="helper">{ $t('compatibility-info.notes') }</HelperText>
+  <HelperText slot="helper">{$t('compatibility-info.notes')}</HelperText>
 </Textfield>

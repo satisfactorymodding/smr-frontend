@@ -4,7 +4,7 @@
   import CompatibilityInfo from '$lib/components/mods/compatibility/CompatibilityInfo.svelte';
   import Button from '@smui/button';
   import CompatibilityIcon from './CompatibilityIcon.svelte';
-  import { getTranslate } from "@tolgee/svelte";
+  import { getTranslate } from '@tolgee/svelte';
   let open = false;
 
   export let compatibility: CompatibilityInfoInput;

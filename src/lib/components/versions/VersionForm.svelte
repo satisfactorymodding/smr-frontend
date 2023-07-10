@@ -12,7 +12,7 @@
   import { VersionStabilities } from '$lib/generated';
   import Select, { Option } from '@smui/select';
   import { prettyBytes } from '$lib/utils/formatting';
-  import { getTranslate } from "@tolgee/svelte";
+  import { getTranslate } from '@tolgee/svelte';
 
   export const { t } = getTranslate();
 
@@ -47,7 +47,7 @@
 <form use:form>
   <div class="grid grid-flow-row gap-6">
     <div class="grid grid-flow-row gap-2">
-      <Select bind:value={$data.stability} label={ $t('stability') }>
+      <Select bind:value={$data.stability} label={$t('stability')}>
         <Option value="alpha">Alpha</Option>
         <Option value="beta">Beta</Option>
         <Option value="release">Release</Option>
@@ -59,7 +59,7 @@
 
     {#if !editing}
       <div class="grid grid-flow-row gap-2">
-        <label for="file">{ $t('file') }:</label>
+        <label for="file">{$t('file')}:</label>
         <input id="file" class="base-input" name="file" type="file" accept=".zip,.smod" placeholder="File" />
         <ValidationMessage for="file" let:messages={message}>
           <span class="validation-message">{message || ''}</span>
@@ -68,28 +68,29 @@
 
       {#if $data.file}
         <div>
-          <span><strong>{ $t('file-type') }:</strong> {$data.file.type || 'Unknown'}</span><br />
-          <span><strong>{ $t('file-size') }:</strong> {prettyBytes($data.file.size)}</span>
+          <span><strong>{$t('file-type')}:</strong> {$data.file.type || 'Unknown'}</span><br />
+          <span><strong>{$t('file-size')}:</strong> {prettyBytes($data.file.size)}</span>
         </div>
       {/if}
 
       {#if $modMeta}
         <div>
           <p class="mb-4">
-            <span><strong>{ $t('version') }:</strong> {$modMeta.uplugin.Version}<br /></span>
+            <span><strong>{$t('version')}:</strong> {$modMeta.uplugin.Version}<br /></span>
 
             {#if $modMeta.uplugin.SemVersion !== undefined}
               <span><strong>SemVersion:</strong> {$modMeta.uplugin.SemVersion}<br /></span>
             {:else}
               <span class="text-yellow-600">
-                { $t('version-form.missing-sem-version') } {$modMeta.uplugin.Version}.0.0
+                {$t('version-form.missing-sem-version')}
+                {$modMeta.uplugin.Version}.0.0
               </span>
             {/if}
           </p>
 
           {#if $modMeta.uplugin.Plugins !== undefined}
             <p>
-              <strong>{ $t('dependencies') }:</strong><br />
+              <strong>{$t('dependencies')}:</strong><br />
               {#each $modMeta.uplugin.Plugins as dependency}
                 <strong>{dependency.Name}: </strong>
                 {#if dependency.SemVersion}
@@ -104,7 +105,7 @@
 
           {#if $modMeta.objects && $modMeta.objects.length > 0}
             <p>
-              <strong>{ $t('objects') }:</strong><br />
+              <strong>{$t('objects')}:</strong><br />
               {#each $modMeta.objects as object}
                 <span>{object}</span>
                 <br />
@@ -113,7 +114,7 @@
           {:else}
             <p>
               <span class="text-yellow-600">
-                { $t('version-form.missing-sem-version') }
+                {$t('version-form.missing-sem-version')}
               </span>
             </p>
           {/if}
@@ -127,7 +128,7 @@
           textarea
           class="vertical-textarea"
           bind:value={$data.changelog}
-          label={ $t('changelog') }
+          label={$t('changelog')}
           required
           input$rows={10} />
         <ValidationMessage for="changelog" let:messages={message}>
@@ -135,7 +136,7 @@
         </ValidationMessage>
       </div>
       <div class="grid grid-flow-row gap-2 auto-rows-max">
-        <span>{ $t('preview') }:</span>
+        <span>{$t('preview')}:</span>
         {#await markdown(preview) then previewRendered}
           <div class="markdown-content right">{@html previewRendered}</div>
         {/await}
@@ -143,7 +144,7 @@
     </div>
 
     <div class="text-muted">
-      { $t('version-form.agreement-to') } <a href="/content-policy">{ $t('content-policy') }</a>.
+      {$t('version-form.agreement-to')} <a href="/content-policy">{$t('content-policy')}</a>.
     </div>
 
     <div>

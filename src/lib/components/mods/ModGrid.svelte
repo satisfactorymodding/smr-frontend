@@ -15,7 +15,7 @@
   import FicsitCard from '$lib/components/general/FicsitCard.svelte';
   import Select, { Option } from '@smui/select';
   import { browser } from '$app/environment';
-  import { getTranslate } from "@tolgee/svelte";
+  import { getTranslate } from '@tolgee/svelte';
 
   export let colCount: 4 | 5 = 4;
   export let newMod = false;
@@ -93,22 +93,22 @@
 
 <div class="ml-auto flex flex-wrap justify-between items-center mb-5">
   {#if newMod && $user !== null}
-    <Button variant="outlined" href="{base}/new-mod">{ $t('mods.new') }</Button>
+    <Button variant="outlined" href="{base}/new-mod">{$t('mods.new')}</Button>
   {/if}
 
   {#if showSearch}
     <div class="search-container flex flex-wrap sm:px-4">
       <div class="mr-3">
-        <Select bind:value={orderBy} label={ $t('order-by') }>
+        <Select bind:value={orderBy} label={$t('order-by')}>
           {#each orderFields as orderField}
             <Option value={orderField[1]}>{orderField[0]}</Option>
           {/each}
         </Select>
       </div>
       <div class="mr-3">
-        <Select bind:value={order} label={ $t('order') }>
-          <Option value="asc">{ $t('ascending') }</Option>
-          <Option value="desc">{ $t('descending') }</Option>
+        <Select bind:value={order} label={$t('order')}>
+          <Option value="asc">{$t('ascending')}</Option>
+          <Option value="desc">{$t('descending')}</Option>
         </Select>
       </div>
       <Paper class="search-paper mr-3" elevation={6}>
