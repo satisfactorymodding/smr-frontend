@@ -29,6 +29,10 @@
   let order: Order = Order.Desc;
   let orderBy: ModFields = ModFields.LastVersionDate;
 
+  if (search) {
+    orderBy = ModFields.Search;
+  }
+
   let page = parseInt($storePage.url.searchParams.get('p'), 10) || 1;
 
   $: mods = queryStore({
@@ -84,7 +88,9 @@
     ['Popularity (Downloads)', 'popularity'],
     ['Creation Date', 'created_at'],
     ['Last Version', 'last_version_date'],
-    ...(search !== '' && search !== null ? [['Search', 'search']] : [])
+    // Hide the search option if a search string is not set.
+    // The component must still exist, otherwise Select will set orderBy to null/undefined, because the selectedIndex would be -1.
+    ['Search', 'search', search === '' || search === null]
   ];
 </script>
 
@@ -98,7 +104,8 @@
       <div class="mr-3">
         <Select bind:value={orderBy} label="Order By">
           {#each orderFields as orderField}
-            <Option value={orderField[1]}>{orderField[0]}</Option>
+            <!-- Using style instead of tailwind because Option unnecessarily consumes the class prop without exposing another one for the inner item -->
+            <Option value={orderField[1]} style={orderField[2] ? 'display: none;' : ''}>{orderField[0]}</Option>
           {/each}
         </Select>
       </div>
