@@ -126,7 +126,7 @@
   {/if}
 
   <div>
-    <PageControls totalPages={Math.ceil(totalMods / perPage)} currentPage={page} />
+    <PageControls totalPages={Math.ceil(totalMods / perPage)} bind:currentPage={page} />
   </div>
 </div>
 
@@ -148,7 +148,7 @@
 
 <div class="mt-5 ml-auto flex justify-end">
   <div>
-    <PageControls totalPages={Math.ceil(totalMods / perPage)} currentPage={page} />
+    <PageControls totalPages={Math.ceil(totalMods / perPage)} bind:currentPage={page} />
   </div>
 </div>
 

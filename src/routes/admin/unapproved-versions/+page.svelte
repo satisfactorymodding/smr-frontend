@@ -58,7 +58,7 @@
 {#if totalVersions}
   <div class="mb-5 ml-auto flex justify-end">
     <div>
-      <PageControls totalPages={Math.ceil(totalVersions / perPage)} currentPage={page} />
+      <PageControls totalPages={Math.ceil(totalVersions / perPage)} bind:currentPage={page} />
     </div>
   </div>
 {/if}
@@ -107,6 +107,6 @@
 
 {#if totalVersions}
   <div class="mt-5 ml-auto flex justify-end">
-    <PageControls totalPages={Math.ceil(totalVersions / perPage)} currentPage={page} />
+    <PageControls totalPages={Math.ceil(totalVersions / perPage)} bind:currentPage={page} />
   </div>
 {/if}
