@@ -14,7 +14,7 @@
   // TODO Selectable
   const perPage = 20;
 
-  const page = 1;
+  let page = 1;
 
   $: mods = queryStore({
     query: GetUnapprovedModsDocument,
@@ -27,7 +27,10 @@
     }
   });
 
-  $: totalMods = $mods?.data?.getUnapprovedMods?.count;
+  let totalMods = 0;
+  $: if ($mods?.data?.getUnapprovedMods?.count) {
+    totalMods = $mods.data.getUnapprovedMods.count;
+  }
 
   const approveMod = (modId: string) => {
     client

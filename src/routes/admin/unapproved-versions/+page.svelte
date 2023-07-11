@@ -15,7 +15,7 @@
   // TODO Selectable
   const perPage = 20;
 
-  const page = 1;
+  let page = 1;
 
   $: versions = queryStore({
     query: GetUnapprovedVersionsDocument,
@@ -28,7 +28,10 @@
     }
   });
 
-  $: totalVersions = $versions?.data?.getUnapprovedVersions?.count;
+  let totalVersions = 0;
+  $: if ($versions?.data?.getUnapprovedVersions?.count) {
+    totalVersions = $versions.data.getUnapprovedVersions.count;
+  }
 
   const approveVersion = (versionId: string) => {
     client

@@ -14,7 +14,7 @@
   // TODO Selectable
   const perPage = 20;
 
-  const page = 1;
+  let page = 1;
 
   $: versions = queryStore({
     query: GetSmlVersionsAdminDocument,
@@ -27,7 +27,10 @@
     }
   });
 
-  $: totalVersions = $versions?.data?.getSMLVersions?.count;
+  let totalVersions = 0;
+  $: if ($versions?.data?.getSMLVersions?.count) {
+    totalVersions = $versions.data.getSMLVersions.count;
+  }
 
   const deleteVersion = (smlVersionID: string) => {
     client
