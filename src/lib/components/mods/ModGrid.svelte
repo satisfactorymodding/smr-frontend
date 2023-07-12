@@ -68,6 +68,12 @@
 
   let urlSearch = searchField;
 
+  $: if ($navigating && $navigating.type !== 'goto') {
+    searchField = $storePage.url.searchParams.get('q');
+    page = parseInt($storePage.url.searchParams.get('p'), 10) || 1;
+    urlSearch = searchField;
+  }
+
   const updateUrl = () => {
     if (browser && !$navigating) {
       const url = new URL(window.location.origin + window.location.pathname);
