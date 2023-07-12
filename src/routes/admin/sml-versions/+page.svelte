@@ -14,7 +14,7 @@
   // TODO Selectable
   const perPage = 20;
 
-  const page = 1;
+  let page = 1;
 
   $: versions = queryStore({
     query: GetSmlVersionsAdminDocument,
@@ -27,7 +27,10 @@
     }
   });
 
-  $: totalVersions = $versions?.data?.getSMLVersions?.count;
+  let totalVersions = 0;
+  $: if ($versions?.data?.getSMLVersions?.count) {
+    totalVersions = $versions.data.getSMLVersions.count;
+  }
 
   const deleteVersion = (smlVersionID: string) => {
     client
@@ -49,7 +52,7 @@
 
   {#if totalVersions}
     <div>
-      <PageControls totalPages={Math.ceil(totalVersions / perPage)} currentPage={page} />
+      <PageControls totalPages={Math.ceil(totalVersions / perPage)} bind:currentPage={page} />
     </div>
   {/if}
 </div>
@@ -95,7 +98,7 @@
 {#if totalVersions}
   <div class="mt-5 ml-auto flex justify-end">
     <div>
-      <PageControls totalPages={Math.ceil(totalVersions / perPage)} currentPage={page} />
+      <PageControls totalPages={Math.ceil(totalVersions / perPage)} bind:currentPage={page} />
     </div>
   </div>
 {/if}

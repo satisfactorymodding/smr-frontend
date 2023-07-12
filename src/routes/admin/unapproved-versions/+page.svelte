@@ -15,7 +15,7 @@
   // TODO Selectable
   const perPage = 20;
 
-  const page = 1;
+  let page = 1;
 
   $: versions = queryStore({
     query: GetUnapprovedVersionsDocument,
@@ -28,7 +28,10 @@
     }
   });
 
-  $: totalVersions = $versions?.data?.getUnapprovedVersions?.count;
+  let totalVersions = 0;
+  $: if ($versions?.data?.getUnapprovedVersions?.count) {
+    totalVersions = $versions.data.getUnapprovedVersions.count;
+  }
 
   const approveVersion = (versionId: string) => {
     client
@@ -58,7 +61,7 @@
 {#if totalVersions}
   <div class="mb-5 ml-auto flex justify-end">
     <div>
-      <PageControls totalPages={Math.ceil(totalVersions / perPage)} currentPage={page} />
+      <PageControls totalPages={Math.ceil(totalVersions / perPage)} bind:currentPage={page} />
     </div>
   </div>
 {/if}
@@ -107,6 +110,6 @@
 
 {#if totalVersions}
   <div class="mt-5 ml-auto flex justify-end">
-    <PageControls totalPages={Math.ceil(totalVersions / perPage)} currentPage={page} />
+    <PageControls totalPages={Math.ceil(totalVersions / perPage)} bind:currentPage={page} />
   </div>
 {/if}

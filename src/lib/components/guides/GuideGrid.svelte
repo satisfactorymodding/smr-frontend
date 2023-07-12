@@ -16,7 +16,7 @@
   // TODO Selectable
   const perPage = 40;
 
-  const page = 1;
+  let page = 1;
 
   $: guides = queryStore({
     query: GetGuidesDocument,
@@ -24,8 +24,10 @@
     variables: { offset: (page - 1) * perPage, limit: perPage }
   });
 
-  let totalGuides: number;
-  $: totalGuides = $guides?.data?.getGuides?.count || 0;
+  let totalGuides = 0;
+  $: if ($guides?.data?.getGuides?.count) {
+    totalGuides = $guides.data.getGuides.count;
+  }
 
   $: gridClasses =
     colCount == 4
@@ -39,7 +41,7 @@
   {/if}
 
   <div>
-    <PageControls totalPages={Math.ceil(totalGuides / perPage)} currentPage={page} />
+    <PageControls totalPages={Math.ceil(totalGuides / perPage)} bind:currentPage={page} />
   </div>
 </div>
 
@@ -61,6 +63,6 @@
 
 <div class="mt-5 ml-auto flex justify-end">
   <div>
-    <PageControls totalPages={Math.ceil(totalGuides / perPage)} currentPage={page} />
+    <PageControls totalPages={Math.ceil(totalGuides / perPage)} bind:currentPage={page} />
   </div>
 </div>

@@ -41,7 +41,7 @@
     variables: { offset: (page - 1) * perPage, limit: perPage, search, order, orderBy }
   });
 
-  let totalMods: number;
+  let totalMods = 0;
 
   let searchField = search;
 
@@ -73,7 +73,9 @@
     goto(url.toString(), { keepFocus: true });
   }
 
-  $: totalMods = $mods?.data?.getMods?.count || 0;
+  $: if ($mods?.data?.getMods?.count) {
+    totalMods = $mods.data.getMods.count;
+  }
 
   $: gridClasses =
     colCount == 4
@@ -126,7 +128,7 @@
   {/if}
 
   <div>
-    <PageControls totalPages={Math.ceil(totalMods / perPage)} currentPage={page} />
+    <PageControls totalPages={Math.ceil(totalMods / perPage)} bind:currentPage={page} />
   </div>
 </div>
 
@@ -148,7 +150,7 @@
 
 <div class="mt-5 ml-auto flex justify-end">
   <div>
-    <PageControls totalPages={Math.ceil(totalMods / perPage)} currentPage={page} />
+    <PageControls totalPages={Math.ceil(totalMods / perPage)} bind:currentPage={page} />
   </div>
 </div>
 
