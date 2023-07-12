@@ -73,6 +73,9 @@
                 class="grid grid-flow-col gap-4"
                 on:click|stopPropagation={() => {
                   /*block table row expansion*/
+                }}
+                on:keypress|stopPropagation={() => {
+                  /*a11y-click-events-have-key-events*/
                 }}>
                 <Button variant="outlined" href={base + '/mod/' + modId + '/version/' + version.id}
                   >{$t('view')}</Button>

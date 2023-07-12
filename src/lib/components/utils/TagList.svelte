@@ -176,8 +176,10 @@
           <div class="text-neutral-300 whitespace-nowrap flex removable-tag">
             <span class="hashtag text-orange-500">#</span>
             <span class="cancel">
-              <i class="material-icons mdc-chip__icon mdc-chip__icon--trailing" on:click={() => deleteTag(tag)}
-                >cancel</i>
+              <i
+                class="material-icons mdc-chip__icon mdc-chip__icon--trailing"
+                on:click={() => deleteTag(tag)}
+                on:keypress={() => deleteTag(tag)}>cancel</i>
             </span>
             <p>{tag.name}</p>
           </div>
