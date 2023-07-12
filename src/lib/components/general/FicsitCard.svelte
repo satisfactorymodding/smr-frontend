@@ -41,7 +41,7 @@
     class:text-gray-500={fake}
     class:font-flow={fake}
     class="grid grid-max-auto sm:grid-cols-2 grid-cols-1 justify-items-center">
-    <div class="cursor-pointer card-image-container" on:click={() => goto(link)}>
+    <div class="cursor-pointer card-image-container" on:click={() => goto(link)} on:keypress={() => goto(link)}>
       {#if fake}
         <div class="bg-gray-500 logo min-w-full min-h-full max-w-full max-h-full" />
       {:else}
