@@ -62,6 +62,7 @@
       if ('cookieconsent' in window) {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
+        // cspell:ignore initialise
         window.cookieconsent.initialise({
           palette: {
             popup: {
@@ -70,6 +71,11 @@
             button: {
               background: '#f1d600'
             }
+          },
+          content: {
+            message: tolgee.t('cookieconsent.message'),
+            link: tolgee.t('cookieconsent.link'),
+            dismiss: tolgee.t('cookieconsent.dismiss')
           },
           theme: 'edgeless',
           position: 'bottom-right'
