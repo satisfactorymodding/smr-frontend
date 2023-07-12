@@ -12,7 +12,7 @@
 
   export let data: PageData;
 
-  const { guideId } = data;
+  $: ({ guideId } = data);
 
   const client = getContextClient();
 

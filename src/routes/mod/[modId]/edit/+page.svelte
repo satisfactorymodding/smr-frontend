@@ -13,7 +13,7 @@
 
   export let data: PageData;
 
-  const { modId } = data;
+  $: ({ modId } = data);
 
   const client = getContextClient();
 

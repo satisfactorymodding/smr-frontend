@@ -17,7 +17,7 @@
 
   export let data: PageData;
 
-  const { modId, versionId, version } = data;
+  $: ({ modId, versionId, version } = data);
 
   const client = getContextClient();
 

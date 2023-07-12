@@ -12,7 +12,7 @@
 
   export let data: PageData;
 
-  const { smlVersionId } = data;
+  $: ({ smlVersionId } = data);
 
   const client = getContextClient();
 
