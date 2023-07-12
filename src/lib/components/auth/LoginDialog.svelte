@@ -22,14 +22,6 @@
   const client = getContextClient();
 
   if (browser) {
-    const getMe = queryStore({
-      query: GetMeDocument,
-      client,
-      variables: {},
-      requestPolicy: 'network-only',
-      pause: true
-    });
-
     let first = true;
     userToken.subscribe((token) => {
       if (token) {
@@ -53,21 +45,17 @@
       first = false;
 
       if (token) {
-        getMe.pause();
-        getMe.resume();
-
-        const unsub = getMe.subscribe((response) => {
-          if (!response.fetching) {
+        client
+          .query(GetMeDocument, {}, { requestPolicy: 'network-only' })
+          .toPromise()
+          .then((response) => {
             if (response.error) {
               // TODO Toast or something
               console.error(response.error.message);
-              unsub();
             } else if (response.data) {
               user.set(response.data.getMe);
-              unsub();
             }
-          }
-        });
+          });
       } else {
         user.set(null);
       }
