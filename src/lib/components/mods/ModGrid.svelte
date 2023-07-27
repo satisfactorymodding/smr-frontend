@@ -10,7 +10,7 @@
   import Fab from '@smui/fab';
   import { Icon } from '@smui/common';
   import { goto } from '$app/navigation';
-  import { page as storePage } from '$app/stores';
+  import { page as storePage, navigating } from '$app/stores';
   import { user } from '$lib/stores/user';
   import FicsitCard from '$lib/components/general/FicsitCard.svelte';
   import Select, { Option } from '@smui/select';
@@ -66,12 +66,34 @@
     }, 250) as unknown as number;
   }
 
-  $: if (browser) {
-    const url = new URL(window.location.origin + window.location.pathname);
-    url.searchParams.append('p', page.toString());
-    searchField !== '' && searchField !== null && url.searchParams.append('q', searchField);
-    goto(url.toString(), { keepFocus: true });
+  let urlSearch = searchField;
+
+  $: if ($navigating && $navigating.type !== 'goto') {
+    searchField = $storePage.url.searchParams.get('q');
+    page = parseInt($storePage.url.searchParams.get('p'), 10) || 1;
+    urlSearch = searchField;
   }
+
+  const updateUrl = () => {
+    if (browser && !$navigating) {
+      const url = new URL(window.location.origin + window.location.pathname);
+      url.searchParams.append('p', page.toString());
+      urlSearch !== '' && urlSearch !== null && url.searchParams.append('q', urlSearch);
+      goto(url.toString(), { keepFocus: true });
+    }
+  };
+
+  $: {
+    page;
+    urlSearch;
+    updateUrl();
+  }
+
+  const handleKeyDown = (event: CustomEvent | KeyboardEvent) => {
+    if ((event as KeyboardEvent).key === 'Enter') {
+      urlSearch = searchField;
+    }
+  };
 
   $: if ($mods?.data?.getMods?.count) {
     totalMods = $mods.data.getMods.count;
@@ -119,9 +141,9 @@
       </div>
       <Paper class="search-paper mr-3" elevation={6}>
         <Icon class="material-icons">search</Icon>
-        <Input bind:value={searchField} placeholder="Search" />
+        <Input bind:value={searchField} on:keypress={handleKeyDown} placeholder="Search" />
       </Paper>
-      <Fab on:click={() => goto(base + '/mods?q=' + search)} color="primary" mini class="solo-fab" aria-label="Search">
+      <Fab on:click={() => (urlSearch = searchField)} color="primary" mini class="solo-fab" aria-label="Search">
         <Icon class="material-icons">arrow_forward</Icon>
       </Fab>
     </div>

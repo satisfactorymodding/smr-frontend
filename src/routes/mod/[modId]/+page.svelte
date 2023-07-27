@@ -21,7 +21,7 @@
 
   export let data: PageData;
 
-  const { modId, mod } = data;
+  $: ({ modId, mod } = data);
 
   const client = getContextClient();
 
