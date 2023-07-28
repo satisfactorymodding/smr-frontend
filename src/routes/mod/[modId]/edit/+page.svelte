@@ -8,7 +8,6 @@
   import { base } from '$app/paths';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
   import Card, { Content } from '@smui/card';
-  import { get } from 'svelte/store';
   import type { PageData } from './$types';
 
   export let data: PageData;
@@ -20,7 +19,7 @@
   let errorMessage = '';
   let errorToast = false;
 
-  const mod = queryStore({
+  $: mod = queryStore({
     query: GetModDocument,
     client,
     variables: { mod: modId }
@@ -29,7 +28,7 @@
   const onSubmit = (modData: ModData) => {
     client
       .mutation(EditModDocument, {
-        modId: get(mod).data.mod.id,
+        modId: $mod.data.mod.id,
         mod: modData
       })
       .toPromise()

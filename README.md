@@ -44,3 +44,11 @@ and will start a development server on port 3000.
 If you don't wish to run the backend locally (which most likely you don't),
 you can point your local frontend to the staging or production APIs by specifying a different `NODE_ENV`,
 such as `staging`.
+
+### Login
+
+Trying to log in on a locally hosted copy of the frontend will fail and redirect you to the live site
+because of how the OAuth sign in process works.
+To work around this, copy the `token` cookie produced by signing into the real site (`.ficsit.app`)
+and add it to your cookies for `localhost`.
+There is likely a cookie manager extension for your browser of choice that will make this easier.

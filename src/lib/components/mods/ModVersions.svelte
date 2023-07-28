@@ -17,7 +17,7 @@
   let expandedVersions = new Set<string>();
 
   // TODO Pagination
-  const versions = queryStore({
+  $: versions = queryStore({
     query: GetModVersionsDocument,
     client,
     variables: {

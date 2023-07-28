@@ -19,7 +19,7 @@
   let errorMessage = '';
   let errorToast = false;
 
-  const guide = queryStore({
+  $: guide = queryStore({
     query: GetGuideDocument,
     client,
     variables: { guide: guideId }

@@ -19,7 +19,7 @@
   let errorMessage = '';
   let errorToast = false;
 
-  const smlVersion = queryStore({
+  $: smlVersion = queryStore({
     query: GetSmlVersionAdminDocument,
     client,
     variables: { smlVersionID: smlVersionId }
