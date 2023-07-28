@@ -19,7 +19,7 @@
   let errorMessage = '';
   let errorToast = false;
 
-  const version = queryStore({
+  $: version = queryStore({
     query: GetModVersionDocument,
     client,
     variables: { version: versionId }

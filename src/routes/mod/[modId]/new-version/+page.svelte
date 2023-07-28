@@ -39,7 +39,7 @@
   let errorMessage = '';
   let errorToast = false;
 
-  const mod = queryStore({
+  $: mod = queryStore({
     query: GetModReferenceDocument,
     client,
     variables: { mod: modId }
