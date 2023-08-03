@@ -81,7 +81,7 @@
     "marked-gfm-heading-id": "^3.0.4",
     "marked-mangle": "^1.1.0",
     "prismjs": "^1.29.0",
-    "semver": "^7.5.0",
+    "semver": "^7.5.2",
     "socket.io-client": "^4.6.1",
     "tslib": "^2.5.0",
     "wonka": "^6.3.2",
