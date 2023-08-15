@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { base } from '$app/paths';
   import type { IVersion } from '$lib/models/versions';
   import DataTable, { Body, Row, Cell } from '@smui/data-table';
 
@@ -23,8 +24,7 @@
           <Cell><div class="text-center">N/A</div></Cell>
         </Row>
       {:else}
-        TODO implement getVersion returns dependencies
-        <!-- {#each version?.dependencies as dependency}
+        {#each version?.dependencies as dependency}
           <Row>
             <Cell>
               <a
@@ -34,7 +34,7 @@
             </Cell>
             <Cell><div class="text-center">{dependency.condition}</div></Cell>
           </Row>
-        {/each} -->
+        {/each}
       {/if}
     </Body>
   </DataTable>
