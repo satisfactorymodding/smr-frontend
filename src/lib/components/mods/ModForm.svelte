@@ -13,7 +13,7 @@
   import FormField from '@smui/form-field';
   import Switch from '@smui/switch';
   import TagList from '$lib/components/utils/TagList.svelte';
-  import { CompatibilityState } from '$lib/generated';
+  import { CompatibilityState, MultiplayerState } from '$lib/generated';
   import ModCompatibility from '$lib/components/mods/compatibility/ModCompatibilityEdit.svelte';
 
   export let onSubmit: (data: ModData) => void;
@@ -28,11 +28,13 @@
     compatibility: {
       EA: {
         state: CompatibilityState.Works,
-        note: ''
+        note: '',
+        multi: MultiplayerState.Compatible
       },
       EXP: {
         state: CompatibilityState.Works,
-        note: ''
+        note: '',
+        multi: MultiplayerState.Compatible
       }
     }
   };

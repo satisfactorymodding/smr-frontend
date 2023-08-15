@@ -4,6 +4,7 @@
   import Card, { Content as CardContent } from '@smui/card';
   import CompatibilityInfo from '$lib/components/mods/compatibility/CompatibilityInfo.svelte';
   import CompatibilityStateText from '$lib/components/mods/compatibility/CompatibilityStateText.svelte';
+  import MultiplayerStateText from '$lib/components/mods/compatibility/MultiplayerStateText.svelte';
   import Button from '@smui/button';
   import DataTable, { Body, Row, Cell } from '@smui/data-table';
   import { markdown } from '../../../utils/markdown';
@@ -15,6 +16,7 @@
   export const noNotesText = '(No extra notes)';
 </script>
 
+<!-- TODO: Add vertical line between configurable fields -->
 <Card>
   <CardContent>
     <div class="grid grid-flow-row gap-y-2">
@@ -57,6 +59,38 @@
                     <CompatibilityStateText state={compatibility?.EXP?.state} />
                   </Button>
                 </div></Cell>
+            </Row>
+            <Row>
+              <Cell colspan={2}><div style="bold" class="text-center">Multiplayer:</div></Cell>
+            </Row>
+            <Row>
+              <Cell
+                ><div class="text-center">
+                  <Button
+                    --mdc-text-button-container-height="20px"
+                    class="min-w-0 m-0"
+                    title="Click for more information"
+                    on:click={() => {
+                      open = true;
+                    }}>
+                    <MultiplayerStateText multi={compatibility?.EA?.multi} />
+                  </Button>
+                </div></Cell>
+              <Cell
+                ><div class="text-center">
+                  <Button
+                    --mdc-text-button-container-height="20px"
+                    class="min-w-0 m-0"
+                    title="Click for more information"
+                    on:click={() => {
+                      open = true;
+                    }}>
+                    <MultiplayerStateText multi={compatibility?.EXP?.multi} />
+                  </Button>
+                </div></Cell>
+            </Row>
+            <Row>
+              <Cell colspan={2} style="width: 100%;"><div style="Bold" class="text-center">Notes:</div></Cell>
             </Row>
             <Row>
               <Cell>

@@ -19,10 +19,12 @@ mutation EditMod($modId: ModID!, $mod: UpdateMod!) {
       EA {
         state
         note
+        multi
       }
       EXP {
         state
         note
+        multi
       }
     }
     tags {
