@@ -44,65 +44,65 @@
 <div class="grid grid-flow-row flex flex-wrap h-auto">
   {#if compatibility}
     <div class="grid grid-flow-col flex flex-wrap">
-    <div>
-      <div style="font-weight: bold;">General Mod Functionality:</div>
-      <div class="grid grid-flow-row">
-        <div class="text-1xl col-span-3 w-auto h-auto p-2.5">
-          <div>Early Access: <CompatibilityStateText state={compatibility?.EA?.state} /></div>
-          <div class="compatibility-state-description">
-            {compatibilityStateDescriptions[compatibility?.EA?.state || 'Unknown']}
-          </div>
-          {#if compatibility.EA.note}
-            <div>
-              Note: {#await markdown(compatibility.EA.note) then rendered}
-                {@html rendered}
-              {/await}
+      <div>
+        <div style="font-weight: bold;">General Mod Functionality:</div>
+        <div class="grid grid-flow-row">
+          <div class="text-1xl col-span-3 w-auto h-auto p-2.5">
+            <div>Early Access: <CompatibilityStateText state={compatibility?.EA?.state} /></div>
+            <div class="compatibility-state-description">
+              {compatibilityStateDescriptions[compatibility?.EA?.state || 'Unknown']}
             </div>
-          {/if}
-        </div>
-        <div class="text-1xl col-span-3 w-auto h-auto p-2.5">
-          <div>Experimental: <CompatibilityStateText state={compatibility?.EXP?.state} /></div>
-          <div class="compatibility-state-description">
-            {compatibilityStateDescriptions[compatibility?.EXP?.state || 'Unknown']}
+            {#if compatibility.EA.note}
+              <div>
+                Note: {#await markdown(compatibility.EA.note) then rendered}
+                  {@html rendered}
+                {/await}
+              </div>
+            {/if}
           </div>
-          {#if compatibility.EXP.note}
-            <div>
-              Note: {#await markdown(compatibility.EXP.note) then rendered}
-                {@html rendered}
-              {/await}
+          <div class="text-1xl col-span-3 w-auto h-auto p-2.5">
+            <div>Experimental: <CompatibilityStateText state={compatibility?.EXP?.state} /></div>
+            <div class="compatibility-state-description">
+              {compatibilityStateDescriptions[compatibility?.EXP?.state || 'Unknown']}
             </div>
-          {/if}
-        </div>
-      </div>
-    </div>
-    <div>
-      <div style="font-weight: bold;">Multiplayer Functionality:</div>
-      <div class="grid grid-flow-row">
-        <div class="text-1xl col-span-3 w-auto h-auto p-2.5">
-          <div>Early Access: <MultiplayerStateText multi={compatibility?.EA?.multi} /></div>
-          <div class="compatibility-state-description">
-            {multiplayerStateDescriptions[compatibility?.EA?.multi || 'Unknown']}
-          </div>
-        </div>
-        <div class="text-1xl col-span-3 w-auto h-auto p-2.5">
-          <br />
-          <div>Experimental: <MultiplayerStateText multi={compatibility?.EXP?.multi} /></div>
-          <div class="compatibility-state-description">
-            {multiplayerStateDescriptions[compatibility?.EXP?.multi || 'Unknown']}
+            {#if compatibility.EXP.note}
+              <div>
+                Note: {#await markdown(compatibility.EXP.note) then rendered}
+                  {@html rendered}
+                {/await}
+              </div>
+            {/if}
           </div>
         </div>
       </div>
+      <div>
+        <div style="font-weight: bold;">Multiplayer Functionality:</div>
+        <div class="grid grid-flow-row">
+          <div class="text-1xl col-span-3 w-auto h-auto p-2.5">
+            <div>Early Access: <MultiplayerStateText multi={compatibility?.EA?.multi} /></div>
+            <div class="compatibility-state-description">
+              {multiplayerStateDescriptions[compatibility?.EA?.multi || 'Unknown']}
+            </div>
+          </div>
+          <div class="text-1xl col-span-3 w-auto h-auto p-2.5">
+            <br />
+            <div>Experimental: <MultiplayerStateText multi={compatibility?.EXP?.multi} /></div>
+            <div class="compatibility-state-description">
+              {multiplayerStateDescriptions[compatibility?.EXP?.multi || 'Unknown']}
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
   {:else}
-      <div style="font-weight: bold;">General Mod Functionality:</div>
-      <div>
-        {compatibilityStateDescriptions.Unknown}
-      </div>
-      <br />
-      <div style="font-weight: bold;">Multiplayer Functionality:</div>
-      <div>
-        {multiplayerStateDescriptions.Unknown}
-      </div>
+    <div style="font-weight: bold;">General Mod Functionality:</div>
+    <div>
+      {compatibilityStateDescriptions.Unknown}
+    </div>
+    <br />
+    <div style="font-weight: bold;">Multiplayer Functionality:</div>
+    <div>
+      {multiplayerStateDescriptions.Unknown}
+    </div>
   {/if}
 </div>
