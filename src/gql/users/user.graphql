@@ -34,12 +34,10 @@ query GetUser($user: UserID!) {
           EA {
             state
             note
-            multi
           }
           EXP {
             state
             note
-            multi
           }
         }
       }

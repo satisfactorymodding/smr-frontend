@@ -1,6 +1,6 @@
 <script lang="ts">
   import Accordion, { Header, Panel, Content } from '@smui-extra/accordion';
-  import { CompatibilityState, MultiplayerState } from '$lib/generated';
+  import { CompatibilityState } from '$lib/generated';
   import type { CompatibilityInfo } from '$lib/generated';
   import CompatibilityEdit from '$lib/components/mods/compatibility/CompatibilityEdit.svelte';
 
@@ -9,13 +9,11 @@
     compatibilityInfo = {
       EA: {
         state: CompatibilityState.Works,
-        note: '',
-        multi: MultiplayerState.Compatible
+        note: ''
       },
       EXP: {
         state: CompatibilityState.Works,
-        note: '',
-        multi: MultiplayerState.Compatible
+        note: ''
       }
     };
   }

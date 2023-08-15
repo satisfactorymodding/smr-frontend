@@ -30,12 +30,10 @@ query GetMods($offset: Int!, $limit: Int!, $search: String, $order: Order, $orde
         EA {
           note
           state
-          multi
         }
         EXP {
           note
           state
-          multi
         }
       }
       tags {

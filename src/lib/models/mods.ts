@@ -1,5 +1,5 @@
 import * as zod from 'zod';
-import type { CompatibilityState, MultiplayerState, Tag } from '$lib/generated';
+import type { CompatibilityState, Tag } from '$lib/generated';
 
 export type ModData = {
   name: string;
@@ -16,12 +16,10 @@ export type ModData = {
     EA: {
       state: CompatibilityState;
       note?: string;
-      multi: MultiplayerState;
     };
     EXP: {
       state: CompatibilityState;
       note?: string;
-      multi: MultiplayerState;
     };
   };
   hidden: boolean;
@@ -57,13 +55,11 @@ export const modSchema = zod.object({
     zod.object({
       EA: zod.object({
         state: zod.string(),
-        note: zod.ostring(),
-        multi: zod.string()
+        note: zod.ostring()
       }),
       EXP: zod.object({
         state: zod.string(),
-        note: zod.ostring(),
-        multi: zod.string()
+        note: zod.ostring()
       })
     })
   ),

@@ -77,12 +77,10 @@ query GetMod($mod: String!) {
       EA {
         note
         state
-        multi
       }
       EXP {
         note
         state
-        multi
       }
     }
     tags {

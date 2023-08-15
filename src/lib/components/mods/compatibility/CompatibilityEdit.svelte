@@ -3,23 +3,16 @@
   import HelperText from '@smui/textfield/helper-text';
   import Select, { Option } from '@smui/select';
   import type { Compatibility } from '$lib/generated';
-  import { CompatibilityState, MultiplayerState } from '$lib/generated';
+  import { CompatibilityState } from '$lib/generated';
 
   export let compatibility: Compatibility = {
-    state: CompatibilityState.Works,
-    multi: MultiplayerState.Compatible
+    state: CompatibilityState.Works
   };
 </script>
 
 <Select style="margin-bottom: 10px" bind:value={compatibility.state} label="Compatibility State">
   {#each Object.values(CompatibilityState) as state}
     <Option value={state}>{state}</Option>
-  {/each}
-</Select>
-<br />
-<Select style="margin-bottom: 10px" bind:value={compatibility.multi} label="Multiplayer State">
-  {#each Object.values(MultiplayerState) as multi}
-    <Option value={multi}>{multi}</Option>
   {/each}
 </Select>
 <br />
