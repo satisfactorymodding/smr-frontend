@@ -32,8 +32,8 @@
   import Button from '@smui/button';
   import Dialog, { Title, Content as DialogContent } from '@smui/dialog';
   import { modSchema, serializeSchema } from '$lib/utils/schema';
-  import EditCompatibilityForm from '../../../lib/components/mods/compatibility/EditCompatibilityForm.svelte';
-  import CompatibilityGrid from '../../../lib/components/mods/compatibility/CompatibilityGrid.svelte';
+  import EditCompatibilityForm from '$lib/components/mods/compatibility/EditCompatibilityForm.svelte';
+  import CompatibilityGrid from '$lib/components/mods/compatibility/CompatibilityGrid.svelte';
 
   export let modId!: string;
   export let mod: typeof modQ;

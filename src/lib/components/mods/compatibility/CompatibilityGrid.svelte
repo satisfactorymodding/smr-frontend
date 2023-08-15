@@ -8,7 +8,7 @@
   import Button from '@smui/button';
   import DataTable, { Body, Row, Cell } from '@smui/data-table';
   import { markdown } from '../../../utils/markdown';
-  import CompatibilityIcon from './CompatibilityIcon.svelte';
+  import CompatibilityIcon from '$lib/components/mods/compatibility/CompatibilityIcon.svelte';
 
   let open = false;
 
