@@ -9,13 +9,6 @@
     Mod,
     'source_url' | 'created_at' | 'views' | 'downloads' | 'mod_reference' | 'compatibility' | 'tags'
   >;
-
-  function urlWrap(url: string) {
-    if (url.length > 40) {
-      return url.replace(/\/(?!.*\/)/g, '/\n');
-    }
-    return url;
-  }
 </script>
 
 <Card>
@@ -33,7 +26,7 @@
       <span style="white-space: pre-line"
         ><strong>Source:</strong>
         {#if mod?.source_url}
-          <a class="underline text-yellow-500" href={mod.source_url}>{urlWrap(mod.source_url)}</a>
+          <a class="underline text-yellow-500" style="word-break: break-all;" href={mod.source_url}>{mod.source_url}</a>
         {:else}
           (No source URL provided by mod author)
         {/if}
