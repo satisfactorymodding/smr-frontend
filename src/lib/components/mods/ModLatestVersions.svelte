@@ -4,9 +4,9 @@
   import { Icon } from '@smui/common';
   import { prettyDate } from '$lib/utils/formatting';
   import { installMod } from '$lib/stores/launcher';
-  import VersionTargetSupportGrid from '../versions/VersionTargetSupportGrid.svelte';
   import type { IVersion } from '$lib/models/versions';
-  import VersionDependenciesGrid from '../versions/VersionDependenciesGrid.svelte';
+  import VersionTargetSupportGrid from '$lib/versions/VersionTargetSupportGrid.svelte';
+  import VersionDependenciesGrid from '$lib/versions/VersionDependenciesGrid.svelte';
 
   type ILatestVersions = {
     alpha?: IVersion;
