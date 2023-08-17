@@ -24,7 +24,6 @@ export const prettyBytes = (bytes: number, decimals = 2) => {
 
 export const prettyTarget = (target: string) => {
   switch (target) {
-    case 'WindowsNoEditor':
     case 'Windows':
       return 'Windows Client';
     case 'WindowsServer':

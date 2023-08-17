@@ -29,8 +29,7 @@ export type IVersion = Pick<Version, 'id' | 'link' | 'version' | 'created_at'> &
   targets?: Pick<VersionTarget, 'targetName' | 'size' | 'hash'>[];
 } & { dependencies?: Pick<VersionDependency, 'mod_id' | 'condition'>[] };
 
-// TODO UE5: WindowsNoEditor -> Windows
-const ALLOWED_TARGETS = ['WindowsNoEditor', 'WindowsServer', 'LinuxServer'];
+const ALLOWED_TARGETS = ['Windows', 'WindowsServer', 'LinuxServer'];
 
 const readUPluginJson = async (
   uPluginJson: string,
