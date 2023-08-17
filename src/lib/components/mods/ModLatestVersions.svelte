@@ -5,8 +5,8 @@
   import { prettyDate } from '$lib/utils/formatting';
   import { installMod } from '$lib/stores/launcher';
   import type { IVersion } from '$lib/models/versions';
-  import VersionTargetSupportGrid from '$lib/versions/VersionTargetSupportGrid.svelte';
-  import VersionDependenciesGrid from '$lib/versions/VersionDependenciesGrid.svelte';
+  import VersionTargetSupportGrid from '$lib/components/versions/VersionTargetSupportGrid.svelte';
+  import VersionDependenciesGrid from '$lib/components/versions/VersionDependenciesGrid.svelte';
 
   type ILatestVersions = {
     alpha?: IVersion;
