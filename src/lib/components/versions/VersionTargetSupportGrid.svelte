@@ -1,29 +1,36 @@
 <script lang="ts">
-  import type { VersionTarget } from '$lib/generated';
   import type { IVersion } from '$lib/models/versions';
   import { Icon } from '@smui/common';
   import DataTable, { Body, Row, Cell } from '@smui/data-table';
 
   export let version!: IVersion;
-  const targets = version.targets as VersionTarget[];
 
-  async function getTargetData(selectedTarget: string) {
-    let found = false;
-
-    const fromBeforeDedicatedServerSupport = targets.length == 0;
-    if (fromBeforeDedicatedServerSupport) {
-      found = ['WindowsNoEditor', 'Windows'].includes(selectedTarget);
-    } else {
-      found = targets.some((target) => target.targetName === selectedTarget);
+  function formatTooltip(found: boolean, selectedTarget: string) {
+    if (found) {
+      return `This version supports the ${selectedTarget} target`;
     }
 
-    return {
-      glyph: found ? 'checkmark' : 'cancel',
-      tooltip: found
-        ? `This version supports the ${selectedTarget} target`
-        : `This version lacks files for the ${selectedTarget} target`
-    };
+    return `This version lacks files for the ${selectedTarget} target`;
   }
+
+  const yesGlyph = 'checkmark';
+  const noGlyph = 'cancel';
+
+  $: HasWindows = version.targets.some((target) => target.targetName === 'Windows');
+  $: HasWindowsServer = version.targets.some((target) => target.targetName === 'WindowsServer');
+  $: HasLinuxServer = version.targets.some((target) => target.targetName === 'LinuxServer');
+  $: WindowsSupport = {
+    glyph: HasWindows ? yesGlyph : noGlyph,
+    tooltip: formatTooltip(HasWindows, 'Windows')
+  };
+  $: WindowsServerSupport = {
+    glyph: HasWindowsServer ? yesGlyph : noGlyph,
+    tooltip: formatTooltip(HasWindowsServer, 'Windows Server')
+  };
+  $: LinuxServerSupport = {
+    glyph: HasLinuxServer ? yesGlyph : noGlyph,
+    tooltip: formatTooltip(HasLinuxServer, 'Linux Server')
+  };
 </script>
 
 <div class="grid grid-flow-row">
@@ -42,17 +49,13 @@
         <Cell>Windows</Cell>
         <Cell
           ><div class="text-center">
-            {#await getTargetData('WindowsNoEditor') then support}
-              <Icon class="material-icons text-center" style="width: 20px" title={support.tooltip}
-                >{support.glyph}</Icon>
-            {/await}
+            <Icon class="material-icons text-center" style="width: 20px" title={WindowsSupport.tooltip}
+              >{WindowsSupport.glyph}</Icon>
           </div></Cell>
         <Cell
           ><div class="text-center">
-            {#await getTargetData('WindowsServer') then support}
-              <Icon class="material-icons text-center" style="width: 20px" title={support.tooltip}
-                >{support.glyph}</Icon>
-            {/await}
+            <Icon class="material-icons text-center" style="width: 20px" title={WindowsServerSupport.tooltip}
+              >{WindowsServerSupport.glyph}</Icon>
           </div></Cell>
       </Row>
       <Row>
@@ -61,10 +64,8 @@
           ><div class="text-center" title="There is no Client distribution of Satisfactory for Linux">N/A</div></Cell>
         <Cell
           ><div class="text-center">
-            {#await getTargetData('LinuxServer') then support}
-              <Icon class="material-icons text-center" style="width: 20px" title={support.tooltip}
-                >{support.glyph}</Icon>
-            {/await}
+            <Icon class="material-icons text-center" style="width: 20px" title={LinuxServerSupport.tooltip}
+              >{LinuxServerSupport.glyph}</Icon>
           </div></Cell>
       </Row>
     </Body>
