@@ -1,0 +1,2 @@
+const a=r=>(typeof r=="string"&&(r=new Date(r)),r.toLocaleString()),c=r=>r.toLocaleString(),i=(r,e=2)=>{if(r===0)return"0 Bytes";const o=1024,n=e<0?0:e,s=["Bytes","KB","MB","GB","TB","PB","EB","ZB","YB"],t=Math.floor(Math.log(r)/Math.log(o));return parseFloat((r/Math.pow(o,t)).toFixed(n))+" "+s[t]},B=r=>{switch(r){case"WindowsNoEditor":return"Windows Client";case"WindowsServer":return"Windows Server";case"LinuxServer":return"Linux Server"}return r};export{c as a,i as b,B as c,a as p};
+//# sourceMappingURL=formatting.6f84ef8f.js.map
