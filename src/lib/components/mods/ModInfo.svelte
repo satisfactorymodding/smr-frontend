@@ -17,7 +17,7 @@
       <h3 class="text-2xl my-4 font-bold">Info</h3>
       <span
         ><strong>Tags:</strong>
-        {#if mod?.tags?.length == 0}
+        {#if mod.tags.length == 0}
           <div class="tags">(No tags assigned)</div>
         {:else}
           <TagList tags={mod.tags} />
@@ -25,8 +25,8 @@
       </span>
       <span style="white-space: pre-line"
         ><strong>Source:</strong>
-        {#if mod?.source_url}
-          <a class="underline text-yellow-500" style="word-break: break-all;" href={mod.source_url}>{mod.source_url}</a>
+        {#if mod.source_url}
+          <a class="underline text-yellow-500 break-all" href={mod.source_url}>{mod.source_url}</a>
         {:else}
           (No source URL provided by mod author)
         {/if}
