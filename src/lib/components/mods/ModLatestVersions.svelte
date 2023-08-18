@@ -4,9 +4,13 @@
   import { Icon } from '@smui/common';
   import { prettyDate } from '$lib/utils/formatting';
   import { installMod } from '$lib/stores/launcher';
-  import type { IVersion } from '$lib/models/versions';
   import VersionTargetSupportGrid from '$lib/components/versions/VersionTargetSupportGrid.svelte';
   import VersionDependenciesGrid from '$lib/components/versions/VersionDependenciesGrid.svelte';
+  import type { Version, VersionDependency, VersionTarget } from '$lib/generated';
+
+  type IVersion = Pick<Version, 'id' | 'link' | 'version' | 'created_at'> & {
+    targets?: Pick<VersionTarget, 'targetName' | 'size' | 'hash'>[];
+  } & { dependencies?: Pick<VersionDependency, 'mod_id' | 'condition'>[] };
 
   type ILatestVersions = {
     alpha?: IVersion;
@@ -50,8 +54,8 @@
               </a>
             </div>
           </div>
-          <VersionTargetSupportGrid version={latestVersions[stability]} />
-          <VersionDependenciesGrid version={latestVersions[stability]} />
+          <VersionTargetSupportGrid targets={latestVersions[stability].targets} />
+          <VersionDependenciesGrid dependencies={latestVersions[stability].dependencies} />
         {/if}
       {/each}
     </div>

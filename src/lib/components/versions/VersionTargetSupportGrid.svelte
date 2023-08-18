@@ -1,9 +1,9 @@
 <script lang="ts">
-  import type { IVersion } from '$lib/models/versions';
+  import type { VersionTarget } from '$lib/generated';
   import { Icon } from '@smui/common';
   import DataTable, { Body, Row, Cell } from '@smui/data-table';
 
-  export let version!: IVersion;
+  export let targets!: Pick<VersionTarget, 'targetName'>[];
 
   function formatTooltip(found: boolean, selectedTarget: string) {
     if (found) {
@@ -16,9 +16,9 @@
   const yesGlyph = 'checkmark';
   const noGlyph = 'cancel';
 
-  $: HasWindows = version.targets.some((target) => target.targetName === 'Windows');
-  $: HasWindowsServer = version.targets.some((target) => target.targetName === 'WindowsServer');
-  $: HasLinuxServer = version.targets.some((target) => target.targetName === 'LinuxServer');
+  $: HasWindows = targets.some((target) => target.targetName === 'Windows');
+  $: HasWindowsServer = targets.some((target) => target.targetName === 'WindowsServer');
+  $: HasLinuxServer = targets.some((target) => target.targetName === 'LinuxServer');
   $: WindowsSupport = {
     glyph: HasWindows ? yesGlyph : noGlyph,
     tooltip: formatTooltip(HasWindows, 'Windows')

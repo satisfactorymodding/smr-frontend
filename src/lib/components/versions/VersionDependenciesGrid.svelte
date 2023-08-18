@@ -1,10 +1,9 @@
 <script lang="ts">
   import { base } from '$app/paths';
-  import type { IVersion } from '$lib/models/versions';
   import DataTable, { Body, Row, Cell } from '@smui/data-table';
+  import type { VersionDependency } from '$lib/generated';
 
-  export let version!: IVersion;
-  console.log(version);
+  export let dependencies!: Pick<VersionDependency, 'mod_id' | 'condition'>[];
 </script>
 
 <div class="grid grid-flow-row">
@@ -18,13 +17,13 @@
         <Cell>Mod Dependency</Cell>
         <Cell><div class="text-center">Version Range</div></Cell>
       </Row>
-      {#if version?.dependencies?.length === 0}
+      {#if dependencies?.length === 0}
         <Row>
           <Cell><div class="text-center">None</div></Cell>
           <Cell><div class="text-center">N/A</div></Cell>
         </Row>
       {:else}
-        {#each version?.dependencies as dependency}
+        {#each dependencies as dependency}
           <Row>
             <Cell>
               <a

@@ -133,8 +133,8 @@
       <VersionDescription changelog={$version.data.getVersion.changelog} />
       <div class="grid grid-cols-1 auto-rows-min gap-8">
         <VersionInfo version={$version.data.getVersion} />
-        <VersionTargetSupportGrid version={$version.data.getVersion} />
-        <VersionDependenciesGrid version={$version.data.getVersion} />
+        <VersionTargetSupportGrid targets={$version.data.getVersion.targets} />
+        <VersionDependenciesGrid dependencies={$version.data.getVersion.dependencies} />
       </div>
     </div>
   </div>
