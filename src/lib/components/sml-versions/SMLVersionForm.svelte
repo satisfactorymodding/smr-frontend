@@ -22,7 +22,7 @@
     satisfactory_version: 0,
     stability: VersionStabilities.Alpha,
     version: '',
-    targets: [{ targetName: 'WindowsNoEditor', link: '' }]
+    targets: [{ targetName: 'Windows', link: '' }]
   };
   export let submitText = 'Create';
 
@@ -106,7 +106,7 @@
         <div class="flex content-center gap-2">
           <div>
             <Select bind:value={target.targetName} label="Platform">
-              <Option value="WindowsNoEditor">Windows Client</Option>
+              <Option value="Windows">Windows Client</Option>
               <Option value="WindowsServer">Windows Server</Option>
               <Option value="LinuxServer">Linux Server</Option>
               <svelte:fragment slot="helperText">

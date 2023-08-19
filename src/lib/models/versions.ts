@@ -25,8 +25,7 @@ export type VersionMetadata = {
   targets: string[];
 };
 
-// TODO UE5: WindowsNoEditor -> Windows
-const ALLOWED_TARGETS = ['WindowsNoEditor', 'WindowsServer', 'LinuxServer'];
+const ALLOWED_TARGETS = ['Windows', 'WindowsServer', 'LinuxServer'];
 
 const readUPluginJson = async (
   uPluginJson: string,
