@@ -13,7 +13,7 @@
 
   export let onSubmit: (data: SMLVersionData) => void;
 
-  export let editing = false;
+  // export let editing = false;
 
   export let initialValues: SMLVersionData = {
     link: '',
@@ -129,9 +129,7 @@
             >Remove</Button>
         </div>
       {/each}
-      {#if !editing}
-        <Button type="button" on:click={addTarget}>Add target</Button>
-      {/if}
+      <Button type="button" on:click={addTarget}>Add target</Button>
 
       <Textfield bind:value={$data.link} label="Link" />
       <ValidationMessage for="link" let:messages={message}>
