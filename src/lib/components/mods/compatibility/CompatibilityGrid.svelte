@@ -28,35 +28,35 @@
           table$class="!overflow-visible">
           <Body>
             <Row>
-              <Cell style="width: 50%;"><div class="text-center"><CompatibilityIcon /> Early Access</div></Cell>
-              <Cell style="width: 50%;"
-                ><div class="text-center"><CompatibilityIcon EXP={true} /> Experimental</div></Cell>
+              <Cell><div class="flex justify-center items-center"><CompatibilityIcon /> Early Access</div></Cell>
+              <Cell
+                ><div class="flex justify-center items-center">
+                  <CompatibilityIcon EXP={true} /> Experimental
+                </div></Cell>
             </Row>
             <Row>
-              <Cell
-                ><div class="text-center">
-                  <Button
-                    --mdc-text-button-container-height="20px"
-                    class="min-w-0 m-0"
-                    title="Click for more information"
-                    on:click={() => {
-                      open = true;
-                    }}>
-                    <CompatibilityStateText state={compatibility?.EA?.state} />
-                  </Button>
-                </div></Cell>
-              <Cell
-                ><div class="text-center">
-                  <Button
-                    --mdc-text-button-container-height="20px"
-                    class="min-w-0 m-0"
-                    title="Click for more information"
-                    on:click={() => {
-                      open = true;
-                    }}>
-                    <CompatibilityStateText state={compatibility?.EXP?.state} />
-                  </Button>
-                </div></Cell>
+              <Cell class="text-center">
+                <Button
+                  --mdc-text-button-container-height="20px"
+                  class="min-w-0 m-0"
+                  title="Click for more information"
+                  on:click={() => {
+                    open = true;
+                  }}>
+                  <CompatibilityStateText state={compatibility?.EA?.state} />
+                </Button>
+              </Cell>
+              <Cell class="text-center">
+                <Button
+                  --mdc-text-button-container-height="20px"
+                  class="min-w-0 m-0"
+                  title="Click for more information"
+                  on:click={() => {
+                    open = true;
+                  }}>
+                  <CompatibilityStateText state={compatibility?.EXP?.state} />
+                </Button>
+              </Cell>
             </Row>
             <Row>
               <Cell>
