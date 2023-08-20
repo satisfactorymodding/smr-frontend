@@ -118,7 +118,7 @@
           </div>
           <div class="grow">
             <Textfield placeholder="URL" bind:value={target.link} label="URL" class="w-full">
-              <svelte:fragment slot="helperText">
+              <svelte:fragment slot="helper">
                 <ValidationMessage for="targets.{i}.link" let:messages={message}>
                   <span class="validation-message">{message || ''}</span>
                 </ValidationMessage>
