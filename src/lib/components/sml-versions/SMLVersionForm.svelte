@@ -8,7 +8,7 @@
   import { smlVersionSchema } from '$lib/models/sml-versions';
   import Textfield from '@smui/textfield';
   import Button from '@smui/button';
-  import { VersionStabilities } from '$lib/generated';
+  import { TargetName, VersionStabilities } from '$lib/generated';
   import Select, { Option } from '@smui/select';
 
   export let onSubmit: (data: SMLVersionData) => void;
@@ -22,7 +22,7 @@
     satisfactory_version: 0,
     stability: VersionStabilities.Alpha,
     version: '',
-    targets: [{ targetName: 'Windows', link: '' }]
+    targets: [{ targetName: TargetName.Windows, link: '' }]
   };
   export let submitText = 'Create';
 
@@ -33,7 +33,7 @@
   });
 
   const addTarget = () => {
-    addField('targets', { targetName: '', link: '' });
+    addField('targets', { targetName: TargetName.Windows, link: '' });
   };
 
   const removeTarget = (i: number) => {
@@ -106,9 +106,9 @@
         <div class="flex content-center gap-2">
           <div>
             <Select bind:value={target.targetName} label="Platform">
-              <Option value="Windows">Windows Client</Option>
-              <Option value="WindowsServer">Windows Server</Option>
-              <Option value="LinuxServer">Linux Server</Option>
+              <Option value={TargetName.Windows}>Windows Client</Option>
+              <Option value={TargetName.WindowsServer}>Windows Server</Option>
+              <Option value={TargetName.LinuxServer}>Linux Server</Option>
               <svelte:fragment slot="helperText">
                 <ValidationMessage for="targets.{i}.targetName" let:messages={message}>
                   <span class="validation-message">{message || ''}</span>

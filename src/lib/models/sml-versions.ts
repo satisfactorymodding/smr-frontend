@@ -1,8 +1,8 @@
 import * as zod from 'zod';
-import type { UpdateSmlVersionTarget, VersionStabilities } from '$lib/generated';
+import type { TargetName, UpdateSmlVersionTarget, VersionStabilities } from '$lib/generated';
 
 export type SMLTargetData = {
-  targetName: string;
+  targetName: TargetName;
   link: string;
 };
 

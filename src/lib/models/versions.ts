@@ -5,6 +5,7 @@ import type { Writable } from 'svelte/store';
 import type { ZodObject, ZodRawShape } from 'zod';
 import type { File } from '$lib/models/file';
 import type { VersionStabilities } from '$lib/generated';
+import { TargetName } from '$lib/generated/graphql';
 
 export type VersionData = {
   file: File;
@@ -25,7 +26,9 @@ export type VersionMetadata = {
   targets: string[];
 };
 
-const ALLOWED_TARGETS = ['Windows', 'WindowsServer', 'LinuxServer'];
+const ALLOWED_TARGETS = Object.keys(TargetName)
+  .map((key) => TargetName[key])
+  .filter((value) => typeof value === 'string') as TargetName[];
 
 const readUPluginJson = async (
   uPluginJson: string,
