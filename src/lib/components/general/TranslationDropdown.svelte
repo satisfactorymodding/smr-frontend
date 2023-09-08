@@ -1,6 +1,5 @@
 <script lang="ts">
   import { getTolgee, getTranslate } from '@tolgee/svelte';
-  import Select, { Option } from '@smui/select';
   import { writable } from 'svelte/store';
 
   const tolgee = getTolgee(['language']);
@@ -22,9 +21,9 @@
 </script>
 
 <div class="darker-please mr-3 max-h-1/2">
-  <Select bind:value={$lang} label={$t('appbar.language-dropdown')} variant="outlined">
+  <select bind:value={$lang} class="select">
     {#each Object.entries(languages) as lang}
-      <Option value={lang[0]}>{lang[1]}</Option>
+      <option value={lang[0]}>{lang[1]}</option>
     {/each}
-  </Select>
+  </select>
 </div>

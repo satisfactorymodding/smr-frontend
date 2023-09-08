@@ -1,8 +1,5 @@
 <script lang="ts">
-  import Switch from '@smui/switch';
-  import FormField from '@smui/form-field';
-  import Drawer, { Content } from '@smui/drawer';
-  import List, { Item, Text, Graphic, Separator } from '@smui/list';
+  import { SlideToggle } from '@skeletonlabs/skeleton';
   import { goto, preloadData } from '$app/navigation';
   import { base } from '$app/paths';
   import { page } from '$app/stores';
@@ -11,7 +8,7 @@
   import { getTranslate } from '@tolgee/svelte';
 
   export let open: boolean;
-  export let drawerVariant: 'modal' | 'dismissible';
+  // export let drawerVariant: 'modal' | 'dismissible';
   export let hideTopElements: boolean;
   export let accessibility: boolean;
 
@@ -101,89 +98,98 @@
   ];
 </script>
 
-<Drawer variant={drawerVariant} fixed={false} bind:open>
-  <Content>
-    <div class="drawer-content">
-      {#if hideTopElements}
-        <List>
-          {#if $user === null}
-            <Item on:click={() => loginDialogOpen.set(true)}>
-              <Graphic class="material-icons">login</Graphic>
-              <Text>{$t('user.sign-in')}</Text>
-            </Item>
-          {:else}
-            {#if isAdmin}
-              <Item on:click={() => goto(base + '/admin')} activated={currentPath.startsWith('/admin')}>
-                <Graphic class="material-icons">admin_panel_settings</Graphic>
-                <Text>Admin</Text>
-              </Item>
-            {/if}
+<aside class="hidden lg:block">
+  <div class="p-4 pb-20 space-y-4 overflow-y-auto">
+    <!-- TODO -->
+    <!--{#if hideTopElements}-->
+    <!--  <List>-->
+    <!--    {#if $user === null}-->
+    <!--      <Item on:click={() => loginDialogOpen.set(true)}>-->
+    <!--        <Graphic class="material-icons">login</Graphic>-->
+    <!--        <Text>{$t('user.sign-in')}</Text>-->
+    <!--      </Item>-->
+    <!--    {:else}-->
+    <!--      {#if isAdmin}-->
+    <!--        <Item on:click={() => goto(base + '/admin')} activated={currentPath.startsWith('/admin')}>-->
+    <!--          <Graphic class="material-icons">admin_panel_settings</Graphic>-->
+    <!--          <Text>Admin</Text>-->
+    <!--        </Item>-->
+    <!--      {/if}-->
 
-            <Item on:click={() => goto(base + '/user/' + $user.id)} activated={currentPath.startsWith('/user')}>
-              <Graphic>
-                <div class="rounded-full bg-cover w-7 h-7" style={`background-image: url("${$user.avatar}")`} />
-              </Graphic>
-              <Text>{$user.username}</Text>
-            </Item>
+    <!--      <Item on:click={() => goto(base + '/user/' + $user.id)} activated={currentPath.startsWith('/user')}>-->
+    <!--        <Graphic>-->
+    <!--          <div class="rounded-full bg-cover w-7 h-7" style={`background-image: url("${$user.avatar}")`} />-->
+    <!--        </Graphic>-->
+    <!--        <Text>{$user.username}</Text>-->
+    <!--      </Item>-->
 
-            <Item on:click={() => userToken.set(null)}>
-              <Graphic class="material-icons">logout</Graphic>
-              <Text>{$t('user.logout')}</Text>
-            </Item>
-          {/if}
-        </List>
+    <!--      <Item on:click={() => userToken.set(null)}>-->
+    <!--        <Graphic class="material-icons">logout</Graphic>-->
+    <!--        <Text>{$t('user.logout')}</Text>-->
+    <!--      </Item>-->
+    <!--    {/if}-->
+    <!--  </List>-->
 
-        <Separator />
-      {/if}
+    <!--  <Separator />-->
+    <!--{/if}-->
 
-      <List>
+
+    <nav class="list-nav">
+      <ul>
         {#each top as item}
-          {#if !item.external}
-            <Item href={item.url} activated={currentPath === item.url} on:mouseover={() => preloadData(item.url)}>
-              <Graphic class="material-icons">{item.icon}</Graphic>
-              <Text>{item.label}</Text>
-            </Item>
-          {:else}
-            <Item href={item.url} target="_blank" rel="noopener">
-              <Graphic class="material-icons">{item.icon}</Graphic>
-              <Text>{item.label}</Text>
-            </Item>
-          {/if}
+          <li>
+            {#if !item.external}
+              <a href={item.url} class:bg-primary-active-token={currentPath === item.url} on:mouseover={() => preloadData(item.url)}>
+                <span class="badge bg-primary-500 material-icons">{item.icon}</span>
+                <span class="flex-auto">{item.label}</span>
+              </a>
+            {:else}
+              <a href={item.url} target="_blank" rel="noopener">
+                <span class="badge bg-primary-500 material-icons">{item.icon}</span>
+                <span class="flex-auto">{item.label}</span>
+              </a>
+            {/if}
+          </li>
         {/each}
-      </List>
+      </ul>
+    </nav>
 
-      <List>
+
+    <nav class="list-nav">
+      <ul>
         {#each bottom as item}
-          {#if !item.external}
-            <Item href={item.url} activated={currentPath === item.url} on:mouseover={() => preloadData(item.url)}>
-              <Graphic class="material-icons">{item.icon}</Graphic>
-              <Text>{item.label}</Text>
-            </Item>
-          {:else}
-            <Item href={item.url} target="_blank" rel="noopener">
-              <Graphic class="material-icons">{item.icon}</Graphic>
-              <Text>{item.label}</Text>
-            </Item>
-          {/if}
+          <li>
+            {#if !item.external}
+              <a href={item.url} class:bg-primary-active-token={currentPath === item.url} on:mouseover={() => preloadData(item.url)}>
+                <span class="badge bg-primary-500 material-icons">{item.icon}</span>
+                <span class="flex-auto">{item.label}</span>
+              </a>
+            {:else}
+              <a href={item.url} target="_blank" rel="noopener">
+                <span class="badge bg-primary-500 material-icons">{item.icon}</span>
+                <span class="flex-auto">{item.label}</span>
+              </a>
+            {/if}
+          </li>
         {/each}
 
         {#if hideTopElements}
-          <Item target="_blank" href="https://smm.ficsit.app" rel="noopener">
-            <Graphic class="material-icons">file_download</Graphic>
-            <Text>{$t('sidebar.mod-manager')}</Text>
-          </Item>
+          <li>
+            <a target="_blank" href="https://smm.ficsit.app" rel="noopener">
+              <span class="badge bg-primary-500 material-icons">file_download</span>
+              <span class="flex-auto">{$t('sidebar.mod-manager')}</span>
+            </a>
+          </li>
         {/if}
 
-        <Item>
-          <FormField align="end">
-            <Switch bind:checked={accessibility} aria-label="Accessibility Font" />
-            <span slot="label">{$t('sidebar.accessibility-font')}</span>
-          </FormField>
-        </Item>
-      </List>
-    </div>
-  </Content>
-</Drawer>
+        <li>
+          <SlideToggle bind:checked={accessibility} aria-label="Accessibility Font" />
+          <span>{$t('sidebar.accessibility-font')}</span>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</aside>
 
 <style lang="postcss">
   .drawer-content {

@@ -1,5 +1,5 @@
 import sveltePreprocess from 'svelte-preprocess';
-import adapterNode from '@sveltejs/adapter-node';
+import adapterBun from 'svelte-adapter-bun';
 import adapterStatic from '@sveltejs/adapter-static';
 
 const mode = process.env.NODE_ENV || 'development';
@@ -19,17 +19,8 @@ const config = {
     // By default, `npm run build` will create a standard Node app.
     // You can create optimized builds for different platforms by
     // specifying a different adapter
-    adapter: process.env.SVELTE_ADAPTER === 'node' ? adapterNode({
+    adapter: process.env.SVELTE_ADAPTER === 'node' ? adapterBun({
       out: 'build/node',
-      esbuild(defaultOptions) {
-        return {
-          ...defaultOptions,
-          external: [
-            ...defaultOptions.external || [],
-            'canvas'
-          ]
-        };
-      }
     }) : adapterStatic({
       pages: 'build/static',
       assets: 'build/static',

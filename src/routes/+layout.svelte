@@ -1,27 +1,34 @@
 <script lang="ts">
   import LoginDialog from '$lib/components/auth/LoginDialog.svelte';
   import { setContextClient } from '@urql/svelte';
-  import { AppContent, Scrim } from '@smui/drawer';
   import { onMobile, sidebarOpen } from '$lib/stores/global';
   import { onMount } from 'svelte';
   import { customProtocolCheck, hasLauncher } from '$lib/stores/launcher';
   import Sidebar from '$lib/components/general/Sidebar.svelte';
-  import AnnouncementHeader from '$lib/components/announcements/AnnouncementHeader.svelte';
+  // TODO import AnnouncementHeader from '$lib/components/announcements/AnnouncementHeader.svelte';
   import { base } from '$app/paths';
   import { browser } from '$app/environment';
   import { PUBLIC_GOOGLE_SITE_TAG, PUBLIC_TOLGEE_API_URL, PUBLIC_TOLGEE_API_KEY } from '$env/static/public';
   import type { LayoutData } from './$types';
   import { TolgeeProvider, Tolgee, DevTools, FormatSimple, LanguageDetector } from '@tolgee/svelte';
+  import { initializeStores } from '@skeletonlabs/skeleton';
+  import { AppShell, Modal } from '@skeletonlabs/skeleton';
+  import TopBar from '$lib/components/general/TopBar.svelte';
+  import './_global.postcss';
+  import { computePosition, autoUpdate, offset, shift, flip, arrow } from '@floating-ui/dom';
+  import { storePopup } from '@skeletonlabs/skeleton';
 
   import enCommon from '../i18n/common/en.json';
   import deCommon from '../i18n/common/de.json';
   import frCommon from '../i18n/common/fr.json';
   import lvCommon from '../i18n/common/lv.json';
-  import TopBar from '$lib/components/general/TopBar.svelte';
 
   export let data: LayoutData;
 
   const { client } = data;
+
+  initializeStores();
+  storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow });
 
   const tolgee = Tolgee()
     .use(DevTools())
@@ -137,24 +144,24 @@
 </svelte:head>
 
 <TolgeeProvider {tolgee}>
-  <div class="app-container">
-    <TopBar />
+  <Modal />
 
-    <div class="drawer-container">
+  <AppShell>
+    <svelte:fragment slot="header">
+      <TopBar />
+    </svelte:fragment>
+
+    <svelte:fragment slot="sidebarLeft">
       <Sidebar bind:open={$sidebarOpen} bind:accessibility bind:drawerVariant bind:hideTopElements />
+    </svelte:fragment>
 
-      {#if drawerVariant === 'modal'}
-        <Scrim fixed={false} />
-      {/if}
-
-      <AppContent class="app-content w-full overflow-auto">
-        <AnnouncementHeader />
-        <main class="main-content min-h-100% py-6 px-3">
-          <slot />
-        </main>
-      </AppContent>
+    <div class="app-content w-full overflow-auto">
+<!--     TODO <AnnouncementHeader />-->
+      <main class="main-content min-h-100% py-6 px-3">
+        <slot />
+      </main>
     </div>
-  </div>
+  </AppShell>
 
   <LoginDialog />
 </TolgeeProvider>

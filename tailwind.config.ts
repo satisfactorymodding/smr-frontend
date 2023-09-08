@@ -1,9 +1,20 @@
-const colors = require('tailwindcss/colors');
+import { join } from 'path';
+import type { Config } from 'tailwindcss';
 
-module.exports = {
+import { skeleton } from '@skeletonlabs/tw-plugin';
+
+import colors from 'tailwindcss/colors';
+
+import { customTheme } from './custom-theme'
+
+const config = {
   mode: 'jit',
   content: [
     "./src/**/*.{html,js,svelte,ts}",
+    join(require.resolve(
+        '@skeletonlabs/skeleton'),
+      '../**/*.{html,js,svelte,ts}'
+    )
   ],
   darkMode: 'class',
   theme: {
@@ -29,8 +40,13 @@ module.exports = {
       }
     }
   },
-  variants: {
-    extend: {},
-  },
-  plugins: [],
-};
+  plugins: [
+    skeleton({
+      themes: {
+        custom: [customTheme]
+      }
+    })
+  ],
+} satisfies Config;
+
+export default config;

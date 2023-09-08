@@ -15,9 +15,6 @@
   import Toast from '../general/Toast.svelte';
   import { user, userToken } from '$lib/stores/user';
   import cookie from 'js-cookie';
-  import Dialog, { Title, Content } from '@smui/dialog';
-  import Button from '@smui/button';
-  import CircularProgress from '@smui/circular-progress';
   import { getTranslate } from '@tolgee/svelte';
 
   const client = getContextClient();
@@ -142,34 +139,35 @@
   };
 </script>
 
-<Dialog bind:open={$loginDialogOpen}>
-  <Title>{$t('user.sign-in')} / {$t('user.sign-up')}</Title>
-  <Content>
-    <div class="grid grid-flow-row gap-4">
-      {#if signingIn}
-        <p>{$t('user.logging-in')}...</p>
-        <div class="flex justify-center">
-          <CircularProgress class="h-10 w-10" indeterminate />
-        </div>
-      {:else if $oauthOptions.fetching}
-        <!-- TODO Placeholders -->
-        <p>{$t('loading')}...</p>
-      {:else if $oauthOptions.error}
-        <p>Oh no... {$oauthOptions.error.message}</p>
-      {:else}
-        <Button variant="outlined" on:click={() => goTo('github', $oauthOptions.data.getOAuthOptions.github)}>
-          {$t('login-dialog.sign-in-with-github')}
-        </Button>
-        <Button variant="outlined" on:click={() => goTo('google', $oauthOptions.data.getOAuthOptions.google)}>
-          {$t('login-dialog.sign-in-with-google')}
-        </Button>
-        <Button variant="outlined" on:click={() => goTo('facebook', $oauthOptions.data.getOAuthOptions.facebook)}>
-          {$t('login-dialog.sign-in-with-facebook')}
-        </Button>
-      {/if}
-    </div>
-  </Content>
-</Dialog>
+<!-- TODO -->
+<!--<Dialog bind:open={$loginDialogOpen}>-->
+<!--  <Title>{$t('user.sign-in')} / {$t('user.sign-up')}</Title>-->
+<!--  <Content>-->
+<!--    <div class="grid grid-flow-row gap-4">-->
+<!--      {#if signingIn}-->
+<!--        <p>{$t('user.logging-in')}...</p>-->
+<!--        <div class="flex justify-center">-->
+<!--          <CircularProgress class="h-10 w-10" indeterminate />-->
+<!--        </div>-->
+<!--      {:else if $oauthOptions.fetching}-->
+<!--        &lt;!&ndash; TODO Placeholders &ndash;&gt;-->
+<!--        <p>{$t('loading')}...</p>-->
+<!--      {:else if $oauthOptions.error}-->
+<!--        <p>Oh no... {$oauthOptions.error.message}</p>-->
+<!--      {:else}-->
+<!--        <Button variant="outlined" on:click={() => goTo('github', $oauthOptions.data.getOAuthOptions.github)}>-->
+<!--          {$t('login-dialog.sign-in-with-github')}-->
+<!--        </Button>-->
+<!--        <Button variant="outlined" on:click={() => goTo('google', $oauthOptions.data.getOAuthOptions.google)}>-->
+<!--          {$t('login-dialog.sign-in-with-google')}-->
+<!--        </Button>-->
+<!--        <Button variant="outlined" on:click={() => goTo('facebook', $oauthOptions.data.getOAuthOptions.facebook)}>-->
+<!--          {$t('login-dialog.sign-in-with-facebook')}-->
+<!--        </Button>-->
+<!--      {/if}-->
+<!--    </div>-->
+<!--  </Content>-->
+<!--</Dialog>-->
 
 <Toast bind:running={errorToast}>
   <span>{errorMessage}</span>

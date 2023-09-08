@@ -30,11 +30,7 @@ const config = {
           }
           if (
             id.includes('zod') ||
-            id.includes('felte') ||
-            id.includes('@smui/textfield') ||
-            id.includes('@smui/select') ||
-            id.includes('@smui/data-table') ||
-            id.includes('@smui/floating-label')
+            id.includes('felte')
           ) {
             return 'forms';
           }
