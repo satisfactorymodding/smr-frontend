@@ -6,7 +6,7 @@
   import { user } from '$lib/stores/user';
   import FicsitCard from '$lib/components/general/FicsitCard.svelte';
   import { getTranslate } from '@tolgee/svelte';
-  import { type PaginationSettings, Paginator } from "@skeletonlabs/skeleton";
+  import { type PaginationSettings, Paginator } from '@skeletonlabs/skeleton';
 
   export let colCount: 4 | 5 = 4;
   export let newGuide = false;
@@ -36,7 +36,7 @@
     page: page,
     limit: perPage,
     size: $guides?.data?.getGuides?.count || 0,
-    amounts: [8, 16, 32, 64, 100],
+    amounts: [8, 16, 32, 64, 100]
   } satisfies PaginationSettings;
 </script>
 
@@ -48,12 +48,11 @@
   <div>
     <Paginator
       bind:settings={paginationSettings}
-      showFirstLastButtons="{true}"
-      showPreviousNextButtons="{true}"
-      on:page={(p) => page = p.detail}
-      on:amount={(p) => perPage = p.detail}
-      controlVariant="variant-filled-surface"
-    />
+      showFirstLastButtons={true}
+      showPreviousNextButtons={true}
+      on:page={(p) => (page = p.detail)}
+      on:amount={(p) => (perPage = p.detail)}
+      controlVariant="variant-filled-surface" />
   </div>
 </div>
 
@@ -77,11 +76,10 @@
   <div>
     <Paginator
       bind:settings={paginationSettings}
-      showFirstLastButtons="{true}"
-      showPreviousNextButtons="{true}"
-      on:page={(p) => page = p.detail}
-      on:amount={(p) => perPage = p.detail}
-      controlVariant="variant-filled-surface"
-    />
+      showFirstLastButtons={true}
+      showPreviousNextButtons={true}
+      on:page={(p) => (page = p.detail)}
+      on:amount={(p) => (perPage = p.detail)}
+      controlVariant="variant-filled-surface" />
   </div>
 </div>

@@ -5,8 +5,8 @@
   import { base } from '$app/paths';
   import TranslationDropdown from '$lib/components/general/TranslationDropdown.svelte';
   import { getTranslate } from '@tolgee/svelte';
-  import { AppBar, type PopupSettings, popup, getDrawerStore, getModalStore } from "@skeletonlabs/skeleton";
-  import LoginModal from "$lib/modals/LoginModal.svelte";
+  import { AppBar, type PopupSettings, popup, getDrawerStore, getModalStore } from '@skeletonlabs/skeleton';
+  import LoginModal from '$lib/modals/LoginModal.svelte';
 
   $: isAdmin = !$user ? false : $user.roles.approveMods || $user.roles.approveVersions || $user.roles.editSMLVersions;
 
@@ -40,23 +40,22 @@
           <span class="material-icons">file_download</span>
         </button>
       {:else}
-        <a
-          class="btn btn-sm variant-ghost-primary"
-          target="_blank"
-          rel="noopener"
-          href="https://smm.ficsit.app">
+        <a class="btn btn-sm variant-ghost-primary" target="_blank" rel="noopener" href="https://smm.ficsit.app">
           <span>Mod Manager</span>
           <span class="material-icons">file_download</span>
         </a>
       {/if}
 
       {#if $user === null}
-        <button class="btn btn-sm variant-ghost-primary" on:click={() => modalStore.trigger({
-            type: 'component',
-            component: {
-              ref: LoginModal
-            },
-          })}>
+        <button
+          class="btn btn-sm variant-ghost-primary"
+          on:click={() =>
+            modalStore.trigger({
+              type: 'component',
+              component: {
+                ref: LoginModal
+              }
+            })}>
           <span>{$t('user.sign-in')}</span>
           <span class="material-icons">login</span>
         </button>

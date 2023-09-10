@@ -2,7 +2,7 @@
   import { getContextClient, queryStore } from '@urql/svelte';
   import { CreateTagDocument, DeleteTagDocument, GetTagsDocument, UpdateTagDocument } from '$lib/generated';
   import type { Tag } from '$lib/generated';
-  import { Accordion, AccordionItem, getToastStore } from "@skeletonlabs/skeleton";
+  import { Accordion, AccordionItem, getToastStore } from '@skeletonlabs/skeleton';
 
   const client = getContextClient();
 

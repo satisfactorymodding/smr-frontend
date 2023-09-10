@@ -1,7 +1,7 @@
 <script lang="ts">
-  import CompatibilityInfo from "$lib/components/mods/compatibility/CompatibilityInfo.svelte";
-  import type { CompatibilityInfoInput } from "$lib/generated";
-  import { getTranslate } from "@tolgee/svelte";
+  import CompatibilityInfo from '$lib/components/mods/compatibility/CompatibilityInfo.svelte';
+  import type { CompatibilityInfoInput } from '$lib/generated';
+  import { getTranslate } from '@tolgee/svelte';
 
   export let compatibility: CompatibilityInfoInput;
 

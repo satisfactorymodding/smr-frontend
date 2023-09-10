@@ -12,9 +12,9 @@ const config = {
     sveltekit(),
     purgeCss({
       safelist: {
-        greedy: [/^hljs-/],
-      },
-    }),
+        greedy: [/^hljs-/]
+      }
+    })
   ],
   server: {
     port: 3000,
@@ -36,10 +36,7 @@ const config = {
           if (id.includes('jszip')) {
             return 'jszip';
           }
-          if (
-            id.includes('zod') ||
-            id.includes('felte')
-          ) {
+          if (id.includes('zod') || id.includes('felte')) {
             return 'forms';
           }
           if (

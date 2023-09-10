@@ -11,7 +11,7 @@
   import { CompatibilityState } from '$lib/generated';
   import ModCompatibility from '$lib/components/mods/compatibility/ModCompatibilityEdit.svelte';
   import { getTranslate } from '@tolgee/svelte';
-  import { SlideToggle } from "@skeletonlabs/skeleton";
+  import { SlideToggle } from '@skeletonlabs/skeleton';
 
   export const { t } = getTranslate();
 
@@ -119,11 +119,7 @@
       <div class="grid grid-flow-row gap-2 auto-rows-max">
         <label class="label">
           <span>{$t('entry.full-description')}</span>
-          <textarea
-            class="vertical-textarea textarea p-2"
-            bind:value={$data.full_description}
-            required
-            rows={10} />
+          <textarea class="vertical-textarea textarea p-2" bind:value={$data.full_description} required rows={10} />
         </label>
         <ValidationMessage for="full_description" let:messages={message}>
           <span class="validation-message">{message || ''}</span>
@@ -175,9 +171,12 @@
     </div>
     {#if editing}
       <div>
-        <SlideToggle name="slider-label" bind:checked={editCompatibility} on:change={() => {
-          $data.compatibility = editCompatibility ? originalCompatibility : undefined;
-        }}>
+        <SlideToggle
+          name="slider-label"
+          bind:checked={editCompatibility}
+          on:change={() => {
+            $data.compatibility = editCompatibility ? originalCompatibility : undefined;
+          }}>
           {$t('compatibility-info.edit')}
         </SlideToggle>
       </div>
@@ -202,7 +201,12 @@
             {/if}
             <label class="label">
               <span>User ID</span>
-              <input type="text" bind:value={$data.authors[i].user_id} required class="input p-2" disabled={author.role === 'creator'} />
+              <input
+                type="text"
+                bind:value={$data.authors[i].user_id}
+                required
+                class="input p-2"
+                disabled={author.role === 'creator'} />
             </label>
             {#if author.role !== 'creator'}
               <button class="btn variant-ghost-primary" type="button" on:click={() => removeAuthor(i)}>

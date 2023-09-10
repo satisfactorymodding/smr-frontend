@@ -14,8 +14,8 @@
   import { user, userToken } from '$lib/stores/user';
   import cookie from 'js-cookie';
   import { getTranslate } from '@tolgee/svelte';
-  import { getModalStore, type ModalSettings } from "@skeletonlabs/skeleton";
-  import LoginModal from "$lib/modals/LoginModal.svelte";
+  import { getModalStore, type ModalSettings } from '@skeletonlabs/skeleton';
+  import LoginModal from '$lib/modals/LoginModal.svelte';
 
   const client = getContextClient();
 
@@ -84,15 +84,14 @@
   let errorToast = false;
   let signingIn = false;
 
-
   $: loginModal = {
     type: 'component',
     component: {
       ref: LoginModal,
       props: {
         signingIn
-      },
-    },
+      }
+    }
   } satisfies ModalSettings;
 
   const modalStore = getModalStore();

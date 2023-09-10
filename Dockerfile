@@ -13,7 +13,7 @@ RUN bun install --ignore-scripts
 
 COPY . .
 
-RUN bash -c "NODE_ENV=$NODE_ENV_ARG bun run prepare && bun run graphql-codegen && bun run translations && bun run build:$NODE_ENV_ARG"
+RUN NODE_ENV=$NODE_ENV_ARG set -o allexport; set -ex; source .env.$NODE_ENV_ARG; set +o allexport && bun run prepare && bun run graphql-codegen && bun run translations && bun run build:$NODE_ENV_ARG
 
 
 FROM ghcr.io/vilsol/yeet:v0.6.4 as yeet

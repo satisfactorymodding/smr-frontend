@@ -53,11 +53,7 @@
       <div class="grid grid-flow-row gap-2 auto-rows-max">
         <label class="label">
           <span>{$t('guide')}</span>
-          <textarea
-            class="vertical-textarea textarea p-2"
-            bind:value={$data.guide}
-            required
-            rows={10} />
+          <textarea class="vertical-textarea textarea p-2" bind:value={$data.guide} required rows={10} />
         </label>
         <ValidationMessage for="guide" let:messages={message}>
           <span class="validation-message">{message || ''}</span>

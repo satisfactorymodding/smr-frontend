@@ -23,5 +23,5 @@
 
 <label class="label">
   <span>Note</span>
-  <textarea class="textarea p-4" bind:value={compatibility.note} placeholder={$t('compatibility-info.notes')}/>
+  <textarea class="textarea p-4" bind:value={compatibility.note} placeholder={$t('compatibility-info.notes')} />
 </label>

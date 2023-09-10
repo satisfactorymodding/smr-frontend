@@ -85,12 +85,12 @@
                     <button
                       class="btn btn-sm variant-ghost-primary"
                       style="padding: 0; min-width: 36px;"
-                      use:popup={({
+                      use:popup={{
                         event: 'focus-click',
                         target: 'versionArchDropdown_' + version.version,
                         placement: 'bottom',
                         closeQuery: 'a'
-                      })}>
+                      }}>
                       <span class="material-icons" style="margin: 0;">arrow_drop_down</span>
                     </button>
 
@@ -99,7 +99,9 @@
                         <ul>
                           {#each version.arch as arch, _}
                             <li>
-                              <a class="w-full" href={API_REST +
+                              <a
+                                class="w-full"
+                                href={API_REST +
                                   '/mod/' +
                                   modId +
                                   '/versions/' +
@@ -115,12 +117,16 @@
                       </nav>
                     </div>
                   {:else}
-                    <a class="btn btn-sm variant-ghost-primary" href={API_REST + '/mod/' + modId + '/versions/' + version.id + '/download'}>
+                    <a
+                      class="btn btn-sm variant-ghost-primary"
+                      href={API_REST + '/mod/' + modId + '/versions/' + version.id + '/download'}>
                       {$t('download')}
                     </a>
                   {/if}
 
-                  <button class="btn btn-sm variant-ghost-primary" on:click={() => installMod($versions.data.getMod.mod_reference)}>
+                  <button
+                    class="btn btn-sm variant-ghost-primary"
+                    on:click={() => installMod($versions.data.getMod.mod_reference)}>
                     <span>{$t('install')}</span>
                     <span class="material-icons">download</span>
                   </button>

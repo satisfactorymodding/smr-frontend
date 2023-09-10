@@ -98,11 +98,7 @@
       <div class="grid grid-flow-row gap-2 auto-rows-max">
         <label class="label">
           <span>{$t('changelog')}</span>
-          <textarea
-            class="vertical-textarea textarea p-2"
-            bind:value={$data.changelog}
-            required
-            rows={10} />
+          <textarea class="vertical-textarea textarea p-2" bind:value={$data.changelog} required rows={10} />
         </label>
         <ValidationMessage for="changelog" let:messages={message}>
           <span class="validation-message">{message || ''}</span>

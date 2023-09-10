@@ -1,11 +1,11 @@
 <script lang="ts">
-  import { getModalStore, SlideToggle } from "@skeletonlabs/skeleton";
+  import { getModalStore, SlideToggle } from '@skeletonlabs/skeleton';
   import { goto, preloadData } from '$app/navigation';
   import { base } from '$app/paths';
   import { page } from '$app/stores';
   import { user, userToken } from '$lib/stores/user';
   import { getTranslate } from '@tolgee/svelte';
-  import LoginModal from "$lib/modals/LoginModal.svelte";
+  import LoginModal from '$lib/modals/LoginModal.svelte';
 
   export let accessibility: boolean;
 
@@ -100,34 +100,36 @@
 <div class="p-4 overflow-y-auto flex flex-col justify-between h-full">
   <nav class="list-nav xl:hidden">
     <ul>
-    {#if $user === null}
-      <button on:click={() => modalStore.trigger({
-            type: 'component',
-            component: {
-              ref: LoginModal
-            },
-          })}
+      {#if $user === null}
+        <button
+          on:click={() =>
+            modalStore.trigger({
+              type: 'component',
+              component: {
+                ref: LoginModal
+              }
+            })}
           class="w-full">
-        <span class="material-icons">login</span>
-        <span>{$t('user.sign-in')}</span>
-      </button>
-    {:else}
-      {#if isAdmin}
-        <button on:click={() => goto(base + '/admin')} class="w-full">
-          <span class="material-icons">admin_panel_settings</span>
-          <span>Admin</span>
+          <span class="material-icons">login</span>
+          <span>{$t('user.sign-in')}</span>
+        </button>
+      {:else}
+        {#if isAdmin}
+          <button on:click={() => goto(base + '/admin')} class="w-full">
+            <span class="material-icons">admin_panel_settings</span>
+            <span>Admin</span>
+          </button>
+        {/if}
+        <button class="grid grid-flow-col w-full" on:click={() => goto(base + '/user/' + $user.id)}>
+          <div class="rounded-full bg-cover w-7 h-7" style={`background-image: url("${$user.avatar}")`} />
+          <div>{$user.username}</div>
+        </button>
+
+        <button on:click={() => userToken.set(null)} class="w-full">
+          <span class="material-icons">logout</span>
+          <span>{$t('user.logout')}</span>
         </button>
       {/if}
-      <button class="grid grid-flow-col w-full" on:click={() => goto(base + '/user/' + $user.id)}>
-        <div class="rounded-full bg-cover w-7 h-7" style={`background-image: url("${$user.avatar}")`} />
-        <div>{$user.username}</div>
-      </button>
-
-      <button on:click={() => userToken.set(null)} class="w-full">
-        <span class="material-icons">logout</span>
-        <span>{$t('user.logout')}</span>
-      </button>
-    {/if}
     </ul>
   </nav>
 
@@ -140,7 +142,11 @@
       {#each top as item}
         <li>
           {#if !item.external}
-            <a href={item.url} class:bg-primary-active-token={currentPath === item.url} on:mouseover={() => preloadData(item.url)} on:focus={() => preloadData(item.url)}>
+            <a
+              href={item.url}
+              class:bg-primary-active-token={currentPath === item.url}
+              on:mouseover={() => preloadData(item.url)}
+              on:focus={() => preloadData(item.url)}>
               <span class="material-icons">{item.icon}</span>
               <span class="flex-auto">{item.label}</span>
             </a>
@@ -155,13 +161,16 @@
     </ul>
   </nav>
 
-
   <nav class="list-nav">
     <ul>
       {#each bottom as item}
         <li>
           {#if !item.external}
-            <a href={item.url} class:bg-primary-active-token={currentPath === item.url} on:mouseover={() => preloadData(item.url)} on:focus={() => preloadData(item.url)}>
+            <a
+              href={item.url}
+              class:bg-primary-active-token={currentPath === item.url}
+              on:mouseover={() => preloadData(item.url)}
+              on:focus={() => preloadData(item.url)}>
               <span class="material-icons">{item.icon}</span>
               <span class="flex-auto">{item.label}</span>
             </a>
@@ -182,7 +191,12 @@
       </li>
 
       <li class="flex flex-row items-center justify-center gap-4 px-3 pt-2">
-        <SlideToggle bind:checked={accessibility} aria-label="Accessibility Font" name="accessibility_font" size="sm" active="bg-primary-500" />
+        <SlideToggle
+          bind:checked={accessibility}
+          aria-label="Accessibility Font"
+          name="accessibility_font"
+          size="sm"
+          active="bg-primary-500" />
         <span>{$t('sidebar.accessibility-font')}</span>
       </li>
     </ul>

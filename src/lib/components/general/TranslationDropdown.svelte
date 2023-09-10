@@ -1,7 +1,7 @@
 <script lang="ts">
   import { getTolgee, getTranslate } from '@tolgee/svelte';
   import { writable } from 'svelte/store';
-  import { type PopupSettings, popup } from "@skeletonlabs/skeleton";
+  import { type PopupSettings, popup } from '@skeletonlabs/skeleton';
 
   const tolgee = getTolgee(['language']);
 

@@ -3,7 +3,7 @@
   import type { CompatibilityInfo } from '$lib/generated';
   import CompatibilityEdit from '$lib/components/mods/compatibility/CompatibilityEdit.svelte';
   import { getTranslate } from '@tolgee/svelte';
-  import { Accordion, AccordionItem } from "@skeletonlabs/skeleton";
+  import { Accordion, AccordionItem } from '@skeletonlabs/skeleton';
 
   export let compatibilityInfo: CompatibilityInfo = undefined;
   if (compatibilityInfo == null) {

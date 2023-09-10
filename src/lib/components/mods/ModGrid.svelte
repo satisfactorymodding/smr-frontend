@@ -9,7 +9,7 @@
   import FicsitCard from '$lib/components/general/FicsitCard.svelte';
   import { browser } from '$app/environment';
   import { getTranslate } from '@tolgee/svelte';
-  import { type PaginationSettings, Paginator } from "@skeletonlabs/skeleton";
+  import { type PaginationSettings, Paginator } from '@skeletonlabs/skeleton';
 
   export let colCount: 4 | 5 = 4;
   export let newMod = false;
@@ -87,7 +87,7 @@
     page: page,
     limit: perPage,
     size: $mods?.data?.getMods?.count || 0,
-    amounts: [8, 16, 32, 64, 100],
+    amounts: [8, 16, 32, 64, 100]
   } satisfies PaginationSettings;
 </script>
 
@@ -117,30 +117,28 @@
           bind:value={searchField}
           class="bg-transparent border-0 ring-0 p-1.5"
           name="search"
-          placeholder="Search"
-        />
+          placeholder="Search" />
         <button class="variant-filled-primary material-icons">arrow_forward</button>
       </div>
 
-<!--      <Paper class="search-paper mr-3" elevation={6}>-->
-<!--        <Icon class="material-icons">search</Icon>-->
-<!--        <Input bind:value={searchField} placeholder="Search" />-->
-<!--      </Paper>-->
-<!--      <Fab on:click={() => goto(base + '/mods?q=' + search)} color="primary" mini class="solo-fab" aria-label="Search">-->
-<!--        <Icon class="material-icons">arrow_forward</Icon>-->
-<!--      </Fab>-->
+      <!--      <Paper class="search-paper mr-3" elevation={6}>-->
+      <!--        <Icon class="material-icons">search</Icon>-->
+      <!--        <Input bind:value={searchField} placeholder="Search" />-->
+      <!--      </Paper>-->
+      <!--      <Fab on:click={() => goto(base + '/mods?q=' + search)} color="primary" mini class="solo-fab" aria-label="Search">-->
+      <!--        <Icon class="material-icons">arrow_forward</Icon>-->
+      <!--      </Fab>-->
     </div>
   {/if}
 
   <div>
     <Paginator
       bind:settings={paginationSettings}
-      showFirstLastButtons="{true}"
-      showPreviousNextButtons="{true}"
-      on:page={(p) => page = p.detail}
-      on:amount={(p) => perPage = p.detail}
-      controlVariant="variant-filled-surface"
-    />
+      showFirstLastButtons={true}
+      showPreviousNextButtons={true}
+      on:page={(p) => (page = p.detail)}
+      on:amount={(p) => (perPage = p.detail)}
+      controlVariant="variant-filled-surface" />
   </div>
 </div>
 
@@ -164,12 +162,11 @@
   <div>
     <Paginator
       bind:settings={paginationSettings}
-      showFirstLastButtons="{true}"
-      showPreviousNextButtons="{true}"
-      on:page={(p) => page = p.detail}
-      on:amount={(p) => perPage = p.detail}
-      controlVariant="variant-filled-surface"
-    />
+      showFirstLastButtons={true}
+      showPreviousNextButtons={true}
+      on:page={(p) => (page = p.detail)}
+      on:amount={(p) => (perPage = p.detail)}
+      controlVariant="variant-filled-surface" />
   </div>
 </div>
 

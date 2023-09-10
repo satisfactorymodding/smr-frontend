@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { getTranslate } from "@tolgee/svelte";
-  import { goto } from "$app/navigation";
-  import { ConicGradient, type ConicStop } from "@skeletonlabs/skeleton";
-  import { getContextClient, queryStore } from "@urql/svelte";
-  import { GetOAuthOptionsDocument } from "$lib/generated";
-  import { browser } from "$app/environment";
+  import { getTranslate } from '@tolgee/svelte';
+  import { goto } from '$app/navigation';
+  import { ConicGradient, type ConicStop } from '@skeletonlabs/skeleton';
+  import { getContextClient, queryStore } from '@urql/svelte';
+  import { GetOAuthOptionsDocument } from '$lib/generated';
+  import { browser } from '$app/environment';
 
   export let signingIn = false;
 
@@ -33,28 +33,34 @@
 <div class="card p-4 flex flex-col gap-2">
   <h2 class="text-2xl">{$t('user.sign-in')} / {$t('user.sign-up')}</h2>
   <div>
-        <div class="grid grid-flow-row gap-4">
-          {#if signingIn}
-            <p>{$t('user.logging-in')}...</p>
-            <div class="flex justify-center">
-              <ConicGradient stops={conicStops} spin>Loading</ConicGradient>
-            </div>
-          {:else if $oauthOptions.fetching}
-            <!-- TODO Placeholders -->
-            <p>{$t('loading')}...</p>
-          {:else if $oauthOptions.error}
-            <p>Oh no... {$oauthOptions.error.message}</p>
-          {:else}
-            <button class="btn variant-ghost-primary" on:click={() => goTo('github', $oauthOptions.data.getOAuthOptions.github)}>
-              {$t('login-dialog.sign-in-with-github')}
-            </button>
-            <button class="btn variant-ghost-primary" on:click={() => goTo('google', $oauthOptions.data.getOAuthOptions.google)}>
-              {$t('login-dialog.sign-in-with-google')}
-            </button>
-            <button class="btn variant-ghost-primary" on:click={() => goTo('facebook', $oauthOptions.data.getOAuthOptions.facebook)}>
-              {$t('login-dialog.sign-in-with-facebook')}
-            </button>
-          {/if}
+    <div class="grid grid-flow-row gap-4">
+      {#if signingIn}
+        <p>{$t('user.logging-in')}...</p>
+        <div class="flex justify-center">
+          <ConicGradient stops={conicStops} spin>Loading</ConicGradient>
         </div>
+      {:else if $oauthOptions.fetching}
+        <!-- TODO Placeholders -->
+        <p>{$t('loading')}...</p>
+      {:else if $oauthOptions.error}
+        <p>Oh no... {$oauthOptions.error.message}</p>
+      {:else}
+        <button
+          class="btn variant-ghost-primary"
+          on:click={() => goTo('github', $oauthOptions.data.getOAuthOptions.github)}>
+          {$t('login-dialog.sign-in-with-github')}
+        </button>
+        <button
+          class="btn variant-ghost-primary"
+          on:click={() => goTo('google', $oauthOptions.data.getOAuthOptions.google)}>
+          {$t('login-dialog.sign-in-with-google')}
+        </button>
+        <button
+          class="btn variant-ghost-primary"
+          on:click={() => goTo('facebook', $oauthOptions.data.getOAuthOptions.facebook)}>
+          {$t('login-dialog.sign-in-with-facebook')}
+        </button>
+      {/if}
+    </div>
   </div>
 </div>

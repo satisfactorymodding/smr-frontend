@@ -4,7 +4,7 @@
   import { base } from '$app/paths';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
   import { prettyDate } from '$lib/utils/formatting';
-  import { type PaginationSettings, Paginator } from "@skeletonlabs/skeleton";
+  import { type PaginationSettings, Paginator } from '@skeletonlabs/skeleton';
 
   const client = getContextClient();
 
@@ -48,7 +48,7 @@
     page: page,
     limit: perPage,
     size: totalMods,
-    amounts: [5, 10, 20, 50, 100],
+    amounts: [5, 10, 20, 50, 100]
   } satisfies PaginationSettings;
 </script>
 
@@ -61,12 +61,11 @@
     <div>
       <Paginator
         bind:settings={paginationSettings}
-        showFirstLastButtons="{true}"
-        showPreviousNextButtons="{true}"
-        on:page={(p) => page = p.detail}
-        on:amount={(p) => perPage = p.detail}
-        controlVariant="variant-filled-surface"
-      />
+        showFirstLastButtons={true}
+        showPreviousNextButtons={true}
+        on:page={(p) => (page = p.detail)}
+        on:amount={(p) => (perPage = p.detail)}
+        controlVariant="variant-filled-surface" />
     </div>
   </div>
 {/if}
@@ -111,12 +110,11 @@
     <div>
       <Paginator
         bind:settings={paginationSettings}
-        showFirstLastButtons="{true}"
-        showPreviousNextButtons="{true}"
-        on:page={(p) => page = p.detail}
-        on:amount={(p) => perPage = p.detail}
-        controlVariant="variant-filled-surface"
-      />
+        showFirstLastButtons={true}
+        showPreviousNextButtons={true}
+        on:page={(p) => (page = p.detail)}
+        on:amount={(p) => (perPage = p.detail)}
+        controlVariant="variant-filled-surface" />
     </div>
   </div>
 {/if}

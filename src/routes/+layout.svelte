@@ -10,7 +10,7 @@
   import { PUBLIC_GOOGLE_SITE_TAG, PUBLIC_TOLGEE_API_URL, PUBLIC_TOLGEE_API_KEY } from '$env/static/public';
   import type { LayoutData } from './$types';
   import { TolgeeProvider, Tolgee, DevTools, FormatSimple, LanguageDetector } from '@tolgee/svelte';
-  import { initializeStores, AppShell, Modal, storePopup, Drawer, Toast } from "@skeletonlabs/skeleton";
+  import { initializeStores, AppShell, Modal, storePopup, Drawer, Toast } from '@skeletonlabs/skeleton';
   import TopBar from '$lib/components/general/TopBar.svelte';
   import './_global.postcss';
   import { computePosition, autoUpdate, offset, shift, flip, arrow } from '@floating-ui/dom';

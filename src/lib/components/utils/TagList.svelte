@@ -160,65 +160,65 @@
     {/if}
   {:else}
     <!-- TODO -->
-<!--    <Textfield class="tags overflow-visible" bind:input={inputA} style="z-index: 9999">-->
-<!--      <FloatingLabel-->
-<!--        class="pb-2"-->
-<!--        for="input-manual-a"-->
-<!--        slot="label"-->
-<!--        floatAbove={(newTag && newTag.value.length > 0) || focused || tags.length > 0}>Tags</FloatingLabel>-->
-<!--      <div class="flex flex-row flex-wrap text-sm gap-1 mr-2">-->
-<!--        {#each tags as tag}-->
-<!--          <div class="text-neutral-300 whitespace-nowrap flex removable-tag">-->
-<!--            <span class="hashtag text-orange-500">#</span>-->
-<!--            <span class="cancel">-->
-<!--              <i-->
-<!--                class="material-icons mdc-chip__icon mdc-chip__icon&#45;&#45;trailing"-->
-<!--                on:click={() => deleteTag(tag)}-->
-<!--                on:keypress={() => deleteTag(tag)}>cancel</i>-->
-<!--            </span>-->
-<!--            <p>{tag.name}</p>-->
-<!--          </div>-->
-<!--        {/each}-->
-<!--        <div-->
-<!--          id="newTagContainer"-->
-<!--          class="text-neutral-300 whitespace-nowrap flex"-->
-<!--          bind:this={newTagContainer}-->
-<!--          on:focusin={() => surface.setOpen(true)}-->
-<!--          on:focusout={onFocusLost}>-->
-<!--          <MenuSurface bind:this={surface} managed={true} anchorCorner="BOTTOM_LEFT" anchorElement={newTag}>-->
-<!--            <div style="margin: 1rem">-->
-<!--              <h1>Available Tags</h1>-->
-<!--              <div class="flex flex-wrap m-1">-->
-<!--                <Set chips={filteredTagsMatched} let:chip key={(tag) => tag.name}>-->
-<!--                  <Chip {chip} on:SMUIChip:interaction={() => addTag(chip.name)}>-->
-<!--                    <Text>{chip.name}</Text>-->
-<!--                  </Chip>-->
-<!--                </Set>-->
-<!--              </div>-->
-<!--              <div class="flex flex-wrap m-1">-->
-<!--                <Set chips={filteredTagsUnmatched} let:chip key={(tag) => tag.name}>-->
-<!--                  <Chip {chip} on:SMUIChip:interaction={() => addTag(chip.name)}>-->
-<!--                    <Text>{chip.name}</Text>-->
-<!--                  </Chip>-->
-<!--                </Set>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </MenuSurface>-->
-<!--          {#if focused}-->
-<!--            <span class="text-orange-500">#</span>-->
-<!--          {/if}-->
-<!--          <Input-->
-<!--            id="input-manual-a"-->
-<!--            spellcheck="false"-->
-<!--            autocomplete="off"-->
-<!--            class="inline text-sm text-neutral-300 {shake ? 'shake' : ''}"-->
-<!--            style="height: initial"-->
-<!--            bind:this={inputA}-->
-<!--            on:keydown={newTagKeydown}-->
-<!--            on:input={onInput} />-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </Textfield>-->
+    <!--    <Textfield class="tags overflow-visible" bind:input={inputA} style="z-index: 9999">-->
+    <!--      <FloatingLabel-->
+    <!--        class="pb-2"-->
+    <!--        for="input-manual-a"-->
+    <!--        slot="label"-->
+    <!--        floatAbove={(newTag && newTag.value.length > 0) || focused || tags.length > 0}>Tags</FloatingLabel>-->
+    <!--      <div class="flex flex-row flex-wrap text-sm gap-1 mr-2">-->
+    <!--        {#each tags as tag}-->
+    <!--          <div class="text-neutral-300 whitespace-nowrap flex removable-tag">-->
+    <!--            <span class="hashtag text-orange-500">#</span>-->
+    <!--            <span class="cancel">-->
+    <!--              <i-->
+    <!--                class="material-icons mdc-chip__icon mdc-chip__icon&#45;&#45;trailing"-->
+    <!--                on:click={() => deleteTag(tag)}-->
+    <!--                on:keypress={() => deleteTag(tag)}>cancel</i>-->
+    <!--            </span>-->
+    <!--            <p>{tag.name}</p>-->
+    <!--          </div>-->
+    <!--        {/each}-->
+    <!--        <div-->
+    <!--          id="newTagContainer"-->
+    <!--          class="text-neutral-300 whitespace-nowrap flex"-->
+    <!--          bind:this={newTagContainer}-->
+    <!--          on:focusin={() => surface.setOpen(true)}-->
+    <!--          on:focusout={onFocusLost}>-->
+    <!--          <MenuSurface bind:this={surface} managed={true} anchorCorner="BOTTOM_LEFT" anchorElement={newTag}>-->
+    <!--            <div style="margin: 1rem">-->
+    <!--              <h1>Available Tags</h1>-->
+    <!--              <div class="flex flex-wrap m-1">-->
+    <!--                <Set chips={filteredTagsMatched} let:chip key={(tag) => tag.name}>-->
+    <!--                  <Chip {chip} on:SMUIChip:interaction={() => addTag(chip.name)}>-->
+    <!--                    <Text>{chip.name}</Text>-->
+    <!--                  </Chip>-->
+    <!--                </Set>-->
+    <!--              </div>-->
+    <!--              <div class="flex flex-wrap m-1">-->
+    <!--                <Set chips={filteredTagsUnmatched} let:chip key={(tag) => tag.name}>-->
+    <!--                  <Chip {chip} on:SMUIChip:interaction={() => addTag(chip.name)}>-->
+    <!--                    <Text>{chip.name}</Text>-->
+    <!--                  </Chip>-->
+    <!--                </Set>-->
+    <!--              </div>-->
+    <!--            </div>-->
+    <!--          </MenuSurface>-->
+    <!--          {#if focused}-->
+    <!--            <span class="text-orange-500">#</span>-->
+    <!--          {/if}-->
+    <!--          <Input-->
+    <!--            id="input-manual-a"-->
+    <!--            spellcheck="false"-->
+    <!--            autocomplete="off"-->
+    <!--            class="inline text-sm text-neutral-300 {shake ? 'shake' : ''}"-->
+    <!--            style="height: initial"-->
+    <!--            bind:this={inputA}-->
+    <!--            on:keydown={newTagKeydown}-->
+    <!--            on:input={onInput} />-->
+    <!--        </div>-->
+    <!--      </div>-->
+    <!--    </Textfield>-->
   {/if}
 </div>
 

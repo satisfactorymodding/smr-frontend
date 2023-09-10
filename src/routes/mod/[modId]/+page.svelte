@@ -14,8 +14,8 @@
   import { modSchema, serializeSchema } from '$lib/utils/schema';
   import { getContextClient } from '@urql/svelte';
   import type { PageData } from './$types';
-  import { getModalStore, type ModalSettings } from "@skeletonlabs/skeleton";
-  import EditCompatibilityModal from "$lib/modals/EditCompatibilityModal.svelte";
+  import { getModalStore, type ModalSettings } from '@skeletonlabs/skeleton';
+  import EditCompatibilityModal from '$lib/modals/EditCompatibilityModal.svelte';
 
   export let data: PageData;
 
@@ -56,7 +56,7 @@
       if (r) {
         deleteModFn();
       }
-    },
+    }
   };
 
   $: editCompatibilityModal = {
@@ -65,8 +65,8 @@
       ref: EditCompatibilityModal,
       props: {
         mod: $mod.data
-      },
-    },
+      }
+    }
   } satisfies ModalSettings;
 
   const modalStore = getModalStore();
@@ -93,12 +93,15 @@
       <h1 class="text-4xl font-bold">{$mod.data.mod.name}</h1>
       <div>
         {#if canUserEdit}
-          <button class="btn variant-ghost-primary" on:click={() => goto(base + '/mod/' + modId + '/edit')}>Edit</button>
+          <button class="btn variant-ghost-primary" on:click={() => goto(base + '/mod/' + modId + '/edit')}
+            >Edit</button>
           <button class="btn variant-ghost-primary" on:click={() => modalStore.trigger(deleteModal)}>Delete</button>
-          <button class="btn variant-ghost-primary" on:click={() => goto(base + '/mod/' + modId + '/new-version')}>New Version</button>
+          <button class="btn variant-ghost-primary" on:click={() => goto(base + '/mod/' + modId + '/new-version')}
+            >New Version</button>
         {/if}
         {#if canUserEditCompatibility}
-          <button class="btn variant-ghost-primary" on:click={() => modalStore.trigger(editCompatibilityModal)}>Compatibility</button>
+          <button class="btn variant-ghost-primary" on:click={() => modalStore.trigger(editCompatibilityModal)}
+            >Compatibility</button>
         {/if}
 
         <button class="btn variant-ghost-primary" on:click={() => (versionsTab = !versionsTab)}>

@@ -13,7 +13,7 @@
   import { prettyArch } from '$lib/utils/formatting';
   import { getContextClient } from '@urql/svelte';
   import type { PageData } from './$types';
-  import { getModalStore, type ModalSettings, popup } from "@skeletonlabs/skeleton";
+  import { getModalStore, type ModalSettings, popup } from '@skeletonlabs/skeleton';
 
   export let data: PageData;
 
@@ -52,7 +52,7 @@
       if (r) {
         deleteVersionFn();
       }
-    },
+    }
   };
 
   const modalStore = getModalStore();
@@ -80,18 +80,22 @@
 
       <div class="grid grid-flow-col gap-4">
         {#if canUserEdit}
-          <button class="btn variant-ghost-primary" on:click={() => goto(base + '/mod/' + modId + '/version/' + versionId + '/edit')}>
+          <button
+            class="btn variant-ghost-primary"
+            on:click={() => goto(base + '/mod/' + modId + '/version/' + versionId + '/edit')}>
             Edit
           </button>
           <button class="btn variant-ghost-primary" on:click={() => modalStore.trigger(deleteModal)}>Delete</button>
         {/if}
         {#if $version.data.getVersion.arch.length != 0}
-          <button class="btn variant-ghost-primary" use:popup={({
+          <button
+            class="btn variant-ghost-primary"
+            use:popup={{
               event: 'focus-click',
               target: 'versionArchDropdown',
               placement: 'bottom',
               closeQuery: 'a'
-            })}>
+            }}>
             <span>Download</span>
             <span class="material-icons" style="margin: 0;">arrow_drop_down</span>
           </button>
@@ -101,8 +105,9 @@
               <ul>
                 {#each $version.data.getVersion.arch as arch}
                   <li>
-                    <a class="w-full"
-                       href={API_REST + '/mod/' + modId + '/versions/' + versionId + '/' + arch.platform + '/download'}>
+                    <a
+                      class="w-full"
+                      href={API_REST + '/mod/' + modId + '/versions/' + versionId + '/' + arch.platform + '/download'}>
                       <span>Download {prettyArch(arch.platform)}</span>
                     </a>
                   </li>
@@ -112,10 +117,13 @@
           </div>
         {:else}
           <a class="btn variant-ghost-primary" href={base + '/mod/' + modId + '/version/' + versionId}>View</a>
-          <a class="btn variant-ghost-primary" href={API_REST + '/mod/' + modId + '/versions/' + versionId + '/download'}
-            >Download</a>
+          <a
+            class="btn variant-ghost-primary"
+            href={API_REST + '/mod/' + modId + '/versions/' + versionId + '/download'}>Download</a>
         {/if}
-        <button class="btn variant-ghost-primary" on:click={() => installMod($version.data.getVersion.mod.mod_reference)}>
+        <button
+          class="btn variant-ghost-primary"
+          on:click={() => installMod($version.data.getVersion.mod.mod_reference)}>
           <span>Install</span>
           <span class="material-icons">download</span>
         </button>

@@ -10,7 +10,7 @@
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
   import { getContextClient } from '@urql/svelte';
   import type { PageData } from './$types';
-  import { getModalStore, type ModalSettings } from "@skeletonlabs/skeleton";
+  import { getModalStore, type ModalSettings } from '@skeletonlabs/skeleton';
 
   export let data: PageData;
 
@@ -51,7 +51,7 @@
       if (r) {
         deleteGuideFn();
       }
-    },
+    }
   };
 
   const modalStore = getModalStore();
@@ -74,7 +74,8 @@
 
       <div>
         {#if canUserEdit}
-          <button class="btn variant-ghost-primary" on:click={() => goto(base + '/guide/' + guideId + '/edit')}>Edit</button>
+          <button class="btn variant-ghost-primary" on:click={() => goto(base + '/guide/' + guideId + '/edit')}
+            >Edit</button>
           <button class="btn variant-ghost-primary" on:click={() => modalStore.trigger(deleteModal)}>Delete</button>
         {/if}
       </div>
