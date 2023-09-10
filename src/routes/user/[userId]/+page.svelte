@@ -1,5 +1,4 @@
 <script lang="ts">
-  import Button from '@smui/button';
   import UserInfo from '$lib/components/users/UserInfo.svelte';
   import UserAvatar from '$lib/components/users/UserAvatar.svelte';
   import ModCard from '$lib/components/mods/ModCard.svelte';
@@ -35,16 +34,16 @@
 
       <div>
         {#if $me && $user.data.getUser.id === $me.id}
-          <Button variant="outlined" href="{base}/settings">Settings</Button>
+          <a class="btn variant-ghost-primary" href="{base}/settings">Settings</a>
         {/if}
 
-        <Button variant="outlined" on:click={() => (guidesTab = !guidesTab)}>
+        <button class="btn variant-ghost-primary" on:click={() => (guidesTab = !guidesTab)}>
           {#if !guidesTab}
             Guides
           {:else}
             Mods
           {/if}
-        </Button>
+        </button>
       </div>
     </div>
     <div class="grid grid-auto-max auto-cols-fr gap-4">

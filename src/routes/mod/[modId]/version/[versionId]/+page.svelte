@@ -9,14 +9,11 @@
   import { goto } from '$app/navigation';
   import { user } from '$lib/stores/user';
   import { base } from '$app/paths';
-  import Button, { Label, Icon } from '@smui/button';
-  import Dialog, { Title, Content as DialogContent } from '@smui/dialog';
-  import Menu from '@smui/menu';
-  import List, { Item } from '@smui/list';
   import { installMod } from '$lib/stores/launcher';
   import { prettyArch } from '$lib/utils/formatting';
   import { getContextClient } from '@urql/svelte';
   import type { PageData } from './$types';
+  import { getModalStore, type ModalSettings, popup } from "@skeletonlabs/skeleton";
 
   export let data: PageData;
 
@@ -26,13 +23,10 @@
 
   let errorMessage = '';
   let errorToast = false;
-  let menu: Menu;
 
   $: canUserEdit =
     $user?.roles?.deleteContent ||
     $version?.data?.getVersion.mod?.authors?.findIndex((author) => author.user_id == $user?.id) >= 0;
-
-  const deleteDialogOpen = writable<boolean>(false);
 
   const deleteVersionFn = () => {
     client
@@ -49,6 +43,19 @@
         }
       });
   };
+
+  const deleteModal: ModalSettings = {
+    type: 'confirm',
+    title: 'Delete Version?',
+    body: 'Are you sure you wish to delete this version?',
+    response: (r: boolean) => {
+      if (r) {
+        deleteVersionFn();
+      }
+    },
+  };
+
+  const modalStore = getModalStore();
 </script>
 
 <svelte:head>
@@ -73,43 +80,50 @@
 
       <div class="grid grid-flow-col gap-4">
         {#if canUserEdit}
-          <Button variant="outlined" on:click={() => goto(base + '/mod/' + modId + '/version/' + versionId + '/edit')}>
+          <button class="btn variant-ghost-primary" on:click={() => goto(base + '/mod/' + modId + '/version/' + versionId + '/edit')}>
             Edit
-          </Button>
-          <Button variant="outlined" on:click={() => deleteDialogOpen.set(true)}>Delete</Button>
+          </button>
+          <button class="btn variant-ghost-primary" on:click={() => modalStore.trigger(deleteModal)}>Delete</button>
         {/if}
         {#if $version.data.getVersion.arch.length != 0}
-          <Button variant="outlined" on:click={() => menu.setOpen(true)}>
-            <Label>Download</Label>
-            <Icon class="material-icons" style="margin: 0;">arrow_drop_down</Icon>
-          </Button>
-          <Menu bind:this={menu} anchorCorner="BOTTOM_LEFT">
-            <List>
-              {#each $version.data.getVersion.arch as arch}
-                <Item>
-                  <Button
-                    variant="outlined"
-                    class="w-full"
-                    href={API_REST + '/mod/' + modId + '/versions/' + versionId + '/' + arch.platform + '/download'}
-                    >Download {prettyArch(arch.platform)}</Button>
-                </Item>
-              {/each}
-            </List>
-          </Menu>
-        {:else}
-          <Button variant="outlined" href={base + '/mod/' + modId + '/version/' + versionId}>View</Button>
-          <Button variant="outlined" href={API_REST + '/mod/' + modId + '/versions/' + versionId + '/download'}
-            >Download</Button>
-        {/if}
-        <Button variant="outlined" on:click={() => installMod($version.data.getVersion.mod.mod_reference)}>
-          <Label>Install</Label>
-          <Icon class="material-icons">download</Icon>
-        </Button>
+          <button class="btn variant-ghost-primary" use:popup={({
+              event: 'focus-click',
+              target: 'versionArchDropdown',
+              placement: 'bottom',
+              closeQuery: 'a'
+            })}>
+            <span>Download</span>
+            <span class="material-icons" style="margin: 0;">arrow_drop_down</span>
+          </button>
 
-        <Button variant="outlined" href={base + '/mod/' + modId}>
-          <Label>Mod</Label>
-          <Icon class="material-icons">extension</Icon>
-        </Button>
+          <div class="card w-72 shadow-xl" data-popup="versionArchDropdown">
+            <nav class="list-nav">
+              <ul>
+                {#each $version.data.getVersion.arch as arch}
+                  <li>
+                    <a class="w-full"
+                       href={API_REST + '/mod/' + modId + '/versions/' + versionId + '/' + arch.platform + '/download'}>
+                      <span>Download {prettyArch(arch.platform)}</span>
+                    </a>
+                  </li>
+                {/each}
+              </ul>
+            </nav>
+          </div>
+        {:else}
+          <a class="btn variant-ghost-primary" href={base + '/mod/' + modId + '/version/' + versionId}>View</a>
+          <a class="btn variant-ghost-primary" href={API_REST + '/mod/' + modId + '/versions/' + versionId + '/download'}
+            >Download</a>
+        {/if}
+        <button class="btn variant-ghost-primary" on:click={() => installMod($version.data.getVersion.mod.mod_reference)}>
+          <span>Install</span>
+          <span class="material-icons">download</span>
+        </button>
+
+        <a class="btn variant-ghost-primary" href={base + '/mod/' + modId}>
+          <span>Mod</span>
+          <span class="material-icons">extension</span>
+        </a>
       </div>
     </div>
     <div class="grid grid-auto-max auto-cols-fr gap-4">
@@ -119,20 +133,6 @@
       </div>
     </div>
   </div>
-
-  {#if canUserEdit}
-    <Dialog bind:open={$deleteDialogOpen}>
-      <Title id="simple-title">Delete Version?</Title>
-      <DialogContent>
-        <div class="grid grid-flow-row gap-4">
-          <span>Are you sure you wish to delete this version</span>
-
-          <Button variant="outlined" on:click={() => deleteDialogOpen.set(false)}>Cancel</Button>
-          <Button variant="outlined" on:click={() => deleteVersionFn()}>Delete</Button>
-        </div>
-      </DialogContent>
-    </Dialog>
-  {/if}
 
   <Toast bind:running={errorToast}>
     <span>{errorMessage}</span>

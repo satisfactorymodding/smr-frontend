@@ -1,27 +1,27 @@
 <script lang="ts">
   import LoginDialog from '$lib/components/auth/LoginDialog.svelte';
   import { setContextClient } from '@urql/svelte';
-  import { onMobile, sidebarOpen } from '$lib/stores/global';
   import { onMount } from 'svelte';
   import { customProtocolCheck, hasLauncher } from '$lib/stores/launcher';
   import Sidebar from '$lib/components/general/Sidebar.svelte';
-  // TODO import AnnouncementHeader from '$lib/components/announcements/AnnouncementHeader.svelte';
+  import AnnouncementHeader from '$lib/components/announcements/AnnouncementHeader.svelte';
   import { base } from '$app/paths';
   import { browser } from '$app/environment';
   import { PUBLIC_GOOGLE_SITE_TAG, PUBLIC_TOLGEE_API_URL, PUBLIC_TOLGEE_API_KEY } from '$env/static/public';
   import type { LayoutData } from './$types';
   import { TolgeeProvider, Tolgee, DevTools, FormatSimple, LanguageDetector } from '@tolgee/svelte';
-  import { initializeStores } from '@skeletonlabs/skeleton';
-  import { AppShell, Modal } from '@skeletonlabs/skeleton';
+  import { initializeStores, AppShell, Modal, storePopup, Drawer, Toast } from "@skeletonlabs/skeleton";
   import TopBar from '$lib/components/general/TopBar.svelte';
   import './_global.postcss';
   import { computePosition, autoUpdate, offset, shift, flip, arrow } from '@floating-ui/dom';
-  import { storePopup } from '@skeletonlabs/skeleton';
 
   import enCommon from '../i18n/common/en.json';
   import deCommon from '../i18n/common/de.json';
   import frCommon from '../i18n/common/fr.json';
   import lvCommon from '../i18n/common/lv.json';
+  import mtCommon from '../i18n/common/mt.json';
+  import zhHansCommon from '../i18n/common/zh-Hans.json';
+  import zhHantCommon from '../i18n/common/zh-Hant.json';
 
   export let data: LayoutData;
 
@@ -47,7 +47,10 @@
         'en:common': enCommon,
         'de:common': deCommon,
         'fr:common': frCommon,
-        'lv:common': lvCommon
+        'lv:common': lvCommon,
+        'mt:common': mtCommon,
+        'zh-Hans:common': zhHansCommon,
+        'zh-Hant:common': zhHantCommon
       }
     });
 
@@ -101,15 +104,6 @@
   $: root && (accessibility ? root.classList.add('accessibility') : root.classList.remove('accessibility'));
 
   setContextClient(client);
-
-  let drawerVariant: 'modal' | undefined = 'modal';
-  let hideTopElements = true;
-  if (browser) {
-    onMobile.subscribe((mobile) => {
-      drawerVariant = mobile ? 'modal' : undefined;
-      hideTopElements = mobile;
-    });
-  }
 </script>
 
 <svelte:head>
@@ -144,7 +138,12 @@
 </svelte:head>
 
 <TolgeeProvider {tolgee}>
+  <Toast />
   <Modal />
+
+  <Drawer>
+    <Sidebar bind:accessibility />
+  </Drawer>
 
   <AppShell>
     <svelte:fragment slot="header">
@@ -152,12 +151,17 @@
     </svelte:fragment>
 
     <svelte:fragment slot="sidebarLeft">
-      <Sidebar bind:open={$sidebarOpen} bind:accessibility bind:drawerVariant bind:hideTopElements />
+      <aside class="hidden xl:block h-full">
+        <Sidebar bind:accessibility />
+      </aside>
+    </svelte:fragment>
+
+    <svelte:fragment slot="pageHeader">
+      <AnnouncementHeader />
     </svelte:fragment>
 
     <div class="app-content w-full overflow-auto">
-<!--     TODO <AnnouncementHeader />-->
-      <main class="main-content min-h-100% py-6 px-3">
+      <main class="main-content min-h-100% xl:py-6 xl:pr-3">
         <slot />
       </main>
     </div>
@@ -165,22 +169,3 @@
 
   <LoginDialog />
 </TolgeeProvider>
-
-<style lang="postcss">
-  .app-container {
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    height: 100vh;
-    max-height: 100vh;
-    width: 100vw;
-    max-width: 100vw;
-  }
-
-  .drawer-container {
-    display: flex;
-    height: 100%;
-    overflow: hidden;
-    position: relative;
-  }
-</style>

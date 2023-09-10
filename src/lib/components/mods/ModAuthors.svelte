@@ -1,7 +1,6 @@
 <script lang="ts">
   import type { User, UserMod } from '$lib/generated';
   import { assets, base } from '$app/paths';
-  import Card, { Content } from '@smui/card';
   import { getTranslate } from '@tolgee/svelte';
 
   export let authors: Array<
@@ -13,8 +12,8 @@
   export const { t } = getTranslate();
 </script>
 
-<Card>
-  <Content>
+<div class="card p-4">
+  <section>
     <div class="grid grid-flow-row gap-y-2">
       <h3 class="text-2xl my-4 font-bold">{$t('authors')}</h3>
 
@@ -32,5 +31,5 @@
         {/each}
       </div>
     </div>
-  </Content>
-</Card>
+  </section>
+</div>

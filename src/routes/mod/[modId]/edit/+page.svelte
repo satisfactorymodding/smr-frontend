@@ -7,7 +7,6 @@
   import type { ModData } from '$lib/models/mods';
   import { base } from '$app/paths';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
-  import Card, { Content } from '@smui/card';
   import { get } from 'svelte/store';
   import type { PageData } from './$types';
 
@@ -68,8 +67,8 @@
 
 <h1 class="text-4xl my-4 font-bold">Edit Mod</h1>
 
-<Card>
-  <Content>
+<div class="card p-4">
+  <section>
     {#if $mod.fetching}
       <p>Loading...</p>
     {:else if $mod.error}
@@ -77,8 +76,8 @@
     {:else}
       <ModForm {onSubmit} {initialValues} editing={true} submitText="Save" />
     {/if}
-  </Content>
-</Card>
+  </section>
+</div>
 
 <Toast bind:running={errorToast}>
   <span>{errorMessage}</span>

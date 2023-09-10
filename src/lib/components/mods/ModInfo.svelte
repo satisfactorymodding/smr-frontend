@@ -1,6 +1,5 @@
 <script lang="ts">
   import type { Mod } from '$lib/generated';
-  import Card, { Content } from '@smui/card';
   import { prettyDate, prettyNumber } from '$lib/utils/formatting';
 
   import TagList from '$lib/components/utils/TagList.svelte';
@@ -15,8 +14,8 @@
   export const { t } = getTranslate();
 </script>
 
-<Card>
-  <Content>
+<div class="card p-4">
+  <section>
     <div class="text-lg break-words">
       <h3 class="text-2xl my-4 font-bold">Info</h3>
       <span
@@ -34,5 +33,5 @@
         </span><br />
       {/if}
     </div>
-  </Content>
-</Card>
+  </section>
+</div>

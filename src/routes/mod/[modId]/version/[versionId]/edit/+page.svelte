@@ -7,7 +7,6 @@
   import type { VersionData } from '$lib/models/versions';
   import { base } from '$app/paths';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
-  import Card, { Content } from '@smui/card';
   import type { PageData } from './$types';
 
   export let data: PageData;
@@ -66,8 +65,8 @@
 
 <h1 class="text-4xl my-4 font-bold">Edit Version</h1>
 
-<Card>
-  <Content>
+<div class="card p-4">
+  <section>
     {#if $version.fetching}
       <p>Loading...</p>
     {:else if $version.error}
@@ -80,8 +79,8 @@
         editing={true}
         submitText="Save" />
     {/if}
-  </Content>
-</Card>
+  </section>
+</div>
 
 <Toast bind:running={errorToast}>
   <span>{errorMessage}</span>

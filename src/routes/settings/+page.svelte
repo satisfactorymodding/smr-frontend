@@ -12,10 +12,7 @@
   import type { Form } from '@felte/core';
   import { base } from '$app/paths';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
-  import Card, { Content } from '@smui/card';
-  import Textfield from '@smui/textfield';
   import type { Writable } from 'svelte/store';
-  import Button from '@smui/button';
 
   let errorMessage = '';
   let errorToast = false;
@@ -74,8 +71,8 @@
 
 <h1 class="text-4xl my-4 font-bold">Settings</h1>
 
-<Card>
-  <Content>
+<div class="card p-4">
+  <section>
     {#if $user === null}
       <p>Please log in</p>
     {:else}
@@ -96,20 +93,23 @@
           </div>
 
           <div class="grid grid-flow-row gap-2">
-            <Textfield bind:value={$data.username} label="Username" required />
+            <label class="label">
+              <span>Username</span>
+              <input type="text" bind:value={$data.username} required class="input p-2" />
+            </label>
             <ValidationMessage for="username" let:messages={message}>
               <span class="validation-message">{message || ''}</span>
             </ValidationMessage>
           </div>
 
           <div>
-            <Button type="submit" variant="outlined">Save</Button>
+            <button class="btn variant-ghost-primary" type="submit">Save</button>
           </div>
         </div>
       </form>
     {/if}
-  </Content>
-</Card>
+  </section>
+</div>
 
 <Toast bind:running={errorToast}>
   <span>{errorMessage}</span>

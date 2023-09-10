@@ -4,7 +4,6 @@
   import Toast from '$lib/components/general/Toast.svelte';
   import { goto } from '$app/navigation';
   import GuideForm from '$lib/components/guides/GuideForm.svelte';
-  import Card, { Content } from '@smui/card';
   import type { GuideData } from '$lib/models/guides';
   import { base } from '$app/paths';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
@@ -59,8 +58,8 @@
 
 <h1 class="text-4xl my-4 font-bold">Edit Guide</h1>
 
-<Card>
-  <Content>
+<div class="card p-4">
+  <section>
     {#if $guide.fetching}
       <p>Loading...</p>
     {:else if $guide.error}
@@ -68,8 +67,8 @@
     {:else}
       <GuideForm {onSubmit} initialValues={$guide.data.getGuide} submitText="Save" />
     {/if}
-  </Content>
-</Card>
+  </section>
+</div>
 
 <Toast bind:running={errorToast}>
   <span>{errorMessage}</span>

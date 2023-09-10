@@ -6,10 +6,7 @@
   import { markdown } from '$lib/utils/markdown';
   import type { SMLVersionData } from '$lib/models/sml-versions';
   import { smlVersionSchema } from '$lib/models/sml-versions';
-  import Textfield from '@smui/textfield';
-  import Button from '@smui/button';
   import { VersionStabilities } from '$lib/generated';
-  import Select, { Option } from '@smui/select';
   import { getTranslate } from '@tolgee/svelte';
 
   export const { t } = getTranslate();
@@ -52,14 +49,20 @@
 <form use:form>
   <div class="grid grid-flow-row gap-6">
     <div class="grid grid-flow-row gap-2">
-      <Textfield bind:value={$data.version} label={$t('version')} required />
+      <label class="label">
+        <span>{$t('version')}</span>
+        <input type="text" bind:value={$data.version} required class="input p-2" />
+      </label>
       <ValidationMessage for="version" let:messages={message}>
         <span class="validation-message">{message || ''}</span>
       </ValidationMessage>
     </div>
 
     <div class="grid grid-flow-row gap-2">
-      <Textfield bind:value={$data.satisfactory_version} label="Satisfactory {$t('version')}" required type="number" />
+      <label class="label">
+        <span>Satisfactory {$t('version')}</span>
+        <input type="text" bind:value={$data.satisfactory_version} required class="input p-2" />
+      </label>
       <ValidationMessage for="satisfactory_version" let:messages={message}>
         <span class="validation-message">{message || ''}</span>
       </ValidationMessage>
@@ -67,7 +70,10 @@
 
     {#if $data.bootstrap_version !== '0.0.0'}
       <div class="grid grid-flow-row gap-2">
-        <Textfield bind:value={$data.bootstrap_version} label="Bootstrap {$t('version')}" required />
+        <label class="label">
+          <span>Bootstrap {$t('version')}</span>
+          <input type="text" bind:value={$data.bootstrap_version} required class="input p-2" />
+        </label>
         <ValidationMessage for="bootstrap_version" let:messages={message}>
           <span class="validation-message">{message || ''}</span>
         </ValidationMessage>
@@ -75,11 +81,14 @@
     {/if}
 
     <div class="grid grid-flow-row gap-2">
-      <Select bind:value={$data.stability} label={$t('stability')}>
-        <Option value="alpha">Alpha</Option>
-        <Option value="beta">Beta</Option>
-        <Option value="release">Release</Option>
-      </Select>
+      <label class="label">
+        <span>{$t('stability')}</span>
+        <select class="select" bind:value={$data.stability}>
+          <option value="alpha">Alpha</option>
+          <option value="beta">Beta</option>
+          <option value="release">Release</option>
+        </select>
+      </label>
       <ValidationMessage for="stability" let:messages={message}>
         <span class="validation-message">{message || ''}</span>
       </ValidationMessage>
@@ -87,13 +96,14 @@
 
     <div class="grid gap-6 split">
       <div class="grid grid-flow-row gap-2 auto-rows-max">
-        <Textfield
-          textarea
-          class="vertical-textarea"
-          bind:value={$data.changelog}
-          label={$t('changelog')}
-          required
-          input$rows={10} />
+        <label class="label">
+          <span>{$t('changelog')}</span>
+          <textarea
+            class="vertical-textarea textarea p-2"
+            bind:value={$data.changelog}
+            required
+            rows={10} />
+        </label>
         <ValidationMessage for="changelog" let:messages={message}>
           <span class="validation-message">{message || ''}</span>
         </ValidationMessage>
@@ -109,45 +119,57 @@
     <div class="grid grid-flow-row gap-2">
       {#each $data.arch as data_link, i}
         <div class="gap-6 auto-rows-max">
-          <Select bind:value={data_link.platform} label="Platform">
-            <Option value="WindowsNoEditor">{$t('arch.windows-client')}</Option>
-            <Option value="WindowsServer">{$t('arch.windows-server')}</Option>
-            <Option value="LinuxServer">{$t('arch.linux-server')}</Option>
-          </Select>
+          <label class="label">
+            <span>Platform</span>
+            <select class="select" bind:value={data_link.platform}>
+              <option value="WindowsNoEditor">{$t('arch.windows-client')}</option>
+              <option value="WindowsServer">{$t('arch.windows-server')}</option>
+              <option value="LinuxServer">{$t('arch.linux-server')}</option>
+            </select>
+          </label>
 
-          <Textfield
-            name={`data_link.link`}
-            placeholder="URL"
-            bind:value={data_link.link}
-            style="min-width: 850px;"
-            label="URL" />
+          <label class="label">
+            <span>URL</span>
+            <textarea
+              class="textarea p-2"
+              name={`data_link.link`}
+              placeholder="URL"
+              bind:value={data_link.link}
+              style="min-width: 850px;" />
+          </label>
           <ValidationMessage for="data_link.link" let:messages={message}>
             <span class="validation-message">{message || ''}</span>
           </ValidationMessage>
 
           {#if !editing}
-            <Button type="button" on:click={addArch}>{$t('add')}</Button>
-            <Button type="button" disabled={$data.arch.length == 1} on:click={() => removeArch(i)}
-              >{$t('remove')}</Button>
+            <button class="btn variant-ghost-primary" on:click={addArch}>{$t('add')}</button>
+            <button class="btn variant-ghost-primary" disabled={$data.arch.length == 1} on:click={() => removeArch(i)}
+              >{$t('remove')}</button>
           {/if}
         </div>
       {/each}
 
-      <Textfield bind:value={$data.link} label={$t('link')} />
+      <label class="label">
+        <span>{$t('link')}</span>
+        <input type="text" bind:value={$data.link} required class="input p-2" />
+      </label>
       <ValidationMessage for="link" let:messages={message}>
         <span class="validation-message">{message || ''}</span>
       </ValidationMessage>
     </div>
 
     <div class="grid grid-flow-row gap-2">
-      <Textfield bind:value={$data.date} label={$t('date-and-time')} required />
+      <label class="label">
+        <span>{$t('date-and-time')}</span>
+        <input type="text" bind:value={$data.date} required class="input p-2" />
+      </label>
       <ValidationMessage for="date" let:messages={message}>
         <span class="validation-message">{message || ''}</span>
       </ValidationMessage>
     </div>
 
     <div>
-      <Button variant="outlined" type="submit">{submitText}</Button>
+      <button class="btn variant-ghost-primary" type="submit">{submitText}</button>
     </div>
   </div>
 </form>

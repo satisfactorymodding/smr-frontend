@@ -1,55 +1,47 @@
 <script lang="ts">
   import { hasLauncher, pingLauncher } from '$lib/stores/launcher';
   import { user, userToken } from '$lib/stores/user';
-  import { loginDialogOpen, onMobile, sidebarOpen } from '$lib/stores/global';
   import { goto } from '$app/navigation';
   import { base } from '$app/paths';
   import TranslationDropdown from '$lib/components/general/TranslationDropdown.svelte';
-  import { browser } from '$app/environment';
   import { getTranslate } from '@tolgee/svelte';
-  import { AppBar, type PopupSettings, popup } from "@skeletonlabs/skeleton";
+  import { AppBar, type PopupSettings, popup, getDrawerStore, getModalStore } from "@skeletonlabs/skeleton";
+  import LoginModal from "$lib/modals/LoginModal.svelte";
 
   $: isAdmin = !$user ? false : $user.roles.approveMods || $user.roles.approveVersions || $user.roles.editSMLVersions;
 
   export const { t } = getTranslate();
 
-  let drawerVariant: 'modal' | undefined = 'modal';
-  let hideTopElements = true;
-  if (browser) {
-    onMobile.subscribe((mobile) => {
-      drawerVariant = mobile ? 'modal' : undefined;
-      hideTopElements = mobile;
-    });
-  }
+  const drawerStore = getDrawerStore();
 
   const userMenuBox: PopupSettings = {
     event: 'focus-click',
     target: 'userMenuBox',
     placement: 'bottom',
-    closeQuery: '.listbox-item'
+    closeQuery: 'li'
   };
+
+  const modalStore = getModalStore();
 </script>
 
 <AppBar variant="static">
   <svelte:fragment slot="lead">
-    {#if drawerVariant === 'modal'}
-      <span class="material-icons" on:click={() => sidebarOpen.set(!$sidebarOpen)}>menu</span>
-    {/if}
-    <span>{$t('top-bar.title')}</span>
+    <button class="material-icons xl:hidden btn-sm" on:click={() => drawerStore.open()}>menu</button>
+    <span class="text-lg">{$t('top-bar.title')}</span>
   </svelte:fragment>
 
   <svelte:fragment slot="trail">
-    {#if !hideTopElements}
+    <div class="hidden xl:flex xl:gap-3">
       <TranslationDropdown />
 
       {#if $hasLauncher}
-        <button class="btn variant-ghost-primary mr-3" on:click={pingLauncher}>
+        <button class="btn btn-sm variant-ghost-primary" on:click={pingLauncher}>
           <span>Launcher Detected</span>
           <span class="material-icons">file_download</span>
         </button>
       {:else}
         <a
-          class="btn variant-ghost-primary mr-3"
+          class="btn btn-sm variant-ghost-primary"
           target="_blank"
           rel="noopener"
           href="https://smm.ficsit.app">
@@ -59,21 +51,26 @@
       {/if}
 
       {#if $user === null}
-        <button class="btn variant-ghost-primary" on:click={() => loginDialogOpen.set(true)}>
+        <button class="btn btn-sm variant-ghost-primary" on:click={() => modalStore.trigger({
+            type: 'component',
+            component: {
+              ref: LoginModal
+            },
+          })}>
           <span>{$t('user.sign-in')}</span>
           <span class="material-icons">login</span>
         </button>
       {:else}
         {#if isAdmin}
-          <button class="mr-3 btn variant-ghost-primary" on:click={() => goto(base + '/admin')}>
+          <button class="btn btn-sm variant-ghost-primary" on:click={() => goto(base + '/admin')}>
             <span>Admin</span>
             <span class="material-icons">admin_panel_settings</span>
           </button>
         {/if}
 
         <div>
-          <button class="grid grid-flow-col btn variant-ghost-primary" use:popup={userMenuBox}>
-            <div class="mr-3">{$user.username}</div>
+          <button class="grid grid-flow-col btn btn-sm variant-ghost-primary" use:popup={userMenuBox}>
+            <div>{$user.username}</div>
             <div class="rounded-full bg-cover w-7 h-7" style={`background-image: url("${$user.avatar}")`} />
           </button>
 
@@ -101,6 +98,6 @@
           </div>
         </div>
       {/if}
-    {/if}
+    </div>
   </svelte:fragment>
 </AppBar>

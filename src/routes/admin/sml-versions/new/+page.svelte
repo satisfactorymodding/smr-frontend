@@ -7,7 +7,6 @@
   import SMLVersionForm from '$lib/components/sml-versions/SMLVersionForm.svelte';
   import { base } from '$app/paths';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
-  import Card, { Content } from '@smui/card';
 
   const client = getContextClient();
 
@@ -43,11 +42,11 @@
 
 <h1 class="text-4xl my-4 font-bold">New SML Version</h1>
 
-<Card>
-  <Content>
+<div class="card p-4">
+  <section>
     <SMLVersionForm {onSubmit} />
-  </Content>
-</Card>
+  </section>
+</div>
 
 <Toast bind:running={errorToast}>
   <span>{errorMessage}</span>

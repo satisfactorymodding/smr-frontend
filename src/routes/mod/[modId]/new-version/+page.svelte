@@ -10,7 +10,6 @@
   import type { UploadState } from '$lib/utils/chunked-upload';
   import { base } from '$app/paths';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
-  import Card, { Content } from '@smui/card';
   import type { PageData } from './$types';
 
   export let data: PageData;
@@ -92,8 +91,8 @@
   {/if}
 </h1>
 
-<Card>
-  <Content>
+<div class="card p-4">
+  <section>
     {#if $mod.fetching}
       <p>Loading...</p>
     {:else if $mod.error}
@@ -122,8 +121,8 @@
         </div>
       {/if}
     {/if}
-  </Content>
-</Card>
+  </section>
+</div>
 
 <Toast bind:running={errorToast}>
   <span>{errorMessage}</span>
