@@ -4,6 +4,8 @@ ARG NODE_ENV_ARG=production
 
 RUN apt update && apt install -y curl unzip git bash
 
+SHELL ["/bin/bash", "-c"]
+
 WORKDIR /app
 
 COPY package.json package.json
