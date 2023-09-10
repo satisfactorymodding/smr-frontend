@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    
+		<link href="/smr-frontend/bun-skeleton/_app/immutable/assets/vendor.bd53154f.css" rel="stylesheet">
+		<link rel="modulepreload" href="/smr-frontend/bun-skeleton/_app/immutable/entry/start.b8e035f5.js">
+		<link rel="modulepreload" href="/smr-frontend/bun-skeleton/_app/immutable/chunks/vendor.3a29e177.js">
+		<link rel="modulepreload" href="/smr-frontend/bun-skeleton/_app/immutable/entry/app.0339ab08.js">
+		<link rel="modulepreload" href="/smr-frontend/bun-skeleton/_app/immutable/chunks/preload-helper.8b93628a.js">
+  </head>
+  <body data-theme="custom-theme">
+    <div style="display: contents" class="h-full overflow-hidden">
+			<script>
+				{
+					__sveltekit_12ndss4 = {
+						assets: "/smr-frontend/bun-skeleton",
+						base: "/smr-frontend/bun-skeleton",
+						env: {"PUBLIC_BACKEND_API_BASE":"https://api.ficsit.dev","PUBLIC_BASE_URL":"https://ficsit.dev","PUBLIC_GOOGLE_SITE_TAG":"UA-138769351-1","PUBLIC_TOLGEE_API_URL":"https://translate.ficsit.app","PUBLIC_TOLGEE_API_KEY":"tgpak_gjptqytrm5sgyy3ohfwdk2junf2wemtbnezts2lig5yte"}
+					};
+
+					const element = document.currentScript.parentElement;
+
+					Promise.all([
+						import("/smr-frontend/bun-skeleton/_app/immutable/entry/start.b8e035f5.js"),
+						import("/smr-frontend/bun-skeleton/_app/immutable/entry/app.0339ab08.js")
+					]).then(([kit, app]) => {
+						kit.start(app, element);
+					});
+
+					if ('serviceWorker' in navigator) {
+						addEventListener('load', function () {
+							navigator.serviceWorker.register('/smr-frontend/bun-skeleton/service-worker.js');
+						});
+					}
+				}
+			</script>
+		</div>
+  </body>
+</html>
