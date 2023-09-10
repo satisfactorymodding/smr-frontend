@@ -51,7 +51,7 @@ jobs:
       - name: Lint
         run: |
           set -o allexport; source .env.${{ inputs.env }}; set +o allexport
-          bun run graphql-codegen && bun run check && bun run lint
+          bun run postinstall && bun run graphql-codegen && bun run check && bun run lint
         env:
           NODE_ENV: ${{ inputs.env }}
 
