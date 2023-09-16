@@ -8,14 +8,14 @@
   import ModVersions from '$lib/components/mods/ModVersions.svelte';
   import { user } from '$lib/stores/user';
   import { goto } from '$app/navigation';
-  import Toast from '$lib/components/general/Toast.svelte';
   import { base } from '$app/paths';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
   import { modSchema, serializeSchema } from '$lib/utils/schema';
   import { getContextClient } from '@urql/svelte';
   import type { PageData } from './$types';
-  import { getModalStore, type ModalSettings } from '@skeletonlabs/skeleton';
+  import { getModalStore, getToastStore, type ModalSettings } from "@skeletonlabs/skeleton";
   import EditCompatibilityModal from '$lib/modals/EditCompatibilityModal.svelte';
+  import Page404 from "$lib/components/general/Page404.svelte";
 
   export let data: PageData;
 
@@ -25,8 +25,7 @@
 
   let versionsTab = false;
 
-  let errorMessage = '';
-  let errorToast = false;
+  const toastStore = getToastStore();
 
   $: canUserEdit =
     $user?.roles?.deleteContent || $mod?.data?.mod?.authors?.findIndex((author) => author.user_id == $user?.id) >= 0;
@@ -39,10 +38,17 @@
       .then((value) => {
         if (value.error) {
           console.error(value.error.message);
-          errorMessage = 'Error deleting mod: ' + value.error.message;
-          errorToast = true;
+          toastStore.trigger({
+            message: 'Error deleting mod: ' + value.error.message,
+            background: 'variant-filled-error',
+            autohide: false
+          });
         } else {
-          // TODO Toast or something
+          toastStore.trigger({
+            message: `Mod deleted`,
+            background: 'variant-filled-success',
+            timeout: 5000
+          });
           goto(base + '/mods');
         }
       });
@@ -131,11 +137,6 @@
       </div>
     </div>
   </div>
-
-  <Toast bind:running={errorToast}>
-    <span>{errorMessage}</span>
-  </Toast>
 {:else}
-  <!-- TODO Better 404 -->
-  404
+  <Page404/>
 {/if}

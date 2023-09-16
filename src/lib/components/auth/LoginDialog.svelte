@@ -9,14 +9,15 @@
   import { getContextClient, queryStore } from '@urql/svelte';
   import { browser } from '$app/environment';
   import { page } from '$app/stores';
-  import Toast from '../general/Toast.svelte';
   import { user, userToken } from '$lib/stores/user';
   import cookie from 'js-cookie';
   import { getTranslate } from '@tolgee/svelte';
-  import { getModalStore, type ModalSettings } from '@skeletonlabs/skeleton';
+  import { getModalStore, getToastStore, type ModalSettings } from "@skeletonlabs/skeleton";
   import LoginModal from '$lib/modals/LoginModal.svelte';
 
   const client = getContextClient();
+
+  const toastStore = getToastStore();
 
   export const { t } = getTranslate();
 
@@ -58,7 +59,11 @@
         const unsub = getMe.subscribe((response) => {
           if (!response.fetching) {
             if (response.error) {
-              // TODO Toast or something
+              toastStore.trigger({
+                message: `Error resolving user: ` + response.error.message,
+                background: 'variant-filled-error',
+                timeout: 5000
+              });
               console.error(response.error.message);
               unsub();
             } else if (response.data) {
@@ -79,8 +84,6 @@
     facebook: OAuthFacebookDocument
   };
 
-  let errorMessage = '';
-  let errorToast = false;
   let signingIn = false;
 
   $: loginModal = {
@@ -120,8 +123,11 @@
         .then((result) => {
           if (result.error) {
             console.error(result.error.message);
-            errorMessage = 'Error logging in: ' + result.error.message;
-            errorToast = true;
+            toastStore.trigger({
+              message: 'Error logging in: ' + result.error.message,
+              background: 'variant-filled-error',
+              autohide: false
+            });
           } else {
             userToken.set(result.data.session.token);
             modalStore.close();
@@ -132,7 +138,3 @@
     }
   }
 </script>
-
-<Toast bind:running={errorToast}>
-  <span>{errorMessage}</span>
-</Toast>

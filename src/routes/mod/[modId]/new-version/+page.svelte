@@ -1,6 +1,5 @@
 <script lang="ts">
   import { getContextClient, queryStore } from '@urql/svelte';
-  import Toast from '$lib/components/general/Toast.svelte';
   import { goto } from '$app/navigation';
   import type { VersionData } from '$lib/models/versions';
   import VersionForm from '$lib/components/versions/VersionForm.svelte';
@@ -11,6 +10,7 @@
   import { base } from '$app/paths';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
   import type { PageData } from './$types';
+  import { getToastStore } from "@skeletonlabs/skeleton";
 
   export let data: PageData;
 
@@ -35,8 +35,7 @@
     }
   });
 
-  let errorMessage = '';
-  let errorToast = false;
+  const toastStore = getToastStore();
 
   const mod = queryStore({
     query: GetModReferenceDocument,
@@ -58,20 +57,22 @@
       client
     )
       .then((success) => {
-        console.log({ success });
-        // TODO Toast or something
+        toastStore.trigger({
+          message: `Version created`,
+          background: 'variant-filled-success',
+          timeout: 5000
+        });
         goto(base + '/mod/' + modId + '/version/' + success.version.id);
       })
       .catch((err) => {
         console.error(err);
-        errorMessage = 'Error creating version: ' + err.message;
-        errorToast = true;
+        toastStore.trigger({
+          message: 'Error creating version: ' + err.message,
+          background: 'variant-filled-error',
+          autohide: false
+        });
         uploadStatus.set('');
       });
-
-  $: if (!errorToast) {
-    errorMessage = '';
-  }
 </script>
 
 <svelte:head>
@@ -123,7 +124,3 @@
     {/if}
   </section>
 </div>
-
-<Toast bind:running={errorToast}>
-  <span>{errorMessage}</span>
-</Toast>

@@ -4,13 +4,13 @@
   import GuideAuthor from '$lib/components/guides/GuideAuthor.svelte';
   import { user } from '$lib/stores/user';
   import { goto } from '$app/navigation';
-  import Toast from '$lib/components/general/Toast.svelte';
   import { markdown } from '$lib/utils/markdown';
   import { base } from '$app/paths';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
   import { getContextClient } from '@urql/svelte';
   import type { PageData } from './$types';
-  import { getModalStore, type ModalSettings } from '@skeletonlabs/skeleton';
+  import { getModalStore, getToastStore, type ModalSettings } from "@skeletonlabs/skeleton";
+  import Page404 from "$lib/components/general/Page404.svelte";
 
   export let data: PageData;
 
@@ -18,8 +18,7 @@
 
   const client = getContextClient();
 
-  let errorMessage = '';
-  let errorToast = false;
+  const toastStore = getToastStore();
 
   $: canUserEdit = $user?.roles?.deleteContent || $user?.id === $guide?.data?.getGuide?.user?.id;
 
@@ -30,18 +29,21 @@
       .then((value) => {
         if (value.error) {
           console.error(value.error.message);
-          errorMessage = 'Error deleting guide: ' + value.error.message;
-          errorToast = true;
+          toastStore.trigger({
+            message: 'Error deleting guide: ' + value.error.message,
+            background: 'variant-filled-error',
+            autohide: false
+          });
         } else {
-          // TODO Toast or something
+          toastStore.trigger({
+            message: `Guide deleted`,
+            background: 'variant-filled-success',
+            timeout: 5000
+          });
           goto(base + '/guides');
         }
       });
   };
-
-  $: if (!errorToast) {
-    errorMessage = '';
-  }
 
   const deleteModal: ModalSettings = {
     type: 'confirm',
@@ -97,11 +99,6 @@
       </div>
     </div>
   </div>
-
-  <Toast bind:running={errorToast}>
-    <span>{errorMessage}</span>
-  </Toast>
 {:else}
-  <!-- TODO Better 404 -->
-  404
+  <Page404/>
 {/if}

@@ -1,7 +1,6 @@
 <script lang="ts">
   import { getContextClient } from '@urql/svelte';
   import { UpdateUserDocument } from '$lib/generated';
-  import Toast from '$lib/components/general/Toast.svelte';
   import { goto } from '$app/navigation';
   import { createForm } from 'felte';
   import { validator } from '@felte/validator-zod';
@@ -13,9 +12,9 @@
   import { base } from '$app/paths';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
   import type { Writable } from 'svelte/store';
+  import { getToastStore } from "@skeletonlabs/skeleton";
 
-  let errorMessage = '';
-  let errorToast = false;
+  const toastStore = getToastStore();
 
   const client = getContextClient();
 
@@ -45,10 +44,17 @@
             .then((value) => {
               if (value.error) {
                 console.error(value.error.message);
-                errorMessage = 'Error editing user: ' + value.error.message;
-                errorToast = true;
+                toastStore.trigger({
+                  message: 'Error editing user: ' + value.error.message,
+                  background: 'variant-filled-error',
+                  autohide: false
+                });
               } else {
-                // TODO Toast or something
+                toastStore.trigger({
+                  message: `User updated`,
+                  background: 'variant-filled-success',
+                  timeout: 5000
+                });
                 goto(base + '/user/' + value.data.updateUser.id);
               }
             });
@@ -58,10 +64,6 @@
       form = createdForm.form;
       data = createdForm.data;
     }
-  }
-
-  $: if (!errorToast) {
-    errorMessage = '';
   }
 </script>
 
@@ -110,7 +112,3 @@
     {/if}
   </section>
 </div>
-
-<Toast bind:running={errorToast}>
-  <span>{errorMessage}</span>
-</Toast>

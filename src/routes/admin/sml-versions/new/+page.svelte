@@ -1,17 +1,16 @@
 <script lang="ts">
   import { getContextClient } from '@urql/svelte';
   import { NewSmlVersionDocument } from '$lib/generated';
-  import Toast from '$lib/components/general/Toast.svelte';
   import { goto } from '$app/navigation';
   import type { SMLVersionData } from '$lib/models/sml-versions';
   import SMLVersionForm from '$lib/components/sml-versions/SMLVersionForm.svelte';
   import { base } from '$app/paths';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
+  import { getToastStore } from "@skeletonlabs/skeleton";
 
   const client = getContextClient();
 
-  let errorMessage = '';
-  let errorToast = false;
+  const toastStore = getToastStore();
 
   const onSubmit = (data: SMLVersionData) => {
     client
@@ -22,18 +21,21 @@
       .then((value) => {
         if (value.error) {
           console.error(value.error.message);
-          errorMessage = 'Error creating SML Version: ' + value.error.message;
-          errorToast = true;
+          toastStore.trigger({
+            message: 'Error creating SML Version: ' + value.error.message,
+            background: 'variant-filled-error',
+            autohide: false
+          });
         } else {
-          // TODO Toast or something
+          toastStore.trigger({
+            message: `SML version created`,
+            background: 'variant-filled-success',
+            timeout: 5000
+          });
           goto(base + '/admin/sml-versions');
         }
       });
   };
-
-  $: if (!errorToast) {
-    errorMessage = '';
-  }
 </script>
 
 <svelte:head>
@@ -47,7 +49,3 @@
     <SMLVersionForm {onSubmit} />
   </section>
 </div>
-
-<Toast bind:running={errorToast}>
-  <span>{errorMessage}</span>
-</Toast>

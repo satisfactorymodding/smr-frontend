@@ -4,7 +4,6 @@
   import VersionInfo from '$lib/components/versions/VersionInfo.svelte';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
   import { API_REST } from '$lib/core';
-  import Toast from '$lib/components/general/Toast.svelte';
   import { goto } from '$app/navigation';
   import { user } from '$lib/stores/user';
   import { base } from '$app/paths';
@@ -12,7 +11,8 @@
   import { prettyArch } from '$lib/utils/formatting';
   import { getContextClient } from '@urql/svelte';
   import type { PageData } from './$types';
-  import { getModalStore, type ModalSettings, popup } from '@skeletonlabs/skeleton';
+  import { getModalStore, getToastStore, type ModalSettings, popup } from "@skeletonlabs/skeleton";
+  import Page404 from "$lib/components/general/Page404.svelte";
 
   export let data: PageData;
 
@@ -20,8 +20,7 @@
 
   const client = getContextClient();
 
-  let errorMessage = '';
-  let errorToast = false;
+  const toastStore = getToastStore();
 
   $: canUserEdit =
     $user?.roles?.deleteContent ||
@@ -34,10 +33,17 @@
       .then((value) => {
         if (value.error) {
           console.error(value.error.message);
-          errorMessage = 'Error deleting version: ' + value.error.message;
-          errorToast = true;
+          toastStore.trigger({
+            message: 'Error deleting version: ' + value.error.message,
+            background: 'variant-filled-error',
+            autohide: false
+          });
         } else {
-          // TODO Toast or something
+          toastStore.trigger({
+            message: `Version deleted`,
+            background: 'variant-filled-success',
+            timeout: 5000
+          });
           goto(base + '/mod/' + modId);
         }
       });
@@ -140,11 +146,6 @@
       </div>
     </div>
   </div>
-
-  <Toast bind:running={errorToast}>
-    <span>{errorMessage}</span>
-  </Toast>
 {:else}
-  <!-- TODO Better 404 -->
-  404
+  <Page404/>
 {/if}

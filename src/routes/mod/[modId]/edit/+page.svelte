@@ -1,7 +1,6 @@
 <script lang="ts">
   import { getContextClient, queryStore } from '@urql/svelte';
   import { EditModDocument, GetModDocument } from '$lib/generated';
-  import Toast from '$lib/components/general/Toast.svelte';
   import { goto } from '$app/navigation';
   import ModForm from '$lib/components/mods/ModForm.svelte';
   import type { ModData } from '$lib/models/mods';
@@ -9,6 +8,7 @@
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
   import { get } from 'svelte/store';
   import type { PageData } from './$types';
+  import { getToastStore } from "@skeletonlabs/skeleton";
 
   export let data: PageData;
 
@@ -16,8 +16,7 @@
 
   const client = getContextClient();
 
-  let errorMessage = '';
-  let errorToast = false;
+  const toastStore = getToastStore();
 
   const mod = queryStore({
     query: GetModDocument,
@@ -35,18 +34,21 @@
       .then((value) => {
         if (value.error) {
           console.error(value.error.message);
-          errorMessage = 'Error editing mod: ' + value.error.message;
-          errorToast = true;
+          toastStore.trigger({
+            message: 'Error editing mod: ' + value.error.message,
+            background: 'variant-filled-error',
+            autohide: false
+          });
         } else {
-          // TODO Toast or something
+          toastStore.trigger({
+            message: `Mod updated`,
+            background: 'variant-filled-success',
+            timeout: 5000
+          });
           goto(base + '/mod/' + value.data.updateMod.id);
         }
       });
   };
-
-  $: if (!errorToast) {
-    errorMessage = '';
-  }
 
   $: initialValues = $mod.data
     ? {
@@ -78,7 +80,3 @@
     {/if}
   </section>
 </div>
-
-<Toast bind:running={errorToast}>
-  <span>{errorMessage}</span>
-</Toast>

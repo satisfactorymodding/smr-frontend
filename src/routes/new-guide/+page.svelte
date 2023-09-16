@@ -1,15 +1,14 @@
 <script lang="ts">
   import { getContextClient } from '@urql/svelte';
   import { NewGuideDocument } from '$lib/generated';
-  import Toast from '$lib/components/general/Toast.svelte';
   import { goto } from '$app/navigation';
   import GuideForm from '$lib/components/guides/GuideForm.svelte';
   import type { GuideData } from '$lib/models/guides';
   import { base } from '$app/paths';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
+  import { getToastStore } from "@skeletonlabs/skeleton";
 
-  let errorMessage = '';
-  let errorToast = false;
+  const toastStore = getToastStore();
 
   const client = getContextClient();
 
@@ -22,18 +21,21 @@
       .then((value) => {
         if (value.error) {
           console.error(value.error.message);
-          errorMessage = 'Error creating guide: ' + value.error.message;
-          errorToast = true;
+          toastStore.trigger({
+            message: 'Error creating guide: ' + value.error.message,
+            background: 'variant-filled-error',
+            autohide: false
+          });
         } else {
-          // TODO Toast or something
+          toastStore.trigger({
+            message: `Guide created`,
+            background: 'variant-filled-success',
+            timeout: 5000
+          });
           goto(base + '/guide/' + value.data.createGuide.id);
         }
       });
   };
-
-  $: if (!errorToast) {
-    errorMessage = '';
-  }
 </script>
 
 <svelte:head>
@@ -47,7 +49,3 @@
     <GuideForm {onSubmit} />
   </section>
 </div>
-
-<Toast bind:running={errorToast}>
-  <span>{errorMessage}</span>
-</Toast>
