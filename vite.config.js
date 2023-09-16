@@ -21,7 +21,7 @@ const config = {
     strictPort: true
   },
   ssr: {
-    noExternal: ['node-fetch', '@cfworker/json-schema', 'dompurify', 'custom-protocol-check']
+    noExternal: ['custom-protocol-check']
   },
   optimizeDeps: {
     exclude: ['custom-protocol-check']
