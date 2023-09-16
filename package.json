@@ -111,5 +111,10 @@
   "type": "module",
   "engines": {
     "node": ">= 18.0.0"
-  }
+  },
+  "trustedDependencies": [
+    "smr-next",
+    "esbuild",
+    "@sveltejs/kit"
+  ]
 }

@@ -1,4 +1,4 @@
-FROM oven/bun:1.0.0 as build
+FROM oven/bun:1.0.2 as build
 
 ARG NODE_ENV_ARG=production
 
