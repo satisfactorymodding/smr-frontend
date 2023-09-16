@@ -8,27 +8,21 @@ Hello there! In order to simplify the process of contributing, we're putting thi
 
 At the highest level you must at least have:
 
-* [NodeJS](https://nodejs.org/en/)
-* [pnpm](https://pnpm.io/)
+* [Bun](https://bun.sh/)
 * terminal
 
-### pnpm installation
+### bun installation
 
-This project uses `pnpm`. To install `pnpm` run:
+This project uses `bun`. To install `bun` run:
 
 ```sh
-$ npm i -g pnpm
-...
-1 package is looking for funding
-  run `npm fund` for details
-
-found 0 vulnerabilities
+curl -fsSL https://bun.sh/install | bash
 ```
 
 After that run:
 
 ```sh
-$ pnpm i
+$ bun i
 ...
 > husky install
 
@@ -42,16 +36,13 @@ Now you're good to go!
 After you've installed everything, start the project via:
 
 ```sh
-$ pnpm run dev
+$ bun run dev
 ...
+  VITE v4.4.9  ready in 747 ms
 
-  SvelteKit v1.0.0-next.87
-
-  network: not exposed
-  network: not exposed
-  local:   http://localhost:3000
-
-  Use --host to expose server to other devices on this network
+  ➜  Local:   http://localhost:3000/
+  ➜  Network: use --host to expose
+  ➜  press h to show help
 ```
 
 And head to [localhost:3000](http://localhost:3000) to see it running.
@@ -66,15 +57,15 @@ Our repo is designed to help you throughout your contribution to maintain our co
 
 When your changes are ready to be committed, we do a few things:
 
-  1. we run `pnpm lint` to validate your syntax
-  1. we run `pnpx svelte-check` to validate all of your svelte
+  1. we run `bun run lint` to validate your syntax
+  1. we run `bun run check` to validate all of your svelte
   1. we validate your commit adheres to our `commitlint` conventions
 
 ### In The Remote
 
 When you've opened up your Pull Request we do a few more things:
 
-  1. we build via `pnpm graphql-codegen:prod && pnpm build`
+  1. we build via `bun run graphql-codegen:prod && bun run build`
   1. we lint the code again (you can sneak stuff in, husky is imperfect in enforcement!)
   1. if that all passes we deploy to our GitHub page!
 
