@@ -5,7 +5,6 @@
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
   import { API_REST } from '$lib/core';
   import Toast from '$lib/components/general/Toast.svelte';
-  import { writable } from 'svelte/store';
   import { goto } from '$app/navigation';
   import { user } from '$lib/stores/user';
   import { base } from '$app/paths';
