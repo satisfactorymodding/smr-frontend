@@ -8,6 +8,7 @@
   <section>
     <div class="markdown-content">
       {#await markdown(changelog) then changelogRendered}
+        <!-- eslint-disable -->
         <p>{@html changelogRendered}</p>
       {/await}
     </div>

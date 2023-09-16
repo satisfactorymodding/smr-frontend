@@ -2,16 +2,18 @@ module.exports = {
   root: true,
   parser: '@typescript-eslint/parser',
   ignorePatterns: ['*.cjs'],
-  plugins: ['@typescript-eslint', 'svelte3'],
+  plugins: ['@typescript-eslint'],
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/eslint-recommended',
     'plugin:@typescript-eslint/recommended',
-    'prettier'
+    'prettier',
+    'plugin:svelte/recommended'
   ],
   parserOptions: {
     ecmaVersion: 2019,
-    sourceType: 'module'
+    sourceType: 'module',
+    extraFileExtensions: ['.svelte']
   },
   env: {
     browser: true,
@@ -21,12 +23,13 @@ module.exports = {
   overrides: [
     {
       files: ['*.svelte'],
-      processor: 'svelte3/svelte3'
+      parser: 'svelte-eslint-parser',
+      parserOptions: {
+        parser: '@typescript-eslint/parser'
+      }
     }
   ],
   settings: {
-    'svelte3/typescript': require('typescript'),
-    'svelte3/ignore-styles': () => true,
     quotes: 'single'
   },
   rules: {
@@ -50,6 +53,11 @@ module.exports = {
     'array-bracket-newline': ['error', { multiline: true }],
     'brace-style': 'error',
     'no-shadow': 'error',
-    'no-use-before-define': 'error'
+    'no-use-before-define': 'error',
+    'no-unused-vars': 'off',
+    '@typescript-eslint/no-unused-vars': ['warn', {
+      varsIgnorePattern: '^_',
+      argsIgnorePattern: '^_'
+    }]
   }
 };

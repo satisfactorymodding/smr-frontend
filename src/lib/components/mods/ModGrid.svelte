@@ -86,7 +86,7 @@
   $: paginationSettings = {
     page: page,
     limit: perPage,
-    size: $mods?.data?.getMods?.count || 0,
+    size: totalMods,
     amounts: [8, 16, 32, 64, 100]
   } satisfies PaginationSettings;
 </script>

@@ -79,6 +79,7 @@
       title={$mod.data.mod.name}
       image={$mod.data.mod.logo} />
 
+    <!-- eslint-disable -->
     {@html serializeSchema(modSchema($mod.data.mod))}
   {/if}
 </svelte:head>

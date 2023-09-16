@@ -94,6 +94,7 @@
             <tr>
               <td colspan={5} class="p-2 markdown-content">
                 {#await markdown(version.changelog) then changelogRendered}
+                  <!-- eslint-disable -->
                   {@html changelogRendered}
                 {/await}
               </td>

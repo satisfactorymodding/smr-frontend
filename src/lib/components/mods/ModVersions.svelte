@@ -57,7 +57,7 @@
           </tr>
         </thead>
         <tbody>
-          {#each $versions.data.getMod.versions as version, i}
+          {#each $versions.data.getMod.versions as version}
             <tr on:click={() => toggleRow(version.id)}>
               <td>{version.version}</td>
               <td>{version.stability}</td>
@@ -142,6 +142,7 @@
 
                   <div class="col-span-6 p-2 markdown-content">
                     {#await markdown(version.changelog) then changelogRendered}
+                      <!-- eslint-disable -->
                       {@html changelogRendered}
                     {/await}
                   </div>

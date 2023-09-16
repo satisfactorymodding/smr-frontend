@@ -402,6 +402,7 @@ This line is way far down
         <h3 class="text-2xl my-4 font-bold">&lt;mod&gt;.uplugin format</h3>
         <div class="markdown-content">
           {#await markdown(exampleUPluginJson) then exampleUPluginJsonRendered}
+            <!-- eslint-disable -->
             {@html exampleUPluginJsonRendered}
           {/await}
         </div>
@@ -426,6 +427,7 @@ This line is way far down
               <ul>
                 {#each errors as err}
                   {#await markdown(err) then errRendered}
+                    <!-- eslint-disable -->
                     <li class="markdown-content">{@html errRendered}</li>
                   {/await}
                 {/each}
@@ -442,6 +444,7 @@ This line is way far down
     <section class="p-4">
       <div class="markdown-content">
         {#await markdownHtml then markdownHtmlRendered}
+          <!-- eslint-disable -->
           <p>{@html markdownHtmlRendered}</p>
         {/await}
       </div>

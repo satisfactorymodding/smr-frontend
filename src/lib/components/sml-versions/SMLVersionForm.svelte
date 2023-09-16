@@ -107,6 +107,7 @@
       <div class="grid grid-flow-row gap-2 auto-rows-max">
         <span>{$t('preview')}:</span>
         {#await markdown(preview) then previewRendered}
+          <!-- eslint-disable -->
           <div class="markdown-content right">{@html previewRendered}</div>
         {/await}
       </div>

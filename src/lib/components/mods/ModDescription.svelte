@@ -11,6 +11,7 @@
   <section>
     <div class="markdown-content break-words">
       {#await description then descriptionRendered}
+        <!-- eslint-disable -->
         <p>{@html descriptionRendered}</p>
       {/await}
     </div>

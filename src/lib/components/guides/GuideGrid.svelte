@@ -24,7 +24,6 @@
     variables: { offset: page * perPage, limit: perPage }
   });
 
-  let totalGuides: number;
   $: totalGuides = $guides?.data?.getGuides?.count || 0;
 
   $: gridClasses =
@@ -35,7 +34,7 @@
   $: paginationSettings = {
     page: page,
     limit: perPage,
-    size: $guides?.data?.getGuides?.count || 0,
+    size: totalGuides,
     amounts: [8, 16, 32, 64, 100]
   } satisfies PaginationSettings;
 </script>

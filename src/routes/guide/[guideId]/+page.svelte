@@ -85,6 +85,7 @@
         <section>
           <div class="markdown-content break-words">
             {#await markdown($guide.data.getGuide.guide) then guideRendered}
+              <!-- eslint-disable -->
               <p>{@html guideRendered}</p>
             {/await}
           </div>

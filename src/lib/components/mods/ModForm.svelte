@@ -39,6 +39,12 @@
 
   export let editing = false;
 
+  const { form, data } = createForm<ModData>({
+    initialValues: initialValues,
+    extend: [validator({ schema: modSchema }), reporter],
+    onSubmit: (submitted: ModData) => onSubmit(trimNonSchema(submitted, modSchema))
+  });
+
   let tags = [];
   $: {
     const anyData = $data;
@@ -48,12 +54,6 @@
     }
     $data.tagIDs = tags.map((tag) => tag.id);
   }
-
-  const { form, data } = createForm<ModData>({
-    initialValues: initialValues,
-    extend: [validator({ schema: modSchema }), reporter],
-    onSubmit: (submitted: ModData) => onSubmit(trimNonSchema(submitted, modSchema))
-  });
 
   // The GQL type NewMod does not have a compatibility field.
   // We remove the field from the data so that the GQL request is valid
@@ -128,6 +128,7 @@
       <div class="grid grid-flow-row gap-2 auto-rows-max">
         <span>{$t('preview')}:</span>
         {#await markdown(preview) then previewRendered}
+          <!-- eslint-disable -->
           <div class="markdown-content right">{@html previewRendered}</div>
         {/await}
       </div>
