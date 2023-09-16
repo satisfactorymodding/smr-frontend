@@ -87,7 +87,7 @@
             <td>{version.satisfactory_version}</td>
             <td>{version.bootstrap_version}</td>
             <td>{prettyDate(version.created_at)}</td>
-            <td>
+            <td class="!p-2.5">
               <div class="grid grid-flow-col gap-4">
                 <button class="btn btn-sm variant-ghost-primary" on:click={() => deleteVersion(version.id)}
                   >Delete</button>

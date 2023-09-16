@@ -32,6 +32,8 @@
 
     clearTimeout(timeoutHandle);
   };
+
+  let actionButtons: HTMLElement;
 </script>
 
 <div
@@ -57,9 +59,9 @@
         <img src={renderedLogo} alt="{renderedName} Logo" class="logo max-w-full max-h-full" />
       {/if}
     </div>
-    <div class="w-full flex flex-col justify-between">
-      <div class="flex flex-col p-4 pb-0">
-        <div class="mb-2">
+    <div class="w-full flex flex-col justify-between relative">
+      <div class="flex flex-col px-3 py-2 pb-0">
+        <div class="mb-1.5">
           <a href={link} class="text-white">
             <span class="text-xl break-words">{renderedName}</span>
           </a>
@@ -75,12 +77,17 @@
           <slot name="tags" />
         </div>
 
-        <div class:font-flow={fake} class="break-words">
+        <div class:font-flow={fake} style="word-wrap: anywhere">
           {renderedDescription}
+
+          <div class="float-right"
+               style="width: {(actionButtons?.clientWidth || 0) - 8}px; height: {(actionButtons?.clientHeight || 0) - 8}px">
+            <!-- Placeholder for action buttons -->
+          </div>
         </div>
       </div>
 
-      <div class="self-end py-2 px-3 flex flex-row items-center text-lg gap-1">
+      <div class="self-end py-2 px-2 flex flex-row items-center text-lg gap-1 absolute bottom-0 right-0" bind:this={actionButtons}>
         {#if !fake}
           <a
             href={link}
@@ -104,7 +111,7 @@
     border-bottom-left-radius: 4px;
   }
 
-  @media (min-width: 1279px) {
+  @media (min-width: 1024px) {
     .grid-max-auto {
       grid-template-columns: max-content auto;
     }

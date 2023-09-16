@@ -91,7 +91,7 @@
             <td>{mod.name}</td>
             <td>{mod.short_description}</td>
             <td>{prettyDate(mod.created_at)}</td>
-            <td>
+            <td class="!p-2.5">
               <div class="grid grid-flow-col gap-4">
                 <button class="btn btn-sm variant-ghost-primary" on:click={() => approveMod(mod.id)}>Approve</button>
                 <button class="btn btn-sm variant-ghost-primary" on:click={() => denyMod(mod.id)}>Deny</button>

@@ -64,7 +64,7 @@
               <td>{version.sml_version}</td>
               <td>{prettyNumber(version.downloads)}</td>
               <td>{prettyDate(version.created_at)}</td>
-              <td class="!overflow-visible">
+              <td class="!overflow-visible !p-2">
                 <div
                   role="none"
                   class="grid grid-flow-col gap-4"

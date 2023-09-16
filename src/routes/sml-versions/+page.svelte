@@ -83,7 +83,7 @@
             <td>{version.stability}</td>
             <td>{version.satisfactory_version}</td>
             <td>{prettyDate(version.date)}</td>
-            <td>
+            <td class="!p-2.5">
               <div class="grid grid-flow-col gap-4">
                 <a class="btn btn-sm variant-ghost-primary" href={version.link}>View</a>
               </div>

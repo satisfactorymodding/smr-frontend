@@ -92,7 +92,7 @@
             <td>{version.mod.name}</td>
             <td>{version.version}</td>
             <td>{prettyDate(version.created_at)}</td>
-            <td>
+            <td class="!p-2.5">
               <div class="grid grid-flow-col gap-4">
                 <button class="btn variant-ghost-primary" on:click={() => approveVersion(version.id)}>Approve</button>
                 <button class="btn variant-ghost-primary" on:click={() => denyVersion(version.id)}>Deny</button>

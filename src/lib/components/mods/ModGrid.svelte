@@ -23,12 +23,12 @@
   let orderBy: ModFields = ModFields.LastVersionDate;
 
   let perPage = 32;
-  let page = parseInt($storePage.url.searchParams.get('p'), 10) || 1;
+  let page = parseInt($storePage.url.searchParams.get('p'), 10) || 0;
 
   $: mods = queryStore({
     query: GetModsDocument,
     client,
-    variables: { offset: (page - 1) * perPage, limit: perPage, search, order, orderBy }
+    variables: { offset: page * perPage, limit: perPage, search, order, orderBy }
   });
 
   let totalMods: number;

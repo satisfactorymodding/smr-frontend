@@ -64,6 +64,7 @@
     "@graphql-codegen/typescript-urql": "^3.7.3",
     "@graphql-codegen/urql-introspection": "^2.2.1",
     "@graphql-typed-document-node/core": "^3.2.0",
+    "@parcel/watcher": "^2.3.0",
     "@rollup/plugin-terser": "^0.4.3",
     "@skeletonlabs/skeleton": "^2.1.0",
     "@skeletonlabs/tw-plugin": "^0.2.0",
