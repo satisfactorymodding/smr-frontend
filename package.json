@@ -2,9 +2,9 @@
   "name": "smr-next",
   "version": "0.0.1",
   "scripts": {
-    "build": "conc -m 1 npm:translations npm:build:static npm:build:node",
-    "build:staging": "cross-env NODE_ENV=staging conc -m 1 npm:build:static npm:build:node",
-    "build:production": "cross-env NODE_ENV=production conc -m 1 npm:build:static npm:build:node",
+    "build": "bun run translations && bun run build:static && bun run build:node",
+    "build:staging": "cross-env NODE_ENV=staging bun run build:static && bun run build:node",
+    "build:production": "cross-env NODE_ENV=production bun run build:static && bun run build:node",
     "build:node": "rimraf .svelte build/node && cross-env SVELTE_ADAPTER=node vite build",
     "build:static": "rimraf .svelte build/static && vite build",
     "check": "svelte-check --ignore build,.svelte,.svelte-kit",
