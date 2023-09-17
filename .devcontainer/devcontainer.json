@@ -1,0 +1,30 @@
+{
+	"name": "Bun & SvelteKit",
+
+	"image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+
+	"features": {
+		"ghcr.io/shyim/devcontainers-features/bun:0": {}
+	},
+
+	"postCreateCommand": "./.devcontainer/create.sh",
+
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"ms-vscode.vscode-typescript-next",
+				"svelte.svelte-vscode",
+				"dbaeumer.vscode-eslint",
+				"esbenp.prettier-vscode",
+				"bradlc.vscode-tailwindcss",
+				"csstools.postcss",
+				"mquandalle.graphql",
+				"GraphQL.vscode-graphql-execution",
+				"GraphQL.vscode-graphql",
+				"GraphQL.vscode-graphql-syntax",
+				"streetsidesoftware.code-spell-checker",
+				"vunguyentuan.vscode-postcss"
+			]
+		}
+	}
+}
