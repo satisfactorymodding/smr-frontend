@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
 
-# Install watchman
-sudo apt-get update && sudo apt-get install -y watchman
-
 # Install packages
 bun install
+
+# Source those environment variables for translation script
+source .devcontainer/env.sh staging
+
+# Download translations
+bun run translations

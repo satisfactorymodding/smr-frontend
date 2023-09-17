@@ -4,10 +4,11 @@
 	"image": "mcr.microsoft.com/devcontainers/base:ubuntu",
 
 	"features": {
-		"ghcr.io/shyim/devcontainers-features/bun:0": {}
+		"ghcr.io/shyim/devcontainers-features/bun:0": {},
+		"./ficsit-feature": {}
 	},
 
-	"postCreateCommand": "./.devcontainer/create.sh",
+	"onCreateCommand": "./.devcontainer/create.sh",
 
 	"customizations": {
 		"vscode": {
@@ -26,5 +27,9 @@
 				"vunguyentuan.vscode-postcss"
 			]
 		}
+	},
+
+	"remoteEnv": {
+		"NODE_ENV": "staging"
 	}
 }
