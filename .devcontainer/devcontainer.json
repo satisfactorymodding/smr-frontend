@@ -7,6 +7,13 @@
 		"ghcr.io/shyim/devcontainers-features/bun:0": {}
 	},
 
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	"forwardPorts": [3000],
+
+	// Consistently name the folder so that it can be added as a git safe directory inside the container
+	"workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/smr_frontend,type=bind",
+	"workspaceFolder": "/workspaces/smr_frontend",
+
 	"postCreateCommand": "./.devcontainer/create.sh",
 
 	"customizations": {
