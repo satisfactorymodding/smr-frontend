@@ -45,7 +45,7 @@
   <div class="grid grid-flow-row gap-6">
     <div class="grid grid-flow-row gap-2">
       <label class="label">
-        <span>{$t('stability')}</span>
+        <span>{$t('stability')} *</span>
         <select class="select" bind:value={$data.stability}>
           <option value="alpha">Alpha</option>
           <option value="beta">Beta</option>
@@ -59,7 +59,7 @@
 
     {#if !editing}
       <div class="grid grid-flow-row gap-2">
-        <label for="file">{$t('file')}:</label>
+        <label for="file">{$t('file')} *</label>
         <input id="file" class="base-input" name="file" type="file" accept=".zip,.smod" placeholder="File" />
         <ValidationMessage for="file" let:messages={message}>
           <span class="validation-message">{message || ''}</span>
@@ -125,7 +125,7 @@
     <div class="grid gap-6 split">
       <div class="grid grid-flow-row gap-2 auto-rows-max">
         <label class="label">
-          <span>{$t('changelog')}</span>
+          <span>{$t('changelog')} *</span>
           <textarea class="vertical-textarea textarea p-2" bind:value={$data.changelog} required rows={10} />
         </label>
         <ValidationMessage for="changelog" let:messages={message}>

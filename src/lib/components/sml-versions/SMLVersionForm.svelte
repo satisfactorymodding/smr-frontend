@@ -50,7 +50,7 @@
   <div class="grid grid-flow-row gap-6">
     <div class="grid grid-flow-row gap-2">
       <label class="label">
-        <span>{$t('version')}</span>
+        <span>{$t('version')} *</span>
         <input type="text" bind:value={$data.version} required class="input p-2" />
       </label>
       <ValidationMessage for="version" let:messages={message}>
@@ -60,7 +60,7 @@
 
     <div class="grid grid-flow-row gap-2">
       <label class="label">
-        <span>Satisfactory {$t('version')}</span>
+        <span>Satisfactory {$t('version')} *</span>
         <input type="text" bind:value={$data.satisfactory_version} required class="input p-2" />
       </label>
       <ValidationMessage for="satisfactory_version" let:messages={message}>
@@ -71,7 +71,7 @@
     {#if $data.bootstrap_version !== '0.0.0'}
       <div class="grid grid-flow-row gap-2">
         <label class="label">
-          <span>Bootstrap {$t('version')}</span>
+          <span>Bootstrap {$t('version')} *</span>
           <input type="text" bind:value={$data.bootstrap_version} required class="input p-2" />
         </label>
         <ValidationMessage for="bootstrap_version" let:messages={message}>
@@ -82,7 +82,7 @@
 
     <div class="grid grid-flow-row gap-2">
       <label class="label">
-        <span>{$t('stability')}</span>
+        <span>{$t('stability')} *</span>
         <select class="select" bind:value={$data.stability}>
           <option value="alpha">Alpha</option>
           <option value="beta">Beta</option>
@@ -97,7 +97,7 @@
     <div class="grid gap-6 split">
       <div class="grid grid-flow-row gap-2 auto-rows-max">
         <label class="label">
-          <span>{$t('changelog')}</span>
+          <span>{$t('changelog')} *</span>
           <textarea class="vertical-textarea textarea p-2" bind:value={$data.changelog} required rows={10} />
         </label>
         <ValidationMessage for="changelog" let:messages={message}>

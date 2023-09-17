@@ -70,7 +70,7 @@
     component: {
       ref: EditCompatibilityModal,
       props: {
-        mod: $mod.data
+        mod: $mod.data?.mod
       }
     }
   } satisfies ModalSettings;
