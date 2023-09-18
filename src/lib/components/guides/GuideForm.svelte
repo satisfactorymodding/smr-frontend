@@ -31,7 +31,7 @@
   <div class="grid grid-flow-row gap-6">
     <div class="grid grid-flow-row gap-2">
       <label class="label">
-        <span>{$t('entry.name')}</span>
+        <span>{$t('entry.name')} *</span>
         <input type="text" bind:value={$data.name} required class="input p-2" />
       </label>
       <ValidationMessage for="name" let:messages={message}>
@@ -41,7 +41,7 @@
 
     <div class="grid grid-flow-row gap-2">
       <label class="label">
-        <span>{$t('entry.short-description')}</span>
+        <span>{$t('entry.short-description')} *</span>
         <input type="text" bind:value={$data.short_description} required class="input p-2" />
       </label>
       <ValidationMessage for="short_description" let:messages={message}>
@@ -52,7 +52,7 @@
     <div class="grid gap-6 split">
       <div class="grid grid-flow-row gap-2 auto-rows-max">
         <label class="label">
-          <span>{$t('guide')}</span>
+          <span>{$t('guide')} *</span>
           <textarea class="vertical-textarea textarea p-2" bind:value={$data.guide} required rows={10} />
         </label>
         <ValidationMessage for="guide" let:messages={message}>

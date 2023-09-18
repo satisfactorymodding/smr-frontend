@@ -105,7 +105,7 @@
             <span class="material-icons" style="margin: 0;">arrow_drop_down</span>
           </button>
 
-          <div class="card w-72 shadow-xl" data-popup="versionArchDropdown">
+          <div class="card w-72 shadow-xl z-10" data-popup="versionArchDropdown">
             <nav class="list-nav">
               <ul>
                 {#each $version.data.getVersion.arch as arch}
