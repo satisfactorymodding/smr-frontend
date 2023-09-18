@@ -59,11 +59,6 @@
         const unsub = getMe.subscribe((response) => {
           if (!response.fetching) {
             if (response.error) {
-              toastStore.trigger({
-                message: `Error resolving user: ` + response.error.message,
-                background: 'variant-filled-error',
-                timeout: 5000
-              });
               console.error(response.error.message);
               unsub();
             } else if (response.data) {
