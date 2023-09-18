@@ -12,10 +12,7 @@ const config = {
     sveltekit(),
     purgeCss({
       safelist: {
-        greedy: [
-          /^hljs-/,
-          /^cc-/
-        ]
+        greedy: [/^hljs-/, /^cc-/]
       }
     })
   ],
