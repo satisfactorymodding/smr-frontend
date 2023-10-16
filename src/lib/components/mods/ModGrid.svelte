@@ -16,6 +16,7 @@
   import Select, { Option } from '@smui/select';
   import { browser } from '$app/environment';
   import { getTranslate } from '@tolgee/svelte';
+  import TagList from '$lib/components/utils/TagList.svelte';
 
   export let colCount: 4 | 5 = 4;
   export let newMod = false;
@@ -99,7 +100,7 @@
   {#if showSearch}
     <div class="search-container flex flex-wrap sm:px-4">
       <div class="mr-3">
-        <Select bind:value={orderBy} label={$t('order-by')}>
+        <Select bind:value={orderBy} label="Order By">
           {#each orderFields as orderField}
             <Option value={orderField[1]}>{orderField[0]}</Option>
           {/each}
