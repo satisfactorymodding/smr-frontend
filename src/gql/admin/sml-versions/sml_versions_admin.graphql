@@ -14,6 +14,7 @@ query GetSMLVersionsAdmin($filter: SMLVersionFilter) {
       date
       satisfactory_version
       bootstrap_version
+      engine_version
     }
     count
   }

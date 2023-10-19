@@ -8,7 +8,7 @@
   import { smlVersionSchema } from '$lib/models/sml-versions';
   import Textfield from '@smui/textfield';
   import Button from '@smui/button';
-  import { VersionStabilities } from '$lib/generated';
+  import { TargetName, VersionStabilities } from "$lib/generated";
   import Select, { Option } from '@smui/select';
 
   export let onSubmit: (data: SMLVersionData) => void;
@@ -22,7 +22,8 @@
     satisfactory_version: 0,
     stability: VersionStabilities.Alpha,
     version: '',
-    targets: [{ targetName: 'Windows', link: '' }]
+    targets: [{ targetName: TargetName.Windows, link: '' }],
+    engine_version: ''
   };
   export let submitText = 'Create';
 
@@ -33,7 +34,8 @@
   });
 
   const addTarget = () => {
-    addField('targets', { targetName: '', link: '' });
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    addField('targets', { targetName: '', link: '' } as any);
   };
 
   const removeTarget = (i: number) => {
@@ -142,6 +144,13 @@
     <div class="grid grid-flow-row gap-2">
       <Textfield bind:value={$data.date} label="Date and Time" required />
       <ValidationMessage for="date" let:messages={message}>
+        <span class="validation-message">{message || ''}</span>
+      </ValidationMessage>
+    </div>
+
+    <div class="grid grid-flow-row gap-2">
+      <Textfield bind:value={$data.engine_version} label="Engine version" required />
+      <ValidationMessage for="engine_version" let:messages={message}>
         <span class="validation-message">{message || ''}</span>
       </ValidationMessage>
     </div>
