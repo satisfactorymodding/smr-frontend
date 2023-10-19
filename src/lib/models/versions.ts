@@ -107,11 +107,6 @@ const validateModZip = async (
           };
         }
 
-        // Do not allow multi-target mods for now
-        return {
-          message: 'multi-target mods are not allowed'
-        };
-
         // Multi-target mod
         if (uPluginFiles.some((f) => f.name === modReference + '.uplugin')) {
           return {
