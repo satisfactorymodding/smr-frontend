@@ -2,7 +2,7 @@
   import { assets } from '$app/paths';
   import Card, { Content, Actions } from '@smui/card';
   import IconButton, { Icon } from '@smui/icon-button';
-  import { prefetch } from '$app/navigation';
+  import { goto, preloadData } from '$app/navigation';
 
   export let name = '';
   export let logo = assets + '/images/no_image.webp';
@@ -23,7 +23,7 @@
 
     timeoutHandle = setTimeout(() => {
       preloaded = true;
-      prefetch(link);
+      preloadData(link);
     }, 250) as unknown as number;
   };
 
@@ -42,7 +42,7 @@
     class:font-flow={fake}
     class="grid grid-max-auto sm:grid-cols-2 grid-cols-1 justify-items-center">
     <div class="cursor-pointer card-image-container">
-      <a href={link}>
+      <a href={link} on:keypress={() => goto(link)}>
         {#if fake}
           <div class="bg-gray-500 logo min-w-full min-h-full max-w-full max-h-full" />
         {:else}

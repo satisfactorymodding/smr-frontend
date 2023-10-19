@@ -4,10 +4,13 @@
   import Select, { Option } from '@smui/select';
   import type { Compatibility } from '$lib/generated';
   import { CompatibilityState } from '$lib/generated';
+  import { getTranslate } from '@tolgee/svelte';
 
   export let compatibility: Compatibility = {
     state: CompatibilityState.Works
   };
+
+  export const { t } = getTranslate();
 </script>
 
 <Select style="margin-bottom: 10px" bind:value={compatibility.state} label="Compatibility State">
@@ -17,5 +20,5 @@
 </Select>
 <br />
 <Textfield textarea bind:value={compatibility.note} label="Note">
-  <HelperText slot="helper">A small description regarding the compatibility.<br />Markdown supported.</HelperText>
+  <HelperText slot="helper">{$t('compatibility-info.notes')}</HelperText>
 </Textfield>

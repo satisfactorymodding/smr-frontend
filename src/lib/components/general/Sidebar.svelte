@@ -3,91 +3,99 @@
   import FormField from '@smui/form-field';
   import Drawer, { Content } from '@smui/drawer';
   import List, { Item, Text, Graphic, Separator } from '@smui/list';
-  import { goto, prefetch } from '$app/navigation';
+  import { goto, preloadData } from '$app/navigation';
   import { base } from '$app/paths';
   import { page } from '$app/stores';
   import { user, userToken } from '$lib/stores/user';
   import { loginDialogOpen } from '$lib/stores/global';
+  import { getTranslate } from '@tolgee/svelte';
 
   export let open: boolean;
   export let drawerVariant: 'modal' | 'dismissible';
   export let hideTopElements: boolean;
   export let accessibility: boolean;
 
+  export const { t } = getTranslate();
+
   $: currentPath = $page.url.pathname;
   $: isAdmin = !$user ? false : $user.roles.approveMods || $user.roles.approveVersions || $user.roles.editSMLVersions;
 
-  const top = [
+  $: top = [
     {
       url: base + '/',
       icon: 'home',
-      label: 'Home'
+      label: $t('sidebar.home')
     },
     {
       url: base + '/mods',
       icon: 'extension',
-      label: 'Mods'
+      label: $t('sidebar.mods')
     },
     {
       url: base + '/guides',
       icon: 'description',
-      label: 'Guides'
+      label: $t('sidebar.guides')
     },
     {
       url: base + '/sml-versions',
       icon: 'lightbulb',
-      label: 'SML Versions'
+      label: $t('sidebar.sml-versions')
     },
     {
       url: base + '/tools',
       icon: 'apps',
-      label: 'Tools'
+      label: $t('sidebar.tools')
     },
     {
       url: 'https://discord.gg/xkVJ73E',
       icon: 'people',
-      label: 'Discord',
+      label: $t('discord'),
       external: true
     },
     {
       url: 'https://docs.ficsit.app/',
       icon: 'find_in_page',
-      label: 'Docs',
+      label: $t('sidebar.docs'),
       external: true
     },
     {
       url: 'https://forums.ficsit.app/',
       icon: 'forum',
-      label: 'Forums',
+      label: $t('sidebar.forums'),
       external: true
     }
   ];
 
-  const bottom = [
+  $: bottom = [
     {
       url: base + '/help',
       icon: 'help',
-      label: 'Help'
+      label: $t('sidebar.help')
+    },
+    {
+      url: base + '/content-policy',
+      icon: 'verified_user',
+      label: $t('content-policy')
     },
     {
       url: base + '/privacy-policy',
       icon: 'policy',
-      label: 'Privacy Policy'
+      label: $t('sidebar.privacy-policy')
     },
     {
       url: base + '/tos',
       icon: 'gavel',
-      label: 'Terms of Service'
+      label: $t('sidebar.tos')
     },
     {
       url: base + '/api-docs',
       icon: 'api',
-      label: 'API'
+      label: $t('sidebar.api')
     },
     {
       url: 'https://github.com/satisfactorymodding',
       icon: 'source',
-      label: 'GitHub',
+      label: $t('sidebar.github'),
       external: true
     }
   ];
@@ -101,7 +109,7 @@
           {#if $user === null}
             <Item on:click={() => loginDialogOpen.set(true)}>
               <Graphic class="material-icons">login</Graphic>
-              <Text>Sign In</Text>
+              <Text>{$t('user.sign-in')}</Text>
             </Item>
           {:else}
             {#if isAdmin}
@@ -120,7 +128,7 @@
 
             <Item on:click={() => userToken.set(null)}>
               <Graphic class="material-icons">logout</Graphic>
-              <Text>Logout</Text>
+              <Text>{$t('user.logout')}</Text>
             </Item>
           {/if}
         </List>
@@ -131,7 +139,7 @@
       <List>
         {#each top as item}
           {#if !item.external}
-            <Item href={item.url} activated={currentPath === item.url} on:mouseover={() => prefetch(item.url)}>
+            <Item href={item.url} activated={currentPath === item.url} on:mouseover={() => preloadData(item.url)}>
               <Graphic class="material-icons">{item.icon}</Graphic>
               <Text>{item.label}</Text>
             </Item>
@@ -147,7 +155,7 @@
       <List>
         {#each bottom as item}
           {#if !item.external}
-            <Item href={item.url} activated={currentPath === item.url} on:mouseover={() => prefetch(item.url)}>
+            <Item href={item.url} activated={currentPath === item.url} on:mouseover={() => preloadData(item.url)}>
               <Graphic class="material-icons">{item.icon}</Graphic>
               <Text>{item.label}</Text>
             </Item>
@@ -162,14 +170,14 @@
         {#if hideTopElements}
           <Item target="_blank" href="https://smm.ficsit.app" rel="noopener">
             <Graphic class="material-icons">file_download</Graphic>
-            <Text>Mod Manager</Text>
+            <Text>{$t('sidebar.mod-manager')}</Text>
           </Item>
         {/if}
 
         <Item>
           <FormField align="end">
             <Switch bind:checked={accessibility} aria-label="Accessibility Font" />
-            <span slot="label">Accessibility Font</span>
+            <span slot="label">{$t('sidebar.accessibility-font')}</span>
           </FormField>
         </Item>
       </List>

@@ -1,10 +1,7 @@
 import { writable } from 'svelte/store';
-import type { Client } from '@urql/svelte';
-import { browser } from '$app/env';
+import { browser } from '$app/environment';
 
 export const loginDialogOpen = writable<boolean>(false);
-
-export const gqlClient = writable<undefined | Client>(undefined);
 
 let mobileQuery: MediaQueryList;
 if (browser) {
@@ -14,6 +11,7 @@ if (browser) {
 export const onMobile = writable<boolean>(mobileQuery && !mobileQuery.matches);
 export const doggoNeedsPats = writable<boolean>(false);
 export const easterEgg = writable<boolean>(false);
+export const sidebarOpen = writable<boolean>(false);
 
 if (browser) {
   mobileQuery.addEventListener('change', (data) => {

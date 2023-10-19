@@ -1,5 +1,5 @@
 import { get, writable } from 'svelte/store';
-import { browser } from '$app/env';
+import { browser } from '$app/environment';
 import { io } from 'socket.io-client';
 
 export const customProtocolCheck = writable<unknown | null>(null);

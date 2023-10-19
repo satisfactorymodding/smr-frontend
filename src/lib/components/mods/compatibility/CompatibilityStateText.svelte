@@ -1,9 +1,11 @@
 <script lang="ts">
   import type { CompatibilityState } from '$lib/generated';
+  import { getTranslate } from '@tolgee/svelte';
   export let state: CompatibilityState = null;
 
-  const textForState = state ?? 'Unknown';
-  const classForState = (s: string): string => `mod-state-${s.toString().toLowerCase()}`;
+  export const { t } = getTranslate();
+
+  const classForState = (s: CompatibilityState): string => `mod-state-${s.toString().toLowerCase()}`;
 </script>
 
-<p class="{classForState(textForState)} mod-state">{textForState}</p>
+<p class="{classForState(state)} mod-state">{$t(`compatibility-info.state.${state.toString().toLowerCase()}`)}</p>

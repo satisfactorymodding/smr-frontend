@@ -1,6 +1,6 @@
 <script lang="ts">
   import { GetModVersionsDocument } from '$lib/generated';
-  import { operationStore, query } from '@urql/svelte';
+  import { queryStore, getContextClient } from '@urql/svelte';
   import { API_REST } from '$lib/core';
   import { markdown } from '$lib/utils/markdown';
   import { base } from '$app/paths';
@@ -11,20 +11,27 @@
   import Button, { Group, GroupItem, Label, Icon } from '@smui/button';
   import { installMod } from '$lib/stores/launcher';
   import { prettyDate, prettyNumber, prettyBytes, prettyTarget } from '$lib/utils/formatting';
+  import { getTranslate } from '@tolgee/svelte';
 
   export let modId!: string;
+
+  export const { t } = getTranslate();
+
+  const client = getContextClient();
 
   let expandedVersions = new Set<string>();
   const menus = [];
 
   // TODO Pagination
-  const versions = operationStore(GetModVersionsDocument, {
-    mod: modId,
-    limit: 100,
-    offset: 0
+  const versions = queryStore({
+    query: GetModVersionsDocument,
+    client,
+    variables: {
+      mod: modId,
+      limit: 100,
+      offset: 0
+    }
   });
-
-  query(versions);
 
   const toggleRow = (versionId: string) => {
     if (expandedVersions.has(versionId)) {
@@ -38,18 +45,18 @@
 
 <Card class="h-fit">
   {#if $versions.fetching}
-    <Content>Loading...</Content>
+    <Content>{$t('loading')}...</Content>
   {:else if $versions.error}
-    <Content>Oh no... {$versions.error.message}</Content>
+    <Content>{$t('error.oh-no')} {$versions.error.message}</Content>
   {:else}
     <DataTable class="max-w-full" container$class="!overflow-visible" table$class="!overflow-visible">
       <Head>
         <Row>
-          <Cell>Version</Cell>
-          <Cell>Stability</Cell>
-          <Cell>SML Version</Cell>
-          <Cell>Downloads</Cell>
-          <Cell>Upload Date</Cell>
+          <Cell>{$t('version')}</Cell>
+          <Cell>{$t('stability')}</Cell>
+          <Cell>SML {$t('version')}</Cell>
+          <Cell>{$t('downloads')}</Cell>
+          <Cell>{$t('upload-date')}</Cell>
           <Cell><!-- Buttons --></Cell>
         </Row>
       </Head>
@@ -66,15 +73,19 @@
                 class="grid grid-flow-col gap-4"
                 on:click|stopPropagation={() => {
                   /*block table row expansion*/
+                }}
+                on:keypress|stopPropagation={() => {
+                  /*a11y-click-events-have-key-events*/
                 }}>
-                <Button variant="outlined" href={base + '/mod/' + modId + '/version/' + version.id}>View</Button>
-                {#if version.targets.length != 0}
+                <Button variant="outlined" href={base + '/mod/' + modId + '/version/' + version.id}
+                  >{$t('view')}</Button>
+                {#if version.targets.length !== 0}
                   <Group variant="outlined">
                     <Button
                       variant="outlined"
                       href={API_REST + '/mod/' + modId + '/versions/' + version.id + '/download'}
                       class="flex-grow">
-                      <Label>Download</Label>
+                      <Label>{$t('download')}</Label>
                     </Button>
                     <div use:GroupItem>
                       <Button
@@ -97,7 +108,7 @@
                                   version.id +
                                   '/' +
                                   target.targetName +
-                                  '/download'}>Download {prettyTarget(target.targetName)}</Button>
+                                  '/download'}>{$t('download')} {prettyTarget(target.targetName)}</Button>
                             </Item>
                           {/each}
                         </List>
@@ -106,11 +117,11 @@
                   </Group>
                 {:else}
                   <Button variant="outlined" href={API_REST + '/mod/' + modId + '/versions/' + version.id + '/download'}
-                    >Download</Button>
+                    >{$t('download')}</Button>
                 {/if}
 
                 <Button variant="outlined" on:click={() => installMod($versions.data.getMod.mod_reference)}>
-                  <Label>Install</Label>
+                  <Label>{$t('install')}</Label>
                   <Icon class="material-icons">download</Icon>
                 </Button>
               </div>
@@ -120,8 +131,8 @@
           {#if expandedVersions.has(version.id)}
             <Row>
               <Cell colspan={6}>
-                <div class="col-span-3 p-2">Size: {prettyBytes(version.size)}</div>
-                <div class="col-span-3 p-2">Hash: {version.hash}</div>
+                <div class="col-span-3 p-2">{$t('size')}: {prettyBytes(version.size)}</div>
+                <div class="col-span-3 p-2">{$t('hash')}: {version.hash}</div>
 
                 <div class="col-span-6 p-2 markdown-content">
                   {#await markdown(version.changelog) then changelogRendered}

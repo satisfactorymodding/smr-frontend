@@ -1,24 +1,26 @@
 <script lang="ts">
-  import { operationStore, query } from '@urql/svelte';
+  import { queryStore, getContextClient } from '@urql/svelte';
   import { GetUserDocument } from '$lib/generated';
   import { assets } from '$app/paths';
+  import { getTranslate } from '@tolgee/svelte';
 
   export let id: string;
 
-  const user = operationStore(GetUserDocument, { user: id });
+  export const { t } = getTranslate();
 
-  $: {
-    $user.variables.user = id;
-    $user.reexecute();
-  }
+  const client = getContextClient();
 
-  query(user);
+  $: user = queryStore({
+    query: GetUserDocument,
+    client,
+    variables: { user: id }
+  });
 </script>
 
 {#if $user.fetching}
-  <p class="mr-2">Loading...</p>
+  <p class="mr-2">{$t('loading')}...</p>
 {:else if $user.error}
-  <p class="mr-2">Oh no... {$user.error.message}</p>
+  <p class="mr-2">{$t('error.oh-no')}... {$user.error.message}</p>
 {:else if $user.data.getUser}
   <div class="grid grid-flow-col auto-cols-max gap-x-2 mr-2">
     <div

@@ -2,3 +2,4 @@ node_modules
 dist
 build
 .svelte
+src/i18n

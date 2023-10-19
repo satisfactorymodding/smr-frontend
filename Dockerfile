@@ -2,6 +2,8 @@ FROM node:18-alpine as build
 
 ARG NODE_ENV_ARG=production
 
+RUN apk add --no-cache curl unzip
+
 RUN npm i -g pnpm
 
 WORKDIR /app
@@ -13,10 +15,10 @@ RUN pnpm install --ignore-scripts
 
 COPY . .
 
-RUN NODE_ENV=$NODE_ENV_ARG set -o allexport; set -ex; source .env.$NODE_ENV_ARG; set +o allexport && pnpm run prepare && pnpm run graphql-codegen && pnpm run build:$NODE_ENV_ARG
+RUN NODE_ENV=$NODE_ENV_ARG set -o allexport; set -ex; source .env.$NODE_ENV_ARG; set +o allexport && pnpm run prepare && pnpm run graphql-codegen && pnpm run translations && pnpm run build:$NODE_ENV_ARG
 
 
-FROM ghcr.io/vilsol/yeet:v0.5.3 as yeet
+FROM ghcr.io/vilsol/yeet:v0.6.4 as yeet
 
 FROM node:18-alpine
 

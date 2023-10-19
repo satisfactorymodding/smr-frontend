@@ -10,6 +10,9 @@
   import Button from '@smui/button';
   import { TargetName, VersionStabilities } from '$lib/generated';
   import Select, { Option } from '@smui/select';
+  import { getTranslate } from '@tolgee/svelte';
+
+  export const { t } = getTranslate();
 
   export let onSubmit: (data: SMLVersionData) => void;
 
@@ -25,7 +28,7 @@
     targets: [{ targetName: TargetName.Windows, link: '' }],
     engine_version: ''
   };
-  export let submitText = 'Create';
+  export let submitText = $t('entry.create');
 
   const { form, data, addField, unsetField } = createForm<SMLVersionData>({
     initialValues: initialValues,
@@ -48,14 +51,14 @@
 <form use:form>
   <div class="grid grid-flow-row gap-6">
     <div class="grid grid-flow-row gap-2">
-      <Textfield bind:value={$data.version} label="Version" required />
+      <Textfield bind:value={$data.version} label={$t('version')} required />
       <ValidationMessage for="version" let:messages={message}>
         <span class="validation-message">{message || ''}</span>
       </ValidationMessage>
     </div>
 
     <div class="grid grid-flow-row gap-2">
-      <Textfield bind:value={$data.satisfactory_version} label="Satisfactory Version" required type="number" />
+      <Textfield bind:value={$data.satisfactory_version} label="Satisfactory {$t('version')}" required type="number" />
       <ValidationMessage for="satisfactory_version" let:messages={message}>
         <span class="validation-message">{message || ''}</span>
       </ValidationMessage>
@@ -63,7 +66,7 @@
 
     {#if $data.bootstrap_version !== undefined && $data.bootstrap_version !== null}
       <div class="grid grid-flow-row gap-2">
-        <Textfield bind:value={$data.bootstrap_version} label="Bootstrap Version" required />
+        <Textfield bind:value={$data.bootstrap_version} label="Bootstrap {$t('version')}" required />
         <ValidationMessage for="bootstrap_version" let:messages={message}>
           <span class="validation-message">{message || ''}</span>
         </ValidationMessage>
@@ -71,7 +74,7 @@
     {/if}
 
     <div class="grid grid-flow-row gap-2">
-      <Select bind:value={$data.stability} label="Stability">
+      <Select bind:value={$data.stability} label={$t('stability')}>
         <Option value="release">Release</Option>
         <Option value="alpha">Alpha</Option>
         <Option value="beta">Beta</Option>
@@ -87,7 +90,7 @@
           textarea
           class="vertical-textarea"
           bind:value={$data.changelog}
-          label="Changelog"
+          label={$t('changelog')}
           required
           input$rows={10} />
         <ValidationMessage for="changelog" let:messages={message}>
@@ -95,7 +98,7 @@
         </ValidationMessage>
       </div>
       <div class="grid grid-flow-row gap-2 auto-rows-max">
-        <span>Preview:</span>
+        <span>{$t('preview')}:</span>
         {#await markdown(preview) then previewRendered}
           <div class="markdown-content right">{@html previewRendered}</div>
         {/await}
@@ -108,9 +111,9 @@
         <div class="flex content-center gap-2">
           <div>
             <Select bind:value={target.targetName} label="Platform">
-              <Option value={TargetName.Windows}>Windows Client</Option>
-              <Option value={TargetName.WindowsServer}>Windows Server</Option>
-              <Option value={TargetName.LinuxServer}>Linux Server</Option>
+              <Option value={TargetName.Windows}>{$t('arch.windows-client')}</Option>
+              <Option value={TargetName.WindowsServer}>{$t('arch.windows-server')}</Option>
+              <Option value={TargetName.LinuxServer}>{$t('arch.linux-server')}</Option>
               <svelte:fragment slot="helperText">
                 <ValidationMessage for="targets.{i}.targetName" let:messages={message}>
                   <span class="validation-message">{message || ''}</span>
@@ -128,19 +131,19 @@
             </Textfield>
           </div>
           <Button type="button" disabled={$data.targets.length == 1} on:click={() => removeTarget(i)} class="h-full"
-            >Remove</Button>
+            >{$t('remove')}</Button>
         </div>
       {/each}
-      <Button type="button" on:click={addTarget}>Add target</Button>
+      <Button type="button" on:click={addTarget}>{$t('add')}</Button>
 
-      <Textfield bind:value={$data.link} label="Link" />
+      <Textfield bind:value={$data.link} label={$t('link')} />
       <ValidationMessage for="link" let:messages={message}>
         <span class="validation-message">{message || ''}</span>
       </ValidationMessage>
     </div>
 
     <div class="grid grid-flow-row gap-2">
-      <Textfield bind:value={$data.date} label="Date and Time" required />
+      <Textfield bind:value={$data.date} label={$t('date-and-time')} required />
       <ValidationMessage for="date" let:messages={message}>
         <span class="validation-message">{message || ''}</span>
       </ValidationMessage>

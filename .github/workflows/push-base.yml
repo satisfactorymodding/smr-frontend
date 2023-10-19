@@ -9,7 +9,7 @@ on:
 
 env:
   NODE_VERSION: "18"
-  PNPM_VERSION: "7.5.0"
+  PNPM_VERSION: "8.6.1"
 
 jobs:
   build:
@@ -47,7 +47,7 @@ jobs:
       - name: Build
         run: |
           set -o allexport; source .env.${{ inputs.env }}; set +o allexport
-          pnpm graphql-codegen && pnpm ${{ matrix.action }}
+          pnpm graphql-codegen && pnpm run translations && pnpm ${{ matrix.action }}
         env:
           NODE_ENV: ${{ inputs.env }}
 
@@ -124,7 +124,7 @@ jobs:
       - name: Build
         run: |
           set -o allexport; source .env.${{ inputs.env }}; set +o allexport
-          pnpm graphql-codegen && pnpm build:static
+          pnpm graphql-codegen && pnpm run translations && pnpm build:static
         env:
           SVELTE_BASE_PATH: "/${{ env.GITHUB_REPOSITORY_NAME_PART_SLUG }}/${{ env.GITHUB_REF_SLUG }}"
           NODE_ENV: ${{ inputs.env }}

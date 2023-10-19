@@ -1,33 +1,34 @@
 <script lang="ts">
-  import { operationStore, query } from '@urql/svelte';
+  import { queryStore, getContextClient } from '@urql/svelte';
   import { GetGuidesDocument } from '$lib/generated';
   import GuideCard from './GuideCard.svelte';
   import PageControls from '$lib/components/utils/PageControls.svelte';
-  import { writable } from 'svelte/store';
   import { base } from '$app/paths';
   import Button from '@smui/button';
   import { user } from '$lib/stores/user';
   import FicsitCard from '$lib/components/general/FicsitCard.svelte';
+  import { getTranslate } from '@tolgee/svelte';
 
   export let colCount: 4 | 5 = 4;
   export let newGuide = false;
 
+  const client = getContextClient();
+
   // TODO Selectable
   const perPage = 40;
 
-  const guides = operationStore(GetGuidesDocument, { offset: 0, limit: perPage });
+  const page = 1;
 
-  const page = writable(1);
-  let totalGuides: number;
+  export const { t } = getTranslate();
 
-  page.subscribe((p) => {
-    $guides.variables.offset = (p - 1) * perPage;
-    $guides.reexecute();
+  $: guides = queryStore({
+    query: GetGuidesDocument,
+    client,
+    variables: { offset: (page - 1) * perPage, limit: perPage }
   });
 
+  let totalGuides: number;
   $: totalGuides = $guides?.data?.getGuides?.count || 0;
-
-  query(guides);
 
   $: gridClasses =
     colCount == 4
@@ -37,7 +38,7 @@
 
 <div class="mb-5 ml-auto flex justify-between">
   {#if newGuide && $user !== null}
-    <Button variant="outlined" href="{base}/new-guide">New Guide</Button>
+    <Button variant="outlined" href="{base}/new-guide">{$t('guides.new')}</Button>
   {/if}
 
   <div>
@@ -52,7 +53,7 @@
     {/each}
   </div>
 {:else if $guides.error}
-  <p>Oh no... {$guides.error.message}</p>
+  <p>{$t('error.oh-no')} {$guides.error.message}</p>
 {:else}
   <div class="grid {gridClasses} gap-4">
     {#each $guides.data.getGuides.guides as guide}

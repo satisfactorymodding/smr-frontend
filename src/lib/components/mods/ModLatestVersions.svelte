@@ -3,6 +3,7 @@
   import Card, { Content } from '@smui/card';
   import { Icon } from '@smui/common';
   import { prettyDate } from '$lib/utils/formatting';
+  import { getTranslate } from '@tolgee/svelte';
   import { installMod } from '$lib/stores/launcher';
   import VersionTargetSupportGrid from '$lib/components/versions/VersionTargetSupportGrid.svelte';
   import VersionDependenciesGrid from '$lib/components/versions/VersionDependenciesGrid.svelte';
@@ -26,12 +27,14 @@
 
   export let latestVersions!: ILatestVersions;
   export let modId!: string;
+
+  export const { t } = getTranslate();
 </script>
 
 <Card>
   <Content>
     <div class="grid grid-flow-row gap-y-2">
-      <h3 class="text-2xl my-4 font-bold">Latest Versions</h3>
+      <h3 class="text-2xl my-4 font-bold">{$t('mod.latest-versions')}</h3>
 
       {#each Object.keys(stabilities) as stability}
         {#if latestVersions[stability]}
