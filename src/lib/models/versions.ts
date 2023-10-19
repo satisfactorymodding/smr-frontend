@@ -100,7 +100,7 @@ const validateModZip = async (
           };
         }
 
-        const invalidTargets = targets.filter((t) => !ALLOWED_TARGETS.includes(t));
+        const invalidTargets = targets.filter((t) => !ALLOWED_TARGETS.includes(t as TargetName));
         if (invalidTargets.length !== 0) {
           return {
             message: `invalid target(s): ${invalidTargets.join(', ')}`

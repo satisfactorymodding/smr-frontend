@@ -20,7 +20,7 @@
     <div class="text-lg break-words">
       <h3 class="text-2xl my-4 font-bold">Info</h3>
       <span
-      ><strong>Tags:</strong>
+        ><strong>Tags:</strong>
         {#if mod.tags.length === 0}
           <div class="tags">(No tags assigned)</div>
         {:else}
