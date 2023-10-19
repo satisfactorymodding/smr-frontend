@@ -4,9 +4,8 @@ query GetSMLVersionAdmin($smlVersionID: SMLVersionID!) {
     version
     stability
     link
-    arch {
-      id
-      platform
+    targets {
+      targetName
       link
     }
     changelog
@@ -14,5 +13,6 @@ query GetSMLVersionAdmin($smlVersionID: SMLVersionID!) {
     date
     satisfactory_version
     bootstrap_version
+    engine_version
   }
 }

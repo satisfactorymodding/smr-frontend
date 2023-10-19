@@ -5,9 +5,8 @@ query GetSMLVersionsAdmin($filter: SMLVersionFilter) {
       version
       stability
       link
-      arch {
-        id
-        platform
+      targets {
+        targetName
         link
       }
       changelog
@@ -15,6 +14,7 @@ query GetSMLVersionsAdmin($filter: SMLVersionFilter) {
       date
       satisfactory_version
       bootstrap_version
+      engine_version
     }
     count
   }

@@ -13,13 +13,15 @@ query GetMod($mod: String!) {
       alpha {
         id
         link
-        arch {
-          id
-          ModVersionID
-          platform
-          asset
+        targets {
+          targetName
+          link
           hash
           size
+        }
+        dependencies {
+          mod_id
+          condition
         }
         version
         created_at
@@ -28,13 +30,15 @@ query GetMod($mod: String!) {
       beta {
         id
         link
-        arch {
-          id
-          ModVersionID
-          platform
-          asset
+        targets {
+          targetName
+          link
           hash
           size
+        }
+        dependencies {
+          mod_id
+          condition
         }
         version
         created_at
@@ -43,13 +47,15 @@ query GetMod($mod: String!) {
       release {
         id
         link
-        arch {
-          id
-          ModVersionID
-          platform
-          asset
+        targets {
+          targetName
+          link
           hash
           size
+        }
+        dependencies {
+          mod_id
+          condition
         }
         version
         created_at

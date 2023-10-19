@@ -34,6 +34,7 @@
       {/await}
     </div>
   {/if}
+  <br />
   <div>{$t('experimental')}: <CompatibilityStateText state={compatibility?.EXP?.state} /></div>
   <div class="compatibility-state-description">
     {compatibilityStateDescriptions[compatibility?.EXP?.state || 'Unknown']}

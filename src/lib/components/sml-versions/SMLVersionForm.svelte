@@ -8,7 +8,7 @@
   import { smlVersionSchema } from '$lib/models/sml-versions';
   import Textfield from '@smui/textfield';
   import Button from '@smui/button';
-  import { VersionStabilities } from '$lib/generated';
+  import { TargetName, VersionStabilities } from '$lib/generated';
   import Select, { Option } from '@smui/select';
   import { getTranslate } from '@tolgee/svelte';
 
@@ -16,34 +16,33 @@
 
   export let onSubmit: (data: SMLVersionData) => void;
 
-  export let editing = false;
+  // export let editing = false;
 
   export let initialValues: SMLVersionData = {
     link: '',
-    bootstrap_version: '0.0.0',
-    date: '',
+    date: new Date().toISOString(),
     changelog: '',
     satisfactory_version: 0,
     stability: VersionStabilities.Alpha,
     version: '',
-    arch: [{ platform: '', link: '' }]
+    targets: [{ targetName: TargetName.Windows, link: '' }],
+    engine_version: ''
   };
   export let submitText = $t('entry.create');
 
-  const { form, data } = createForm<SMLVersionData>({
+  const { form, data, addField, unsetField } = createForm<SMLVersionData>({
     initialValues: initialValues,
     extend: [validator({ schema: smlVersionSchema }), reporter],
     onSubmit: (submitted: SMLVersionData) => onSubmit(trimNonSchema(submitted, smlVersionSchema))
   });
 
-  const addArch = () => {
-    $data.arch.push({ platform: '', link: '', key: '' });
-    $data.arch = $data.arch;
+  const addTarget = () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    addField('targets', { targetName: TargetName.Windows, link: '' } as any);
   };
 
-  const removeArch = (i: number) => {
-    $data.arch.splice(i, 1);
-    $data.arch = $data.arch;
+  const removeTarget = (i: number) => {
+    unsetField(`targets.${i}`);
   };
 
   $: preview = ($data.changelog as string) || '';
@@ -65,7 +64,7 @@
       </ValidationMessage>
     </div>
 
-    {#if $data.bootstrap_version !== '0.0.0'}
+    {#if $data.bootstrap_version !== undefined && $data.bootstrap_version !== null}
       <div class="grid grid-flow-row gap-2">
         <Textfield bind:value={$data.bootstrap_version} label="Bootstrap {$t('version')}" required />
         <ValidationMessage for="bootstrap_version" let:messages={message}>
@@ -76,9 +75,9 @@
 
     <div class="grid grid-flow-row gap-2">
       <Select bind:value={$data.stability} label={$t('stability')}>
+        <Option value="release">Release</Option>
         <Option value="alpha">Alpha</Option>
         <Option value="beta">Beta</Option>
-        <Option value="release">Release</Option>
       </Select>
       <ValidationMessage for="stability" let:messages={message}>
         <span class="validation-message">{message || ''}</span>
@@ -106,32 +105,36 @@
       </div>
     </div>
 
+    <span>Targets:</span>
     <div class="grid grid-flow-row gap-2">
-      {#each $data.arch as data_link, i}
-        <div class="gap-6 auto-rows-max">
-          <Select bind:value={data_link.platform} label="Platform">
-            <Option value="WindowsNoEditor">{$t('arch.windows-client')}</Option>
-            <Option value="WindowsServer">{$t('arch.windows-server')}</Option>
-            <Option value="LinuxServer">{$t('arch.linux-server')}</Option>
-          </Select>
-
-          <Textfield
-            name={`data_link.link`}
-            placeholder="URL"
-            bind:value={data_link.link}
-            style="min-width: 850px;"
-            label="URL" />
-          <ValidationMessage for="data_link.link" let:messages={message}>
-            <span class="validation-message">{message || ''}</span>
-          </ValidationMessage>
-
-          {#if !editing}
-            <Button type="button" on:click={addArch}>{$t('add')}</Button>
-            <Button type="button" disabled={$data.arch.length == 1} on:click={() => removeArch(i)}
-              >{$t('remove')}</Button>
-          {/if}
+      {#each $data.targets as target, i}
+        <div class="flex content-center gap-2">
+          <div>
+            <Select bind:value={target.targetName} label="Platform">
+              <Option value={TargetName.Windows}>{$t('arch.windows-client')}</Option>
+              <Option value={TargetName.WindowsServer}>{$t('arch.windows-server')}</Option>
+              <Option value={TargetName.LinuxServer}>{$t('arch.linux-server')}</Option>
+              <svelte:fragment slot="helperText">
+                <ValidationMessage for="targets.{i}.targetName" let:messages={message}>
+                  <span class="validation-message">{message || ''}</span>
+                </ValidationMessage>
+              </svelte:fragment>
+            </Select>
+          </div>
+          <div class="grow">
+            <Textfield placeholder="URL" bind:value={target.link} label="URL" class="w-full">
+              <svelte:fragment slot="helper">
+                <ValidationMessage for="targets.{i}.link" let:messages={message}>
+                  <span class="validation-message">{message || ''}</span>
+                </ValidationMessage>
+              </svelte:fragment>
+            </Textfield>
+          </div>
+          <Button type="button" disabled={$data.targets.length == 1} on:click={() => removeTarget(i)} class="h-full"
+            >{$t('remove')}</Button>
         </div>
       {/each}
+      <Button type="button" on:click={addTarget}>{$t('add')}</Button>
 
       <Textfield bind:value={$data.link} label={$t('link')} />
       <ValidationMessage for="link" let:messages={message}>
@@ -142,6 +145,13 @@
     <div class="grid grid-flow-row gap-2">
       <Textfield bind:value={$data.date} label={$t('date-and-time')} required />
       <ValidationMessage for="date" let:messages={message}>
+        <span class="validation-message">{message || ''}</span>
+      </ValidationMessage>
+    </div>
+
+    <div class="grid grid-flow-row gap-2">
+      <Textfield bind:value={$data.engine_version} label="Engine version" required />
+      <ValidationMessage for="engine_version" let:messages={message}>
         <span class="validation-message">{message || ''}</span>
       </ValidationMessage>
     </div>
