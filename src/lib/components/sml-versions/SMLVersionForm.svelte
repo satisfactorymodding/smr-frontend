@@ -13,7 +13,7 @@
 
   export let onSubmit: (data: SMLVersionData) => void;
 
-  export let editing = false;
+  // export let editing = false;
 
   export let initialValues: SMLVersionData = {
     link: '',
@@ -35,7 +35,7 @@
 
   const addTarget = () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    addField('targets', { targetName: '', link: '' } as any);
+    addField('targets', { targetName: TargetName.Windows, link: '' } as any);
   };
 
   const removeTarget = (i: number) => {
@@ -108,9 +108,9 @@
         <div class="flex content-center gap-2">
           <div>
             <Select bind:value={target.targetName} label="Platform">
-              <Option value="Windows">Windows Client</Option>
-              <Option value="WindowsServer">Windows Server</Option>
-              <Option value="LinuxServer">Linux Server</Option>
+              <Option value={TargetName.Windows}>Windows Client</Option>
+              <Option value={TargetName.WindowsServer}>Windows Server</Option>
+              <Option value={TargetName.LinuxServer}>Linux Server</Option>
               <svelte:fragment slot="helperText">
                 <ValidationMessage for="targets.{i}.targetName" let:messages={message}>
                   <span class="validation-message">{message || ''}</span>
@@ -120,7 +120,7 @@
           </div>
           <div class="grow">
             <Textfield placeholder="URL" bind:value={target.link} label="URL" class="w-full">
-              <svelte:fragment slot="helperText">
+              <svelte:fragment slot="helper">
                 <ValidationMessage for="targets.{i}.link" let:messages={message}>
                   <span class="validation-message">{message || ''}</span>
                 </ValidationMessage>
@@ -131,9 +131,7 @@
             >Remove</Button>
         </div>
       {/each}
-      {#if !editing}
-        <Button type="button" on:click={addTarget}>Add target</Button>
-      {/if}
+      <Button type="button" on:click={addTarget}>Add target</Button>
 
       <Textfield bind:value={$data.link} label="Link" />
       <ValidationMessage for="link" let:messages={message}>
