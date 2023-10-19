@@ -7,32 +7,37 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
     <meta http-equiv="content-security-policy" content="">
-	<link rel="modulepreload" href="/smr-frontend/dedicated-server-updates/_app/immutable/start-f5c215e3.js">
-	<link rel="modulepreload" href="/smr-frontend/dedicated-server-updates/_app/immutable/chunks/vendor-5faff0be.js">
-	<link rel="modulepreload" href="/smr-frontend/dedicated-server-updates/_app/immutable/chunks/paths-1c47712a.js">
-	<link rel="modulepreload" href="/smr-frontend/dedicated-server-updates/_app/immutable/chunks/preload-helper-4217b9ca.js">
-	<link rel="modulepreload" href="/smr-frontend/dedicated-server-updates/_app/immutable/chunks/singletons-cdeec3fd.js">
-			<script>
-		if ('serviceWorker' in navigator) {
-			addEventListener('load', function () {
-				navigator.serviceWorker.register('/smr-frontend/dedicated-server-updates/service-worker.js');
-			});
-		}
-	</script>
+		<link rel="modulepreload" href="/smr-frontend/dedicated-server-updates/_app/immutable/entry/start.55eec8e4.js">
+		<link rel="modulepreload" href="/smr-frontend/dedicated-server-updates/_app/immutable/chunks/vendor.650b2849.js">
+		<link rel="modulepreload" href="/smr-frontend/dedicated-server-updates/_app/immutable/entry/app.2d114b0e.js">
+		<link rel="modulepreload" href="/smr-frontend/dedicated-server-updates/_app/immutable/chunks/preload-helper.12267524.js">
   </head>
   <body>
     <div>
-		<script type="module" data-sveltekit-hydrate="45h">
-		import { start } from "/smr-frontend/dedicated-server-updates/_app/immutable/start-f5c215e3.js";
-		start({
-			target: document.querySelector('[data-sveltekit-hydrate="45h"]').parentNode,
-			paths: {"base":"/smr-frontend/dedicated-server-updates","assets":"/smr-frontend/dedicated-server-updates"},
-			session: {},
-			route: true,
-			spa: true,
-			trailing_slash: "never",
-			hydrate: null
-		});
-	</script></div>
+			<script>
+				{
+					__sveltekit_1t1ey7u = {
+						assets: "/smr-frontend/dedicated-server-updates",
+						base: "/smr-frontend/dedicated-server-updates",
+						env: {"PUBLIC_BACKEND_API_BASE":"https://api.ficsit.dev","PUBLIC_BASE_URL":"https://ficsit.dev","PUBLIC_GOOGLE_SITE_TAG":"UA-138769351-1","PUBLIC_TOLGEE_API_URL":"https://translate.ficsit.app","PUBLIC_TOLGEE_API_KEY":"tgpak_gjptqytrm5sgyy3ohfwdk2junf2wemtbnezts2lig5yte"}
+					};
+
+					const element = document.currentScript.parentElement;
+
+					Promise.all([
+						import("/smr-frontend/dedicated-server-updates/_app/immutable/entry/start.55eec8e4.js"),
+						import("/smr-frontend/dedicated-server-updates/_app/immutable/entry/app.2d114b0e.js")
+					]).then(([kit, app]) => {
+						kit.start(app, element);
+					});
+
+					if ('serviceWorker' in navigator) {
+						addEventListener('load', function () {
+							navigator.serviceWorker.register('/smr-frontend/dedicated-server-updates/service-worker.js');
+						});
+					}
+				}
+			</script>
+		</div>
   </body>
 </html>
