@@ -83,7 +83,6 @@ const validateModZip = async (
       .loadAsync(file as any)
       .then(async (zip) => {
         const uPluginFiles = zip.filter((filePath) => basename(filePath) == modReference + '.uplugin');
-        const targets = uPluginFiles.map((f) => dirname(f.name));
 
         if (uPluginFiles.length === 0) {
           return {
@@ -91,6 +90,29 @@ const validateModZip = async (
           };
         }
 
+        if (uPluginFiles.length === 1 && uPluginFiles[0].name === modReference + '.uplugin') {
+          // Single-target mod
+          const uPluginData = await readUPluginJson(await uPluginFiles[0].async('string'), modReference);
+
+          if ('message' in uPluginData) {
+            return uPluginData;
+          }
+
+          return {
+            uplugin: uPluginData,
+            objects: Object.keys(zip.files).filter(
+              (f) => f.endsWith('.so') || f.endsWith('.dll') || f.endsWith('.pak')
+            ),
+            targets: ['Windows']
+          };
+        }
+
+        // Do not allow multi-target mods for now
+        return {
+          message: 'multi-target mods are not allowed'
+        };
+
+        // Multi-target mod
         if (uPluginFiles.some((f) => f.name === modReference + '.uplugin')) {
           return {
             message:
@@ -99,6 +121,8 @@ const validateModZip = async (
               '.uplugin files in the root directory. New uploads must use the multi-target format. Read more on the docs: https://docs.ficsit.app/satisfactory-modding/latest/Development/UpdatingToDedi.html'
           };
         }
+
+        const targets = uPluginFiles.map((f) => dirname(f.name));
 
         const invalidTargets = targets.filter((t) => !ALLOWED_TARGETS.includes(t as TargetName));
         if (invalidTargets.length !== 0) {
@@ -131,6 +155,10 @@ const validateModZip = async (
 
         // Since the .uplugin files are all the same, we only need to parse one
         const uPluginData = await readUPluginJson(uPluginFilesData[0], modReference);
+
+        if ('message' in uPluginData) {
+          return uPluginData;
+        }
 
         return {
           uplugin: uPluginData,
