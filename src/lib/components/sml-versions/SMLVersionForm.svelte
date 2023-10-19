@@ -8,7 +8,7 @@
   import { smlVersionSchema } from '$lib/models/sml-versions';
   import Textfield from '@smui/textfield';
   import Button from '@smui/button';
-  import { TargetName, VersionStabilities } from "$lib/generated";
+  import { TargetName, VersionStabilities } from '$lib/generated';
   import Select, { Option } from '@smui/select';
 
   export let onSubmit: (data: SMLVersionData) => void;
