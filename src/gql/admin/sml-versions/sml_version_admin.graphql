@@ -13,5 +13,6 @@ query GetSMLVersionAdmin($smlVersionID: SMLVersionID!) {
     date
     satisfactory_version
     bootstrap_version
+    engine_version
   }
 }

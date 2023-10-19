@@ -15,6 +15,7 @@ export type SMLVersionData = {
   changelog: string;
   date: string;
   targets: UpdateSmlVersionTarget[];
+  engine_version: string;
 };
 
 const versionRegex =
@@ -43,5 +44,6 @@ export const smlVersionSchema = zod.object({
     }
   }),
   changelog: zod.string(),
-  date: zod.string()
+  date: zod.string(),
+  engine_version: zod.string()
 });
