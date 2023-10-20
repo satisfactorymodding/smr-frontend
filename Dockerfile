@@ -1,4 +1,4 @@
-FROM oven/bun:1.0.2 as build
+FROM oven/bun:1.0.6 as build
 
 ARG NODE_ENV_ARG=production
 
@@ -20,7 +20,7 @@ RUN NODE_ENV=$NODE_ENV_ARG set -o allexport; set -ex; source .env.$NODE_ENV_ARG;
 
 FROM ghcr.io/vilsol/yeet:v0.6.4 as yeet
 
-FROM oven/bun:1.0.0
+FROM oven/bun:1.0.6
 
 COPY --from=yeet /yeet /yeet
 

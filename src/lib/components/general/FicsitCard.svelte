@@ -52,7 +52,6 @@
       >
       <a href={link}
       on:keypress={() => goto(link)}
-      role="link"
       tabindex="0">
         {#if fake}
           <div class="bg-gray-500 logo min-w-full min-h-full max-w-full max-h-full" />

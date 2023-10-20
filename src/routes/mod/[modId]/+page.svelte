@@ -11,7 +11,6 @@
   import { base } from '$app/paths';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
   import { modSchema, serializeSchema } from '$lib/utils/schema';
-  import EditCompatibilityForm from '$lib/components/mods/compatibility/EditCompatibilityForm.svelte';
   import CompatibilityGrid from '$lib/components/mods/compatibility/CompatibilityGrid.svelte';
   import { getContextClient } from '@urql/svelte';
   import type { PageData } from './$types';

@@ -138,11 +138,9 @@
             <span class="validation-message">{message || ''}</span>
           </ValidationMessage>
 
-          {#if !editing}
-            <button class="btn variant-ghost-primary" on:click={addTarget}>{$t('add')}</button>
-            <button class="btn variant-ghost-primary" disabled={$data.targets.length == 1} on:click={() => removeTarget(i)}
-              >{$t('remove')}</button>
-          {/if}
+          <button class="btn variant-ghost-primary" on:click={addTarget}>{$t('add')}</button>
+          <button class="btn variant-ghost-primary" disabled={$data.targets.length == 1} on:click={() => removeTarget(i)}
+            >{$t('remove')}</button>
         </div>
       {/each}
 
@@ -166,7 +164,10 @@
     </div>
 
     <div class="grid grid-flow-row gap-2">
-      <Textfield bind:value={$data.engine_version} label="Engine version" required />
+      <label class="label">
+        <span>Engine version</span>
+        <input type="text" bind:value={$data.engine_version} required class="input p-2" />
+      </label>
       <ValidationMessage for="engine_version" let:messages={message}>
         <span class="validation-message">{message || ''}</span>
       </ValidationMessage>
