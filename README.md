@@ -25,6 +25,7 @@ The `dev` script executes several processes:
 * Development Server
 * GraphQL Generator
 * Svelte Checker
+* GraphQL Code Generator
 * ESLint
 
 ```shell

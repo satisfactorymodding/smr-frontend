@@ -2,7 +2,7 @@
   import type { CompatibilityInput } from '$lib/generated';
   import { CompatibilityState } from '$lib/generated';
 
-  export let compatibility: CompatibilityInput;
+  export let compatibility: CompatibilityInput = null;
   export let EXP = false;
   let iconText = 'rocket_launch';
   if (EXP) {

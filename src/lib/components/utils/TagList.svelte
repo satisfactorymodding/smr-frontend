@@ -58,7 +58,7 @@
 <div class="tags">
   {#if !editable}
     {#if tags.length > 0}
-      <div class="flex flex-row flex-wrap text-sm gap-1">
+      <div class="flex flex-row flex-wrap text-md gap-1">
         {#each tags as tag}
           <div class="text-neutral-300 lowercase">
             <span class="text-orange-500">#</span>{tag.name}

@@ -11,6 +11,8 @@
   import { base } from '$app/paths';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
   import { modSchema, serializeSchema } from '$lib/utils/schema';
+  import EditCompatibilityForm from '$lib/components/mods/compatibility/EditCompatibilityForm.svelte';
+  import CompatibilityGrid from '$lib/components/mods/compatibility/CompatibilityGrid.svelte';
   import { getContextClient } from '@urql/svelte';
   import type { PageData } from './$types';
   import { getModalStore, getToastStore, type ModalSettings } from "@skeletonlabs/skeleton";
@@ -108,7 +110,7 @@
         {/if}
         {#if canUserEditCompatibility}
           <button class="btn variant-ghost-primary" on:click={() => modalStore.trigger(editCompatibilityModal)}
-            >Compatibility</button>
+            >Edit Compatibility</button>
         {/if}
 
         <button class="btn variant-ghost-primary" on:click={() => (versionsTab = !versionsTab)}>
@@ -127,12 +129,15 @@
         <ModVersions modId={$mod.data.mod.id} />
       {/if}
       <div class="grid grid-cols-1 auto-rows-min gap-8">
-        <ModLogo
-          modLogo={$mod.data.mod.logo}
-          modName={$mod.data.mod.name}
-          compatibility={$mod.data.mod.compatibility} />
-        <ModInfo mod={$mod.data.mod} />
+        <div class="m-auto">
+          <ModLogo
+            modLogo={$mod.data.mod.logo}
+            modName={$mod.data.mod.name}
+            compatibility={$mod.data.mod.compatibility} />
+        </div>
         <ModLatestVersions modId={$mod.data.mod.id} latestVersions={$mod.data.mod.latestVersions} />
+        <CompatibilityGrid compatibility={$mod.data.mod.compatibility} />
+        <ModInfo mod={$mod.data.mod} />
         <ModAuthors authors={$mod.data.mod.authors} />
       </div>
     </div>

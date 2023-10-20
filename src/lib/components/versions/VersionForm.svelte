@@ -16,7 +16,6 @@
   export let modReference: string;
   export let onSubmit: (data: VersionData) => Promise<void>;
   export let initialValues: Omit<VersionData, 'file'> = {
-    arch: [{ ModVersionID: '', platform: '', asset: '', hash: '', size: 0 }],
     changelog: '',
     stability: VersionStabilities.Alpha
   };
@@ -87,6 +86,8 @@
               </span>
             {/if}
           </p>
+
+          <span><strong>Targets:</strong> {$modMeta.targets.join(', ')}<br /></span>
 
           {#if $modMeta.uplugin.Plugins !== undefined}
             <p>

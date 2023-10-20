@@ -9,7 +9,7 @@ Hello there! In order to simplify the process of contributing, we're putting thi
 At the highest level you must at least have:
 
 * [Bun](https://bun.sh/)
-* terminal
+* terminal (Bash is suggested but not required.)
 
 ### bun installation
 
@@ -32,6 +32,8 @@ husky - Git hooks installed
 Now you're good to go!
 
 ## Local Development
+
+See the [Readme](README.md) for how to point your local frontend to the staging or production API.
 
 After you've installed everything, start the project via:
 

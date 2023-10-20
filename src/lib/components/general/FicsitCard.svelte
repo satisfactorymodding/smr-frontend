@@ -49,15 +49,17 @@
     class="grid grid-max-auto sm:grid-cols-2 grid-cols-1 justify-items-center">
     <div
       class="cursor-pointer card-image-container"
-      on:click={() => goto(link)}
+      >
+      <a href={link}
       on:keypress={() => goto(link)}
       role="link"
       tabindex="0">
-      {#if fake}
-        <div class="bg-gray-500 logo min-w-full min-h-full max-w-full max-h-full" />
-      {:else}
-        <img src={renderedLogo} alt="{renderedName} Logo" class="logo max-w-full max-h-full" />
-      {/if}
+        {#if fake}
+          <div class="bg-gray-500 logo min-w-full min-h-full max-w-full max-h-full" />
+        {:else}
+          <img src={renderedLogo} alt="{renderedName} Logo" class="logo max-w-full max-h-full" />
+        {/if}
+      </a>
     </div>
     <div class="w-full flex flex-col justify-between relative">
       <div class="flex flex-col px-3 py-2 pb-0">

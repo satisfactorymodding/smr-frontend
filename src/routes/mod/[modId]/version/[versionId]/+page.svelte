@@ -8,7 +8,9 @@
   import { user } from '$lib/stores/user';
   import { base } from '$app/paths';
   import { installMod } from '$lib/stores/launcher';
-  import { prettyArch } from '$lib/utils/formatting';
+  import { prettyTarget } from '$lib/utils/formatting';
+  import VersionTargetSupportGrid from '$lib/components/versions/VersionTargetSupportGrid.svelte';
+  import VersionDependenciesGrid from '$lib/components/versions/VersionDependenciesGrid.svelte';
   import { getContextClient } from '@urql/svelte';
   import type { PageData } from './$types';
   import { getModalStore, getToastStore, type ModalSettings, popup } from "@skeletonlabs/skeleton";
@@ -92,7 +94,7 @@
           </button>
           <button class="btn variant-ghost-primary" on:click={() => modalStore.trigger(deleteModal)}>Delete</button>
         {/if}
-        {#if $version.data.getVersion.arch.length != 0}
+        {#if $version.data.getVersion.targets.length != 0}
           <button
             class="btn variant-ghost-primary"
             use:popup={{
@@ -108,12 +110,12 @@
           <div class="card w-72 shadow-xl z-10" data-popup="versionArchDropdown">
             <nav class="list-nav">
               <ul>
-                {#each $version.data.getVersion.arch as arch}
+                {#each $version.data.getVersion.targets as target}
                   <li>
                     <a
                       class="w-full"
-                      href={API_REST + '/mod/' + modId + '/versions/' + versionId + '/' + arch.platform + '/download'}>
-                      <span>Download {prettyArch(arch.platform)}</span>
+                      href={API_REST + '/mod/' + modId + '/versions/' + versionId + '/' + target.targetName + '/download'}>
+                      <span>Download {prettyTarget(target.targetName)}</span>
                     </a>
                   </li>
                 {/each}
@@ -143,6 +145,8 @@
       <VersionDescription changelog={$version.data.getVersion.changelog} />
       <div class="grid grid-cols-1 auto-rows-min gap-8">
         <VersionInfo version={$version.data.getVersion} />
+        <VersionTargetSupportGrid targets={$version.data.getVersion.targets} />
+        <VersionDependenciesGrid dependencies={$version.data.getVersion.dependencies} />
       </div>
     </div>
   </div>

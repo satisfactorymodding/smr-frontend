@@ -5,7 +5,7 @@
   import { markdown } from '$lib/utils/markdown';
   import { base } from '$app/paths';
   import { installMod } from '$lib/stores/launcher';
-  import { prettyDate, prettyNumber, prettyBytes, prettyArch } from '$lib/utils/formatting';
+  import { prettyDate, prettyNumber, prettyBytes, prettyTarget } from '$lib/utils/formatting';
   import { getTranslate } from '@tolgee/svelte';
   import { popup } from '@skeletonlabs/skeleton';
 
@@ -76,7 +76,7 @@
                   }}>
                   <a class="btn btn-sm variant-ghost-primary" href={base + '/mod/' + modId + '/version/' + version.id}
                     >{$t('view')}</a>
-                  {#if version.arch.length != 0}
+                  {#if version.targets.length !== 0}
                     <a
                       href={API_REST + '/mod/' + modId + '/versions/' + version.id + '/download'}
                       class="btn btn-sm variant-ghost-primary flex-grow">
@@ -97,7 +97,7 @@
                     <div class="card w-72 shadow-xl" data-popup="versionArchDropdown_{version.version}">
                       <nav class="list-nav">
                         <ul>
-                          {#each version.arch as arch, _}
+                          {#each version.targets as target, _}
                             <li>
                               <a
                                 class="w-full"
@@ -107,9 +107,9 @@
                                   '/versions/' +
                                   version.id +
                                   '/' +
-                                  arch.platform +
+                                  target.targetName +
                                   '/download'}>
-                                <span>{$t('download')} {prettyArch(arch.platform)}</span>
+                                <span>{$t('download')} {prettyTarget(target.targetName)}</span>
                               </a>
                             </li>
                           {/each}
