@@ -8,11 +8,13 @@
   import DataTable, { Body, Row, Cell } from '@smui/data-table';
   import { markdown } from '../../../utils/markdown';
   import CompatibilityIcon from '$lib/components/mods/compatibility/CompatibilityIcon.svelte';
+  import { getTranslate } from '@tolgee/svelte';
 
   let open = false;
 
   export let compatibility: CompatibilityInfoInput;
-  export const noNotesText = '(No extra notes)';
+  export const { t } = getTranslate();
+  const noNotesText = '(No extra notes)';
 </script>
 
 <Card>
@@ -59,28 +61,37 @@
               </Cell>
             </Row>
             <Row>
-              <Cell>
-                <span style="padding: 2px; white-space:normal">
-                  {#if compatibility?.EA?.note}
-                    {#await markdown(compatibility.EA.note) then rendered}
-                      {@html rendered}
-                    {/await}
-                  {:else}
-                    {noNotesText}
-                  {/if}
-                </span>
-              </Cell>
-              <Cell>
-                <span style="padding: 2px; white-space:normal">
-                  {#if compatibility?.EXP?.note}
-                    {#await markdown(compatibility.EXP.note) then rendered}
-                      {@html rendered}
-                    {/await}
-                  {:else}
-                    {noNotesText}
-                  {/if}
-                </span>
-              </Cell>
+              {#if compatibility}
+                <Cell>
+                  <span style="padding: 2px; white-space:normal">
+                    {#if compatibility?.EA?.note}
+                      {#await markdown(compatibility.EA.note) then rendered}
+                        {@html rendered}
+                      {/await}
+                    {:else}
+                      {noNotesText}
+                    {/if}
+                  </span>
+                </Cell>
+                <Cell>
+                  <span style="padding: 2px; white-space:normal">
+                    {#if compatibility?.EXP?.note}
+                      {#await markdown(compatibility.EXP.note) then rendered}
+                        {@html rendered}
+                      {/await}
+                    {:else}
+                      {noNotesText}
+                    {/if}
+                  </span>
+                </Cell>
+              {:else}
+                <!-- TODO once we switch to Skeleton instead of SMUI, make this span 2 cols.  Bug with smui types means TS doesn't understand Cell colSpan even though it's a working prop. -->
+                <Cell>
+                  <span style="padding: 2px; white-space:normal">
+                    {$t('compatibility-info.state.unknown.description')}
+                  </span>
+                </Cell>
+              {/if}
             </Row>
           </Body>
         </DataTable>
