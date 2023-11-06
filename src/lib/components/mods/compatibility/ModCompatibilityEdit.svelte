@@ -5,20 +5,21 @@
   import CompatibilityEdit from '$lib/components/mods/compatibility/CompatibilityEdit.svelte';
   import { getTranslate } from '@tolgee/svelte';
 
-  export let compatibilityInfo: CompatibilityInfo = undefined;
-  if (compatibilityInfo == null) {
-    compatibilityInfo = {
-      EA: {
-        state: CompatibilityState.Works,
-        note: ''
-      },
-      EXP: {
-        state: CompatibilityState.Works,
-        note: ''
-      }
-    };
-  }
+  const prefilledCompatibilityInfo = {
+    EA: {
+      state: CompatibilityState.Works,
+      note: ''
+    },
+    EXP: {
+      state: CompatibilityState.Works,
+      note: ''
+    }
+  };
 
+  export let compatibilityInfo: CompatibilityInfo = null;
+  $: if (compatibilityInfo == null) {
+    compatibilityInfo = prefilledCompatibilityInfo;
+  }
   export const { t } = getTranslate();
 </script>
 

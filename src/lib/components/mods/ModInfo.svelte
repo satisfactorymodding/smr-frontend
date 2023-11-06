@@ -20,6 +20,14 @@
     <div class="text-lg break-words">
       <h3 class="text-2xl my-4 font-bold">Info</h3>
       <span
+        ><strong>Tags:</strong>
+        {#if mod.tags.length === 0}
+          <div class="tags">(No tags assigned)</div>
+        {:else}
+          <TagList tags={mod.tags} />
+        {/if}
+      </span>
+      <span
         ><strong>{$t('entry.source')}:</strong>
         <a class="underline text-yellow-500" href={mod.source_url}>{mod.source_url}</a></span
       ><br />

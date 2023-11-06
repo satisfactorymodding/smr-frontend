@@ -11,6 +11,8 @@
 </script>
 
 <div class="relative overflow-hidden">
-  <OutdatedBanner {compatibility} logo={true} />
-  <img class="rounded-lg sm:max-w-lg max-w-full w-full" src={logo} alt="Logo for {modName}" />
+  <div class="sm:max-w-lg max-w-full w-full">
+    <OutdatedBanner {compatibility} logo={true} />
+    <img class="rounded-lg" src={logo} alt="Logo for {modName}" />
+  </div>
 </div>

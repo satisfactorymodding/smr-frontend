@@ -156,7 +156,7 @@
 <div class="tags" on:focusin={() => (focused = true)} on:focusout={() => (focused = false)}>
   {#if !editable}
     {#if tags.length > 0}
-      <div class="flex flex-row flex-wrap text-sm gap-1">
+      <div class="flex flex-row flex-wrap text-md gap-1">
         {#each tags as tag}
           <div class="text-neutral-300 lowercase">
             <span class="text-orange-500">#</span>{tag.name}
@@ -176,8 +176,10 @@
           <div class="text-neutral-300 whitespace-nowrap flex removable-tag">
             <span class="hashtag text-orange-500">#</span>
             <span class="cancel">
-              <i class="material-icons mdc-chip__icon mdc-chip__icon--trailing" on:click={() => deleteTag(tag)}
-                >cancel</i>
+              <i
+                class="material-icons mdc-chip__icon mdc-chip__icon--trailing"
+                on:click={() => deleteTag(tag)}
+                on:keypress={() => deleteTag(tag)}>cancel</i>
             </span>
             <p>{tag.name}</p>
           </div>

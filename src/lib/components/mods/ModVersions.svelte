@@ -10,7 +10,7 @@
   import List, { Item } from '@smui/list';
   import Button, { Group, GroupItem, Label, Icon } from '@smui/button';
   import { installMod } from '$lib/stores/launcher';
-  import { prettyDate, prettyNumber, prettyBytes, prettyArch } from '$lib/utils/formatting';
+  import { prettyDate, prettyNumber, prettyBytes, prettyTarget } from '$lib/utils/formatting';
   import { getTranslate } from '@tolgee/svelte';
 
   export let modId!: string;
@@ -73,10 +73,13 @@
                 class="grid grid-flow-col gap-4"
                 on:click|stopPropagation={() => {
                   /*block table row expansion*/
+                }}
+                on:keypress|stopPropagation={() => {
+                  /*a11y-click-events-have-key-events*/
                 }}>
                 <Button variant="outlined" href={base + '/mod/' + modId + '/version/' + version.id}
                   >{$t('view')}</Button>
-                {#if version.arch.length != 0}
+                {#if version.targets.length !== 0}
                   <Group variant="outlined">
                     <Button
                       variant="outlined"
@@ -93,7 +96,7 @@
                       </Button>
                       <Menu bind:this={menus[i]} anchorCorner="TOP_LEFT">
                         <List>
-                          {#each version.arch as arch, _}
+                          {#each version.targets as target, _}
                             <Item>
                               <Button
                                 class="w-full"
@@ -104,8 +107,8 @@
                                   '/versions/' +
                                   version.id +
                                   '/' +
-                                  arch.platform +
-                                  '/download'}>{$t('download')} {prettyArch(arch.platform)}</Button>
+                                  target.targetName +
+                                  '/download'}>{$t('download')} {prettyTarget(target.targetName)}</Button>
                             </Item>
                           {/each}
                         </List>

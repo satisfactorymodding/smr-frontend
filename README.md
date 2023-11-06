@@ -24,6 +24,7 @@ The `dev` script executes several processes:
 
 * Development Server
 * Svelte Checker
+* GraphQL Code Generator
 * ESLint
 
 ```shell
@@ -31,9 +32,13 @@ pnpm dev
 ```
 
 If you don't wish to run the backend (which most likely you don't),
-you can point your local frontend to the staging or production API's using environment variables:
+you can point your local frontend to the staging or production APIs using environment variables:
+(note this example env var syntax only works in bash)
 
 ```shell
 NODE_ENV=staging pnpm dev
 NODE_ENV=production pnpm dev
 ```
+
+You can make your own `.env.something.local` files if you need to point to a different API
+or have a different local configuration.
