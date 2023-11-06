@@ -139,7 +139,11 @@
       <List>
         {#each top as item}
           {#if !item.external}
-            <Item href={item.url} activated={currentPath === item.url} on:mouseover={() => preloadData(item.url)}>
+            <Item
+              on:click={() => (open = false)}
+              href={item.url}
+              activated={currentPath === item.url}
+              on:mouseover={() => preloadData(item.url)}>
               <Graphic class="material-icons">{item.icon}</Graphic>
               <Text>{item.label}</Text>
             </Item>
@@ -155,7 +159,11 @@
       <List>
         {#each bottom as item}
           {#if !item.external}
-            <Item href={item.url} activated={currentPath === item.url} on:mouseover={() => preloadData(item.url)}>
+            <Item
+              on:click={() => (open = false)}
+              href={item.url}
+              activated={currentPath === item.url}
+              on:mouseover={() => preloadData(item.url)}>
               <Graphic class="material-icons">{item.icon}</Graphic>
               <Text>{item.label}</Text>
             </Item>
