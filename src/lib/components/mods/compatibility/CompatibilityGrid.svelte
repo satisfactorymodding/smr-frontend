@@ -85,7 +85,6 @@
                 </span>
               </td>
             {:else}
-              <!-- TODO once we switch to Skeleton instead of SMUI, make this span 2 cols.  Bug with smui types means TS doesn't understand Cell colSpan even though it's a working prop. -->
               <td colspan="2">
                   <span style="padding: 2px; white-space:normal">
                     {$t('compatibility-info.state.unknown.description')}
