@@ -107,26 +107,44 @@
       {#if hideTopElements}
         <List>
           {#if $user === null}
-            <Item on:click={() => loginDialogOpen.set(true)}>
+            <Item
+              on:click={() => {
+                loginDialogOpen.set(true);
+                open = false;
+              }}>
               <Graphic class="material-icons">login</Graphic>
               <Text>{$t('user.sign-in')}</Text>
             </Item>
           {:else}
             {#if isAdmin}
-              <Item on:click={() => goto(base + '/admin')} activated={currentPath.startsWith('/admin')}>
+              <Item
+                on:click={() => {
+                  open = false;
+                  return goto(base + '/admin');
+                }}
+                activated={currentPath.startsWith('/admin')}>
                 <Graphic class="material-icons">admin_panel_settings</Graphic>
                 <Text>Admin</Text>
               </Item>
             {/if}
 
-            <Item on:click={() => goto(base + '/user/' + $user.id)} activated={currentPath.startsWith('/user')}>
+            <Item
+              on:click={() => {
+                open = false;
+                return goto(base + '/user/' + $user.id);
+              }}
+              activated={currentPath.startsWith('/user')}>
               <Graphic>
                 <div class="rounded-full bg-cover w-7 h-7" style={`background-image: url("${$user.avatar}")`} />
               </Graphic>
               <Text>{$user.username}</Text>
             </Item>
 
-            <Item on:click={() => userToken.set(null)}>
+            <Item
+              on:click={() => {
+                userToken.set(null);
+                open = false;
+              }}>
               <Graphic class="material-icons">logout</Graphic>
               <Text>{$t('user.logout')}</Text>
             </Item>
