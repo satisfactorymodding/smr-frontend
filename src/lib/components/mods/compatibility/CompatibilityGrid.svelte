@@ -5,8 +5,11 @@
   import CompatibilityIcon from '$lib/components/mods/compatibility/CompatibilityIcon.svelte';
   import { getModalStore } from "@skeletonlabs/skeleton";
   import CompatibilityModal from "$lib/modals/CompatibilityModal.svelte";
+  import { getTranslate } from '@tolgee/svelte';
 
   export let compatibility: CompatibilityInfoInput;
+
+  export const { t } = getTranslate();
   export const noNotesText = '(No extra notes)';
 
   const modalStore = getModalStore();
@@ -58,28 +61,37 @@
             </td>
           </tr>
           <tr class="border rounded !border-surface-500">
-            <td>
-              <span style="padding: 2px; white-space:normal">
-                {#if compatibility?.EA?.note}
-                  {#await markdown(compatibility.EA.note) then rendered}
-                    {@html rendered}
-                  {/await}
-                {:else}
-                  {noNotesText}
-                {/if}
-              </span>
-            </td>
-            <td>
-              <span style="padding: 2px; white-space:normal">
-                {#if compatibility?.EXP?.note}
-                  {#await markdown(compatibility.EXP.note) then rendered}
-                    {@html rendered}
-                  {/await}
-                {:else}
-                  {noNotesText}
-                {/if}
-              </span>
-            </td>
+            {#if compatibility}
+              <td>
+                <span style="padding: 2px; white-space:normal">
+                  {#if compatibility?.EA?.note}
+                    {#await markdown(compatibility.EA.note) then rendered}
+                      {@html rendered}
+                    {/await}
+                  {:else}
+                    {noNotesText}
+                  {/if}
+                </span>
+              </td>
+              <td>
+                <span style="padding: 2px; white-space:normal">
+                  {#if compatibility?.EXP?.note}
+                    {#await markdown(compatibility.EXP.note) then rendered}
+                      {@html rendered}
+                    {/await}
+                  {:else}
+                    {noNotesText}
+                  {/if}
+                </span>
+              </td>
+            {:else}
+              <!-- TODO once we switch to Skeleton instead of SMUI, make this span 2 cols.  Bug with smui types means TS doesn't understand Cell colSpan even though it's a working prop. -->
+              <td colspan="2">
+                  <span style="padding: 2px; white-space:normal">
+                    {$t('compatibility-info.state.unknown.description')}
+                  </span>
+              </td>
+            {/if}
           </tr>
         </tbody>
       </table>

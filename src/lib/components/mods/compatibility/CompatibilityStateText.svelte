@@ -9,8 +9,6 @@
   const classForState = (s: CompatibilityState): string => `mod-state-${s.toString().toLowerCase()}`;
 </script>
 
-{#if state}
-  <p class="{classForState(textForState)} mod-state">
-    {$t(`compatibility-info.state.${textForState.toString().toLowerCase()}`)}
-  </p>
-{/if}
+<p class="{classForState(textForState)} mod-state">
+  {$t(`compatibility-info.state.${textForState.toString().toLowerCase()}`)}
+</p>
