@@ -162,11 +162,27 @@ you probably need to change what environment variables you're using.
 
 ### Signing In
 
-Getting signed in on your locally hosted copy requires copying the token from the `ficsit.dev` site.
+Getting signed in on your locally hosted copy requires copying a login token from the live `https://ficsit.dev` site.
+It's not possible to use the Sign In button on your locally hosted copy
+because the authentication service will reject the request
+since it's coming from `localhost:3000` and not the live site.
+Trying to use the button will direct you to the `https://ficsit.dev` site with an error message encoded in the URL.
 
-If you need to sign in, use the login button which will eventually redirect you to `ficsit.dev`.
-After you've signed in there, copy the `token` cookie over (like from Chrome dev tools -> Application -> Cookies)
-and insert it in your `localhost:3000` page (again using dev tools) and refresh.
+In order to sign in:
+
+1. Have a local copy of the frontend running already (ex. via `NODE_ENV=staging pnpm dev`)
+2. Sign in as normal on `https://ficsit.dev`
+3. Access your brower's stored cookie data
+    * Chrome: dev tools -> Application -> Cookies
+    * Firefox: dev tools -> Storage -> Cookies
+4. Copy value of the `token` cookie. If it doesn't exist, make sure you're actually signed in.
+5. Go back to your locally hosted copy (ex. `https://localhost:3000`)
+6. Return to the browser's stored cookie data
+7. If the `token` cookie exists, replace its value with the value you copied.
+   If the cookie doesn't exist yet, create a new cookie, rename it to `token`, and set its value to the value you copied.
+8. Force refresh the page, after which you should be logged in after it loads (might take a second or two)
+
+To sign out, either use the Logout option on the site, or delete the cookie.
 
 ## Committing Changes
 
