@@ -97,69 +97,71 @@
   const modalStore = getModalStore();
 </script>
 
-<div class="p-4 overflow-y-auto flex flex-col justify-between h-full">
-  <nav class="list-nav xl:hidden">
-    <ul>
-      {#if $user === null}
-        <button
-          on:click={() =>
-            modalStore.trigger({
-              type: 'component',
-              component: {
-                ref: LoginModal
-              }
-            })}
-          class="w-full">
-          <span class="material-icons">login</span>
-          <span>{$t('user.sign-in')}</span>
-        </button>
-      {:else}
-        {#if isAdmin}
-          <button on:click={() => goto(base + '/admin')} class="w-full">
-            <span class="material-icons">admin_panel_settings</span>
-            <span>Admin</span>
+<div class="p-4 overflow-y-auto flex flex-col justify-between h-full max-w-xl">
+  <div class="flex flex-col h-full max-w-xl gap-4">
+    <nav class="list-nav xl:hidden">
+      <ul>
+        {#if $user === null}
+          <button
+            on:click={() =>
+              modalStore.trigger({
+                type: 'component',
+                component: {
+                  ref: LoginModal
+                }
+              })}
+            class="w-full">
+            <span class="material-icons">login</span>
+            <span>{$t('user.sign-in')}</span>
+          </button>
+        {:else}
+          {#if isAdmin}
+            <button on:click={() => goto(base + '/admin')} class="w-full">
+              <span class="material-icons">admin_panel_settings</span>
+              <span>Admin</span>
+            </button>
+          {/if}
+          <button class="grid grid-flow-col w-full" on:click={() => goto(base + '/user/' + $user.id)}>
+            <div class="rounded-full bg-cover w-7 h-7" style={`background-image: url("${$user.avatar}")`} />
+            <div>{$user.username}</div>
+          </button>
+
+          <button on:click={() => userToken.set(null)} class="w-full">
+            <span class="material-icons">logout</span>
+            <span>{$t('user.logout')}</span>
           </button>
         {/if}
-        <button class="grid grid-flow-col w-full" on:click={() => goto(base + '/user/' + $user.id)}>
-          <div class="rounded-full bg-cover w-7 h-7" style={`background-image: url("${$user.avatar}")`} />
-          <div>{$user.username}</div>
-        </button>
+      </ul>
+    </nav>
 
-        <button on:click={() => userToken.set(null)} class="w-full">
-          <span class="material-icons">logout</span>
-          <span>{$t('user.logout')}</span>
-        </button>
-      {/if}
-    </ul>
-  </nav>
+    <div class="xl:hidden">
+      <hr />
+    </div>
 
-  <div class="xl:hidden">
-    <hr />
+    <nav class="list-nav">
+      <ul>
+        {#each top as item}
+          <li>
+            {#if !item.external}
+              <a
+                href={item.url}
+                class:bg-primary-active-token={currentPath === item.url}
+                on:mouseover={() => preloadData(item.url)}
+                on:focus={() => preloadData(item.url)}>
+                <span class="material-icons">{item.icon}</span>
+                <span class="flex-auto">{item.label}</span>
+              </a>
+            {:else}
+              <a href={item.url} target="_blank" rel="noopener">
+                <span class="material-icons">{item.icon}</span>
+                <span class="flex-auto">{item.label}</span>
+              </a>
+            {/if}
+          </li>
+        {/each}
+      </ul>
+    </nav>
   </div>
-
-  <nav class="list-nav">
-    <ul>
-      {#each top as item}
-        <li>
-          {#if !item.external}
-            <a
-              href={item.url}
-              class:bg-primary-active-token={currentPath === item.url}
-              on:mouseover={() => preloadData(item.url)}
-              on:focus={() => preloadData(item.url)}>
-              <span class="material-icons">{item.icon}</span>
-              <span class="flex-auto">{item.label}</span>
-            </a>
-          {:else}
-            <a href={item.url} target="_blank" rel="noopener">
-              <span class="material-icons">{item.icon}</span>
-              <span class="flex-auto">{item.label}</span>
-            </a>
-          {/if}
-        </li>
-      {/each}
-    </ul>
-  </nav>
 
   <nav class="list-nav">
     <ul>

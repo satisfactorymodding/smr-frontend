@@ -22,11 +22,17 @@
   };
 
   const modalStore = getModalStore();
+
+  const openSidebar = () => {
+    drawerStore.open({
+      width: 'w-[280px]',
+    });
+  }
 </script>
 
 <AppBar variant="static">
   <svelte:fragment slot="lead">
-    <button class="material-icons xl:hidden btn-sm" on:click={() => drawerStore.open()}>menu</button>
+    <button class="material-icons xl:hidden btn-sm" on:click={openSidebar}>menu</button>
     <span class="text-lg">{$t('top-bar.title')}</span>
   </svelte:fragment>
 
