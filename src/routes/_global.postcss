@@ -1,16 +1,21 @@
-@import '../../static/smui.css';
 @import '../../node_modules/prismjs/themes/prism-okaidia.css';
 @import '../../node_modules/cookieconsent/build/cookieconsent.min.css';
 
-@import 'https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible&family=Roboto&family=Roboto+Mono&family=Material+Icons&display=swap';
+@import 'https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible&family=Roboto&family=Roboto+Mono&family=Material+Icons&family=Noto+Color+Emoji&display=swap';
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@tailwind variants;
 
 html,
 body {
-  font-family: 'Roboto', Helvetica Neue, sans-serif;
+  @apply h-full overflow-hidden;
+  font-family:
+    'Roboto',
+    Helvetica Neue,
+    sans-serif,
+    'Noto Color Emoji';
   margin: 0;
   padding: 0;
   overflow: hidden;
@@ -18,7 +23,11 @@ body {
 
 html.accessibility,
 body.accessibility {
-  font-family: 'Atkinson Hyperlegible', Helvetica Neue, sans-serif;
+  font-family:
+    'Atkinson Hyperlegible',
+    Helvetica Neue,
+    sans-serif,
+    'Noto Color Emoji';
 }
 
 .markdown-content {
@@ -71,7 +80,9 @@ body.accessibility {
   }
 
   & pre {
-    font-family: Roboto Mono, monospace !important;
+    font-family:
+      Roboto Mono,
+      monospace !important;
     padding: 1em;
     margin: 0.5em 0;
     overflow: auto;

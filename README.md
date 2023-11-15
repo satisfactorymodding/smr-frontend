@@ -1,7 +1,7 @@
 # SMR Frontend
 
 Frontend for the Satisfactory Mod Repository.
-Implemented via NodeJS, Typescript, Svelte, GraphQL, and SMUI.
+Implemented via Bun, Typescript, Svelte, GraphQL, and Skeleton.
 
 ## Contributing
 

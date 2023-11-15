@@ -6,10 +6,7 @@
   import { markdown } from '$lib/utils/markdown';
   import type { SMLVersionData } from '$lib/models/sml-versions';
   import { smlVersionSchema } from '$lib/models/sml-versions';
-  import Textfield from '@smui/textfield';
-  import Button from '@smui/button';
   import { TargetName, VersionStabilities } from '$lib/generated';
-  import Select, { Option } from '@smui/select';
   import { getTranslate } from '@tolgee/svelte';
 
   export const { t } = getTranslate();
@@ -51,14 +48,20 @@
 <form use:form>
   <div class="grid grid-flow-row gap-6">
     <div class="grid grid-flow-row gap-2">
-      <Textfield bind:value={$data.version} label={$t('version')} required />
+      <label class="label">
+        <span>{$t('version')} *</span>
+        <input type="text" bind:value={$data.version} required class="input p-2" />
+      </label>
       <ValidationMessage for="version" let:messages={message}>
         <span class="validation-message">{message || ''}</span>
       </ValidationMessage>
     </div>
 
     <div class="grid grid-flow-row gap-2">
-      <Textfield bind:value={$data.satisfactory_version} label="Satisfactory {$t('version')}" required type="number" />
+      <label class="label">
+        <span>Satisfactory {$t('version')} *</span>
+        <input type="text" bind:value={$data.satisfactory_version} required class="input p-2" />
+      </label>
       <ValidationMessage for="satisfactory_version" let:messages={message}>
         <span class="validation-message">{message || ''}</span>
       </ValidationMessage>
@@ -66,7 +69,10 @@
 
     {#if $data.bootstrap_version !== undefined && $data.bootstrap_version !== null}
       <div class="grid grid-flow-row gap-2">
-        <Textfield bind:value={$data.bootstrap_version} label="Bootstrap {$t('version')}" required />
+        <label class="label">
+          <span>Bootstrap {$t('version')} *</span>
+          <input type="text" bind:value={$data.bootstrap_version} required class="input p-2" />
+        </label>
         <ValidationMessage for="bootstrap_version" let:messages={message}>
           <span class="validation-message">{message || ''}</span>
         </ValidationMessage>
@@ -74,11 +80,14 @@
     {/if}
 
     <div class="grid grid-flow-row gap-2">
-      <Select bind:value={$data.stability} label={$t('stability')}>
-        <Option value="release">Release</Option>
-        <Option value="alpha">Alpha</Option>
-        <Option value="beta">Beta</Option>
-      </Select>
+      <label class="label">
+        <span>{$t('stability')} *</span>
+        <select class="select" bind:value={$data.stability}>
+          <option value="release">Release</option>
+          <option value="alpha">Alpha</option>
+          <option value="beta">Beta</option>
+        </select>
+      </label>
       <ValidationMessage for="stability" let:messages={message}>
         <span class="validation-message">{message || ''}</span>
       </ValidationMessage>
@@ -86,13 +95,10 @@
 
     <div class="grid gap-6 split">
       <div class="grid grid-flow-row gap-2 auto-rows-max">
-        <Textfield
-          textarea
-          class="vertical-textarea"
-          bind:value={$data.changelog}
-          label={$t('changelog')}
-          required
-          input$rows={10} />
+        <label class="label">
+          <span>{$t('changelog')} *</span>
+          <textarea class="vertical-textarea textarea p-2" bind:value={$data.changelog} required rows={10} />
+        </label>
         <ValidationMessage for="changelog" let:messages={message}>
           <span class="validation-message">{message || ''}</span>
         </ValidationMessage>
@@ -100,6 +106,7 @@
       <div class="grid grid-flow-row gap-2 auto-rows-max">
         <span>{$t('preview')}:</span>
         {#await markdown(preview) then previewRendered}
+          <!-- eslint-disable -->
           <div class="markdown-content right">{@html previewRendered}</div>
         {/await}
       </div>
@@ -108,56 +115,66 @@
     <span>Targets:</span>
     <div class="grid grid-flow-row gap-2">
       {#each $data.targets as target, i}
-        <div class="flex content-center gap-2">
-          <div>
-            <Select bind:value={target.targetName} label="Platform">
-              <Option value={TargetName.Windows}>{$t('arch.windows-client')}</Option>
-              <Option value={TargetName.WindowsServer}>{$t('arch.windows-server')}</Option>
-              <Option value={TargetName.LinuxServer}>{$t('arch.linux-server')}</Option>
-              <svelte:fragment slot="helperText">
-                <ValidationMessage for="targets.{i}.targetName" let:messages={message}>
-                  <span class="validation-message">{message || ''}</span>
-                </ValidationMessage>
-              </svelte:fragment>
-            </Select>
-          </div>
-          <div class="grow">
-            <Textfield placeholder="URL" bind:value={target.link} label="URL" class="w-full">
-              <svelte:fragment slot="helper">
-                <ValidationMessage for="targets.{i}.link" let:messages={message}>
-                  <span class="validation-message">{message || ''}</span>
-                </ValidationMessage>
-              </svelte:fragment>
-            </Textfield>
-          </div>
-          <Button type="button" disabled={$data.targets.length == 1} on:click={() => removeTarget(i)} class="h-full"
-            >{$t('remove')}</Button>
+        <div class="gap-6 auto-rows-max">
+          <label class="label">
+            <span>Platform</span>
+            <select class="select" bind:value={target.targetName}>
+              <option value={TargetName.Windows}>{$t('arch.windows-client')}</option>
+              <option value={TargetName.WindowsServer}>{$t('arch.windows-server')}</option>
+              <option value={TargetName.LinuxServer}>{$t('arch.linux-server')}</option>
+            </select>
+          </label>
+
+          <label class="label">
+            <span>URL</span>
+            <textarea
+              class="textarea p-2"
+              name={`data_link.link`}
+              placeholder="URL"
+              bind:value={target.link}
+              style="min-width: 850px;" />
+          </label>
+          <ValidationMessage for="targets.{i}.link" let:messages={message}>
+            <span class="validation-message">{message || ''}</span>
+          </ValidationMessage>
+
+          <button class="btn variant-ghost-primary" on:click={addTarget}>{$t('add')}</button>
+          <button class="btn variant-ghost-primary" disabled={$data.targets.length == 1} on:click={() => removeTarget(i)}
+            >{$t('remove')}</button>
         </div>
       {/each}
-      <Button type="button" on:click={addTarget}>{$t('add')}</Button>
 
-      <Textfield bind:value={$data.link} label={$t('link')} />
+      <label class="label">
+        <span>{$t('link')}</span>
+        <input type="text" bind:value={$data.link} required class="input p-2" />
+      </label>
       <ValidationMessage for="link" let:messages={message}>
         <span class="validation-message">{message || ''}</span>
       </ValidationMessage>
     </div>
 
     <div class="grid grid-flow-row gap-2">
-      <Textfield bind:value={$data.date} label={$t('date-and-time')} required />
+      <label class="label">
+        <span>{$t('date-and-time')}</span>
+        <input type="text" bind:value={$data.date} required class="input p-2" />
+      </label>
       <ValidationMessage for="date" let:messages={message}>
         <span class="validation-message">{message || ''}</span>
       </ValidationMessage>
     </div>
 
     <div class="grid grid-flow-row gap-2">
-      <Textfield bind:value={$data.engine_version} label="Engine version" required />
+      <label class="label">
+        <span>Engine version</span>
+        <input type="text" bind:value={$data.engine_version} required class="input p-2" />
+      </label>
       <ValidationMessage for="engine_version" let:messages={message}>
         <span class="validation-message">{message || ''}</span>
       </ValidationMessage>
     </div>
 
     <div>
-      <Button variant="outlined" type="submit">{submitText}</Button>
+      <button class="btn variant-ghost-primary" type="submit">{submitText}</button>
     </div>
   </div>
 </form>

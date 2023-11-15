@@ -10,31 +10,15 @@ To extend or enhance the main site, you'll need to fork and open a PR targeting 
 
 At the highest level you must at least have:
 
-* [NodeJS](https://nodejs.org/en/)
-  * Check [`.github\workflows\push-base.yml`](.github/workflows/push-base.yml)'s `NODE_VERSION` to see which Node version to use.
-  * [Node Version Manager](https://github.com/nvm-sh/nvm) (Unix)
-    or [nvm-windows](https://github.com/coreybutler/nvm-windows) (Windows)
-    is suggested if you plan to have multiple Node versions installed.
-* Bash
-  * You must use Git Bash on windows for environment variables to be handled correctly.
+* [Bun](https://bun.sh/)
+* terminal (Bash is suggested but not required.)
 
-### pnpm Installation
+### bun installation
 
-This project uses `pnpm`.
-If you don't already have it installed, run the following to install `pnpm`:
+This project uses `bun`. To install `bun` run:
 
 ```sh
-npm i -g pnpm
-```
-
-The expected output is:
-
-```text
-<a whole bunch of messages about packages being installed>
-<some number of> packages are looking for funding
-  run `npm fund` for details
-
-found <some number of> vulnerabilities
+curl -fsSL https://bun.sh/install | bash
 ```
 
 ## Local Setup
@@ -45,20 +29,11 @@ Every time you pull changes or switch branches, make sure you have the correct p
 Run this command from a terminal window opened inside the **repository's root directory**:
 
 ```sh
-pnpm install
-```
-
-The expected output is:
-
-```text
-<a whole bunch of messages about packages being installed>
+$ bun i
+...
 > husky install
 
 husky - Git hooks installed
-
-Compiling SMUI Styles...
-Writing CSS to static/smui.css...
-Done in <some number>s
 ```
 
 ### Decide Which Environment You Want To Run
@@ -72,12 +47,12 @@ This project has three main environments:
 * `development`
   * Used if you'd like to run the [backend](https://github.com/satisfactorymodding/smr-api) yourself (which most likely you don't)
 
-If you do not specify which environment you want to use when running `pnpm` comands, `development` will be used by default.
+If you do not specify which environment you want to use when running `bun` comands, `development` will be used by default.
 
 ### Loading Environment Variables
 
 This project uses dotenv-flow to simplify the process of handling environment variables.
-It will handle the loading of the contents of the `.env.something` files for you when running `pnpm` commands,
+It will handle the loading of the contents of the `.env.something` files for you when running `bun` commands,
 provided that you prefix the command with a specifier for which environment to use.
 
 If you don't wish to run the backend (which most likely you don't),
@@ -119,7 +94,7 @@ Download the latest strings via the `translations` script.
 For example:
 
 ```shell
-NODE_ENV=staging pnpm run translations
+NODE_ENV=staging bun run translations
 ```
 
 If it errors, try following the troubleshooting steps above to load environment variables manually.
@@ -134,25 +109,22 @@ It executes several smaller scripts for you:
 * GraphQL Code Generator with hot reload (graphql-codegen:watch)
 * ESLint with hot reload (lint:dev)
 
-Run the dev script via `pnpm dev`.
+Run the dev script via `bun dev`.
 For example:
 
 ```shell
-NODE_ENV=staging pnpm dev
+NODE_ENV=staging bun dev
 ```
 
 The expected output is:
 
 ```text
 ...
+  VITE v4.4.9  ready in 747 ms
 
-  SvelteKit v1.0.0-next.87
-
-  network: not exposed
-  network: not exposed
-  local:   http://localhost:3000
-
-  Use --host to expose server to other devices on this network
+  ➜  Local:   http://localhost:3000/
+  ➜  Network: use --host to expose
+  ➜  press h to show help
 ```
 
 Head to [localhost:3000](http://localhost:3000) to see it running.
@@ -170,7 +142,7 @@ Trying to use the button will direct you to the `https://ficsit.dev` site with a
 
 In order to sign in:
 
-1. Have a local copy of the frontend running already (ex. via `NODE_ENV=staging pnpm dev`)
+1. Have a local copy of the frontend running already (ex. via `NODE_ENV=staging bun dev`)
 2. Sign in as normal on `https://ficsit.dev`
 3. Access your brower's stored cookie data
     * Chrome: dev tools -> Application -> Cookies
@@ -192,23 +164,23 @@ Our repo is designed to help you throughout your contribution to maintain our co
 
 When your changes are ready to be committed, we do a few things for you:
 
-  1. we run `pnpm lint` to validate your syntax
-  1. we run `pnpx svelte-check` to validate all of your svelte
+  1. we run `bun run lint` to validate your syntax
+  1. we run `bun run check` to validate all of your svelte
   1. we validate your commit adheres to our `commitlint` conventions
 
 #### What You Need To Do
 
 Committing will be blocked if your changes does not pass the linters mentioned above.
-Running `pnpm format` will attempt to auto-fix most style issues.
+Running `bun format` will attempt to auto-fix most style issues.
 
 Note that Git may switch around file line endings on you, causing the linters to fail on files you never edited.
-Running `pnpm format` will fix this.
+Running `bun format` will fix this.
 
 ### In The Remote
 
 When you've opened up your Pull Request we do a few more things:
 
-  1. we build via `pnpm graphql-codegen:prod && pnpm build`
+  1. we build via `bun run graphql-codegen:prod && bun run build`
   1. we lint the code again (you can sneak stuff in, husky is imperfect in enforcement!)
   1. if that all passes we deploy to our GitHub page!
 

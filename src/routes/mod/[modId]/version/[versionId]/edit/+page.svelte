@@ -1,14 +1,13 @@
 <script lang="ts">
   import { queryStore, getContextClient } from '@urql/svelte';
   import { GetModVersionDocument, UpdateVersionDocument } from '$lib/generated';
-  import Toast from '$lib/components/general/Toast.svelte';
   import { goto } from '$app/navigation';
   import VersionForm from '$lib/components/versions/VersionForm.svelte';
   import type { VersionData } from '$lib/models/versions';
   import { base } from '$app/paths';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
-  import Card, { Content } from '@smui/card';
   import type { PageData } from './$types';
+  import { getToastStore } from "@skeletonlabs/skeleton";
 
   export let data: PageData;
 
@@ -16,8 +15,7 @@
 
   const client = getContextClient();
 
-  let errorMessage = '';
-  let errorToast = false;
+  const toastStore = getToastStore();
 
   const version = queryStore({
     query: GetModVersionDocument,
@@ -35,17 +33,20 @@
       .then((value) => {
         if (value.error) {
           console.error(value.error.message);
-          errorMessage = 'Error editing version: ' + value.error.message;
-          errorToast = true;
+          toastStore.trigger({
+            message: 'Error editing version: ' + value.error.message,
+            background: 'variant-filled-error',
+            autohide: false
+          });
         } else {
-          // TODO Toast or something
+          toastStore.trigger({
+            message: `Version updated`,
+            background: 'variant-filled-success',
+            timeout: 5000
+          });
           return goto(base + '/mod/' + modId + '/version/' + versionId);
         }
       });
-
-  $: if (!errorToast) {
-    errorMessage = '';
-  }
 
   $: initialValues = $version.data
     ? {
@@ -65,8 +66,8 @@
 
 <h1 class="text-4xl my-4 font-bold">Edit Version</h1>
 
-<Card>
-  <Content>
+<div class="card p-4">
+  <section>
     {#if $version.fetching}
       <p>Loading...</p>
     {:else if $version.error}
@@ -79,9 +80,5 @@
         editing={true}
         submitText="Save" />
     {/if}
-  </Content>
-</Card>
-
-<Toast bind:running={errorToast}>
-  <span>{errorMessage}</span>
-</Toast>
+  </section>
+</div>

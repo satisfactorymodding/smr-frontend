@@ -1,14 +1,13 @@
 <script lang="ts">
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
-  import Card, { Content } from '@smui/card';
 </script>
 
 <svelte:head>
   <MetaDescriptors description="Privacy policy for the Satisfactory Mod Repository" title="Privacy policy" />
 </svelte:head>
 
-<Card>
-  <Content>
+<div class="card p-4">
+  <section class="p-4">
     <h1>Privacy Policy</h1>
     <p>
       At ficsit.app, accessible from https://ficsit.app, one of our main priorities is the privacy of our visitors. This
@@ -179,8 +178,8 @@
       you think that your child provided this kind of information on our website, we strongly encourage you to contact
       us immediately and we will do our best efforts to promptly remove such information from our records.
     </p>
-  </Content>
-</Card>
+  </section>
+</div>
 
 <style lang="postcss">
   p {

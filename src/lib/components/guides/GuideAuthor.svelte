@@ -1,7 +1,6 @@
 <script lang="ts">
   import type { User } from '$lib/generated';
   import { base } from '$app/paths';
-  import Card, { Content } from '@smui/card';
   import { getTranslate } from '@tolgee/svelte';
 
   export let author: Pick<User, 'id' | 'username' | 'avatar'>;
@@ -9,8 +8,8 @@
   export const { t } = getTranslate();
 </script>
 
-<Card>
-  <Content>
+<div class="card p-4">
+  <section>
     <div class="grid grid-flow-row gap-y-2">
       <h3 class="text-2xl my-4 font-bold">{$t('author')}</h3>
 
@@ -24,5 +23,5 @@
         </div>
       </div>
     </div>
-  </Content>
-</Card>
+  </section>
+</div>

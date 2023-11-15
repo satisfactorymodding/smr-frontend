@@ -1,30 +1,74 @@
 <script lang="ts">
   import { getTolgee, getTranslate } from '@tolgee/svelte';
-  import Select, { Option } from '@smui/select';
   import { writable } from 'svelte/store';
+  import { type PopupSettings, popup } from '@skeletonlabs/skeleton';
 
   const tolgee = getTolgee(['language']);
 
   export const { t } = getTranslate();
 
   const languages = {
-    en: 'English',
-    de: 'Deutsch',
-    fr: 'Français',
-    lv: 'Latviešu'
-  };
+    en: {
+      name: 'English',
+      flag: '🇺🇳'
+    },
+    de: {
+      name: 'Deutsch',
+      flag: '🇩🇪'
+    },
+    fr: {
+      name: 'Français',
+      flag: '🇫🇷'
+    },
+    lv: {
+      name: 'Latviešu',
+      flag: '🇱🇻'
+    },
+    mt: {
+      name: 'Malti',
+      flag: '🇲🇹'
+    },
+    'zh-Hans': {
+      name: '简体中文',
+      flag: '🇨🇳'
+    },
+    'zh-Hant': {
+      name: '繁體中文',
+      flag: '🇹🇼'
+    }
+  } as const;
 
   const lang = writable<string>(localStorage.getItem('language') || $tolgee.getLanguage());
   lang.subscribe((l) => {
     $tolgee.changeLanguage(l);
     localStorage.setItem('language', l);
   });
+
+  const languageMenuBox: PopupSettings = {
+    event: 'focus-click',
+    target: 'languageMenuBox',
+    placement: 'bottom',
+    closeQuery: 'li'
+  };
 </script>
 
-<div class="darker-please mr-3 max-h-1/2">
-  <Select bind:value={$lang} label={$t('appbar.language-dropdown')} variant="outlined">
-    {#each Object.entries(languages) as lang}
-      <Option value={lang[0]}>{lang[1]}</Option>
-    {/each}
-  </Select>
+<button class="grid grid-flow-col btn btn-sm variant-ghost-primary" use:popup={languageMenuBox}>
+  <span>{languages[$lang].name}</span>
+  <span class="text-xl">{languages[$lang].flag}</span>
+</button>
+
+<div class="card w-48 shadow-xl py-2" data-popup="languageMenuBox">
+  <nav class="list-nav">
+    <ul>
+      {#each Object.entries(languages) as [k, v]}
+        <li class:bg-primary-active-token={$lang === k}>
+          <button class="w-full" on:click={() => lang.set(k)}>
+            <span>{v.name}</span>
+            <span class="text-xl">{v.flag}</span>
+          </button>
+        </li>
+      {/each}
+    </ul>
+  </nav>
+  <div class="arrow bg-surface-100-800-token" />
 </div>

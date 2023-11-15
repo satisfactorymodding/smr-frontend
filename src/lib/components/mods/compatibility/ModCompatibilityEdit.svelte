@@ -1,9 +1,9 @@
 <script lang="ts">
-  import Accordion, { Header, Panel, Content } from '@smui-extra/accordion';
   import { CompatibilityState } from '$lib/generated';
   import type { CompatibilityInfo } from '$lib/generated';
   import CompatibilityEdit from '$lib/components/mods/compatibility/CompatibilityEdit.svelte';
   import { getTranslate } from '@tolgee/svelte';
+  import { Accordion, AccordionItem } from '@skeletonlabs/skeleton';
 
   const prefilledCompatibilityInfo = {
     EA: {
@@ -24,16 +24,16 @@
 </script>
 
 <Accordion>
-  <Panel>
-    <Header>{$t('early-access')} - {$t('compatibility')}</Header>
-    <Content>
+  <AccordionItem>
+    <svelte:fragment slot="summary">{$t('early-access')} - {$t('compatibility')}</svelte:fragment>
+    <svelte:fragment slot="content">
       <CompatibilityEdit bind:compatibility={compatibilityInfo.EA} />
-    </Content>
-  </Panel>
-  <Panel>
-    <Header>{$t('experimental')} - {$t('compatibility')}</Header>
-    <Content>
+    </svelte:fragment>
+  </AccordionItem>
+  <AccordionItem>
+    <svelte:fragment slot="summary">{$t('experimental')} - {$t('compatibility')}</svelte:fragment>
+    <svelte:fragment slot="content">
       <CompatibilityEdit bind:compatibility={compatibilityInfo.EXP} />
-    </Content>
-  </Panel>
+    </svelte:fragment>
+  </AccordionItem>
 </Accordion>

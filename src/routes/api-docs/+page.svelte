@@ -1,7 +1,6 @@
 <script lang="ts">
   import { API_GRAPHQL, API_GRAPHQL_PLAYGROUND, API_REST, API_REST_DOCS } from '$lib/core';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
-  import Card, { Content } from '@smui/card';
 </script>
 
 <svelte:head>
@@ -9,8 +8,8 @@
 </svelte:head>
 
 <h1>API Docs</h1>
-<Card>
-  <Content>
+<div class="card p-4">
+  <section class="p-4">
     <div>
       <h2>GraphQL API</h2>
       <p>
@@ -26,8 +25,8 @@
       </p>
       <p>It is recommended that you use the GraphQL API as the REST API is not feature complete by design.</p>
     </div>
-  </Content>
-</Card>
+  </section>
+</div>
 
 <style lang="postcss">
   p {

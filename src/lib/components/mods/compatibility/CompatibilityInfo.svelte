@@ -30,6 +30,7 @@
   {#if compatibility.EA.note}
     <div>
       {$t('compatibility-info.note')}: {#await markdown(compatibility.EA.note) then rendered}
+        <!-- eslint-disable -->
         {@html rendered}
       {/await}
     </div>
@@ -42,6 +43,7 @@
   {#if compatibility.EXP.note}
     <div>
       {$t('compatibility-info.note')}: {#await markdown(compatibility.EXP.note) then rendered}
+        <!-- eslint-disable -->
         {@html rendered}
       {/await}
     </div>
