@@ -69,22 +69,30 @@
 
       await import('cookieconsent/src/cookieconsent');
 
-      if ('cookieconsent' in window) {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        window.cookieconsent.initialise({
-          palette: {
-            popup: {
-              background: '#000'
+      tolgee.on('initialLoad', () => {
+        if ('cookieconsent' in window) {
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          // cspell:ignore initialise
+          window.cookieconsent.initialise({
+            palette: {
+              popup: {
+                background: '#000'
+              },
+              button: {
+                background: '#f1d600'
+              }
             },
-            button: {
-              background: '#f1d600'
-            }
-          },
-          theme: 'edgeless',
-          position: 'bottom-right'
-        });
-      }
+            content: {
+              message: tolgee.t('cookieconsent.message'),
+              link: tolgee.t('cookieconsent.link'),
+              dismiss: tolgee.t('cookieconsent.dismiss')
+            },
+            theme: 'edgeless',
+            position: 'bottom-right'
+          });
+        }
+      });
 
       customProtocolCheck.set(await import('$lib/thirdparty/custom_protocol'));
 
