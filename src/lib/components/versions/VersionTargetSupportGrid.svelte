@@ -1,7 +1,5 @@
 <script lang="ts">
   import type { VersionTarget } from '$lib/generated';
-  import { Icon } from '@smui/common';
-  import DataTable, { Body, Row, Cell } from '@smui/data-table';
 
   export let targets!: Pick<VersionTarget, 'targetName'>[];
 
@@ -34,40 +32,38 @@
 </script>
 
 <div class="grid grid-flow-row">
-  <DataTable
-    table$aria-label="Available Releases"
-    class="max-w-auto"
-    container$class="!overflow-visible"
-    table$class="!overflow-visible">
-    <Body>
-      <Row>
-        <Cell style="width: 20%;" />
-        <Cell style="width: 40%;"><div class="text-center" title="Game client">Client</div></Cell>
-        <Cell style="width: 40%;"><div class="text-center" title="Dedicated server">Server</div></Cell>
-      </Row>
-      <Row>
-        <Cell>Windows</Cell>
-        <Cell
+  <table
+    aria-label="Available Releases"
+    class="table table-hover max-w-auto !overflow-visible">
+    <tbody>
+      <tr class="border rounded !border-surface-500">
+        <td style="width: 20%;" />
+        <td style="width: 40%;"><div class="text-center" title="Game client">Client</div></td>
+        <td style="width: 40%;"><div class="text-center" title="Dedicated server">Server</div></td>
+      </tr>
+      <tr class="border rounded !border-surface-500">
+        <td>Windows</td>
+        <td
           ><div class="text-center">
-            <Icon class="material-icons text-center" style="width: 20px" title={WindowsSupport.tooltip}
-              >{WindowsSupport.glyph}</Icon>
-          </div></Cell>
-        <Cell
+            <span class="material-icons text-center" style="width: 20px" title={WindowsSupport.tooltip}
+              >{WindowsSupport.glyph}</span>
+          </div></td>
+        <td
           ><div class="text-center">
-            <Icon class="material-icons text-center" style="width: 20px" title={WindowsServerSupport.tooltip}
-              >{WindowsServerSupport.glyph}</Icon>
-          </div></Cell>
-      </Row>
-      <Row>
-        <Cell>Linux</Cell>
-        <Cell
-          ><div class="text-center" title="There is no Client distribution of Satisfactory for Linux">N/A</div></Cell>
-        <Cell
+            <span class="material-icons text-center" style="width: 20px" title={WindowsServerSupport.tooltip}
+              >{WindowsServerSupport.glyph}</span>
+          </div></td>
+      </tr>
+      <tr class="border rounded !border-surface-500">
+        <td>Linux</td>
+        <td
+          ><div class="text-center" title="There is no Client distribution of Satisfactory for Linux">N/A</div></td>
+        <td
           ><div class="text-center">
-            <Icon class="material-icons text-center" style="width: 20px" title={LinuxServerSupport.tooltip}
-              >{LinuxServerSupport.glyph}</Icon>
-          </div></Cell>
-      </Row>
-    </Body>
-  </DataTable>
+            <span class="material-icons text-center" style="width: 20px" title={LinuxServerSupport.tooltip}
+              >{LinuxServerSupport.glyph}</span>
+          </div></td>
+      </tr>
+    </tbody>
+  </table>
 </div>

@@ -1,5 +1,6 @@
 import { sveltekit } from '@sveltejs/kit/vite';
 import terser from '@rollup/plugin-terser';
+import { purgeCss } from 'vite-plugin-tailwind-purgecss';
 
 const mode = process.env.NODE_ENV || 'development';
 const dev = mode === 'development' || process.env.RUNTIME === 'development';
@@ -7,13 +8,20 @@ process.env.TAILWIND_MODE = dev ? 'watch' : 'build';
 
 /** @type {import('vite').UserConfig} */
 const config = {
-  plugins: [sveltekit()],
+  plugins: [
+    sveltekit(),
+    purgeCss({
+      safelist: {
+        greedy: [/^hljs-/, /^cc-/]
+      }
+    })
+  ],
   server: {
     port: 3000,
     strictPort: true
   },
   ssr: {
-    noExternal: ['node-fetch', '@cfworker/json-schema', 'dompurify', 'custom-protocol-check']
+    noExternal: ['custom-protocol-check']
   },
   optimizeDeps: {
     exclude: ['custom-protocol-check']
@@ -28,14 +36,7 @@ const config = {
           if (id.includes('jszip')) {
             return 'jszip';
           }
-          if (
-            id.includes('zod') ||
-            id.includes('felte') ||
-            id.includes('@smui/textfield') ||
-            id.includes('@smui/select') ||
-            id.includes('@smui/data-table') ||
-            id.includes('@smui/floating-label')
-          ) {
+          if (id.includes('zod') || id.includes('felte')) {
             return 'forms';
           }
           if (

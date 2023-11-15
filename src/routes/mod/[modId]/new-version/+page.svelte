@@ -1,6 +1,5 @@
 <script lang="ts">
   import { getContextClient, queryStore } from '@urql/svelte';
-  import Toast from '$lib/components/general/Toast.svelte';
   import { goto } from '$app/navigation';
   import type { VersionData } from '$lib/models/versions';
   import VersionForm from '$lib/components/versions/VersionForm.svelte';
@@ -10,8 +9,8 @@
   import type { UploadState } from '$lib/utils/chunked-upload';
   import { base } from '$app/paths';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
-  import Card, { Content } from '@smui/card';
   import type { PageData } from './$types';
+  import { getToastStore } from "@skeletonlabs/skeleton";
 
   export let data: PageData;
 
@@ -36,8 +35,7 @@
     }
   });
 
-  let errorMessage = '';
-  let errorToast = false;
+  const toastStore = getToastStore();
 
   const mod = queryStore({
     query: GetModReferenceDocument,
@@ -59,20 +57,22 @@
       client
     )
       .then((success) => {
-        console.log({ success });
-        // TODO Toast or something
+        toastStore.trigger({
+          message: `Version created`,
+          background: 'variant-filled-success',
+          timeout: 5000
+        });
         goto(base + '/mod/' + modId + '/version/' + success.version.id);
       })
       .catch((err) => {
         console.error(err);
-        errorMessage = 'Error creating version: ' + err.message;
-        errorToast = true;
+        toastStore.trigger({
+          message: 'Error creating version: ' + err.message,
+          background: 'variant-filled-error',
+          autohide: false
+        });
         uploadStatus.set('');
       });
-
-  $: if (!errorToast) {
-    errorMessage = '';
-  }
 </script>
 
 <svelte:head>
@@ -92,8 +92,8 @@
   {/if}
 </h1>
 
-<Card>
-  <Content>
+<div class="card p-4">
+  <section>
     {#if $mod.fetching}
       <p>Loading...</p>
     {:else if $mod.error}
@@ -122,9 +122,5 @@
         </div>
       {/if}
     {/if}
-  </Content>
-</Card>
-
-<Toast bind:running={errorToast}>
-  <span>{errorMessage}</span>
-</Toast>
+  </section>
+</div>

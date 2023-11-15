@@ -3,9 +3,7 @@
   import FicsitCard from '$lib/components/general/FicsitCard.svelte';
   import ModCard from '$lib/components/mods/ModCard.svelte';
   import Doggo from '$lib/components/general/Doggo.svelte';
-  import Card from '@smui/card';
   import { assets } from '$app/paths';
-  import Button from '@smui/button';
   import { onMobile, easterEgg, doggoNeedsPats } from '$lib/stores/global';
   import type { PageData } from './$types';
   import { getTranslate } from '@tolgee/svelte';
@@ -29,7 +27,7 @@
   <div class="mb-4 min-h-[25vh] overflow-hidden">
     {#if !$onMobile}
       <a href="https://smm.ficsit.app" rel="noopener" target="_blank">
-        <Card class="h-full">
+        <div class="card h-full">
           <div class="relative h-full w-full">
             <div class="banner smm-banner" />
             <div class="flex absolute w-full h-full top-0 items-center justify-center">
@@ -57,11 +55,11 @@
               {/if}
             </div>
           </div>
-        </Card>
+        </div>
       </a>
     {:else}
       <a href="/mods" class="overflow-hidden">
-        <Card class="h-full">
+        <div class="card h-full">
           <div class="relative h-full w-full">
             <div class="smm-banner banner" />
             <div class="flex absolute w-full h-full top-0 items-center justify-end text-center">
@@ -84,19 +82,19 @@
               </div>
             </div>
             <div class="flex absolute w-full h-full top-0 items-end justify-center">
-              <Button variant="unelevated" class="h-1/4 py-3 px-14 w-full" style="background: #5a7b78; color: white">
+              <button class="btn h-1/4 py-3 px-14 w-full" style="background: #5a7b78; color: white">
                 {$t('home.banner.take-a-look')}
-              </Button>
+              </button>
             </div>
           </div>
-        </Card>
+        </div>
       </a>
     {/if}
   </div>
 
   <div class="grid xl:grid-cols-2 grid-cols-1 gap-4 flex-1 mb-4">
     <a href="https://discord.gg/xkVJ73E" rel="noopener" target="_blank" class="overflow-hidden min-h-[25vh]">
-      <Card class="h-full">
+      <div class="card h-full">
         <div class="relative h-full w-full">
           <div class="modding-banner banner" />
           <div class="flex absolute w-full h-full top-0 items-center justify-center">
@@ -106,10 +104,10 @@
             <span>{$t('home.banner.community-run-discord')}</span>
           </div>
         </div>
-      </Card>
+      </div>
     </a>
     <a href="https://www.satisfactorygame.com/" rel="noopener" target="_blank" class="overflow-hidden min-h-[25vh]">
-      <Card class="h-full">
+      <div class="card h-full">
         <div class="relative h-full w-full">
           <div class="css-banner banner" />
           <div class="flex absolute w-full h-full top-0 items-center justify-center">
@@ -122,7 +120,7 @@
             <span>{$t('home.banner.official-website')}</span>
           </div>
         </div>
-      </Card>
+      </div>
     </a>
   </div>
 

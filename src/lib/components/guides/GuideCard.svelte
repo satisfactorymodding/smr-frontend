@@ -1,7 +1,6 @@
 <script lang="ts">
   import type { Guide } from '$lib/generated';
   import { assets, base } from '$app/paths';
-  import { Icon } from '@smui/icon-button';
   import FicsitCard from '$lib/components/general/FicsitCard.svelte';
   import { prettyNumber } from '$lib/utils/formatting';
 
@@ -11,6 +10,6 @@
 
 <FicsitCard name={guide.name} {logo} description={guide.short_description} link={base + `/guide/${guide.id}`}>
   <div slot="stats">
-    <span><Icon class="material-icons align-middle text-sm">visibility</Icon>{prettyNumber(guide.views)}</span>
+    <span><span class="material-icons align-middle text-sm">visibility</span>{prettyNumber(guide.views)}</span>
   </div>
 </FicsitCard>

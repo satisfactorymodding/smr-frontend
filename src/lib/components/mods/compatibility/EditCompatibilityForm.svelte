@@ -4,7 +4,6 @@
   import { EditModCompatibilityDocument } from '$lib/generated';
   import { getContextClient } from '@urql/svelte';
   import { createEventDispatcher } from 'svelte';
-  import Button from '@smui/button';
   import { getTranslate } from '@tolgee/svelte';
 
   export let modId: string;
@@ -37,6 +36,6 @@
 <form on:submit={onSubmit}>
   <ModCompatibilityEdit bind:compatibilityInfo={mod.compatibility} />
   <div class="p-5">
-    <Button variant="outlined" type="submit">{$t('entry.save')}</Button>
+    <button class="btn variant-ghost-primary" type="submit">{$t('entry.save')}</button>
   </div>
 </form>

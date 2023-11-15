@@ -1,44 +1,15 @@
 # SMR Frontend
 
-## Development
+Frontend for the Satisfactory Mod Repository.
+Implemented via Bun, Typescript, Svelte, GraphQL, and Skeleton.
+
+## Contributing
+
+Contributions are welcome and encouraged.
 
 See [Contributing](CONTRIBUTING.md) for more information.
 
-### Setup
+## Setup, Development, Running
 
-This project uses [pnpm](https://pnpm.js.org/):
-
-```shell
-pnpm install
-```
-
-After switching branches you should regenerate the graphql files as the schema may have changed:
-
-```shell
-pnpm graphql-codegen
-```
-
-### Running
-
-The `dev` script executes several processes:
-
-* Development Server
-* Svelte Checker
-* GraphQL Code Generator
-* ESLint
-
-```shell
-pnpm dev
-```
-
-If you don't wish to run the backend (which most likely you don't),
-you can point your local frontend to the staging or production APIs using environment variables:
-(note this example env var syntax only works in bash)
-
-```shell
-NODE_ENV=staging pnpm dev
-NODE_ENV=production pnpm dev
-```
-
-You can make your own `.env.something.local` files if you need to point to a different API
-or have a different local configuration.
+To avoid duplicating information, all setup and development information is included in the contributing guide.
+See [Contributing](CONTRIBUTING.md) for more information.

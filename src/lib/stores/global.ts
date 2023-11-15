@@ -1,8 +1,6 @@
 import { writable } from 'svelte/store';
 import { browser } from '$app/environment';
 
-export const loginDialogOpen = writable<boolean>(false);
-
 let mobileQuery: MediaQueryList;
 if (browser) {
   mobileQuery = window.matchMedia('(min-width: 1280px)');
@@ -11,8 +9,6 @@ if (browser) {
 export const onMobile = writable<boolean>(mobileQuery && !mobileQuery.matches);
 export const doggoNeedsPats = writable<boolean>(false);
 export const easterEgg = writable<boolean>(false);
-export const sidebarOpen = writable<boolean>(false);
-
 if (browser) {
   mobileQuery.addEventListener('change', (data) => {
     onMobile && onMobile.set(!data.matches);

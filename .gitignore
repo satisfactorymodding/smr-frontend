@@ -304,5 +304,5 @@ $RECYCLE.BIN/
 /schema.graphql
 /graphql.schema.json
 /.svelte-kit
-/static/smui.css
 /.pnpm-store
+.direnv

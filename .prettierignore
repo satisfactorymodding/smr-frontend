@@ -12,7 +12,7 @@ static
 .env.production
 .env.staging
 .eslintignore
-.eslintrc.cjs
+eslint.config.js
 .gitignore
 .graphqlconfig
 .prettierignore
@@ -32,3 +32,4 @@ tailwind.config.cjs
 tsconfig.json
 .pnpm-store
 src/i18n
+.devcontainer/devcontainer.json

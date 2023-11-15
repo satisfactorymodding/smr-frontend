@@ -1,14 +1,13 @@
 <script lang="ts">
   import { getContextClient, queryStore } from '@urql/svelte';
   import { GetSmlVersionAdminDocument, UpdateSmlVersionDocument } from '$lib/generated';
-  import Toast from '$lib/components/general/Toast.svelte';
   import { goto } from '$app/navigation';
   import type { SMLVersionData } from '$lib/models/sml-versions';
   import SMLVersionForm from '$lib/components/sml-versions/SMLVersionForm.svelte';
   import { base } from '$app/paths';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
-  import Card, { Content } from '@smui/card';
   import type { PageData } from './$types';
+  import { getToastStore } from "@skeletonlabs/skeleton";
 
   export let data: PageData;
 
@@ -16,8 +15,7 @@
 
   const client = getContextClient();
 
-  let errorMessage = '';
-  let errorToast = false;
+  const toastStore = getToastStore();
 
   const smlVersion = queryStore({
     query: GetSmlVersionAdminDocument,
@@ -35,18 +33,21 @@
       .then((value) => {
         if (value.error) {
           console.error(value.error.message);
-          errorMessage = 'Error editing SMLVersion: ' + value.error.message;
-          errorToast = true;
+          toastStore.trigger({
+            message: 'Error editing SMLVersion: ' + value.error.message,
+            background: 'variant-filled-error',
+            autohide: false
+          });
         } else {
-          // TODO Toast or something
+          toastStore.trigger({
+            message: `SML version updated`,
+            background: 'variant-filled-success',
+            timeout: 5000
+          });
           goto(base + '/admin/sml-versions');
         }
       });
   };
-
-  $: if (!errorToast) {
-    errorMessage = '';
-  }
 
   $: initialValues = $smlVersion.data
     ? ({
@@ -62,8 +63,8 @@
 
 <h1 class="text-4xl my-4 font-bold">Edit SMLVersion</h1>
 
-<Card>
-  <Content>
+<div class="card p-4">
+  <section>
     {#if $smlVersion.fetching}
       <p>Loading...</p>
     {:else if $smlVersion.error}
@@ -71,9 +72,5 @@
     {:else}
       <SMLVersionForm {onSubmit} {initialValues} submitText="Save" />
     {/if}
-  </Content>
-</Card>
-
-<Toast bind:running={errorToast}>
-  <span>{errorMessage}</span>
-</Toast>
+  </section>
+</div>

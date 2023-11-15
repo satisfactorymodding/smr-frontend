@@ -1,7 +1,5 @@
 <script lang="ts">
   import { base } from '$app/paths';
-  import Card, { Content } from '@smui/card';
-  import { Icon } from '@smui/common';
   import { prettyDate } from '$lib/utils/formatting';
   import { getTranslate } from '@tolgee/svelte';
   import { installMod } from '$lib/stores/launcher';
@@ -31,8 +29,8 @@
   export const { t } = getTranslate();
 </script>
 
-<Card>
-  <Content>
+<div class="card p-4">
+  <section>
     <div class="grid grid-flow-row gap-y-2">
       <h3 class="text-2xl my-4 font-bold">{$t('mod.latest-versions')}</h3>
 
@@ -40,7 +38,7 @@
         {#if latestVersions[stability]}
           <div class="version">
             <div class="text-4xl w-14 h-14 p-2.5" title={`Latest ${stability} release`}>
-              <Icon class="material-icons">{stabilities[stability]}</Icon>
+              <span class="material-icons">{stabilities[stability]}</span>
             </div>
             <div class="grid grid-flow-row">
               <a href="{base}/mod/{modId}/version/{latestVersions[stability].id}/" class="text-yellow-500 underline"
@@ -53,7 +51,7 @@
                 on:click={() => installMod(modId)}
                 title="Install via Satisfactory Mod Manager"
                 class="text-yellow-500">
-                <Icon class="material-icons align-middle" style="font-size: 118x;">download</Icon> <u>Download</u>
+                <span class="material-icons align-middle" style="font-size: 118x;">download</span> <u>Download</u>
               </a>
             </div>
           </div>
@@ -62,8 +60,8 @@
         {/if}
       {/each}
     </div>
-  </Content>
-</Card>
+  </section>
+</div>
 
 <style lang="postcss">
   .version {

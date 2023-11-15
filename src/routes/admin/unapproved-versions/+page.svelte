@@ -1,21 +1,16 @@
 <script lang="ts">
   import { ApproveVersionDocument, DenyVersionDocument, GetUnapprovedVersionsDocument } from '$lib/generated';
   import { getContextClient, queryStore } from '@urql/svelte';
-  import PageControls from '$lib/components/utils/PageControls.svelte';
   import { API_REST } from '$lib/core';
   import { base } from '$app/paths';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
-  import Card, { Content } from '@smui/card';
-  import DataTable, { Head, Body, Row, Cell } from '@smui/data-table';
-  import Button from '@smui/button';
   import { prettyDate } from '$lib/utils/formatting';
+  import { type PaginationSettings, Paginator } from '@skeletonlabs/skeleton';
 
   const client = getContextClient();
 
-  // TODO Selectable
-  const perPage = 20;
-
-  const page = 1;
+  let perPage = 20;
+  let page = 1;
 
   $: versions = queryStore({
     query: GetUnapprovedVersionsDocument,
@@ -49,6 +44,13 @@
         versions.resume();
       });
   };
+
+  $: paginationSettings = {
+    page: page,
+    limit: perPage,
+    size: totalVersions,
+    amounts: [5, 10, 20, 50, 100]
+  } satisfies PaginationSettings;
 </script>
 
 <svelte:head>
@@ -58,55 +60,67 @@
 {#if totalVersions}
   <div class="mb-5 ml-auto flex justify-end">
     <div>
-      <PageControls totalPages={Math.ceil(totalVersions / perPage)} currentPage={page} />
+      <Paginator
+        bind:settings={paginationSettings}
+        showFirstLastButtons={true}
+        showPreviousNextButtons={true}
+        on:page={(p) => (page = p.detail)}
+        on:amount={(p) => (perPage = p.detail)}
+        controlVariant="variant-filled-surface" />
     </div>
   </div>
 {/if}
 
-<Card>
+<div class="card">
   {#if $versions.fetching}
-    <Content>Loading...</Content>
+    <section class="p-4">Loading...</section>
   {:else if $versions.error}
-    <Content>Oh no... {$versions.error.message}</Content>
+    <section class="p-4">Oh no... {$versions.error.message}</section>
   {:else}
-    <DataTable class="max-w-full">
-      <Head>
-        <Row>
-          <Cell>Mod</Cell>
-          <Cell>Version</Cell>
-          <Cell>Release Date</Cell>
-          <Cell><!-- Buttons --></Cell>
-        </Row>
-      </Head>
-      <Body>
+    <table class="max-w-full table table-hover">
+      <thead>
+        <tr>
+          <th>Mod</th>
+          <th>Version</th>
+          <th>Release Date</th>
+          <th><!-- Buttons --></th>
+        </tr>
+      </thead>
+      <tbody>
         {#each $versions.data.getUnapprovedVersions.versions as version}
-          <Row>
-            <Cell>{version.mod.name}</Cell>
-            <Cell>{version.version}</Cell>
-            <Cell>{prettyDate(version.created_at)}</Cell>
-            <Cell>
+          <tr>
+            <td>{version.mod.name}</td>
+            <td>{version.version}</td>
+            <td>{prettyDate(version.created_at)}</td>
+            <td class="!p-2.5">
               <div class="grid grid-flow-col gap-4">
-                <Button variant="outlined" on:click={() => approveVersion(version.id)}>Approve</Button>
-                <Button variant="outlined" on:click={() => denyVersion(version.id)}>Deny</Button>
-                <Button
-                  variant="outlined"
+                <button class="btn variant-ghost-primary" on:click={() => approveVersion(version.id)}>Approve</button>
+                <button class="btn variant-ghost-primary" on:click={() => denyVersion(version.id)}>Deny</button>
+                <a
+                  class="btn variant-ghost-primary"
                   href={API_REST + '/mod/' + version.mod_id + '/versions/' + version.id + '/download'}>
                   Download
-                </Button>
-                <Button variant="outlined" href={base + '/mod/' + version.mod_id + '/version/' + version.id}>
+                </a>
+                <a class="btn variant-ghost-primary" href={base + '/mod/' + version.mod_id + '/version/' + version.id}>
                   View
-                </Button>
+                </a>
               </div>
-            </Cell>
-          </Row>
+            </td>
+          </tr>
         {/each}
-      </Body>
-    </DataTable>
+      </tbody>
+    </table>
   {/if}
-</Card>
+</div>
 
 {#if totalVersions}
   <div class="mt-5 ml-auto flex justify-end">
-    <PageControls totalPages={Math.ceil(totalVersions / perPage)} currentPage={page} />
+    <Paginator
+      bind:settings={paginationSettings}
+      showFirstLastButtons={true}
+      showPreviousNextButtons={true}
+      on:page={(p) => (page = p.detail)}
+      on:amount={(p) => (perPage = p.detail)}
+      controlVariant="variant-filled-surface" />
   </div>
 {/if}

@@ -4,16 +4,13 @@
   import GuideAuthor from '$lib/components/guides/GuideAuthor.svelte';
   import { user } from '$lib/stores/user';
   import { goto } from '$app/navigation';
-  import { writable } from 'svelte/store';
-  import Toast from '$lib/components/general/Toast.svelte';
   import { markdown } from '$lib/utils/markdown';
   import { base } from '$app/paths';
-  import Dialog, { Title, Content as DialogContent } from '@smui/dialog';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
-  import Card, { Content } from '@smui/card';
-  import Button from '@smui/button';
   import { getContextClient } from '@urql/svelte';
   import type { PageData } from './$types';
+  import { getModalStore, getToastStore, type ModalSettings } from "@skeletonlabs/skeleton";
+  import Page404 from "$lib/components/general/Page404.svelte";
 
   export let data: PageData;
 
@@ -21,12 +18,9 @@
 
   const client = getContextClient();
 
-  let errorMessage = '';
-  let errorToast = false;
+  const toastStore = getToastStore();
 
   $: canUserEdit = $user?.roles?.deleteContent || $user?.id === $guide?.data?.getGuide?.user?.id;
-
-  const deleteDialogOpen = writable<boolean>(false);
 
   const deleteGuideFn = () => {
     client
@@ -35,18 +29,34 @@
       .then((value) => {
         if (value.error) {
           console.error(value.error.message);
-          errorMessage = 'Error deleting guide: ' + value.error.message;
-          errorToast = true;
+          toastStore.trigger({
+            message: 'Error deleting guide: ' + value.error.message,
+            background: 'variant-filled-error',
+            autohide: false
+          });
         } else {
-          // TODO Toast or something
+          toastStore.trigger({
+            message: `Guide deleted`,
+            background: 'variant-filled-success',
+            timeout: 5000
+          });
           goto(base + '/guides');
         }
       });
   };
 
-  $: if (!errorToast) {
-    errorMessage = '';
-  }
+  const deleteModal: ModalSettings = {
+    type: 'confirm',
+    title: 'Delete Guide?',
+    body: 'Are you sure you wish to delete this guide?',
+    response: (r: boolean) => {
+      if (r) {
+        deleteGuideFn();
+      }
+    }
+  };
+
+  const modalStore = getModalStore();
 </script>
 
 <svelte:head>
@@ -66,46 +76,29 @@
 
       <div>
         {#if canUserEdit}
-          <Button variant="outlined" on:click={() => goto(base + '/guide/' + guideId + '/edit')}>Edit</Button>
-          <Button variant="outlined" on:click={() => deleteDialogOpen.set(true)}>Delete</Button>
+          <button class="btn variant-ghost-primary" on:click={() => goto(base + '/guide/' + guideId + '/edit')}
+            >Edit</button>
+          <button class="btn variant-ghost-primary" on:click={() => modalStore.trigger(deleteModal)}>Delete</button>
         {/if}
       </div>
     </div>
     <div class="grid grid-auto-max auto-cols-fr gap-4">
-      <Card class="h-fit">
-        <Content>
+      <div class="card p-4 h-fit">
+        <section>
           <div class="markdown-content break-words">
             {#await markdown($guide.data.getGuide.guide) then guideRendered}
+              <!-- eslint-disable -->
               <p>{@html guideRendered}</p>
             {/await}
           </div>
-        </Content>
-      </Card>
+        </section>
+      </div>
       <div class="grid grid-cols-1 auto-rows-min gap-8">
         <GuideInfo guide={$guide.data.getGuide} />
         <GuideAuthor author={$guide.data.getGuide.user} />
       </div>
     </div>
   </div>
-
-  {#if canUserEdit}
-    <Dialog bind:open={$deleteDialogOpen}>
-      <Title>Delete Guide?</Title>
-      <DialogContent>
-        <div class="grid grid-flow-row gap-4">
-          <span>Are you sure you wish to delete this guide</span>
-
-          <Button variant="outlined" on:click={() => deleteDialogOpen.set(false)}>Cancel</Button>
-          <Button variant="outlined" on:click={() => deleteGuideFn()}>Delete</Button>
-        </div>
-      </DialogContent>
-    </Dialog>
-  {/if}
-
-  <Toast bind:running={errorToast}>
-    <span>{errorMessage}</span>
-  </Toast>
 {:else}
-  <!-- TODO Better 404 -->
-  404
+  <Page404/>
 {/if}

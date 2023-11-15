@@ -7,10 +7,7 @@
   import { trimNonSchema } from '$lib/utils/forms';
   import { markdown } from '$lib/utils/markdown';
   import { writable } from 'svelte/store';
-  import Textfield from '@smui/textfield';
-  import Button from '@smui/button';
   import { VersionStabilities } from '$lib/generated';
-  import Select, { Option } from '@smui/select';
   import { prettyBytes } from '$lib/utils/formatting';
   import { getTranslate } from '@tolgee/svelte';
 
@@ -46,11 +43,14 @@
 <form use:form>
   <div class="grid grid-flow-row gap-6">
     <div class="grid grid-flow-row gap-2">
-      <Select bind:value={$data.stability} label={$t('stability')}>
-        <Option value="alpha">Alpha</Option>
-        <Option value="beta">Beta</Option>
-        <Option value="release">Release</Option>
-      </Select>
+      <label class="label">
+        <span>{$t('stability')} *</span>
+        <select class="select" bind:value={$data.stability}>
+          <option value="alpha">Alpha</option>
+          <option value="beta">Beta</option>
+          <option value="release">Release</option>
+        </select>
+      </label>
       <ValidationMessage for="stability" let:messages={message}>
         <span class="validation-message">{message || ''}</span>
       </ValidationMessage>
@@ -58,7 +58,7 @@
 
     {#if !editing}
       <div class="grid grid-flow-row gap-2">
-        <label for="file">{$t('file')}:</label>
+        <label for="file">{$t('file')} *</label>
         <input id="file" class="base-input" name="file" type="file" accept=".zip,.smod" placeholder="File" />
         <ValidationMessage for="file" let:messages={message}>
           <span class="validation-message">{message || ''}</span>
@@ -125,13 +125,10 @@
 
     <div class="grid gap-6 split">
       <div class="grid grid-flow-row gap-2 auto-rows-max">
-        <Textfield
-          textarea
-          class="vertical-textarea"
-          bind:value={$data.changelog}
-          label={$t('changelog')}
-          required
-          input$rows={10} />
+        <label class="label">
+          <span>{$t('changelog')} *</span>
+          <textarea class="vertical-textarea textarea p-2" bind:value={$data.changelog} required rows={10} />
+        </label>
         <ValidationMessage for="changelog" let:messages={message}>
           <span class="validation-message">{message || ''}</span>
         </ValidationMessage>
@@ -139,6 +136,7 @@
       <div class="grid grid-flow-row gap-2 auto-rows-max">
         <span>{$t('preview')}:</span>
         {#await markdown(preview) then previewRendered}
+          <!-- eslint-disable -->
           <div class="markdown-content right">{@html previewRendered}</div>
         {/await}
       </div>
@@ -149,7 +147,7 @@
     </div>
 
     <div>
-      <Button variant="outlined" type="submit" {disabled}>{submitText}</Button>
+      <button class="btn variant-ghost-primary" type="submit" {disabled}>{submitText}</button>
     </div>
   </div>
 </form>

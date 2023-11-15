@@ -2,20 +2,14 @@
   import { queryStore, getContextClient } from '@urql/svelte';
   import { GetModsDocument, ModFields, Order } from '$lib/generated';
   import ModCard from './ModCard.svelte';
-  import PageControls from '$lib/components/utils/PageControls.svelte';
   import { base } from '$app/paths';
-  import Button from '@smui/button';
-  import { Input } from '@smui/textfield';
-  import Paper from '@smui/paper';
-  import Fab from '@smui/fab';
-  import { Icon } from '@smui/common';
   import { goto } from '$app/navigation';
   import { page as storePage } from '$app/stores';
   import { user } from '$lib/stores/user';
   import FicsitCard from '$lib/components/general/FicsitCard.svelte';
-  import Select, { Option } from '@smui/select';
   import { browser } from '$app/environment';
   import { getTranslate } from '@tolgee/svelte';
+  import { type PaginationSettings, Paginator } from '@skeletonlabs/skeleton';
 
   export let colCount: 4 | 5 = 4;
   export let newMod = false;
@@ -25,17 +19,16 @@
 
   let search = $storePage.url.searchParams.get('q');
 
-  // TODO Selectable
-  const perPage = 40;
   let order: Order = Order.Desc;
   let orderBy: ModFields = ModFields.LastVersionDate;
 
-  let page = parseInt($storePage.url.searchParams.get('p'), 10) || 1;
+  let perPage = 32;
+  let page = parseInt($storePage.url.searchParams.get('p'), 10) || 0;
 
   $: mods = queryStore({
     query: GetModsDocument,
     client,
-    variables: { offset: (page - 1) * perPage, limit: perPage, search, order, orderBy }
+    variables: { offset: page * perPage, limit: perPage, search, order, orderBy }
   });
 
   let totalMods: number;
@@ -89,40 +82,63 @@
     [$t('sort-order.last_version_date'), 'last_version_date'],
     ...(search !== '' && search !== null ? [[$t('sort-order.search'), 'search']] : [])
   ];
+
+  $: paginationSettings = {
+    page: page,
+    limit: perPage,
+    size: totalMods,
+    amounts: [8, 16, 32, 64, 100]
+  } satisfies PaginationSettings;
 </script>
 
 <div class="ml-auto flex flex-wrap justify-between items-center mb-5">
   {#if newMod && $user !== null}
-    <Button variant="outlined" href="{base}/new-mod">{$t('mods.new')}</Button>
+    <a class="btn variant-ghost-primary" href="{base}/new-mod">{$t('mods.new')}</a>
   {/if}
 
   {#if showSearch}
-    <div class="search-container flex flex-wrap sm:px-4">
+    <div class="search-container flex flex-wrap flex-row sm:px-4">
       <div class="mr-3">
-        <Select bind:value={orderBy} label={$t('order-by')}>
+        <select bind:value={orderBy} class="select">
           {#each orderFields as orderField}
-            <Option value={orderField[1]}>{orderField[0]}</Option>
+            <option value={orderField[1]}>{orderField[0]}</option>
           {/each}
-        </Select>
+        </select>
       </div>
       <div class="mr-3">
-        <Select bind:value={order} label={$t('order')}>
-          <Option value="asc">{$t('ascending')}</Option>
-          <Option value="desc">{$t('descending')}</Option>
-        </Select>
+        <select bind:value={order} class="select">
+          <option value="asc">{$t('ascending')}</option>
+          <option value="desc">{$t('descending')}</option>
+        </select>
       </div>
-      <Paper class="search-paper mr-3" elevation={6}>
-        <Icon class="material-icons">search</Icon>
-        <Input bind:value={searchField} placeholder="Search" />
-      </Paper>
-      <Fab on:click={() => goto(base + '/mods?q=' + search)} color="primary" mini class="solo-fab" aria-label="Search">
-        <Icon class="material-icons">arrow_forward</Icon>
-      </Fab>
+
+      <div class="input-group input-group-divider grid-cols-[1fr_auto] rounded-container-token w-fit">
+        <input
+          bind:value={searchField}
+          class="bg-transparent border-0 ring-0 p-1.5"
+          name="search"
+          placeholder="Search" />
+        <button class="variant-filled-primary material-icons">arrow_forward</button>
+      </div>
+
+      <!--      <Paper class="search-paper mr-3" elevation={6}>-->
+      <!--        <Icon class="material-icons">search</Icon>-->
+      <!--        <Input bind:value={searchField} placeholder="Search" />-->
+      <!--      </Paper>-->
+      <!--      <Fab on:click={() => goto(base + '/mods?q=' + search)} color="primary" mini class="solo-fab" aria-label="Search">-->
+      <!--        <Icon class="material-icons">arrow_forward</Icon>-->
+      <!--      </Fab>-->
     </div>
   {/if}
 
   <div>
-    <PageControls totalPages={Math.ceil(totalMods / perPage)} currentPage={page} />
+    <Paginator
+      bind:settings={paginationSettings}
+      showFirstLastButtons={true}
+      showPreviousNextButtons={true}
+      on:page={(p) => (page = p.detail)}
+      on:amount={(p) => (perPage = p.detail)}
+      controlVariant="variant-filled-surface" />
   </div>
 </div>
 
@@ -144,7 +160,13 @@
 
 <div class="mt-5 ml-auto flex justify-end">
   <div>
-    <PageControls totalPages={Math.ceil(totalMods / perPage)} currentPage={page} />
+    <Paginator
+      bind:settings={paginationSettings}
+      showFirstLastButtons={true}
+      showPreviousNextButtons={true}
+      on:page={(p) => (page = p.detail)}
+      on:amount={(p) => (perPage = p.detail)}
+      controlVariant="variant-filled-surface" />
   </div>
 </div>
 

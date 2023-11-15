@@ -1,14 +1,13 @@
 <script lang="ts">
   import { getContextClient, queryStore } from '@urql/svelte';
   import { EditGuideDocument, GetGuideDocument } from '$lib/generated';
-  import Toast from '$lib/components/general/Toast.svelte';
   import { goto } from '$app/navigation';
   import GuideForm from '$lib/components/guides/GuideForm.svelte';
-  import Card, { Content } from '@smui/card';
   import type { GuideData } from '$lib/models/guides';
   import { base } from '$app/paths';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
   import type { PageData } from './$types';
+  import { getToastStore } from "@skeletonlabs/skeleton";
 
   export let data: PageData;
 
@@ -16,8 +15,7 @@
 
   const client = getContextClient();
 
-  let errorMessage = '';
-  let errorToast = false;
+  const toastStore = getToastStore();
 
   const guide = queryStore({
     query: GetGuideDocument,
@@ -35,18 +33,21 @@
       .then((value) => {
         if (value.error) {
           console.error(value.error.message);
-          errorMessage = 'Error editing guide: ' + value.error.message;
-          errorToast = true;
+          toastStore.trigger({
+            message: 'Error editing guide: ' + value.error.message,
+            background: 'variant-filled-error',
+            autohide: false
+          });
         } else {
-          // TODO Toast or something
+          toastStore.trigger({
+            message: `Guide updated`,
+            background: 'variant-filled-success',
+            timeout: 5000
+          });
           goto(base + '/guide/' + value.data.updateGuide.id);
         }
       });
   };
-
-  $: if (!errorToast) {
-    errorMessage = '';
-  }
 </script>
 
 <svelte:head>
@@ -59,8 +60,8 @@
 
 <h1 class="text-4xl my-4 font-bold">Edit Guide</h1>
 
-<Card>
-  <Content>
+<div class="card p-4">
+  <section>
     {#if $guide.fetching}
       <p>Loading...</p>
     {:else if $guide.error}
@@ -68,9 +69,5 @@
     {:else}
       <GuideForm {onSubmit} initialValues={$guide.data.getGuide} submitText="Save" />
     {/if}
-  </Content>
-</Card>
-
-<Toast bind:running={errorToast}>
-  <span>{errorMessage}</span>
-</Toast>
+  </section>
+</div>
