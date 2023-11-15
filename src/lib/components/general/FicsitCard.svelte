@@ -56,7 +56,7 @@
         {#if fake}
           <div class="bg-gray-500 logo min-w-full min-h-full max-w-full max-h-full" />
         {:else}
-          <img src={renderedLogo} alt="{renderedName} Logo" class="logo max-w-full max-h-full" />
+          <img src={renderedLogo} alt="{renderedName} Logo" class="logo max-w-full max-h-full min-w-full min-h-full" />
         {/if}
       </a>
     </div>
