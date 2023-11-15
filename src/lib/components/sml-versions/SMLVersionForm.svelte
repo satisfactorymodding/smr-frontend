@@ -30,7 +30,10 @@
   const { form, data, addField, unsetField } = createForm<SMLVersionData>({
     initialValues: initialValues,
     extend: [validator({ schema: smlVersionSchema }), reporter],
-    onSubmit: (submitted: SMLVersionData) => onSubmit(trimNonSchema(submitted, smlVersionSchema))
+    onSubmit: (submitted: SMLVersionData) => {
+      console.log('hello', submitted);
+      return onSubmit(trimNonSchema(submitted, smlVersionSchema));
+    }
   });
 
   const addTarget = () => {
@@ -60,7 +63,7 @@
     <div class="grid grid-flow-row gap-2">
       <label class="label">
         <span>Satisfactory {$t('version')} *</span>
-        <input type="text" bind:value={$data.satisfactory_version} required class="input p-2" />
+        <input type="number" bind:value={$data.satisfactory_version} required class="input p-2" />
       </label>
       <ValidationMessage for="satisfactory_version" let:messages={message}>
         <span class="validation-message">{message || ''}</span>

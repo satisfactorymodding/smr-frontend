@@ -305,3 +305,4 @@ $RECYCLE.BIN/
 /graphql.schema.json
 /.svelte-kit
 /.pnpm-store
+.direnv
