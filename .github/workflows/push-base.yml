@@ -8,7 +8,7 @@ on:
         type: string
 
 env:
-  BUN_VERSION: "1.0.9"
+  BUN_VERSION: "1.0.11"
 
 jobs:
   build:
