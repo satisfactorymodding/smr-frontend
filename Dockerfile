@@ -29,10 +29,8 @@ RUN apt update && apt install -y bash
 WORKDIR /app
 
 COPY --from=build /app/build /app/build
-COPY --from=build /app/package.json /app/package.json
-COPY --from=build /app/bun.lockb /app/bun.lockb
 
-RUN bun install --production --ignore-scripts
+RUN cd /app/build/node && bun install --no-save
 
 COPY docker/entrypoint.sh /entrypoint.sh
 
