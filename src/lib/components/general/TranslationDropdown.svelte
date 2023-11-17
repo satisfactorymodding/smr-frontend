@@ -2,6 +2,7 @@
   import { getTolgee, getTranslate } from '@tolgee/svelte';
   import { writable } from 'svelte/store';
   import { type PopupSettings, popup } from '@skeletonlabs/skeleton';
+  import { browser } from "$app/environment";
 
   const tolgee = getTolgee(['language']);
 
@@ -38,10 +39,12 @@
     }
   } as const;
 
-  const lang = writable<string>(localStorage.getItem('language') || $tolgee.getLanguage());
+  const lang = writable<string>(browser && localStorage.getItem('language') || $tolgee.getLanguage());
   lang.subscribe((l) => {
     $tolgee.changeLanguage(l);
-    localStorage.setItem('language', l);
+    if (browser) {
+      localStorage.setItem('language', l);
+    }
   });
 
   const languageMenuBox: PopupSettings = {
@@ -64,7 +67,7 @@
         <li class:bg-primary-active-token={$lang === k}>
           <button class="w-full" on:click={() => lang.set(k)}>
             <span>{v.name}</span>
-            <span class="text-xl">{v.flag}</span>
+            <span class="text-xl text-white">{v.flag}</span>
           </button>
         </li>
       {/each}

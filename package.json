@@ -5,7 +5,7 @@
     "build": "bun run translations && bun run build:static && bun run build:node",
     "build:staging": "cross-env NODE_ENV=staging bun run build:static && bun run build:node",
     "build:production": "cross-env NODE_ENV=production bun run build:static && bun run build:node",
-    "build:node": "rimraf .svelte build/node && cross-env SVELTE_ADAPTER=node vite build",
+    "build:node": "rimraf .svelte build/node && cross-env SVELTE_ADAPTER=bun vite build",
     "build:static": "rimraf .svelte build/static && vite build",
     "check": "svelte-check --ignore build,.svelte,.svelte-kit",
     "check:dev": "svelte-check --ignore build,.svelte,.svelte-kit --watch",

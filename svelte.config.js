@@ -19,8 +19,10 @@ const config = {
     // By default, `npm run build` will create a standard Node app.
     // You can create optimized builds for different platforms by
     // specifying a different adapter
-    adapter: process.env.SVELTE_ADAPTER === 'node' ? adapterBun({
+    adapter: process.env.SVELTE_ADAPTER === 'bun' ? adapterBun({
       out: 'build/node',
+      dynamic_origin: true,
+      development: dev,
     }) : adapterStatic({
       pages: 'build/static',
       assets: 'build/static',
@@ -29,6 +31,12 @@ const config = {
 
     paths: {
       base: process.env.SVELTE_BASE_PATH || ''
+    },
+
+    prerender: {
+      handleHttpError: 'warn',
+      handleMissingId: 'ignore',
+      origin: process.env.PUBLIC_BASE_URL
     }
   }
 };

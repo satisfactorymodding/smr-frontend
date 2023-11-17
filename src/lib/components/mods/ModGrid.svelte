@@ -17,13 +17,13 @@
 
   const client = getContextClient();
 
-  let search = $storePage.url.searchParams.get('q');
+  let search = browser && $storePage.url.searchParams.get('q') || '';
 
   let order: Order = Order.Desc;
   let orderBy: ModFields = ModFields.LastVersionDate;
 
   let perPage = 32;
-  let page = parseInt($storePage.url.searchParams.get('p'), 10) || 0;
+  let page = parseInt(browser && $storePage.url.searchParams.get('p') || '0', 10) || 0;
 
   $: mods = queryStore({
     query: GetModsDocument,

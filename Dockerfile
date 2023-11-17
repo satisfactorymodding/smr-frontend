@@ -36,6 +36,8 @@ RUN bun install --production --ignore-scripts
 
 COPY docker/entrypoint.sh /entrypoint.sh
 
+ENV HOST_HEADER=host
+
 EXPOSE 80
 
 ENTRYPOINT ["bash", "/entrypoint.sh"]

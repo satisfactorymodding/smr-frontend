@@ -7,52 +7,20 @@
   import AnnouncementHeader from '$lib/components/announcements/AnnouncementHeader.svelte';
   import { base } from '$app/paths';
   import { browser } from '$app/environment';
-  import { PUBLIC_GOOGLE_SITE_TAG, PUBLIC_TOLGEE_API_URL, PUBLIC_TOLGEE_API_KEY } from '$env/static/public';
+  import { PUBLIC_GOOGLE_SITE_TAG } from '$env/static/public';
   import type { LayoutData } from './$types';
-  import { TolgeeProvider, Tolgee, DevTools, FormatSimple, LanguageDetector } from '@tolgee/svelte';
+  import { TolgeeProvider } from '@tolgee/svelte';
   import { initializeStores, AppShell, Modal, storePopup, Drawer, Toast } from '@skeletonlabs/skeleton';
   import TopBar from '$lib/components/general/TopBar.svelte';
   import './_global.postcss';
   import { computePosition, autoUpdate, offset, shift, flip, arrow } from '@floating-ui/dom';
 
-  import enCommon from '../i18n/common/en.json';
-  import deCommon from '../i18n/common/de.json';
-  import frCommon from '../i18n/common/fr.json';
-  import lvCommon from '../i18n/common/lv.json';
-  import mtCommon from '../i18n/common/mt.json';
-  import zhHansCommon from '../i18n/common/zh-Hans.json';
-  import zhHantCommon from '../i18n/common/zh-Hant.json';
-
   export let data: LayoutData;
 
-  const { client } = data;
+  const { client, tolgee } = data;
 
   initializeStores();
   storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow });
-
-  const tolgee = Tolgee()
-    .use(DevTools())
-    .use(FormatSimple())
-    .use(LanguageDetector())
-    .init({
-      defaultNs: 'common',
-
-      defaultLanguage: 'en',
-      fallbackLanguage: 'en',
-
-      apiUrl: PUBLIC_TOLGEE_API_URL,
-      apiKey: PUBLIC_TOLGEE_API_KEY,
-
-      staticData: {
-        'en:common': enCommon,
-        'de:common': deCommon,
-        'fr:common': frCommon,
-        'lv:common': lvCommon,
-        'mt:common': mtCommon,
-        'zh-Hans:common': zhHansCommon,
-        'zh-Hant:common': zhHantCommon
-      }
-    });
 
   let gTag: unknown;
   if (browser) {
@@ -145,7 +113,11 @@
   {/if}
 </svelte:head>
 
+<span>OUTSIDE TOLGEE</span>
+<span>{JSON.stringify(tolgee)}</span>
+<span>{JSON.stringify(tolgee.isLoaded())}</span>
 <TolgeeProvider {tolgee}>
+  <span>INSIDE TOLGEE</span>
   <Toast />
   <Modal />
 

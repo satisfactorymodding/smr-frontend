@@ -3,6 +3,8 @@ import { queryStore } from '@urql/svelte';
 import { GetUserDocument } from '$lib/generated';
 import { loadWaitForNoFetch } from '$lib/utils/gql';
 
+export const prerender = false;
+
 export const load: PageLoad = async ({ params, parent }) => ({
   ...params,
   ...(await loadWaitForNoFetch({
