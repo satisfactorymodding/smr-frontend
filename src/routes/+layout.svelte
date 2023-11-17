@@ -113,11 +113,7 @@
   {/if}
 </svelte:head>
 
-<span>OUTSIDE TOLGEE</span>
-<span>{JSON.stringify(tolgee)}</span>
-<span>{JSON.stringify(tolgee.isLoaded())}</span>
 <TolgeeProvider {tolgee}>
-  <span>INSIDE TOLGEE</span>
   <Toast />
   <Modal />
 
