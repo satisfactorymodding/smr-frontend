@@ -21,6 +21,10 @@
       name: 'Français',
       flag: '🇫🇷'
     },
+    it: {
+      name: 'Italiano',
+      flag: '🇮🇹'
+    },
     lv: {
       name: 'Latviešu',
       flag: '🇱🇻'
@@ -28,6 +32,14 @@
     mt: {
       name: 'Malti',
       flag: '🇲🇹'
+    },
+    nl: {
+      name: 'Nederlands',
+      flag: '🇳🇱'
+    },
+    ru: {
+      name: 'Pусский',
+      flag: '🇷🇺'
     },
     'zh-Hans': {
       name: '简体中文',
