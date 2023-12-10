@@ -8,6 +8,18 @@ To extend or enhance the main site, you'll need to fork and open a PR targeting 
 
 ## Requirements
 
+### Note: Dev Container
+
+This project uses [Bun](https://bun.sh/) which is not fully featured yet for Windows.
+If you're developing from windows, we suggest you use the devcontainer included with the project instead.
+Generic directions for setup can be found
+[here](https://github.com/satisfactorymodding/Documentation/blob/master/README.md#devcontainer).
+You should operate the devcontainer out of a volume
+to avoid the _significant_ slowdowns caused by working on the host file system
+and issues with Git setting up files for Windows line endings.
+
+### Dependencies
+
 At the highest level you must at least have:
 
 * [Bun](https://bun.sh/)
@@ -47,7 +59,9 @@ This project has three main environments:
 * `development`
   * Used if you'd like to run the [backend](https://github.com/satisfactorymodding/smr-api) yourself (which most likely you don't)
 
-If you do not specify which environment you want to use when running `bun` comands, `development` will be used by default.
+If you do not specify which environment you want to use when running `bun` comands,
+`development` will be used by default.
+The process for specifting an environment is covered in the next section.
 
 ### Loading Environment Variables
 
