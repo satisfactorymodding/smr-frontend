@@ -86,22 +86,19 @@ export const initializeGraphQLClient = (fetch?: LoadEvent['fetch']): Client =>
           }
         }
       }),
-      authExchange(async (utils) => {
-        const token = get(userToken);
-        return {
-          addAuthToOperation(operation) {
-            return utils.appendHeaders(operation, {
-              Authorization: token
-            });
-          },
-          didAuthError(error) {
-            return error.message.indexOf('user not logged in') >= 0;
-          },
-          async refreshAuth() {
-            // Token cannot be refreshed currently
-          }
-        };
-      }),
+      authExchange(async (utils) => ({
+        addAuthToOperation(operation) {
+          return utils.appendHeaders(operation, {
+            Authorization: get(userToken)
+          });
+        },
+        didAuthError(error) {
+          return error.message.indexOf('user not logged in') >= 0;
+        },
+        async refreshAuth() {
+          // Token cannot be refreshed currently
+        }
+      })),
       persistedExchange({
         preferGetForPersistedQueries: true
       }),

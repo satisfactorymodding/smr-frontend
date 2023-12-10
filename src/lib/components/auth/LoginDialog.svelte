@@ -14,6 +14,7 @@
   import { getTranslate } from '@tolgee/svelte';
   import { getModalStore, getToastStore, type ModalSettings } from "@skeletonlabs/skeleton";
   import LoginModal from '$lib/modals/LoginModal.svelte';
+  import { derived, get, writable } from "svelte/store";
 
   const client = getContextClient();
 
@@ -79,17 +80,16 @@
     facebook: OAuthFacebookDocument
   };
 
-  let signingIn = false;
-
-  $: loginModal = {
-    type: 'component',
-    component: {
-      ref: LoginModal,
-      props: {
-        signingIn
+  const signingIn = writable(false);
+  const loginModal = derived(signingIn, (val) => ({
+      type: 'component',
+      component: {
+        ref: LoginModal,
+        props: {
+          signingIn: val
+        }
       }
-    }
-  } satisfies ModalSettings;
+    } satisfies ModalSettings))
 
   const modalStore = getModalStore();
 
@@ -106,8 +106,8 @@
     const state = queryParams.state;
 
     if (signInMethod && code && state) {
-      signingIn = true;
-      modalStore.trigger(loginModal);
+      signingIn.set(true);
+      modalStore.trigger(get(loginModal));
 
       client
         .mutation(signInMethods[signInMethod as 'github' | 'google' | 'facebook'], {
@@ -129,7 +129,7 @@
           }
         })
         .catch()
-        .then(() => (signingIn = false));
+        .then(() => signingIn.set(false));
     }
   }
 </script>
