@@ -42,7 +42,7 @@
       if (searchField && searchField.length > 2) {
         if ((search === '' || search === null) && searchField !== '' && searchField !== null) {
           orderBy = ModFields.Search;
-          page = 1;
+          page = 0;
         }
 
         search = searchField;
