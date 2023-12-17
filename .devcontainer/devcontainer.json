@@ -31,7 +31,10 @@
 				"GraphQL.vscode-graphql",
 				"GraphQL.vscode-graphql-syntax",
 				"streetsidesoftware.code-spell-checker",
-				"vunguyentuan.vscode-postcss"
+				"vunguyentuan.vscode-postcss",
+				"bbenoist.Nix",
+				"mikestead.dotenv",
+				"me-dutour-mathieu.vscode-github-actions"
 			]
 		}
 	},
