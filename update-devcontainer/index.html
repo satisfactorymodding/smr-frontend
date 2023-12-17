@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    
+		<link href="/smr-frontend/update-devcontainer/_app/immutable/assets/vendor.bd53154f.css" rel="stylesheet">
+		<link rel="modulepreload" href="/smr-frontend/update-devcontainer/_app/immutable/entry/start.328327bd.js">
+		<link rel="modulepreload" href="/smr-frontend/update-devcontainer/_app/immutable/chunks/vendor.222e00a9.js">
+		<link rel="modulepreload" href="/smr-frontend/update-devcontainer/_app/immutable/entry/app.35792bd8.js">
+		<link rel="modulepreload" href="/smr-frontend/update-devcontainer/_app/immutable/chunks/preload-helper.8b93628a.js">
+  </head>
+  <body data-theme="custom-theme">
+    <div style="display: contents" class="h-full overflow-hidden">
+			<script>
+				{
+					__sveltekit_13eeez5 = {
+						assets: "/smr-frontend/update-devcontainer",
+						base: "/smr-frontend/update-devcontainer",
+						env: {"PUBLIC_BACKEND_API_BASE":"https://api.ficsit.dev","PUBLIC_BASE_URL":"https://ficsit.dev","PUBLIC_GOOGLE_SITE_TAG":"UA-138769351-1","PUBLIC_TOLGEE_API_URL":"https://translate.ficsit.app","PUBLIC_TOLGEE_API_KEY":"tgpak_gjptqytrm5sgyy3ohfwdk2junf2wemtbnezts2lig5yte"}
+					};
+
+					const element = document.currentScript.parentElement;
+
+					Promise.all([
+						import("/smr-frontend/update-devcontainer/_app/immutable/entry/start.328327bd.js"),
+						import("/smr-frontend/update-devcontainer/_app/immutable/entry/app.35792bd8.js")
+					]).then(([kit, app]) => {
+						kit.start(app, element);
+					});
+
+					if ('serviceWorker' in navigator) {
+						addEventListener('load', function () {
+							navigator.serviceWorker.register('/smr-frontend/update-devcontainer/service-worker.js');
+						});
+					}
+				}
+			</script>
+		</div>
+  </body>
+</html>
