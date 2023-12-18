@@ -41,7 +41,9 @@
               <span class="material-icons">{stabilities[stability]}</span>
             </div>
             <div class="grid grid-flow-row">
-              <a href="{base}/mod/{modId}/version/{latestVersions[stability].id}/" class="text-yellow-500 underline"
+              <a href="{base}/mod/{modId}/version/{latestVersions[stability].id}/"
+              class="text-yellow-500 underline"
+              title="Click to view patch notes for this version"
                 >Version {latestVersions[stability].version} ({stability})</a>
               <div>{prettyDate(latestVersions[stability].created_at)}</div>
             </div>
@@ -51,7 +53,7 @@
                 on:click={() => installMod(modId)}
                 title="Install via Satisfactory Mod Manager"
                 class="text-yellow-500">
-                <span class="material-icons align-middle" style="font-size: 118x;">download</span> <u>Download</u>
+                <span class="material-icons align-middle" style="font-size: 118x;">download</span> <u>Install</u>
               </a>
             </div>
           </div>
