@@ -10,6 +10,7 @@ query GetModVersion($version: VersionID!) {
     link
     hash
     size
+    approved
     targets {
       targetName
       link

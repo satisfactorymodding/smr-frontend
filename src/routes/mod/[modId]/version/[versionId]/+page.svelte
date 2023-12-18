@@ -142,7 +142,7 @@
       </div>
     </div>
     <div class="grid grid-auto-max auto-cols-fr gap-4">
-      <VersionDescription changelog={$version.data.getVersion.changelog} />
+      <VersionDescription changelog={$version.data.getVersion.changelog} approved={$version.data.getVersion.approved} />
       <div class="grid grid-cols-1 auto-rows-min gap-8">
         <VersionInfo version={$version.data.getVersion} />
         <VersionTargetSupportGrid targets={$version.data.getVersion.targets} />
