@@ -1,19 +1,20 @@
 <script lang="ts">
   import { getModalStore, SlideToggle } from '@skeletonlabs/skeleton';
-  import { goto, preloadData } from '$app/navigation';
+  import { goto } from '$app/navigation';
   import { base } from '$app/paths';
-  import { page } from '$app/stores';
   import { user, userToken } from '$lib/stores/user';
   import { getTranslate } from '@tolgee/svelte';
   import LoginModal from '$lib/modals/LoginModal.svelte';
+  import type { SidebarItemData } from '$lib/utils/sidebarItemData';
+  import SidebarItem from './SidebarItem.svelte';
 
   export let accessibility: boolean;
 
   export const { t } = getTranslate();
 
-  $: currentPath = $page.url.pathname;
   $: isAdmin = !$user ? false : $user.roles.approveMods || $user.roles.approveVersions || $user.roles.editSMLVersions;
 
+  let top: SidebarItemData[];
   $: top = [
     {
       url: base + '/',
@@ -60,6 +61,7 @@
     }
   ];
 
+  let bottom: SidebarItemData[];
   $: bottom = [
     {
       url: base + '/help',
@@ -141,23 +143,7 @@
     <nav class="list-nav">
       <ul>
         {#each top as item}
-          <li>
-            {#if !item.external}
-              <a
-                href={item.url}
-                class:bg-primary-active-token={currentPath === item.url}
-                on:mouseover={() => preloadData(item.url)}
-                on:focus={() => preloadData(item.url)}>
-                <span class="material-icons">{item.icon}</span>
-                <span class="flex-auto">{item.label}</span>
-              </a>
-            {:else}
-              <a href={item.url} target="_blank" rel="noopener">
-                <span class="material-icons">{item.icon}</span>
-                <span class="flex-auto">{item.label}</span>
-              </a>
-            {/if}
-          </li>
+          <SidebarItem {item} />
         {/each}
       </ul>
     </nav>
@@ -166,23 +152,7 @@
   <nav class="list-nav">
     <ul>
       {#each bottom as item}
-        <li>
-          {#if !item.external}
-            <a
-              href={item.url}
-              class:bg-primary-active-token={currentPath === item.url}
-              on:mouseover={() => preloadData(item.url)}
-              on:focus={() => preloadData(item.url)}>
-              <span class="material-icons">{item.icon}</span>
-              <span class="flex-auto">{item.label}</span>
-            </a>
-          {:else}
-            <a href={item.url} target="_blank" rel="noopener">
-              <span class="material-icons">{item.icon}</span>
-              <span class="flex-auto">{item.label}</span>
-            </a>
-          {/if}
-        </li>
+        <SidebarItem {item} />
       {/each}
 
       <li class="xl:hidden">
