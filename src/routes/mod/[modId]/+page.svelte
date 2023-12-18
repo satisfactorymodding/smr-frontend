@@ -14,9 +14,9 @@
   import CompatibilityGrid from '$lib/components/mods/compatibility/CompatibilityGrid.svelte';
   import { getContextClient } from '@urql/svelte';
   import type { PageData } from './$types';
-  import { getModalStore, getToastStore, type ModalSettings } from "@skeletonlabs/skeleton";
+  import { getModalStore, getToastStore, type ModalSettings } from '@skeletonlabs/skeleton';
   import EditCompatibilityModal from '$lib/modals/EditCompatibilityModal.svelte';
-  import Page404 from "$lib/components/general/Page404.svelte";
+  import Page404 from '$lib/components/general/Page404.svelte';
 
   export let data: PageData;
 
@@ -142,5 +142,5 @@
     </div>
   </div>
 {:else}
-  <Page404/>
+  <Page404 />
 {/if}
