@@ -17,7 +17,7 @@
   export let onSubmit: (data: VersionData) => Promise<void>;
   export let initialValues: Omit<VersionData, 'file'> = {
     changelog: '',
-    stability: VersionStabilities.Alpha
+    stability: VersionStabilities.Release
   };
   export let submitText = $t('entry.create');
 
