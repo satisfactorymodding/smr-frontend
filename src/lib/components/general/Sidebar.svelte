@@ -1,19 +1,20 @@
 <script lang="ts">
-  import { getModalStore, SlideToggle } from '@skeletonlabs/skeleton';
-  import { goto, preloadData } from '$app/navigation';
+  import { getDrawerStore, getModalStore, SlideToggle } from '@skeletonlabs/skeleton';
+  import { goto } from '$app/navigation';
   import { base } from '$app/paths';
-  import { page } from '$app/stores';
   import { user, userToken } from '$lib/stores/user';
   import { getTranslate } from '@tolgee/svelte';
   import LoginModal from '$lib/modals/LoginModal.svelte';
+  import type { SidebarItemData } from '$lib/utils/sidebarItemData';
+  import SidebarItem from './SidebarItem.svelte';
 
   export let accessibility: boolean;
 
   export const { t } = getTranslate();
 
-  $: currentPath = $page.url.pathname;
   $: isAdmin = !$user ? false : $user.roles.approveMods || $user.roles.approveVersions || $user.roles.editSMLVersions;
 
+  let top: SidebarItemData[];
   $: top = [
     {
       url: base + '/',
@@ -60,6 +61,7 @@
     }
   ];
 
+  let bottom: SidebarItemData[];
   $: bottom = [
     {
       url: base + '/help',
@@ -95,6 +97,7 @@
   ];
 
   const modalStore = getModalStore();
+  const drawerStore = getDrawerStore();
 </script>
 
 <div class="p-4 overflow-y-auto flex flex-col justify-between h-full max-w-xl">
@@ -103,20 +106,27 @@
       <ul>
         {#if $user === null}
           <button
-            on:click={() =>
+            on:click={() => {
               modalStore.trigger({
                 type: 'component',
                 component: {
                   ref: LoginModal
                 }
-              })}
+              });
+              drawerStore.close();
+            }}
             class="w-full">
             <span class="material-icons">login</span>
             <span>{$t('user.sign-in')}</span>
           </button>
         {:else}
           {#if isAdmin}
-            <button on:click={() => goto(base + '/admin')} class="w-full">
+            <button
+              on:click={() => {
+                goto(base + '/admin');
+                drawerStore.close();
+              }}
+              class="w-full">
               <span class="material-icons">admin_panel_settings</span>
               <span>Admin</span>
             </button>
@@ -126,7 +136,12 @@
             <div>{$user.username}</div>
           </button>
 
-          <button on:click={() => userToken.set(null)} class="w-full">
+          <button
+            on:click={() => {
+              userToken.set(null);
+              drawerStore.close();
+            }}
+            class="w-full">
             <span class="material-icons">logout</span>
             <span>{$t('user.logout')}</span>
           </button>
@@ -141,23 +156,7 @@
     <nav class="list-nav">
       <ul>
         {#each top as item}
-          <li>
-            {#if !item.external}
-              <a
-                href={item.url}
-                class:bg-primary-active-token={currentPath === item.url}
-                on:mouseover={() => preloadData(item.url)}
-                on:focus={() => preloadData(item.url)}>
-                <span class="material-icons">{item.icon}</span>
-                <span class="flex-auto">{item.label}</span>
-              </a>
-            {:else}
-              <a href={item.url} target="_blank" rel="noopener">
-                <span class="material-icons">{item.icon}</span>
-                <span class="flex-auto">{item.label}</span>
-              </a>
-            {/if}
-          </li>
+          <SidebarItem {item} />
         {/each}
       </ul>
     </nav>
@@ -166,23 +165,7 @@
   <nav class="list-nav">
     <ul>
       {#each bottom as item}
-        <li>
-          {#if !item.external}
-            <a
-              href={item.url}
-              class:bg-primary-active-token={currentPath === item.url}
-              on:mouseover={() => preloadData(item.url)}
-              on:focus={() => preloadData(item.url)}>
-              <span class="material-icons">{item.icon}</span>
-              <span class="flex-auto">{item.label}</span>
-            </a>
-          {:else}
-            <a href={item.url} target="_blank" rel="noopener">
-              <span class="material-icons">{item.icon}</span>
-              <span class="flex-auto">{item.label}</span>
-            </a>
-          {/if}
-        </li>
+        <SidebarItem {item} />
       {/each}
 
       <li class="xl:hidden">
