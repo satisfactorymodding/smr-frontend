@@ -112,13 +112,11 @@
             >Edit Compatibility</button>
         {/if}
 
-        <button class="btn variant-ghost-primary" on:click={() => (versionsTab = !versionsTab)}>
-          {#if !versionsTab}
-            Versions
-          {:else}
-            Description
-          {/if}
-        </button>
+        {#if !versionsTab}
+          <button class="btn variant-ghost-primary" title="Browse all uploaded versions of this mod" on:click={() => (versionsTab = !versionsTab)}> Versions </button>
+        {:else}
+          <button class="btn variant-ghost-primary" title="View the description page for this mod" on:click={() => (versionsTab = !versionsTab)}> Description </button>
+        {/if}
       </div>
     </div>
     <div class="grid grid-auto-max auto-cols-fr gap-4">

@@ -97,6 +97,7 @@
         {#if $version.data.getVersion.targets.length != 0}
           <button
             class="btn variant-ghost-primary"
+            title="Download a specific release target of this mod"
             use:popup={{
               event: 'focus-click',
               target: 'versionArchDropdown',
@@ -130,12 +131,13 @@
         {/if}
         <button
           class="btn variant-ghost-primary"
+          title="Install via Satisfactory Mod Manager"
           on:click={() => installMod($version.data.getVersion.mod.mod_reference)}>
           <span>Install</span>
           <span class="material-icons">download</span>
         </button>
 
-        <a class="btn variant-ghost-primary" href={base + '/mod/' + modId}>
+        <a class="btn variant-ghost-primary" href={base + '/mod/' + modId} title="View the description page for this mod">
           <span>Mod</span>
           <span class="material-icons">extension</span>
         </a>
