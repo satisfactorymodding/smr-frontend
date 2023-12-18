@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { getModalStore, SlideToggle } from '@skeletonlabs/skeleton';
+  import { getDrawerStore, getModalStore, SlideToggle } from '@skeletonlabs/skeleton';
   import { goto } from '$app/navigation';
   import { base } from '$app/paths';
   import { user, userToken } from '$lib/stores/user';
@@ -97,6 +97,7 @@
   ];
 
   const modalStore = getModalStore();
+  const drawerStore = getDrawerStore();
 </script>
 
 <div class="p-4 overflow-y-auto flex flex-col justify-between h-full max-w-xl">
@@ -105,20 +106,27 @@
       <ul>
         {#if $user === null}
           <button
-            on:click={() =>
+            on:click={() => {
               modalStore.trigger({
                 type: 'component',
                 component: {
                   ref: LoginModal
                 }
-              })}
+              });
+              drawerStore.close();
+            }}
             class="w-full">
             <span class="material-icons">login</span>
             <span>{$t('user.sign-in')}</span>
           </button>
         {:else}
           {#if isAdmin}
-            <button on:click={() => goto(base + '/admin')} class="w-full">
+            <button
+              on:click={() => {
+                goto(base + '/admin');
+                drawerStore.close();
+              }}
+              class="w-full">
               <span class="material-icons">admin_panel_settings</span>
               <span>Admin</span>
             </button>
@@ -128,7 +136,12 @@
             <div>{$user.username}</div>
           </button>
 
-          <button on:click={() => userToken.set(null)} class="w-full">
+          <button
+            on:click={() => {
+              userToken.set(null);
+              drawerStore.close();
+            }}
+            class="w-full">
             <span class="material-icons">logout</span>
             <span>{$t('user.logout')}</span>
           </button>
