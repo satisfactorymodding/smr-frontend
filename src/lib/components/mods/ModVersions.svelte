@@ -80,7 +80,7 @@
                     <a
                       href={API_REST + '/mod/' + modId + '/versions/' + version.id + '/download'}
                       class="btn btn-sm variant-ghost-primary flex-grow">
-                      <span>{$t('download')}</span>
+                      <span>{$t('download-multi-target')}</span>
                     </a>
                     <button
                       class="btn btn-sm variant-ghost-primary"
@@ -126,6 +126,7 @@
 
                   <button
                     class="btn btn-sm variant-ghost-primary"
+                    title="Install via Satisfactory Mod Manager"
                     on:click={() => installMod($versions.data.getMod.mod_reference)}>
                     <span>{$t('install')}</span>
                     <span class="material-icons">download</span>
