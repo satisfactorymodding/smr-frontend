@@ -83,6 +83,7 @@
   {/if}
 </svelte:head>
 
+<div class="flex flex-wrap h-auto justify-between items-center">
 <h1 class="text-4xl my-4 font-bold">
   New Version for
   {#if $mod.fetching}
@@ -91,6 +92,15 @@
     {$mod.data.mod.name}
   {/if}
 </h1>
+  <div>
+    <button
+      class="btn variant-ghost-primary"
+      title="View the description page for this mod"
+      on:click={() => goto(base + '/mod/' + modId)}>
+      Return to Description Page (discard new version)
+    </button>
+  </div>
+</div>
 
 <div class="card p-4">
   <section>
