@@ -3,14 +3,15 @@
   import { goto } from '$app/navigation';
   import type { VersionData } from '$lib/models/versions';
   import VersionForm from '$lib/components/versions/VersionForm.svelte';
-  import { GetModReferenceDocument } from '$lib/generated';
+  import { GetModDocument } from '$lib/generated';
   import { writable } from 'svelte/store';
   import { chunkedUpload } from '$lib/utils/chunked-upload';
   import type { UploadState } from '$lib/utils/chunked-upload';
   import { base } from '$app/paths';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
   import type { PageData } from './$types';
-  import { getToastStore } from "@skeletonlabs/skeleton";
+  import { getToastStore } from '@skeletonlabs/skeleton';
+  import EditCompatibilityForm from '$lib/components/mods/compatibility/EditCompatibilityForm.svelte';
 
   export let data: PageData;
 
@@ -38,7 +39,7 @@
   const toastStore = getToastStore();
 
   const mod = queryStore({
-    query: GetModReferenceDocument,
+    query: GetModDocument,
     client,
     variables: { mod: modId }
   });
@@ -84,14 +85,14 @@
 </svelte:head>
 
 <div class="flex flex-wrap h-auto justify-between items-center">
-<h1 class="text-4xl my-4 font-bold">
-  New Version for
-  {#if $mod.fetching}
-    ...
-  {:else if !$mod.error}
-    {$mod.data.mod.name}
-  {/if}
-</h1>
+  <h1 class="text-4xl my-4 font-bold">
+    New Version for
+    {#if $mod.fetching}
+      ...
+    {:else if !$mod.error}
+      {$mod.data.mod.name}
+    {/if}
+  </h1>
   <div>
     <button
       class="btn variant-ghost-primary"
@@ -131,6 +132,21 @@
           </div>
         </div>
       {/if}
+
+      <div class="p-4">
+        <span>Edit Compatibility Info</span>
+      </div>
+      <div class="card p-4">
+        <EditCompatibilityForm
+          mod={$mod.data.mod}
+          {modId}
+          on:fail={() => {
+            alert('Failed to update compatibility information, check browser console for more info.');
+          }}
+          on:submit={() => {
+            alert("Mod compatibility data updated. Don't forget to upload the version too!");
+          }} />
+      </div>
     {/if}
   </section>
 </div>
