@@ -9,8 +9,8 @@
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
   import { getContextClient } from '@urql/svelte';
   import type { PageData } from './$types';
-  import { getModalStore, getToastStore, type ModalSettings } from "@skeletonlabs/skeleton";
-  import Page404 from "$lib/components/general/Page404.svelte";
+  import { getModalStore, getToastStore, type ModalSettings } from '@skeletonlabs/skeleton';
+  import Page404 from '$lib/components/general/Page404.svelte';
 
   export let data: PageData;
 
@@ -76,8 +76,7 @@
 
       <div>
         {#if canUserEdit}
-          <button class="btn variant-ghost-primary" on:click={() => goto(base + '/guide/' + guideId + '/edit')}
-            >
+          <button class="btn variant-ghost-primary" on:click={() => goto(base + '/guide/' + guideId + '/edit')}>
             <span class="material-icons pr-2">edit</span>
             Edit</button>
           <button class="btn variant-ghost-primary" on:click={() => modalStore.trigger(deleteModal)}>
@@ -104,5 +103,5 @@
     </div>
   </div>
 {:else}
-  <Page404/>
+  <Page404 />
 {/if}

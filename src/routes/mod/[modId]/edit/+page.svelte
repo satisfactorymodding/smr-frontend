@@ -8,7 +8,7 @@
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
   import { get } from 'svelte/store';
   import type { PageData } from './$types';
-  import { getToastStore } from "@skeletonlabs/skeleton";
+  import { getToastStore } from '@skeletonlabs/skeleton';
 
   export let data: PageData;
 

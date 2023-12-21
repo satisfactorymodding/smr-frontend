@@ -13,8 +13,8 @@
   import VersionDependenciesGrid from '$lib/components/versions/VersionDependenciesGrid.svelte';
   import { getContextClient } from '@urql/svelte';
   import type { PageData } from './$types';
-  import { getModalStore, getToastStore, type ModalSettings, popup } from "@skeletonlabs/skeleton";
-  import Page404 from "$lib/components/general/Page404.svelte";
+  import { getModalStore, getToastStore, type ModalSettings, popup } from '@skeletonlabs/skeleton';
+  import Page404 from '$lib/components/general/Page404.svelte';
 
   export let data: PageData;
 
@@ -118,7 +118,14 @@
                   <li>
                     <a
                       class="w-full"
-                      href={API_REST + '/mod/' + modId + '/versions/' + versionId + '/' + target.targetName + '/download'}>
+                      href={API_REST +
+                        '/mod/' +
+                        modId +
+                        '/versions/' +
+                        versionId +
+                        '/' +
+                        target.targetName +
+                        '/download'}>
                       <span>Download {prettyTarget(target.targetName)}</span>
                     </a>
                   </li>
@@ -139,7 +146,10 @@
           <span class="material-icons">download</span>
           <span>Install</span>
         </button>
-        <a class="btn variant-ghost-primary" href={base + '/mod/' + modId} title="View the description page for this mod">
+        <a
+          class="btn variant-ghost-primary"
+          href={base + '/mod/' + modId}
+          title="View the description page for this mod">
           <span class="material-icons">extension</span>
           <span>Back to Mod</span>
         </a>
@@ -155,5 +165,5 @@
     </div>
   </div>
 {:else}
-  <Page404/>
+  <Page404 />
 {/if}

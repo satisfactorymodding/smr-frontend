@@ -47,12 +47,8 @@
     class:text-gray-500={fake}
     class:font-flow={fake}
     class="grid grid-max-auto sm:grid-cols-2 grid-cols-1 justify-items-center">
-    <div
-      class="cursor-pointer card-image-container"
-      >
-      <a href={link}
-      on:keypress={() => goto(link)}
-      tabindex="0">
+    <div class="cursor-pointer card-image-container">
+      <a href={link} on:keypress={() => goto(link)} tabindex="0">
         {#if fake}
           <div class="bg-gray-500 logo min-w-full min-h-full max-w-full max-h-full" />
         {:else}
@@ -81,14 +77,18 @@
         <div class:font-flow={fake} style="word-wrap: anywhere">
           {renderedDescription}
 
-          <div class="float-right"
-               style="width: {(actionButtons?.clientWidth || 0) - 8}px; height: {(actionButtons?.clientHeight || 0) - 8}px">
+          <div
+            class="float-right"
+            style="width: {(actionButtons?.clientWidth || 0) - 8}px; height: {(actionButtons?.clientHeight || 0) -
+              8}px">
             <!-- Placeholder for action buttons -->
           </div>
         </div>
       </div>
 
-      <div class="self-end py-2 px-2 flex flex-row items-center text-lg gap-1 absolute bottom-0 right-0" bind:this={actionButtons}>
+      <div
+        class="self-end py-2 px-2 flex flex-row items-center text-lg gap-1 absolute bottom-0 right-0"
+        bind:this={actionButtons}>
         {#if !fake}
           <a
             href={link}

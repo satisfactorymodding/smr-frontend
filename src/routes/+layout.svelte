@@ -97,7 +97,6 @@
   <link rel="preload" href="{base}/assets/fonts/flow-rounded.woff" as="font" type="font/woff" />
 
   {#if gTag}
-    <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id={gTag}"></script>
     <script>
       window.dataLayer = window.dataLayer || [];

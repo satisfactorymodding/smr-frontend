@@ -12,9 +12,9 @@
   import { user, userToken } from '$lib/stores/user';
   import cookie from 'js-cookie';
   import { getTranslate } from '@tolgee/svelte';
-  import { getModalStore, getToastStore, type ModalSettings } from "@skeletonlabs/skeleton";
+  import { getModalStore, getToastStore, type ModalSettings } from '@skeletonlabs/skeleton';
   import LoginModal from '$lib/modals/LoginModal.svelte';
-  import { derived, get, writable } from "svelte/store";
+  import { derived, get, writable } from 'svelte/store';
 
   const client = getContextClient();
 
@@ -81,15 +81,19 @@
   };
 
   const signingIn = writable(false);
-  const loginModal = derived(signingIn, (val) => ({
-      type: 'component',
-      component: {
-        ref: LoginModal,
-        props: {
-          signingIn: val
+  const loginModal = derived(
+    signingIn,
+    (val) =>
+      ({
+        type: 'component',
+        component: {
+          ref: LoginModal,
+          props: {
+            signingIn: val
+          }
         }
-      }
-    } satisfies ModalSettings))
+      }) satisfies ModalSettings
+  );
 
   const modalStore = getModalStore();
 

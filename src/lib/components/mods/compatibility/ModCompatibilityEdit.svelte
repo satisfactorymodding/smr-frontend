@@ -27,7 +27,7 @@
   <AccordionItem>
     <svelte:fragment slot="summary">
       <span class="material-icons text-sm">rocket_launch</span>
-    {$t('early-access')} - {$t('compatibility')}</svelte:fragment>
+      {$t('early-access')} - {$t('compatibility')}</svelte:fragment>
     <svelte:fragment slot="content">
       <CompatibilityEdit bind:compatibility={compatibilityInfo.EA} />
     </svelte:fragment>

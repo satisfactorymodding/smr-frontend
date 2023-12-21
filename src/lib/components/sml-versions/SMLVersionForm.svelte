@@ -142,8 +142,10 @@
           </ValidationMessage>
 
           <button class="btn variant-ghost-primary" on:click={addTarget}>{$t('add')}</button>
-          <button class="btn variant-ghost-primary" disabled={$data.targets.length == 1} on:click={() => removeTarget(i)}
-            >{$t('remove')}</button>
+          <button
+            class="btn variant-ghost-primary"
+            disabled={$data.targets.length == 1}
+            on:click={() => removeTarget(i)}>{$t('remove')}</button>
         </div>
       {/each}
 

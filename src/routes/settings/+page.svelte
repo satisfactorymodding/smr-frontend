@@ -12,7 +12,7 @@
   import { base } from '$app/paths';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
   import type { Writable } from 'svelte/store';
-  import { getToastStore } from "@skeletonlabs/skeleton";
+  import { getToastStore } from '@skeletonlabs/skeleton';
 
   const toastStore = getToastStore();
 

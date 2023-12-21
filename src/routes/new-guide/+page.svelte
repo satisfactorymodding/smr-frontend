@@ -6,7 +6,7 @@
   import type { GuideData } from '$lib/models/guides';
   import { base } from '$app/paths';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
-  import { getToastStore } from "@skeletonlabs/skeleton";
+  import { getToastStore } from '@skeletonlabs/skeleton';
 
   const toastStore = getToastStore();
 
@@ -46,6 +46,6 @@
 
 <div class="card p-4">
   <section>
-    <GuideForm {onSubmit} submitIcon="add_circle"/>
+    <GuideForm {onSubmit} submitIcon="add_circle" />
   </section>
 </div>

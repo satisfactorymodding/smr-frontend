@@ -3,8 +3,8 @@
   import CompatibilityStateText from '$lib/components/mods/compatibility/CompatibilityStateText.svelte';
   import { markdown } from '../../../utils/markdown';
   import CompatibilityIcon from '$lib/components/mods/compatibility/CompatibilityIcon.svelte';
-  import { getModalStore } from "@skeletonlabs/skeleton";
-  import CompatibilityModal from "$lib/modals/CompatibilityModal.svelte";
+  import { getModalStore } from '@skeletonlabs/skeleton';
+  import CompatibilityModal from '$lib/modals/CompatibilityModal.svelte';
   import { getTranslate } from '@tolgee/svelte';
 
   export let compatibility: CompatibilityInfoInput;
@@ -31,9 +31,7 @@
     <h3 class="text-2xl my-4 font-bold">Compatibility Information</h3>
     <p>Click the colored text for more details.</p>
     <div class="grid grid-flow-row">
-      <table
-        aria-label="Available Releases"
-        class="table table-hover max-w-auto !overflow-visible">
+      <table aria-label="Available Releases" class="table table-hover max-w-auto !overflow-visible">
         <tbody>
           <tr class="border rounded !border-surface-500">
             <td><div class="flex justify-center items-center"><CompatibilityIcon /> Early Access</div></td>
@@ -44,18 +42,12 @@
           </tr>
           <tr class="border rounded !border-surface-500">
             <td class="text-center">
-              <button
-                class="min-w-0 m-0"
-                title="Click for more information"
-                on:click={openCompatibility}>
+              <button class="min-w-0 m-0" title="Click for more information" on:click={openCompatibility}>
                 <CompatibilityStateText state={compatibility?.EA?.state} />
               </button>
             </td>
             <td class="text-center">
-              <button
-                class="min-w-0 m-0"
-                title="Click for more information"
-                on:click={openCompatibility}>
+              <button class="min-w-0 m-0" title="Click for more information" on:click={openCompatibility}>
                 <CompatibilityStateText state={compatibility?.EXP?.state} />
               </button>
             </td>
@@ -86,9 +78,9 @@
               </td>
             {:else}
               <td colspan="2">
-                  <span style="padding: 2px; white-space:normal">
-                    {$t('compatibility-info.state.unknown.description')}
-                  </span>
+                <span style="padding: 2px; white-space:normal">
+                  {$t('compatibility-info.state.unknown.description')}
+                </span>
               </td>
             {/if}
           </tr>

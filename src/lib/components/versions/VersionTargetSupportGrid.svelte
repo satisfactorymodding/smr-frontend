@@ -32,9 +32,7 @@
 </script>
 
 <div class="grid grid-flow-row">
-  <table
-    aria-label="Available Releases"
-    class="table table-hover max-w-auto !overflow-visible">
+  <table aria-label="Available Releases" class="table table-hover max-w-auto !overflow-visible">
     <tbody>
       <tr class="border rounded !border-surface-500">
         <td style="width: 20%;" />
@@ -56,8 +54,7 @@
       </tr>
       <tr class="border rounded !border-surface-500">
         <td>Linux</td>
-        <td
-          ><div class="text-center" title="There is no Client distribution of Satisfactory for Linux">N/A</div></td>
+        <td><div class="text-center" title="There is no Client distribution of Satisfactory for Linux">N/A</div></td>
         <td
           ><div class="text-center">
             <span class="material-icons text-center" style="width: 20px" title={LinuxServerSupport.tooltip}
