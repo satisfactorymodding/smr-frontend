@@ -7,7 +7,7 @@
   import { base } from '$app/paths';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
   import type { PageData } from './$types';
-  import { getToastStore } from "@skeletonlabs/skeleton";
+  import { getModalStore, getToastStore, type ModalSettings } from "@skeletonlabs/skeleton";
 
   export let data: PageData;
 
@@ -54,6 +54,25 @@
         logo: undefined
       }
     : undefined;
+  
+    const goBackFn = () => {
+    goto(base + '/mod/' + modId + '/version/' + versionId);
+  }
+
+  const backModal: ModalSettings = {
+    type: 'confirm',
+    title: 'Go Back?',
+    buttonTextCancel: 'Keep Editing',
+    buttonTextConfirm: 'Go Back',
+    body: 'Going back will discard any unsaved changes. Are you sure you wish to continue?',
+    response: (r: boolean) => {
+      if (r) {
+        goBackFn();
+      }
+    }
+  };
+
+  const modalStore = getModalStore();
 </script>
 
 <svelte:head>
@@ -64,7 +83,16 @@
   {/if}
 </svelte:head>
 
-<h1 class="text-4xl my-4 font-bold">Edit Version</h1>
+
+
+<div class="flex flex-wrap h-auto justify-between items-center">
+  <h1 class="text-4xl my-4 font-bold">Edit Version</h1>
+  <div>
+    <button class="btn variant-ghost-primary" on:click={() => modalStore.trigger(backModal)}>
+      <span class="material-icons pr-2">arrow_back</span>
+      Back to Versions</button>
+  </div>
+</div>
 
 <div class="card p-4">
   <section>
@@ -78,7 +106,9 @@
         {initialValues}
         modReference={$version.data.getVersion.mod.mod_reference}
         editing={true}
-        submitText="Save" />
+        submitText="Save"
+        submitIcon="save"
+        />
     {/if}
   </section>
 </div>

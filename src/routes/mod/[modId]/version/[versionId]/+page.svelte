@@ -90,9 +90,12 @@
           <button
             class="btn variant-ghost-primary"
             on:click={() => goto(base + '/mod/' + modId + '/version/' + versionId + '/edit')}>
+            <span class="material-icons pr-2">edit_document</span>
             Edit
           </button>
-          <button class="btn variant-ghost-primary" on:click={() => modalStore.trigger(deleteModal)}>Delete</button>
+          <button class="btn variant-ghost-primary" on:click={() => modalStore.trigger(deleteModal)}>
+            <span class="material-icons pr-2">delete</span>
+            Delete</button>
         {/if}
         {#if $version.data.getVersion.targets.length != 0}
           <button
@@ -103,7 +106,7 @@
               placement: 'bottom',
               closeQuery: 'a'
             }}>
-            <span>Download</span>
+            <span>Download...</span>
             <span class="material-icons" style="margin: 0;">arrow_drop_down</span>
           </button>
 
@@ -131,13 +134,13 @@
         <button
           class="btn variant-ghost-primary"
           on:click={() => installMod($version.data.getVersion.mod.mod_reference)}>
-          <span>Install</span>
           <span class="material-icons">download</span>
+          <span>Install</span>
         </button>
 
         <a class="btn variant-ghost-primary" href={base + '/mod/' + modId}>
-          <span>Mod</span>
           <span class="material-icons">extension</span>
+          <span>Back to Mod</span>
         </a>
       </div>
     </div>

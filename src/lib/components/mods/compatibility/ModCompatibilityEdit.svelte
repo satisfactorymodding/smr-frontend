@@ -25,13 +25,17 @@
 
 <Accordion>
   <AccordionItem>
-    <svelte:fragment slot="summary">{$t('early-access')} - {$t('compatibility')}</svelte:fragment>
+    <svelte:fragment slot="summary">
+      <span class="material-icons text-sm">rocket_launch</span>
+    {$t('early-access')} - {$t('compatibility')}</svelte:fragment>
     <svelte:fragment slot="content">
       <CompatibilityEdit bind:compatibility={compatibilityInfo.EA} />
     </svelte:fragment>
   </AccordionItem>
   <AccordionItem>
-    <svelte:fragment slot="summary">{$t('experimental')} - {$t('compatibility')}</svelte:fragment>
+    <svelte:fragment slot="summary">
+      <span class="material-icons text-sm">science</span>
+      {$t('experimental')} - {$t('compatibility')}</svelte:fragment>
     <svelte:fragment slot="content">
       <CompatibilityEdit bind:compatibility={compatibilityInfo.EXP} />
     </svelte:fragment>

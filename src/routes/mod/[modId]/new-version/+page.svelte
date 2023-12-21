@@ -10,7 +10,7 @@
   import { base } from '$app/paths';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
   import type { PageData } from './$types';
-  import { getToastStore } from '@skeletonlabs/skeleton';
+  import { getModalStore, getToastStore, type ModalSettings } from '@skeletonlabs/skeleton';
   import EditCompatibilityForm from '$lib/components/mods/compatibility/EditCompatibilityForm.svelte';
 
   export let data: PageData;
@@ -74,6 +74,25 @@
         });
         uploadStatus.set('');
       });
+
+  const goBackFn = () => {
+    goto(base + '/mod/' + modId);
+  };
+
+  const backModal: ModalSettings = {
+    type: 'confirm',
+    title: 'Go Back?',
+    buttonTextCancel: 'Keep Editing',
+    buttonTextConfirm: 'Go Back',
+    body: 'Going back will discard any unsaved changes. Are you sure you wish to continue?',
+    response: (r: boolean) => {
+      if (r) {
+        goBackFn();
+      }
+    }
+  };
+
+  const modalStore = getModalStore();
 </script>
 
 <svelte:head>
@@ -97,8 +116,9 @@
     <button
       class="btn variant-ghost-primary"
       title="View the description page for this mod"
-      on:click={() => goto(base + '/mod/' + modId)}>
-      Return to Description Page (discard new version)
+      on:click={() => modalStore.trigger(backModal)}>
+      <span class="material-icons pr-2">arrow_back</span>
+      Back to Mod
     </button>
   </div>
 </div>
@@ -110,7 +130,7 @@
     {:else if $mod.error}
       <p>Oh no... {$mod.error.message}</p>
     {:else}
-      <VersionForm {onSubmit} modReference={$mod.data.mod.mod_reference} />
+      <VersionForm {onSubmit} modReference={$mod.data.mod.mod_reference} submitIcon="add_circle" />
 
       {#if $uploadStatus}
         <div class="relative pt-4">

@@ -77,11 +77,6 @@
                   <a class="btn btn-sm variant-ghost-primary" href={base + '/mod/' + modId + '/version/' + version.id}
                     >{$t('view')}</a>
                   {#if version.targets.length !== 0}
-                    <a
-                      href={API_REST + '/mod/' + modId + '/versions/' + version.id + '/download'}
-                      class="btn btn-sm variant-ghost-primary flex-grow">
-                      <span>{$t('download')}</span>
-                    </a>
                     <button
                       class="btn btn-sm variant-ghost-primary"
                       style="padding: 0; min-width: 36px;"
@@ -91,12 +86,20 @@
                         placement: 'bottom',
                         closeQuery: 'a'
                       }}>
+                      <span>{$t('download')}...</span>
                       <span class="material-icons" style="margin: 0;">arrow_drop_down</span>
                     </button>
 
                     <div class="card w-72 shadow-xl" data-popup="versionArchDropdown_{version.version}">
                       <nav class="list-nav">
                         <ul>
+                          <li>
+                            <a
+                              href={API_REST + '/mod/' + modId + '/versions/' + version.id + '/download'}>
+                              <span class="material-icons">polyline</span>
+                              <span>{$t('version.download-multi-target')}</span>
+                            </a>
+                          </li>
                           {#each version.targets as target, _}
                             <li>
                               <a
@@ -127,8 +130,8 @@
                   <button
                     class="btn btn-sm variant-ghost-primary"
                     on:click={() => installMod($versions.data.getMod.mod_reference)}>
-                    <span>{$t('install')}</span>
                     <span class="material-icons">download</span>
+                    <span>{$t('install')}</span>
                   </button>
                 </div>
               </td>

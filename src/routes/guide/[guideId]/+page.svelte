@@ -77,8 +77,12 @@
       <div>
         {#if canUserEdit}
           <button class="btn variant-ghost-primary" on:click={() => goto(base + '/guide/' + guideId + '/edit')}
-            >Edit</button>
-          <button class="btn variant-ghost-primary" on:click={() => modalStore.trigger(deleteModal)}>Delete</button>
+            >
+            <span class="material-icons pr-2">edit</span>
+            Edit</button>
+          <button class="btn variant-ghost-primary" on:click={() => modalStore.trigger(deleteModal)}>
+            <span class="material-icons pr-2">delete</span>
+            Delete</button>
         {/if}
       </div>
     </div>

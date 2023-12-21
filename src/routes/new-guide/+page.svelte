@@ -46,6 +46,6 @@
 
 <div class="card p-4">
   <section>
-    <GuideForm {onSubmit} />
+    <GuideForm {onSubmit} submitIcon="add_circle"/>
   </section>
 </div>
