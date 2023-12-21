@@ -25,9 +25,9 @@
 
   const openSidebar = () => {
     drawerStore.open({
-      width: 'w-[280px]',
+      width: 'w-[280px]'
     });
-  }
+  };
 </script>
 
 <AppBar variant="static">

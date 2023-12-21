@@ -94,8 +94,7 @@
                       <nav class="list-nav">
                         <ul>
                           <li>
-                            <a
-                              href={API_REST + '/mod/' + modId + '/versions/' + version.id + '/download'}>
+                            <a href={API_REST + '/mod/' + modId + '/versions/' + version.id + '/download'}>
                               <span class="material-icons">polyline</span>
                               <span>{$t('version.download-multi-target')}</span>
                             </a>

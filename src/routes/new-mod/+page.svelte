@@ -6,7 +6,7 @@
   import type { ModData } from '$lib/models/mods';
   import { base } from '$app/paths';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
-  import { getToastStore } from "@skeletonlabs/skeleton";
+  import { getToastStore } from '@skeletonlabs/skeleton';
 
   const toastStore = getToastStore();
 

@@ -6,9 +6,7 @@
 </script>
 
 <div class="grid grid-flow-row">
-  <table
-    aria-label="Mod Dependency"
-    class="table table-hover max-w-auto !overflow-visible">
+  <table aria-label="Mod Dependency" class="table table-hover max-w-auto !overflow-visible">
     <tbody>
       <tr class="border rounded !border-surface-500">
         <td>Mod Dependency</td>

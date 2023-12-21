@@ -1,6 +1,5 @@
 <script lang="ts">
   import { getTranslate } from '@tolgee/svelte';
-  import { goto } from '$app/navigation';
   import { ConicGradient, type ConicStop } from '@skeletonlabs/skeleton';
   import { getContextClient, queryStore } from '@urql/svelte';
   import { GetOAuthOptionsDocument } from '$lib/generated';
@@ -14,7 +13,7 @@
 
   const goTo = (service: string, url: string) => {
     localStorage.setItem('sign.in.method', service);
-    goto(url);
+    window.location.href = url;
   };
 
   const conicStops: ConicStop[] = [

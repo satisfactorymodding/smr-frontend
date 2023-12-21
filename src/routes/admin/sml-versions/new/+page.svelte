@@ -6,7 +6,7 @@
   import SMLVersionForm from '$lib/components/sml-versions/SMLVersionForm.svelte';
   import { base } from '$app/paths';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
-  import { getToastStore } from "@skeletonlabs/skeleton";
+  import { getToastStore } from '@skeletonlabs/skeleton';
 
   const client = getContextClient();
 

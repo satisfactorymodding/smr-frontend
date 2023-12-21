@@ -51,7 +51,7 @@
 
   const goBackFn = () => {
     goto(base + '/guide/' + guideId);
-  }
+  };
 
   const backModal: ModalSettings = {
     type: 'confirm',
@@ -93,7 +93,7 @@
     {:else if $guide.error}
       <p>Oh no... {$guide.error.message}</p>
     {:else}
-      <GuideForm {onSubmit} initialValues={$guide.data.getGuide} submitText="Save" submitIcon="save"/>
+      <GuideForm {onSubmit} initialValues={$guide.data.getGuide} submitText="Save" submitIcon="save" />
     {/if}
   </section>
 </div>

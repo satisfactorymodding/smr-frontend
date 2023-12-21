@@ -7,7 +7,7 @@
   import { user as me } from '$lib/stores/user';
   import { base } from '$app/paths';
   import type { PageData } from './$types';
-  import Page404 from "$lib/components/general/Page404.svelte";
+  import Page404 from '$lib/components/general/Page404.svelte';
 
   export let data: PageData;
 
@@ -78,5 +78,5 @@
     </div>
   </div>
 {:else}
-  <Page404/>
+  <Page404 />
 {/if}

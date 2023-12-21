@@ -119,10 +119,10 @@
         {/if}
         <button class="btn variant-ghost-primary" on:click={() => (versionsTab = !versionsTab)}>
           {#if !versionsTab}
-          <span class="material-icons pr-2" title="Browse all uploaded versions of this mod">view_list</span>
+            <span class="material-icons pr-2" title="Browse all uploaded versions of this mod">view_list</span>
             View Versions
           {:else}
-          <span class="material-icons pr-2" title="View the description page for this mod">description</span>
+            <span class="material-icons pr-2" title="View the description page for this mod">description</span>
             View Description
           {/if}
         </button>

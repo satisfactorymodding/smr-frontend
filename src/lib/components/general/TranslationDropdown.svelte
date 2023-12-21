@@ -2,7 +2,7 @@
   import { getTolgee, getTranslate } from '@tolgee/svelte';
   import { writable } from 'svelte/store';
   import { type PopupSettings, popup } from '@skeletonlabs/skeleton';
-  import { browser } from "$app/environment";
+  import { browser } from '$app/environment';
 
   const tolgee = getTolgee(['language']);
 
@@ -51,7 +51,7 @@
     }
   } as const;
 
-  const lang = writable<string>(browser && localStorage.getItem('language') || $tolgee.getLanguage());
+  const lang = writable<string>((browser && localStorage.getItem('language')) || $tolgee.getLanguage());
   lang.subscribe((l) => {
     $tolgee.changeLanguage(l);
     if (browser) {

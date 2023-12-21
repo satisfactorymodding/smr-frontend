@@ -7,7 +7,7 @@
   import { base } from '$app/paths';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
   import type { PageData } from './$types';
-  import { getModalStore, getToastStore, type ModalSettings } from "@skeletonlabs/skeleton";
+  import { getModalStore, getToastStore, type ModalSettings } from '@skeletonlabs/skeleton';
 
   export let data: PageData;
 
@@ -54,10 +54,10 @@
         logo: undefined
       }
     : undefined;
-  
-    const goBackFn = () => {
+
+  const goBackFn = () => {
     goto(base + '/mod/' + modId + '/version/' + versionId);
-  }
+  };
 
   const backModal: ModalSettings = {
     type: 'confirm',
@@ -83,8 +83,6 @@
   {/if}
 </svelte:head>
 
-
-
 <div class="flex flex-wrap h-auto justify-between items-center">
   <h1 class="text-4xl my-4 font-bold">Edit Version</h1>
   <div>
@@ -107,8 +105,7 @@
         modReference={$version.data.getVersion.mod.mod_reference}
         editing={true}
         submitText="Save"
-        submitIcon="save"
-        />
+        submitIcon="save" />
     {/if}
   </section>
 </div>

@@ -41,9 +41,10 @@
               <span class="material-icons">{stabilities[stability]}</span>
             </div>
             <div class="grid grid-flow-row">
-              <a href="{base}/mod/{modId}/version/{latestVersions[stability].id}/"
-              class="text-yellow-500 underline"
-              title="Click to view patch notes for this version"
+              <a
+                href="{base}/mod/{modId}/version/{latestVersions[stability].id}/"
+                class="text-yellow-500 underline"
+                title="Click to view patch notes for this version"
                 >Version {latestVersions[stability].version} ({stability})</a>
               <div>{prettyDate(latestVersions[stability].created_at)}</div>
             </div>
