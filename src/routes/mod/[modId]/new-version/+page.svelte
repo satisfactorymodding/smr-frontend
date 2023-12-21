@@ -139,7 +139,7 @@
       <div class="card p-4">
         <EditCompatibilityForm
           mod={$mod.data.mod}
-          {modId}
+          modId={$mod.data.mod.id}
           on:fail={() => {
             alert('Failed to update compatibility information, check browser console for more info.');
           }}
