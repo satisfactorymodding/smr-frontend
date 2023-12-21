@@ -129,6 +129,7 @@
 
                   <button
                     class="btn btn-sm variant-ghost-primary"
+                    title="Install via Satisfactory Mod Manager"
                     on:click={() => installMod($versions.data.getMod.mod_reference)}>
                     <span class="material-icons">download</span>
                     <span>{$t('install')}</span>
