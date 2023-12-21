@@ -101,22 +101,31 @@
       <h1 class="text-4xl font-bold">{$mod.data.mod.name}</h1>
       <div>
         {#if canUserEdit}
-          <button class="btn variant-ghost-primary" on:click={() => goto(base + '/mod/' + modId + '/edit')}
-            >Edit</button>
-          <button class="btn variant-ghost-primary" on:click={() => modalStore.trigger(deleteModal)}>Delete</button>
-          <button class="btn variant-ghost-primary" on:click={() => goto(base + '/mod/' + modId + '/new-version')}
-            >New Version</button>
+          <button class="btn variant-ghost-primary" on:click={() => goto(base + '/mod/' + modId + '/edit')}>
+            <span class="material-icons pr-2">edit</span>
+            Edit</button>
+          <button class="btn variant-ghost-primary" on:click={() => modalStore.trigger(deleteModal)}>
+            <span class="material-icons pr-2">delete_forever</span>
+            Delete</button>
+          <button class="btn variant-ghost-primary" on:click={() => goto(base + '/mod/' + modId + '/new-version')}>
+            <span class="material-icons pr-2">upload_file</span>
+            New Version</button>
         {/if}
         {#if canUserEditCompatibility}
-          <button class="btn variant-ghost-primary" on:click={() => modalStore.trigger(editCompatibilityModal)}
-            >Edit Compatibility</button>
+          <button class="btn variant-ghost-primary" on:click={() => modalStore.trigger(editCompatibilityModal)}>
+            <span class="material-icons">rocket_launch</span>
+            <span class="material-icons pr-2">science</span>
+            Edit Compatibility</button>
         {/if}
-
-        {#if !versionsTab}
-          <button class="btn variant-ghost-primary" title="Browse all uploaded versions of this mod" on:click={() => (versionsTab = !versionsTab)}> Versions </button>
-        {:else}
-          <button class="btn variant-ghost-primary" title="View the description page for this mod" on:click={() => (versionsTab = !versionsTab)}> Description </button>
-        {/if}
+        <button class="btn variant-ghost-primary" on:click={() => (versionsTab = !versionsTab)}>
+          {#if !versionsTab}
+          <span class="material-icons pr-2" title="Browse all uploaded versions of this mod">view_list</span>
+            View Versions
+          {:else}
+          <span class="material-icons pr-2" title="View the description page for this mod">description</span>
+            View Description
+          {/if}
+        </button>
       </div>
     </div>
     <div class="grid grid-auto-max auto-cols-fr gap-4">

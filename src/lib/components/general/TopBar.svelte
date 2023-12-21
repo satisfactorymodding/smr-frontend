@@ -42,12 +42,12 @@
 
       {#if $hasLauncher}
         <button class="btn btn-sm variant-ghost-primary" on:click={pingLauncher}>
-          <span>Launcher Detected</span>
-          <span class="material-icons">file_download</span>
+          <span>Open Mod Manager</span>
+          <span class="material-icons">launch</span>
         </button>
       {:else}
         <a class="btn btn-sm variant-ghost-primary" target="_blank" rel="noopener" href="https://smm.ficsit.app">
-          <span>Mod Manager</span>
+          <span>Download the Mod Manager</span>
           <span class="material-icons">file_download</span>
         </a>
       {/if}

@@ -16,6 +16,7 @@
     guide: '',
     short_description: ''
   };
+  export let submitIcon: string;
   export let submitText = $t('entry.create');
 
   const { form, data } = createForm<GuideData>({
@@ -69,7 +70,9 @@
     </div>
 
     <div>
-      <button class="btn variant-ghost-primary" type="submit">{submitText}</button>
+      <button class="btn variant-ghost-primary" type="submit">
+        <span class="material-icons pr-2">{submitIcon}</span>
+        {submitText}</button>
     </div>
   </div>
 </form>

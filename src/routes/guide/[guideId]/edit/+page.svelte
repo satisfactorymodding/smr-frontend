@@ -7,7 +7,7 @@
   import { base } from '$app/paths';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
   import type { PageData } from './$types';
-  import { getToastStore } from "@skeletonlabs/skeleton";
+  import { getModalStore, getToastStore, type ModalSettings } from '@skeletonlabs/skeleton';
 
   export let data: PageData;
 
@@ -48,6 +48,25 @@
         }
       });
   };
+
+  const goBackFn = () => {
+    goto(base + '/guide/' + guideId);
+  }
+
+  const backModal: ModalSettings = {
+    type: 'confirm',
+    title: 'Go Back?',
+    buttonTextCancel: 'Keep Editing',
+    buttonTextConfirm: 'Go Back',
+    body: 'Going back will discard any unsaved changes. Are you sure you wish to continue?',
+    response: (r: boolean) => {
+      if (r) {
+        goBackFn();
+      }
+    }
+  };
+
+  const modalStore = getModalStore();
 </script>
 
 <svelte:head>
@@ -58,7 +77,14 @@
   {/if}
 </svelte:head>
 
-<h1 class="text-4xl my-4 font-bold">Edit Guide</h1>
+<div class="flex flex-wrap h-auto justify-between items-center">
+  <h1 class="text-4xl my-4 font-bold">Edit Guide</h1>
+  <div>
+    <button class="btn variant-ghost-primary" on:click={() => modalStore.trigger(backModal)}>
+      <span class="material-icons pr-2">arrow_back</span>
+      Back to Guide</button>
+  </div>
+</div>
 
 <div class="card p-4">
   <section>
@@ -67,7 +93,7 @@
     {:else if $guide.error}
       <p>Oh no... {$guide.error.message}</p>
     {:else}
-      <GuideForm {onSubmit} initialValues={$guide.data.getGuide} submitText="Save" />
+      <GuideForm {onSubmit} initialValues={$guide.data.getGuide} submitText="Save" submitIcon="save"/>
     {/if}
   </section>
 </div>
