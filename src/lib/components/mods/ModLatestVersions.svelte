@@ -58,7 +58,9 @@
               </a>
             </div>
           </div>
-          <VersionTargetSupportGrid targets={latestVersions[stability].targets} />
+          {#if latestVersions[stability].targets.length > 1}
+            <VersionTargetSupportGrid targets={latestVersions[stability].targets} />
+          {/if}
           <VersionDependenciesGrid dependencies={latestVersions[stability].dependencies} />
         {/if}
       {/each}
