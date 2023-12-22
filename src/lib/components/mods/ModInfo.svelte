@@ -19,8 +19,12 @@
       <h3 class="text-2xl my-4 font-bold">Info</h3>
       <span
         ><strong>{$t('entry.source')}:</strong>
-        <a class="underline text-yellow-500" href={mod.source_url}>{mod.source_url}</a></span
-      ><br />
+        {#if mod.source_url.length > 0}
+          <a class="underline text-yellow-500" href={mod.source_url}>{mod.source_url}</a>
+        {:else}
+          {$t('entry.source.none-provided')}
+        {/if}
+      </span><br />
       <span><strong>{$t('entry.created-at')}:</strong> {prettyDate(mod.created_at)}</span><br />
       <span><strong>{$t('entry.views')}:</strong> {prettyNumber(mod.views)}</span><br />
       <span><strong>{$t('downloads')}:</strong> {prettyNumber(mod.downloads)}</span><br />
