@@ -91,13 +91,13 @@
   } satisfies PaginationSettings;
 </script>
 
-<div class="ml-auto flex flex-wrap justify-between items-center mb-5">
+<div class="mb-5 ml-auto flex flex-wrap items-center justify-between">
   {#if newMod && $user !== null}
-    <a class="btn variant-ghost-primary" href="{base}/new-mod">{$t('mods.new')}</a>
+    <a class="variant-ghost-primary btn" href="{base}/new-mod">{$t('mods.new')}</a>
   {/if}
 
   {#if showSearch}
-    <div class="search-container flex flex-wrap flex-row sm:px-4">
+    <div class="search-container flex flex-row flex-wrap sm:px-4">
       <div class="mr-3">
         <select bind:value={orderBy} class="select">
           {#each orderFields as orderField}
@@ -112,13 +112,13 @@
         </select>
       </div>
 
-      <div class="input-group input-group-divider grid-cols-[1fr_auto] rounded-container-token w-fit">
+      <div class="input-group input-group-divider w-fit grid-cols-[1fr_auto] rounded-container-token">
         <input
           bind:value={searchField}
-          class="bg-transparent border-0 ring-0 p-1.5"
+          class="border-0 bg-transparent p-1.5 ring-0"
           name="search"
           placeholder="Search" />
-        <button class="variant-filled-primary material-icons">arrow_forward</button>
+        <button class="material-icons variant-filled-primary">arrow_forward</button>
       </div>
 
       <!--      <Paper class="search-paper mr-3" elevation={6}>-->
@@ -158,7 +158,7 @@
   </div>
 {/if}
 
-<div class="mt-5 ml-auto flex justify-end">
+<div class="ml-auto mt-5 flex justify-end">
   <div>
     <Paginator
       bind:settings={paginationSettings}

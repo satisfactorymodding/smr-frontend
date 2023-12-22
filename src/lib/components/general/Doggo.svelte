@@ -56,7 +56,7 @@
 
 {#if $dogVisible}
   <img
-    class={'h-full doggo-flipper' + (isLookingRight ? '-R' : '-L')}
+    class={'doggo-flipper h-full' + (isLookingRight ? '-R' : '-L')}
     src={sprite}
     alt="Doggo!"
     title="Click to pat doggo!"

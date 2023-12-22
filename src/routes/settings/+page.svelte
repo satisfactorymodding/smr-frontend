@@ -71,7 +71,7 @@
   <MetaDescriptors description="Change your user settings" title="Settings" />
 </svelte:head>
 
-<h1 class="text-4xl my-4 font-bold">Settings</h1>
+<h1 class="my-4 text-4xl font-bold">Settings</h1>
 
 <div class="card p-4">
   <section>
@@ -105,7 +105,7 @@
           </div>
 
           <div>
-            <button class="btn variant-ghost-primary" type="submit">Save</button>
+            <button class="variant-ghost-primary btn" type="submit">Save</button>
           </div>
         </div>
       </form>

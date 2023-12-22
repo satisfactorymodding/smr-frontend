@@ -24,7 +24,7 @@
 </script>
 
 <button
-  class="btn text-xs px-1 py-0 variant-soft-surface min-w-0 m-0"
+  class="variant-soft-surface btn m-0 min-w-0 px-1 py-0 text-xs"
   title={$t('compatibility-info.button')}
   on:click={openCompatibility}>
   <CompatibilityIcon compatibility={compatibility?.EA} />

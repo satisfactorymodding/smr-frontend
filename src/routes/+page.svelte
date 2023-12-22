@@ -23,33 +23,33 @@
 
 <Doggo dogVisible={doggoNeedsPats} />
 
-<div class="flex flex-col min-h-full" style="height: calc(100vh - 64px - 3rem)">
+<div class="flex min-h-full flex-col" style="height: calc(100vh - 64px - 3rem)">
   <div class="mb-4 min-h-[25vh] overflow-hidden">
     {#if !$onMobile}
       <a href="https://smm.ficsit.app" rel="noopener" target="_blank">
         <div class="card h-full">
           <div class="relative h-full w-full">
             <div class="banner smm-banner" />
-            <div class="flex absolute w-full h-full top-0 items-center justify-center">
+            <div class="absolute top-0 flex h-full w-full items-center justify-center">
               {#if $easterEgg}
-                <img class="h-full flipper-1" src={assets + '/images/smm_hand.webp'} alt="Ficsit Minion" />
-                <img class="h-full flipper-2" src={assets + '/images/smm_hand.webp'} alt="Ficsit Minion" />
+                <img class="flipper-1 h-full" src={assets + '/images/smm_hand.webp'} alt="Ficsit Minion" />
+                <img class="flipper-2 h-full" src={assets + '/images/smm_hand.webp'} alt="Ficsit Minion" />
               {:else}
-                <img class="h-full flipped" src={assets + '/images/smm_hand.webp'} alt="Ficsit Minion" />
+                <img class="flipped h-full" src={assets + '/images/smm_hand.webp'} alt="Ficsit Minion" />
               {/if}
               <div class="text-center">
-                <div class="text-4xl mb-2">{$t('home.satisfactory-mod-manager')}</div>
-                <div class="text-xl mb-4">
+                <div class="mb-2 text-4xl">{$t('home.satisfactory-mod-manager')}</div>
+                <div class="mb-4 text-xl">
                   Windows - Linux - Epic - Steam
                   {#if $easterEgg || $doggoNeedsPats}{' - Doggo'}{/if}
                 </div>
-                <div class="2xl:h-1/2 h-1/3 flex justify-center">
+                <div class="flex h-1/3 justify-center 2xl:h-1/2">
                   <img class="h-full" src={assets + '/images/smm_icon_white.webp'} alt="Satisfactory Mod Manager" />
                 </div>
               </div>
               {#if $easterEgg}
-                <img class="h-full flipper-3" src={assets + '/images/smm_hand.webp'} alt="Ficsit Minion" />
-                <img class="h-full flipper-4" src={assets + '/images/smm_hand.webp'} alt="Ficsit Minion" />
+                <img class="flipper-3 h-full" src={assets + '/images/smm_hand.webp'} alt="Ficsit Minion" />
+                <img class="flipper-4 h-full" src={assets + '/images/smm_hand.webp'} alt="Ficsit Minion" />
               {:else}
                 <img class="h-full" src={assets + '/images/smm_hand.webp'} alt="Ficsit Minion" />
               {/if}
@@ -62,14 +62,14 @@
         <div class="card h-full">
           <div class="relative h-full w-full">
             <div class="smm-banner banner" />
-            <div class="flex absolute w-full h-full top-0 items-center justify-end text-center">
+            <div class="absolute top-0 flex h-full w-full items-center justify-end text-center">
               <img class="h-full" src={assets + '/images/mods_mobile.webp'} alt="Ficsit Minion" />
             </div>
-            <div class="flex absolute w-full h-4/5 top-0 items-center pl-8">
+            <div class="absolute top-0 flex h-4/5 w-full items-center pl-8">
               <div>
                 <div class="text-md">
                   {$t('home.banner.we-have-over')}
-                  <span class="text-amber-600 font-bold">
+                  <span class="font-bold text-amber-600">
                     {#if $mods.fetching || $mods.error}
                       ...
                     {:else}
@@ -81,8 +81,8 @@
                 <div class="text-md max-w-prose">{$t('home.banner.most-are-compatible')}</div>
               </div>
             </div>
-            <div class="flex absolute w-full h-full top-0 items-end justify-center">
-              <button class="btn h-1/4 py-3 px-14 w-full" style="background: #5a7b78; color: white">
+            <div class="absolute top-0 flex h-full w-full items-end justify-center">
+              <button class="btn h-1/4 w-full px-14 py-3" style="background: #5a7b78; color: white">
                 {$t('home.banner.take-a-look')}
               </button>
             </div>
@@ -92,31 +92,31 @@
     {/if}
   </div>
 
-  <div class="grid xl:grid-cols-2 grid-cols-1 gap-4 flex-1 mb-4">
-    <a href="https://discord.gg/xkVJ73E" rel="noopener" target="_blank" class="overflow-hidden min-h-[25vh]">
+  <div class="mb-4 grid flex-1 grid-cols-1 gap-4 xl:grid-cols-2">
+    <a href="https://discord.gg/xkVJ73E" rel="noopener" target="_blank" class="min-h-[25vh] overflow-hidden">
       <div class="card h-full">
         <div class="relative h-full w-full">
           <div class="modding-banner banner" />
-          <div class="flex absolute w-full h-full top-0 items-center justify-center">
+          <div class="absolute top-0 flex h-full w-full items-center justify-center">
             <img class="centered-logo" src={assets + '/images/sf_modding_logo.webp'} alt="Satisfactory Modding Logo" />
           </div>
-          <div class="absolute bottom-0 pb-4 px-4 w-full text-gray-400 text-center xl:text-left">
+          <div class="absolute bottom-0 w-full px-4 pb-4 text-center text-gray-400 xl:text-left">
             <span>{$t('home.banner.community-run-discord')}</span>
           </div>
         </div>
       </div>
     </a>
-    <a href="https://www.satisfactorygame.com/" rel="noopener" target="_blank" class="overflow-hidden min-h-[25vh]">
+    <a href="https://www.satisfactorygame.com/" rel="noopener" target="_blank" class="min-h-[25vh] overflow-hidden">
       <div class="card h-full">
         <div class="relative h-full w-full">
           <div class="css-banner banner" />
-          <div class="flex absolute w-full h-full top-0 items-center justify-center">
+          <div class="absolute top-0 flex h-full w-full items-center justify-center">
             <img
               class="centered-logo"
               src={assets + '/images/satisfactory_logo_full_color_small.webp'}
               alt="Satisfactory Logo" />
           </div>
-          <div class="absolute bottom-0 pb-4 px-4 w-full text-gray-300 text-center xl:text-right">
+          <div class="absolute bottom-0 w-full px-4 pb-4 text-center text-gray-300 xl:text-right">
             <span>{$t('home.banner.official-website')}</span>
           </div>
         </div>

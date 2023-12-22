@@ -28,31 +28,31 @@
 
 <div class="card p-4">
   <div class="grid grid-flow-row gap-y-2">
-    <h3 class="text-2xl my-4 font-bold">Compatibility Information</h3>
+    <h3 class="my-4 text-2xl font-bold">Compatibility Information</h3>
     <p>Click the colored text for more details.</p>
     <div class="grid grid-flow-row">
-      <table aria-label="Available Releases" class="table table-hover max-w-auto !overflow-visible">
+      <table aria-label="Available Releases" class="max-w-auto table table-hover !overflow-visible">
         <tbody>
-          <tr class="border rounded !border-surface-500">
-            <td><div class="flex justify-center items-center"><CompatibilityIcon /> Early Access</div></td>
+          <tr class="rounded border !border-surface-500">
+            <td><div class="flex items-center justify-center"><CompatibilityIcon /> Early Access</div></td>
             <td
-              ><div class="flex justify-center items-center">
+              ><div class="flex items-center justify-center">
                 <CompatibilityIcon EXP={true} /> Experimental
               </div></td>
           </tr>
-          <tr class="border rounded !border-surface-500">
+          <tr class="rounded border !border-surface-500">
             <td class="text-center">
-              <button class="min-w-0 m-0" title="Click for more information" on:click={openCompatibility}>
+              <button class="m-0 min-w-0" title="Click for more information" on:click={openCompatibility}>
                 <CompatibilityStateText state={compatibility?.EA?.state} />
               </button>
             </td>
             <td class="text-center">
-              <button class="min-w-0 m-0" title="Click for more information" on:click={openCompatibility}>
+              <button class="m-0 min-w-0" title="Click for more information" on:click={openCompatibility}>
                 <CompatibilityStateText state={compatibility?.EXP?.state} />
               </button>
             </td>
           </tr>
-          <tr class="border rounded !border-surface-500">
+          <tr class="rounded border !border-surface-500">
             {#if compatibility}
               <td>
                 <span style="padding: 2px; white-space:normal">

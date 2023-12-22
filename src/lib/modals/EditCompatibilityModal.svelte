@@ -10,7 +10,7 @@
   const modalStore = getModalStore();
 </script>
 
-<div class="card p-4 flex flex-col gap-2">
+<div class="card flex flex-col gap-2 p-4">
   <h2 class="text-2xl">Edit Compatibility</h2>
   <div>
     <EditCompatibilityForm

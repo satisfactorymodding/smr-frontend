@@ -41,7 +41,7 @@
 
 <div class="mb-5 ml-auto flex justify-between">
   {#if newGuide && $user !== null}
-    <a class="btn variant-ghost-primary" href="{base}/new-guide">{$t('guides.new')}</a>
+    <a class="variant-ghost-primary btn" href="{base}/new-guide">{$t('guides.new')}</a>
   {/if}
 
   <div>
@@ -71,7 +71,7 @@
   </div>
 {/if}
 
-<div class="mt-5 ml-auto flex justify-end">
+<div class="ml-auto mt-5 flex justify-end">
   <div>
     <Paginator
       bind:settings={paginationSettings}

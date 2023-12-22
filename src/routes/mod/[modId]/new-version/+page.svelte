@@ -103,8 +103,8 @@
   {/if}
 </svelte:head>
 
-<div class="flex flex-wrap h-auto justify-between items-center">
-  <h1 class="text-4xl my-4 font-bold">
+<div class="flex h-auto flex-wrap items-center justify-between">
+  <h1 class="my-4 text-4xl font-bold">
     New Version for
     {#if $mod.fetching}
       ...
@@ -114,7 +114,7 @@
   </h1>
   <div>
     <button
-      class="btn variant-ghost-primary"
+      class="variant-ghost-primary btn"
       title="View the description page for this mod"
       on:click={() => modalStore.trigger(backModal)}>
       <span class="material-icons pr-2">arrow_back</span>
@@ -134,21 +134,21 @@
 
       {#if $uploadStatus}
         <div class="relative pt-4">
-          <div class="flex mb-2 items-center justify-between">
+          <div class="mb-2 flex items-center justify-between">
             <div>
               <span
-                class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-white bg-yellow-600">
+                class="inline-block rounded-full bg-yellow-600 px-2 py-1 text-xs font-semibold uppercase text-white">
                 {$uploadStatus}
               </span>
             </div>
             <div class="text-right">
-              <span class="text-xs font-semibold inline-block text-white">{$uploadPercent.toFixed(0)}%</span>
+              <span class="inline-block text-xs font-semibold text-white">{$uploadPercent.toFixed(0)}%</span>
             </div>
           </div>
-          <div class="overflow-hidden h-2 mb-4 text-xs flex rounded bg-gray-600">
+          <div class="mb-4 flex h-2 overflow-hidden rounded bg-gray-600 text-xs">
             <div
               style="width: {$uploadPercent.toFixed(0)}%"
-              class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-yellow-600" />
+              class="flex flex-col justify-center whitespace-nowrap bg-yellow-600 text-center text-white shadow-none" />
           </div>
         </div>
       {/if}

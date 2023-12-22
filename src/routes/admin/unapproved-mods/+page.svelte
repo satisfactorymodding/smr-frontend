@@ -76,7 +76,7 @@
   {:else if $mods.error}
     <section class="p-4">Oh no... {$mods.error.message}</section>
   {:else}
-    <table class="max-w-full table table-hover">
+    <table class="table table-hover max-w-full">
       <thead>
         <tr>
           <th>Mod</th>
@@ -93,9 +93,9 @@
             <td>{prettyDate(mod.created_at)}</td>
             <td class="!p-2.5">
               <div class="grid grid-flow-col gap-4">
-                <button class="btn btn-sm variant-ghost-primary" on:click={() => approveMod(mod.id)}>Approve</button>
-                <button class="btn btn-sm variant-ghost-primary" on:click={() => denyMod(mod.id)}>Deny</button>
-                <a class="btn btn-sm variant-ghost-primary" href={base + '/mod/' + mod.id}>View</a>
+                <button class="variant-ghost-primary btn btn-sm" on:click={() => approveMod(mod.id)}>Approve</button>
+                <button class="variant-ghost-primary btn btn-sm" on:click={() => denyMod(mod.id)}>Deny</button>
+                <a class="variant-ghost-primary btn btn-sm" href={base + '/mod/' + mod.id}>View</a>
               </div>
             </td>
           </tr>
@@ -106,7 +106,7 @@
 </div>
 
 {#if totalMods}
-  <div class="mt-5 ml-auto flex justify-end">
+  <div class="ml-auto mt-5 flex justify-end">
     <div>
       <Paginator
         bind:settings={paginationSettings}

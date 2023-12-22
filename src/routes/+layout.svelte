@@ -126,7 +126,7 @@
     </svelte:fragment>
 
     <svelte:fragment slot="sidebarLeft">
-      <aside class="hidden xl:block h-full">
+      <aside class="hidden h-full xl:block">
         <Sidebar bind:accessibility />
       </aside>
     </svelte:fragment>

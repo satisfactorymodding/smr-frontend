@@ -38,14 +38,14 @@
   };
 </script>
 
-<div class="h-fit card">
+<div class="card h-fit">
   {#if $versions.fetching}
     <section class="p-4">{$t('loading')}...</section>
   {:else if $versions.error}
     <section class="p-4">{$t('error.oh-no')} {$versions.error.message}</section>
   {:else}
     <div class="table-container">
-      <table class="max-w-full table table-hover">
+      <table class="table table-hover max-w-full">
         <thead>
           <tr>
             <th>{$t('version')}</th>
@@ -74,11 +74,11 @@
                   on:keypress|stopPropagation={() => {
                     /*a11y-click-events-have-key-events*/
                   }}>
-                  <a class="btn btn-sm variant-ghost-primary" href={base + '/mod/' + modId + '/version/' + version.id}
+                  <a class="variant-ghost-primary btn btn-sm" href={base + '/mod/' + modId + '/version/' + version.id}
                     >{$t('view')}</a>
                   {#if version.targets.length !== 0}
                     <button
-                      class="btn btn-sm variant-ghost-primary"
+                      class="variant-ghost-primary btn btn-sm"
                       style="padding: 0; min-width: 36px;"
                       use:popup={{
                         event: 'focus-click',
@@ -120,14 +120,14 @@
                     </div>
                   {:else}
                     <a
-                      class="btn btn-sm variant-ghost-primary"
+                      class="variant-ghost-primary btn btn-sm"
                       href={API_REST + '/mod/' + modId + '/versions/' + version.id + '/download'}>
                       {$t('download')}
                     </a>
                   {/if}
 
                   <button
-                    class="btn btn-sm variant-ghost-primary"
+                    class="variant-ghost-primary btn btn-sm"
                     title="Install via Satisfactory Mod Manager"
                     on:click={() => installMod($versions.data.getMod.mod_reference)}>
                     <span class="material-icons">download</span>
@@ -143,7 +143,7 @@
                   <div class="col-span-3 p-2">{$t('size')}: {prettyBytes(version.size)}</div>
                   <div class="col-span-3 p-2">{$t('hash')}: {version.hash}</div>
 
-                  <div class="col-span-6 p-2 markdown-content">
+                  <div class="markdown-content col-span-6 p-2">
                     {#await markdown(version.changelog) then changelogRendered}
                       <!-- eslint-disable -->
                       {@html changelogRendered}

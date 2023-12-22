@@ -79,7 +79,7 @@
   <p>Oh no... {$version.error.message}</p>
 {:else if $version.data.getVersion}
   <div class="grid gap-6 xlx:grid-flow-row">
-    <div class="flex flex-wrap h-auto justify-between items-center">
+    <div class="flex h-auto flex-wrap items-center justify-between">
       <h1 class="text-4xl font-bold">
         {$version.data.getVersion.mod.name}
         Version {$version.data.getVersion.version}
@@ -88,18 +88,18 @@
       <div class="grid grid-flow-col gap-4">
         {#if canUserEdit}
           <button
-            class="btn variant-ghost-primary"
+            class="variant-ghost-primary btn"
             on:click={() => goto(base + '/mod/' + modId + '/version/' + versionId + '/edit')}>
             <span class="material-icons pr-2">edit_document</span>
             Edit
           </button>
-          <button class="btn variant-ghost-primary" on:click={() => modalStore.trigger(deleteModal)}>
+          <button class="variant-ghost-primary btn" on:click={() => modalStore.trigger(deleteModal)}>
             <span class="material-icons pr-2">delete</span>
             Delete</button>
         {/if}
         {#if $version.data.getVersion.targets.length != 0}
           <button
-            class="btn variant-ghost-primary"
+            class="variant-ghost-primary btn"
             title="Download a specific release target of this mod"
             use:popup={{
               event: 'focus-click',
@@ -111,7 +111,7 @@
             <span class="material-icons" style="margin: 0;">arrow_drop_down</span>
           </button>
 
-          <div class="card w-72 shadow-xl z-10" data-popup="versionArchDropdown">
+          <div class="card z-10 w-72 shadow-xl" data-popup="versionArchDropdown">
             <nav class="list-nav">
               <ul>
                 {#each $version.data.getVersion.targets as target}
@@ -134,20 +134,20 @@
             </nav>
           </div>
         {:else}
-          <a class="btn variant-ghost-primary" href={base + '/mod/' + modId + '/version/' + versionId}>View</a>
+          <a class="variant-ghost-primary btn" href={base + '/mod/' + modId + '/version/' + versionId}>View</a>
           <a
-            class="btn variant-ghost-primary"
+            class="variant-ghost-primary btn"
             href={API_REST + '/mod/' + modId + '/versions/' + versionId + '/download'}>Download</a>
         {/if}
         <button
-          class="btn variant-ghost-primary"
+          class="variant-ghost-primary btn"
           title="Install via Satisfactory Mod Manager"
           on:click={() => installMod($version.data.getVersion.mod.mod_reference)}>
           <span class="material-icons">download</span>
           <span>Install</span>
         </button>
         <a
-          class="btn variant-ghost-primary"
+          class="variant-ghost-primary btn"
           href={base + '/mod/' + modId}
           title="View the description page for this mod">
           <span class="material-icons">extension</span>
@@ -155,9 +155,9 @@
         </a>
       </div>
     </div>
-    <div class="grid grid-auto-max auto-cols-fr gap-4">
+    <div class="grid-auto-max grid auto-cols-fr gap-4">
       <VersionDescription changelog={$version.data.getVersion.changelog} approved={$version.data.getVersion.approved} />
-      <div class="grid grid-cols-1 auto-rows-min gap-8">
+      <div class="grid auto-rows-min grid-cols-1 gap-8">
         <VersionInfo version={$version.data.getVersion} />
         <VersionTargetSupportGrid targets={$version.data.getVersion.targets} />
         <VersionDependenciesGrid dependencies={$version.data.getVersion.dependencies} />

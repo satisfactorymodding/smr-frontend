@@ -115,8 +115,8 @@
       </ValidationMessage>
     </div>
 
-    <div class="grid gap-6 split">
-      <div class="grid grid-flow-row gap-2 auto-rows-max">
+    <div class="split grid gap-6">
+      <div class="grid grid-flow-row auto-rows-max gap-2">
         <label class="label">
           <span>{$t('entry.full-description')} *</span>
           <textarea class="vertical-textarea textarea p-2" bind:value={$data.full_description} required rows={10} />
@@ -125,7 +125,7 @@
           <span class="validation-message">{message || ''}</span>
         </ValidationMessage>
       </div>
-      <div class="grid grid-flow-row gap-2 auto-rows-max">
+      <div class="grid grid-flow-row auto-rows-max gap-2">
         <span>{$t('preview')}:</span>
         {#await markdown(preview) then previewRendered}
           <!-- eslint-disable -->
@@ -189,7 +189,7 @@
       <div class="grid grid-flow-row gap-2">
         <div class="flex items-center">
           <h4 class="mr-4">{$t('authors')}</h4>
-          <button class="btn variant-ghost-primary" type="button" on:click={addAuthor}>
+          <button class="variant-ghost-primary btn" type="button" on:click={addAuthor}>
             <span>{$t('add')}</span>
           </button>
         </div>
@@ -210,7 +210,7 @@
                 disabled={author.role === 'creator'} />
             </label>
             {#if author.role !== 'creator'}
-              <button class="btn variant-ghost-primary" type="button" on:click={() => removeAuthor(i)}>
+              <button class="variant-ghost-primary btn" type="button" on:click={() => removeAuthor(i)}>
                 <span>{$t('remove')}</span>
               </button>
             {/if}
@@ -220,7 +220,7 @@
     {/if}
 
     <div>
-      <button class="btn variant-ghost-primary" type="submit">{submitText}</button>
+      <button class="variant-ghost-primary btn" type="submit">{submitText}</button>
     </div>
   </div>
 </form>

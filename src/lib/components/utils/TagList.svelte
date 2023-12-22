@@ -58,9 +58,9 @@
 <div class="tags">
   {#if !editable}
     {#if tags.length > 0}
-      <div class="flex flex-row flex-wrap text-md gap-1">
+      <div class="text-md flex flex-row flex-wrap gap-1">
         {#each tags as tag}
-          <div class="text-neutral-300 lowercase">
+          <div class="lowercase text-neutral-300">
             <span class="text-orange-500">#</span>{tag.name}
           </div>
         {/each}
@@ -78,7 +78,7 @@
         chips="variant-filled-primary" />
     </div>
 
-    <div class="card w-full max-w-sm max-h-48 p-4 overflow-y-auto" tabindex="-1" data-popup="popupAutocomplete">
+    <div class="card max-h-48 w-full max-w-sm overflow-y-auto p-4" tabindex="-1" data-popup="popupAutocomplete">
       <Autocomplete
         bind:input={inputTag}
         options={allTags.filter((t) => tagList.indexOf(t.label) < 0)}

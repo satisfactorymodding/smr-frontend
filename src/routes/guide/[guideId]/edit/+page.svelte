@@ -77,10 +77,10 @@
   {/if}
 </svelte:head>
 
-<div class="flex flex-wrap h-auto justify-between items-center">
-  <h1 class="text-4xl my-4 font-bold">Edit Guide</h1>
+<div class="flex h-auto flex-wrap items-center justify-between">
+  <h1 class="my-4 text-4xl font-bold">Edit Guide</h1>
   <div>
-    <button class="btn variant-ghost-primary" on:click={() => modalStore.trigger(backModal)}>
+    <button class="variant-ghost-primary btn" on:click={() => modalStore.trigger(backModal)}>
       <span class="material-icons pr-2">arrow_back</span>
       Back to Guide</button>
   </div>

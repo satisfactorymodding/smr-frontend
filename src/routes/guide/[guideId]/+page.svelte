@@ -71,22 +71,22 @@
   <p>Oh no... {$guide.error.message}</p>
 {:else if $guide.data.getGuide}
   <div class="grid gap-6 xlx:grid-flow-row">
-    <div class="flex flex-wrap h-auto justify-between items-center">
+    <div class="flex h-auto flex-wrap items-center justify-between">
       <h1 class="text-4xl font-bold">{$guide.data.getGuide.name}</h1>
 
       <div>
         {#if canUserEdit}
-          <button class="btn variant-ghost-primary" on:click={() => goto(base + '/guide/' + guideId + '/edit')}>
+          <button class="variant-ghost-primary btn" on:click={() => goto(base + '/guide/' + guideId + '/edit')}>
             <span class="material-icons pr-2">edit</span>
             Edit</button>
-          <button class="btn variant-ghost-primary" on:click={() => modalStore.trigger(deleteModal)}>
+          <button class="variant-ghost-primary btn" on:click={() => modalStore.trigger(deleteModal)}>
             <span class="material-icons pr-2">delete</span>
             Delete</button>
         {/if}
       </div>
     </div>
-    <div class="grid grid-auto-max auto-cols-fr gap-4">
-      <div class="card p-4 h-fit">
+    <div class="grid-auto-max grid auto-cols-fr gap-4">
+      <div class="card h-fit p-4">
         <section>
           <div class="markdown-content break-words">
             {#await markdown($guide.data.getGuide.guide) then guideRendered}
@@ -96,7 +96,7 @@
           </div>
         </section>
       </div>
-      <div class="grid grid-cols-1 auto-rows-min gap-8">
+      <div class="grid auto-rows-min grid-cols-1 gap-8">
         <GuideInfo guide={$guide.data.getGuide} />
         <GuideAuthor author={$guide.data.getGuide.user} />
       </div>

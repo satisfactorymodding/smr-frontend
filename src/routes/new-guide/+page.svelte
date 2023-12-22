@@ -42,7 +42,7 @@
   <MetaDescriptors description="Creating a new guide" title="New guide" />
 </svelte:head>
 
-<h1 class="text-4xl my-4 font-bold">New Guide</h1>
+<h1 class="my-4 text-4xl font-bold">New Guide</h1>
 
 <div class="card p-4">
   <section>

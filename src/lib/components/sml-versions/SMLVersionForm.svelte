@@ -96,8 +96,8 @@
       </ValidationMessage>
     </div>
 
-    <div class="grid gap-6 split">
-      <div class="grid grid-flow-row gap-2 auto-rows-max">
+    <div class="split grid gap-6">
+      <div class="grid grid-flow-row auto-rows-max gap-2">
         <label class="label">
           <span>{$t('changelog')} *</span>
           <textarea class="vertical-textarea textarea p-2" bind:value={$data.changelog} required rows={10} />
@@ -106,7 +106,7 @@
           <span class="validation-message">{message || ''}</span>
         </ValidationMessage>
       </div>
-      <div class="grid grid-flow-row gap-2 auto-rows-max">
+      <div class="grid grid-flow-row auto-rows-max gap-2">
         <span>{$t('preview')}:</span>
         {#await markdown(preview) then previewRendered}
           <!-- eslint-disable -->
@@ -118,7 +118,7 @@
     <span>Targets:</span>
     <div class="grid grid-flow-row gap-2">
       {#each $data.targets as target, i}
-        <div class="gap-6 auto-rows-max">
+        <div class="auto-rows-max gap-6">
           <label class="label">
             <span>Platform</span>
             <select class="select" bind:value={target.targetName}>
@@ -141,9 +141,9 @@
             <span class="validation-message">{message || ''}</span>
           </ValidationMessage>
 
-          <button class="btn variant-ghost-primary" on:click={addTarget}>{$t('add')}</button>
+          <button class="variant-ghost-primary btn" on:click={addTarget}>{$t('add')}</button>
           <button
-            class="btn variant-ghost-primary"
+            class="variant-ghost-primary btn"
             disabled={$data.targets.length == 1}
             on:click={() => removeTarget(i)}>{$t('remove')}</button>
         </div>
@@ -179,7 +179,7 @@
     </div>
 
     <div>
-      <button class="btn variant-ghost-primary" type="submit">{submitText}</button>
+      <button class="variant-ghost-primary btn" type="submit">{submitText}</button>
     </div>
   </div>
 </form>

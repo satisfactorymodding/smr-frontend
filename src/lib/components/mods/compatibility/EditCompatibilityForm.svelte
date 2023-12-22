@@ -36,6 +36,6 @@
 <form on:submit={onSubmit}>
   <ModCompatibilityEdit bind:compatibilityInfo={mod.compatibility} />
   <div class="p-5">
-    <button class="btn variant-ghost-primary" type="submit">{$t('entry.save')}</button>
+    <button class="variant-ghost-primary btn" type="submit">{$t('entry.save')}</button>
   </div>
 </form>

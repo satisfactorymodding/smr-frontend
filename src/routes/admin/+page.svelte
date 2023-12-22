@@ -31,14 +31,14 @@
 
 <style lang="postcss">
   h1 {
-    @apply text-4xl my-4 font-bold;
+    @apply my-4 text-4xl font-bold;
   }
 
   h2 {
-    @apply text-3xl my-4 font-bold;
+    @apply my-4 text-3xl font-bold;
   }
 
   a {
-    @apply underline text-yellow-500;
+    @apply text-yellow-500 underline;
   }
 </style>

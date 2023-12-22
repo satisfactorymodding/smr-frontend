@@ -15,12 +15,12 @@
 
 <div class="card p-4">
   <section>
-    <div class="text-lg break-words">
-      <h3 class="text-2xl my-4 font-bold">Info</h3>
+    <div class="break-words text-lg">
+      <h3 class="my-4 text-2xl font-bold">Info</h3>
       <span
         ><strong>{$t('entry.source')}:</strong>
         {#if mod.source_url.length > 0}
-          <a class="underline text-yellow-500" href={mod.source_url}>{mod.source_url}</a>
+          <a class="text-yellow-500 underline" href={mod.source_url}>{mod.source_url}</a>
         {:else}
           {$t('entry.source.none-provided')}
         {/if}

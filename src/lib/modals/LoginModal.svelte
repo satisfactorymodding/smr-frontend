@@ -29,7 +29,7 @@
   });
 </script>
 
-<div class="card p-4 flex flex-col gap-2">
+<div class="card flex flex-col gap-2 p-4">
   <h2 class="text-2xl">{$t('user.sign-in')} / {$t('user.sign-up')}</h2>
   <div>
     <div class="grid grid-flow-row gap-4">
@@ -45,17 +45,17 @@
         <p>Oh no... {$oauthOptions.error.message}</p>
       {:else}
         <button
-          class="btn variant-ghost-primary"
+          class="variant-ghost-primary btn"
           on:click={() => goTo('github', $oauthOptions.data.getOAuthOptions.github)}>
           {$t('login-dialog.sign-in-with-github')}
         </button>
         <button
-          class="btn variant-ghost-primary"
+          class="variant-ghost-primary btn"
           on:click={() => goTo('google', $oauthOptions.data.getOAuthOptions.google)}>
           {$t('login-dialog.sign-in-with-google')}
         </button>
         <button
-          class="btn variant-ghost-primary"
+          class="variant-ghost-primary btn"
           on:click={() => goTo('facebook', $oauthOptions.data.getOAuthOptions.facebook)}>
           {$t('login-dialog.sign-in-with-facebook')}
         </button>

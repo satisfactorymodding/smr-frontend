@@ -47,7 +47,7 @@
 </svelte:head>
 
 <div class="mb-5 ml-auto flex justify-between">
-  <a class="btn variant-ghost-primary" href="{base}/admin/sml-versions/new">New SML Version</a>
+  <a class="variant-ghost-primary btn" href="{base}/admin/sml-versions/new">New SML Version</a>
 
   {#if totalVersions}
     <div>
@@ -68,7 +68,7 @@
   {:else if $versions.error}
     <section class="p-4">Oh no... {$versions.error.message}</section>
   {:else}
-    <table class="max-w-full table table-hover">
+    <table class="table table-hover max-w-full">
       <thead>
         <tr>
           <th>Version</th>
@@ -89,9 +89,9 @@
             <td>{prettyDate(version.created_at)}</td>
             <td class="!p-2.5">
               <div class="grid grid-flow-col gap-4">
-                <button class="btn btn-sm variant-ghost-primary" on:click={() => deleteVersion(version.id)}
+                <button class="variant-ghost-primary btn btn-sm" on:click={() => deleteVersion(version.id)}
                   >Delete</button>
-                <a class="btn btn-sm variant-ghost-primary" href={base + '/admin/sml-versions/' + version.id + '/edit'}
+                <a class="variant-ghost-primary btn btn-sm" href={base + '/admin/sml-versions/' + version.id + '/edit'}
                   >Edit</a>
               </div>
             </td>
@@ -103,7 +103,7 @@
 </div>
 
 {#if totalVersions}
-  <div class="mt-5 ml-auto flex justify-end">
+  <div class="ml-auto mt-5 flex justify-end">
     <div>
       <Paginator
         bind:settings={paginationSettings}

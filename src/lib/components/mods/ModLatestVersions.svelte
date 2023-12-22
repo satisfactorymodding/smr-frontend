@@ -32,12 +32,12 @@
 <div class="card p-4">
   <section>
     <div class="grid grid-flow-row gap-y-2">
-      <h3 class="text-2xl my-4 font-bold">{$t('mod.latest-versions')}</h3>
+      <h3 class="my-4 text-2xl font-bold">{$t('mod.latest-versions')}</h3>
 
       {#each Object.keys(stabilities) as stability}
         {#if latestVersions[stability]}
           <div class="version">
-            <div class="text-4xl w-14 h-14 p-2.5" title={`Latest ${stability} release`}>
+            <div class="h-14 w-14 p-2.5 text-4xl" title={`Latest ${stability} release`}>
               <span class="material-icons">{stabilities[stability]}</span>
             </div>
             <div class="grid grid-flow-row">
@@ -48,7 +48,7 @@
                 >Version {latestVersions[stability].version} ({stability})</a>
               <div>{prettyDate(latestVersions[stability].created_at)}</div>
             </div>
-            <div class="text-1xl col-span-3 w-auto h-auto p-2.5">
+            <div class="text-1xl col-span-3 h-auto w-auto p-2.5">
               <a
                 href="#top"
                 on:click={() => installMod(modId)}
@@ -70,7 +70,7 @@
 
 <style lang="postcss">
   .version {
-    @apply grid grid-flow-col text-lg gap-x-4;
+    @apply grid grid-flow-col gap-x-4 text-lg;
     grid-template-columns: max-content auto max-content;
   }
 </style>

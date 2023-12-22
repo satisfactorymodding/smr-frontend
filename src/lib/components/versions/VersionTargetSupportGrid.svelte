@@ -32,14 +32,14 @@
 </script>
 
 <div class="grid grid-flow-row">
-  <table aria-label="Available Releases" class="table table-hover max-w-auto !overflow-visible">
+  <table aria-label="Available Releases" class="max-w-auto table table-hover !overflow-visible">
     <tbody>
-      <tr class="border rounded !border-surface-500">
+      <tr class="rounded border !border-surface-500">
         <td style="width: 20%;" />
         <td style="width: 40%;"><div class="text-center" title="Game client">Client</div></td>
         <td style="width: 40%;"><div class="text-center" title="Dedicated server">Server</div></td>
       </tr>
-      <tr class="border rounded !border-surface-500">
+      <tr class="rounded border !border-surface-500">
         <td>Windows</td>
         <td
           ><div class="text-center">
@@ -52,7 +52,7 @@
               >{WindowsServerSupport.glyph}</span>
           </div></td>
       </tr>
-      <tr class="border rounded !border-surface-500">
+      <tr class="rounded border !border-surface-500">
         <td>Linux</td>
         <td><div class="text-center" title="There is no Client distribution of Satisfactory for Linux">N/A</div></td>
         <td

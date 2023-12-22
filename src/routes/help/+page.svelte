@@ -396,10 +396,10 @@ This line is way far down
 </svelte:head>
 
 <div>
-  <div class="grid gap-4 grid-flow-col grid-cols-2">
+  <div class="grid grid-flow-col grid-cols-2 gap-4">
     <div class="card p-4">
       <section class="p-4">
-        <h3 class="text-2xl my-4 font-bold">&lt;mod&gt;.uplugin format</h3>
+        <h3 class="my-4 text-2xl font-bold">&lt;mod&gt;.uplugin format</h3>
         <div class="markdown-content">
           {#await markdown(exampleUPluginJson) then exampleUPluginJsonRendered}
             <!-- eslint-disable -->
@@ -411,7 +411,7 @@ This line is way far down
 
     <div class="card p-4">
       <section class="p-4">
-        <h3 class="text-2xl my-4 font-bold">Validate your &lt;mod&gt;.uplugin</h3>
+        <h3 class="my-4 text-2xl font-bold">Validate your &lt;mod&gt;.uplugin</h3>
         <textarea
           placeholder="enter your <mod>.uplugin"
           rows="23"
@@ -422,7 +422,7 @@ This line is way far down
             <p>Loading...</p>
           {:then errors}
             {#if errors.length === 0}
-              <h3 class="text-2xl my-4 font-bold">&lt;mod&gt;.uplugin valid!</h3>
+              <h3 class="my-4 text-2xl font-bold">&lt;mod&gt;.uplugin valid!</h3>
             {:else}
               <ul>
                 {#each errors as err}
@@ -439,7 +439,7 @@ This line is way far down
     </div>
   </div>
 
-  <h1 class="text-4xl my-4 font-bold">Markdown</h1>
+  <h1 class="my-4 text-4xl font-bold">Markdown</h1>
   <div class="card p-4">
     <section class="p-4">
       <div class="markdown-content">

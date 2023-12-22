@@ -67,7 +67,7 @@
   {/if}
 </svelte:head>
 
-<h1 class="text-4xl my-4 font-bold">Edit Mod</h1>
+<h1 class="my-4 text-4xl font-bold">Edit Mod</h1>
 
 <div class="card p-4">
   <section>

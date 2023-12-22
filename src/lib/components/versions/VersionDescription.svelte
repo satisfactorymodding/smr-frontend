@@ -15,7 +15,7 @@
         message="This version has not yet been approved by the virus scanner and is hidden until this process is complete. If this message isn't gone in the next few minutes, ask for manual approval on the Discord." />
     </div>
   {/if}
-  <div class="h-fit card p-4">
+  <div class="card h-fit p-4">
     <section>
       <div class="markdown-content break-words">
         {#await markdown(changelog) then changelogRendered}

@@ -29,8 +29,8 @@
   logo={mod.logo}
   description={mod.short_description}>
   <div slot="stats" class="flex flex-row items-center gap-2">
-    <span><span class="material-icons align-middle text-sm mr-1">visibility</span>{prettyNumber(mod.views)}</span>
-    <span><span class="material-icons align-middle text-sm mr-1">download</span>{prettyNumber(mod.downloads)}</span>
+    <span><span class="material-icons mr-1 align-middle text-sm">visibility</span>{prettyNumber(mod.views)}</span>
+    <span><span class="material-icons mr-1 align-middle text-sm">download</span>{prettyNumber(mod.downloads)}</span>
     <CompatibilityButton compatibility={mod.compatibility} />
   </div>
   <div slot="tags">
@@ -38,7 +38,7 @@
   </div>
   <svelte:fragment slot="actions">
     {#if installable}
-      <button class="btn btn-sm variant-soft-surface" title="Install" on:click={() => installMod(mod.mod_reference)}>
+      <button class="variant-soft-surface btn btn-sm" title="Install" on:click={() => installMod(mod.mod_reference)}>
         <span class="material-icons">download</span>
       </button>
     {/if}

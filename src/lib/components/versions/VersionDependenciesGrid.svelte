@@ -6,20 +6,20 @@
 </script>
 
 <div class="grid grid-flow-row">
-  <table aria-label="Mod Dependency" class="table table-hover max-w-auto !overflow-visible">
+  <table aria-label="Mod Dependency" class="max-w-auto table table-hover !overflow-visible">
     <tbody>
-      <tr class="border rounded !border-surface-500">
+      <tr class="rounded border !border-surface-500">
         <td>Mod Dependency</td>
         <td><div class="text-center">Version Range</div></td>
       </tr>
       {#if dependencies?.length === 0}
-        <tr class="border rounded !border-surface-500">
+        <tr class="rounded border !border-surface-500">
           <td><div class="text-center">None</div></td>
           <td><div class="text-center">N/A</div></td>
         </tr>
       {:else}
         {#each dependencies as dependency}
-          <tr class="border rounded !border-surface-500">
+          <tr class="rounded border !border-surface-500">
             <td>
               <a
                 title="Click to view mod page"

@@ -66,7 +66,7 @@
   {:else if $versions.error}
     <section class="p-4">Oh no... {$versions.error.message}</section>
   {:else}
-    <table class="max-w-full table table-hover">
+    <table class="table table-hover max-w-full">
       <thead>
         <tr>
           <th>Version</th>
@@ -85,14 +85,14 @@
             <td>{prettyDate(version.date)}</td>
             <td class="!p-2.5">
               <div class="grid grid-flow-col gap-4">
-                <a class="btn btn-sm variant-ghost-primary" href={version.link}>View</a>
+                <a class="variant-ghost-primary btn btn-sm" href={version.link}>View</a>
               </div>
             </td>
           </tr>
 
           {#if expandedVersions.has(version.id)}
             <tr>
-              <td colspan={5} class="p-2 markdown-content">
+              <td colspan={5} class="markdown-content p-2">
                 {#await markdown(version.changelog) then changelogRendered}
                   <!-- eslint-disable -->
                   {@html changelogRendered}
@@ -107,7 +107,7 @@
 </div>
 
 {#if totalVersions}
-  <div class="mt-5 ml-auto flex justify-end">
+  <div class="ml-auto mt-5 flex justify-end">
     <div>
       <Paginator
         bind:settings={paginationSettings}

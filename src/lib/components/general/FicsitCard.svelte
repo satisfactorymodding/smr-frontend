@@ -37,7 +37,7 @@
 </script>
 
 <div
-  class="card h-full overflow-hidden relative"
+  class="card relative h-full overflow-hidden"
   on:mouseover={onOver}
   on:mouseout={onOut}
   on:focus={onOver}
@@ -46,24 +46,24 @@
   <div
     class:text-gray-500={fake}
     class:font-flow={fake}
-    class="grid grid-max-auto sm:grid-cols-2 grid-cols-1 justify-items-center">
-    <div class="cursor-pointer card-image-container">
+    class="grid-max-auto grid grid-cols-1 justify-items-center sm:grid-cols-2">
+    <div class="card-image-container cursor-pointer">
       <a href={link} on:keypress={() => goto(link)} tabindex="0">
         {#if fake}
-          <div class="bg-gray-500 logo min-w-full min-h-full max-w-full max-h-full" />
+          <div class="logo max-h-full min-h-full min-w-full max-w-full bg-gray-500" />
         {:else}
-          <img src={renderedLogo} alt="{renderedName} Logo" class="logo max-w-full max-h-full min-w-full min-h-full" />
+          <img src={renderedLogo} alt="{renderedName} Logo" class="logo max-h-full min-h-full min-w-full max-w-full" />
         {/if}
       </a>
     </div>
-    <div class="w-full flex flex-col justify-between relative">
+    <div class="relative flex w-full flex-col justify-between">
       <div class="flex flex-col px-3 py-2 pb-0">
         <div class="mb-1.5">
           <a href={link} class="text-white">
-            <span class="text-xl break-words">{renderedName}</span>
+            <span class="break-words text-xl">{renderedName}</span>
           </a>
 
-          <h5 class="text-sm m-0">
+          <h5 class="m-0 text-sm">
             <slot name="stats">
               {#if fake}
                 <span class="font-flow">Card stats</span>
@@ -87,12 +87,12 @@
       </div>
 
       <div
-        class="self-end py-2 px-2 flex flex-row items-center text-lg gap-1 absolute bottom-0 right-0"
+        class="absolute bottom-0 right-0 flex flex-row items-center gap-1 self-end px-2 py-2 text-lg"
         bind:this={actionButtons}>
         {#if !fake}
           <a
             href={link}
-            class="btn btn-sm variant-soft-surface"
+            class="variant-soft-surface btn btn-sm"
             aria-label="View {renderedName}"
             title="View {renderedName}">
             <span class="material-icons">info</span>

@@ -67,12 +67,12 @@
   };
 </script>
 
-<button class="grid grid-flow-col btn btn-sm variant-ghost-primary" use:popup={languageMenuBox}>
+<button class="variant-ghost-primary btn btn-sm grid grid-flow-col" use:popup={languageMenuBox}>
   <span>{languages[$lang].name}</span>
   <span class="text-xl">{languages[$lang].flag}</span>
 </button>
 
-<div class="card w-48 shadow-xl py-2" data-popup="languageMenuBox">
+<div class="card w-48 py-2 shadow-xl" data-popup="languageMenuBox">
   <nav class="list-nav">
     <ul>
       {#each Object.entries(languages) as [k, v]}
@@ -85,5 +85,5 @@
       {/each}
     </ul>
   </nav>
-  <div class="arrow bg-surface-100-800-token" />
+  <div class="bg-surface-100-800-token arrow" />
 </div>

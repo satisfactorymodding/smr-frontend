@@ -24,10 +24,10 @@
 </script>
 
 <div class="{backgroundColors[importance]} max-h-64 overflow-hidden rounded-sm">
-  <div class="p-1 striped text-black">
-    <span class="material-icons text-2xl align-middle">{iconNames[importance]}</span>
+  <div class="striped p-1 text-black">
+    <span class="material-icons align-middle text-2xl">{iconNames[importance]}</span>
     <div
-      class="align-middle text-l inline-block break-words max-w-full"
+      class="text-l inline-block max-w-full break-words align-middle"
       class:font-mono={isMonospace}
       class:whitespace-pre={isMonospace}>
       <b>{importance}: </b>{finalMessage}

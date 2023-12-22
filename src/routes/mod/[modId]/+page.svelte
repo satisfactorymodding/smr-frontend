@@ -97,27 +97,27 @@
   <p>Oh no... {$mod.error.message}</p>
 {:else if $mod.data.mod}
   <div class="grid gap-6 xlx:grid-flow-row">
-    <div class="flex flex-wrap h-auto justify-between items-center">
+    <div class="flex h-auto flex-wrap items-center justify-between">
       <h1 class="text-4xl font-bold">{$mod.data.mod.name}</h1>
       <div>
         {#if canUserEdit}
-          <button class="btn variant-ghost-primary" on:click={() => goto(base + '/mod/' + modId + '/edit')}>
+          <button class="variant-ghost-primary btn" on:click={() => goto(base + '/mod/' + modId + '/edit')}>
             <span class="material-icons pr-2">edit</span>
             Edit</button>
-          <button class="btn variant-ghost-primary" on:click={() => modalStore.trigger(deleteModal)}>
+          <button class="variant-ghost-primary btn" on:click={() => modalStore.trigger(deleteModal)}>
             <span class="material-icons pr-2">delete_forever</span>
             Delete</button>
-          <button class="btn variant-ghost-primary" on:click={() => goto(base + '/mod/' + modId + '/new-version')}>
+          <button class="variant-ghost-primary btn" on:click={() => goto(base + '/mod/' + modId + '/new-version')}>
             <span class="material-icons pr-2">upload_file</span>
             New Version</button>
         {/if}
         {#if canUserEditCompatibility}
-          <button class="btn variant-ghost-primary" on:click={() => modalStore.trigger(editCompatibilityModal)}>
+          <button class="variant-ghost-primary btn" on:click={() => modalStore.trigger(editCompatibilityModal)}>
             <span class="material-icons">rocket_launch</span>
             <span class="material-icons pr-2">science</span>
             Edit Compatibility</button>
         {/if}
-        <button class="btn variant-ghost-primary" on:click={() => (versionsTab = !versionsTab)}>
+        <button class="variant-ghost-primary btn" on:click={() => (versionsTab = !versionsTab)}>
           {#if !versionsTab}
             <span class="material-icons pr-2" title="Browse all uploaded versions of this mod">view_list</span>
             View Versions
@@ -128,13 +128,13 @@
         </button>
       </div>
     </div>
-    <div class="grid grid-auto-max auto-cols-fr gap-4">
+    <div class="grid-auto-max grid auto-cols-fr gap-4">
       {#if !versionsTab}
         <ModDescription mod={$mod.data.mod} />
       {:else}
         <ModVersions modId={$mod.data.mod.id} />
       {/if}
-      <div class="grid grid-cols-1 auto-rows-min gap-8">
+      <div class="grid auto-rows-min grid-cols-1 gap-8">
         <div class="m-auto">
           <ModLogo
             modLogo={$mod.data.mod.logo}

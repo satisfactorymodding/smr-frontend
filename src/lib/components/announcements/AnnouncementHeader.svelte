@@ -19,7 +19,7 @@
     message="Failed to load announcements: {$announcements.error.message}"
     importance={AnnouncementImportance.Warning} />
 {:else if $announcements && $announcements.data && $announcements.data.getAnnouncements}
-  <div class="max-h-96 overflow-y-auto flex flex-col gap-2 mr-3 mt-3 ml-3 xl:ml-0 mb-3 xl:mb-0">
+  <div class="mb-3 ml-3 mr-3 mt-3 flex max-h-96 flex-col gap-2 overflow-y-auto xl:mb-0 xl:ml-0">
     {#each $announcements?.data?.getAnnouncements as announcement}
       <AnnouncementRow message={announcement.message} importance={announcement.importance} />
     {/each}

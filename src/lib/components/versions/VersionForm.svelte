@@ -124,8 +124,8 @@
       {/if}
     {/if}
 
-    <div class="grid gap-6 split">
-      <div class="grid grid-flow-row gap-2 auto-rows-max">
+    <div class="split grid gap-6">
+      <div class="grid grid-flow-row auto-rows-max gap-2">
         <label class="label">
           <span>{$t('changelog')} *</span>
           <textarea class="vertical-textarea textarea p-2" bind:value={$data.changelog} required rows={10} />
@@ -134,7 +134,7 @@
           <span class="validation-message">{message || ''}</span>
         </ValidationMessage>
       </div>
-      <div class="grid grid-flow-row gap-2 auto-rows-max">
+      <div class="grid grid-flow-row auto-rows-max gap-2">
         <span>{$t('preview')}:</span>
         {#await markdown(preview) then previewRendered}
           <!-- eslint-disable -->
@@ -148,7 +148,7 @@
     </div>
 
     <div>
-      <button class="btn variant-ghost-primary" type="submit" {disabled}>
+      <button class="variant-ghost-primary btn" type="submit" {disabled}>
         <span class="material-icons pr-2">{submitIcon}</span>
         {submitText}
       </button>
@@ -167,6 +167,6 @@
   }
 
   a {
-    @apply underline text-yellow-500;
+    @apply text-yellow-500 underline;
   }
 </style>

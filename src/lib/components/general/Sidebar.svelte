@@ -100,8 +100,8 @@
   const drawerStore = getDrawerStore();
 </script>
 
-<div class="p-4 overflow-y-auto flex flex-col justify-between h-full max-w-xl">
-  <div class="flex flex-col h-full max-w-xl gap-4">
+<div class="flex h-full max-w-xl flex-col justify-between overflow-y-auto p-4">
+  <div class="flex h-full max-w-xl flex-col gap-4">
     <nav class="list-nav xl:hidden">
       <ul>
         {#if $user === null}
@@ -131,8 +131,8 @@
               <span>Admin</span>
             </button>
           {/if}
-          <button class="grid grid-flow-col w-full" on:click={() => goto(base + '/user/' + $user.id)}>
-            <div class="rounded-full bg-cover w-7 h-7" style={`background-image: url("${$user.avatar}")`} />
+          <button class="grid w-full grid-flow-col" on:click={() => goto(base + '/user/' + $user.id)}>
+            <div class="h-7 w-7 rounded-full bg-cover" style={`background-image: url("${$user.avatar}")`} />
             <div>{$user.username}</div>
           </button>
 

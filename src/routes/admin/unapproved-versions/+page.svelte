@@ -77,7 +77,7 @@
   {:else if $versions.error}
     <section class="p-4">Oh no... {$versions.error.message}</section>
   {:else}
-    <table class="max-w-full table table-hover">
+    <table class="table table-hover max-w-full">
       <thead>
         <tr>
           <th>Mod</th>
@@ -94,14 +94,14 @@
             <td>{prettyDate(version.created_at)}</td>
             <td class="!p-2.5">
               <div class="grid grid-flow-col gap-4">
-                <button class="btn variant-ghost-primary" on:click={() => approveVersion(version.id)}>Approve</button>
-                <button class="btn variant-ghost-primary" on:click={() => denyVersion(version.id)}>Deny</button>
+                <button class="variant-ghost-primary btn" on:click={() => approveVersion(version.id)}>Approve</button>
+                <button class="variant-ghost-primary btn" on:click={() => denyVersion(version.id)}>Deny</button>
                 <a
-                  class="btn variant-ghost-primary"
+                  class="variant-ghost-primary btn"
                   href={API_REST + '/mod/' + version.mod_id + '/versions/' + version.id + '/download'}>
                   Download
                 </a>
-                <a class="btn variant-ghost-primary" href={base + '/mod/' + version.mod_id + '/version/' + version.id}>
+                <a class="variant-ghost-primary btn" href={base + '/mod/' + version.mod_id + '/version/' + version.id}>
                   View
                 </a>
               </div>
@@ -114,7 +114,7 @@
 </div>
 
 {#if totalVersions}
-  <div class="mt-5 ml-auto flex justify-end">
+  <div class="ml-auto mt-5 flex justify-end">
     <Paginator
       bind:settings={paginationSettings}
       showFirstLastButtons={true}

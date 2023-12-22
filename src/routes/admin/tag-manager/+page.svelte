@@ -144,7 +144,7 @@
               on:change={() => tagChange(tag)} />
             <span slot="helper">Human-Readable name of the tag that is shown in UI</span>
 
-            <button class="btn variant-ghost-error" on:click={(e) => onDeleteClick(e, tag)}>
+            <button class="variant-ghost-error btn" on:click={(e) => onDeleteClick(e, tag)}>
               <span>Delete</span>
             </button>
           </svelte:fragment>
@@ -153,7 +153,7 @@
     </Accordion>
 
     <section class="p-4">
-      <button class="btn variant-ghost-primary" on:click={newTag}>
+      <button class="variant-ghost-primary btn" on:click={newTag}>
         <span>Add new tag</span>
         <span class="material-icons">add</span>
       </button>
