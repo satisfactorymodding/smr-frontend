@@ -1,6 +1,6 @@
 <script lang="ts">
   import { queryStore, getContextClient } from '@urql/svelte';
-  import { GetModsDocument, ModFields, Order } from '$lib/generated';
+  import { GetModsDocument, GetTagsDocument, ModFields, Order } from '$lib/generated';
   import ModCard from './ModCard.svelte';
   import { base } from '$app/paths';
   import { goto } from '$app/navigation';
@@ -25,10 +25,18 @@
   let perPage = 32;
   let page = parseInt((browser && $storePage.url.searchParams.get('p')) || '0', 10) || 0;
 
+  let selectedTags: string[] = [];
+
   $: mods = queryStore({
     query: GetModsDocument,
     client,
-    variables: { offset: page * perPage, limit: perPage, search, order, orderBy }
+    variables: { offset: page * perPage, limit: perPage, search, order, orderBy, tagIDs: selectedTags.sort() }
+  });
+
+  $: allTags = queryStore({
+    query: GetTagsDocument,
+    client,
+    variables: {}
   });
 
   let totalMods: number;
@@ -89,49 +97,69 @@
     size: totalMods,
     amounts: [8, 16, 32, 64, 100]
   } satisfies PaginationSettings;
+
+  const toggleTag = (tagId: string) => {
+    if (selectedTags.indexOf(tagId) >= 0) {
+      const i = selectedTags.indexOf(tagId);
+      selectedTags = [...selectedTags.slice(0, i), ...selectedTags.slice(i + 1)];
+    } else {
+      selectedTags = [...selectedTags, tagId];
+    }
+    console.log(selectedTags);
+  };
 </script>
 
-<div class="mb-5 ml-auto flex flex-wrap items-center justify-between">
+<div class="mb-5 ml-auto flex flex-wrap">
   {#if newMod && $user !== null}
     <a class="variant-ghost-primary btn" href="{base}/new-mod">{$t('mods.new')}</a>
   {/if}
 
   {#if showSearch}
-    <div class="search-container flex flex-row flex-wrap sm:px-4">
-      <div class="mr-3">
-        <select bind:value={orderBy} class="select">
-          {#each orderFields as orderField}
-            <option value={orderField[1]}>{orderField[0]}</option>
+    <div class="flex grow flex-col items-center justify-center gap-4 sm:px-4">
+      <div class="flex grow flex-row flex-wrap items-center justify-center sm:px-4">
+        <div class="mr-3">
+          <select bind:value={orderBy} class="select">
+            {#each orderFields as orderField}
+              <option value={orderField[1]}>{orderField[0]}</option>
+            {/each}
+          </select>
+        </div>
+        <div class="mr-3">
+          <select bind:value={order} class="select">
+            <option value="asc">{$t('ascending')}</option>
+            <option value="desc">{$t('descending')}</option>
+          </select>
+        </div>
+
+        <div class="input-group input-group-divider w-fit grid-cols-[1fr_auto] rounded-container-token">
+          <input
+            bind:value={searchField}
+            class="border-0 bg-transparent p-1.5 ring-0"
+            name="search"
+            placeholder="Search" />
+          <button class="material-icons variant-filled-primary">arrow_forward</button>
+        </div>
+      </div>
+      <div class="flex flex-row gap-1">
+        {#if $allTags.error}
+          <p>Oh no... {$allTags.error.message}</p>
+        {:else if !$allTags.fetching}
+          {#each $allTags.data.getTags as tag}
+            <button
+              class="chip hover:variant-filled-surface [&:not(:hover)]:variant-soft"
+              class:selected={selectedTags.indexOf(tag.id) >= 0}
+              on:click={() => toggleTag(tag.id)}>
+              <div class="lowercase text-neutral-300">
+                <span class="text-orange-500">#</span>{tag.name}
+              </div>
+            </button>
           {/each}
-        </select>
+        {/if}
       </div>
-      <div class="mr-3">
-        <select bind:value={order} class="select">
-          <option value="asc">{$t('ascending')}</option>
-          <option value="desc">{$t('descending')}</option>
-        </select>
-      </div>
-
-      <div class="input-group input-group-divider w-fit grid-cols-[1fr_auto] rounded-container-token">
-        <input
-          bind:value={searchField}
-          class="border-0 bg-transparent p-1.5 ring-0"
-          name="search"
-          placeholder="Search" />
-        <button class="material-icons variant-filled-primary">arrow_forward</button>
-      </div>
-
-      <!--      <Paper class="search-paper mr-3" elevation={6}>-->
-      <!--        <Icon class="material-icons">search</Icon>-->
-      <!--        <Input bind:value={searchField} placeholder="Search" />-->
-      <!--      </Paper>-->
-      <!--      <Fab on:click={() => goto(base + '/mods?q=' + search)} color="primary" mini class="solo-fab" aria-label="Search">-->
-      <!--        <Icon class="material-icons">arrow_forward</Icon>-->
-      <!--      </Fab>-->
     </div>
   {/if}
 
-  <div>
+  <div class="self-end">
     <Paginator
       bind:settings={paginationSettings}
       showFirstLastButtons={true}
@@ -170,12 +198,9 @@
   </div>
 </div>
 
-<style>
-  .search-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-grow: 1;
+<style lang="postcss">
+  .selected {
+    @apply variant-ghost-primary hover:variant-ringed-primary;
   }
 
   * :global(.search-paper) {

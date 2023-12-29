@@ -1,5 +1,7 @@
-query GetMods($offset: Int!, $limit: Int!, $search: String, $order: Order, $orderBy: ModFields) {
-  getMods(filter: { limit: $limit, offset: $offset, search: $search, order: $order, order_by: $orderBy }) {
+query GetMods($offset: Int!, $limit: Int!, $search: String, $order: Order, $orderBy: ModFields, $tagIDs: [TagID!]) {
+  getMods(
+    filter: { limit: $limit, offset: $offset, search: $search, order: $order, order_by: $orderBy, tagIDs: $tagIDs }
+  ) {
     count
     mods {
       id
