@@ -105,7 +105,6 @@
     } else {
       selectedTags = [...selectedTags, tagId];
     }
-    console.log(selectedTags);
   };
 </script>
 
