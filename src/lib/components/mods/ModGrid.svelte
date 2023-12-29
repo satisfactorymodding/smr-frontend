@@ -111,7 +111,7 @@
 
 <div class="mb-5 ml-auto flex flex-wrap">
   {#if newMod && $user !== null}
-    <a class="variant-ghost-primary btn" href="{base}/new-mod">{$t('mods.new')}</a>
+    <a class="variant-ghost-primary btn self-end" href="{base}/new-mod">{$t('mods.new')}</a>
   {/if}
 
   {#if showSearch}
