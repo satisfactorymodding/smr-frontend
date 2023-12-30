@@ -14,7 +14,9 @@
   const tagsQuery = queryStore({
     query: GetTagsDocument,
     client,
-    variables: {}
+    variables: {
+      limit: 100
+    }
   });
 
   $: tags = $tagsQuery.data?.getTags || [];

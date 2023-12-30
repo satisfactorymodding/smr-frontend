@@ -1,6 +1,6 @@
 <script lang="ts">
   import { queryStore, getContextClient } from '@urql/svelte';
-  import { GetModsDocument, GetTagsDocument, ModFields, Order } from '$lib/generated';
+  import { GetModsDocument, GetTagsDocument, ModFields, Order, type Tag } from '$lib/generated';
   import ModCard from './ModCard.svelte';
   import { base } from '$app/paths';
   import { goto } from '$app/navigation';
@@ -36,7 +36,9 @@
   $: allTags = queryStore({
     query: GetTagsDocument,
     client,
-    variables: {}
+    variables: {
+      limit: 100
+    }
   });
 
   let totalMods: number;
@@ -106,24 +108,33 @@
       selectedTags = [...selectedTags, tagId];
     }
   };
+
+  const sortedTags = (tags: Tag[]): Tag[] => tags.toSorted((a, b) => a.name.localeCompare(b.name));
+
+  let tagsOpen = false;
 </script>
 
-<div class="mb-5 ml-auto flex flex-wrap">
-  {#if newMod && $user !== null}
-    <a class="variant-ghost-primary btn self-end" href="{base}/new-mod">{$t('mods.new')}</a>
-  {/if}
-
+<div class="mb-5 ml-auto flex flex-col gap-4">
   {#if showSearch}
     <div class="flex grow flex-col items-center justify-center gap-4 sm:px-4">
-      <div class="flex grow flex-row flex-wrap items-center justify-center sm:px-4">
-        <div class="mr-3">
+      <div class="flex grow flex-row flex-wrap items-center justify-center gap-3 sm:px-4">
+        <div>
+          <button
+            type="button"
+            class="text-md variant-filled-surface btn btn-sm"
+            class:variant-ghost-primary={tagsOpen}
+            on:click={() => (tagsOpen = !tagsOpen)}>
+            <span class="text-orange-500">#</span>tags
+          </button>
+        </div>
+        <div>
           <select bind:value={orderBy} class="select">
             {#each orderFields as orderField}
               <option value={orderField[1]}>{orderField[0]}</option>
             {/each}
           </select>
         </div>
-        <div class="mr-3">
+        <div>
           <select bind:value={order} class="select">
             <option value="asc">{$t('ascending')}</option>
             <option value="desc">{$t('descending')}</option>
@@ -139,33 +150,41 @@
           <button class="material-icons variant-filled-primary">arrow_forward</button>
         </div>
       </div>
-      <div class="flex flex-row gap-1">
-        {#if $allTags.error}
-          <p>Oh no... {$allTags.error.message}</p>
-        {:else if !$allTags.fetching}
-          {#each $allTags.data.getTags as tag}
-            <button
-              class="chip hover:variant-filled-surface [&:not(:hover)]:variant-soft"
-              class:selected={selectedTags.indexOf(tag.id) >= 0}
-              on:click={() => toggleTag(tag.id)}>
-              <div class="lowercase text-neutral-300">
-                <span class="text-orange-500">#</span>{tag.name}
-              </div>
-            </button>
-          {/each}
-        {/if}
-      </div>
+      {#if tagsOpen}
+        <div class="flex flex-grow flex-row flex-wrap items-center justify-center gap-1">
+          {#if $allTags.error}
+            <p>Oh no... {$allTags.error.message}</p>
+          {:else if !$allTags.fetching}
+            {#each sortedTags($allTags.data.getTags) as tag}
+              <button
+                class="chip hover:variant-filled-surface [&:not(:hover)]:variant-soft"
+                class:selected={selectedTags.indexOf(tag.id) >= 0}
+                on:click={() => toggleTag(tag.id)}>
+                <div class="lowercase text-neutral-300">
+                  <span class="text-orange-500">#</span>{tag.name}
+                </div>
+              </button>
+            {/each}
+          {/if}
+        </div>
+      {/if}
     </div>
   {/if}
 
-  <div class="self-end">
-    <Paginator
-      bind:settings={paginationSettings}
-      showFirstLastButtons={true}
-      showPreviousNextButtons={true}
-      on:page={(p) => (page = p.detail)}
-      on:amount={(p) => (perPage = p.detail)}
-      controlVariant="variant-filled-surface" />
+  <div class="flex flex-wrap justify-between">
+    {#if newMod && $user !== null}
+      <a class="variant-ghost-primary btn self-end" href="{base}/new-mod">{$t('mods.new')}</a>
+    {/if}
+
+    <div class="self-end">
+      <Paginator
+        bind:settings={paginationSettings}
+        showFirstLastButtons={true}
+        showPreviousNextButtons={true}
+        on:page={(p) => (page = p.detail)}
+        on:amount={(p) => (perPage = p.detail)}
+        controlVariant="variant-filled-surface" />
+    </div>
   </div>
 </div>
 

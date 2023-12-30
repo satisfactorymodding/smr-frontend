@@ -1,5 +1,5 @@
-query GetTags {
-  getTags {
+query GetTags($limit: Int) {
+  getTags(filter: { limit: $limit }) {
     id
     name
   }
