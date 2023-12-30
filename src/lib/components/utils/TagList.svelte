@@ -10,7 +10,9 @@
   const getAllTags = queryStore({
     query: GetTagsDocument,
     client,
-    variables: {}
+    variables: {
+      limit: 100
+    }
   });
 
   export let tags: Tag[] = [];
