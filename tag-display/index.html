@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    
+		<link href="/smr-frontend/tag-display/_app/immutable/assets/vendor.S7VwM45E.css" rel="stylesheet">
+		<link rel="modulepreload" href="/smr-frontend/tag-display/_app/immutable/entry/start.aIJ2hzwl.js">
+		<link rel="modulepreload" href="/smr-frontend/tag-display/_app/immutable/chunks/vendor.ibgMb1_Q.js">
+		<link rel="modulepreload" href="/smr-frontend/tag-display/_app/immutable/entry/app.2GEI4LG2.js">
+		<link rel="modulepreload" href="/smr-frontend/tag-display/_app/immutable/chunks/preload-helper.-ShncZYO.js">
+  </head>
+  <body data-theme="custom-theme">
+    <div style="display: contents" class="h-full overflow-hidden">
+			<script>
+				{
+					__sveltekit_1m5u9p9 = {
+						assets: "/smr-frontend/tag-display",
+						base: "/smr-frontend/tag-display",
+						env: null
+					};
+
+					const element = document.currentScript.parentElement;
+
+					Promise.all([
+						import("/smr-frontend/tag-display/_app/immutable/entry/start.aIJ2hzwl.js"),
+						import("/smr-frontend/tag-display/_app/immutable/entry/app.2GEI4LG2.js")
+					]).then(([kit, app]) => {
+						kit.start(app, element);
+					});
+
+					if ('serviceWorker' in navigator) {
+						addEventListener('load', function () {
+							navigator.serviceWorker.register('/smr-frontend/tag-display/service-worker.js');
+						});
+					}
+				}
+			</script>
+		</div>
+  </body>
+</html>
