@@ -162,7 +162,7 @@
                 class="chip hover:variant-filled-surface [&:not(:hover)]:variant-soft"
                 class:selected={selectedTags.indexOf(tag.id) >= 0}
                 on:click={() => toggleTag(tag.id)}>
-                <TagDisplay {tag} />
+                <TagDisplay {tag} popupTriggerEvent="hover" />
               </button>
             {/each}
           {/if}

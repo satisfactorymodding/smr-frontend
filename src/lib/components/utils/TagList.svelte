@@ -18,10 +18,11 @@
 
   export let tags: Tag[] = [];
   export let editable = false;
+  export let popupTriggerEvent: PopupSettings['event'] = 'click';
 
   $: allTags =
     $getAllTags.data?.getTags?.map((t) => ({
-      label: t.name,
+      label: `${t.name} - ${'TODO: Tag description this will become a very long string sometimes yes long string'}`,
       value: t.id
     })) || ([] satisfies AutocompleteOption[]);
 
@@ -32,7 +33,7 @@
   };
 
   let tagList = [];
-  const loadTagList = () => (tagList = tags.map((t) => t.name));
+  const loadTagList = () => (tagList = tags.map((t: Tag) => t.name));
 
   onMount(loadTagList);
 
@@ -63,7 +64,7 @@
     {#if tags.length > 0}
       <div class="text-md flex flex-row flex-wrap gap-1">
         {#each tags as tag}
-          <TagDisplay {tag} />
+          <TagDisplay {tag} {popupTriggerEvent} />
         {/each}
       </div>
     {/if}
@@ -79,7 +80,7 @@
         chips="variant-filled-primary" />
     </div>
 
-    <div class="card max-h-48 w-full max-w-sm overflow-y-auto p-4" tabindex="-1" data-popup="popupAutocomplete">
+    <div class="card max-h-48 w-max max-w-full overflow-y-auto p-4" tabindex="-1" data-popup="popupAutocomplete">
       <Autocomplete
         bind:input={inputTag}
         options={allTags.filter((t) => tagList.indexOf(t.label) < 0)}
