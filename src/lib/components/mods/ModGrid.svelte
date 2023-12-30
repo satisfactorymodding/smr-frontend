@@ -124,8 +124,9 @@
             type="button"
             class="text-md variant-filled-surface btn btn-sm"
             class:variant-ghost-primary={tagsOpen}
+            title={$t('filter.expand-button-tooltip')}
             on:click={() => (tagsOpen = !tagsOpen)}>
-            <span class="text-orange-500">#</span>tags
+            <span>{$t('filter.expand-button-text')}</span>
           </button>
         </div>
         <div>
@@ -147,7 +148,7 @@
             bind:value={searchField}
             class="border-0 bg-transparent p-1.5 ring-0"
             name="search"
-            placeholder="Search" />
+            placeholder={$t('search.placeholder-text')} />
           <button class="material-icons variant-filled-primary">arrow_forward</button>
         </div>
       </div>
