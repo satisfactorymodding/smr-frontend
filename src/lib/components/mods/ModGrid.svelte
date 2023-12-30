@@ -122,7 +122,7 @@
         <div>
           <button
             type="button"
-            class="text-md variant-filled-surface btn btn-sm"
+            class="text-md variant-filled-surface btn btn-sm p-2 pl-4 pr-4"
             class:variant-ghost-primary={tagsOpen}
             title={$t('filter.expand-button-tooltip')}
             on:click={() => (tagsOpen = !tagsOpen)}>
