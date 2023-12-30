@@ -10,6 +10,7 @@
   import { browser } from '$app/environment';
   import { getTranslate } from '@tolgee/svelte';
   import { type PaginationSettings, Paginator } from '@skeletonlabs/skeleton';
+  import TagDisplay from '../utils/TagDisplay.svelte';
 
   export let colCount: 4 | 5 = 4;
   export let newMod = false;
@@ -160,9 +161,7 @@
                 class="chip hover:variant-filled-surface [&:not(:hover)]:variant-soft"
                 class:selected={selectedTags.indexOf(tag.id) >= 0}
                 on:click={() => toggleTag(tag.id)}>
-                <div class="lowercase text-neutral-300">
-                  <span class="text-orange-500">#</span>{tag.name}
-                </div>
+                <TagDisplay {tag} />
               </button>
             {/each}
           {/if}

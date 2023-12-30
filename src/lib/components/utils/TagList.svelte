@@ -4,6 +4,7 @@
   import { queryStore, getContextClient } from '@urql/svelte';
   import { Autocomplete, type AutocompleteOption, InputChip, type PopupSettings, popup } from '@skeletonlabs/skeleton';
   import { onMount } from 'svelte';
+  import TagDisplay from './TagDisplay.svelte';
 
   const client = getContextClient();
 
@@ -62,9 +63,7 @@
     {#if tags.length > 0}
       <div class="text-md flex flex-row flex-wrap gap-1">
         {#each tags as tag}
-          <div class="lowercase text-neutral-300">
-            <span class="text-orange-500">#</span>{tag.name}
-          </div>
+          <TagDisplay {tag} />
         {/each}
       </div>
     {/if}
