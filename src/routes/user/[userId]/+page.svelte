@@ -11,7 +11,7 @@
 
   export let data: PageData;
 
-  const { user } = data;
+  $: ({ user } = data);
 
   let guidesTab = false;
 </script>

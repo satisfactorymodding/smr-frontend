@@ -14,7 +14,7 @@
 
   export let data: PageData;
 
-  const { guideId, guide } = data;
+  $: ({ guideId, guide } = data);
 
   const client = getContextClient();
 

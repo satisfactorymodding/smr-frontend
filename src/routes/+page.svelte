@@ -10,7 +10,7 @@
 
   export let data: PageData;
 
-  const { mods } = data;
+  $: ({ mods } = data);
 
   export const { t } = getTranslate();
 

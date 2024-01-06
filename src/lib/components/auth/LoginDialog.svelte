@@ -6,7 +6,7 @@
     OAuthGoogleDocument,
     LogoutDocument
   } from '$lib/generated';
-  import { getContextClient, queryStore } from '@urql/svelte';
+  import { getContextClient } from '@urql/svelte';
   import { browser } from '$app/environment';
   import { page } from '$app/stores';
   import { user, userToken } from '$lib/stores/user';
@@ -23,14 +23,6 @@
   export const { t } = getTranslate();
 
   if (browser) {
-    const getMe = queryStore({
-      query: GetMeDocument,
-      client,
-      variables: {},
-      requestPolicy: 'network-only',
-      pause: true
-    });
-
     let first = true;
     userToken.subscribe((token) => {
       if (token) {
@@ -54,20 +46,16 @@
       first = false;
 
       if (token) {
-        getMe.pause();
-        getMe.resume();
-
-        const unsub = getMe.subscribe((response) => {
-          if (!response.fetching) {
+        client
+          .query(GetMeDocument, {}, { requestPolicy: 'network-only' })
+          .toPromise()
+          .then((response) => {
             if (response.error) {
               console.error(response.error.message);
-              unsub();
             } else if (response.data) {
               user.set(response.data.getMe);
-              unsub();
             }
-          }
-        });
+          });
       } else {
         user.set(null);
       }

@@ -40,6 +40,10 @@ query GetUser($user: UserID!) {
             note
           }
         }
+        tags {
+          id
+          name
+        }
       }
     }
     guides {

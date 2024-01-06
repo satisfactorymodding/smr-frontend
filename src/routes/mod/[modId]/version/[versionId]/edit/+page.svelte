@@ -11,13 +11,13 @@
 
   export let data: PageData;
 
-  const { modId, versionId } = data;
+  $: ({ modId, versionId } = data);
 
   const client = getContextClient();
 
   const toastStore = getToastStore();
 
-  const version = queryStore({
+  $: version = queryStore({
     query: GetModVersionDocument,
     client,
     variables: { version: versionId }

@@ -11,13 +11,13 @@
 
   export let data: PageData;
 
-  const { smlVersionId } = data;
+  $: ({ smlVersionId } = data);
 
   const client = getContextClient();
 
   const toastStore = getToastStore();
 
-  const smlVersion = queryStore({
+  $: smlVersion = queryStore({
     query: GetSmlVersionAdminDocument,
     client,
     variables: { smlVersionID: smlVersionId }

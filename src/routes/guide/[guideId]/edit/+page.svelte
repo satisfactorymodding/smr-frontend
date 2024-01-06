@@ -11,13 +11,13 @@
 
   export let data: PageData;
 
-  const { guideId } = data;
+  $: ({ guideId } = data);
 
   const client = getContextClient();
 
   const toastStore = getToastStore();
 
-  const guide = queryStore({
+  $: guide = queryStore({
     query: GetGuideDocument,
     client,
     variables: { guide: guideId }
