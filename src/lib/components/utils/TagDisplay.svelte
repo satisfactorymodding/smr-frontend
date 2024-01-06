@@ -6,7 +6,7 @@
 
   $: popupHover = {
     event: popupTriggerEvent,
-    target: `popupHoverFor${tag.name}`,
+    target: `popupHoverFor${tag.id}`,
     placement: 'bottom-start'
   } satisfies PopupSettings;
 </script>
@@ -14,12 +14,13 @@
 <div
   class="lowercase text-neutral-300 [&>*]:pointer-events-none"
   use:popup={popupHover}
-  title="Click for tag information">
+  title={popupTriggerEvent === 'click' ? 'Click for tag information' : ''}>
   <span class="text-orange-500">#</span>{tag.name}
 </div>
 
 <!-- Must use high z-index to ensure it draws on top of things like striped compatibility overlays in mod cards -->
+<!-- For some reason this still isn't able to draw over the ModGrid paginator-->
 <!-- https://floating-ui.com/docs/misc#z-index-stacking -->
-<div class="card variant-filled-surface p-4" data-popup={`popupHoverFor${tag.name}`} style="z-index: 1000">
-  <p>{tag.description}.</p>
+<div class="card variant-filled-surface p-4" data-popup={`popupHoverFor${tag.id}`} style="z-index: 1000">
+  <p>{tag.description}</p>
 </div>

@@ -153,7 +153,7 @@
         </div>
       </div>
       {#if tagsOpen}
-        <div class="flex flex-grow flex-row flex-wrap items-center justify-center gap-1">
+        <div class="flex flex-grow flex-row flex-wrap items-center justify-center gap-1 pb-10">
           {#if $allTags.error}
             <p>Oh no... {$allTags.error.message}</p>
           {:else if !$allTags.fetching}
