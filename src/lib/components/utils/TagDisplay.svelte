@@ -22,5 +22,5 @@
 <!-- For some reason this still isn't able to draw over the ModGrid paginator-->
 <!-- https://floating-ui.com/docs/misc#z-index-stacking -->
 <div class="card variant-filled-surface p-4" data-popup={`popupHoverFor${tag.name}`} style="z-index: 1000">
-  <p>{tag.description}.</p>
+  <p>{tag.description}</p>
 </div>
