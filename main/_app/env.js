@@ -1,0 +1,1 @@
+export const env={"PUBLIC_BACKEND_API_BASE":"https://api.ficsit.app","PUBLIC_BASE_URL":"https://ficsit.app","PUBLIC_GOOGLE_SITE_TAG":"UA-138769351-2","PUBLIC_TOLGEE_API_URL":"https://translate.ficsit.app","PUBLIC_TOLGEE_API_KEY":"tgpak_gjptqytrm5sgyy3ohfwdk2junf2wemtbnezts2lig5yte"}
