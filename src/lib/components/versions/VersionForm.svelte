@@ -7,19 +7,20 @@
   import { trimNonSchema } from '$lib/utils/forms';
   import { markdown } from '$lib/utils/markdown';
   import { writable } from 'svelte/store';
-  import Textfield from '@smui/textfield';
-  import Button from '@smui/button';
   import { VersionStabilities } from '$lib/generated';
-  import Select, { Option } from '@smui/select';
   import { prettyBytes } from '$lib/utils/formatting';
+  import { getTranslate } from '@tolgee/svelte';
+
+  export const { t } = getTranslate();
 
   export let modReference: string;
   export let onSubmit: (data: VersionData) => Promise<void>;
   export let initialValues: Omit<VersionData, 'file'> = {
     changelog: '',
-    stability: VersionStabilities.Alpha
+    stability: VersionStabilities.Release
   };
-  export let submitText = 'Create';
+  export let submitIcon: string;
+  export let submitText = $t('entry.create');
 
   export let editing = false;
 
@@ -43,11 +44,14 @@
 <form use:form>
   <div class="grid grid-flow-row gap-6">
     <div class="grid grid-flow-row gap-2">
-      <Select bind:value={$data.stability} label="Stability">
-        <Option value="alpha">Alpha</Option>
-        <Option value="beta">Beta</Option>
-        <Option value="release">Release</Option>
-      </Select>
+      <label class="label">
+        <span>{$t('stability')} *</span>
+        <select class="select" bind:value={$data.stability}>
+          <option value="alpha">Alpha</option>
+          <option value="beta">Beta</option>
+          <option value="release">Release</option>
+        </select>
+      </label>
       <ValidationMessage for="stability" let:messages={message}>
         <span class="validation-message">{message || ''}</span>
       </ValidationMessage>
@@ -55,7 +59,7 @@
 
     {#if !editing}
       <div class="grid grid-flow-row gap-2">
-        <label for="file">File:</label>
+        <label for="file">{$t('file')} *</label>
         <input id="file" class="base-input" name="file" type="file" accept=".zip,.smod" placeholder="File" />
         <ValidationMessage for="file" let:messages={message}>
           <span class="validation-message">{message || ''}</span>
@@ -64,29 +68,31 @@
 
       {#if $data.file}
         <div>
-          <span><strong>File Type:</strong> {$data.file.type || 'Unknown'}</span><br />
-          <span><strong>File Size:</strong> {prettyBytes($data.file.size)}</span>
+          <span><strong>{$t('file-type')}:</strong> {$data.file.type || 'Unknown'}</span><br />
+          <span><strong>{$t('file-size')}:</strong> {prettyBytes($data.file.size)}</span>
         </div>
       {/if}
 
       {#if $modMeta}
         <div>
           <p class="mb-4">
-            <span><strong>Version:</strong> {$modMeta.uplugin.Version}<br /></span>
+            <span><strong>{$t('version')}:</strong> {$modMeta.uplugin.Version}<br /></span>
 
             {#if $modMeta.uplugin.SemVersion !== undefined}
               <span><strong>SemVersion:</strong> {$modMeta.uplugin.SemVersion}<br /></span>
             {:else}
               <span class="text-yellow-600">
-                Mod is missing SemVersion field! Are you sure you want to continue? Your version will be set to {$modMeta
-                  .uplugin.Version}.0.0
+                {$t('version-form.missing-sem-version')}
+                {$modMeta.uplugin.Version}.0.0
               </span>
             {/if}
           </p>
 
+          <span><strong>Targets:</strong> {$modMeta.targets.join(', ')}<br /></span>
+
           {#if $modMeta.uplugin.Plugins !== undefined}
             <p>
-              <strong>Dependencies:</strong><br />
+              <strong>{$t('dependencies')}:</strong><br />
               {#each $modMeta.uplugin.Plugins as dependency}
                 <strong>{dependency.Name}: </strong>
                 {#if dependency.SemVersion}
@@ -101,7 +107,7 @@
 
           {#if $modMeta.objects && $modMeta.objects.length > 0}
             <p>
-              <strong>Objects:</strong><br />
+              <strong>{$t('objects')}:</strong><br />
               {#each $modMeta.objects as object}
                 <span>{object}</span>
                 <br />
@@ -110,7 +116,7 @@
           {:else}
             <p>
               <span class="text-yellow-600">
-                Mod contains no objects (.dll, .pak)! Are you sure you want to continue?
+                {$t('version-form.missing-sem-version')}
               </span>
             </p>
           {/if}
@@ -118,33 +124,34 @@
       {/if}
     {/if}
 
-    <div class="grid gap-6 split">
-      <div class="grid grid-flow-row gap-2 auto-rows-max">
-        <Textfield
-          textarea
-          class="vertical-textarea"
-          bind:value={$data.changelog}
-          label="Changelog"
-          required
-          input$rows={10} />
+    <div class="split grid gap-6">
+      <div class="grid grid-flow-row auto-rows-max gap-2">
+        <label class="label">
+          <span>{$t('changelog')} *</span>
+          <textarea class="vertical-textarea textarea p-2" bind:value={$data.changelog} required rows={10} />
+        </label>
         <ValidationMessage for="changelog" let:messages={message}>
           <span class="validation-message">{message || ''}</span>
         </ValidationMessage>
       </div>
-      <div class="grid grid-flow-row gap-2 auto-rows-max">
-        <span>Preview:</span>
+      <div class="grid grid-flow-row auto-rows-max gap-2">
+        <span>{$t('preview')}:</span>
         {#await markdown(preview) then previewRendered}
+          <!-- eslint-disable -->
           <div class="markdown-content right">{@html previewRendered}</div>
         {/await}
       </div>
     </div>
 
     <div class="text-muted">
-      By uploading this version you agree to the <a href="/content-policy">Content Policy</a>.
+      {$t('version-form.agreement-to')} <a href="/content-policy">{$t('content-policy')}</a>.
     </div>
 
     <div>
-      <Button variant="outlined" type="submit" {disabled}>{submitText}</Button>
+      <button class="variant-ghost-primary btn" type="submit" {disabled}>
+        <span class="material-icons pr-2">{submitIcon}</span>
+        {submitText}
+      </button>
     </div>
   </div>
 </form>
@@ -160,6 +167,6 @@
   }
 
   a {
-    @apply underline text-yellow-500;
+    @apply text-yellow-500 underline;
   }
 </style>

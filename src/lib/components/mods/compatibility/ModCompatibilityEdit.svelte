@@ -1,35 +1,43 @@
 <script lang="ts">
-  import Accordion, { Header, Panel, Content } from '@smui-extra/accordion';
   import { CompatibilityState } from '$lib/generated';
   import type { CompatibilityInfo } from '$lib/generated';
   import CompatibilityEdit from '$lib/components/mods/compatibility/CompatibilityEdit.svelte';
+  import { getTranslate } from '@tolgee/svelte';
+  import { Accordion, AccordionItem } from '@skeletonlabs/skeleton';
 
-  export let compatibilityInfo: CompatibilityInfo = undefined;
-  if (compatibilityInfo == null) {
-    compatibilityInfo = {
-      EA: {
-        state: CompatibilityState.Works,
-        note: ''
-      },
-      EXP: {
-        state: CompatibilityState.Works,
-        note: ''
-      }
-    };
+  const prefilledCompatibilityInfo = {
+    EA: {
+      state: CompatibilityState.Works,
+      note: ''
+    },
+    EXP: {
+      state: CompatibilityState.Works,
+      note: ''
+    }
+  };
+
+  export let compatibilityInfo: CompatibilityInfo = null;
+  $: if (compatibilityInfo == null) {
+    compatibilityInfo = prefilledCompatibilityInfo;
   }
+  export const { t } = getTranslate();
 </script>
 
 <Accordion>
-  <Panel>
-    <Header>Early Access - Compatibility</Header>
-    <Content>
+  <AccordionItem>
+    <svelte:fragment slot="summary">
+      <span class="material-icons text-sm">rocket_launch</span>
+      {$t('early-access')} - {$t('compatibility')}</svelte:fragment>
+    <svelte:fragment slot="content">
       <CompatibilityEdit bind:compatibility={compatibilityInfo.EA} />
-    </Content>
-  </Panel>
-  <Panel>
-    <Header>Experimental - Compatibility</Header>
-    <Content>
+    </svelte:fragment>
+  </AccordionItem>
+  <AccordionItem>
+    <svelte:fragment slot="summary">
+      <span class="material-icons text-sm">science</span>
+      {$t('experimental')} - {$t('compatibility')}</svelte:fragment>
+    <svelte:fragment slot="content">
       <CompatibilityEdit bind:compatibility={compatibilityInfo.EXP} />
-    </Content>
-  </Panel>
+    </svelte:fragment>
+  </AccordionItem>
 </Accordion>

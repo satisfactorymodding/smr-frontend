@@ -1,14 +1,13 @@
 <script lang="ts">
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
-  import Card, { Content } from '@smui/card';
 </script>
 
 <svelte:head>
   <MetaDescriptors description="Terms of service for the Satisfactory Mod Repository" title="Terms of service" />
 </svelte:head>
 
-<Card>
-  <Content>
+<div class="card p-4">
+  <section class="p-4">
     <h1>Terms of Service</h1>
     <p>
       ficsit.app strives to provide its users with services and information that facilitate the discussion and
@@ -161,19 +160,19 @@
     </p>
     <br />
     <p>Updated: <b>25/06/2020</b></p>
-  </Content>
-</Card>
+  </section>
+</div>
 
 <style lang="postcss">
   p {
-    @apply text-base my-5;
+    @apply my-5 text-base;
   }
 
   h1 {
-    @apply text-4xl my-4 font-bold;
+    @apply my-4 text-4xl font-bold;
   }
 
   h2 {
-    @apply text-3xl my-4 font-bold;
+    @apply my-4 text-3xl font-bold;
   }
 </style>

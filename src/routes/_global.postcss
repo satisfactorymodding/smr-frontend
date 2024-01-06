@@ -1,16 +1,21 @@
-@import '../../static/smui.css';
 @import '../../node_modules/prismjs/themes/prism-okaidia.css';
 @import '../../node_modules/cookieconsent/build/cookieconsent.min.css';
 
-@import 'https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible&family=Roboto&family=Roboto+Mono&family=Material+Icons&display=swap';
+@import 'https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible&family=Roboto&family=Roboto+Mono&family=Material+Icons&family=Noto+Color+Emoji&display=swap';
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@tailwind variants;
 
 html,
 body {
-  font-family: 'Roboto', Helvetica Neue, sans-serif;
+  @apply h-full overflow-hidden;
+  font-family:
+    'Roboto',
+    Helvetica Neue,
+    sans-serif,
+    'Noto Color Emoji';
   margin: 0;
   padding: 0;
   overflow: hidden;
@@ -18,7 +23,11 @@ body {
 
 html.accessibility,
 body.accessibility {
-  font-family: 'Atkinson Hyperlegible', Helvetica Neue, sans-serif;
+  font-family:
+    'Atkinson Hyperlegible',
+    Helvetica Neue,
+    sans-serif,
+    'Noto Color Emoji';
 }
 
 .markdown-content {
@@ -30,27 +39,27 @@ body.accessibility {
   }
 
   & h1 {
-    @apply text-4xl my-4 font-bold;
+    @apply my-4 text-4xl font-bold;
   }
 
   & h2 {
-    @apply text-3xl my-4 font-bold;
+    @apply my-4 text-3xl font-bold;
   }
 
   & h3 {
-    @apply text-2xl my-4 font-bold;
+    @apply my-4 text-2xl font-bold;
   }
 
   & h4 {
-    @apply text-xl my-4 font-bold;
+    @apply my-4 text-xl font-bold;
   }
 
   & h5 {
-    @apply text-lg my-4 font-bold;
+    @apply my-4 text-lg font-bold;
   }
 
   & h6 {
-    @apply text-base my-4 font-bold;
+    @apply my-4 text-base font-bold;
   }
 
   & ul {
@@ -62,7 +71,7 @@ body.accessibility {
   }
 
   & p {
-    @apply text-base my-5;
+    @apply my-5 text-base;
   }
 
   & a {
@@ -71,7 +80,9 @@ body.accessibility {
   }
 
   & pre {
-    font-family: Roboto Mono, monospace !important;
+    font-family:
+      Roboto Mono,
+      monospace !important;
     padding: 1em;
     margin: 0.5em 0;
     overflow: auto;
@@ -253,4 +264,8 @@ body.accessibility {
 .darker-please .mdc-select__anchor * {
   border-color: black !important;
   color: black !important;
+}
+
+.validation-message {
+  color: red;
 }

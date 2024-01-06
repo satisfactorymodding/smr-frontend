@@ -5,6 +5,7 @@ import type { Writable } from 'svelte/store';
 import type { ZodObject, ZodRawShape } from 'zod';
 import type { File } from '$lib/models/file';
 import type { VersionStabilities } from '$lib/generated';
+import { TargetName } from '$lib/generated/graphql';
 
 export type VersionData = {
   file: File;
@@ -22,49 +23,54 @@ export type VersionMetadata = {
     }[];
   };
   objects: string[];
+  targets: string[];
 };
 
-const validateUPluginJsonModZip = async (
-  zip: JSZip,
-  uPluginJsonFile: JSZip.JSZipObject,
+const ALLOWED_TARGETS = Object.keys(TargetName)
+  .map((key) => TargetName[key])
+  .filter((value) => typeof value === 'string') as TargetName[];
+
+const readUPluginJson = async (
+  uPluginJson: string,
   modReference: string
-): Promise<{ [key: string]: unknown } | VersionMetadata> =>
-  uPluginJsonFile
-    .async('string')
-    .then(async (uPluginJson) => {
-      const result = await validateUPluginJson(uPluginJson);
+): Promise<{ [key: string]: unknown } | VersionMetadata['uplugin']> => {
+  const result = await validateUPluginJson(uPluginJson);
 
-      if (result.length != 0) {
-        return {
-          message: `invalid ${modReference}.uplugin`,
-          extended: result
-        };
-      }
+  if (result.length != 0) {
+    return {
+      message: `invalid ${modReference}.uplugin`,
+      extended: result
+    };
+  }
 
-      const parsed = JSON.parse(uPluginJson);
+  const parsed = JSON.parse(uPluginJson) as VersionMetadata['uplugin'];
 
-      let foundSML = false;
-      for (const dependency of parsed.Plugins) {
-        if (dependency.Name === 'SML') {
-          foundSML = true;
-          break;
-        }
-      }
+  let foundSML = false;
+  for (const dependency of parsed.Plugins) {
+    if (dependency.Name === 'SML') {
+      foundSML = true;
+      break;
+    }
+  }
 
-      if (!foundSML) {
-        return {
-          message: 'mod must depend on SML'
-        };
-      }
+  if (!foundSML) {
+    return {
+      message: 'mod must depend on SML'
+    };
+  }
 
-      return {
-        uplugin: parsed,
-        objects: Object.keys(zip.files).filter((f) => f.endsWith('.dll') || f.endsWith('.pak'))
-      };
-    })
-    .catch((err) => ({
-      message: `invalid ${modReference}.uplugin: ${err}`
-    }));
+  return parsed;
+};
+
+function basename(path: string): string {
+  const parts = path.split('/');
+  return parts[parts.length - 1];
+}
+
+function dirname(path: string): string {
+  const parts = path.split('/');
+  return parts.slice(0, parts.length - 1).join('/');
+}
 
 const validateModZip = async (
   file: unknown,
@@ -75,14 +81,84 @@ const validateModZip = async (
     zipper
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       .loadAsync(file as any)
-      .then((zip) => {
-        const uPluginJsonFile = zip.file(modReference + '.uplugin');
-        if (uPluginJsonFile) {
-          return validateUPluginJsonModZip(zip, uPluginJsonFile, modReference);
+      .then(async (zip) => {
+        const uPluginFiles = zip.filter((filePath) => basename(filePath) == modReference + '.uplugin');
+
+        if (uPluginFiles.length === 0) {
+          return {
+            message: 'Mod does not contain any ' + modReference + '.uplugin files'
+          };
+        }
+
+        if (uPluginFiles.length === 1 && uPluginFiles[0].name === modReference + '.uplugin') {
+          // Single-target mod
+          const uPluginData = await readUPluginJson(await uPluginFiles[0].async('string'), modReference);
+
+          if ('message' in uPluginData) {
+            return uPluginData;
+          }
+
+          return {
+            uplugin: uPluginData,
+            objects: Object.keys(zip.files).filter(
+              (f) => f.endsWith('.so') || f.endsWith('.dll') || f.endsWith('.pak')
+            ),
+            targets: ['Windows']
+          };
+        }
+
+        // Multi-target mod
+        if (uPluginFiles.some((f) => f.name === modReference + '.uplugin')) {
+          return {
+            message:
+              'Mod contains ' +
+              modReference +
+              '.uplugin files in the root directory. New uploads must use the multi-target format. Read more on the docs: https://docs.ficsit.app/satisfactory-modding/latest/Development/UpdatingToDedi.html'
+          };
+        }
+
+        const targets = uPluginFiles.map((f) => dirname(f.name));
+
+        const invalidTargets = targets.filter((t) => !ALLOWED_TARGETS.includes(t as TargetName));
+        if (invalidTargets.length !== 0) {
+          return {
+            message: `invalid target(s): ${invalidTargets.join(', ')}`
+          };
+        }
+
+        const outsideFiles = zip.filter((filePath) => !targets.some((target) => filePath.startsWith(target + '/')));
+        if (outsideFiles.length !== 0) {
+          return {
+            message: `file(s) outside target directories: ${outsideFiles.map((f) => f.name).join(', ')}`
+          };
+        }
+
+        const uPluginFilesData = await Promise.all(
+          uPluginFiles.map((f) =>
+            f.async('string').catch((err) => {
+              // Will be caught by the .catch below
+              throw new Error(`invalid ${modReference}.uplugin: ${err}`);
+            })
+          )
+        );
+
+        if (!uPluginFilesData.every((f) => f === uPluginFilesData[0])) {
+          return {
+            message: 'Mod contains ' + modReference + '.uplugin files with different contents'
+          };
+        }
+
+        // Since the .uplugin files are all the same, we only need to parse one
+        const uPluginData = await readUPluginJson(uPluginFilesData[0], modReference);
+
+        if ('message' in uPluginData) {
+          return uPluginData;
         }
 
         return {
-          message: modReference + '.uplugin missing from mod'
+          uplugin: uPluginData,
+          objects: Object.keys(zip.files).filter((f) => f.endsWith('.so') || f.endsWith('.dll') || f.endsWith('.pak')),
+          targets
         };
       })
       .catch((err) => ({

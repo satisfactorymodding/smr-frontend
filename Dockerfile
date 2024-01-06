@@ -1,42 +1,40 @@
-FROM node:18-alpine as build
+FROM oven/bun:1.0.18 as build
 
 ARG NODE_ENV_ARG=production
 
-RUN apk add --no-cache curl unzip
+RUN apt update && apt install -y curl unzip git bash
 
-RUN npm i -g pnpm
+SHELL ["/bin/bash", "-c"]
 
 WORKDIR /app
 
 COPY package.json package.json
-COPY pnpm-lock.yaml pnpm-lock.yaml
+COPY bun.lockb bun.lockb
 
-RUN pnpm install --ignore-scripts
+RUN bun install --ignore-scripts
 
 COPY . .
 
-RUN NODE_ENV=$NODE_ENV_ARG set -o allexport; set -ex; source .env.$NODE_ENV_ARG; set +o allexport && pnpm run prepare && pnpm run graphql-codegen && pnpm run translations && pnpm run build:$NODE_ENV_ARG
+RUN NODE_ENV=$NODE_ENV_ARG set -o allexport; set -ex; source .env.$NODE_ENV_ARG; set +o allexport && bun run prepare && bun run graphql-codegen && bun run translations && bun run build:$NODE_ENV_ARG
 
 
 FROM ghcr.io/vilsol/yeet:v0.6.4 as yeet
 
-FROM node:18-alpine
+FROM oven/bun:1.0.18
 
 COPY --from=yeet /yeet /yeet
 
-RUN npm i -g pnpm
-
-RUN apk add --no-cache bash
+RUN apt update && apt install -y bash
 
 WORKDIR /app
 
 COPY --from=build /app/build /app/build
-COPY --from=build /app/package.json /app/package.json
-COPY pnpm-lock.yaml pnpm-lock.yaml
 
-RUN pnpm install -P --ignore-scripts
+RUN cd /app/build/node && bun install --no-save
 
 COPY docker/entrypoint.sh /entrypoint.sh
+
+ENV HOST_HEADER=host
 
 EXPOSE 80
 

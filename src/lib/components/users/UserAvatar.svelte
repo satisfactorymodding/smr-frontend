@@ -8,5 +8,5 @@
 </script>
 
 <div>
-  <img class="rounded-lg sm:max-w-lg max-w-full w-full" src={userAvatar} alt="Avatar for {username}" />
+  <img class="w-full max-w-full rounded-lg sm:max-w-lg" src={userAvatar} alt="Avatar for {username}" />
 </div>

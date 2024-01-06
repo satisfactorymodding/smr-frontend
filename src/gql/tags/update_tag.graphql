@@ -1,6 +1,7 @@
-mutation UpdateTag($tagID: TagID!, $tagName: TagName!) {
-  updateTag(tagID: $tagID, NewName: $tagName) {
+mutation UpdateTag($tagID: TagID!, $tagName: TagName!, $description: String!) {
+  updateTag(tagID: $tagID, NewName: $tagName, description: $description) {
     id
     name
+    description
   }
 }

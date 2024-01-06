@@ -1,28 +1,32 @@
 <script lang="ts">
   import type { CompatibilityInfoInput } from '$lib/generated';
-  import Dialog, { Content, Title } from '@smui/dialog';
-  import CompatibilityInfo from '$lib/components/mods/compatibility/CompatibilityInfo.svelte';
-  import Button from '@smui/button';
   import CompatibilityIcon from './CompatibilityIcon.svelte';
-  let open = false;
+  import { getTranslate } from '@tolgee/svelte';
+  import { getModalStore } from '@skeletonlabs/skeleton';
+  import CompatibilityModal from '$lib/modals/CompatibilityModal.svelte';
 
   export let compatibility: CompatibilityInfoInput;
+
+  export const { t } = getTranslate();
+
+  const modalStore = getModalStore();
+  const openCompatibility = () => {
+    modalStore.trigger({
+      type: 'component',
+      component: {
+        ref: CompatibilityModal,
+        props: {
+          compatibility
+        }
+      }
+    });
+  };
 </script>
 
-<Button
-  --mdc-text-button-container-height="20px"
-  class="min-w-0 m-0"
-  title="Compatibility information (click to view more info)"
-  on:click={() => {
-    open = true;
-  }}>
+<button
+  class="variant-soft-surface btn m-0 min-w-0 px-1 py-0 text-xs"
+  title={$t('compatibility-info.button')}
+  on:click={openCompatibility}>
   <CompatibilityIcon compatibility={compatibility?.EA} />
   <CompatibilityIcon compatibility={compatibility?.EXP} EXP={true} />
-</Button>
-
-<Dialog bind:open>
-  <Title>Compatibility Information</Title>
-  <Content>
-    <CompatibilityInfo {compatibility} />
-  </Content>
-</Dialog>
+</button>

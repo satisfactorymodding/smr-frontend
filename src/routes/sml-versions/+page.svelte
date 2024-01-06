@@ -1,37 +1,28 @@
 <script lang="ts">
   import { GetSmlVersionsDocument } from '$lib/generated';
   import { getContextClient, queryStore } from '@urql/svelte';
-  import PageControls from '$lib/components/utils/PageControls.svelte';
   import { markdown } from '$lib/utils/markdown';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
-  import Card, { Content } from '@smui/card';
-  import DataTable, { Head, Body, Row, Cell } from '@smui/data-table';
-  import Button from '@smui/button';
   import { prettyDate } from '$lib/utils/formatting';
+  import { type PaginationSettings, Paginator } from '@skeletonlabs/skeleton';
 
   const client = getContextClient();
 
   let expandedVersions = new Set<string>();
 
-  // TODO Selectable
-  const perPage = 20;
+  let perPage = 20;
+  let page = 0;
 
-  let page = 1;
-
-  // TODO Pagination
   $: versions = queryStore({
     query: GetSmlVersionsDocument,
     client,
     variables: {
-      offset: (page - 1) * perPage,
+      offset: page * perPage,
       limit: perPage
     }
   });
 
-  let totalVersions = 0;
-  $: if ($versions?.data?.getSMLVersions?.count) {
-    totalVersions = $versions.data.getSMLVersions.count;
-  }
+  $: totalVersions = $versions?.data?.getSMLVersions?.count;
 
   const toggleRow = (versionId: string) => {
     if (expandedVersions.has(versionId)) {
@@ -41,6 +32,13 @@
     }
     expandedVersions = expandedVersions;
   };
+
+  $: paginationSettings = {
+    page: page,
+    limit: perPage,
+    size: totalVersions,
+    amounts: [5, 10, 20, 50, 100]
+  } satisfies PaginationSettings;
 </script>
 
 <svelte:head>
@@ -51,60 +49,73 @@
 {#if totalVersions}
   <div class="mb-5 ml-auto flex justify-end">
     <div>
-      <PageControls totalPages={Math.ceil(totalVersions / perPage)} bind:currentPage={page} />
+      <Paginator
+        bind:settings={paginationSettings}
+        showFirstLastButtons={true}
+        showPreviousNextButtons={true}
+        on:page={(p) => (page = p.detail)}
+        on:amount={(p) => (perPage = p.detail)}
+        controlVariant="variant-filled-surface" />
     </div>
   </div>
 {/if}
 
-<Card>
+<div class="card">
   {#if $versions.fetching}
-    <Content>Loading...</Content>
+    <section class="p-4">Loading...</section>
   {:else if $versions.error}
-    <Content>Oh no... {$versions.error.message}</Content>
+    <section class="p-4">Oh no... {$versions.error.message}</section>
   {:else}
-    <DataTable class="max-w-full">
-      <Head>
-        <Row>
-          <Cell>Version</Cell>
-          <Cell>Stability</Cell>
-          <Cell>Game Version</Cell>
-          <Cell>Release Date</Cell>
-          <Cell><!-- Buttons --></Cell>
-        </Row>
-      </Head>
-      <Body>
+    <table class="table table-hover max-w-full">
+      <thead>
+        <tr>
+          <th>Version</th>
+          <th>Stability</th>
+          <th>Game Version</th>
+          <th>Release Date</th>
+          <th><!-- Buttons --></th>
+        </tr>
+      </thead>
+      <tbody>
         {#each $versions.data.getSMLVersions.sml_versions as version}
-          <Row on:click={() => toggleRow(version.id)}>
-            <Cell>{version.version}</Cell>
-            <Cell>{version.stability}</Cell>
-            <Cell>{version.satisfactory_version}</Cell>
-            <Cell>{prettyDate(version.date)}</Cell>
-            <Cell>
+          <tr on:click={() => toggleRow(version.id)}>
+            <td>{version.version}</td>
+            <td>{version.stability}</td>
+            <td>{version.satisfactory_version}</td>
+            <td>{prettyDate(version.date)}</td>
+            <td class="!p-2.5">
               <div class="grid grid-flow-col gap-4">
-                <Button variant="outlined" href={version.link}>View</Button>
+                <a class="variant-ghost-primary btn btn-sm" href={version.link}>View</a>
               </div>
-            </Cell>
-          </Row>
+            </td>
+          </tr>
 
           {#if expandedVersions.has(version.id)}
-            <Row>
-              <Cell colspan={5} class="p-2 markdown-content">
+            <tr>
+              <td colspan={5} class="markdown-content p-2">
                 {#await markdown(version.changelog) then changelogRendered}
+                  <!-- eslint-disable -->
                   {@html changelogRendered}
                 {/await}
-              </Cell>
-            </Row>
+              </td>
+            </tr>
           {/if}
         {/each}
-      </Body>
-    </DataTable>
+      </tbody>
+    </table>
   {/if}
-</Card>
+</div>
 
 {#if totalVersions}
-  <div class="mt-5 ml-auto flex justify-end">
+  <div class="ml-auto mt-5 flex justify-end">
     <div>
-      <PageControls totalPages={Math.ceil(totalVersions / perPage)} bind:currentPage={page} />
+      <Paginator
+        bind:settings={paginationSettings}
+        showFirstLastButtons={true}
+        showPreviousNextButtons={true}
+        on:page={(p) => (page = p.detail)}
+        on:amount={(p) => (perPage = p.detail)}
+        controlVariant="variant-filled-surface" />
     </div>
   </div>
 {/if}

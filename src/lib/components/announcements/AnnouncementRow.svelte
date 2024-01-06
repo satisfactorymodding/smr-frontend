@@ -1,6 +1,5 @@
 <script lang="ts">
   import { AnnouncementImportance } from '$lib/generated';
-  import { Icon } from '@smui/icon-button';
 
   const iconNames: { [key in AnnouncementImportance]: string } = {
     [AnnouncementImportance.Info]: 'info',
@@ -24,11 +23,11 @@
   $: finalMessage = isMonospace ? message.replaceAll(monospacePrefix, '') : message;
 </script>
 
-<div class="{backgroundColors[importance]} max-h-64 overflow-hidden">
-  <div class="p-1 striped text-black">
-    <Icon class="material-icons text-2xl align-middle">{iconNames[importance]}</Icon>
+<div class="{backgroundColors[importance]} max-h-64 overflow-hidden rounded-sm">
+  <div class="striped p-1 text-black">
+    <span class="material-icons align-middle text-2xl">{iconNames[importance]}</span>
     <div
-      class="align-middle text-l inline-block break-words max-w-full"
+      class="text-l inline-block max-w-full break-words align-middle"
       class:font-mono={isMonospace}
       class:whitespace-pre={isMonospace}>
       <b>{importance}: </b>{finalMessage}

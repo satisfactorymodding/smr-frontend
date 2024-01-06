@@ -1,20 +1,16 @@
 <script lang="ts">
   import { queryStore, getContextClient } from '@urql/svelte';
-  import { GetModsDocument, ModFields, Order } from '$lib/generated';
+  import { GetModsDocument, GetTagsDocument, ModFields, Order, type Tag } from '$lib/generated';
   import ModCard from './ModCard.svelte';
-  import PageControls from '$lib/components/utils/PageControls.svelte';
   import { base } from '$app/paths';
-  import Button from '@smui/button';
-  import { Input } from '@smui/textfield';
-  import Paper from '@smui/paper';
-  import Fab from '@smui/fab';
-  import { Icon } from '@smui/common';
   import { goto } from '$app/navigation';
-  import { page as storePage, navigating } from '$app/stores';
+  import { page as storePage } from '$app/stores';
   import { user } from '$lib/stores/user';
   import FicsitCard from '$lib/components/general/FicsitCard.svelte';
-  import Select, { Option } from '@smui/select';
   import { browser } from '$app/environment';
+  import { getTranslate } from '@tolgee/svelte';
+  import { type PaginationSettings, Paginator } from '@skeletonlabs/skeleton';
+  import TagDisplay from '../utils/TagDisplay.svelte';
 
   export let colCount: 4 | 5 = 4;
   export let newMod = false;
@@ -22,26 +18,31 @@
 
   const client = getContextClient();
 
-  let search = $storePage.url.searchParams.get('q');
+  let search = (browser && $storePage.url.searchParams.get('q')) || '';
 
-  // TODO Selectable
-  const perPage = 40;
   let order: Order = Order.Desc;
   let orderBy: ModFields = ModFields.LastVersionDate;
 
-  if (search) {
-    orderBy = ModFields.Search;
-  }
+  let perPage = 32;
+  let page = parseInt((browser && $storePage.url.searchParams.get('p')) || '0', 10) || 0;
 
-  let page = parseInt($storePage.url.searchParams.get('p'), 10) || 1;
+  let selectedTags: string[] = [];
 
   $: mods = queryStore({
     query: GetModsDocument,
     client,
-    variables: { offset: (page - 1) * perPage, limit: perPage, search, order, orderBy }
+    variables: { offset: page * perPage, limit: perPage, search, order, orderBy, tagIDs: selectedTags.sort() }
   });
 
-  let totalMods = 0;
+  $: allTags = queryStore({
+    query: GetTagsDocument,
+    client,
+    variables: {
+      limit: 100
+    }
+  });
+
+  let totalMods: number;
 
   let searchField = search;
 
@@ -52,7 +53,7 @@
       if (searchField && searchField.length > 2) {
         if ((search === '' || search === null) && searchField !== '' && searchField !== null) {
           orderBy = ModFields.Search;
-          page = 1;
+          page = 0;
         }
 
         search = searchField;
@@ -66,91 +67,127 @@
     }, 250) as unknown as number;
   }
 
-  let urlSearch = searchField;
-
-  $: if ($navigating && $navigating.type !== 'goto') {
-    searchField = $storePage.url.searchParams.get('q');
-    page = parseInt($storePage.url.searchParams.get('p'), 10) || 1;
-    urlSearch = searchField;
+  $: if (browser) {
+    const url = new URL(window.location.origin + window.location.pathname);
+    url.searchParams.append('p', page.toString());
+    searchField !== '' && searchField !== null && url.searchParams.append('q', searchField);
+    goto(url.toString(), { keepFocus: true });
   }
 
-  const updateUrl = () => {
-    if (browser && !$navigating) {
-      const url = new URL(window.location.origin + window.location.pathname);
-      url.searchParams.append('p', page.toString());
-      urlSearch !== '' && urlSearch !== null && url.searchParams.append('q', urlSearch);
-      goto(url.toString(), { keepFocus: true });
-    }
-  };
-
-  $: {
-    page;
-    urlSearch;
-    updateUrl();
-  }
-
-  const handleKeyDown = (event: CustomEvent | KeyboardEvent) => {
-    if ((event as KeyboardEvent).key === 'Enter') {
-      urlSearch = searchField;
-    }
-  };
-
-  $: if ($mods?.data?.getMods?.count) {
-    totalMods = $mods.data.getMods.count;
-  }
+  $: totalMods = $mods?.data?.getMods?.count || 0;
 
   $: gridClasses =
     colCount == 4
       ? '3xl:grid-cols-4 2xl:grid-cols-3 lg:grid-cols-2 grid-cols-1'
       : '3xl:grid-cols-3 2xl:grid-cols-2 grid-cols-1';
 
+  export const { t } = getTranslate();
+
   $: orderFields = [
-    ['Name', 'name'],
-    ['Views', 'views'],
-    ['Downloads', 'downloads'],
-    ['Hotness (Views)', 'hotness'],
-    ['Popularity (Downloads)', 'popularity'],
-    ['Creation Date', 'created_at'],
-    ['Last Version', 'last_version_date'],
-    // Hide the search option if a search string is not set.
-    // The component must still exist, otherwise Select will set orderBy to null/undefined, because the selectedIndex would be -1.
-    ['Search', 'search', search === '' || search === null]
+    [$t('sort-order.name'), 'name'],
+    [$t('sort-order.views'), 'views'],
+    [$t('sort-order.downloads'), 'downloads'],
+    [$t('sort-order.hotness'), 'hotness'],
+    [$t('sort-order.popularity'), 'popularity'],
+    [$t('sort-order.created_at'), 'created_at'],
+    [$t('sort-order.last_version_date'), 'last_version_date'],
+    ...(search !== '' && search !== null ? [[$t('sort-order.search'), 'search']] : [])
   ];
+
+  $: paginationSettings = {
+    page: page,
+    limit: perPage,
+    size: totalMods,
+    amounts: [8, 16, 32, 64, 100]
+  } satisfies PaginationSettings;
+
+  const toggleTag = (tagId: string) => {
+    if (selectedTags.indexOf(tagId) >= 0) {
+      const i = selectedTags.indexOf(tagId);
+      selectedTags = [...selectedTags.slice(0, i), ...selectedTags.slice(i + 1)];
+    } else {
+      selectedTags = [...selectedTags, tagId];
+    }
+  };
+
+  const sortedTags = (tags: Tag[]): Tag[] => tags.toSorted((a, b) => a.name.localeCompare(b.name));
+
+  let tagsOpen = false;
 </script>
 
-<div class="ml-auto flex flex-wrap justify-between items-center mb-5">
-  {#if newMod && $user !== null}
-    <Button variant="outlined" href="{base}/new-mod">New Mod</Button>
-  {/if}
-
+<div class="mb-5 ml-auto flex flex-col gap-4">
   {#if showSearch}
-    <div class="search-container flex flex-wrap sm:px-4">
-      <div class="mr-3">
-        <Select bind:value={orderBy} label="Order By">
-          {#each orderFields as orderField}
-            <!-- Using style instead of tailwind because Option unnecessarily consumes the class prop without exposing another one for the inner item -->
-            <Option value={orderField[1]} style={orderField[2] ? 'display: none;' : ''}>{orderField[0]}</Option>
-          {/each}
-        </Select>
+    <div class="flex grow flex-col items-center justify-center gap-4 sm:px-4">
+      <div class="flex grow flex-row flex-wrap items-center justify-center gap-3 sm:px-4">
+        <div>
+          <button
+            type="button"
+            class="text-md variant-filled-surface btn btn-sm p-2 pl-4 pr-4"
+            class:variant-ghost-primary={tagsOpen}
+            title={$t('filter.expand-button-tooltip')}
+            on:click={() => (tagsOpen = !tagsOpen)}>
+            <span>{$t('filter.expand-button-text')}</span>
+          </button>
+        </div>
+        <div>
+          <select bind:value={orderBy} class="select">
+            {#each orderFields as orderField}
+              <option value={orderField[1]}>{orderField[0]}</option>
+            {/each}
+          </select>
+        </div>
+        <div>
+          <select bind:value={order} class="select">
+            <option value="asc">{$t('ascending')}</option>
+            <option value="desc">{$t('descending')}</option>
+          </select>
+        </div>
+
+        <div class="input-group input-group-divider w-fit grid-cols-[1fr_auto] rounded-container-token">
+          <input
+            bind:value={searchField}
+            class="border-0 bg-transparent p-1.5 ring-0"
+            name="search"
+            placeholder={$t('search.placeholder-text')} />
+          <button class="material-icons variant-filled-primary">arrow_forward</button>
+        </div>
       </div>
-      <div class="mr-3">
-        <Select bind:value={order} label="Order">
-          <Option value="asc">Ascending</Option>
-          <Option value="desc">Descending</Option>
-        </Select>
-      </div>
-      <Paper class="search-paper mr-3" elevation={6}>
-        <Icon class="material-icons">search</Icon>
-        <Input bind:value={searchField} on:keypress={handleKeyDown} placeholder="Search" />
-      </Paper>
-      <Fab on:click={() => (urlSearch = searchField)} color="primary" mini class="solo-fab" aria-label="Search">
-        <Icon class="material-icons">arrow_forward</Icon>
-      </Fab>
+      {#if tagsOpen}
+        <div class="flex flex-grow flex-row flex-wrap items-center justify-center gap-1 pb-10">
+          {#if $allTags.error}
+            <p>Oh no... {$allTags.error.message}</p>
+          {:else if !$allTags.fetching}
+            {#each sortedTags($allTags.data.getTags) as tag}
+              <TagDisplay
+                {tag}
+                popupTriggerEvent="hover"
+                asButton={true}
+                selected={selectedTags.indexOf(tag.id) >= 0}
+                on:click={() => toggleTag(tag.id)} />
+            {/each}
+          {/if}
+        </div>
+      {/if}
     </div>
   {/if}
 
-  <div>
-    <PageControls totalPages={Math.ceil(totalMods / perPage)} bind:currentPage={page} />
+  <div
+    class="flex grow flex-row flex-wrap"
+    class:justify-between={newMod && $user !== null}
+    class:justify-end={!newMod || $user == null}>
+    {#if newMod && $user !== null}
+      <a class="variant-ghost-primary btn self-end" href="{base}/new-mod">{$t('mods.new')}</a>
+    {/if}
+
+    <div class="self-end">
+      <Paginator
+        bind:settings={paginationSettings}
+        showFirstLastButtons={true}
+        showPreviousNextButtons={true}
+        on:page={(p) => (page = p.detail)}
+        on:amount={(p) => (perPage = p.detail)}
+        controlVariant="variant-filled-surface" />
+    </div>
   </div>
 </div>
 
@@ -170,20 +207,19 @@
   </div>
 {/if}
 
-<div class="mt-5 ml-auto flex justify-end">
+<div class="ml-auto mt-5 flex justify-end">
   <div>
-    <PageControls totalPages={Math.ceil(totalMods / perPage)} bind:currentPage={page} />
+    <Paginator
+      bind:settings={paginationSettings}
+      showFirstLastButtons={true}
+      showPreviousNextButtons={true}
+      on:page={(p) => (page = p.detail)}
+      on:amount={(p) => (perPage = p.detail)}
+      controlVariant="variant-filled-surface" />
   </div>
 </div>
 
-<style>
-  .search-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-grow: 1;
-  }
-
+<style lang="postcss">
   * :global(.search-paper) {
     display: flex;
     align-items: center;

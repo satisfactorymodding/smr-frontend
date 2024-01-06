@@ -1,7 +1,6 @@
 <script lang="ts">
   import type { Mod, Maybe, Version } from '$lib/generated';
   import { base } from '$app/paths';
-  import IconButton, { Icon } from '@smui/icon-button';
   import FicsitCard from '$lib/components/general/FicsitCard.svelte';
   import { installMod } from '$lib/stores/launcher';
   import { prettyNumber } from '$lib/utils/formatting';
@@ -29,21 +28,21 @@
   link={base + '/mod/' + mod.mod_reference}
   logo={mod.logo}
   description={mod.short_description}>
-  <div slot="stats">
-    <span><Icon class="material-icons align-middle text-sm mr-1">visibility</Icon>{prettyNumber(mod.views)}</span>
-    <span><Icon class="material-icons align-middle text-sm mr-1">download</Icon>{prettyNumber(mod.downloads)}</span>
+  <div slot="stats" class="flex flex-row items-center gap-2">
+    <span><span class="material-icons mr-1 align-middle text-sm">visibility</span>{prettyNumber(mod.views)}</span>
+    <span><span class="material-icons mr-1 align-middle text-sm">download</span>{prettyNumber(mod.downloads)}</span>
     <CompatibilityButton compatibility={mod.compatibility} />
   </div>
   <div slot="tags">
     <TagList tags={mod.tags} />
   </div>
-  <div slot="actions">
+  <svelte:fragment slot="actions">
     {#if installable}
-      <IconButton class="material-icons" title="Install" on:click={() => installMod(mod.mod_reference)}>
-        download
-      </IconButton>
+      <button class="variant-soft-surface btn btn-sm" title="Install" on:click={() => installMod(mod.mod_reference)}>
+        <span class="material-icons">download</span>
+      </button>
     {/if}
-  </div>
+  </svelte:fragment>
   <div slot="outer">
     <OutdatedBanner compatibility={mod.compatibility} />
   </div>

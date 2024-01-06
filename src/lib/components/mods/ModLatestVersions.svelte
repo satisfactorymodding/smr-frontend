@@ -1,15 +1,20 @@
 <script lang="ts">
-  import type { Version } from '$lib/generated';
-  import { API_REST } from '$lib/core';
   import { base } from '$app/paths';
-  import Card, { Content } from '@smui/card';
-  import { Icon } from '@smui/common';
   import { prettyDate } from '$lib/utils/formatting';
+  import { getTranslate } from '@tolgee/svelte';
+  import { installMod } from '$lib/stores/launcher';
+  import VersionTargetSupportGrid from '$lib/components/versions/VersionTargetSupportGrid.svelte';
+  import VersionDependenciesGrid from '$lib/components/versions/VersionDependenciesGrid.svelte';
+  import type { Version, VersionDependency, VersionTarget } from '$lib/generated';
+
+  type IVersion = Pick<Version, 'id' | 'link' | 'version' | 'created_at'> & {
+    targets?: Pick<VersionTarget, 'targetName' | 'size' | 'hash'>[];
+  } & { dependencies?: Pick<VersionDependency, 'mod_id' | 'condition'>[] };
 
   type ILatestVersions = {
-    alpha?: Pick<Version, 'id' | 'link' | 'version' | 'created_at'>;
-    beta?: Pick<Version, 'id' | 'link' | 'version' | 'created_at'>;
-    release?: Pick<Version, 'id' | 'link' | 'version' | 'created_at'>;
+    alpha?: IVersion;
+    beta?: IVersion;
+    release?: IVersion;
   };
 
   const stabilities = {
@@ -20,41 +25,52 @@
 
   export let latestVersions!: ILatestVersions;
   export let modId!: string;
+
+  export const { t } = getTranslate();
 </script>
 
-<Card>
-  <Content>
+<div class="card p-4">
+  <section>
     <div class="grid grid-flow-row gap-y-2">
-      <h3 class="text-2xl my-4 font-bold">Latest Versions</h3>
+      <h3 class="my-4 text-2xl font-bold">{$t('mod.latest-versions')}</h3>
 
       {#each Object.keys(stabilities) as stability}
         {#if latestVersions[stability]}
           <div class="version">
-            <div class="text-4xl w-14 h-14 p-2.5">
-              <Icon class="material-icons">{stabilities[stability]}</Icon>
+            <div class="h-14 w-14 p-2.5 text-4xl" title={`Latest ${stability} release`}>
+              <span class="material-icons">{stabilities[stability]}</span>
             </div>
             <div class="grid grid-flow-row">
-              <a href="{base}/mod/{modId}/version/{latestVersions[stability].id}/" class="text-yellow-500 underline"
-                >Version {latestVersions[stability].version}</a>
+              <a
+                href="{base}/mod/{modId}/version/{latestVersions[stability].id}/"
+                class="text-yellow-500 underline"
+                title="Click to view patch notes for this version"
+                >Version {latestVersions[stability].version} ({stability})</a>
               <div>{prettyDate(latestVersions[stability].created_at)}</div>
             </div>
-            <div class="text-3xl w-14 h-14 p-2.5">
+            <div class="text-1xl col-span-3 h-auto w-auto p-2.5">
               <a
-                href={API_REST + '/mod/' + modId + '/versions/' + latestVersions[stability].id + '/download'}
-                class="text-yellow-500 underline">
-                <Icon class="material-icons">download</Icon>
+                href="#top"
+                on:click={() => installMod(modId)}
+                title="Install via Satisfactory Mod Manager"
+                class="text-yellow-500">
+                <span class="material-icons align-middle" style="font-size: 118x;">download</span> <u>Install</u>
               </a>
             </div>
           </div>
+          {#if latestVersions[stability].targets.length > 1}
+            <VersionTargetSupportGrid targets={latestVersions[stability].targets} />
+          {/if}
+          <VersionDependenciesGrid dependencies={latestVersions[stability].dependencies} />
         {/if}
       {/each}
     </div>
-  </Content>
-</Card>
+  </section>
+</div>
 
 <style lang="postcss">
   .version {
-    @apply grid grid-flow-col text-lg gap-x-4;
+    @apply grid grid-flow-col gap-x-4 text-lg;
     grid-template-columns: max-content auto max-content;
   }
 </style>

@@ -1,14 +1,13 @@
 <script lang="ts">
   import { getContextClient, queryStore } from '@urql/svelte';
   import { EditGuideDocument, GetGuideDocument } from '$lib/generated';
-  import Toast from '$lib/components/general/Toast.svelte';
   import { goto } from '$app/navigation';
   import GuideForm from '$lib/components/guides/GuideForm.svelte';
-  import Card, { Content } from '@smui/card';
   import type { GuideData } from '$lib/models/guides';
   import { base } from '$app/paths';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
   import type { PageData } from './$types';
+  import { getModalStore, getToastStore, type ModalSettings } from '@skeletonlabs/skeleton';
 
   export let data: PageData;
 
@@ -16,8 +15,7 @@
 
   const client = getContextClient();
 
-  let errorMessage = '';
-  let errorToast = false;
+  const toastStore = getToastStore();
 
   $: guide = queryStore({
     query: GetGuideDocument,
@@ -35,18 +33,40 @@
       .then((value) => {
         if (value.error) {
           console.error(value.error.message);
-          errorMessage = 'Error editing guide: ' + value.error.message;
-          errorToast = true;
+          toastStore.trigger({
+            message: 'Error editing guide: ' + value.error.message,
+            background: 'variant-filled-error',
+            autohide: false
+          });
         } else {
-          // TODO Toast or something
+          toastStore.trigger({
+            message: `Guide updated`,
+            background: 'variant-filled-success',
+            timeout: 5000
+          });
           goto(base + '/guide/' + value.data.updateGuide.id);
         }
       });
   };
 
-  $: if (!errorToast) {
-    errorMessage = '';
-  }
+  const goBackFn = () => {
+    goto(base + '/guide/' + guideId);
+  };
+
+  const backModal: ModalSettings = {
+    type: 'confirm',
+    title: 'Go Back?',
+    buttonTextCancel: 'Keep Editing',
+    buttonTextConfirm: 'Go Back',
+    body: 'Going back will discard any unsaved changes. Are you sure you wish to continue?',
+    response: (r: boolean) => {
+      if (r) {
+        goBackFn();
+      }
+    }
+  };
+
+  const modalStore = getModalStore();
 </script>
 
 <svelte:head>
@@ -57,20 +77,23 @@
   {/if}
 </svelte:head>
 
-<h1 class="text-4xl my-4 font-bold">Edit Guide</h1>
+<div class="flex h-auto flex-wrap items-center justify-between">
+  <h1 class="my-4 text-4xl font-bold">Edit Guide</h1>
+  <div>
+    <button class="variant-ghost-primary btn" on:click={() => modalStore.trigger(backModal)}>
+      <span class="material-icons pr-2">arrow_back</span>
+      Back to Guide</button>
+  </div>
+</div>
 
-<Card>
-  <Content>
+<div class="card p-4">
+  <section>
     {#if $guide.fetching}
       <p>Loading...</p>
     {:else if $guide.error}
       <p>Oh no... {$guide.error.message}</p>
     {:else}
-      <GuideForm {onSubmit} initialValues={$guide.data.getGuide} submitText="Save" />
+      <GuideForm {onSubmit} initialValues={$guide.data.getGuide} submitText="Save" submitIcon="save" />
     {/if}
-  </Content>
-</Card>
-
-<Toast bind:running={errorToast}>
-  <span>{errorMessage}</span>
-</Toast>
+  </section>
+</div>

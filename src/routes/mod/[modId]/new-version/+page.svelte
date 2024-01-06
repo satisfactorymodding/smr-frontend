@@ -1,21 +1,21 @@
 <script lang="ts">
   import { getContextClient, queryStore } from '@urql/svelte';
-  import Toast from '$lib/components/general/Toast.svelte';
   import { goto } from '$app/navigation';
   import type { VersionData } from '$lib/models/versions';
   import VersionForm from '$lib/components/versions/VersionForm.svelte';
-  import { GetModReferenceDocument } from '$lib/generated';
+  import { GetModDocument } from '$lib/generated';
   import { writable } from 'svelte/store';
   import { chunkedUpload } from '$lib/utils/chunked-upload';
   import type { UploadState } from '$lib/utils/chunked-upload';
   import { base } from '$app/paths';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
-  import Card, { Content } from '@smui/card';
   import type { PageData } from './$types';
+  import { getModalStore, getToastStore, type ModalSettings } from '@skeletonlabs/skeleton';
+  import EditCompatibilityForm from '$lib/components/mods/compatibility/EditCompatibilityForm.svelte';
 
   export let data: PageData;
 
-  $: ({ modId } = data);
+  const { modId } = data;
 
   const client = getContextClient();
 
@@ -36,11 +36,10 @@
     }
   });
 
-  let errorMessage = '';
-  let errorToast = false;
+  const toastStore = getToastStore();
 
-  $: mod = queryStore({
-    query: GetModReferenceDocument,
+  const mod = queryStore({
+    query: GetModDocument,
     client,
     variables: { mod: modId }
   });
@@ -59,20 +58,41 @@
       client
     )
       .then((success) => {
-        console.log({ success });
-        // TODO Toast or something
+        toastStore.trigger({
+          message: `Version created`,
+          background: 'variant-filled-success',
+          timeout: 5000
+        });
         goto(base + '/mod/' + modId + '/version/' + success.version.id);
       })
       .catch((err) => {
         console.error(err);
-        errorMessage = 'Error creating version: ' + err.message;
-        errorToast = true;
+        toastStore.trigger({
+          message: 'Error creating version: ' + err.message,
+          background: 'variant-filled-error',
+          autohide: false
+        });
         uploadStatus.set('');
       });
 
-  $: if (!errorToast) {
-    errorMessage = '';
-  }
+  const goBackFn = () => {
+    goto(base + '/mod/' + modId);
+  };
+
+  const backModal: ModalSettings = {
+    type: 'confirm',
+    title: 'Go Back?',
+    buttonTextCancel: 'Keep Editing',
+    buttonTextConfirm: 'Go Back',
+    body: 'Going back will discard any unsaved changes. Are you sure you wish to continue?',
+    response: (r: boolean) => {
+      if (r) {
+        goBackFn();
+      }
+    }
+  };
+
+  const modalStore = getModalStore();
 </script>
 
 <svelte:head>
@@ -83,48 +103,70 @@
   {/if}
 </svelte:head>
 
-<h1 class="text-4xl my-4 font-bold">
-  New Version for
-  {#if $mod.fetching}
-    ...
-  {:else if !$mod.error}
-    {$mod.data.mod.name}
-  {/if}
-</h1>
+<div class="flex h-auto flex-wrap items-center justify-between">
+  <h1 class="my-4 text-4xl font-bold">
+    New Version for
+    {#if $mod.fetching}
+      ...
+    {:else if !$mod.error}
+      {$mod.data.mod.name}
+    {/if}
+  </h1>
+  <div>
+    <button
+      class="variant-ghost-primary btn"
+      title="View the description page for this mod"
+      on:click={() => modalStore.trigger(backModal)}>
+      <span class="material-icons pr-2">arrow_back</span>
+      Back to Mod
+    </button>
+  </div>
+</div>
 
-<Card>
-  <Content>
+<div class="card p-4">
+  <section>
     {#if $mod.fetching}
       <p>Loading...</p>
     {:else if $mod.error}
       <p>Oh no... {$mod.error.message}</p>
     {:else}
-      <VersionForm {onSubmit} modReference={$mod.data.mod.mod_reference} />
+      <VersionForm {onSubmit} modReference={$mod.data.mod.mod_reference} submitIcon="add_circle" />
 
       {#if $uploadStatus}
         <div class="relative pt-4">
-          <div class="flex mb-2 items-center justify-between">
+          <div class="mb-2 flex items-center justify-between">
             <div>
               <span
-                class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-white bg-yellow-600">
+                class="inline-block rounded-full bg-yellow-600 px-2 py-1 text-xs font-semibold uppercase text-white">
                 {$uploadStatus}
               </span>
             </div>
             <div class="text-right">
-              <span class="text-xs font-semibold inline-block text-white">{$uploadPercent.toFixed(0)}%</span>
+              <span class="inline-block text-xs font-semibold text-white">{$uploadPercent.toFixed(0)}%</span>
             </div>
           </div>
-          <div class="overflow-hidden h-2 mb-4 text-xs flex rounded bg-gray-600">
+          <div class="mb-4 flex h-2 overflow-hidden rounded bg-gray-600 text-xs">
             <div
               style="width: {$uploadPercent.toFixed(0)}%"
-              class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-yellow-600" />
+              class="flex flex-col justify-center whitespace-nowrap bg-yellow-600 text-center text-white shadow-none" />
           </div>
         </div>
       {/if}
-    {/if}
-  </Content>
-</Card>
 
-<Toast bind:running={errorToast}>
-  <span>{errorMessage}</span>
-</Toast>
+      <div class="p-4">
+        <span>Edit Compatibility Info</span>
+      </div>
+      <div class="card p-4">
+        <EditCompatibilityForm
+          mod={$mod.data.mod}
+          modId={$mod.data.mod.id}
+          on:fail={() => {
+            alert('Failed to update compatibility information, check browser console for more info.');
+          }}
+          on:submit={() => {
+            alert("Mod compatibility data updated. Don't forget to upload the version too!");
+          }} />
+      </div>
+    {/if}
+  </section>
+</div>

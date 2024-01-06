@@ -4,20 +4,21 @@
   import { API_REST } from '$lib/core';
   import { markdown } from '$lib/utils/markdown';
   import { base } from '$app/paths';
-  import Card, { Content } from '@smui/card';
-  import DataTable, { Head, Body, Row, Cell } from '@smui/data-table';
-  import Button, { Label, Icon } from '@smui/button';
   import { installMod } from '$lib/stores/launcher';
-  import { prettyDate, prettyNumber, prettyBytes } from '$lib/utils/formatting';
+  import { prettyDate, prettyNumber, prettyBytes, prettyTarget } from '$lib/utils/formatting';
+  import { getTranslate } from '@tolgee/svelte';
+  import { popup } from '@skeletonlabs/skeleton';
 
   export let modId!: string;
+
+  export const { t } = getTranslate();
 
   const client = getContextClient();
 
   let expandedVersions = new Set<string>();
 
   // TODO Pagination
-  $: versions = queryStore({
+  const versions = queryStore({
     query: GetModVersionsDocument,
     client,
     variables: {
@@ -37,60 +38,123 @@
   };
 </script>
 
-<Card class="h-fit">
+<div class="card h-fit">
   {#if $versions.fetching}
-    <Content>Loading...</Content>
+    <section class="p-4">{$t('loading')}...</section>
   {:else if $versions.error}
-    <Content>Oh no... {$versions.error.message}</Content>
+    <section class="p-4">{$t('error.oh-no')} {$versions.error.message}</section>
   {:else}
-    <DataTable class="max-w-full">
-      <Head>
-        <Row>
-          <Cell>Version</Cell>
-          <Cell>Stability</Cell>
-          <Cell>SML Version</Cell>
-          <Cell>Downloads</Cell>
-          <Cell>Upload Date</Cell>
-          <Cell><!-- Buttons --></Cell>
-        </Row>
-      </Head>
-      <Body>
-        {#each $versions.data.getMod.versions as version}
-          <Row on:click={() => toggleRow(version.id)}>
-            <Cell>{version.version}</Cell>
-            <Cell>{version.stability}</Cell>
-            <Cell>{version.sml_version}</Cell>
-            <Cell>{prettyNumber(version.downloads)}</Cell>
-            <Cell>{prettyDate(version.created_at)}</Cell>
-            <Cell>
-              <div class="grid grid-flow-col gap-4">
-                <Button variant="outlined" href={base + '/mod/' + modId + '/version/' + version.id}>View</Button>
-                <Button variant="outlined" href={API_REST + '/mod/' + modId + '/versions/' + version.id + '/download'}
-                  >Download</Button>
-                <Button variant="outlined" on:click={() => installMod($versions.data.getMod.mod_reference)}>
-                  <Label>Install</Label>
-                  <Icon class="material-icons">download</Icon>
-                </Button>
-              </div>
-            </Cell>
-          </Row>
+    <div class="table-container">
+      <table class="table table-hover max-w-full">
+        <thead>
+          <tr>
+            <th>{$t('version')}</th>
+            <th>{$t('stability')}</th>
+            <th>SML {$t('version')}</th>
+            <th>{$t('downloads')}</th>
+            <th>{$t('upload-date')}</th>
+            <th><!-- Buttons --></th>
+          </tr>
+        </thead>
+        <tbody>
+          {#each $versions.data.getMod.versions as version}
+            <tr on:click={() => toggleRow(version.id)}>
+              <td>{version.version}</td>
+              <td>{version.stability}</td>
+              <td>{version.sml_version}</td>
+              <td>{prettyNumber(version.downloads)}</td>
+              <td>{prettyDate(version.created_at)}</td>
+              <td class="!overflow-visible !p-2">
+                <div
+                  role="none"
+                  class="grid grid-flow-col gap-4"
+                  on:click|stopPropagation={() => {
+                    /*block table row expansion*/
+                  }}
+                  on:keypress|stopPropagation={() => {
+                    /*a11y-click-events-have-key-events*/
+                  }}>
+                  <a class="variant-ghost-primary btn btn-sm" href={base + '/mod/' + modId + '/version/' + version.id}
+                    >{$t('view')}</a>
+                  {#if version.targets.length !== 0}
+                    <button
+                      class="variant-ghost-primary btn btn-sm"
+                      style="padding: 0; min-width: 36px;"
+                      use:popup={{
+                        event: 'focus-click',
+                        target: 'versionArchDropdown_' + version.version,
+                        placement: 'bottom',
+                        closeQuery: 'a'
+                      }}>
+                      <span>{$t('download')}...</span>
+                      <span class="material-icons" style="margin: 0;">arrow_drop_down</span>
+                    </button>
 
-          {#if expandedVersions.has(version.id)}
-            <Row>
-              <Cell colspan={6}>
-                <div class="col-span-3 p-2">Size: {prettyBytes(version.size)}</div>
-                <div class="col-span-3 p-2">Hash: {version.hash}</div>
+                    <div class="card w-72 shadow-xl" data-popup="versionArchDropdown_{version.version}">
+                      <nav class="list-nav">
+                        <ul>
+                          <li>
+                            <a href={API_REST + '/mod/' + modId + '/versions/' + version.id + '/download'}>
+                              <span class="material-icons">polyline</span>
+                              <span>{$t('version.download-multi-target')}</span>
+                            </a>
+                          </li>
+                          {#each version.targets as target, _}
+                            <li>
+                              <a
+                                class="w-full"
+                                href={API_REST +
+                                  '/mod/' +
+                                  modId +
+                                  '/versions/' +
+                                  version.id +
+                                  '/' +
+                                  target.targetName +
+                                  '/download'}>
+                                <span>{$t('download')} {prettyTarget(target.targetName)}</span>
+                              </a>
+                            </li>
+                          {/each}
+                        </ul>
+                      </nav>
+                    </div>
+                  {:else}
+                    <a
+                      class="variant-ghost-primary btn btn-sm"
+                      href={API_REST + '/mod/' + modId + '/versions/' + version.id + '/download'}>
+                      {$t('download')}
+                    </a>
+                  {/if}
 
-                <div class="col-span-6 p-2 markdown-content">
-                  {#await markdown(version.changelog) then changelogRendered}
-                    {@html changelogRendered}
-                  {/await}
+                  <button
+                    class="variant-ghost-primary btn btn-sm"
+                    title="Install via Satisfactory Mod Manager"
+                    on:click={() => installMod($versions.data.getMod.mod_reference)}>
+                    <span class="material-icons">download</span>
+                    <span>{$t('install')}</span>
+                  </button>
                 </div>
-              </Cell>
-            </Row>
-          {/if}
-        {/each}
-      </Body>
-    </DataTable>
+              </td>
+            </tr>
+
+            {#if expandedVersions.has(version.id)}
+              <tr>
+                <td colspan={6}>
+                  <div class="col-span-3 p-2">{$t('size')}: {prettyBytes(version.size)}</div>
+                  <div class="col-span-3 p-2">{$t('hash')}: {version.hash}</div>
+
+                  <div class="markdown-content col-span-6 p-2">
+                    {#await markdown(version.changelog) then changelogRendered}
+                      <!-- eslint-disable -->
+                      {@html changelogRendered}
+                    {/await}
+                  </div>
+                </td>
+              </tr>
+            {/if}
+          {/each}
+        </tbody>
+      </table>
+    </div>
   {/if}
-</Card>
+</div>

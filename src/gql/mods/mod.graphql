@@ -13,6 +13,16 @@ query GetMod($mod: String!) {
       alpha {
         id
         link
+        targets {
+          targetName
+          link
+          hash
+          size
+        }
+        dependencies {
+          mod_id
+          condition
+        }
         version
         created_at
         sml_version
@@ -20,6 +30,16 @@ query GetMod($mod: String!) {
       beta {
         id
         link
+        targets {
+          targetName
+          link
+          hash
+          size
+        }
+        dependencies {
+          mod_id
+          condition
+        }
         version
         created_at
         sml_version
@@ -27,6 +47,16 @@ query GetMod($mod: String!) {
       release {
         id
         link
+        targets {
+          targetName
+          link
+          hash
+          size
+        }
+        dependencies {
+          mod_id
+          condition
+        }
         version
         created_at
         sml_version
@@ -56,6 +86,7 @@ query GetMod($mod: String!) {
     tags {
       id
       name
+      description
     }
   }
 }

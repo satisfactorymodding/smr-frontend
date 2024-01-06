@@ -104,8 +104,8 @@
     title="Tools" />
 </svelte:head>
 
-<h1 class="text-4xl my-4 font-bold">Tools</h1>
-<div class="grid 3xl:grid-cols-3 2xl:grid-cols-2 grid-cols-1 gap-4">
+<h1 class="my-4 text-4xl font-bold">Tools</h1>
+<div class="grid grid-cols-1 gap-4 2xl:grid-cols-2 3xl:grid-cols-3">
   {#each tools as tool}
     <ToolCard {tool} />
   {/each}

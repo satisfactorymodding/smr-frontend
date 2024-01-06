@@ -8,8 +8,7 @@ on:
         type: string
 
 env:
-  NODE_VERSION: "18"
-  PNPM_VERSION: "8.6.1"
+  BUN_VERSION: "1.0.18"
 
 jobs:
   build:
@@ -20,34 +19,19 @@ jobs:
       matrix:
         action: [ "build:node", "build:static" ]
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
-      - name: Setup nodejs
-        uses: actions/setup-node@v1
+      - uses: oven-sh/setup-bun@v1
         with:
-          node-version: ${{ env.NODE_VERSION }}
-
-      - name: Cache pnpm modules
-        uses: actions/cache@v2
-        env:
-          cache-name: cache-pnpm-modules
-        with:
-          path: ~/.pnpm-store
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ env.NODE_VERSION }}-${{ hashFiles('**/package.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-${{ env.NODE_VERSION }}-
+          bun-version: ${{ env.BUN_VERSION }}
 
       - name: Install dependencies
-        uses: pnpm/action-setup@v2.2.2
-        with:
-          version: ${{ env.PNPM_VERSION }}
-          run_install: true
+        run: bun install
 
       - name: Build
         run: |
           set -o allexport; source .env.${{ inputs.env }}; set +o allexport
-          pnpm graphql-codegen && pnpm run translations && pnpm ${{ matrix.action }}
+          bun run graphql-codegen && bun run translations && bun run ${{ matrix.action }}
         env:
           NODE_ENV: ${{ inputs.env }}
 
@@ -55,34 +39,19 @@ jobs:
     name: Lint
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
-      - name: Setup nodejs
-        uses: actions/setup-node@v1
+      - uses: oven-sh/setup-bun@v1
         with:
-          node-version: ${{ env.NODE_VERSION }}
-
-      - name: Cache pnpm modules
-        uses: actions/cache@v2
-        env:
-          cache-name: cache-pnpm-modules
-        with:
-          path: ~/.pnpm-store
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ env.NODE_VERSION }}-${{ hashFiles('**/package.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-${{ env.NODE_VERSION }}-
+          bun-version: ${{ env.BUN_VERSION }}
 
       - name: Install dependencies
-        uses: pnpm/action-setup@v2.2.2
-        with:
-          version: ${{ env.PNPM_VERSION }}
-          run_install: true
+        run: bun install
 
       - name: Lint
         run: |
           set -o allexport; source .env.${{ inputs.env }}; set +o allexport
-          pnpm exec svelte-kit sync && pnpm graphql-codegen && pnpm check && pnpm lint
+          bun run postinstall && bun run graphql-codegen && bun run check && bun run lint
         env:
           NODE_ENV: ${{ inputs.env }}
 
@@ -94,37 +63,21 @@ jobs:
       - lint
     if: ${{ github.event_name != 'pull_request' }}
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
-      - name: Setup nodejs
-        uses: actions/setup-node@v1
+      - uses: oven-sh/setup-bun@v1
         with:
-          node-version: ${{ env.NODE_VERSION }}
-
-      - name: Cache pnpm modules
-        uses: actions/cache@v2
-        env:
-          cache-name: cache-pnpm-modules
-        with:
-          path: ~/.pnpm-store
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ env.NODE_VERSION }}-${{ hashFiles('**/package.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-${{ env.NODE_VERSION }}-
+          bun-version: ${{ env.BUN_VERSION }}
 
       - name: Install dependencies
-        uses: pnpm/action-setup@v2.2.2
-        with:
-          version: ${{ env.PNPM_VERSION }}
-          run_install: true
+        run: bun install
 
-      - name: Inject slug/short variables
-        uses: rlespinasse/github-slug-action@v3.x
+      - uses: rlespinasse/github-slug-action@v3.x
 
       - name: Build
         run: |
           set -o allexport; source .env.${{ inputs.env }}; set +o allexport
-          pnpm graphql-codegen && pnpm run translations && pnpm build:static
+          bun run graphql-codegen && bun run translations && bun run build:static
         env:
           SVELTE_BASE_PATH: "/${{ env.GITHUB_REPOSITORY_NAME_PART_SLUG }}/${{ env.GITHUB_REF_SLUG }}"
           NODE_ENV: ${{ inputs.env }}
@@ -143,26 +96,22 @@ jobs:
       - build
       - lint
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@v1
+      - uses: docker/login-action@v2
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Docker meta
-        id: meta
-        uses: docker/metadata-action@v3
+      - id: meta
+        uses: docker/metadata-action@v4
         with:
           images: ghcr.io/${{ github.repository }}
           flavor: |
             latest=false
 
-      - name: Build and push
-        uses: docker/build-push-action@v2
+      - uses: docker/build-push-action@v4
         with:
           context: .
           push: ${{ github.event_name != 'pull_request' }}

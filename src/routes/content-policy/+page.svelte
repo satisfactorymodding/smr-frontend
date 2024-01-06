@@ -1,14 +1,13 @@
 <script lang="ts">
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
-  import Card, { Content } from '@smui/card';
 </script>
 
 <svelte:head>
   <MetaDescriptors description="Mod content policy for the Satisfactory Mod Repository" title="Content Policy" />
 </svelte:head>
 
-<Card>
-  <Content>
+<div class="card p-4">
+  <section class="p-4">
     <h1>Content Policy</h1>
     <h2>Advertising within Mods</h2>
 
@@ -74,19 +73,19 @@
       Until the platform can responsibly hide content from minors using some form of age-gating, mods with violent,
       harmful, explicit, gory, or otherwise adult-only content are expressly forbidden.
     </p>
-  </Content>
-</Card>
+  </section>
+</div>
 
 <style lang="postcss">
   p {
-    @apply text-base my-5;
+    @apply my-5 text-base;
   }
 
   h1 {
-    @apply text-4xl my-4 font-bold;
+    @apply my-4 text-4xl font-bold;
   }
 
   h2 {
-    @apply text-3xl my-4 font-bold;
+    @apply my-4 text-3xl font-bold;
   }
 </style>

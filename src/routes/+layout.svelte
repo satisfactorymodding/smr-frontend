@@ -1,53 +1,26 @@
 <script lang="ts">
   import LoginDialog from '$lib/components/auth/LoginDialog.svelte';
   import { setContextClient } from '@urql/svelte';
-  import TopAppBar, { Row, Section, Title } from '@smui/top-app-bar';
-  import { AppContent, Scrim } from '@smui/drawer';
-  import List, { Item, Text } from '@smui/list';
-  import IconButton from '@smui/icon-button';
-  import Button, { Label, Icon } from '@smui/button';
-  import { user, userToken } from '$lib/stores/user';
-  import { goto } from '$app/navigation';
-  import { loginDialogOpen, onMobile } from '$lib/stores/global';
-  import Menu from '@smui/menu';
   import { onMount } from 'svelte';
-  import { customProtocolCheck, hasLauncher, pingLauncher } from '$lib/stores/launcher';
+  import { customProtocolCheck, hasLauncher } from '$lib/stores/launcher';
   import Sidebar from '$lib/components/general/Sidebar.svelte';
   import AnnouncementHeader from '$lib/components/announcements/AnnouncementHeader.svelte';
   import { base } from '$app/paths';
   import { browser } from '$app/environment';
-  import { PUBLIC_GOOGLE_SITE_TAG, PUBLIC_TOLGEE_API_URL, PUBLIC_TOLGEE_API_KEY } from '$env/static/public';
+  import { PUBLIC_GOOGLE_SITE_TAG } from '$env/static/public';
   import type { LayoutData } from './$types';
-  import { TolgeeProvider, Tolgee, DevTools, FormatSimple } from '@tolgee/svelte';
-  import TranslationDropdown from '$lib/components/general/TranslationDropdown.svelte';
-
-  import enCommon from '../i18n/common/en.json';
-  import deCommon from '../i18n/common/de.json';
-  import frCommon from '../i18n/common/fr.json';
-  import lvCommon from '../i18n/common/lv.json';
+  import { TolgeeProvider } from '@tolgee/svelte';
+  import { initializeStores, AppShell, Modal, storePopup, Drawer, Toast } from '@skeletonlabs/skeleton';
+  import TopBar from '$lib/components/general/TopBar.svelte';
+  import './_global.postcss';
+  import { computePosition, autoUpdate, offset, shift, flip, arrow } from '@floating-ui/dom';
 
   export let data: LayoutData;
 
-  const { client } = data;
+  const { client, tolgee } = data;
 
-  const tolgee = Tolgee()
-    .use(DevTools())
-    .use(FormatSimple())
-    .init({
-      defaultNs: 'common',
-
-      language: 'en',
-
-      apiUrl: PUBLIC_TOLGEE_API_URL,
-      apiKey: PUBLIC_TOLGEE_API_KEY,
-
-      staticData: {
-        'en:common': enCommon,
-        'de:common': deCommon,
-        'fr:common': frCommon,
-        'lv:common': lvCommon
-      }
-    });
+  initializeStores();
+  storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow });
 
   let gTag: unknown;
   if (browser) {
@@ -64,22 +37,30 @@
 
       await import('cookieconsent/src/cookieconsent');
 
-      if ('cookieconsent' in window) {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        window.cookieconsent.initialise({
-          palette: {
-            popup: {
-              background: '#000'
+      tolgee.on('initialLoad', () => {
+        if ('cookieconsent' in window) {
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          // cspell:ignore initialise
+          window.cookieconsent.initialise({
+            palette: {
+              popup: {
+                background: '#000'
+              },
+              button: {
+                background: '#f1d600'
+              }
             },
-            button: {
-              background: '#f1d600'
-            }
-          },
-          theme: 'edgeless',
-          position: 'bottom-right'
-        });
-      }
+            content: {
+              message: tolgee.t('cookieconsent.message'),
+              link: tolgee.t('cookieconsent.link'),
+              dismiss: tolgee.t('cookieconsent.dismiss')
+            },
+            theme: 'edgeless',
+            position: 'bottom-right'
+          });
+        }
+      });
 
       customProtocolCheck.set(await import('$lib/thirdparty/custom_protocol'));
 
@@ -99,20 +80,6 @@
   $: root && (accessibility ? root.classList.add('accessibility') : root.classList.remove('accessibility'));
 
   setContextClient(client);
-
-  $: isAdmin = !$user ? false : $user.roles.approveMods || $user.roles.approveVersions || $user.roles.editSMLVersions;
-
-  let open = false;
-  let drawerVariant: 'modal' | undefined = 'modal';
-  let hideTopElements = true;
-  if (browser) {
-    onMobile.subscribe((mobile) => {
-      drawerVariant = mobile ? 'modal' : undefined;
-      hideTopElements = mobile;
-    });
-  }
-
-  let menu: Menu;
 </script>
 
 <svelte:head>
@@ -130,7 +97,6 @@
   <link rel="preload" href="{base}/assets/fonts/flow-rounded.woff" as="font" type="font/woff" />
 
   {#if gTag}
-    <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id={gTag}"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -147,114 +113,34 @@
 </svelte:head>
 
 <TolgeeProvider {tolgee}>
-  <div class="app-container">
-    <TopAppBar variant="static">
-      <Row>
-        <Section>
-          {#if drawerVariant === 'modal'}
-            <IconButton class="material-icons" on:click={() => (open = !open)}>menu</IconButton>
-          {/if}
-          <Title>FICSIT Augmentation Database</Title>
-        </Section>
-        {#if !hideTopElements}
-          <Section align="end" toolbar>
-            <TranslationDropdown />
+  <Toast />
+  <Modal />
 
-            {#if $hasLauncher}
-              <Button color="secondary" variant="outlined" class="mr-3" on:click={pingLauncher}>
-                <Label>Launcher Detected</Label>
-                <Icon class="material-icons">file_download</Icon>
-              </Button>
-            {:else}
-              <Button
-                color="secondary"
-                variant="outlined"
-                class="mr-3"
-                target="_blank"
-                rel="noopener"
-                href="https://smm.ficsit.app">
-                <Label>Mod Manager</Label>
-                <Icon class="material-icons">file_download</Icon>
-              </Button>
-            {/if}
+  <Drawer>
+    <Sidebar bind:accessibility />
+  </Drawer>
 
-            {#if $user === null}
-              <Button color="secondary" variant="outlined" on:click={() => loginDialogOpen.set(true)}>
-                <Label>Sign In</Label>
-                <Icon class="material-icons">login</Icon>
-              </Button>
-            {:else}
-              {#if isAdmin}
-                <Button color="secondary" variant="outlined" class="mr-3" on:click={() => goto(base + '/admin')}>
-                  <Label>Admin</Label>
-                  <Icon class="material-icons">admin_panel_settings</Icon>
-                </Button>
-              {/if}
+  <AppShell>
+    <svelte:fragment slot="header">
+      <TopBar />
+    </svelte:fragment>
 
-              <div>
-                <Button
-                  variant="outlined"
-                  color="secondary"
-                  on:click={() => menu.setOpen(true)}
-                  class="grid grid-flow-col">
-                  <div class="mr-3">{$user.username}</div>
-                  <div class="rounded-full bg-cover w-7 h-7" style={`background-image: url("${$user.avatar}")`} />
-                </Button>
+    <svelte:fragment slot="sidebarLeft">
+      <aside class="hidden h-full xl:block">
+        <Sidebar bind:accessibility />
+      </aside>
+    </svelte:fragment>
 
-                <Menu bind:this={menu}>
-                  <List>
-                    <Item on:SMUI:action={() => goto(base + '/user/' + $user.id)}>
-                      <Text>Profile</Text>
-                    </Item>
-                    <Item on:SMUI:action={() => goto(base + '/settings')}>
-                      <Text>Settings</Text>
-                    </Item>
-                    <Item on:SMUI:action={() => userToken.set(null)}>
-                      <Text>Logout</Text>
-                    </Item>
-                  </List>
-                </Menu>
-              </div>
-            {/if}
-          </Section>
-        {/if}
-      </Row>
-    </TopAppBar>
+    <svelte:fragment slot="pageHeader">
+      <AnnouncementHeader />
+    </svelte:fragment>
 
-    <div class="drawer-container">
-      <Sidebar bind:open bind:accessibility bind:drawerVariant bind:hideTopElements />
-
-      {#if drawerVariant === 'modal'}
-        <Scrim fixed={false} />
-      {/if}
-
-      <AppContent class="app-content w-full overflow-auto">
-        <AnnouncementHeader />
-        <main class="main-content min-h-100% py-6 px-3">
-          <slot />
-        </main>
-      </AppContent>
+    <div class="app-content w-full overflow-auto">
+      <main class="main-content min-h-100% xl:py-6 xl:pr-3">
+        <slot />
+      </main>
     </div>
-  </div>
+  </AppShell>
 
   <LoginDialog />
 </TolgeeProvider>
-
-<style lang="postcss">
-  .app-container {
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    height: 100vh;
-    max-height: 100vh;
-    width: 100vw;
-    max-width: 100vw;
-  }
-
-  .drawer-container {
-    display: flex;
-    height: 100%;
-    overflow: hidden;
-    position: relative;
-  }
-</style>

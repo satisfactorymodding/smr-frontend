@@ -1,25 +1,20 @@
 <script lang="ts">
-  import Switch from '@smui/switch';
-  import FormField from '@smui/form-field';
-  import Drawer, { Content } from '@smui/drawer';
-  import List, { Item, Text, Graphic, Separator } from '@smui/list';
-  import { goto, preloadData } from '$app/navigation';
+  import { getDrawerStore, getModalStore, SlideToggle } from '@skeletonlabs/skeleton';
+  import { goto } from '$app/navigation';
   import { base } from '$app/paths';
-  import { page } from '$app/stores';
   import { user, userToken } from '$lib/stores/user';
-  import { loginDialogOpen } from '$lib/stores/global';
   import { getTranslate } from '@tolgee/svelte';
+  import LoginModal from '$lib/modals/LoginModal.svelte';
+  import type { SidebarItemData } from '$lib/utils/sidebarItemData';
+  import SidebarItem from './SidebarItem.svelte';
 
-  export let open: boolean;
-  export let drawerVariant: 'modal' | 'dismissible';
-  export let hideTopElements: boolean;
   export let accessibility: boolean;
 
   export const { t } = getTranslate();
 
-  $: currentPath = $page.url.pathname;
   $: isAdmin = !$user ? false : $user.roles.approveMods || $user.roles.approveVersions || $user.roles.editSMLVersions;
 
+  let top: SidebarItemData[];
   $: top = [
     {
       url: base + '/',
@@ -49,7 +44,7 @@
     {
       url: 'https://discord.gg/xkVJ73E',
       icon: 'people',
-      label: $t('sidebar.discord'),
+      label: $t('discord'),
       external: true
     },
     {
@@ -66,6 +61,7 @@
     }
   ];
 
+  let bottom: SidebarItemData[];
   $: bottom = [
     {
       url: base + '/help',
@@ -75,7 +71,7 @@
     {
       url: base + '/content-policy',
       icon: 'verified_user',
-      label: 'Content Policy'
+      label: $t('content-policy')
     },
     {
       url: base + '/privacy-policy',
@@ -99,97 +95,95 @@
       external: true
     }
   ];
+
+  const modalStore = getModalStore();
+  const drawerStore = getDrawerStore();
 </script>
 
-<Drawer variant={drawerVariant} fixed={false} bind:open>
-  <Content>
-    <div class="drawer-content">
-      {#if hideTopElements}
-        <List>
-          {#if $user === null}
-            <Item on:click={() => loginDialogOpen.set(true)}>
-              <Graphic class="material-icons">login</Graphic>
-              <Text>Sign In</Text>
-            </Item>
-          {:else}
-            {#if isAdmin}
-              <Item on:click={() => goto(base + '/admin')} activated={currentPath.startsWith('/admin')}>
-                <Graphic class="material-icons">admin_panel_settings</Graphic>
-                <Text>Admin</Text>
-              </Item>
-            {/if}
-
-            <Item on:click={() => goto(base + '/user/' + $user.id)} activated={currentPath.startsWith('/user')}>
-              <Graphic>
-                <div class="rounded-full bg-cover w-7 h-7" style={`background-image: url("${$user.avatar}")`} />
-              </Graphic>
-              <Text>{$user.username}</Text>
-            </Item>
-
-            <Item on:click={() => userToken.set(null)}>
-              <Graphic class="material-icons">logout</Graphic>
-              <Text>Logout</Text>
-            </Item>
+<div class="flex h-full max-w-xl flex-col justify-between overflow-y-auto p-4">
+  <div class="flex h-full max-w-xl flex-col gap-4">
+    <nav class="list-nav xl:hidden">
+      <ul>
+        {#if $user === null}
+          <button
+            on:click={() => {
+              modalStore.trigger({
+                type: 'component',
+                component: {
+                  ref: LoginModal
+                }
+              });
+              drawerStore.close();
+            }}
+            class="w-full">
+            <span class="material-icons">login</span>
+            <span>{$t('user.sign-in')}</span>
+          </button>
+        {:else}
+          {#if isAdmin}
+            <button
+              on:click={() => {
+                goto(base + '/admin');
+                drawerStore.close();
+              }}
+              class="w-full">
+              <span class="material-icons">admin_panel_settings</span>
+              <span>Admin</span>
+            </button>
           {/if}
-        </List>
+          <button class="grid w-full grid-flow-col" on:click={() => goto(base + '/user/' + $user.id)}>
+            <div class="h-7 w-7 rounded-full bg-cover" style={`background-image: url("${$user.avatar}")`} />
+            <div>{$user.username}</div>
+          </button>
 
-        <Separator />
-      {/if}
-
-      <List>
-        {#each top as item}
-          {#if !item.external}
-            <Item href={item.url} activated={currentPath === item.url} on:mouseover={() => preloadData(item.url)}>
-              <Graphic class="material-icons">{item.icon}</Graphic>
-              <Text>{item.label}</Text>
-            </Item>
-          {:else}
-            <Item href={item.url} target="_blank" rel="noopener">
-              <Graphic class="material-icons">{item.icon}</Graphic>
-              <Text>{item.label}</Text>
-            </Item>
-          {/if}
-        {/each}
-      </List>
-
-      <List>
-        {#each bottom as item}
-          {#if !item.external}
-            <Item href={item.url} activated={currentPath === item.url} on:mouseover={() => preloadData(item.url)}>
-              <Graphic class="material-icons">{item.icon}</Graphic>
-              <Text>{item.label}</Text>
-            </Item>
-          {:else}
-            <Item href={item.url} target="_blank" rel="noopener">
-              <Graphic class="material-icons">{item.icon}</Graphic>
-              <Text>{item.label}</Text>
-            </Item>
-          {/if}
-        {/each}
-
-        {#if hideTopElements}
-          <Item target="_blank" href="https://smm.ficsit.app" rel="noopener">
-            <Graphic class="material-icons">file_download</Graphic>
-            <Text>Mod Manager</Text>
-          </Item>
+          <button
+            on:click={() => {
+              userToken.set(null);
+              drawerStore.close();
+            }}
+            class="w-full">
+            <span class="material-icons">logout</span>
+            <span>{$t('user.logout')}</span>
+          </button>
         {/if}
+      </ul>
+    </nav>
 
-        <Item>
-          <FormField align="end">
-            <Switch bind:checked={accessibility} aria-label="Accessibility Font" />
-            <span slot="label">Accessibility Font</span>
-          </FormField>
-        </Item>
-      </List>
+    <div class="xl:hidden">
+      <hr />
     </div>
-  </Content>
-</Drawer>
 
-<style lang="postcss">
-  .drawer-content {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 100%;
-  }
-</style>
+    <nav class="list-nav">
+      <ul>
+        {#each top as item}
+          <SidebarItem {item} />
+        {/each}
+      </ul>
+    </nav>
+  </div>
+
+  <nav class="list-nav">
+    <ul>
+      {#each bottom as item}
+        <SidebarItem {item} />
+      {/each}
+
+      <li class="xl:hidden">
+        <a target="_blank" href="https://smm.ficsit.app" rel="noopener">
+          <span class="material-icons">file_download</span>
+          <span class="flex-auto">{$t('sidebar.mod-manager')}</span>
+        </a>
+      </li>
+
+      <li class="flex flex-row items-center justify-center gap-4 px-3 pt-2">
+        <SlideToggle
+          bind:checked={accessibility}
+          aria-label="Accessibility Font"
+          name="accessibility_font"
+          size="sm"
+          active="bg-primary-500" />
+        <span>{$t('sidebar.accessibility-font')}</span>
+      </li>
+    </ul>
+  </nav>
+</div>

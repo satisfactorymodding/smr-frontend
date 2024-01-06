@@ -1,30 +1,89 @@
 <script lang="ts">
   import { getTolgee, getTranslate } from '@tolgee/svelte';
-  import Select, { Option } from '@smui/select';
   import { writable } from 'svelte/store';
+  import { type PopupSettings, popup } from '@skeletonlabs/skeleton';
+  import { browser } from '$app/environment';
 
   const tolgee = getTolgee(['language']);
 
   export const { t } = getTranslate();
 
   const languages = {
-    en: 'English',
-    de: 'Deutsch',
-    fr: 'Français',
-    lv: 'Latviešu'
-  };
+    en: {
+      name: 'English',
+      flag: '🇺🇳'
+    },
+    de: {
+      name: 'Deutsch',
+      flag: '🇩🇪'
+    },
+    fr: {
+      name: 'Français',
+      flag: '🇫🇷'
+    },
+    it: {
+      name: 'Italiano',
+      flag: '🇮🇹'
+    },
+    lv: {
+      name: 'Latviešu',
+      flag: '🇱🇻'
+    },
+    mt: {
+      name: 'Malti',
+      flag: '🇲🇹'
+    },
+    nl: {
+      name: 'Nederlands',
+      flag: '🇳🇱'
+    },
+    ru: {
+      name: 'Pусский',
+      flag: '🇷🇺'
+    },
+    'zh-Hans': {
+      name: '简体中文',
+      flag: '🇨🇳'
+    },
+    'zh-Hant': {
+      name: '繁體中文',
+      flag: '🇹🇼'
+    }
+  } as const;
 
-  const lang = writable<string>(localStorage.getItem('language') || $tolgee.getLanguage());
+  const lang = writable<string>((browser && localStorage.getItem('language')) || $tolgee.getLanguage());
   lang.subscribe((l) => {
     $tolgee.changeLanguage(l);
-    localStorage.setItem('language', l);
+    if (browser) {
+      localStorage.setItem('language', l);
+    }
   });
+
+  const languageMenuBox: PopupSettings = {
+    event: 'focus-click',
+    target: 'languageMenuBox',
+    placement: 'bottom',
+    closeQuery: 'li'
+  };
 </script>
 
-<div class="darker-please mr-3 max-h-1/2">
-  <Select bind:value={$lang} label={$t('appbar.language-dropdown')} variant="outlined">
-    {#each Object.entries(languages) as lang}
-      <Option value={lang[0]}>{lang[1]}</Option>
-    {/each}
-  </Select>
+<button class="variant-ghost-primary btn btn-sm grid grid-flow-col" use:popup={languageMenuBox}>
+  <span>{languages[$lang].name}</span>
+  <span class="text-xl">{languages[$lang].flag}</span>
+</button>
+
+<div class="card w-48 py-2 shadow-xl" data-popup="languageMenuBox">
+  <nav class="list-nav">
+    <ul>
+      {#each Object.entries(languages) as [k, v]}
+        <li class:bg-primary-active-token={$lang === k}>
+          <button class="w-full" on:click={() => lang.set(k)}>
+            <span>{v.name}</span>
+            <span class="text-xl text-white">{v.flag}</span>
+          </button>
+        </li>
+      {/each}
+    </ul>
+  </nav>
+  <div class="bg-surface-100-800-token arrow" />
 </div>

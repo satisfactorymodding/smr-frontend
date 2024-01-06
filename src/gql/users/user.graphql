@@ -43,6 +43,7 @@ query GetUser($user: UserID!) {
         tags {
           id
           name
+          description
         }
       }
     }

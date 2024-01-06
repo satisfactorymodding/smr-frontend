@@ -2,46 +2,59 @@
   import { queryStore, getContextClient } from '@urql/svelte';
   import { GetGuidesDocument } from '$lib/generated';
   import GuideCard from './GuideCard.svelte';
-  import PageControls from '$lib/components/utils/PageControls.svelte';
   import { base } from '$app/paths';
-  import Button from '@smui/button';
   import { user } from '$lib/stores/user';
   import FicsitCard from '$lib/components/general/FicsitCard.svelte';
+  import { getTranslate } from '@tolgee/svelte';
+  import { type PaginationSettings, Paginator } from '@skeletonlabs/skeleton';
 
   export let colCount: 4 | 5 = 4;
   export let newGuide = false;
 
   const client = getContextClient();
 
-  // TODO Selectable
-  const perPage = 40;
+  let perPage = 32;
+  let page = 0;
 
-  let page = 1;
+  export const { t } = getTranslate();
 
   $: guides = queryStore({
     query: GetGuidesDocument,
     client,
-    variables: { offset: (page - 1) * perPage, limit: perPage }
+    variables: { offset: page * perPage, limit: perPage }
   });
 
-  let totalGuides = 0;
-  $: if ($guides?.data?.getGuides?.count) {
-    totalGuides = $guides.data.getGuides.count;
-  }
+  $: totalGuides = $guides?.data?.getGuides?.count || 0;
 
   $: gridClasses =
     colCount == 4
       ? '3xl:grid-cols-4 2xl:grid-cols-3 lg:grid-cols-2 grid-cols-1'
       : '3xl:grid-cols-3 2xl:grid-cols-2 grid-cols-1';
+
+  $: paginationSettings = {
+    page: page,
+    limit: perPage,
+    size: totalGuides,
+    amounts: [8, 16, 32, 64, 100]
+  } satisfies PaginationSettings;
 </script>
 
-<div class="mb-5 ml-auto flex justify-between">
+<div
+  class="mb-5 ml-auto flex"
+  class:justify-between={newGuide && $user !== null}
+  class:justify-end={!newGuide || $user == null}>
   {#if newGuide && $user !== null}
-    <Button variant="outlined" href="{base}/new-guide">New Guide</Button>
+    <a class="variant-ghost-primary btn" href="{base}/new-guide">{$t('guides.new')}</a>
   {/if}
 
   <div>
-    <PageControls totalPages={Math.ceil(totalGuides / perPage)} bind:currentPage={page} />
+    <Paginator
+      bind:settings={paginationSettings}
+      showFirstLastButtons={true}
+      showPreviousNextButtons={true}
+      on:page={(p) => (page = p.detail)}
+      on:amount={(p) => (perPage = p.detail)}
+      controlVariant="variant-filled-surface" />
   </div>
 </div>
 
@@ -52,7 +65,7 @@
     {/each}
   </div>
 {:else if $guides.error}
-  <p>Oh no... {$guides.error.message}</p>
+  <p>{$t('error.oh-no')} {$guides.error.message}</p>
 {:else}
   <div class="grid {gridClasses} gap-4">
     {#each $guides.data.getGuides.guides as guide}
@@ -61,8 +74,14 @@
   </div>
 {/if}
 
-<div class="mt-5 ml-auto flex justify-end">
+<div class="ml-auto mt-5 flex justify-end">
   <div>
-    <PageControls totalPages={Math.ceil(totalGuides / perPage)} bind:currentPage={page} />
+    <Paginator
+      bind:settings={paginationSettings}
+      showFirstLastButtons={true}
+      showPreviousNextButtons={true}
+      on:page={(p) => (page = p.detail)}
+      on:amount={(p) => (perPage = p.detail)}
+      controlVariant="variant-filled-surface" />
   </div>
 </div>

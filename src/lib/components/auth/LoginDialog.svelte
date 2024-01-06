@@ -1,25 +1,26 @@
 <script lang="ts">
-  import { loginDialogOpen } from '$lib/stores/global';
   import {
     GetMeDocument,
-    GetOAuthOptionsDocument,
     OAuthFacebookDocument,
     OAuthGithubDocument,
     OAuthGoogleDocument,
     LogoutDocument
   } from '$lib/generated';
-  import { getContextClient, queryStore } from '@urql/svelte';
+  import { getContextClient } from '@urql/svelte';
   import { browser } from '$app/environment';
   import { page } from '$app/stores';
-  import { goto } from '$app/navigation';
-  import Toast from '../general/Toast.svelte';
   import { user, userToken } from '$lib/stores/user';
   import cookie from 'js-cookie';
-  import Dialog, { Title, Content } from '@smui/dialog';
-  import Button from '@smui/button';
-  import CircularProgress from '@smui/circular-progress';
+  import { getTranslate } from '@tolgee/svelte';
+  import { getModalStore, getToastStore, type ModalSettings } from '@skeletonlabs/skeleton';
+  import LoginModal from '$lib/modals/LoginModal.svelte';
+  import { derived, get, writable } from 'svelte/store';
 
   const client = getContextClient();
+
+  const toastStore = getToastStore();
+
+  export const { t } = getTranslate();
 
   if (browser) {
     let first = true;
@@ -50,7 +51,6 @@
           .toPromise()
           .then((response) => {
             if (response.error) {
-              // TODO Toast or something
               console.error(response.error.message);
             } else if (response.data) {
               user.set(response.data.getMe);
@@ -68,9 +68,22 @@
     facebook: OAuthFacebookDocument
   };
 
-  let errorMessage = '';
-  let errorToast = false;
-  let signingIn = false;
+  const signingIn = writable(false);
+  const loginModal = derived(
+    signingIn,
+    (val) =>
+      ({
+        type: 'component',
+        component: {
+          ref: LoginModal,
+          props: {
+            signingIn: val
+          }
+        }
+      }) satisfies ModalSettings
+  );
+
+  const modalStore = getModalStore();
 
   if (browser) {
     const signInMethod = localStorage.getItem('sign.in.method');
@@ -85,8 +98,8 @@
     const state = queryParams.state;
 
     if (signInMethod && code && state) {
-      signingIn = true;
-      loginDialogOpen.set(true);
+      signingIn.set(true);
+      modalStore.trigger(get(loginModal));
 
       client
         .mutation(signInMethods[signInMethod as 'github' | 'google' | 'facebook'], {
@@ -97,65 +110,18 @@
         .then((result) => {
           if (result.error) {
             console.error(result.error.message);
-            errorMessage = 'Error logging in: ' + result.error.message;
-            errorToast = true;
+            toastStore.trigger({
+              message: 'Error logging in: ' + result.error.message,
+              background: 'variant-filled-error',
+              autohide: false
+            });
           } else {
             userToken.set(result.data.session.token);
-            loginDialogOpen.set(false);
+            modalStore.close();
           }
         })
         .catch()
-        .then(() => (signingIn = false));
+        .then(() => signingIn.set(false));
     }
   }
-
-  const oauthOptions = queryStore({
-    query: GetOAuthOptionsDocument,
-    client,
-    variables: { callback_url: browser ? encodeURIComponent(window.location.origin + window.location.pathname) : '' },
-    requestPolicy: 'network-only'
-  });
-
-  $: if ($loginDialogOpen) {
-    oauthOptions.pause();
-    oauthOptions.resume();
-  }
-
-  const goTo = (service: string, url: string) => {
-    localStorage.setItem('sign.in.method', service);
-    goto(url);
-  };
 </script>
-
-<Dialog bind:open={$loginDialogOpen}>
-  <Title>Login / Sign Up</Title>
-  <Content>
-    <div class="grid grid-flow-row gap-4">
-      {#if signingIn}
-        <p>Logging in...</p>
-        <div class="flex justify-center">
-          <CircularProgress class="h-10 w-10" indeterminate />
-        </div>
-      {:else if $oauthOptions.fetching}
-        <!-- TODO Placeholders -->
-        <p>Loading...</p>
-      {:else if $oauthOptions.error}
-        <p>Oh no... {$oauthOptions.error.message}</p>
-      {:else}
-        <Button variant="outlined" on:click={() => goTo('github', $oauthOptions.data.getOAuthOptions.github)}>
-          Sign in with Github
-        </Button>
-        <Button variant="outlined" on:click={() => goTo('google', $oauthOptions.data.getOAuthOptions.google)}>
-          Sign in with Google
-        </Button>
-        <Button variant="outlined" on:click={() => goTo('facebook', $oauthOptions.data.getOAuthOptions.facebook)}>
-          Sign in with Facebook
-        </Button>
-      {/if}
-    </div>
-  </Content>
-</Dialog>
-
-<Toast bind:running={errorToast}>
-  <span>{errorMessage}</span>
-</Toast>

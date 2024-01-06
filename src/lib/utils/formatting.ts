@@ -1,3 +1,5 @@
+import { TargetName } from '$lib/generated/graphql';
+
 export const prettyDate = (date: Date | string) => {
   if (typeof date === 'string') {
     date = new Date(date);
@@ -20,4 +22,17 @@ export const prettyBytes = (bytes: number, decimals = 2) => {
   const i = Math.floor(Math.log(bytes) / Math.log(k));
 
   return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+};
+
+export const prettyTarget = (target: TargetName) => {
+  switch (target) {
+    case TargetName.Windows:
+      return 'Windows Client';
+    case TargetName.WindowsServer:
+      return 'Windows Server';
+    case TargetName.LinuxServer:
+      return 'Linux Server';
+  }
+
+  return target;
 };

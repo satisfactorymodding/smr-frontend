@@ -5,11 +5,16 @@ query GetSMLVersionsAdmin($filter: SMLVersionFilter) {
       version
       stability
       link
+      targets {
+        targetName
+        link
+      }
       changelog
       created_at
       date
       satisfactory_version
       bootstrap_version
+      engine_version
     }
     count
   }

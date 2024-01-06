@@ -4,6 +4,8 @@
     "streetsidesoftware.code-spell-checker",
     "dbaeumer.vscode-eslint",
     "csstools.postcss",
-    "vunguyentuan.vscode-postcss"
+    "vunguyentuan.vscode-postcss",
+    "github.copilot",
+    "eamodio.gitlens"
   ]
 }

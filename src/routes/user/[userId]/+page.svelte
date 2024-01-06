@@ -1,5 +1,4 @@
 <script lang="ts">
-  import Button from '@smui/button';
   import UserInfo from '$lib/components/users/UserInfo.svelte';
   import UserAvatar from '$lib/components/users/UserAvatar.svelte';
   import ModCard from '$lib/components/mods/ModCard.svelte';
@@ -8,6 +7,7 @@
   import { user as me } from '$lib/stores/user';
   import { base } from '$app/paths';
   import type { PageData } from './$types';
+  import Page404 from '$lib/components/general/Page404.svelte';
 
   export let data: PageData;
 
@@ -30,26 +30,26 @@
   <p>Oh no... {$user.error.message}</p>
 {:else if $user.data.getUser}
   <div class="grid gap-6 xlx:grid-flow-row">
-    <div class="flex flex-wrap h-auto justify-between items-center">
+    <div class="flex h-auto flex-wrap items-center justify-between">
       <h1 class="text-4xl font-bold">{$user.data.getUser.username}</h1>
 
       <div>
         {#if $me && $user.data.getUser.id === $me.id}
-          <Button variant="outlined" href="{base}/settings">Settings</Button>
+          <a class="variant-ghost-primary btn" href="{base}/settings">Settings</a>
         {/if}
 
-        <Button variant="outlined" on:click={() => (guidesTab = !guidesTab)}>
+        <button class="variant-ghost-primary btn" on:click={() => (guidesTab = !guidesTab)}>
           {#if !guidesTab}
             Guides
           {:else}
             Mods
           {/if}
-        </Button>
+        </button>
       </div>
     </div>
-    <div class="grid grid-auto-max auto-cols-fr gap-4">
+    <div class="grid-auto-max grid auto-cols-fr gap-4">
       {#if !guidesTab}
-        <div class="grid 3xl:grid-cols-3 2xl:grid-cols-2 grid-cols-1 gap-4 h-fit">
+        <div class="grid h-fit grid-cols-1 gap-4 2xl:grid-cols-2 3xl:grid-cols-3">
           {#each $user.data.getUser.mods as mod}
             <ModCard mod={mod.mod} />
           {/each}
@@ -60,7 +60,7 @@
           {/if}
         </div>
       {:else}
-        <div class="grid 3xl:grid-cols-3 2xl:grid-cols-2 grid-cols-1 gap-4 h-fit">
+        <div class="grid h-fit grid-cols-1 gap-4 2xl:grid-cols-2 3xl:grid-cols-3">
           {#each $user.data.getUser.guides as guide}
             <GuideCard {guide} logo={$user.data.getUser.avatar} />
           {/each}
@@ -71,13 +71,12 @@
           {/if}
         </div>
       {/if}
-      <div class="grid grid-cols-1 auto-rows-min gap-8">
+      <div class="grid auto-rows-min grid-cols-1 gap-8">
         <UserAvatar avatar={$user.data.getUser.avatar} username={$user.data.getUser.username} />
         <UserInfo user={$user.data.getUser} />
       </div>
     </div>
   </div>
 {:else}
-  <!-- TODO Better 404 -->
-  404
+  <Page404 />
 {/if}

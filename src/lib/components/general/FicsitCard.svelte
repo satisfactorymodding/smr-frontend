@@ -1,7 +1,5 @@
 <script lang="ts">
   import { assets } from '$app/paths';
-  import Card, { Content, Actions } from '@smui/card';
-  import IconButton, { Icon } from '@smui/icon-button';
   import { goto, preloadData } from '$app/navigation';
 
   export let name = '';
@@ -34,28 +32,38 @@
 
     clearTimeout(timeoutHandle);
   };
+
+  let actionButtons: HTMLElement;
 </script>
 
-<Card class="h-full overflow-hidden" on:mouseover={onOver} on:mouseout={onOut}>
+<div
+  class="card relative h-full overflow-hidden"
+  on:mouseover={onOver}
+  on:mouseout={onOut}
+  on:focus={onOver}
+  on:blur={onOut}
+  role="none">
   <div
     class:text-gray-500={fake}
     class:font-flow={fake}
-    class="grid grid-max-auto sm:grid-cols-2 grid-cols-1 justify-items-center">
-    <div class="cursor-pointer card-image-container" on:click={() => goto(link)}>
-      {#if fake}
-        <div class="bg-gray-500 logo min-w-full min-h-full max-w-full max-h-full" />
-      {:else}
-        <img src={renderedLogo} alt="{renderedName} Logo" class="logo max-w-full max-h-full" />
-      {/if}
+    class="grid-max-auto grid grid-cols-1 justify-items-center sm:grid-cols-2">
+    <div class="card-image-container cursor-pointer">
+      <a href={link} on:keypress={() => goto(link)} tabindex="0">
+        {#if fake}
+          <div class="logo max-h-full min-h-full min-w-full max-w-full bg-gray-500" />
+        {:else}
+          <img src={renderedLogo} alt="{renderedName} Logo" class="logo max-h-full min-h-full min-w-full max-w-full" />
+        {/if}
+      </a>
     </div>
-    <div class="w-full flex flex-col justify-between">
-      <Content class="flex flex-col pb-0">
-        <div class="mb-2">
+    <div class="relative flex w-full flex-col justify-between">
+      <div class="flex flex-col px-3 py-2 pb-0">
+        <div class="mb-1.5">
           <a href={link} class="text-white">
-            <span class="text-xl break-words">{renderedName}</span>
+            <span class="break-words text-xl">{renderedName}</span>
           </a>
 
-          <h5 class="text-sm m-0">
+          <h5 class="m-0 text-sm">
             <slot name="stats">
               {#if fake}
                 <span class="font-flow">Card stats</span>
@@ -66,24 +74,37 @@
           <slot name="tags" />
         </div>
 
-        <div class:font-flow={fake} class="break-words">
+        <div class:font-flow={fake} style="word-wrap: anywhere">
           {renderedDescription}
-        </div>
-      </Content>
 
-      <Actions class="self-end">
+          <div
+            class="float-right"
+            style="width: {(actionButtons?.clientWidth || 0) - 8}px; height: {(actionButtons?.clientHeight || 0) -
+              8}px">
+            <!-- Placeholder for action buttons -->
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="absolute bottom-0 right-0 flex flex-row items-center gap-1 self-end px-2 py-2 text-lg"
+        bind:this={actionButtons}>
         {#if !fake}
-          <IconButton href={link} aria-label="View {renderedName}" title="View {renderedName}">
-            <Icon class="material-icons">info</Icon>
-          </IconButton>
+          <a
+            href={link}
+            class="variant-soft-surface btn btn-sm"
+            aria-label="View {renderedName}"
+            title="View {renderedName}">
+            <span class="material-icons">info</span>
+          </a>
           <slot name="actions" />
         {/if}
-      </Actions>
+      </div>
     </div>
   </div>
 
   <slot name="outer" />
-</Card>
+</div>
 
 <style lang="postcss">
   .logo {
@@ -91,7 +112,7 @@
     border-bottom-left-radius: 4px;
   }
 
-  @media (min-width: 1279px) {
+  @media (min-width: 1024px) {
     .grid-max-auto {
       grid-template-columns: max-content auto;
     }

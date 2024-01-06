@@ -2,7 +2,7 @@
   import { page } from '$app/stores';
   import { base } from '$app/paths';
 
-  const baseUrl = $page.url.host;
+  const baseUrl = $page.url.origin;
   const route = $page.url.pathname;
 
   export let description: string | undefined = undefined;

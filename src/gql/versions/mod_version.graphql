@@ -10,6 +10,13 @@ query GetModVersion($version: VersionID!) {
     link
     hash
     size
+    approved
+    targets {
+      targetName
+      link
+      hash
+      size
+    }
     mod {
       id
       mod_reference
@@ -18,6 +25,10 @@ query GetModVersion($version: VersionID!) {
         role
         user_id
       }
+    }
+    dependencies {
+      mod_id
+      condition
     }
   }
 }
