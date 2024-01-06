@@ -22,7 +22,7 @@
 
   $: allTags =
     $getAllTags.data?.getTags?.map((t) => ({
-      label: `${t.name} - ${'TODO: Tag description this will become a very long string sometimes yes long string'}`,
+      label: `${t.name} - ${t.description}`,
       value: t.id
     })) || ([] satisfies AutocompleteOption[]);
 
@@ -38,12 +38,13 @@
   onMount(loadTagList);
 
   const addTag = (tag: AutocompleteOption) => {
+    const realTag = $getAllTags.data?.getTags?.find((t) => t.id == tag.value);
     tags = [
       ...tags,
       {
         id: tag.value,
-        name: tag.label,
-        description: $getAllTags.data?.getTags?.find((t) => t.id == tag.value).description
+        name: realTag?.name,
+        description: realTag?.description
       }
     ];
 
