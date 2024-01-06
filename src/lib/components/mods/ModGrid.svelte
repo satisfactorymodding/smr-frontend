@@ -10,6 +10,7 @@
   import { browser } from '$app/environment';
   import { getTranslate } from '@tolgee/svelte';
   import { type PaginationSettings, Paginator } from '@skeletonlabs/skeleton';
+  import TagDisplay from '../utils/TagDisplay.svelte';
 
   export let colCount: 4 | 5 = 4;
   export let newMod = false;
@@ -121,10 +122,11 @@
         <div>
           <button
             type="button"
-            class="text-md variant-filled-surface btn btn-sm"
+            class="text-md variant-filled-surface btn btn-sm p-2 pl-4 pr-4"
             class:variant-ghost-primary={tagsOpen}
+            title={$t('filter.expand-button-tooltip')}
             on:click={() => (tagsOpen = !tagsOpen)}>
-            <span class="text-orange-500">#</span>tags
+            <span>{$t('filter.expand-button-text')}</span>
           </button>
         </div>
         <div>
@@ -146,7 +148,7 @@
             bind:value={searchField}
             class="border-0 bg-transparent p-1.5 ring-0"
             name="search"
-            placeholder="Search" />
+            placeholder={$t('search.placeholder-text')} />
           <button class="material-icons variant-filled-primary">arrow_forward</button>
         </div>
       </div>
@@ -160,9 +162,7 @@
                 class="chip hover:variant-filled-surface [&:not(:hover)]:variant-soft"
                 class:selected={selectedTags.indexOf(tag.id) >= 0}
                 on:click={() => toggleTag(tag.id)}>
-                <div class="lowercase text-neutral-300">
-                  <span class="text-orange-500">#</span>{tag.name}
-                </div>
+                <TagDisplay {tag} popupTriggerEvent="hover" />
               </button>
             {/each}
           {/if}
