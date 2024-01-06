@@ -28,6 +28,7 @@ mutation EditMod($modId: ModID!, $mod: UpdateMod!) {
     tags {
       id
       name
+      description
     }
   }
 }

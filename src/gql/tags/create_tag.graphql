@@ -1,6 +1,7 @@
-mutation CreateTag($tagName: TagName!) {
-  createTag(tagName: $tagName) {
+mutation CreateTag($tagName: TagName!, $description: String!) {
+  createTag(tagName: $tagName, description: $description) {
     id
     name
+    description
   }
 }

@@ -41,6 +41,7 @@ query GetMods($offset: Int!, $limit: Int!, $search: String, $order: Order, $orde
       tags {
         id
         name
+        description
       }
     }
   }

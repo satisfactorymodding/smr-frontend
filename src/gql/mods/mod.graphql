@@ -86,6 +86,7 @@ query GetMod($mod: String!) {
     tags {
       id
       name
+      description
     }
   }
 }

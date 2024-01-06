@@ -25,7 +25,7 @@
 
   function newTag() {
     if (!tags.find((tag) => tag.name == 'New Tag')) {
-      const tag = { id: tagNegativeID--, name: 'New Tag' } as Tag;
+      const tag = { id: tagNegativeID--, name: 'New Tag', description: 'Description' } as Tag;
       tags.push(tag);
       tags = tags;
       setTimeout(() => {
@@ -51,7 +51,9 @@
     if (tag.id < 0) {
       // Create new tag & update tag.id with new DB id or re-fetch all tags
       try {
-        const result = await client.mutation(CreateTagDocument, { tagName: tag.name }).toPromise();
+        const result = await client
+          .mutation(CreateTagDocument, { tagName: tag.name, description: tag.description })
+          .toPromise();
         if (result.data) {
           tag.id = result.data.createTag.id;
           success = true;
@@ -71,8 +73,11 @@
       // Update existing tag
       try {
         success =
-          (await client.mutation(UpdateTagDocument, { tagID: tag.id, tagName: tag.name }).toPromise()).data.updateTag !=
-          null;
+          (
+            await client
+              .mutation(UpdateTagDocument, { tagID: tag.id, tagName: tag.name, description: tag.description })
+              .toPromise()
+          ).data.updateTag != null;
       } catch {
         // nothing
       }
@@ -137,14 +142,23 @@
         <AccordionItem>
           <svelte:fragment slot="summary">{tag.name}</svelte:fragment>
           <svelte:fragment slot="content">
-            <input
-              type="text"
-              class="input p-2"
-              bind:value={tag.name}
-              placeholder="Tag-Name"
-              bind:this={nameFields[tag.id]}
-              on:change={() => tagChange(tag)} />
-            <span slot="helper">Human-Readable name of the tag that is shown in UI</span>
+            <div>
+              <input
+                type="text"
+                class="input p-2"
+                bind:value={tag.name}
+                placeholder="Name"
+                bind:this={nameFields[tag.id]}
+                on:change={() => tagChange(tag)} />
+
+              <input
+                type="text"
+                class="input p-2"
+                bind:value={tag.description}
+                placeholder="Description"
+                on:change={() => tagChange(tag)} />
+            </div>
+            <span slot="helper">Human-Readable name and description of the tag that is shown in UI</span>
 
             <button class="variant-ghost-error btn" on:click={(e) => onDeleteClick(e, tag)}>
               <span>Delete</span>

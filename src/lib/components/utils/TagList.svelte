@@ -40,7 +40,8 @@
       ...tags,
       {
         id: tag.value,
-        name: tag.label
+        name: tag.label,
+        description: $getAllTags.data?.getTags?.find((t) => t.id == tag.value).description
       }
     ];
 
