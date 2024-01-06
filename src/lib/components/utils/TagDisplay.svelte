@@ -14,7 +14,7 @@
 <div
   class="lowercase text-neutral-300 [&>*]:pointer-events-none"
   use:popup={popupHover}
-  title="Click for tag information">
+  title={popupTriggerEvent === 'click' ? 'Click for tag information' : ''}>
   <span class="text-orange-500">#</span>{tag.name}
 </div>
 
