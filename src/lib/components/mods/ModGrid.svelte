@@ -158,12 +158,12 @@
             <p>Oh no... {$allTags.error.message}</p>
           {:else if !$allTags.fetching}
             {#each sortedTags($allTags.data.getTags) as tag}
-              <button
-                class="chip hover:variant-filled-surface [&:not(:hover)]:variant-soft"
-                class:selected={selectedTags.indexOf(tag.id) >= 0}
-                on:click={() => toggleTag(tag.id)}>
-                <TagDisplay {tag} popupTriggerEvent="hover" />
-              </button>
+              <TagDisplay
+                {tag}
+                popupTriggerEvent="hover"
+                asButton={true}
+                selected={selectedTags.indexOf(tag.id) >= 0}
+                on:click={() => toggleTag(tag.id)} />
             {/each}
           {/if}
         </div>
@@ -171,7 +171,10 @@
     </div>
   {/if}
 
-  <div class="flex flex-wrap justify-between">
+  <div
+    class="flex grow flex-row flex-wrap"
+    class:justify-between={newMod && $user !== null}
+    class:justify-end={!newMod || $user == null}>
     {#if newMod && $user !== null}
       <a class="variant-ghost-primary btn self-end" href="{base}/new-mod">{$t('mods.new')}</a>
     {/if}
@@ -217,10 +220,6 @@
 </div>
 
 <style lang="postcss">
-  .selected {
-    @apply variant-ghost-primary hover:variant-ringed-primary;
-  }
-
   * :global(.search-paper) {
     display: flex;
     align-items: center;

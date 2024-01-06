@@ -39,7 +39,10 @@
   } satisfies PaginationSettings;
 </script>
 
-<div class="mb-5 ml-auto flex justify-between">
+<div
+  class="mb-5 ml-auto flex"
+  class:justify-between={newGuide && $user !== null}
+  class:justify-end={!newGuide || $user == null}>
   {#if newGuide && $user !== null}
     <a class="variant-ghost-primary btn" href="{base}/new-guide">{$t('guides.new')}</a>
   {/if}
