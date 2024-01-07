@@ -23,7 +23,8 @@
   $: allTags =
     $getAllTags.data?.getTags?.map((t) => ({
       label: `${t.name} - ${t.description}`,
-      value: t.id
+      value: t.id,
+      name: t.name
     })) || ([] satisfies AutocompleteOption[]);
 
   const popupSettings: PopupSettings = {
@@ -85,7 +86,7 @@
     <div class="card max-h-48 w-max max-w-full overflow-y-auto p-4" tabindex="-1" data-popup="popupAutocomplete">
       <Autocomplete
         bind:input={inputTag}
-        options={allTags.filter((t) => tagList.indexOf(t.label) < 0)}
+        options={allTags.filter((t) => tagList.indexOf(t.name) < 0)}
         on:selection={(t) => addTag(t.detail)} />
     </div>
   {/if}
