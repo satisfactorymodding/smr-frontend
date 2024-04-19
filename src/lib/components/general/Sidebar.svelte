@@ -42,7 +42,7 @@
       label: $t('sidebar.tools')
     },
     {
-      url: 'https://discord.gg/xkVJ73E',
+      url: 'https://discord.ficsit.app',
       icon: 'people',
       label: $t('discord'),
       external: true
