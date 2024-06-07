@@ -20,6 +20,7 @@ export type VersionMetadata = {
     Plugins?: {
       Name: string;
       SemVersion?: string;
+      Optional: boolean;
     }[];
   };
   objects: string[];
