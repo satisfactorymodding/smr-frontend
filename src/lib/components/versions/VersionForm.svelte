@@ -94,13 +94,13 @@
             <p>
               <strong>{$t('dependencies')}:</strong><br />
               {#each $modMeta.uplugin.Plugins as dependency}
-                {#if dependency.Optional === false}
-                  <strong>{dependency.Name}: </strong>
-                  {#if dependency.SemVersion}
-                    <span>{dependency.SemVersion}</span>
-                  {:else}
-                    <span>*</span>
-                  {/if}
+                <strong
+                  >{dependency.Name}{#if dependency.Optional === true}
+                    - Optional{/if}</strong>
+                {#if dependency.SemVersion}
+                  <span>{dependency.SemVersion}</span>
+                {:else}
+                  <span>*</span>
                 {/if}
                 <br />
               {/each}

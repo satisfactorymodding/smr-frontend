@@ -2,7 +2,7 @@
   import { base } from '$app/paths';
   import type { VersionDependency } from '$lib/generated';
 
-  export let dependencies!: Pick<VersionDependency, 'mod_id' | 'condition'>[];
+  export let dependencies!: Pick<VersionDependency, 'mod_id' | 'optional' | 'condition'>[];
 </script>
 
 <div class="grid grid-flow-row">
@@ -24,7 +24,12 @@
               <a
                 title="Click to view mod page"
                 href={dependency.mod_id === 'SML' ? `${base}/sml-versions` : `${base}/mod/${dependency.mod_id}`}
-                class="text-yellow-500"><u>{dependency.mod_id}</u></a>
+                class="text-yellow-500"
+                ><u
+                  >{dependency.mod_id}
+                  {#if dependency.optional === true}
+                    - Optional{/if}</u
+                ></a>
             </td>
             <td><div class="text-center">{dependency.condition}</div></td>
           </tr>

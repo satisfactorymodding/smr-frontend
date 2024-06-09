@@ -9,7 +9,7 @@
 
   type IVersion = Pick<Version, 'id' | 'link' | 'version' | 'created_at'> & {
     targets?: Pick<VersionTarget, 'targetName' | 'size' | 'hash'>[];
-  } & { dependencies?: Pick<VersionDependency, 'mod_id' | 'condition'>[] };
+  } & { dependencies?: Pick<VersionDependency, 'mod_id' | 'optional' | 'condition'>[] };
 
   type ILatestVersions = {
     alpha?: IVersion;
