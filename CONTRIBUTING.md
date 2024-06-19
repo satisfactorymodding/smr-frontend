@@ -64,7 +64,7 @@ This project has three main environments:
 
 If you do not specify which environment you want to use when running `bun` comands,
 `development` will be used by default.
-The process for specifting an environment is covered in the next section.
+The process for specifying an environment is covered in the next section.
 
 ### Loading Environment Variables
 
