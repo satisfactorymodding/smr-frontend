@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    
+		<link href="/smr-frontend/typo-fix/_app/immutable/assets/vendor.S7VwM45E.css" rel="stylesheet">
+		<link rel="modulepreload" href="/smr-frontend/typo-fix/_app/immutable/entry/start.8gwX9VJB.js">
+		<link rel="modulepreload" href="/smr-frontend/typo-fix/_app/immutable/chunks/vendor.R_-Wpdv2.js">
+		<link rel="modulepreload" href="/smr-frontend/typo-fix/_app/immutable/entry/app.VzeqKgMT.js">
+		<link rel="modulepreload" href="/smr-frontend/typo-fix/_app/immutable/chunks/preload-helper.-ShncZYO.js">
+  </head>
+  <body data-theme="custom-theme">
+    <div style="display: contents" class="h-full overflow-hidden">
+			<script>
+				{
+					__sveltekit_k9ou42 = {
+						assets: "/smr-frontend/typo-fix",
+						base: "/smr-frontend/typo-fix",
+						env: null
+					};
+
+					const element = document.currentScript.parentElement;
+
+					Promise.all([
+						import("/smr-frontend/typo-fix/_app/immutable/entry/start.8gwX9VJB.js"),
+						import("/smr-frontend/typo-fix/_app/immutable/entry/app.VzeqKgMT.js")
+					]).then(([kit, app]) => {
+						kit.start(app, element);
+					});
+
+					if ('serviceWorker' in navigator) {
+						addEventListener('load', function () {
+							navigator.serviceWorker.register('/smr-frontend/typo-fix/service-worker.js');
+						});
+					}
+				}
+			</script>
+		</div>
+  </body>
+</html>
