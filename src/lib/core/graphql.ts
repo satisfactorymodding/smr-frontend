@@ -65,12 +65,6 @@ export const initializeGraphQLClient = (fetch?: LoadEvent['fetch']): Client =>
                 id: args.versionId as string
               });
             },
-            deleteSMLVersion(_result, args, cache) {
-              cache.invalidate({
-                __typename: 'SMLVersion',
-                id: args.smlVersionId as string
-              });
-            },
             deleteVersion(_result, args, cache) {
               cache.invalidate({
                 __typename: 'Version',

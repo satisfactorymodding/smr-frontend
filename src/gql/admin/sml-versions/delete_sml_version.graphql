@@ -1,3 +1,0 @@
-mutation DeleteSMLVersion($smlVersionID: SMLVersionID!) {
-  deleteSMLVersion(smlVersionId: $smlVersionID)
-}

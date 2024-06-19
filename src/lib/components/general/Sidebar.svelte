@@ -12,7 +12,9 @@
 
   export const { t } = getTranslate();
 
-  $: isAdmin = !$user ? false : $user.roles.approveMods || $user.roles.approveVersions || $user.roles.editSMLVersions;
+  $: isAdmin = !$user
+    ? false
+    : $user.roles.approveMods || $user.roles.approveVersions || $user.roles.editSatisfactoryVersions;
 
   let top: SidebarItemData[];
   $: top = [
@@ -30,11 +32,6 @@
       url: base + '/guides',
       icon: 'description',
       label: $t('sidebar.guides')
-    },
-    {
-      url: base + '/sml-versions',
-      icon: 'lightbulb',
-      label: $t('sidebar.sml-versions')
     },
     {
       url: base + '/tools',

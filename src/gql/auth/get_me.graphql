@@ -14,8 +14,7 @@ query GetMe {
       deleteContent
       editContent
       editUsers
-      editSMLVersions
-      editBootstrapVersions
+      editSatisfactoryVersions
       editAnyModCompatibility
     }
   }

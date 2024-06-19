@@ -19,10 +19,6 @@
       <h2>Unapproved Versions</h2>
     </a>
 
-    <a href="{base}/admin/sml-versions" class="text-white">
-      <h2>SML Versions</h2>
-    </a>
-
     <a href="{base}/admin/tag-manager" class="text-white">
       <h2>Tag Manager</h2>
     </a>
