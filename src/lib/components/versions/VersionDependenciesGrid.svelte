@@ -17,7 +17,7 @@
 </script>
 
 <div class="grid grid-flow-row">
-  <table aria-label="Mod Dependencies" class="max-w-auto table table-hover !overflow-visible">
+  <table aria-label="Required Mod Dependencies" class="max-w-auto table table-hover !overflow-visible">
     <tbody>
       <tr class="rounded border !border-surface-500">
         <td
@@ -44,7 +44,7 @@
 <!-- Optional dependencies are uncommon as of now, so don't spend UI space on them unless there are any -->
 {#if optionalDependencies?.length !== 0}
   <div class="grid grid-flow-row">
-    <table aria-label="Mod Dependencies" class="max-w-auto table table-hover !overflow-visible">
+    <table aria-label="Optional Mod Dependencies" class="max-w-auto table table-hover !overflow-visible">
       <tbody>
         <tr class="rounded border !border-surface-500">
           <td
