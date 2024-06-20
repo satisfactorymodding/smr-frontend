@@ -21,6 +21,7 @@
     <tbody>
       <tr class="rounded border !border-surface-500">
         <td
+          class="underline decoration-dotted"
           title="Other mods that must be installed for this mod to function. The Mod Manager will automatically install these for you."
           >Required Dependencies</td>
         <td><div class="text-center">Version Range</div></td>
@@ -44,6 +45,7 @@
     <tbody>
       <tr class="rounded border !border-surface-500">
         <td
+            class="underline decoration-dotted"
           title="Other mods that don't need to be installed for this mod to function, but may unlock additional functionality when present. You must chose to install them in the Mod Manager if you wish to use them."
           >Optional Dependencies</td>
         <td><div class="text-center">Version Range</div></td>
