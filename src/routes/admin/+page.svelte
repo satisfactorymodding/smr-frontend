@@ -19,6 +19,10 @@
       <h2>Unapproved Versions</h2>
     </a>
 
+    <a href="{base}/admin/satisfactory-versions" class="text-white">
+      <h2>Satisfactory Versions</h2>
+    </a>
+
     <a href="{base}/admin/tag-manager" class="text-white">
       <h2>Tag Manager</h2>
     </a>
