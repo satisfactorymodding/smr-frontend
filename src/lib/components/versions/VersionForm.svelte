@@ -86,6 +86,8 @@
                 {$modMeta.uplugin.Version}.0.0
               </span>
             {/if}
+
+            <span><strong>Game version:</strong> {$modMeta.uplugin.GameVersion}<br /></span>
           </p>
 
           <span><strong>Targets:</strong> {$modMeta.targets.join(', ')}<br /></span>
