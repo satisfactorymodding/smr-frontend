@@ -39,6 +39,7 @@
   });
 
   $: preview = ($data.changelog as string) || '';
+  $: dependencies = $modMeta?.uplugin?.Plugins?.filter((d) => !d.BasePlugin) || [];
 </script>
 
 <form use:form>
@@ -95,7 +96,7 @@
           {#if $modMeta.uplugin.Plugins !== undefined}
             <p>
               <strong>{$t('dependencies')}:</strong><br />
-              {#each $modMeta.uplugin.Plugins as dependency}
+              {#each dependencies as dependency}
                 <strong>{dependency.Name}: </strong>
                 {#if dependency.SemVersion}
                   <span>{dependency.SemVersion}</span>

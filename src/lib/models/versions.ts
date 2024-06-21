@@ -21,6 +21,8 @@ export type VersionMetadata = {
     Plugins?: {
       Name: string;
       SemVersion?: string;
+      BasePlugin?: boolean;
+      Optional?: boolean;
     }[];
   };
   objects: string[];
