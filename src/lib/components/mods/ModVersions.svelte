@@ -51,6 +51,7 @@
             <th>{$t('version')}</th>
             <th>{$t('stability')}</th>
             <th>SML {$t('version')}</th>
+            <th>{$t('game-versions')}</th>
             <th>{$t('downloads')}</th>
             <th>{$t('upload-date')}</th>
             <th><!-- Buttons --></th>
@@ -62,6 +63,7 @@
               <td>{version.version}</td>
               <td>{version.stability}</td>
               <td>{version.sml_version}</td>
+              <td>{version.game_version}</td>
               <td>{prettyNumber(version.downloads)}</td>
               <td>{prettyDate(version.created_at)}</td>
               <td class="!overflow-visible !p-2">
@@ -139,7 +141,7 @@
 
             {#if expandedVersions.has(version.id)}
               <tr>
-                <td colspan={6}>
+                <td colspan={7}>
                   <div class="col-span-3 p-2">{$t('size')}: {prettyBytes(version.size)}</div>
                   <div class="col-span-3 p-2">{$t('hash')}: {version.hash}</div>
 

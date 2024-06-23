@@ -7,6 +7,7 @@ query GetModVersions($mod: ModID!, $limit: Int!, $offset: Int!) {
       version
       stability
       sml_version
+      game_version
       downloads
       created_at
       changelog
