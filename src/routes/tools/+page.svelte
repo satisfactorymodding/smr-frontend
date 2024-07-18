@@ -28,13 +28,6 @@
       link: 'https://kirkmcdonald.github.io/satisfactory-calculator/calc.html'
     },
     {
-      name: 'Map',
-      author: 'Cornik and S4XXX',
-      logo: '',
-      description: 'Satisfactory map based on in-game coordinates.',
-      link: 'https://www.satisfactorymap.com/'
-    },
-    {
       name: 'SatisGraphtory',
       author: 'tehalexf and thinkaliker',
       logo: 'https://cdn.jsdelivr.net/gh/rhocode/rhocode.github.io@4713b4887e8821f1482de7af4ae32fb6a4b2bcaf/img/satoolsfactory_icons/dot.png',
