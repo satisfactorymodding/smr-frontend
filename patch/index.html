@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    
+		<link href="/smr-frontend/patch/_app/immutable/assets/vendor.S7VwM45E.css" rel="stylesheet">
+		<link rel="modulepreload" href="/smr-frontend/patch/_app/immutable/entry/start.vBH310h6.js">
+		<link rel="modulepreload" href="/smr-frontend/patch/_app/immutable/chunks/vendor.XWSQ3ZnX.js">
+		<link rel="modulepreload" href="/smr-frontend/patch/_app/immutable/entry/app.s4cT5Xkr.js">
+		<link rel="modulepreload" href="/smr-frontend/patch/_app/immutable/chunks/preload-helper.-ShncZYO.js">
+  </head>
+  <body data-theme="custom-theme">
+    <div style="display: contents" class="h-full overflow-hidden">
+			<script>
+				{
+					__sveltekit_clvto9 = {
+						assets: "/smr-frontend/patch",
+						base: "/smr-frontend/patch",
+						env: null
+					};
+
+					const element = document.currentScript.parentElement;
+
+					Promise.all([
+						import("/smr-frontend/patch/_app/immutable/entry/start.vBH310h6.js"),
+						import("/smr-frontend/patch/_app/immutable/entry/app.s4cT5Xkr.js")
+					]).then(([kit, app]) => {
+						kit.start(app, element);
+					});
+
+					if ('serviceWorker' in navigator) {
+						addEventListener('load', function () {
+							navigator.serviceWorker.register('/smr-frontend/patch/service-worker.js');
+						});
+					}
+				}
+			</script>
+		</div>
+  </body>
+</html>
