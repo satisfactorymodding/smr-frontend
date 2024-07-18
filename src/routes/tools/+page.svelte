@@ -65,14 +65,6 @@
       link: 'https://daniel2013.github.io/satisfactory/'
     },
     {
-      name: 'Satisfactory Toolbox',
-      author: 'Lucek',
-      logo: '',
-      description:
-        'Factory tool collection, with main tool called "factory planner" with detailed, realtime stats for production and consumption, overclocking and much more.',
-      link: 'https://toolbox.satisfactory.lucek.io/'
-    },
-    {
       name: 'Satisfactory 3D Map',
       author: 'Moritz',
       logo: '',
