@@ -78,6 +78,14 @@
       logo: 'https://factoriolab.github.io/factoriolab.webp',
       description: 'Production calculator supporting multiple factory games and visualization approaches',
       link: 'https://factoriolab.github.io/satisfactory'
+    },
+    {
+      name: 'Satisfactory Dedicated Server Remote Manager',
+      author: 'GreyHak',
+      logo: 'https://raw.githubusercontent.com/GreyHak/sdsrm/main/sdsrm_icon.png',
+      description:
+        'Manage your 1.0+ Dedicated Server remotely with this Python GUI through the new Dedicated Server HTTPS API.  If you want a make your own remote manager, a Python library is available.',
+      link: 'https://github.com/GreyHak/sdsrm'
     }
   ];
 </script>
