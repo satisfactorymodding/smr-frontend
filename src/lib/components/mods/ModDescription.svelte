@@ -13,7 +13,7 @@
     <div class="p-4">
       <AnnouncementRow
         importance={AnnouncementImportance.Info}
-        message="This mod is hidden, which means it won't display in searches, and the Mod Manager will not display any view/download count or logo for it. A developer could chose to hide their mod for any number of reasons. Perhaps the mod is a library mod and not intended to be viewed directly, or maybe the developer doesn't want to develop the mod any more. Check the mod page for more information." />
+        message="This mod is hidden, which means it won't display in searches, and the Mod Manager will not display any view/download count or logo for it. A developer could choose to hide their mod for any number of reasons. Perhaps the mod is a library mod and not intended to be viewed directly, or maybe the developer doesn't want to develop the mod any more. Check the mod page for more information." />
     </div>
   {/if}
   <div class="card h-fit p-4">
