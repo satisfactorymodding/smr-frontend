@@ -65,13 +65,6 @@
       link: 'https://github.com/deantendo/sfuikit'
     },
     {
-      name: 'Ficsit.info',
-      author: 'Nevir',
-      logo: 'https://github.com/ficsit/ficsit.info/blob/master/web/assets/site-icons/maskable-512.png?raw=true',
-      description: 'Production line optimization tool, and game info database',
-      link: 'https://ficsit.info/'
-    },
-    {
       name: "Daniel's Satisfactory Tools",
       author: 'DanielTheProgrammer',
       logo: 'https://i.imgur.com/Ogt0r9k.png',
