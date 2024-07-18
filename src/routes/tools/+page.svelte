@@ -71,6 +71,13 @@
       description:
         'Shows all objects within a savegame in 3D and provides a simple version of the game world for spatial context. Additionally, all properties and values of objects are shown.',
       link: 'https://github.com/moritz-h/satisfactory-3d-map'
+    },
+    {
+      name: 'FactorioLab',
+      author: 'Doug Broad',
+      logo: 'https://factoriolab.github.io/factoriolab.webp',
+      description: 'Production calculator supporting multiple factory games and visualization approaches',
+      link: 'https://factoriolab.github.io/satisfactory'
     }
   ];
 </script>
