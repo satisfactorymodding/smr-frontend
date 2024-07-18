@@ -93,6 +93,14 @@
       description:
         'Shows all objects within a savegame in 3D and provides a simple version of the game world for spatial context. Additionally, all properties and values of objects are shown.',
       link: 'https://github.com/moritz-h/satisfactory-3d-map'
+    },
+    {
+      name: 'Satisfactory Dedicated Server Remote Manager',
+      author: 'GreyHak',
+      logo: 'https://raw.githubusercontent.com/GreyHak/sdsrm/main/sdsrm_icon.png',
+      description:
+        'Manage your 1.0+ Dedicated Server remotely with this Python GUI through the new Dedicated Server HTTPS API.  If you want a make your own remote manager, a Python library is available.',
+      link: 'https://github.com/GreyHak/sdsrm'
     }
   ];
 </script>
