@@ -36,7 +36,7 @@
       link: 'https://satisgraphtory.com/'
     },
     {
-      name: 'Satisfactory Calculator',
+      name: 'Satisfactory Calculator Interactive Map (SCIM)',
       author: 'Anthor',
       logo: '',
       description: 'Collection of tools for Satisfactory (Production planner, Interactive map, Recipes, etc)',
