@@ -44,13 +44,13 @@
   on:blur={onOut}
   role="none">
   <div
-    class:text-gray-500={fake}
+    class:text-neutral-500={fake}
     class:font-flow={fake}
     class="grid-max-auto grid grid-cols-1 justify-items-center sm:grid-cols-2">
     <div class="card-image-container cursor-pointer">
       <a href={link} on:keypress={() => goto(link)} tabindex="0">
         {#if fake}
-          <div class="logo max-h-full min-h-full min-w-full max-w-full bg-gray-500" />
+          <div class="logo max-h-full min-h-full min-w-full max-w-full bg-neutral-500" />
         {:else}
           <img src={renderedLogo} alt="{renderedName} Logo" class="logo max-h-full min-h-full min-w-full max-w-full" />
         {/if}

@@ -145,7 +145,7 @@
               <span class="inline-block text-xs font-semibold text-white">{$uploadPercent.toFixed(0)}%</span>
             </div>
           </div>
-          <div class="mb-4 flex h-2 overflow-hidden rounded bg-gray-600 text-xs">
+          <div class="mb-4 flex h-2 overflow-hidden rounded bg-neutral-600 text-xs">
             <div
               style="width: {$uploadPercent.toFixed(0)}%"
               class="flex flex-col justify-center whitespace-nowrap bg-yellow-600 text-center text-white shadow-none" />

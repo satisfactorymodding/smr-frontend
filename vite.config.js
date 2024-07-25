@@ -8,14 +8,7 @@ process.env.TAILWIND_MODE = dev ? 'watch' : 'build';
 
 /** @type {import('vite').UserConfig} */
 const config = {
-  plugins: [
-    sveltekit(),
-    purgeCss({
-      safelist: {
-        greedy: [/^hljs-/, /^cc-/]
-      }
-    })
-  ],
+  plugins: [sveltekit(), purgeCss()],
   server: {
     port: 3000,
     strictPort: true
