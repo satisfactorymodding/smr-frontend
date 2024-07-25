@@ -80,7 +80,7 @@ jobs:
           NODE_ENV: ${{ inputs.env }}
 
       - name: Deploy to pages
-        uses: JamesIves/github-pages-deploy-action@4
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: gh-pages
           folder: build/static
