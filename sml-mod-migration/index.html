@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    
+		<link href="/smr-frontend/sml-mod-migration/_app/immutable/assets/vendor.Cirlo5Z8.css" rel="stylesheet">
+		<link rel="modulepreload" href="/smr-frontend/sml-mod-migration/_app/immutable/entry/start.BmCPYqex.js">
+		<link rel="modulepreload" href="/smr-frontend/sml-mod-migration/_app/immutable/chunks/vendor.DCB_-SJ7.js">
+		<link rel="modulepreload" href="/smr-frontend/sml-mod-migration/_app/immutable/entry/app.BpaqnaEs.js">
+		<link rel="modulepreload" href="/smr-frontend/sml-mod-migration/_app/immutable/chunks/preload-helper.9YLJ1q38.js">
+  </head>
+  <body data-theme="custom-theme">
+    <div style="display: contents" class="h-full overflow-hidden">
+			<script>
+				{
+					__sveltekit_1b1kfbs = {
+						base: "/smr-frontend/sml-mod-migration",
+						assets: "/smr-frontend/sml-mod-migration"
+					};
+
+					const element = document.currentScript.parentElement;
+
+					Promise.all([
+						import("/smr-frontend/sml-mod-migration/_app/immutable/entry/start.BmCPYqex.js"),
+						import("/smr-frontend/sml-mod-migration/_app/immutable/entry/app.BpaqnaEs.js")
+					]).then(([kit, app]) => {
+						kit.start(app, element);
+					});
+
+					if ('serviceWorker' in navigator) {
+						addEventListener('load', function () {
+							navigator.serviceWorker.register('/smr-frontend/sml-mod-migration/service-worker.js');
+						});
+					}
+				}
+			</script>
+		</div>
+  </body>
+</html>
