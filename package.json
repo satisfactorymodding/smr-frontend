@@ -12,7 +12,7 @@
     "dev": "conc -c 'auto' bun:graphql-codegen:watch bun:dev:serve bun:check:dev bun:lint:dev",
     "dev:serve": "vite dev --host",
     "graphql-codegen": "graphql-codegen -r dotenv-flow/config --default-node-env=development --config codegen.yml",
-    "graphql-codegen:watch": "graphql-codegen --watch",
+    "graphql-codegen:watch": "bun graphql-codegen --watch",
     "lint": "eslint . && prettier --check .",
     "lint:dev": "chokidar -c \"eslint . --cache\" --silent --initial \"src/**/*.svelte\" \"src/**/*.ts\"",
     "prepare": "husky",
