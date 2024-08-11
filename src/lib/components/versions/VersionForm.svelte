@@ -88,7 +88,13 @@
               </span>
             {/if}
 
-            <span><strong>Game version:</strong> {$modMeta.uplugin.GameVersion}<br /></span>
+            {#if $modMeta.uplugin.GameVersion !== undefined}
+              <span><strong>Game version:</strong> {$modMeta.uplugin.GameVersion}<br /></span>
+            {:else}
+              <span class="text-yellow-600">
+                {$t('version-form.missing-game-version')}
+              </span>
+            {/if}
           </p>
 
           <span><strong>Targets:</strong> {$modMeta.targets.join(', ')}<br /></span>

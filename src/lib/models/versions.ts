@@ -48,9 +48,12 @@ const readUPluginJson = async (
 
   const parsed = JSON.parse(uPluginJson) as VersionMetadata['uplugin'];
 
-  if (!parsed.GameVersion) {
+  const hasSMLDependency = parsed.Plugins?.some((plugin) => plugin.Name === 'SML');
+  const hasGameVersion = !!parsed.GameVersion;
+
+  if (!hasSMLDependency && !hasGameVersion) {
     return {
-      message: `missing GameVersion in ${modReference}.uplugin`
+      message: `either GameVersion or SML dependency must be present in ${modReference}.uplugin`
     };
   }
 
