@@ -3,7 +3,6 @@ query GetModVersion($version: VersionID!) {
     id
     version
     stability
-    sml_version
     game_version
     downloads
     created_at

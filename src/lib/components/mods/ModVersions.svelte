@@ -50,7 +50,6 @@
           <tr>
             <th>{$t('version')}</th>
             <th>{$t('stability')}</th>
-            <th>SML {$t('version')}</th>
             <th>{$t('game-versions')}</th>
             <th>{$t('downloads')}</th>
             <th>{$t('upload-date')}</th>
@@ -62,7 +61,6 @@
             <tr on:click={() => toggleRow(version.id)}>
               <td>{version.version}</td>
               <td>{version.stability}</td>
-              <td>{version.sml_version}</td>
               <td>{version.game_version}</td>
               <td>{prettyNumber(version.downloads)}</td>
               <td>{prettyDate(version.created_at)}</td>
@@ -141,7 +139,7 @@
 
             {#if expandedVersions.has(version.id)}
               <tr>
-                <td colspan={7}>
+                <td colspan={6}>
                   <div class="col-span-3 p-2">{$t('size')}: {prettyBytes(version.size)}</div>
                   <div class="col-span-3 p-2">{$t('hash')}: {version.hash}</div>
 

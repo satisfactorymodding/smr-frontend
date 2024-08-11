@@ -15,17 +15,14 @@ query GetMods($offset: Int!, $limit: Int!, $search: String, $order: Order, $orde
         alpha {
           id
           version
-          sml_version
         }
         beta {
           id
           version
-          sml_version
         }
         release {
           id
           version
-          sml_version
         }
       }
       compatibility {
