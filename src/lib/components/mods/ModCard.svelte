@@ -13,9 +13,9 @@
     'id' | 'mod_reference' | 'name' | 'logo' | 'views' | 'downloads' | 'short_description' | 'compatibility' | 'tags'
   > & {
     latestVersions: {
-      alpha?: Maybe<Pick<Version, 'id' | 'sml_version'>>;
-      beta?: Maybe<Pick<Version, 'id' | 'sml_version'>>;
-      release?: Maybe<Pick<Version, 'id' | 'sml_version'>>;
+      alpha?: Maybe<Pick<Version, 'id'>>;
+      beta?: Maybe<Pick<Version, 'id'>>;
+      release?: Maybe<Pick<Version, 'id'>>;
     };
   };
 

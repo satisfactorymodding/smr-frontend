@@ -39,6 +39,7 @@
   });
 
   $: preview = ($data.changelog as string) || '';
+  $: dependencies = $modMeta?.uplugin?.Plugins?.filter((d) => !d.BasePlugin) || [];
 </script>
 
 <form use:form>
@@ -86,6 +87,14 @@
                 {$modMeta.uplugin.Version}.0.0
               </span>
             {/if}
+
+            {#if $modMeta.uplugin.GameVersion !== undefined}
+              <span><strong>Game version:</strong> {$modMeta.uplugin.GameVersion}<br /></span>
+            {:else}
+              <span class="text-yellow-600">
+                {$t('version-form.missing-game-version')}
+              </span>
+            {/if}
           </p>
 
           <span><strong>Targets:</strong> {$modMeta.targets.join(', ')}<br /></span>
@@ -93,7 +102,7 @@
           {#if $modMeta.uplugin.Plugins !== undefined}
             <p>
               <strong>{$t('dependencies')}:</strong><br />
-              {#each $modMeta.uplugin.Plugins as dependency}
+              {#each dependencies as dependency}
                 <strong>{dependency.Name}: </strong>
                 {#if dependency.SemVersion}
                   <span>{dependency.SemVersion}</span>

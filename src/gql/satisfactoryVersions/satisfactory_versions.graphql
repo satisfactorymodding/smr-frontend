@@ -1,0 +1,7 @@
+query GetSatisfactoryVersions {
+  getSatisfactoryVersions {
+    id
+    version
+    engine_version
+  }
+}

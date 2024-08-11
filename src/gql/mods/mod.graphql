@@ -25,7 +25,7 @@ query GetMod($mod: String!) {
         }
         version
         created_at
-        sml_version
+        game_version
       }
       beta {
         id
@@ -42,7 +42,7 @@ query GetMod($mod: String!) {
         }
         version
         created_at
-        sml_version
+        game_version
       }
       release {
         id
@@ -59,7 +59,7 @@ query GetMod($mod: String!) {
         }
         version
         created_at
-        sml_version
+        game_version
       }
     }
     downloads

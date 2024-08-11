@@ -8,7 +8,9 @@
   import { AppBar, type PopupSettings, popup, getDrawerStore, getModalStore } from '@skeletonlabs/skeleton';
   import LoginModal from '$lib/modals/LoginModal.svelte';
 
-  $: isAdmin = !$user ? false : $user.roles.approveMods || $user.roles.approveVersions || $user.roles.editSMLVersions;
+  $: isAdmin = !$user
+    ? false
+    : $user.roles.approveMods || $user.roles.approveVersions || $user.roles.editSatisfactoryVersions;
 
   export const { t } = getTranslate();
 
