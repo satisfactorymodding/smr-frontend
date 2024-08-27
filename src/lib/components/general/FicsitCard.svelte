@@ -1,16 +1,32 @@
 <script lang="ts">
   import { assets } from '$app/paths';
   import { goto, preloadData } from '$app/navigation';
+  import { thumbHashToDataURL } from 'thumbhash';
+  import { fade } from 'svelte/transition';
 
   export let name = '';
   export let logo = assets + '/images/no_image.webp';
   export let description = '';
   export let link = '/';
   export let fake = false;
+  export let thumbhash = '2/eFDQIsFmh9h4BreKeAeQqYBxd3d3J4Jw';
 
   $: renderedLogo = logo || assets + '/images/no_image.webp';
   $: renderedName = name || (fake && 'Card Name');
   $: renderedDescription = description || (fake && 'Short card description');
+  $: thumbHashData = (() => {
+    try {
+      return thumbHashToDataURL(
+        new Uint8Array(
+          atob(thumbhash)
+            .split('')
+            .map((x) => x.charCodeAt(0))
+        )
+      );
+    } catch (e) {
+      console.error(e);
+    }
+  })();
 
   let preloaded = false;
   let timeoutHandle: number;
@@ -34,6 +50,8 @@
   };
 
   let actionButtons: HTMLElement;
+
+  let imageLoaded = false;
 </script>
 
 <div
@@ -48,11 +66,27 @@
     class:font-flow={fake}
     class="grid-max-auto grid grid-cols-1 justify-items-center sm:grid-cols-2">
     <div class="card-image-container cursor-pointer">
-      <a href={link} on:keypress={() => goto(link)} tabindex="0">
+      <a
+        href={link}
+        on:keypress={() => goto(link)}
+        tabindex="0"
+        class="relative block max-h-full min-h-full min-w-full max-w-full">
         {#if fake}
           <div class="logo max-h-full min-h-full min-w-full max-w-full bg-neutral-500" />
         {:else}
-          <img src={renderedLogo} alt="{renderedName} Logo" class="logo max-h-full min-h-full min-w-full max-w-full" />
+          <img
+            class="logo absolute max-h-full min-h-full min-w-full max-w-full"
+            src={renderedLogo}
+            alt="{renderedName} Logo"
+            on:load={() => (imageLoaded = true)} />
+          {#if !imageLoaded}
+            <img
+              class="logo absolute max-h-full min-h-full min-w-full max-w-full bg-neutral-500"
+              src={thumbHashData}
+              alt="{renderedName} Logo"
+              width="100%"
+              out:fade={{ duration: 200 }} />
+          {/if}
         {/if}
       </a>
     </div>
@@ -115,6 +149,34 @@
   @media (min-width: 1024px) {
     .grid-max-auto {
       grid-template-columns: max-content auto;
+    }
+  }
+
+  .elementToFadeInAndOut {
+    width: 200px;
+    height: 200px;
+    background: red;
+    -webkit-animation: fadeinout 4s linear forwards;
+    animation: fadeinout 4s linear forwards;
+  }
+
+  @-webkit-keyframes fadeinout {
+    0%,
+    100% {
+      opacity: 0;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+
+  @keyframes fadeinout {
+    0%,
+    100% {
+      opacity: 0;
+    }
+    50% {
+      opacity: 1;
     }
   }
 </style>
