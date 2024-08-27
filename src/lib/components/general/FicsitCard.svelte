@@ -53,7 +53,6 @@
   let actionButtons: HTMLElement;
 
   let imageLoaded = false;
-  let thumbnailLoaded = false;
 </script>
 
 <div
@@ -77,20 +76,18 @@
           <div class="logo max-h-full min-h-full min-w-full max-w-full bg-neutral-500" />
         {:else}
           <img
-            class="logo fade-in-image absolute max-h-full min-h-full min-w-full max-w-full"
-            class:hidden={!imageLoaded}
+            class="logo absolute max-h-full min-h-full min-w-full max-w-full transition-opacity delay-100 duration-200 ease-linear"
+            class:invisible={!imageLoaded}
+            class:opacity-0={!imageLoaded}
             src={renderedLogo}
             alt="{renderedName} Logo"
             on:load={() => (imageLoaded = true)} />
           {#if !imageLoaded && thumbHashData}
             <img
-              class="logo fade-in-thumbhash absolute max-h-full min-h-full min-w-full max-w-full bg-neutral-500"
-              class:hidden={!thumbnailLoaded}
+              class="logo absolute max-h-full min-h-full min-w-full max-w-full"
               src={thumbHashData}
               alt="{renderedName} Logo"
-              width="100%"
-              on:load={() => (thumbnailLoaded = true)}
-              in:fade={{ duration: 1000 }}
+              in:fade={{ duration: 200 }}
               out:fade={{ duration: 200, delay: 100 }} />
           {/if}
         {/if}
@@ -155,23 +152,6 @@
   @media (min-width: 1024px) {
     .grid-max-auto {
       grid-template-columns: max-content auto;
-    }
-  }
-
-  .fade-in-image {
-    animation: fadeIn 200ms;
-  }
-
-  .fade-in-thumbhash {
-    animation: fadeIn 1s;
-  }
-
-  @keyframes fadeIn {
-    0% {
-      opacity: 0;
-    }
-    100% {
-      opacity: 1;
     }
   }
 </style>
