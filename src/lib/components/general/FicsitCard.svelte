@@ -53,6 +53,11 @@
   let actionButtons: HTMLElement;
 
   let imageLoaded = false;
+
+  $: {
+    renderedLogo;
+    imageLoaded = false;
+  }
 </script>
 
 <div
