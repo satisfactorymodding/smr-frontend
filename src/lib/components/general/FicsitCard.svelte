@@ -9,16 +9,17 @@
   export let description = '';
   export let link = '/';
   export let fake = false;
-  export let thumbhash = '2/eFDQIsFmh9h4BreKeAeQqYBxd3d3J4Jw';
+  export let thumbhash = '';
 
   $: renderedLogo = logo || assets + '/images/no_image.webp';
   $: renderedName = name || (fake && 'Card Name');
   $: renderedDescription = description || (fake && 'Short card description');
+  $: renderedThumbhash = thumbhash || '2/eFDQIsFmh9h4BreKeAeQqYBxd3d3J4Jw';
   $: thumbHashData = (() => {
     try {
       return thumbHashToDataURL(
         new Uint8Array(
-          atob(thumbhash)
+          atob(renderedThumbhash)
             .split('')
             .map((x) => x.charCodeAt(0))
         )
