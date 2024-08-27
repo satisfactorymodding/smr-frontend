@@ -77,19 +77,20 @@
           <div class="logo max-h-full min-h-full min-w-full max-w-full bg-neutral-500" />
         {:else}
           <img
-            class="logo absolute max-h-full min-h-full min-w-full max-w-full"
-            class:invisible={!imageLoaded}
+            class="logo fade-in-image absolute max-h-full min-h-full min-w-full max-w-full"
+            class:hidden={!imageLoaded}
             src={renderedLogo}
             alt="{renderedName} Logo"
             on:load={() => (imageLoaded = true)} />
           {#if !imageLoaded && thumbHashData}
             <img
-              class="logo absolute max-h-full min-h-full min-w-full max-w-full bg-neutral-500"
-              class:invisible={!thumbnailLoaded}
+              class="logo fade-in-thumbhash absolute max-h-full min-h-full min-w-full max-w-full bg-neutral-500"
+              class:hidden={!thumbnailLoaded}
               src={thumbHashData}
               alt="{renderedName} Logo"
               width="100%"
               on:load={() => (thumbnailLoaded = true)}
+              in:fade={{ duration: 1000 }}
               out:fade={{ duration: 200, delay: 100 }} />
           {/if}
         {/if}
@@ -157,30 +158,19 @@
     }
   }
 
-  .elementToFadeInAndOut {
-    width: 200px;
-    height: 200px;
-    background: red;
-    -webkit-animation: fadeinout 4s linear forwards;
-    animation: fadeinout 4s linear forwards;
+  .fade-in-image {
+    animation: fadeIn 200ms;
   }
 
-  @-webkit-keyframes fadeinout {
-    0%,
-    100% {
-      opacity: 0;
-    }
-    50% {
-      opacity: 1;
-    }
+  .fade-in-thumbhash {
+    animation: fadeIn 1s;
   }
 
-  @keyframes fadeinout {
-    0%,
-    100% {
+  @keyframes fadeIn {
+    0% {
       opacity: 0;
     }
-    50% {
+    100% {
       opacity: 1;
     }
   }
