@@ -85,7 +85,7 @@
               src={thumbHashData}
               alt="{renderedName} Logo"
               width="100%"
-              out:fade={{ duration: 200 }} />
+              out:fade={{ duration: 200, delay: 100 }} />
           {/if}
         {/if}
       </a>
