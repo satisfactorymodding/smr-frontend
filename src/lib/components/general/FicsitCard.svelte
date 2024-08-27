@@ -52,6 +52,7 @@
   let actionButtons: HTMLElement;
 
   let imageLoaded = false;
+  let thumbnailLoaded = false;
 </script>
 
 <div
@@ -76,15 +77,18 @@
         {:else}
           <img
             class="logo absolute max-h-full min-h-full min-w-full max-w-full"
+            class:invisible={!imageLoaded}
             src={renderedLogo}
             alt="{renderedName} Logo"
             on:load={() => (imageLoaded = true)} />
-          {#if !imageLoaded}
+          {#if !imageLoaded && thumbHashData}
             <img
               class="logo absolute max-h-full min-h-full min-w-full max-w-full bg-neutral-500"
+              class:invisible={!thumbnailLoaded}
               src={thumbHashData}
               alt="{renderedName} Logo"
               width="100%"
+              on:load={() => (thumbnailLoaded = true)}
               out:fade={{ duration: 200, delay: 100 }} />
           {/if}
         {/if}
