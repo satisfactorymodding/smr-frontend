@@ -8,6 +8,7 @@ query GetMods($offset: Int!, $limit: Int!, $search: String, $order: Order, $orde
       mod_reference
       name
       logo
+      logo_thumbhash
       views
       downloads
       short_description
