@@ -5,15 +5,8 @@
 
   export let dependencies!: Pick<VersionDependency, 'mod_id' | 'optional' | 'condition'>[];
 
-  const requiredDependencies: Pick<VersionDependency, 'mod_id' | 'optional' | 'condition'>[] = [];
-  const optionalDependencies: Pick<VersionDependency, 'mod_id' | 'optional' | 'condition'>[] = [];
-  dependencies.forEach((dependency) => {
-    if (dependency.optional) {
-      optionalDependencies.push(dependency);
-    } else {
-      requiredDependencies.push(dependency);
-    }
-  });
+  $: requiredDependencies = dependencies.filter((d) => !d.optional);
+  $: optionalDependencies = dependencies.filter((d) => d.optional);
 </script>
 
 <div class="grid grid-flow-row">
