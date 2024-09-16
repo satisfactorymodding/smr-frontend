@@ -1,5 +1,6 @@
 <script lang="ts">
   import { AnnouncementImportance } from '$lib/generated';
+  import { markdown } from '$lib/utils/markdown';
 
   const iconNames: { [key in AnnouncementImportance]: string } = {
     [AnnouncementImportance.Info]: 'info',
@@ -27,10 +28,14 @@
   <div class="striped p-1 text-black">
     <span class="material-icons align-middle text-2xl">{iconNames[importance]}</span>
     <div
-      class="text-l inline-block max-w-full break-words align-middle"
+      class="text-l announcement-markdown inline-block max-w-full break-words align-middle"
       class:font-mono={isMonospace}
       class:whitespace-pre={isMonospace}>
-      <b>{importance}: </b>{finalMessage}
+      <b>{importance}: </b>
+      {#await markdown(finalMessage, true) then previewRendered}
+        <!-- eslint-disable-next-line -->
+        {@html previewRendered}
+      {/await}
     </div>
   </div>
 </div>
