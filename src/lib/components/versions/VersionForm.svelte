@@ -44,20 +44,6 @@
 
 <form use:form>
   <div class="grid grid-flow-row gap-6">
-    <div class="grid grid-flow-row gap-2">
-      <label class="label">
-        <span>{$t('stability')} *</span>
-        <select class="select" bind:value={$data.stability}>
-          <option value="alpha">Alpha</option>
-          <option value="beta">Beta</option>
-          <option value="release">Release</option>
-        </select>
-      </label>
-      <ValidationMessage for="stability" let:messages={message}>
-        <span class="validation-message">{message || ''}</span>
-      </ValidationMessage>
-    </div>
-
     {#if !editing}
       <div class="grid grid-flow-row gap-2">
         <label for="file">{$t('file')} *</label>

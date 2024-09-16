@@ -18,9 +18,7 @@
   };
 
   const stabilities = {
-    release: 'new_releases',
-    beta: 'warning',
-    alpha: 'report'
+    release: 'new_releases'
   };
 
   export let latestVersions!: ILatestVersions;
@@ -44,8 +42,7 @@
               <a
                 href="{base}/mod/{modId}/version/{latestVersions[stability].id}/"
                 class="text-yellow-500 underline"
-                title="Click to view patch notes for this version"
-                >Version {latestVersions[stability].version} ({stability})</a>
+                title="Click to view patch notes for this version">Version {latestVersions[stability].version}</a>
               <div>{prettyDate(latestVersions[stability].created_at)}</div>
             </div>
             <div class="text-1xl col-span-3 h-auto w-auto p-2.5">
