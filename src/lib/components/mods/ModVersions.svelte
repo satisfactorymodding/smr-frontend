@@ -49,7 +49,6 @@
         <thead>
           <tr>
             <th>{$t('version')}</th>
-            <th>{$t('stability')}</th>
             <th>{$t('game-versions')}</th>
             <th>{$t('downloads')}</th>
             <th>{$t('upload-date')}</th>
@@ -60,7 +59,6 @@
           {#each $versions.data.getMod.versions as version}
             <tr on:click={() => toggleRow(version.id)}>
               <td>{version.version}</td>
-              <td>{version.stability}</td>
               <td>{version.game_version}</td>
               <td>{prettyNumber(version.downloads)}</td>
               <td>{prettyDate(version.created_at)}</td>
