@@ -1,0 +1,7 @@
+mutation UpdateSatisfactoryVersion($id: SatisfactoryVersionID!, $satisfactoryVersion: UpdateSatisfactoryVersion!) {
+  updateSatisfactoryVersion(id: $id, input: $satisfactoryVersion) {
+    id
+    version
+    engine_version
+  }
+}

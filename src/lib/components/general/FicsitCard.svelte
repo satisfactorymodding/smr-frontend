@@ -1,16 +1,33 @@
 <script lang="ts">
   import { assets } from '$app/paths';
   import { goto, preloadData } from '$app/navigation';
+  import { thumbHashToDataURL } from 'thumbhash';
+  import { fade } from 'svelte/transition';
 
   export let name = '';
   export let logo = assets + '/images/no_image.webp';
   export let description = '';
   export let link = '/';
   export let fake = false;
+  export let thumbhash = '';
 
   $: renderedLogo = logo || assets + '/images/no_image.webp';
   $: renderedName = name || (fake && 'Card Name');
   $: renderedDescription = description || (fake && 'Short card description');
+  $: renderedThumbhash = thumbhash || '2/eFDQIsFmh9h4BreKeAeQqYBxd3d3J4Jw';
+  $: thumbHashData = (() => {
+    try {
+      return thumbHashToDataURL(
+        new Uint8Array(
+          atob(renderedThumbhash)
+            .split('')
+            .map((x) => x.charCodeAt(0))
+        )
+      );
+    } catch (e) {
+      console.error(e);
+    }
+  })();
 
   let preloaded = false;
   let timeoutHandle: number;
@@ -34,6 +51,19 @@
   };
 
   let actionButtons: HTMLElement;
+
+  let imageLoaded = false;
+  let thumbnailLoaded = false;
+
+  $: {
+    renderedLogo;
+    imageLoaded = false;
+  }
+
+  $: {
+    renderedThumbhash;
+    thumbnailLoaded = false;
+  }
 </script>
 
 <div
@@ -44,15 +74,35 @@
   on:blur={onOut}
   role="none">
   <div
-    class:text-gray-500={fake}
+    class:text-neutral-500={fake}
     class:font-flow={fake}
     class="grid-max-auto grid grid-cols-1 justify-items-center sm:grid-cols-2">
     <div class="card-image-container cursor-pointer">
-      <a href={link} on:keypress={() => goto(link)} tabindex="0">
+      <a
+        href={link}
+        on:keypress={() => goto(link)}
+        tabindex="0"
+        class="relative block max-h-full min-h-full min-w-full max-w-full">
         {#if fake}
-          <div class="logo max-h-full min-h-full min-w-full max-w-full bg-gray-500" />
+          <div class="logo max-h-full min-h-full min-w-full max-w-full bg-neutral-500" />
         {:else}
-          <img src={renderedLogo} alt="{renderedName} Logo" class="logo max-h-full min-h-full min-w-full max-w-full" />
+          <img
+            class="logo absolute max-h-full min-h-full min-w-full max-w-full transition-opacity delay-100 duration-200 ease-linear"
+            class:invisible={!imageLoaded}
+            class:opacity-0={!imageLoaded}
+            src={renderedLogo}
+            alt="{renderedName} Logo"
+            on:load={() => (imageLoaded = true)} />
+          {#if !imageLoaded && thumbHashData}
+            <img
+              class="logo absolute max-h-full min-h-full min-w-full max-w-full"
+              class:invisible={!thumbnailLoaded}
+              src={thumbHashData}
+              alt="{renderedName} Logo"
+              on:load={() => (thumbnailLoaded = true)}
+              in:fade={{ duration: 200 }}
+              out:fade={{ duration: 200, delay: 100 }} />
+          {/if}
         {/if}
       </a>
     </div>

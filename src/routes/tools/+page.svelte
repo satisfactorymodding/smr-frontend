@@ -28,13 +28,6 @@
       link: 'https://kirkmcdonald.github.io/satisfactory-calculator/calc.html'
     },
     {
-      name: 'Map',
-      author: 'Cornik and S4XXX',
-      logo: '',
-      description: 'Satisfactory map based on in-game coordinates.',
-      link: 'https://www.satisfactorymap.com/'
-    },
-    {
       name: 'SatisGraphtory',
       author: 'tehalexf and thinkaliker',
       logo: 'https://cdn.jsdelivr.net/gh/rhocode/rhocode.github.io@4713b4887e8821f1482de7af4ae32fb6a4b2bcaf/img/satoolsfactory_icons/dot.png',
@@ -43,7 +36,7 @@
       link: 'https://satisgraphtory.com/'
     },
     {
-      name: 'Satisfactory Calculator',
+      name: 'Satisfactory Calculator Interactive Map (SCIM)',
       author: 'Anthor',
       logo: '',
       description: 'Collection of tools for Satisfactory (Production planner, Interactive map, Recipes, etc)',
@@ -65,26 +58,11 @@
       link: 'https://github.com/deantendo/sfuikit'
     },
     {
-      name: 'Ficsit.info',
-      author: 'Nevir',
-      logo: 'https://github.com/ficsit/ficsit.info/blob/master/web/assets/site-icons/maskable-512.png?raw=true',
-      description: 'Production line optimization tool, and game info database',
-      link: 'https://ficsit.info/'
-    },
-    {
       name: "Daniel's Satisfactory Tools",
       author: 'DanielTheProgrammer',
       logo: 'https://i.imgur.com/Ogt0r9k.png',
       description: 'Visualize production chains, and browse items and recipes!',
       link: 'https://daniel2013.github.io/satisfactory/'
-    },
-    {
-      name: 'Satisfactory Toolbox',
-      author: 'Lucek',
-      logo: '',
-      description:
-        'Factory tool collection, with main tool called "factory planner" with detailed, realtime stats for production and consumption, overclocking and much more.',
-      link: 'https://toolbox.satisfactory.lucek.io/'
     },
     {
       name: 'Satisfactory 3D Map',
@@ -93,6 +71,21 @@
       description:
         'Shows all objects within a savegame in 3D and provides a simple version of the game world for spatial context. Additionally, all properties and values of objects are shown.',
       link: 'https://github.com/moritz-h/satisfactory-3d-map'
+    },
+    {
+      name: 'FactorioLab',
+      author: 'Doug Broad',
+      logo: 'https://factoriolab.github.io/factoriolab.webp',
+      description: 'Production calculator supporting multiple factory games and visualization approaches',
+      link: 'https://factoriolab.github.io/satisfactory'
+    },
+    {
+      name: 'Satisfactory Dedicated Server Remote Manager',
+      author: 'GreyHak',
+      logo: 'https://raw.githubusercontent.com/GreyHak/sdsrm/main/sdsrm_icon.png',
+      description:
+        'Manage your 1.0+ Dedicated Server remotely with this Python GUI through the new Dedicated Server HTTPS API.  If you want a make your own remote manager, a Python library is available.',
+      link: 'https://github.com/GreyHak/sdsrm'
     }
   ];
 </script>

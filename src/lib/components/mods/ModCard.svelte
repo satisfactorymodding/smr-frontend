@@ -10,12 +10,21 @@
 
   export let mod: Pick<
     Mod,
-    'id' | 'mod_reference' | 'name' | 'logo' | 'views' | 'downloads' | 'short_description' | 'compatibility' | 'tags'
+    | 'id'
+    | 'mod_reference'
+    | 'name'
+    | 'logo'
+    | 'views'
+    | 'downloads'
+    | 'short_description'
+    | 'compatibility'
+    | 'tags'
+    | 'logo_thumbhash'
   > & {
     latestVersions: {
-      alpha?: Maybe<Pick<Version, 'id' | 'sml_version'>>;
-      beta?: Maybe<Pick<Version, 'id' | 'sml_version'>>;
-      release?: Maybe<Pick<Version, 'id' | 'sml_version'>>;
+      alpha?: Maybe<Pick<Version, 'id'>>;
+      beta?: Maybe<Pick<Version, 'id'>>;
+      release?: Maybe<Pick<Version, 'id'>>;
     };
   };
 
@@ -27,6 +36,7 @@
   name={mod.name}
   link={base + '/mod/' + mod.mod_reference}
   logo={mod.logo}
+  thumbhash={mod.logo_thumbhash}
   description={mod.short_description}>
   <div slot="stats" class="flex flex-row items-center gap-2">
     <span><span class="material-icons mr-1 align-middle text-sm">visibility</span>{prettyNumber(mod.views)}</span>

@@ -302,7 +302,7 @@ $RECYCLE.BIN/
 /functions
 /.graphqlconfig
 /schema.graphql
-/graphql.schema.json
+/graphql.schema.*
 /.svelte-kit
 /.pnpm-store
 .direnv

@@ -17,10 +17,12 @@ export type VersionMetadata = {
   uplugin: {
     Version: string;
     SemVersion?: string;
+    GameVersion?: string;
     Plugins?: {
       Name: string;
       SemVersion?: string;
-      Optional: boolean;
+      BasePlugin?: boolean;
+      Optional?: boolean;
     }[];
   };
   objects: string[];
@@ -46,17 +48,12 @@ const readUPluginJson = async (
 
   const parsed = JSON.parse(uPluginJson) as VersionMetadata['uplugin'];
 
-  let foundSML = false;
-  for (const dependency of parsed.Plugins) {
-    if (dependency.Name === 'SML') {
-      foundSML = true;
-      break;
-    }
-  }
+  const hasSMLDependency = parsed.Plugins?.some((plugin) => plugin.Name === 'SML');
+  const hasGameVersion = !!parsed.GameVersion;
 
-  if (!foundSML) {
+  if (!hasSMLDependency && !hasGameVersion) {
     return {
-      message: 'mod must depend on SML'
+      message: `either GameVersion or SML dependency must be present in ${modReference}.uplugin`
     };
   }
 

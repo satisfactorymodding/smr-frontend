@@ -100,7 +100,7 @@
           <div class="absolute top-0 flex h-full w-full items-center justify-center">
             <img class="centered-logo" src={assets + '/images/sf_modding_logo.webp'} alt="Satisfactory Modding Logo" />
           </div>
-          <div class="absolute bottom-0 w-full px-4 pb-4 text-center text-gray-400 xl:text-left">
+          <div class="absolute bottom-0 w-full px-4 pb-4 text-center text-neutral-400 xl:text-left">
             <span>{$t('home.banner.community-run-discord')}</span>
           </div>
         </div>
@@ -116,7 +116,7 @@
               src={assets + '/images/satisfactory_logo_full_color_small.webp'}
               alt="Satisfactory Logo" />
           </div>
-          <div class="absolute bottom-0 w-full px-4 pb-4 text-center text-gray-300 xl:text-right">
+          <div class="absolute bottom-0 w-full px-4 pb-4 text-center text-neutral-300 xl:text-right">
             <span>{$t('home.banner.official-website')}</span>
           </div>
         </div>

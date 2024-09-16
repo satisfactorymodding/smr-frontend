@@ -34,7 +34,13 @@ const rules = {
 
 export default [
   {
-    ignores: [".svelte-kit/**/*"],
+    ignores: [
+      ".svelte-kit/**/*",
+      "node_modules/**/*",
+      "dist/**/*",
+      "build/**/*",
+      "src/i18n/**/*"
+    ],
   },
 
   {

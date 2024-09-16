@@ -3,16 +3,6 @@ import type { Config } from 'tailwindcss';
 
 import { skeleton } from '@skeletonlabs/tw-plugin';
 
-import colors from 'tailwindcss/colors';
-
-// Keeps this warning from appearing as part of dev-serve task
-// https://github.com/tailwindlabs/tailwindcss/issues/4690
-delete colors['lightBlue'];
-delete colors['warmGray'];
-delete colors['trueGray'];
-delete colors['coolGray'];
-delete colors['blueGray'];
-
 import { customTheme } from './custom-theme';
 
 const config = {
@@ -26,10 +16,6 @@ const config = {
     extend: {
       fontFamily: {
         flow: ['Flow']
-      },
-      colors: {
-        gray: colors.neutral,
-        lime: colors.lime
       },
       screens: {
         fhd: '1920px',
