@@ -19,7 +19,13 @@ You should [operate the devcontainer out of an isolated Docker volume](https://c
 to avoid the _significant_ slowdowns caused by working on the host file system.
 You may need to [install additional software](https://code.visualstudio.com/remote/advancedcontainers/sharing-git-credentials)
 to share your git credentials with the container.
-Alternative, try using GitHub Codespaces.
+Alternatively, try using GitHub Codespaces.
+
+If you normally [gpg sign your commits](https://code.visualstudio.com/remote/advancedcontainers/sharing-git-credentials#_sharing-gpg-keys)
+and the container is giving you trouble,
+consider turning off signing inside the container by running
+`git config --global commit.gpgsign false`
+inside the container.
 
 ### Dependencies
 

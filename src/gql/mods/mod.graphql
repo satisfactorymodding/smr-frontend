@@ -21,6 +21,7 @@ query GetMod($mod: String!) {
         }
         dependencies {
           mod_id
+          optional
           condition
         }
         version
@@ -38,6 +39,7 @@ query GetMod($mod: String!) {
         }
         dependencies {
           mod_id
+          optional
           condition
         }
         version
@@ -55,6 +57,7 @@ query GetMod($mod: String!) {
         }
         dependencies {
           mod_id
+          optional
           condition
         }
         version

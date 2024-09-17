@@ -36,7 +36,8 @@
 				"mikestead.dotenv",
 				"me-dutour-mathieu.vscode-github-actions",
 				"eamodio.gitlens",
-				"GitHub.copilot"
+				"GitHub.copilot",
+				"GitHub.vscode-pull-request-github"
 			]
 		}
 	},

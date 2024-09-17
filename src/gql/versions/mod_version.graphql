@@ -28,6 +28,7 @@ query GetModVersion($version: VersionID!) {
     }
     dependencies {
       mod_id
+      optional
       condition
     }
   }

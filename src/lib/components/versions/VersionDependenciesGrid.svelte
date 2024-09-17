@@ -1,34 +1,55 @@
 <script lang="ts">
-  import { base } from '$app/paths';
+  import DependencyRow from './DependencyRow.svelte';
+
   import type { VersionDependency } from '$lib/generated';
 
-  export let dependencies!: Pick<VersionDependency, 'mod_id' | 'condition'>[];
+  export let dependencies!: Pick<VersionDependency, 'mod_id' | 'optional' | 'condition'>[];
+
+  $: requiredDependencies = dependencies.filter((d) => !d.optional);
+  $: optionalDependencies = dependencies.filter((d) => d.optional);
 </script>
 
 <div class="grid grid-flow-row">
-  <table aria-label="Mod Dependency" class="max-w-auto table table-hover !overflow-visible">
+  <table aria-label="Required Mod Dependencies" class="max-w-auto table table-hover !overflow-visible">
     <tbody>
       <tr class="rounded border !border-surface-500">
-        <td>Mod Dependency</td>
+        <td
+          class="underline decoration-dotted"
+          title="Other mods that must be installed for this mod to function. The Mod Manager will automatically install these for you."
+          >Required Dependencies</td>
         <td><div class="text-center">Version Range</div></td>
       </tr>
-      {#if dependencies?.length === 0}
+      {#if requiredDependencies?.length === 0}
+        <!-- A mod *not* having required dependencies is rare, so point it out when this is the case -->
         <tr class="rounded border !border-surface-500">
           <td><div class="text-center">None</div></td>
           <td><div class="text-center">N/A</div></td>
         </tr>
       {:else}
-        {#each dependencies as dependency}
-          <tr class="rounded border !border-surface-500">
-            <td>
-              <a title="Click to view mod page" href={`${base}/mod/${dependency.mod_id}`} class="text-yellow-500">
-                <u>{dependency.mod_id}</u>
-              </a>
-            </td>
-            <td><div class="text-center">{dependency.condition}</div></td>
-          </tr>
+        {#each requiredDependencies as dependency}
+          <DependencyRow {dependency} />
         {/each}
       {/if}
     </tbody>
   </table>
 </div>
+
+<!-- Optional dependencies are uncommon as of now, so don't spend UI space on them unless there are any -->
+{#if optionalDependencies?.length !== 0}
+  <div class="grid grid-flow-row">
+    <table aria-label="Optional Mod Dependencies" class="max-w-auto table table-hover !overflow-visible">
+      <tbody>
+        <tr class="rounded border !border-surface-500">
+          <td
+            class="underline decoration-dotted"
+            title="Other mods that don't need to be installed for this mod to function, but may unlock additional functionality when present. You must chose to install them in the Mod Manager if you wish to use them."
+            >Optional Dependencies</td>
+          <td><div class="text-center">Version Range</div></td>
+        </tr>
+        {#each optionalDependencies as dependency}
+          <DependencyRow {dependency} />
+        {/each}
+      </tbody>
+    </table>
+  </div>
+{/if}
