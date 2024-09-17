@@ -25,6 +25,7 @@
 
   export let latestVersions!: ILatestVersions;
   export let modId!: string;
+  export let modReference!: string;
 
   export const { t } = getTranslate();
 </script>
@@ -51,7 +52,7 @@
             <div class="text-1xl col-span-3 h-auto w-auto p-2.5">
               <a
                 href="#top"
-                on:click={() => installMod(modId)}
+                on:click={() => installMod(modReference)}
                 title="Install via Satisfactory Mod Manager"
                 class="text-yellow-500">
                 <span class="material-icons align-middle" style="font-size: 118x;">download</span> <u>Install</u>
