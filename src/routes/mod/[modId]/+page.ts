@@ -13,5 +13,10 @@ export const load: PageLoad = async ({ params, parent }) => ({
       client: (await parent()).client,
       variables: { mod: params.modId }
     })
-  }))
+  })),
+  meta: {
+    title: 'Mods',
+    description: 'Mods available from the Satisfactory Mod Repository',
+    image: '/assets/favicon.ico'
+  }
 });
