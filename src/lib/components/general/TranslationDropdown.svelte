@@ -37,7 +37,7 @@
       name: 'Nederlands',
       flag: '🇳🇱'
     },
-	pl: {
+    pl: {
       name: 'Polski',
       flag: '🇵🇱'
     },
