@@ -12,6 +12,7 @@
   import ModCompatibility from '$lib/components/mods/compatibility/ModCompatibilityEdit.svelte';
   import { getTranslate } from '@tolgee/svelte';
   import { SlideToggle } from '@skeletonlabs/skeleton';
+  import { onMount } from 'svelte';
 
   export const { t } = getTranslate();
 
@@ -45,14 +46,15 @@
     onSubmit: (submitted: ModData) => onSubmit(trimNonSchema(submitted, modSchema))
   });
 
-  let tags = [];
-  $: {
-    const anyData = $data;
-    if (anyData.tags) {
-      tags = anyData.tags;
-      delete anyData.tags;
-    }
+  let tags = $data.tags;
+  const computeTags = () => {
     $data.tagIDs = tags.map((tag) => tag.id);
+  };
+
+  onMount(computeTags);
+
+  $: if (tags) {
+    computeTags();
   }
 
   // The GQL type NewMod does not have a compatibility field.

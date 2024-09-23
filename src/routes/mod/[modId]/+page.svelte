@@ -101,7 +101,9 @@
       <h1 class="text-4xl font-bold">{$mod.data.mod.name}</h1>
       <div>
         {#if canUserEdit}
-          <button class="variant-ghost-primary btn" on:click={() => goto(base + '/mod/' + modId + '/edit')}>
+          <button
+            class="variant-ghost-primary btn"
+            on:click={() => goto(base + '/mod/' + modId + '/edit', { invalidateAll: true })}>
             <span class="material-icons pr-2">edit</span>
             Edit</button>
           <button class="variant-ghost-primary btn" on:click={() => modalStore.trigger(deleteModal)}>

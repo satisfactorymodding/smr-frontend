@@ -3,7 +3,7 @@
   import type { Tag } from '$lib/generated/graphql';
   import { queryStore, getContextClient } from '@urql/svelte';
   import { Autocomplete, type AutocompleteOption, InputChip, type PopupSettings, popup } from '@skeletonlabs/skeleton';
-  import { onMount } from 'svelte';
+  import { afterUpdate, onMount } from 'svelte';
   import TagDisplay from './TagDisplay.svelte';
 
   const client = getContextClient();
@@ -32,11 +32,11 @@
     target: 'popupAutocomplete',
     placement: 'bottom-start'
   };
-
   let tagList = [];
-  const loadTagList = () => (tagList = tags.map((t: Tag) => t.name));
+  const loadTagList = tags ? () => (tagList = tags.map((t: Tag) => t.name)) : () => {};
 
   onMount(loadTagList);
+  afterUpdate(loadTagList);
 
   const addTag = (tag: AutocompleteOption) => {
     const realTag = $getAllTags.data?.getTags?.find((t) => t.id == tag.value);
@@ -55,7 +55,9 @@
   const removeTag = (label: string) => {
     const idx = tags.findIndex((t) => t.name === label);
     tags = [...tags.slice(0, idx), ...tags.slice(idx + 1)];
-
+    if (tags.length == null) {
+      tags = [];
+    }
     loadTagList();
   };
 
@@ -64,7 +66,7 @@
 
 <div class="tags">
   {#if !editable}
-    {#if tags.length > 0}
+    {#if tags && tags.length > 0}
       <div class="text-md flex flex-row flex-wrap gap-1">
         {#each tags as tag}
           <TagDisplay {tag} {popupTriggerEvent} />
