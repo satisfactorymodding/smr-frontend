@@ -212,7 +212,7 @@
     {/each}
   </div>
 {:else if $mods.error && $mods.error.message.includes("'Search' failed on the 'min' tag")}
-  <p>Your search query does not seem valid, please provide more than two characters!</p>
+  {$t('search.failed.query-too-short')}
 {:else if $mods.error}
   <p>Oh no... {$mods.error.message}</p>
 {:else}
