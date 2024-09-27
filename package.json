@@ -19,7 +19,7 @@
     "postinstall": "svelte-kit sync",
     "start": "svelte-kit start",
     "format": "prettier --write . && eslint . --fix",
-    "translations": "sh ./download_translations.sh"
+    "translations": "bash ./download_translations.sh"
   },
   "dependencies": {
     "@felte/core": "^1.4.3",
