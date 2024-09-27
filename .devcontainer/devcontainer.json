@@ -37,7 +37,8 @@
 				"me-dutour-mathieu.vscode-github-actions",
 				"eamodio.gitlens",
 				"GitHub.copilot",
-				"GitHub.vscode-pull-request-github"
+				"GitHub.vscode-pull-request-github",
+				"medo64.render-crlf"
 			]
 		}
 	},
