@@ -17,8 +17,11 @@
   import { getModalStore, getToastStore, type ModalSettings } from '@skeletonlabs/skeleton';
   import EditCompatibilityModal from '$lib/modals/EditCompatibilityModal.svelte';
   import Page404 from '$lib/components/general/Page404.svelte';
+  import { getTranslate } from '@tolgee/svelte';
 
   export let data: PageData;
+
+  export const { t } = getTranslate();
 
   $: ({ modId, mod } = data);
 
@@ -46,7 +49,7 @@
           });
         } else {
           toastStore.trigger({
-            message: `Mod deleted`,
+            message: $t('mod.toast.mod-deleted'),
             background: 'variant-filled-success',
             timeout: 5000
           });
@@ -57,8 +60,8 @@
 
   const deleteModal: ModalSettings = {
     type: 'confirm',
-    title: 'Delete Mod?',
-    body: 'Are you sure you wish to delete this mod?',
+    title: $t('mod.modal.delete.title'),
+    body: $t('mod.modal.delete.text'),
     response: (r: boolean) => {
       if (r) {
         deleteModFn();
@@ -103,27 +106,27 @@
         {#if canUserEdit}
           <button class="variant-ghost-primary btn" on:click={() => goto(base + '/mod/' + modId + '/edit')}>
             <span class="material-icons pr-2">edit</span>
-            Edit</button>
+            {$t('mod.edit')}</button>
           <button class="variant-ghost-primary btn" on:click={() => modalStore.trigger(deleteModal)}>
             <span class="material-icons pr-2">delete_forever</span>
-            Delete</button>
+            {$t('mod.delete')}</button>
           <button class="variant-ghost-primary btn" on:click={() => goto(base + '/mod/' + modId + '/new-version')}>
             <span class="material-icons pr-2">upload_file</span>
-            New Version</button>
+            {$t('mod.new-version')}</button>
         {/if}
         {#if canUserEditCompatibility}
           <button class="variant-ghost-primary btn" on:click={() => modalStore.trigger(editCompatibilityModal)}>
             <span class="material-icons">rocket_launch</span>
             <span class="material-icons pr-2">science</span>
-            Edit Compatibility</button>
+            {$t('mod.edit-compatibility')}</button>
         {/if}
         <button class="variant-ghost-primary btn" on:click={() => (versionsTab = !versionsTab)}>
           {#if !versionsTab}
             <span class="material-icons pr-2" title="Browse all uploaded versions of this mod">view_list</span>
-            View Versions
+            {$t('mod.view-versions')}
           {:else}
             <span class="material-icons pr-2" title="View the description page for this mod">description</span>
-            View Description
+            {$t('mod.view-description')}
           {/if}
         </button>
       </div>
