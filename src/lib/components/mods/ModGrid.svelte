@@ -159,7 +159,10 @@
             class="border-0 bg-transparent p-1.5 ring-0"
             name="search"
             placeholder={$t('search.placeholder-text')} />
-          <button class="material-icons {searchButtonClass}" disabled={searchDisabled}>arrow_forward</button>
+          <button
+            class="material-icons {searchButtonClass}"
+            disabled={searchDisabled}
+            title={searchDisabled ? $t('search.disabled') : ''}>arrow_forward</button>
         </div>
       </div>
       {#if tagsOpen}
