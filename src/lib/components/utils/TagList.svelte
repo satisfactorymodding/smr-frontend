@@ -36,7 +36,6 @@
   const loadTagList = () => (tagList = tags.map((t: Tag) => t.name));
 
   onMount(loadTagList);
-  // afterUpdate(loadTagList);
 
   const addTag = (tag: AutocompleteOption) => {
     const realTag = $getAllTags.data?.getTags?.find((t) => t.id == tag.value);
@@ -55,9 +54,6 @@
   const removeTag = (label: string) => {
     const idx = tags.findIndex((t) => t.name === label);
     tags = [...tags.slice(0, idx), ...tags.slice(idx + 1)];
-    // if (tags.length == null) {
-    //   tags = [];
-    // }
     loadTagList();
   };
 
