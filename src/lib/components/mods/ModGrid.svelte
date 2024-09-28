@@ -45,19 +45,12 @@
   let totalMods: number;
 
   let searchField = search;
-  let searchDisabled = true;
-  let searchButtonClass = 'variant-filled-primary';
-  const showPagination: boolean = $mods && !$mods.error && !$mods.fetching;
+  $: showPagination = $mods && !$mods.error && !$mods.fetching;
+  $: searchDisabled = searchField.length > 2;
+  $: searchButtonClass = searchDisabled ? 'variant-filled-primary' : 'variant-filled-surface';
 
   let timer: number;
   $: {
-    if (searchField.length > 2) {
-      searchDisabled = false;
-      searchButtonClass = 'variant-filled-primary';
-    } else {
-      searchDisabled = true;
-      searchButtonClass = 'variant-filled-surface';
-    }
     clearTimeout(timer);
     timer = setTimeout(() => {
       if (searchField && searchField.length > 2) {
