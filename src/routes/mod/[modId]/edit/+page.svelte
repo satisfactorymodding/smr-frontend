@@ -38,9 +38,7 @@
             background: 'variant-filled-success',
             timeout: 5000
           });
-          goto(base + '/mod/' + modId, {
-            invalidateAll: true
-          });
+          goto(base + '/mod/' + modId);
         }
       });
   };

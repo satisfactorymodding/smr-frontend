@@ -12,7 +12,6 @@
   import ModCompatibility from '$lib/components/mods/compatibility/ModCompatibilityEdit.svelte';
   import { getTranslate } from '@tolgee/svelte';
   import { SlideToggle } from '@skeletonlabs/skeleton';
-  import { onMount } from 'svelte';
 
   export const { t } = getTranslate();
 
@@ -50,8 +49,6 @@
   const computeTags = () => {
     $data.tagIDs = tags.map((tag) => tag.id);
   };
-
-  onMount(computeTags);
 
   $: if (tags) {
     computeTags();

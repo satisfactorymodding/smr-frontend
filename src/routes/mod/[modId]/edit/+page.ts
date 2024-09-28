@@ -9,7 +9,8 @@ export const load: PageLoad = async ({ params, parent }) => ({
     mod: queryStore({
       query: GetModDocument,
       client: (await parent()).client,
-      variables: { mod: params.modId }
+      variables: { mod: params.modId },
+      requestPolicy: 'network-only'
     })
   }))
 });
