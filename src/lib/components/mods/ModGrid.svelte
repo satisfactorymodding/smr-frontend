@@ -46,14 +46,14 @@
 
   let searchField = search;
   $: showPagination = $mods && !$mods.error && !$mods.fetching;
-  $: searchDisabled = searchField.length > 2;
+  $: searchDisabled = searchField.length < 3;
   $: searchButtonClass = searchDisabled ? 'variant-filled-primary' : 'variant-filled-surface';
 
   let timer: number;
   $: {
     clearTimeout(timer);
     timer = setTimeout(() => {
-      if (searchField && searchField.length > 2) {
+      if (searchField && searchDisabled) {
         if ((search === '' || search === null) && searchField !== '' && searchField !== null) {
           orderBy = ModFields.Search;
           page = 0;
@@ -73,7 +73,7 @@
   $: if (browser) {
     const url = new URL(window.location.origin + window.location.pathname);
     url.searchParams.append('p', page.toString());
-    searchField.length > 2 && searchField !== '' && searchField !== null && url.searchParams.append('q', searchField);
+    searchDisabled && searchField !== '' && searchField !== null && url.searchParams.append('q', searchField);
     goto(url.toString(), { keepFocus: true });
   }
 
