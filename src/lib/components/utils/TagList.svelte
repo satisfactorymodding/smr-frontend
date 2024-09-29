@@ -35,7 +35,6 @@
     target: 'popupAutocomplete',
     placement: 'bottom-start'
   };
-
   let tagList = [];
   const loadTagList = () => (tagList = tags.map((tag: Tag) => tag.name));
 
@@ -58,7 +57,6 @@
   const removeTag = (label: string) => {
     const idx = tags.findIndex((tag) => tag.name === label);
     tags = [...tags.slice(0, idx), ...tags.slice(idx + 1)];
-
     loadTagList();
   };
 
@@ -67,7 +65,7 @@
 
 <div class="tags">
   {#if !editable}
-    {#if tags.length > 0}
+    {#if tags && tags.length > 0}
       <div class="text-md flex flex-row flex-wrap gap-1">
         {#each tags as tag}
           <TagDisplay {tag} {popupTriggerEvent} />
