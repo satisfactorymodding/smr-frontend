@@ -45,15 +45,14 @@
   let totalMods: number;
 
   let searchField = search;
-  $: showPagination = $mods && !$mods.error && !$mods.fetching;
   $: searchDisabled = searchField.length < 3;
-  $: searchButtonClass = searchDisabled ? 'variant-filled-primary' : 'variant-filled-surface';
+  $: searchButtonClass = searchDisabled ? 'variant-filled-surface' : 'variant-filled-primary';
 
   let timer: number;
   $: {
     clearTimeout(timer);
     timer = setTimeout(() => {
-      if (searchField && searchDisabled) {
+      if (searchField && !searchDisabled) {
         if ((search === '' || search === null) && searchField !== '' && searchField !== null) {
           orderBy = ModFields.Search;
           page = 0;
@@ -73,11 +72,12 @@
   $: if (browser) {
     const url = new URL(window.location.origin + window.location.pathname);
     url.searchParams.append('p', page.toString());
-    searchDisabled && searchField !== '' && searchField !== null && url.searchParams.append('q', searchField);
+    !searchDisabled && searchField !== '' && searchField !== null && url.searchParams.append('q', searchField);
     goto(url.toString(), { keepFocus: true });
   }
 
   $: totalMods = $mods?.data?.getMods?.count || 0;
+  $: showPagination = ($mods && $mods.fetching) || ($mods && !$mods.fetching && totalMods > 0 && !$mods.error);
 
   $: gridClasses =
     colCount == 4
@@ -208,6 +208,8 @@
   {$t('search.failed.query-too-short')}
 {:else if $mods.error}
   <p>Oh no... {$mods.error.message}</p>
+{:else if totalMods == 0}
+  {$t('search.results.empty')}
 {:else}
   <div class="grid {gridClasses} gap-4">
     {#each $mods.data.getMods.mods as mod}
