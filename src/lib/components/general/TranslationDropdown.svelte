@@ -37,6 +37,10 @@
       name: 'Nederlands',
       flag: '🇳🇱'
     },
+    pl: {
+      name: 'Polski',
+      flag: '🇵🇱'
+    },
     ru: {
       name: 'Pусский',
       flag: '🇷🇺'
