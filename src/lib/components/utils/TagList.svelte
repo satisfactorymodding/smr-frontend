@@ -5,6 +5,9 @@
   import { Autocomplete, type AutocompleteOption, InputChip, type PopupSettings, popup } from '@skeletonlabs/skeleton';
   import { onMount } from 'svelte';
   import TagDisplay from './TagDisplay.svelte';
+  import { getTranslate } from '@tolgee/svelte';
+
+  export const { t } = getTranslate();
 
   const client = getContextClient();
 
@@ -21,10 +24,10 @@
   export let popupTriggerEvent: PopupSettings['event'] = 'click';
 
   $: allTags =
-    $getAllTags.data?.getTags?.map((t) => ({
-      label: `${t.name} - ${t.description}`,
-      value: t.id,
-      name: t.name
+    $getAllTags.data?.getTags?.map((tag) => ({
+      label: `${tag.name} - ${tag.description}`,
+      value: tag.id,
+      name: tag.name
     })) || ([] satisfies AutocompleteOption[]);
 
   const popupSettings: PopupSettings = {
@@ -34,16 +37,16 @@
   };
 
   let tagList = [];
-  const loadTagList = () => (tagList = tags.map((t: Tag) => t.name));
+  const loadTagList = () => (tagList = tags.map((tag: Tag) => tag.name));
 
   onMount(loadTagList);
 
-  const addTag = (tag: AutocompleteOption) => {
-    const realTag = $getAllTags.data?.getTags?.find((t) => t.id == tag.value);
+  const addTag = (tagToAdd: AutocompleteOption) => {
+    const realTag = $getAllTags.data?.getTags?.find((tag) => tag.id == tagToAdd.value);
     tags = [
       ...tags,
       {
-        id: tag.value,
+        id: tagToAdd.value,
         name: realTag?.name,
         description: realTag?.description
       }
@@ -53,7 +56,7 @@
   };
 
   const removeTag = (label: string) => {
-    const idx = tags.findIndex((t) => t.name === label);
+    const idx = tags.findIndex((tag) => tag.name === label);
     tags = [...tags.slice(0, idx), ...tags.slice(idx + 1)];
 
     loadTagList();
@@ -72,13 +75,13 @@
       </div>
     {/if}
   {:else}
-    <div class="mb-2">Tags</div>
+    <div class="mb-2">{$t('mod.tags.title')}</div>
 
     <div use:popup={popupSettings}>
       <InputChip
         bind:input={inputTag}
         bind:value={tagList}
-        on:remove={(t) => removeTag(t.detail.chipValue)}
+        on:remove={(tag) => removeTag(tag.detail.chipValue)}
         name="tags"
         chips="variant-filled-primary" />
     </div>
@@ -86,8 +89,8 @@
     <div class="card max-h-48 w-max max-w-full overflow-y-auto p-4" tabindex="-1" data-popup="popupAutocomplete">
       <Autocomplete
         bind:input={inputTag}
-        options={allTags.filter((t) => tagList.indexOf(t.name) < 0)}
-        on:selection={(t) => addTag(t.detail)} />
+        options={allTags.filter((tag) => tagList.indexOf(tag.name) < 0)}
+        on:selection={(tag) => addTag(tag.detail)} />
     </div>
   {/if}
 </div>

@@ -15,6 +15,9 @@
   import type { PageData } from './$types';
   import { getModalStore, getToastStore, type ModalSettings, popup } from '@skeletonlabs/skeleton';
   import Page404 from '$lib/components/general/Page404.svelte';
+  import { getTranslate } from '@tolgee/svelte';
+
+  export const { t } = getTranslate();
 
   export let data: PageData;
 
@@ -151,7 +154,7 @@
           href={base + '/mod/' + modId}
           title="View the description page for this mod">
           <span class="material-icons">extension</span>
-          <span>Back to Mod</span>
+          <span>{$t('version.back')}</span>
         </a>
       </div>
     </div>

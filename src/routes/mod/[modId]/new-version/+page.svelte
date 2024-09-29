@@ -12,6 +12,9 @@
   import type { PageData } from './$types';
   import { getModalStore, getToastStore, type ModalSettings } from '@skeletonlabs/skeleton';
   import EditCompatibilityForm from '$lib/components/mods/compatibility/EditCompatibilityForm.svelte';
+  import { getTranslate } from '@tolgee/svelte';
+
+  export const { t } = getTranslate();
 
   export let data: PageData;
 
@@ -118,7 +121,7 @@
       title="View the description page for this mod"
       on:click={() => modalStore.trigger(backModal)}>
       <span class="material-icons pr-2">arrow_back</span>
-      Back to Mod
+      {$t('version.back')}
     </button>
   </div>
 </div>

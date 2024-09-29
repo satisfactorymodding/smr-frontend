@@ -213,6 +213,7 @@ typings/
 .env
 .env.test
 .env*.local
+.env*.personal
 
 # parcel-bundler cache (https://parceljs.org/)
 .cache

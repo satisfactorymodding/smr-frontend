@@ -32,7 +32,7 @@ inside the container.
 At the highest level you must at least have:
 
 * [Bun](https://bun.sh/)
-* terminal (Bash is suggested but not required.)
+* Bash terminal (others may fail to run some scripts)
 
 ### bun installation
 
@@ -106,6 +106,27 @@ export NODE_ENV=staging; set -o allexport; source .env.staging; set +o allexport
 ```
 
 After running this command, all commands you run in that bash session will have those environment variables loaded.
+
+### Localization
+
+If you'd like to help translate and localize SMM to different languages, join our [discord server](https://discord.ficsit.app/).
+
+ficsit.app handles localization through the Tolgee Svelte integration.
+This allows for [in-context translation](https://tolgee.io/js-sdk/) - simply alt-click on a translatable element to open the Tolgee interface.
+If an element can't be alt-clicked it either doesn't support in-context translation or isn't translatable yet.
+You can also edit translations from the [project's webpage](https://translate.ficsit.app/projects/2).
+
+In order to edit translations in-context, you will need to provide a tolgee API key with edit permissions.
+To do this:
+
+1. Join the Discord and get added to the smr-frontend Tolgee project
+2. Create a copy of the env file you wish to use (such as `.env.staging`) and name it `.env.personal` (so it is gitignored and does not upset dev:serve)
+3. Visit [the project's integration page](https://translate.ficsit.app/projects/2/integrate) to generate an API key (the "weapon" you select does not matter)
+4. Replace the `PUBLIC_TOLGEE_API_KEY` in your new env file with the API key you generated
+5. Use your new env name when running commands.
+   For example, run `fenv personal` to switch to it.
+
+Using the in-context translation Screenshot feature also requires installing the _Tolgee Tools_ browser extension.
 
 ### Downloading Translations
 

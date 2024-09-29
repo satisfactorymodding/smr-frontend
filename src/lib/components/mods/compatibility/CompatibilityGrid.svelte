@@ -10,7 +10,7 @@
   export let compatibility: CompatibilityInfoInput;
 
   export const { t } = getTranslate();
-  export const noNotesText = '(No extra notes)';
+  export const noNotesText = $t('compatibility-info.no-notes');
 
   const modalStore = getModalStore();
   const openCompatibility = () => {
@@ -28,26 +28,29 @@
 
 <div class="card p-4">
   <div class="grid grid-flow-row gap-y-2">
-    <h3 class="my-4 text-2xl font-bold">Compatibility Information</h3>
-    <p>Click the colored text for more details.</p>
+    <h3 class="my-4 text-2xl font-bold">{$t('compatibility-info.header')}</h3>
+    <p>{$t('compatibility-info.subtitle')}</p>
     <div class="grid grid-flow-row">
       <table aria-label="Available Releases" class="max-w-auto table table-hover !overflow-visible">
         <tbody>
           <tr class="rounded border !border-surface-500">
-            <td><div class="flex items-center justify-center"><CompatibilityIcon /> Early Access</div></td>
             <td
               ><div class="flex items-center justify-center">
-                <CompatibilityIcon EXP={true} /> Experimental
+                <CompatibilityIcon />{$t('compatibility-info.branch.stable')}
+              </div></td>
+            <td
+              ><div class="flex items-center justify-center">
+                <CompatibilityIcon EXP={true} />{$t('compatibility-info.branch.unstable')}
               </div></td>
           </tr>
           <tr class="rounded border !border-surface-500">
             <td class="text-center">
-              <button class="m-0 min-w-0" title="Click for more information" on:click={openCompatibility}>
+              <button class="m-0 min-w-0" title={$t('tooltip.click-for-info')} on:click={openCompatibility}>
                 <CompatibilityStateText state={compatibility?.EA?.state} />
               </button>
             </td>
             <td class="text-center">
-              <button class="m-0 min-w-0" title="Click for more information" on:click={openCompatibility}>
+              <button class="m-0 min-w-0" title={$t('tooltip.click-for-info')} on:click={openCompatibility}>
                 <CompatibilityStateText state={compatibility?.EXP?.state} />
               </button>
             </td>

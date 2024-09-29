@@ -7,6 +7,9 @@
   import { base } from '$app/paths';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
   import { getToastStore } from '@skeletonlabs/skeleton';
+  import { getTranslate } from '@tolgee/svelte';
+
+  export const { t } = getTranslate();
 
   const toastStore = getToastStore();
 
@@ -28,7 +31,7 @@
           });
         } else {
           toastStore.trigger({
-            message: `Mod created`,
+            message: $t('new-mod.toast.creation-success'),
             background: 'variant-filled-success',
             timeout: 5000
           });
@@ -42,7 +45,7 @@
   <MetaDescriptors description="Adding a new mod in the Satisfactory Mod Repository" title="New mod" />
 </svelte:head>
 
-<h1 class="my-4 text-4xl font-bold">New Mod</h1>
+<h1 class="my-4 text-4xl font-bold">{$t('new-mod.title')}</h1>
 
 <div class="card p-4">
   <section>
