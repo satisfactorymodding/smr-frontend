@@ -86,6 +86,14 @@
       description:
         'Manage your 1.0+ Dedicated Server remotely with this Python GUI through the new Dedicated Server HTTPS API.  If you want a make your own remote manager, a Python library is available.',
       link: 'https://github.com/GreyHak/sdsrm'
+    },
+    {
+      name: 'Satisfactory Logistics',
+      author: 'leonardfactory',
+      logo: 'https://satisfactory-logistics.xyz/images/logo/logo-square-big.png',
+      description:
+        'Keep track of in-game Logistics (by train, drones, vehicles), setup inputs and outputs between them and see how many items are consumed and where.',
+      link: 'https://satisfactory-logistics.xyz/'
     }
   ];
 </script>
