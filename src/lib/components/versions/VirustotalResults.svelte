@@ -24,7 +24,11 @@
           </td>
           <td>
             <div class="text-center">
-              <a title="View VirusTotal Result" href={result.url} target="_blank" class="text-white">
+              <a
+                title="View VirusTotal Result"
+                href={`https://www.virustotal.com/gui/file/${result.hash}`}
+                target="_blank"
+                class="text-white">
                 <span class="material-icons text-center" style="width: 20px" title={$t('version.virustotal.result')}>
                   policy
                 </span>
