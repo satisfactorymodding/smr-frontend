@@ -165,9 +165,7 @@
         <VersionInfo version={$version.data.getVersion} />
         <VersionTargetSupportGrid targets={$version.data.getVersion.targets} />
         <VersionDependenciesGrid dependencies={$version.data.getVersion.dependencies} />
-        {#if canUserEdit}
-          <VirustotalResults results={$version.data.getVersion.virustotalResults} />
-        {/if}
+        <VirustotalResults results={$version.data.getVersion.virustotalResults} />
       </div>
     </div>
   </div>
