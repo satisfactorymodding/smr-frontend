@@ -1,28 +1,21 @@
 <script lang="ts">
-  import { getContextClient, queryStore } from '@urql/svelte';
-  import { EditModDocument, GetModDocument } from '$lib/generated';
+  import { getContextClient } from '@urql/svelte';
+  import { EditModDocument } from '$lib/generated';
   import { goto } from '$app/navigation';
   import ModForm from '$lib/components/mods/ModForm.svelte';
   import type { ModData } from '$lib/models/mods';
   import { base } from '$app/paths';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
-  import { get } from 'svelte/store';
   import type { PageData } from './$types';
   import { getToastStore } from '@skeletonlabs/skeleton';
+  import { get } from 'svelte/store';
 
   export let data: PageData;
 
-  const { modId } = data;
-
   const client = getContextClient();
-
   const toastStore = getToastStore();
 
-  const mod = queryStore({
-    query: GetModDocument,
-    client,
-    variables: { mod: modId }
-  });
+  $: ({ modId, mod } = data);
 
   const onSubmit = (modData: ModData) => {
     client
@@ -45,7 +38,7 @@
             background: 'variant-filled-success',
             timeout: 5000
           });
-          goto(base + '/mod/' + value.data.updateMod.id);
+          goto(base + '/mod/' + modId);
         }
       });
   };
