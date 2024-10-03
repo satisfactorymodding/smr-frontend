@@ -410,6 +410,7 @@ This line is way far down
   </div>
 
   <h1 class="my-4 text-4xl font-bold">Mod Developer Resources</h1>
+  <div class="grid grid-flow-row grid-cols-1 grid-rows-2 gap-4 md:grid-cols-2 md:grid-rows-1">
     <div class="card p-4">
       <section class="p-4">
         <h3 class="my-4 text-2xl font-bold">&lt;mod&gt;.uplugin format</h3>
