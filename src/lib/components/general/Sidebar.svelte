@@ -40,20 +40,19 @@
     },
     {
       url: 'https://discord.ficsit.app',
-      icon: 'people',
+      icon: 'forum',
       label: $t('discord'),
       external: true
+    },
+    {
+      url: '/community',
+      icon: 'people',
+      label: $t('sidebar.community', 'Community')
     },
     {
       url: 'https://docs.ficsit.app/',
       icon: 'find_in_page',
       label: $t('sidebar.docs'),
-      external: true
-    },
-    {
-      url: 'https://forums.ficsit.app/',
-      icon: 'forum',
-      label: $t('sidebar.forums'),
       external: true
     }
   ];
