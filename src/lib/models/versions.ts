@@ -70,6 +70,8 @@ function dirname(path: string): string {
   return parts.slice(0, parts.length - 1).join('/');
 }
 
+const objectExtensions = ['.so', '.dll', '.pak', '.utoc', '.ucas'];
+
 const validateModZip = async (
   file: unknown,
   modReference: string
@@ -88,6 +90,8 @@ const validateModZip = async (
           };
         }
 
+        const objects = Object.keys(zip.files).filter((f) => objectExtensions.some((ext) => f.endsWith(ext)));
+
         if (uPluginFiles.length === 1 && uPluginFiles[0].name === modReference + '.uplugin') {
           // Single-target mod
           const uPluginData = await readUPluginJson(await uPluginFiles[0].async('string'), modReference);
@@ -98,9 +102,7 @@ const validateModZip = async (
 
           return {
             uplugin: uPluginData,
-            objects: Object.keys(zip.files).filter(
-              (f) => f.endsWith('.so') || f.endsWith('.dll') || f.endsWith('.pak')
-            ),
+            objects,
             targets: ['Windows']
           };
         }
@@ -155,7 +157,7 @@ const validateModZip = async (
 
         return {
           uplugin: uPluginData,
-          objects: Object.keys(zip.files).filter((f) => f.endsWith('.so') || f.endsWith('.dll') || f.endsWith('.pak')),
+          objects,
           targets
         };
       })
