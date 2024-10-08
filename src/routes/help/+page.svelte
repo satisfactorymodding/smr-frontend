@@ -10,6 +10,7 @@
         CanContainContent: true,
         FileVersion: 3,
         SemVersion: '1.0.0',
+        GameVersion: '>=368883',
         Version: 1,
         Modules: [
           {

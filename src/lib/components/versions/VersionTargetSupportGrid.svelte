@@ -1,14 +1,29 @@
 <script lang="ts">
   import type { VersionTarget } from '$lib/generated';
+  import { getTranslate } from '@tolgee/svelte';
+  import { T } from '@tolgee/svelte';
+
+  export const { t } = getTranslate();
 
   export let targets!: Pick<VersionTarget, 'targetName'>[];
 
-  function formatTooltip(found: boolean, selectedTarget: string) {
-    if (found) {
-      return `This version supports the ${selectedTarget} target`;
+  function formatTooltip(filesFoundForTarget: boolean, selectedTarget: string) {
+    if (filesFoundForTarget) {
+      return $t({
+        key: 'version.target-support-tooltip.supported',
+        defaultValue: `This version supports the {TargetPlatform} platform`,
+        params: {
+          TargetPlatform: selectedTarget
+        }
+      });
     }
-
-    return `This version lacks files for the ${selectedTarget} target`;
+    return $t({
+      key: 'version.target-support-tooltip.unsupported',
+      defaultValue: `This version does not support the {TargetPlatform} platform`,
+      params: {
+        TargetPlatform: selectedTarget
+      }
+    });
   }
 
   const yesGlyph = 'checkmark';
@@ -36,11 +51,17 @@
     <tbody>
       <tr class="rounded border !border-surface-500">
         <td style="width: 20%;" />
-        <td style="width: 40%;"><div class="text-center" title="Game client">Client</div></td>
-        <td style="width: 40%;"><div class="text-center" title="Dedicated server">Server</div></td>
+        <td style="width: 40%;"
+          ><div class="text-center" title="Game client">
+            <T keyName="target-platform.client" defaultValue="Client" />
+          </div></td>
+        <td style="width: 40%;"
+          ><div class="text-center" title="Dedicated server">
+            <T keyName="target-platform.server" defaultValue="Server" />
+          </div></td>
       </tr>
       <tr class="rounded border !border-surface-500">
-        <td>Windows</td>
+        <td><T keyName="target-platform.windows" defaultValue="Windows" /></td>
         <td
           ><div class="text-center">
             <span class="material-icons text-center" style="width: 20px" title={WindowsSupport.tooltip}
@@ -53,8 +74,16 @@
           </div></td>
       </tr>
       <tr class="rounded border !border-surface-500">
-        <td>Linux</td>
-        <td><div class="text-center" title="There is no Client distribution of Satisfactory for Linux">N/A</div></td>
+        <td><T keyName="target-platform.linux" defaultValue="Linux" /></td>
+        <td
+          ><div
+            class="text-center"
+            title={$t(
+              'version.target-support-tooltip.no-linux-client',
+              'There is no Client distribution of Satisfactory for Linux'
+            )}>
+            <T keyName="not-applicable.abbreviation" defaultValue="N/A" />
+          </div></td>
         <td
           ><div class="text-center">
             <span class="material-icons text-center" style="width: 20px" title={LinuxServerSupport.tooltip}
