@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { goto } from '$app/navigation';
   import LinkButton from '$lib/components/general/LinkButton.svelte';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
   import { T } from '@tolgee/svelte';
@@ -32,8 +31,8 @@
           <p>
             <T
               keyName="community.discord-bans.description"
-              defaultValue="If you have been banned from the Discord server and would like to appeal your ban, you can do so using the
-            form linked below." />
+              defaultValue="If you have been banned from the modding Discord server and would like to appeal, use the
+            form linked below. Note that our bans are separate from the official Satisfactory Discord - we can't assist you with bans there." />
           </p>
           <LinkButton url="https://dyno.gg/form/b3425ef2" icon="how_to_vote">
             <T keyName="community.discord-bans.appeal-button" defaultValue="Submit an Appeal" />
@@ -52,32 +51,26 @@
 
     <div class="card p-4">
       <section class="p-4">
-        <h1>Community</h1>
+        <h1><T keyName="community.welcome.header" defaultValue="Welcome" /></h1>
         <p>
-          Welcome to the Satisfactory Modding comunity! Click here for a guide to help you get started playing with
-          mods.
+          <T
+            keyName="community.welcome.description"
+            defaultValue="Welcome to the Satisfactory Modding comunity! Click here for a guide to help you get started playing with
+          mods." />
         </p>
-        <button
-          class="variant-ghost-primary btn btn-sm text-2xl"
-          on:click={() => goto('https://docs.ficsit.app/satisfactory-modding/latest/ForUsers/Welcome.html')}>
-          <span>Visit the Welcome Guide</span>
-          <span class="material-icons">waving_hand</span>
-        </button>
         <LinkButton
           url="https://docs.ficsit.app/satisfactory-modding/latest/ForUsers/Welcome.html"
           icon="waving_hand"
           extraCss="text-2xl">
           <T keyName="community.welcome.guide-button" defaultValue="Visit the Welcome Guide" />
         </LinkButton>
-        <h2>Archived Forums</h2>
+        <h2><T keyName="community.forums.header" defaultValue="Archived Forums" /></h2>
         <p>
-          The community used to have a Discourse-powered forums website for modding discussion, but it has since been
-          archived due to low usage. You can find the archives here.
+          <T
+            keyName="community.forums.description"
+            defaultValue="The community used to host a Discourse-powered forums website for modding discussion, but it has since been
+          archived due to low usage. You can find the archives here." />
         </p>
-        <button class="variant-ghost-primary btn btn-sm" on:click={() => goto('https://forums.ficsit.app/')}>
-          <span>Open Archived Forums</span>
-          <span class="material-icons">forum</span>
-        </button>
         <LinkButton url="https://forums.ficsit.app/" icon="forum">
           <T keyName="community.forums.visit-button" defaultValue="View the Archived Forums" />
         </LinkButton>
