@@ -46,7 +46,6 @@
                         keyName="home.download-satisfactory-mod-manager"
                         defaultValue="Download the Mod Manager" /></span>
                     <img class="h-full" src={assets + '/images/smm_icon_white.webp'} alt="Satisfactory Mod Manager" />
-                    <!-- <span class="material-icons">people</span> -->
                   </div>
                 </div>
               </div>
