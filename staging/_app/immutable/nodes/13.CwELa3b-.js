@@ -1,0 +1,354 @@
+import{S as Be,i as Pe,d as f,s as Ae,a6 as q,v as Oe,P as Ne,b as _,e as d,a4 as Ue,Q as Ve,j as h,k as B,g as p,h as y,R as j,N as k,m,T as qe,n as T,U as u,$ as ge,V as De,a7 as z,r as je,t as Ge,W as Je,f as P,u as c,O as fe,a8 as oe,a9 as se,_ as Fe}from"../chunks/vendor.BIR0l0l8.js";import{m as G}from"../chunks/markdown.DrvOSx71.js";import{v as we}from"../chunks/uplugin.D8WYdiCR.js";import{M as be}from"../chunks/MetaDescriptors.DziSNFQq.js";const g="src/routes/help/+page.svelte";function ke(t,e,r){const n=t.slice();return n[8]=e[r],n}function ye(t){const e={c,l:c,m:c,p:c,d:c};return f("SvelteRegisterBlock",{block:e,id:ye.name,type:"catch",source:'(1:0) <script lang=\\"ts\\">import { markdown }',ctx:t}),e}function ve(t){let e,r=t[12]+"",n;const i={c:function(){e=new oe(!1),n=P(),this.h()},l:function(o){e=se(o,!1),n=P(),this.h()},h:function(){e.a=n},m:function(o,s){e.m(r,o,s),T(o,n,s)},p:c,d:function(o){o&&(h(n),e.d())}};return f("SvelteRegisterBlock",{block:i,id:ve.name,type:"then",source:"(395:79)              <!-- eslint-disable -->             {@html exampleUPluginJsonRendered}",ctx:t}),i}function xe(t){const e={c,l:c,m:c,p:c,d:c};return f("SvelteRegisterBlock",{block:e,id:xe.name,type:"pending",source:'(1:0) <script lang=\\"ts\\">import { markdown }',ctx:t}),e}function ee(t){let e,r,n={ctx:t,current:null,token:null,hasCatch:!1,pending:Ce,then:Te,catch:He,value:7};q(r=t[1],n);const i={c:function(){e=P(),n.block.c()},l:function(o){e=P(),n.block.l(o)},m:function(o,s){T(o,e,s),n.block.m(o,n.anchor=s),n.mount=()=>e.parentNode,n.anchor=e},p:function(o,s){t=o,n.ctx=t,s&2&&r!==(r=t[1])&&q(r,n)||z(n,t,s)},d:function(o){o&&h(e),n.block.d(o),n.token=null,n=null}};return f("SvelteRegisterBlock",{block:i,id:ee.name,type:"if",source:"(411:8) {#if uPluginJsonInput !== ''}",ctx:t}),i}function He(t){const e={c,l:c,m:c,p:c,d:c};return f("SvelteRegisterBlock",{block:e,id:He.name,type:"catch",source:'(1:0) <script lang=\\"ts\\">import { markdown }',ctx:t}),e}function Te(t){let e;function r(o,s){return o[7].length===0?Me:Se}let n=r(t),i=n(t);const a={c:function(){i.c(),e=P()},l:function(s){i.l(s),e=P()},m:function(s,l){i.m(s,l),T(s,e,l)},p:function(s,l){n===(n=r(s))&&i?i.p(s,l):(i.d(1),i=n(s),i&&(i.c(),i.m(e.parentNode,e)))},d:function(s){s&&h(e),i.d(s)}};return f("SvelteRegisterBlock",{block:a,id:Te.name,type:"then",source:"(414:10) {:then errors}",ctx:t}),a}function Se(t){let e,r=fe(t[7]),n=[];for(let a=0;a<r.length;a+=1)n[a]=ne(ke(t,r,a));const i={c:function(){e=d("ul");for(let o=0;o<n.length;o+=1)n[o].c();this.h()},l:function(o){e=p(o,"UL",{});var s=y(e);for(let l=0;l<n.length;l+=1)n[l].l(s);s.forEach(h),this.h()},h:function(){m(e,g,427,14,11716)},m:function(o,s){T(o,e,s);for(let l=0;l<n.length;l+=1)n[l]&&n[l].m(e,null)},p:function(o,s){if(s&2){r=fe(o[7]);let l;for(l=0;l<r.length;l+=1){const v=ke(o,r,l);n[l]?n[l].p(v,s):(n[l]=ne(v),n[l].c(),n[l].m(e,null))}for(;l<n.length;l+=1)n[l].d(1);n.length=r.length}},d:function(o){o&&h(e),Fe(n,o)}};return f("SvelteRegisterBlock",{block:i,id:Se.name,type:"else",source:"(417:12) {:else}",ctx:t}),i}function Me(t){let e,r="<mod>.uplugin valid!";const n={c:function(){e=d("h3"),e.textContent=r,this.h()},l:function(a){e=p(a,"H3",{class:!0,"data-svelte-h":!0}),j(e)!=="svelte-mymn8n"&&(e.textContent=r),this.h()},h:function(){k(e,"class","my-4 text-2xl font-bold"),m(e,g,425,14,11614)},m:function(a,o){T(a,e,o)},p:c,d:function(a){a&&h(e)}};return f("SvelteRegisterBlock",{block:n,id:Me.name,type:"if",source:"(415:12) {#if errors.length === 0}",ctx:t}),n}function $e(t){const e={c,l:c,m:c,p:c,d:c};return f("SvelteRegisterBlock",{block:e,id:$e.name,type:"catch",source:'(1:0) <script lang=\\"ts\\">import { markdown }',ctx:t}),e}function Re(t){let e,r,n=t[11]+"",i;const a={c:function(){e=d("li"),r=new oe(!1),i=_(),this.h()},l:function(s){e=p(s,"LI",{class:!0});var l=y(e);r=se(l,!1),l.forEach(h),i=B(s),this.h()},h:function(){r.a=null,k(e,"class","markdown-content"),m(e,g,431,20,11881)},m:function(s,l){T(s,e,l),r.m(n,e),T(s,i,l)},p:function(s,l){l&2&&n!==(n=s[11]+"")&&r.p(n)},d:function(s){s&&(h(e),h(i))}};return f("SvelteRegisterBlock",{block:a,id:Re.name,type:"then",source:'(420:57)                      <!-- eslint-disable -->                     <li class=\\"markdown-content\\">{@html errRendered}',ctx:t}),a}function Ie(t){const e={c,l:c,m:c,p:c,d:c};return f("SvelteRegisterBlock",{block:e,id:Ie.name,type:"pending",source:'(1:0) <script lang=\\"ts\\">import { markdown }',ctx:t}),e}function ne(t){let e,r,n={ctx:t,current:null,token:null,hasCatch:!1,pending:Ie,then:Re,catch:$e,value:11};q(r=G(t[8]),n);const i={c:function(){e=P(),n.block.c()},l:function(o){e=P(),n.block.l(o)},m:function(o,s){T(o,e,s),n.block.m(o,n.anchor=s),n.mount=()=>e.parentNode,n.anchor=e},p:function(o,s){t=o,n.ctx=t,s&2&&r!==(r=G(t[8]))&&q(r,n)||z(n,t,s)},d:function(o){o&&h(e),n.block.d(o),n.token=null,n=null}};return f("SvelteRegisterBlock",{block:i,id:ne.name,type:"each",source:"(419:16) {#each errors as err}",ctx:t}),i}function Ce(t){let e,r="Loading...";const n={c:function(){e=d("p"),e.textContent=r,this.h()},l:function(a){e=p(a,"P",{"data-svelte-h":!0}),j(e)!=="svelte-qdsr2u"&&(e.textContent=r),this.h()},h:function(){m(e,g,422,12,11519)},m:function(a,o){T(a,e,o)},p:c,d:function(a){a&&h(e)}};return f("SvelteRegisterBlock",{block:n,id:Ce.name,type:"pending",source:"(412:32)              <p>Loading...</p>           {:then errors}",ctx:t}),n}function Ee(t){const e={c,l:c,m:c,p:c,d:c};return f("SvelteRegisterBlock",{block:e,id:Ee.name,type:"catch",source:'(1:0) <script lang=\\"ts\\">import { markdown }',ctx:t}),e}function Le(t){let e,r,n=t[6]+"";const i={c:function(){e=d("p"),r=new oe(!1),this.h()},l:function(o){e=p(o,"P",{});var s=y(e);r=se(s,!1),s.forEach(h),this.h()},h:function(){r.a=null,m(e,g,448,10,12335)},m:function(o,s){T(o,e,s),r.m(n,e)},p:c,d:function(o){o&&h(e)}};return f("SvelteRegisterBlock",{block:i,id:Le.name,type:"then",source:"(437:55)            <!-- eslint-disable -->           <p>{@html markdownHtmlRendered}",ctx:t}),i}function _e(t){const e={c,l:c,m:c,p:c,d:c};return f("SvelteRegisterBlock",{block:e,id:_e.name,type:"pending",source:'(1:0) <script lang=\\"ts\\">import { markdown }',ctx:t}),e}function te(t){let e,r,n,i,a,o,s,l="<mod>.uplugin format",v,R,D,w,H,C,ae="Validate your <mod>.uplugin",Q,S,W,X,E,ie="Markdown",K,A,O,L,J,Z,re;e=new be({props:{description:"Help for submitting modules to the Satsifactory Mod Repository",title:"Help"},$$inline:!0});let M={ctx:t,current:null,token:null,hasCatch:!1,pending:xe,then:ve,catch:ye,value:12};q(G(t[2]),M);let b=t[0]!==""&&ee(t),$={ctx:t,current:null,token:null,hasCatch:!1,pending:_e,then:Le,catch:Ee,value:6};q(t[3],$);const le={c:function(){Ne(e.$$.fragment),r=_(),n=d("div"),i=d("div"),a=d("div"),o=d("section"),s=d("h3"),s.textContent=l,v=_(),R=d("div"),M.block.c(),D=_(),w=d("div"),H=d("section"),C=d("h3"),C.textContent=ae,Q=_(),S=d("textarea"),W=_(),b&&b.c(),X=_(),E=d("h1"),E.textContent=ie,K=_(),A=d("div"),O=d("section"),L=d("div"),$.block.c(),this.h()},l:function(x){const I=Ue("svelte-13ontw3",document.head);Ve(e.$$.fragment,I),I.forEach(h),r=B(x),n=p(x,"DIV",{});var U=y(n);i=p(U,"DIV",{class:!0});var F=y(i);a=p(F,"DIV",{class:!0});var ce=y(a);o=p(ce,"SECTION",{class:!0});var Y=y(o);s=p(Y,"H3",{class:!0,"data-svelte-h":!0}),j(s)!=="svelte-1fp9ebh"&&(s.textContent=l),v=B(Y),R=p(Y,"DIV",{class:!0});var he=y(R);M.block.l(he),he.forEach(h),Y.forEach(h),ce.forEach(h),D=B(F),w=p(F,"DIV",{class:!0});var ue=y(w);H=p(ue,"SECTION",{class:!0});var V=y(H);C=p(V,"H3",{class:!0,"data-svelte-h":!0}),j(C)!=="svelte-1a1ovhf"&&(C.textContent=ae),Q=B(V),S=p(V,"TEXTAREA",{placeholder:!0,rows:!0,class:!0}),y(S).forEach(h),W=B(V),b&&b.l(V),V.forEach(h),ue.forEach(h),F.forEach(h),X=B(U),E=p(U,"H1",{class:!0,"data-svelte-h":!0}),j(E)!=="svelte-1k1b7be"&&(E.textContent=ie),K=B(U),A=p(U,"DIV",{class:!0});var de=y(A);O=p(de,"SECTION",{class:!0});var pe=y(O);L=p(pe,"DIV",{class:!0});var me=y(L);$.block.l(me),me.forEach(h),pe.forEach(h),de.forEach(h),U.forEach(h),this.h()},h:function(){document.title="Help - SMR",k(s,"class","my-4 text-2xl font-bold"),m(s,g,402,8,10802),k(R,"class","markdown-content"),m(R,g,403,8,10878),k(o,"class","p-4"),m(o,g,401,6,10772),k(a,"class","card p-4"),m(a,g,400,4,10743),k(C,"class","my-4 text-2xl font-bold"),m(C,g,414,8,11198),k(S,"placeholder","enter your <mod>.uplugin"),k(S,"rows","23"),k(S,"class","markdownEditor"),m(S,g,415,8,11281),k(H,"class","p-4"),m(H,g,413,6,11168),k(w,"class","card p-4"),m(w,g,412,4,11139),k(i,"class","grid grid-flow-col grid-cols-2 gap-4"),m(i,g,399,2,10688),k(E,"class","my-4 text-4xl font-bold"),m(E,g,442,2,12097),k(L,"class","markdown-content"),m(L,g,445,6,12204),k(O,"class","p-4"),m(O,g,444,4,12176),k(A,"class","card p-4"),m(A,g,443,2,12149),m(n,g,398,0,10680)},m:function(x,I){qe(e,document.head,null),T(x,r,I),T(x,n,I),u(n,i),u(i,a),u(a,o),u(o,s),u(o,v),u(o,R),M.block.m(R,M.anchor=null),M.mount=()=>R,M.anchor=null,u(i,D),u(i,w),u(w,H),u(H,C),u(H,Q),u(H,S),ge(S,t[0]),u(H,W),b&&b.m(H,null),u(n,X),u(n,E),u(n,K),u(n,A),u(A,O),u(O,L),$.block.m(L,$.anchor=null),$.mount=()=>L,$.anchor=null,J=!0,Z||(re=De(S,"input",t[4]),Z=!0)},p:function(x,[I]){t=x,z(M,t,I),I&1&&ge(S,t[0]),t[0]!==""?b?b.p(t,I):(b=ee(t),b.c(),b.m(H,null)):b&&(b.d(1),b=null),z($,t,I)},i:function(x){J||(je(e.$$.fragment,x),J=!0)},o:function(x){Ge(e.$$.fragment,x),J=!1},d:function(x){x&&(h(r),h(n)),Je(e),M.block.d(),M.token=null,M=null,b&&b.d(),$.block.d(),$.token=null,$=null,Z=!1,re()}};return f("SvelteRegisterBlock",{block:le,id:te.name,type:"component",source:"",ctx:t}),le}function Ye(t,e,r){let n,{$$slots:i={},$$scope:a}=e;Oe("Page",i,[]);const o="```json\n"+JSON.stringify({CanContainContent:!0,FileVersion:3,SemVersion:"1.0.0",GameVersion:">=368883",Version:1,Modules:[{LoadingPhase:"PostDefault",Name:"testmod",Type:"Runtime"}],Plugins:[{Name:"SML",SemVersion:"^3.0.0"}]},null,2)+"\n```",s=`
+## Headers
+
+\`\`\`markdown
+# H1
+## H2
+### H3
+#### H4
+##### H5
+###### H6
+
+Alternatively, for H1 and H2, an underline-ish style:
+
+Alt-H1
+======
+
+Alt-H2
+------
+\`\`\`
+
+# H1
+## H2
+### H3
+#### H4
+##### H5
+###### H6
+
+Alternatively, for H1 and H2, an underline-ish style:
+
+Alt-H1
+======
+
+Alt-H2
+------
+
+## Emphasis
+
+\`\`\`markdown
+Emphasis, aka italics, with *asterisks* or _underscores_.
+
+Strong emphasis, aka bold, with **asterisks** or __underscores__.
+
+Combined emphasis with **asterisks and _underscores_**.
+
+Strikethrough uses two tildes. ~~Scratch this.~~
+\`\`\`
+
+Emphasis, aka italics, with *asterisks* or _underscores_.
+
+Strong emphasis, aka bold, with **asterisks** or __underscores__.
+
+Combined emphasis with **asterisks and _underscores_**.
+
+Strikethrough uses two tildes. ~~Scratch this.~~
+
+
+## Lists
+
+\`\`\`markdown
+1. First ordered list item
+2. Another item
+  * Unordered sub-list.
+1. Actual numbers don't matter, just that it's a number
+  1. Ordered sub-list
+4. And another item.
+
+   You can have properly indented paragraphs within list items. Notice the blank line above, and the leading spaces (at least one, but we'll use three here to also align the raw Markdown).
+
+   To have a line break without a paragraph, you will need to use two trailing spaces.
+   Note that this line is separate, but within the same paragraph.
+   (This is contrary to the typical GFM line break behaviour, where trailing spaces are not required.)
+
+* Unordered list can use asterisks
+- Or minuses
++ Or pluses
+\`\`\`
+
+1. First ordered list item
+2. Another item
+  * Unordered sub-list.
+1. Actual numbers don't matter, just that it's a number
+  1. Ordered sub-list
+4. And another item.
+
+   You can have properly indented paragraphs within list items. Notice the blank line above, and the leading spaces (at least one, but we'll use three here to also align the raw Markdown).
+
+   To have a line break without a paragraph, you will need to use two trailing spaces.
+   Note that this line is separate, but within the same paragraph.
+   (This is contrary to the typical GFM line break behaviour, where trailing spaces are not required.)
+
+* Unordered list can use asterisks
+- Or minuses
++ Or pluses
+
+## Links
+
+There are two ways to create links.
+
+\`\`\`markdown
+[I'm an inline-style link](https://www.google.com)
+
+[I'm an inline-style link with title](https://www.google.com "Google's Homepage")
+
+[I'm a reference-style link][Arbitrary case-insensitive reference text]
+
+[You can use numbers for reference-style link definitions][1]
+
+Or leave it empty and use the [link text itself].
+
+URLs and URLs in angle brackets will automatically get turned into links.
+http://www.example.com or <http://www.example.com> and sometimes
+example.com (but not on Github, for example).
+
+Some text to show that the reference links can follow later.
+
+[arbitrary case-insensitive reference text]: https://www.mozilla.org
+[1]: http://slashdot.org
+[link text itself]: http://www.reddit.com
+\`\`\`
+
+[I'm an inline-style link](https://www.google.com)
+
+[I'm an inline-style link with title](https://www.google.com "Google's Homepage")
+
+[I'm a reference-style link][Arbitrary case-insensitive reference text]
+
+[You can use numbers for reference-style link definitions][1]
+
+Or leave it empty and use the [link text itself].
+
+URLs and URLs in angle brackets will automatically get turned into links.
+http://www.example.com or <http://www.example.com> and sometimes
+example.com (but not on Github, for example).
+
+Some text to show that the reference links can follow later.
+
+[arbitrary case-insensitive reference text]: https://www.mozilla.org
+[1]: http://slashdot.org
+[link text itself]: http://www.reddit.com
+
+## Images
+
+\`\`\`markdown
+Here's our logo (hover to see the title text):
+
+Inline-style:
+![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Logo Title Text 1")
+
+Reference-style:
+![alt text][logo]
+
+[logo]: https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Logo Title Text 2"
+\`\`\`
+
+Here's our logo (hover to see the title text):
+
+Inline-style:
+![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Logo Title Text 1")
+
+Reference-style:
+![alt text][logo]
+
+[logo]: https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Logo Title Text 2"
+
+## Code and Syntax Highlighting
+
+Code blocks are part of the Markdown spec, but syntax highlighting isn't. However, many renderers -- like Github's and *Markdown Here* -- support syntax highlighting. Which languages are supported and how those language names should be written will vary from renderer to renderer. *Markdown Here* supports highlighting for dozens of languages (and not-really-languages, like diffs and HTTP headers); to see the complete list, and how to write the language names, see the [highlight.js demo page](http://softwaremaniacs.org/media/soft/highlight/test.html).
+
+\`\`\`markdown
+Inline \`code\` has \`back-ticks around\` it.
+\`\`\`
+
+Inline \`code\` has \`back-ticks around\` it.
+
+Blocks of code are either fenced by lines with three back-ticks <code>\`\`\`</code>, or are indented with four spaces. I recommend only using the fenced code blocks -- they're easier and only they support syntax highlighting.
+
+<pre lang="markdown"><code>\`\`\`javascript
+var s = "JavaScript syntax highlighting";
+alert(s);
+\`\`\`
+
+\`\`\`python
+s = "Python syntax highlighting"
+print s
+\`\`\`
+
+\`\`\`
+No language indicated, so no syntax highlighting.
+But let's throw in a &lt;b&gt;tag&lt;/b&gt;.
+\`\`\`
+</code></pre>
+
+
+
+\`\`\`javascript
+var s = "JavaScript syntax highlighting";
+alert(s);
+\`\`\`
+
+\`\`\`python
+s = "Python syntax highlighting"
+print s
+\`\`\`
+
+\`\`\`
+No language indicated, so no syntax highlighting in Markdown Here (varies on Github).
+But let's throw in a <b>tag</b>.
+\`\`\`
+
+
+## Tables
+
+Tables aren't part of the core Markdown spec, but they are part of GFM and *Markdown Here* supports them. They are an easy way of adding tables to your email -- a task that would otherwise require copy-pasting from another application.
+
+\`\`\`markdown
+Colons can be used to align columns.
+
+| Tables        | Are           | Cool  |
+| ------------- |:-------------:| -----:|
+| col 3 is      | right-aligned | $1600 |
+| col 2 is      | centered      |   $12 |
+| zebra stripes | are neat      |    $1 |
+
+There must be at least 3 dashes separating each header cell.
+The outer pipes (|) are optional, and you don't need to make the
+raw Markdown line up prettily. You can also use inline Markdown.
+
+Markdown | Less | Pretty
+--- | --- | ---
+*Still* | \`renders\` | **nicely**
+1 | 2 | 3
+\`\`\`
+
+Colons can be used to align columns.
+
+| Tables        | Are           | Cool |
+| ------------- |:-------------:| -----:|
+| col 3 is      | right-aligned | $1600 |
+| col 2 is      | centered      |   $12 |
+| zebra stripes | are neat      |    $1 |
+
+There must be at least 3 dashes separating each header cell. The outer pipes (|) are optional, and you don't need to make the raw Markdown line up prettily. You can also use inline Markdown.
+
+Markdown | Less | Pretty
+--- | --- | ---
+*Still* | \`renders\` | **nicely**
+1 | 2 | 3
+
+## Blockquotes
+
+\`\`\`markdown
+> Blockquotes are very handy in email to emulate reply text.
+> This line is part of the same quote.
+
+Quote break.
+
+> This is a very long line that will still be quoted properly when it wraps. Oh boy let's keep writing to make sure this is long enough to actually wrap for everyone. Oh, you can *put* **Markdown** into a blockquote.
+\`\`\`
+
+> Blockquotes are very handy in email to emulate reply text.
+> This line is part of the same quote.
+
+Quote break.
+
+> This is a very long line that will still be quoted properly when it wraps. Oh boy let's keep writing to make sure this is long enough to actually wrap for everyone. Oh, you can *put* **Markdown** into a blockquote.
+
+## Inline HTML
+
+You can also use raw HTML in your Markdown, and it'll mostly work pretty well.
+
+\`\`\`html
+<dl>
+  <dt>Definition list</dt>
+  <dd>Is something people use sometimes.</dd>
+
+  <dt>Markdown in HTML</dt>
+  <dd>Does *not* work **very** well. Use HTML <em>tags</em>.</dd>
+</dl>
+\`\`\`
+
+<dl>
+  <dt>Definition list</dt>
+  <dd>Is something people use sometimes.</dd>
+
+  <dt>Markdown in HTML</dt>
+  <dd>Does *not* work **very** well. Use HTML <em>tags</em>.</dd>
+</dl>
+
+## Horizontal Rule
+
+\`\`\`markdown
+Three or more...
+
+---
+
+Hyphens
+
+***
+
+Asterisks
+
+___
+
+Underscores
+\`\`\`
+
+Three or more...
+
+---
+
+Hyphens
+
+***
+
+Asterisks
+
+___
+
+Underscores
+
+## Line Breaks
+
+My basic recommendation for learning how line breaks work is to experiment and discover -- hit &lt;Enter&gt; once (i.e., insert one newline), then hit it twice (i.e., insert two newlines), see what happens.
+To add more than 1 empty line, use the html break tag.
+
+Here are some things to try out:
+
+\`\`\`html
+Here's a line for us to start with.
+
+This line is separated from the one above by two newlines, so it will be a *separate paragraph*.
+
+This line is also a separate paragraph, but...
+This line is only separated by a single newline, so it's a separate line in the *same paragraph*.
+
+<br><br><br>
+
+This line is way far down
+\`\`\`
+
+Here's a line for us to start with.
+
+This line is separated from the one above by two newlines, so it will be a *separate paragraph*.
+
+This line is also begins a separate paragraph, but...
+This line is only separated by a single newline, so it's a separate line in the *same paragraph*.
+
+<br><br><br>
+
+This line is way far down
+
+(Technical note: *Markdown Here* uses GFM line breaks, so there's no need to use MD's two-space line breaks.)
+`,l=G(s);let v="";const R=[];Object.keys(e).forEach(w=>{!~R.indexOf(w)&&w.slice(0,2)!=="$$"&&w!=="slot"&&console.warn(`<Page> was created with unknown prop '${w}'`)});function D(){v=this.value,r(0,v)}return t.$capture_state=()=>({markdown:G,validateUPluginJson:we,MetaDescriptors:be,exampleUPluginJson:o,typescriptMarkdown:s,markdownHtml:l,uPluginJsonInput:v,upluginErrors:n}),t.$inject_state=w=>{"uPluginJsonInput"in w&&r(0,v=w.uPluginJsonInput),"upluginErrors"in w&&r(1,n=w.upluginErrors)},e&&"$$inject"in e&&t.$inject_state(e.$$inject),t.$$.update=()=>{t.$$.dirty&1&&r(1,n=we(v))},[v,n,o,l,D]}class Ke extends Be{constructor(e){super(e),Pe(this,e,Ye,te,Ae,{}),f("SvelteRegisterComponent",{component:this,tagName:"Page",options:e,id:te.name})}}export{Ke as component};
+//# sourceMappingURL=13.CwELa3b-.js.map
