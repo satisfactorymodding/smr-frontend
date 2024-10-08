@@ -45,12 +45,14 @@
   let totalMods: number;
 
   let searchField = search;
+  $: searchDisabled = searchField.length < 3;
+  $: searchButtonClass = searchDisabled ? 'variant-filled-surface' : 'variant-filled-primary';
 
   let timer: number;
   $: {
     clearTimeout(timer);
     timer = setTimeout(() => {
-      if (searchField && searchField.length > 2) {
+      if (searchField && !searchDisabled) {
         if ((search === '' || search === null) && searchField !== '' && searchField !== null) {
           orderBy = ModFields.Search;
           page = 0;
@@ -70,11 +72,12 @@
   $: if (browser) {
     const url = new URL(window.location.origin + window.location.pathname);
     url.searchParams.append('p', page.toString());
-    searchField !== '' && searchField !== null && url.searchParams.append('q', searchField);
+    !searchDisabled && searchField !== '' && searchField !== null && url.searchParams.append('q', searchField);
     goto(url.toString(), { keepFocus: true });
   }
 
   $: totalMods = $mods?.data?.getMods?.count || 0;
+  $: showPagination = ($mods && $mods.fetching) || ($mods && !$mods.fetching && totalMods > 0 && !$mods.error);
 
   $: gridClasses =
     colCount == 4
@@ -149,7 +152,10 @@
             class="border-0 bg-transparent p-1.5 ring-0"
             name="search"
             placeholder={$t('search.placeholder-text')} />
-          <button class="material-icons variant-filled-primary">arrow_forward</button>
+          <button
+            class="material-icons {searchButtonClass}"
+            disabled={searchDisabled}
+            title={searchDisabled ? $t('search.disabled') : ''}>arrow_forward</button>
         </div>
       </div>
       {#if tagsOpen}
@@ -178,16 +184,17 @@
     {#if newMod && $user !== null}
       <a class="variant-ghost-primary btn self-end" href="{base}/new-mod">{$t('mods.new')}</a>
     {/if}
-
-    <div class="self-end">
-      <Paginator
-        bind:settings={paginationSettings}
-        showFirstLastButtons={true}
-        showPreviousNextButtons={true}
-        on:page={(p) => (page = p.detail)}
-        on:amount={(p) => (perPage = p.detail)}
-        controlVariant="variant-filled-surface" />
-    </div>
+    {#if showPagination}
+      <div class="self-end">
+        <Paginator
+          bind:settings={paginationSettings}
+          showFirstLastButtons={true}
+          showPreviousNextButtons={true}
+          on:page={(p) => (page = p.detail)}
+          on:amount={(p) => (perPage = p.detail)}
+          controlVariant="variant-filled-surface" />
+      </div>
+    {/if}
   </div>
 </div>
 
@@ -197,8 +204,12 @@
       <FicsitCard fake />
     {/each}
   </div>
+{:else if $mods.error && $mods.error.message.includes("'Search' failed on the 'min' tag")}
+  {$t('search.failed.query-too-short')}
 {:else if $mods.error}
   <p>Oh no... {$mods.error.message}</p>
+{:else if totalMods == 0}
+  {$t('search.results.empty')}
 {:else}
   <div class="grid {gridClasses} gap-4">
     {#each $mods.data.getMods.mods as mod}
@@ -207,17 +218,19 @@
   </div>
 {/if}
 
-<div class="ml-auto mt-5 flex justify-end">
-  <div>
-    <Paginator
-      bind:settings={paginationSettings}
-      showFirstLastButtons={true}
-      showPreviousNextButtons={true}
-      on:page={(p) => (page = p.detail)}
-      on:amount={(p) => (perPage = p.detail)}
-      controlVariant="variant-filled-surface" />
+{#if showPagination}
+  <div class="ml-auto mt-5 flex justify-end">
+    <div>
+      <Paginator
+        bind:settings={paginationSettings}
+        showFirstLastButtons={true}
+        showPreviousNextButtons={true}
+        on:page={(p) => (page = p.detail)}
+        on:amount={(p) => (perPage = p.detail)}
+        controlVariant="variant-filled-surface" />
+    </div>
   </div>
-</div>
+{/if}
 
 <style lang="postcss">
   * :global(.search-paper) {
