@@ -1,7 +1,5 @@
 <script lang="ts">
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
-  import FicsitCard from '$lib/components/general/FicsitCard.svelte';
-  import ModCard from '$lib/components/mods/ModCard.svelte';
   import Doggo from '$lib/components/general/Doggo.svelte';
   import { assets } from '$app/paths';
   import { onMobile, easterEgg, doggoNeedsPats } from '$lib/stores/global';
@@ -13,8 +11,6 @@
   $: ({ mods } = data);
 
   export const { t } = getTranslate();
-
-  const gridClasses = '3xl:grid-cols-4 lg:grid-cols-2 grid-cols-1';
 </script>
 
 <svelte:head>
@@ -123,22 +119,6 @@
       </div>
     </a>
   </div>
-
-  {#if $mods.fetching}
-    <div class="grid {gridClasses} gap-4">
-      {#each Array(4) as _}
-        <FicsitCard fake />
-      {/each}
-    </div>
-  {:else if $mods.error}
-    <p>{$t('error.oh-no')} {$mods.error.message}</p>
-  {:else}
-    <div class="grid {gridClasses} gap-4">
-      {#each $mods.data.getMods.mods as mod}
-        <ModCard {mod} />
-      {/each}
-    </div>
-  {/if}
 </div>
 
 <style lang="postcss">
