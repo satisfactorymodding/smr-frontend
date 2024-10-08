@@ -4,7 +4,7 @@
   import { assets } from '$app/paths';
   import { onMobile, easterEgg, doggoNeedsPats } from '$lib/stores/global';
   import type { PageData } from './$types';
-  import { getTranslate } from '@tolgee/svelte';
+  import { getTranslate, T } from '@tolgee/svelte';
 
   export let data: PageData;
 
@@ -40,7 +40,14 @@
                   {#if $easterEgg || $doggoNeedsPats}{' - Doggo'}{/if}
                 </div>
                 <div class="flex h-1/3 justify-center 2xl:h-1/2">
-                  <img class="h-full" src={assets + '/images/smm_icon_white.webp'} alt="Satisfactory Mod Manager" />
+                  <div class="variant-filled-surface btn btn-sm m-3">
+                    <span
+                      ><T
+                        keyName="home.download-satisfactory-mod-manager"
+                        defaultValue="Download the Mod Manager" /></span>
+                    <img class="h-full" src={assets + '/images/smm_icon_white.webp'} alt="Satisfactory Mod Manager" />
+                    <!-- <span class="material-icons">people</span> -->
+                  </div>
                 </div>
               </div>
               {#if $easterEgg}
@@ -93,8 +100,12 @@
       <div class="card h-full">
         <div class="relative h-full w-full">
           <div class="modding-banner banner" />
-          <div class="absolute top-0 flex h-full w-full items-center justify-center">
+          <div class="absolute top-0 flex h-full w-full flex-col items-center justify-center">
             <img class="centered-logo" src={assets + '/images/sf_modding_logo.webp'} alt="Satisfactory Modding Logo" />
+            <div class="variant-filled-secondary btn btn-sm m-3">
+              <span><T keyName="home.banner.join-discord" defaultValue="Join the Modding Discord" /></span>
+              <span class="material-icons">people</span>
+            </div>
           </div>
           <div class="absolute bottom-0 w-full px-4 pb-4 text-center text-neutral-400 xl:text-left">
             <span>{$t('home.banner.community-run-discord')}</span>
@@ -106,11 +117,16 @@
       <div class="card h-full">
         <div class="relative h-full w-full">
           <div class="css-banner banner" />
-          <div class="absolute top-0 flex h-full w-full items-center justify-center">
+          <div class="absolute top-0 flex h-full w-full flex-col items-center justify-center">
             <img
               class="centered-logo"
               src={assets + '/images/satisfactory_logo_full_color_small.webp'}
               alt="Satisfactory Logo" />
+            <div class="variant-filled-surface btn btn-sm m-3">
+              <span
+                ><T keyName="home.banner.open-official-website" defaultValue="Visit the Satisfactory Website" /></span>
+              <span class="material-icons">launch</span>
+            </div>
           </div>
           <div class="absolute bottom-0 w-full px-4 pb-4 text-center text-neutral-300 xl:text-right">
             <span>{$t('home.banner.official-website')}</span>
