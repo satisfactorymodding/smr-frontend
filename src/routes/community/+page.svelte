@@ -64,6 +64,15 @@
           extraCss="text-2xl">
           <T keyName="community.welcome.guide-button" defaultValue="Visit the Welcome Guide" />
         </LinkButton>
+        <h2><T keyName="community.answer-overflow.header" defaultValue="Answer Overflow" /></h2>
+        <p>
+          <T
+            keyName="community.answer-overflow.description"
+            defaultValue="Certain channels in the Discord are indexed via Answer Overflow. This means search engines like Google can search their posts and you can read them without being a Discord member. You can also directly view these posts from the Answer Overflow site." />
+        </p>
+        <LinkButton url="https://www.answeroverflow.com/c/555424930502541343/1243688087578738770" icon="search">
+          <T keyName="community.answer-overflow.visit-button" defaultValue="Browse Answer Overflow" />
+        </LinkButton>
         <h2><T keyName="community.forums.header" defaultValue="Archived Forums" /></h2>
         <p>
           <T
