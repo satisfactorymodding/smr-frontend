@@ -20,7 +20,7 @@
 <Doggo dogVisible={doggoNeedsPats} />
 
 <div class="flex min-h-full flex-col" style="height: calc(100vh - 64px - 3rem)">
-  <div class="mb-4 min-h-[25vh] overflow-hidden">
+  <div class="mb-4 min-h-[35vh] overflow-hidden">
     {#if !$onMobile}
       <a href="https://smm.ficsit.app" rel="noopener" target="_blank">
         <div class="card h-full">
@@ -40,7 +40,7 @@
                   {#if $easterEgg || $doggoNeedsPats}{' - Doggo'}{/if}
                 </div>
                 <div class="flex h-1/3 justify-center 2xl:h-1/2">
-                  <div class="variant-filled-surface btn btn-sm m-3">
+                  <div class="variant-ringed-primary variant-glass-surface btn btn-lg m-6 text-3xl">
                     <span
                       ><T
                         keyName="home.download-satisfactory-mod-manager"
@@ -101,7 +101,7 @@
           <div class="modding-banner banner" />
           <div class="absolute top-0 flex h-full w-full flex-col items-center justify-center">
             <img class="centered-logo" src={assets + '/images/sf_modding_logo.webp'} alt="Satisfactory Modding Logo" />
-            <div class="variant-filled-secondary btn btn-sm m-3">
+            <div class="variant-ringed-secondary variant-glass-secondary btn btn-md m-6">
               <span><T keyName="home.banner.join-discord" defaultValue="Join the Modding Discord" /></span>
               <span class="material-icons">people</span>
             </div>
@@ -121,7 +121,7 @@
               class="centered-logo"
               src={assets + '/images/satisfactory_logo_full_color_small.webp'}
               alt="Satisfactory Logo" />
-            <div class="variant-filled-surface btn btn-sm m-3">
+            <div class="variant-ringed-surface variant-glass-surface btn btn-md m-6">
               <span
                 ><T keyName="home.banner.open-official-website" defaultValue="Visit the Satisfactory Website" /></span>
               <span class="material-icons">launch</span>
