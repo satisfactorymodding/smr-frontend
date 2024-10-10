@@ -47,7 +47,7 @@
       author: 'SillyBits',
       logo: '',
       description:
-        'Allows for numerous options regarding satisfactory savegames, e.g. searching and erasing damaged entities (Supports Update 3 save files.)',
+        'Allows for numerous options regarding satisfactory savegames, e.g. searching and erasing damaged entities. (Supports Update 3 save files.)',
       link: 'https://github.com/SillyBits/satisfactory-savegame-tool-ng'
     },
     {
@@ -84,7 +84,7 @@
       author: 'GreyHak',
       logo: 'https://raw.githubusercontent.com/GreyHak/sat_sav_parse/main/sat_py_icon.png',
       description:
-        'A set of Python tools for parsing Satisfactory save files, and then displaying and manipulating the contents.  (Supports Satisfactory Release save files.)',
+        'A set of Python tools for parsing Satisfactory save files, and then displaying and manipulating the contents. (Supports 1.0 Release save files.)',
       link: 'https://github.com/GreyHak/sat_sav_parse'
     },
     {
