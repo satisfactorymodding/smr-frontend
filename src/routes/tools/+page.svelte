@@ -9,7 +9,7 @@
       author: 'Goz3rr',
       logo: 'https://cdn.jsdelivr.net/gh/Goz3rr/SatisfactorySaveEditor@6958101e3f2c0e50ba92df798ebefe4e6bdd4eb5/Reference%20Materials/SatisfactorySaveEditorLogo.png',
       description:
-        'A work in progress save editor for Satisfactory. Consists of both a save parser and an application for viewing and editing the parsed data.',
+        'A work in progress save editor for Satisfactory. Consists of both a save parser and an application for viewing and editing the parsed data. (Supports Update 5 save files.)',
       link: 'https://github.com/Goz3rr/SatisfactorySaveEditor'
     },
     {
@@ -47,7 +47,7 @@
       author: 'SillyBits',
       logo: '',
       description:
-        'Allows for numerous options regarding satisfactory savegames, e.g. searching and erasing damaged entities',
+        'Allows for numerous options regarding satisfactory savegames, e.g. searching and erasing damaged entities (Supports Update 3 save files.)',
       link: 'https://github.com/SillyBits/satisfactory-savegame-tool-ng'
     },
     {
@@ -78,6 +78,14 @@
       logo: 'https://factoriolab.github.io/factoriolab.webp',
       description: 'Production calculator supporting multiple factory games and visualization approaches',
       link: 'https://factoriolab.github.io/satisfactory'
+    },
+    {
+      name: 'Satisfactory Save File Python Tools',
+      author: 'GreyHak',
+      logo: 'https://raw.githubusercontent.com/GreyHak/sat_sav_parse/main/sat_py_icon.png',
+      description:
+        'A set of Python tools for parsing Satisfactory save files, and then displaying and manipulating the contents.  (Supports Satisfactory Release save files.)',
+      link: 'https://github.com/GreyHak/sat_sav_parse'
     },
     {
       name: 'Satisfactory Dedicated Server Remote Manager',
