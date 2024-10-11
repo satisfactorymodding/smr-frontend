@@ -8,14 +8,22 @@
 
   export const { t } = getTranslate();
 
-  const languages = {
+  type language = {
+    name: string;
+    flag: string;
+    style?: string;
+  };
+
+  // cspell:disable
+  const languages: Record<string, language> = {
     en: {
       name: 'English',
       flag: '🇺🇳'
     },
     de: {
       name: 'Deutsch',
-      flag: '🇩🇪'
+      flag: '🇩🇪',
+      style: 'text-black'
     },
     fr: {
       name: 'Français',
@@ -54,6 +62,7 @@
       flag: '🇹🇼'
     }
   } as const;
+  // cspell:enable
 
   const lang = writable<string>((browser && localStorage.getItem('language')) || $tolgee.getLanguage());
   lang.subscribe((l) => {
@@ -73,7 +82,7 @@
 
 <button class="variant-ghost-primary btn btn-sm grid grid-flow-col" use:popup={languageMenuBox}>
   <span>{languages[$lang].name}</span>
-  <span class="text-xl">{languages[$lang].flag}</span>
+  <span class={`text-xl ${languages[$lang]?.style ?? 'text-white'}`}>{languages[$lang].flag}</span>
 </button>
 
 <div class="card w-48 py-2 shadow-xl" data-popup="languageMenuBox">
@@ -83,7 +92,7 @@
         <li class:bg-primary-active-token={$lang === k}>
           <button class="w-full" on:click={() => lang.set(k)}>
             <span>{v.name}</span>
-            <span class="text-xl text-white">{v.flag}</span>
+            <span class="text-xl ${v?.style ?? 'text-white'}">{v.flag}</span>
           </button>
         </li>
       {/each}
