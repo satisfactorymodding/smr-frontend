@@ -16,6 +16,7 @@
   import { getModalStore, getToastStore, type ModalSettings, popup } from '@skeletonlabs/skeleton';
   import Page404 from '$lib/components/general/Page404.svelte';
   import { getTranslate } from '@tolgee/svelte';
+  import VirustotalResults from '$lib/components/versions/VirustotalResults.svelte';
 
   export const { t } = getTranslate();
 
@@ -164,6 +165,9 @@
         <VersionInfo version={$version.data.getVersion} />
         <VersionTargetSupportGrid targets={$version.data.getVersion.targets} />
         <VersionDependenciesGrid dependencies={$version.data.getVersion.dependencies} />
+        {#if $version.data.getVersion.virustotal_results.length != 0}
+          <VirustotalResults results={$version.data.getVersion.virustotal_results} />
+        {/if}
       </div>
     </div>
   </div>

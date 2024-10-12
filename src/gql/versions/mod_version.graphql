@@ -31,5 +31,14 @@ query GetModVersion($version: VersionID!) {
       optional
       condition
     }
+    virustotal_results {
+      created_at
+      file_name
+      hash
+      id
+      safe
+      updated_at
+      version_id
+    }
   }
 }
