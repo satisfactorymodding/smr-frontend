@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { page } from '$app/stores'; // Importing this enables dynamic handling of <meta> tags
+
   import LoginDialog from '$lib/components/auth/LoginDialog.svelte';
   import { setContextClient } from '@urql/svelte';
   import { onMount } from 'svelte';
@@ -16,7 +18,13 @@
   import { computePosition, autoUpdate, offset, shift, flip, arrow } from '@floating-ui/dom';
 
   export let data: LayoutData;
-
+  // Using the $page store, this script supplies default metadeta
+  const defaultMeta = {
+    title: 'Satisfactory Mod Repository',
+    description: 'Your source for mods!',
+    image: '/assets/favicon.ico',
+    url: $page.url.origin + $page.url.pathname
+  };
   const { client, tolgee } = data;
 
   initializeStores();
@@ -83,6 +91,7 @@
 </script>
 
 <svelte:head>
+  <!-- STATIC head elements that don't change across page nav -->
   <link rel="icon" type="image/x-icon" href="{base}/assets/favicon.ico" />
   <link rel="apple-touch-icon" sizes="180x180" href="{base}/assets/apple-touch-icon.png?v=69P26YMB35" />
   <link rel="icon" type="image/png" sizes="32x32" href="{base}/assets/favicon-32x32.png?v=69P26YMB35" />
@@ -95,6 +104,15 @@
   <meta name="theme-color" content="#ff6f00" />
 
   <link rel="preload" href="{base}/assets/fonts/flow-rounded.woff" as="font" type="font/woff" />
+
+  <!-- Ensure the meta tags are only rendered if no duplication occurs -->
+  <!-- Title and meta tags dynamically controlled by page data or default values -->
+  <title>{$page.data.meta?.title || defaultMeta.title} - SMR</title>
+  <meta name="description" content={$page.data.meta?.description || defaultMeta.description} />
+  <meta property="og:title" content="{$page.data.meta?.title || defaultMeta.title} - SMR" />
+  <meta property="og:description" content={$page.data.meta?.description || defaultMeta.description} />
+  <meta property="og:image" content={$page.data.meta?.image || defaultMeta.image} />
+  <meta property="og:url" content={$page.data.meta?.url || defaultMeta.url} />
 
   {#if gTag}
     <script async src="https://www.googletagmanager.com/gtag/js?id={gTag}"></script>
