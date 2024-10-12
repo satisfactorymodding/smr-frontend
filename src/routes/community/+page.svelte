@@ -55,8 +55,8 @@
         <p>
           <T
             keyName="community.welcome.description"
-            defaultValue="Welcome to the Satisfactory Modding comunity! Click here for a guide to help you get started playing with
-          mods." />
+            defaultValue="Welcome to the Satisfactory Modding community! Click here for a guide to help you get started playing with
+          mods. Currently only available in English." />
         </p>
         <LinkButton
           url="https://docs.ficsit.app/satisfactory-modding/latest/ForUsers/Welcome.html"
