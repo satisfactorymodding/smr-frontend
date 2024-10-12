@@ -7,12 +7,14 @@
   // words - list of words to be always considered correct
   "words": [
     "cfworker",
+    "Deantendo",
     "felte",
     "fenv",
     "ficsit",
     "gpgsign",
     "pnpx",
     "prismjs",
+    "SCIM",
     "smui",
     "tolgee",
     "uplugin",

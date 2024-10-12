@@ -393,11 +393,25 @@ This line is way far down
 
 <svelte:head>
   <title>Help - SMR</title>
-  <MetaDescriptors description="Help for submitting modules to the Satsifactory Mod Repository" title="Help" />
+  <MetaDescriptors description="Help using the Satisfactory Mod Repository" title="Help" />
 </svelte:head>
 
 <div>
-  <div class="grid grid-flow-col grid-cols-2 gap-4">
+  <h1 class="my-4 text-4xl font-bold">Get Help Using Mods</h1>
+  <div class="card p-4">
+    <section class="p-4">
+      <button
+        class="variant-ghost-primary btn btn-sm text-2xl"
+        on:click={() =>
+          (window.location.href = 'https://docs.ficsit.app/satisfactory-modding/latest/ForUsers/Welcome.html')}>
+        <span>Visit the Welcome Guide</span>
+        <span class="material-icons">waving_hand</span>
+      </button>
+    </section>
+  </div>
+
+  <h1 class="my-4 text-4xl font-bold">Mod Developer Resources</h1>
+  <div class="grid grid-flow-row grid-cols-1 grid-rows-2 gap-4 md:grid-cols-2 md:grid-rows-1">
     <div class="card p-4">
       <section class="p-4">
         <h3 class="my-4 text-2xl font-bold">&lt;mod&gt;.uplugin format</h3>
