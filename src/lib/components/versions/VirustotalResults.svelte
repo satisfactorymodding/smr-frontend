@@ -7,25 +7,28 @@
 </script>
 
 <div class="grid grid-flow-row">
-  <h3 class="my-4 text-2xl font-bold">VirusTotal Results</h3>
-  <table aria-label="Required Mod Dependencies" class="max-w-auto table table-hover !overflow-visible">
-    <thead>
-      <tr class="rounded border !border-surface-500">
-        <td style="width: 20%;"><div class="text-center" title="File Name">File Name</div></td>
-        <td style="width: 20%;"><div class="text-center" title="Results">Results</div></td>
-        <td style="width: 20%;"><div class="text-center" title="Safe">Safe</div></td>
-      </tr>
-    </thead>
+  <h3 class="my-4 text-2xl font-bold">{$t('virustotal.table.title')}</h3>
+  <table aria-label={$t('virustotal.table.title')} class="max-w-auto table table-hover !overflow-visible">
     <tbody>
+      <tr class="rounded border !border-surface-500">
+        <td style="width: 25%;"
+          ><div title={$t('virustotal.table.file_name')}>
+            {$t('virustotal.table.file_name')}
+          </div></td>
+        <td style="width: 25%;"
+          ><div class="text-center" title={$t('virustotal.table.results')}>{$t('virustotal.table.results')}</div></td>
+        <td style="width: 25%;"
+          ><div class="text-center" title={$t('virustotal.table.safe')}>{$t('virustotal.table.safe')}</div></td>
+      </tr>
       {#each results as result}
         <tr class="rounded border !border-surface-500">
           <td>
-            <div class="text-center">{result.file_name}</div>
+            <div>{result.file_name}</div>
           </td>
           <td>
             <div class="text-center">
               <a
-                title="View VirusTotal Result"
+                title={$t('version.virustotal.result')}
                 href={`https://www.virustotal.com/gui/file/${result.hash}`}
                 target="_blank"
                 class="text-white">
