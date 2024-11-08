@@ -1,7 +1,8 @@
-import typescriptParser from '@typescript-eslint/parser';
-import typescriptPlugin from '@typescript-eslint/eslint-plugin';
-import sveltePlugin from "eslint-plugin-svelte";
-import svelteParser from "svelte-eslint-parser";
+import js from '@eslint/js';
+import ts from 'typescript-eslint';
+import svelte from 'eslint-plugin-svelte';
+import globals from 'globals';
+
 
 const rules = {
   'array-callback-return': 'error',
@@ -26,65 +27,48 @@ const rules = {
   'no-shadow': 'error',
   'no-use-before-define': 'error',
   'no-unused-vars': 'off',
-  '@typescript-eslint/no-unused-vars': ['error', {
-    varsIgnorePattern: '^_',
-    argsIgnorePattern: '^_'
-  }]
+  '@typescript-eslint/no-unused-vars': [
+    'warn', {
+      varsIgnorePattern: '^_',
+      argsIgnorePattern: '^_',
+      caughtErrorsIgnorePattern: '^_',
+    }
+  ],
+  '@typescript-eslint/no-unused-expressions': 'warn',
+  'svelte/no-at-html-tags': 'warn',
 };
 
 export default [
+  js.configs.recommended,
+  ...ts.configs.recommended,
+  ...svelte.configs['flat/recommended'],
+  {
+    languageOptions: {
+      globals: {
+        ...globals.browser,
+        ...globals.node,
+      },
+    },
+  },
   {
     ignores: [
       ".svelte-kit/**/*",
       "node_modules/**/*",
       "dist/**/*",
       "build/**/*",
-      "src/i18n/**/*"
+      "src/i18n/**/*",
+      "postcss.config.cjs",
     ],
   },
-
-  {
-    files: ["**/*.ts"],
-    ignores: [
-      "custom-theme.ts",
-      "src/service-worker.ts",
-      "tailwind.config.ts"
-    ],
-    languageOptions: {
-      parser: typescriptParser,
-      parserOptions: {
-        project: "./tsconfig.json",
-        extraFileExtensions: [".svelte"],
-      },
-    },
-    plugins: {
-      "@typescript-eslint": typescriptPlugin,
-    },
-    rules: {
-      ...typescriptPlugin.configs.recommended.rules,
-      ...rules
-    },
-  },
-
   {
     files: ["**/*.svelte"],
     languageOptions: {
-      parser: svelteParser,
       parserOptions: {
-        parser: typescriptParser,
-        project: "./tsconfig.json",
-        extraFileExtensions: [".svelte"],
+        parser: ts.parser,
       },
     },
-    plugins: {
-      svelte: sveltePlugin,
-      "@typescript-eslint": typescriptPlugin,
-    },
-    rules: {
-      ...typescriptPlugin.configs.recommended.rules,
-      ...sveltePlugin.configs.recommended.rules,
-      ...rules,
-      'svelte/no-at-html-tags': 'off'
-    },
   },
+  {
+    rules
+  }
 ];
