@@ -21,6 +21,11 @@
     "format": "prettier --write . && eslint . --fix",
     "translations": "bash ./download_translations.sh"
   },
+  "config": {
+    "commitizen": {
+      "path": "@commitlint/cz-commitlint"
+    }
+  },
   "dependencies": {
     "@felte/core": "^1.4.3",
     "@felte/reporter-svelte": "^1.1.11",
@@ -46,8 +51,8 @@
     "prismjs": "^1.29.0",
     "semver": "^7.6.3",
     "socket.io-client": "^4.7.5",
-    "tslib": "^2.6.3",
     "thumbhash": "^0.1.1",
+    "tslib": "^2.6.3",
     "wonka": "^6.3.4",
     "zod": "^3.23.8"
   },
@@ -55,6 +60,7 @@
     "@cfworker/json-schema": "^1.12.8",
     "@commitlint/cli": "^19.3.0",
     "@commitlint/config-conventional": "^19.3.0",
+    "@commitlint/cz-commitlint": "^19.5.0",
     "@eslint/eslintrc": "^3.1.0",
     "@graphql-codegen/add": "^5.0.3",
     "@graphql-codegen/cli": "^5.0.2",
@@ -86,13 +92,14 @@
     "cookieconsent": "^3.1.1",
     "cross-env": "^7.0.3",
     "cssnano": "^7.0.4",
-    "cz-conventional-changelog": "^3.3.0",
+    "cz": "^1.8.2",
     "dotenv-flow": "^4.1.0",
     "eslint": "^9.7",
     "eslint-config-prettier": "^9.1",
     "eslint-plugin-svelte": "^2.43",
     "graphql-tag": "^2.12.6",
     "husky": "^9.1.1",
+    "inquirer": "9",
     "postcss": "^8.4.40",
     "postcss-import-url": "^7.2.0",
     "postcss-load-config": "^6.0.1",
