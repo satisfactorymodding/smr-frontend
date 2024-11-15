@@ -120,27 +120,20 @@
     <Sidebar bind:accessibility />
   </Drawer>
 
-  <AppShell>
-    <svelte:fragment slot="header">
+  <div class="grid grid-rows-[auto_1fr_auto]">
+    <header class="sticky top-0 z-10">
       <TopBar />
-    </svelte:fragment>
-
-    <svelte:fragment slot="sidebarLeft">
-      <aside class="hidden h-full xl:block">
+    </header>
+    <div class="grid grid-cols-1 md:grid-cols-[auto_1fr]">
+      <aside class="hidden xl:block sticky top-[calc(72px)] h-[calc(100vh-72px)] col-span-1">
         <Sidebar bind:accessibility />
       </aside>
-    </svelte:fragment>
-
-    <svelte:fragment slot="pageHeader">
-      <AnnouncementHeader />
-    </svelte:fragment>
-
-    <div class="app-content w-full overflow-auto">
-      <main class="main-content min-h-100% xl:py-6 xl:pr-3">
+      <main class="space-y-4 p-4">
+        <!-- <AnnouncementHeader /> -->
         <slot />
       </main>
     </div>
-  </AppShell>
+  </div>
 
   <LoginDialog />
 </TolgeeProvider>
