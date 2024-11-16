@@ -10,7 +10,7 @@
   import { PUBLIC_GOOGLE_SITE_TAG } from '$env/static/public';
   import type { LayoutData } from './$types';
   import { TolgeeProvider } from '@tolgee/svelte';
-  import { initializeStores, AppShell, Modal, storePopup, Drawer, Toast } from '@skeletonlabs/skeleton';
+  import { initializeStores, Modal, storePopup, Drawer, Toast } from '@skeletonlabs/skeleton';
   import TopBar from '$lib/components/general/TopBar.svelte';
   import './_global.postcss';
   import { computePosition, autoUpdate, offset, shift, flip, arrow } from '@floating-ui/dom';
@@ -125,11 +125,11 @@
       <TopBar />
     </header>
     <div class="grid grid-cols-1 md:grid-cols-[auto_1fr]">
-      <aside class="hidden xl:block sticky top-[calc(72px)] h-[calc(100vh-72px)] col-span-1">
+      <aside class="sticky top-[calc(72px)] col-span-1 hidden h-[calc(100vh-72px)] xl:block">
         <Sidebar bind:accessibility />
       </aside>
       <main class="space-y-4 p-4">
-        <!-- <AnnouncementHeader /> -->
+        <AnnouncementHeader />
         <slot />
       </main>
     </div>
