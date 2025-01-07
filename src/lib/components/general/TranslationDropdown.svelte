@@ -8,22 +8,44 @@
 
   export const { t } = getTranslate();
 
-  const languages = {
+  type language = {
+    name: string;
+    flag: string;
+    style?: string;
+  };
+
+  const defaultFlagTextStyle = 'text-white';
+
+  // cspell:disable
+  const languages: Record<string, language> = {
     en: {
       name: 'English',
       flag: '🇺🇳'
     },
     de: {
       name: 'Deutsch',
-      flag: '🇩🇪'
+      flag: '🇩🇪',
+      style: 'text-black' // Bug in something? text color affects the top stripe of the DE flag
+    },
+    es: {
+      name: 'Español',
+      flag: '🇪🇸'
     },
     fr: {
       name: 'Français',
       flag: '🇫🇷'
     },
+    hu: {
+      name: 'Magyar',
+      flag: '🇭🇺'
+    },
     it: {
       name: 'Italiano',
       flag: '🇮🇹'
+    },
+    ko: {
+      name: '한국어',
+      flag: '🇰🇷'
     },
     lv: {
       name: 'Latviešu',
@@ -36,6 +58,10 @@
     nl: {
       name: 'Nederlands',
       flag: '🇳🇱'
+    },
+    'pt-BR': {
+      name: 'Português (Brasil)',
+      flag: '🇧🇷'
     },
     pl: {
       name: 'Polski',
@@ -54,6 +80,7 @@
       flag: '🇹🇼'
     }
   } as const;
+  // cspell:enable
 
   const lang = writable<string>((browser && localStorage.getItem('language')) || $tolgee.getLanguage());
   lang.subscribe((l) => {
@@ -73,17 +100,17 @@
 
 <button class="variant-ghost-primary btn btn-sm grid grid-flow-col" use:popup={languageMenuBox}>
   <span>{languages[$lang].name}</span>
-  <span class="text-xl">{languages[$lang].flag}</span>
+  <span class={`text-xl ${languages[$lang]?.style ?? defaultFlagTextStyle}`}>{languages[$lang].flag}</span>
 </button>
 
-<div class="card w-48 py-2 shadow-xl" data-popup="languageMenuBox">
+<div class="card w-56 overflow-y-auto scroll-smooth py-2 shadow-xl" data-popup="languageMenuBox">
   <nav class="list-nav">
     <ul>
       {#each Object.entries(languages) as [k, v]}
         <li class:bg-primary-active-token={$lang === k}>
           <button class="w-full" on:click={() => lang.set(k)}>
             <span>{v.name}</span>
-            <span class="text-xl text-white">{v.flag}</span>
+            <span class="text-xl {v?.style ?? defaultFlagTextStyle}">{v.flag}</span>
           </button>
         </li>
       {/each}

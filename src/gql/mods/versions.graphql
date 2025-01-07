@@ -19,6 +19,15 @@ query GetModVersions($mod: ModID!, $limit: Int!, $offset: Int!) {
         hash
         size
       }
+      virustotal_results {
+        created_at
+        file_name
+        hash
+        id
+        safe
+        updated_at
+        version_id
+      }
     }
   }
 }
