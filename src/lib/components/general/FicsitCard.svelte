@@ -87,7 +87,7 @@
           <div class="logo max-h-full min-h-full min-w-full max-w-full bg-neutral-500" />
         {:else}
           <img
-            class="logo absolute max-h-full min-h-full min-w-full max-w-full transition-opacity delay-100 duration-200 ease-linear"
+            class="logo absolute max-h-full min-h-full min-w-full max-w-full object-contain transition-opacity delay-100 duration-200 ease-linear"
             class:invisible={!imageLoaded}
             class:opacity-0={!imageLoaded}
             src={renderedLogo}
