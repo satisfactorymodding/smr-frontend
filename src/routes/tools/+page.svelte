@@ -6,6 +6,14 @@
   // cspell:ignore SatisGraphtory tehalexf thinkaliker Moritz
   const tools: Tool[] = [
     {
+      name: 'Satisfactory Interactive Map',
+      author: 'DevLeon',
+      logo: 'https://www.th.gl/satisfactory.jpg',
+      description:
+        'Explore Satisfactory 1.0 with this Interactive Map and In-Game App! Minimap, real-Time position tracking, full-text search, custom drawings, and more!',
+      link: 'https://satisfactory.th.gl/'
+    },
+    {
       name: 'Satisfactory Calculator Interactive Map (SCIM)',
       author: 'Anthor',
       logo: 'https://i.imgur.com/vPKmL9d.png',
