@@ -56,6 +56,8 @@
   <MetaDescriptors description="Unapproved mods" title="Admin: Unapproved Mods" />
 </svelte:head>
 
+<h1>Unapproved Mods</h1>
+
 {#if totalMods}
   <div class="mb-5 ml-auto flex justify-end">
     <div>
@@ -118,3 +120,9 @@
     </div>
   </div>
 {/if}
+
+<style lang="postcss">
+  h1 {
+    @apply my-4 text-4xl font-bold;
+  }
+</style>

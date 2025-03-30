@@ -132,9 +132,9 @@ To define new translation keys yourself, contact us on the Discord about getting
 
 See these documentation pages about how to use Tolgee in code:
 
-- [Using `$t()` and the `T` component](https://tolgee.io/js-sdk/integrations/svelte/translating)
-- [Full spec for `$t()`](https://tolgee.io/js-sdk/api/core_package/tolgee#t)
-- [ICU Message Format](https://tolgee.io/platform/translation_process/icu_message_format)
+* [Using `$t()` and the `T` component](https://tolgee.io/js-sdk/integrations/svelte/translating)
+* [Full spec for `$t()`](https://tolgee.io/js-sdk/api/core_package/tolgee#t)
+* [ICU Message Format](https://tolgee.io/platform/translation_process/icu_message_format)
 
 ### Downloading Translations
 

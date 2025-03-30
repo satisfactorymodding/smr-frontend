@@ -1,0 +1,3 @@
+mutation DeleteAnnouncement($id: AnnouncementID!) {
+  deleteAnnouncement(announcementId: $id)
+}

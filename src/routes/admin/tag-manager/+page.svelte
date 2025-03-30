@@ -10,6 +10,7 @@
   const panels = {};
   const nameFields = {};
   let tagNegativeID = -1;
+  const defaultNewTagName = 'New Tag';
 
   const tagsQuery = queryStore({
     query: GetTagsDocument,
@@ -24,8 +25,8 @@
   const toastStore = getToastStore();
 
   function newTag() {
-    if (!tags.find((tag) => tag.name == 'New Tag')) {
-      const tag = { id: tagNegativeID--, name: 'New Tag', description: 'Description' } as Tag;
+    if (!tags.find((tag) => tag.name == defaultNewTagName)) {
+      const tag = { id: tagNegativeID--, name: defaultNewTagName, description: 'Description' } as Tag;
       tags.push(tag);
       tags = tags;
       setTimeout(() => {
@@ -42,8 +43,7 @@
   }
 
   async function tagChange(tag: Tag) {
-    // ignore "New Tag"
-    if (tag.name == 'New Tag') {
+    if (tag.name == defaultNewTagName) {
       return;
     }
 
@@ -99,7 +99,7 @@
   }
 
   async function deleteTag(tag: Tag) {
-    if (tag.name != 'New Tag') {
+    if (tag.name != defaultNewTagName) {
       // Remove tag
       let success = false;
       try {
@@ -116,6 +116,8 @@
         });
         return;
       }
+    } else {
+      tags.splice(tags.indexOf(tag), 1);
     }
 
     toastStore.trigger({
@@ -131,6 +133,8 @@
   }
 </script>
 
+<h1>Mod Tag Manager</h1>
+
 <div class="card">
   {#if $tagsQuery.fetching}
     <h1>Loading tags...</h1>
@@ -139,10 +143,11 @@
   {:else}
     <Accordion>
       {#each tags as tag}
-        <AccordionItem>
+        <AccordionItem bind:this={panels[tag.id]}>
           <svelte:fragment slot="summary">{tag.name}</svelte:fragment>
           <svelte:fragment slot="content">
             <div>
+              <div>Tag name</div>
               <input
                 type="text"
                 class="input p-2"
@@ -150,7 +155,7 @@
                 placeholder="Name"
                 bind:this={nameFields[tag.id]}
                 on:change={() => tagChange(tag)} />
-
+              <div>Tag description</div>
               <input
                 type="text"
                 class="input p-2"
@@ -176,3 +181,9 @@
     </section>
   {/if}
 </div>
+
+<style lang="postcss">
+  h1 {
+    @apply my-4 text-4xl font-bold;
+  }
+</style>
