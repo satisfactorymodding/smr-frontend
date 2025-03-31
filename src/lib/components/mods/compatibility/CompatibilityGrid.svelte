@@ -61,7 +61,7 @@
                 <span style="padding: 2px; white-space:normal">
                   {#if compatibility?.EA?.note}
                     {#await markdown(compatibility.EA.note) then rendered}
-                      {@html rendered}
+                      {@html rendered} <!-- eslint-disable-line svelte/no-at-html-tags -->
                     {/await}
                   {:else}
                     {noNotesText}
@@ -72,7 +72,7 @@
                 <span style="padding: 2px; white-space:normal">
                   {#if compatibility?.EXP?.note}
                     {#await markdown(compatibility.EXP.note) then rendered}
-                      {@html rendered}
+                      {@html rendered} <!-- eslint-disable-line svelte/no-at-html-tags -->
                     {/await}
                   {:else}
                     {noNotesText}

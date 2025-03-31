@@ -34,7 +34,8 @@ const rules = {
       caughtErrorsIgnorePattern: '^_',
     }
   ],
-  '@typescript-eslint/no-unused-expressions': 'warn',
+  // TODO: This was disabled to due the explicit side-effect style in svelte (`$: ...`). Can be re-enabled with runes
+  '@typescript-eslint/no-unused-expressions': 'off',
   'svelte/no-at-html-tags': 'warn',
 };
 
