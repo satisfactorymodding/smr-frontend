@@ -24,6 +24,10 @@ mutation EditMod($modId: ModID!, $mod: UpdateMod!) {
         state
         note
       }
+      Controller {
+        state
+        note
+      }
     }
     tags {
       id

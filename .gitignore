@@ -307,3 +307,4 @@ $RECYCLE.BIN/
 /.svelte-kit
 /.pnpm-store
 .direnv
+vite.config.js.timestamp-*.mjs

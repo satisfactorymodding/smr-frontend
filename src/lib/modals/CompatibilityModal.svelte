@@ -8,7 +8,7 @@
   export const { t } = getTranslate();
 </script>
 
-<div class="card flex flex-col gap-2 p-4">
+<div class="card w-modal flex flex-col gap-2 p-4">
   <h2 class="text-2xl">{$t('compatibility-info')}</h2>
   <div>
     <CompatibilityInfo {compatibility} />

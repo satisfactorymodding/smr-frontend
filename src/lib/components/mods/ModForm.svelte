@@ -8,7 +8,7 @@
   import { markdown } from '$lib/utils/markdown';
   import ModAuthor from '$lib/components/mods/ModAuthor.svelte';
   import TagList from '$lib/components/utils/TagList.svelte';
-  import { CompatibilityState } from '$lib/generated';
+  import { CompatibilityState, ControllerCompatibilityState } from '$lib/generated';
   import ModCompatibility from '$lib/components/mods/compatibility/ModCompatibilityEdit.svelte';
   import { getTranslate } from '@tolgee/svelte';
   import { SlideToggle } from '@skeletonlabs/skeleton';
@@ -31,6 +31,10 @@
       },
       EXP: {
         state: CompatibilityState.Works,
+        note: ''
+      },
+      Controller: {
+        state: ControllerCompatibilityState.Untested,
         note: ''
       }
     }

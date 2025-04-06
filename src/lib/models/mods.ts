@@ -1,5 +1,5 @@
 import * as zod from 'zod';
-import type { CompatibilityState, Tag } from '$lib/generated';
+import type { CompatibilityState, ControllerCompatibilityState, Tag } from '$lib/generated';
 
 export type ModData = {
   name: string;
@@ -19,6 +19,10 @@ export type ModData = {
     };
     EXP: {
       state: CompatibilityState;
+      note?: string;
+    };
+    Controller: {
+      state: ControllerCompatibilityState;
       note?: string;
     };
   };
