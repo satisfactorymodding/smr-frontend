@@ -57,6 +57,7 @@ export const validateUPluginJson = async (input: string): Promise<string[]> => {
       })
       .filter((v) => !!v);
   } catch (e) {
+    window.console.log('Invalid json:', e);
     return ['Invalid JSON'];
   }
 };

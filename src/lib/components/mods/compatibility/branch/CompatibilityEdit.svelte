@@ -1,13 +1,15 @@
 <script lang="ts">
   import type { Compatibility } from '$lib/generated';
   import { CompatibilityState } from '$lib/generated';
-  import { getTranslate } from '@tolgee/svelte';
+  import { getCompatibilityStateDescriptionFor } from '$lib/utils/compatibility-descriptions';
+  import { getTolgee, getTranslate } from '@tolgee/svelte';
 
   export let compatibility: Compatibility = {
     state: CompatibilityState.Works
   };
 
   export const { t } = getTranslate();
+  export const tolgee = getTolgee().value;
 </script>
 
 <label class="label">
@@ -17,10 +19,10 @@
       <option value={state}>{state}</option>
     {/each}
   </select>
+  <p class="compatibility-state-description">
+    {getCompatibilityStateDescriptionFor(compatibility.state || 'Unknown', tolgee)}
+  </p>
 </label>
-
-<br />
-
 <label class="label">
   <span>Note</span>
   <textarea class="textarea p-4" bind:value={compatibility.note} placeholder={$t('compatibility-info.notes')} />

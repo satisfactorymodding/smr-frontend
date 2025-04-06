@@ -1,9 +1,10 @@
 <script lang="ts">
   import type { CompatibilityInfoInput } from '$lib/generated';
-  import CompatibilityIcon from './CompatibilityIcon.svelte';
+  import CompatibilityIcon from './branch/CompatibilityIcon.svelte';
   import { getTranslate } from '@tolgee/svelte';
   import { getModalStore } from '@skeletonlabs/skeleton';
   import CompatibilityModal from '$lib/modals/CompatibilityModal.svelte';
+  import ControllerCompatibilityIcon from './controller/ControllerCompatibilityIcon.svelte';
 
   export let compatibility: CompatibilityInfoInput;
 
@@ -29,4 +30,5 @@
   on:click={openCompatibility}>
   <CompatibilityIcon compatibility={compatibility?.EA} />
   <CompatibilityIcon compatibility={compatibility?.EXP} EXP={true} />
+  <ControllerCompatibilityIcon compatibility={compatibility?.Controller} />
 </button>

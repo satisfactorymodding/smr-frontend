@@ -35,6 +35,10 @@ query GetMods($offset: Int!, $limit: Int!, $search: String, $order: Order, $orde
           note
           state
         }
+        Controller {
+          note
+          state
+        }
       }
       tags {
         id
