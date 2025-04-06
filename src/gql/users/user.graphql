@@ -36,6 +36,10 @@ query GetUser($user: UserID!) {
             state
             note
           }
+          Controller {
+            state
+            note
+          }
         }
         tags {
           id

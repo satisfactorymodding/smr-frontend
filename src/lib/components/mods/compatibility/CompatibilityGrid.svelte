@@ -1,11 +1,13 @@
 <script lang="ts">
   import type { CompatibilityInfoInput } from '$lib/generated';
-  import CompatibilityStateText from '$lib/components/mods/compatibility/CompatibilityStateText.svelte';
+  import CompatibilityStateText from '$lib/components/mods/compatibility/branch/CompatibilityStateText.svelte';
   import { markdown } from '../../../utils/markdown';
-  import CompatibilityIcon from '$lib/components/mods/compatibility/CompatibilityIcon.svelte';
+  import CompatibilityIcon from '$lib/components/mods/compatibility/branch/CompatibilityIcon.svelte';
   import { getModalStore } from '@skeletonlabs/skeleton';
   import CompatibilityModal from '$lib/modals/CompatibilityModal.svelte';
   import { getTranslate } from '@tolgee/svelte';
+  import ControllerCompatibilityIcon from './controller/ControllerCompatibilityIcon.svelte';
+  import ControllerCompatibilityStateText from './controller/ControllerCompatibilityStateText.svelte';
 
   export let compatibility: CompatibilityInfoInput;
 
@@ -31,7 +33,7 @@
     <h3 class="my-4 text-2xl font-bold">{$t('compatibility-info.header')}</h3>
     <p>{$t('compatibility-info.subtitle')}</p>
     <div class="grid grid-flow-row">
-      <table aria-label="Available Releases" class="max-w-auto table table-hover !overflow-visible">
+      <table aria-label="Branch Compatibility Information" class="max-w-auto table table-hover !overflow-visible">
         <tbody>
           <tr class="rounded border !border-surface-500">
             <td
@@ -86,6 +88,39 @@
                 </span>
               </td>
             {/if}
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="grid grid-flow-row">
+      <table aria-label="Compatibility Information" class="max-w-auto table table-hover !overflow-visible">
+        <tbody>
+          <tr class="rounded border !border-surface-500">
+            <td>
+              <div class="flex items-center justify-center">
+                <ControllerCompatibilityIcon />{$t('controller')}
+              </div>
+            </td>
+          </tr>
+          <tr class="rounded border !border-surface-500">
+            <td class="text-center">
+              <button class="m-0 min-w-0" title={$t('tooltip.click-for-info')} on:click={openCompatibility}>
+                <ControllerCompatibilityStateText state={compatibility?.Controller?.state} />
+              </button>
+            </td>
+          </tr>
+          <tr class="rounded border !border-surface-500">
+            <td>
+              <span style="padding: 2px; white-space:normal">
+                {#if compatibility?.Controller?.note}
+                  {#await markdown(compatibility.Controller.note) then rendered}
+                    {@html rendered}
+                  {/await}
+                {:else}
+                  {noNotesText}
+                {/if}
+              </span>
+            </td>
           </tr>
         </tbody>
       </table>

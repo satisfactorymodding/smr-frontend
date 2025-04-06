@@ -23,6 +23,7 @@ export const initializeGraphQLClient = (fetch?: LoadEvent['fetch']): Client =>
           OAuthOptions: () => null,
           UserRoles: () => null,
           Compatibility: () => null,
+          ControllerCompatibility: () => null,
           CompatibilityInfo: () => null,
           VersionTarget: () => null,
           VersionDependency: () => null

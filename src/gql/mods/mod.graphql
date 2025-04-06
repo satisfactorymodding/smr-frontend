@@ -85,6 +85,10 @@ query GetMod($mod: String!) {
         note
         state
       }
+      Controller {
+        note
+        state
+      }
     }
     tags {
       id
