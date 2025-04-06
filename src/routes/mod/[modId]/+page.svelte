@@ -117,7 +117,8 @@
         {#if canUserEditCompatibility}
           <button class="variant-ghost-primary btn" on:click={() => modalStore.trigger(editCompatibilityModal)}>
             <span class="material-icons">rocket_launch</span>
-            <span class="material-icons pr-2">science</span>
+            <span class="material-icons">science</span>
+            <span class="material-icons pr-3">videogame_asset</span>
             {$t('mod.edit-compatibility')}</button>
         {/if}
         <button class="variant-ghost-primary btn" on:click={() => (versionsTab = !versionsTab)}>
