@@ -18,6 +18,7 @@
   import EditCompatibilityModal from '$lib/modals/EditCompatibilityModal.svelte';
   import Page404 from '$lib/components/general/Page404.svelte';
   import { getTranslate } from '@tolgee/svelte';
+  import ModNetworkDisclosure from '$lib/components/mods/ModNetworkDisclosure.svelte';
 
   export let data: PageData;
 
@@ -152,6 +153,7 @@
         <CompatibilityGrid compatibility={$mod.data.mod.compatibility} />
         <ModInfo mod={$mod.data.mod} />
         <ModAuthors authors={$mod.data.mod.authors} />
+        <ModNetworkDisclosure mod={$mod.data.mod} />
       </div>
     </div>
   </div>
