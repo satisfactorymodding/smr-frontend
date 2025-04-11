@@ -77,7 +77,7 @@
         <td><T keyName="target-platform.linux" defaultValue="Linux" /></td>
         <td
           ><div
-            class="text-center"
+            class="text-center underline decoration-dotted"
             title={$t(
               'version.target-support-tooltip.no-linux-client',
               'There is no Client distribution of Satisfactory for Linux'
