@@ -64,6 +64,10 @@ export const modSchema = zod.object({
       EXP: zod.object({
         state: zod.string(),
         note: zod.ostring()
+      }),
+      Controller: zod.object({
+        state: zod.string(),
+        note: zod.ostring()
       })
     })
   ),
