@@ -95,5 +95,7 @@ query GetMod($mod: String!) {
       name
       description
     }
+    toggle_network_use
+    network_use_disclosure
   }
 }
