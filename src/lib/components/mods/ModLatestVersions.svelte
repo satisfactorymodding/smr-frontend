@@ -34,6 +34,12 @@
     <div class="grid grid-flow-row gap-y-2">
       <h3 class="my-4 text-2xl font-bold"><T keyName="mod.latest-versions" defaultValue="Latest Versions" /></h3>
 
+      {#if !latestVersions.release && !latestVersions.alpha && !latestVersions.beta}
+        <div class="text-lg">
+          <T keyName="mod.no-versions" defaultValue="No versions of this mod exist." />
+        </div>
+      {/if}
+
       {#each Object.keys(stabilities) as stability}
         {#if latestVersions[stability]}
           <div class="version">
