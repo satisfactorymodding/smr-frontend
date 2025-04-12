@@ -12,6 +12,7 @@
   import ModCompatibility from '$lib/components/mods/compatibility/ModCompatibilityEdit.svelte';
   import { getTranslate } from '@tolgee/svelte';
   import { SlideToggle } from '@skeletonlabs/skeleton';
+  import ModNetworkDisclosureEdit from './disclosure/ModNetworkDisclosureEdit.svelte';
 
   export const { t } = getTranslate();
 
@@ -173,8 +174,9 @@
         <span class="validation-message">{message || ''}</span>
       </ValidationMessage>
     </div>
+
     {#if editing}
-      <div>
+      <div class="card p-4">
         <SlideToggle
           name="slider-label"
           bind:checked={editCompatibility}
@@ -183,42 +185,48 @@
           }}>
           {$t('compatibility-info.edit')}
         </SlideToggle>
+
+        {#if editCompatibility}
+          <ModCompatibility bind:compatibilityInfo={$data.compatibility} />
+        {/if}
       </div>
 
-      {#if editCompatibility}
-        <ModCompatibility bind:compatibilityInfo={$data.compatibility} />
-      {/if}
+      <div class="card p-4">
+        <ModNetworkDisclosureEdit bind:disclosure={$data.network_use_disclosure} />
+      </div>
 
-      <div class="grid grid-flow-row gap-2">
-        <div class="flex items-center">
-          <h4 class="mr-4">{$t('authors')}</h4>
-          <button class="variant-ghost-primary btn" type="button" on:click={addAuthor}>
-            <span>{$t('add')}</span>
-          </button>
-        </div>
-        {#each $data.authors as author, i}
-          <div class="flex items-end">
-            {#if $data.authors[i].user_id}
-              <div class="p-2">
-                <ModAuthor id={$data.authors[i].user_id} />
-              </div>
-            {/if}
-            <label class="label">
-              <span>User ID</span>
-              <input
-                type="text"
-                bind:value={$data.authors[i].user_id}
-                required
-                class="input p-2"
-                disabled={author.role === 'creator'} />
-            </label>
-            {#if author.role !== 'creator'}
-              <button class="variant-ghost-primary btn" type="button" on:click={() => removeAuthor(i)}>
-                <span>{$t('remove')}</span>
-              </button>
-            {/if}
+      <div class="card p-4">
+        <div class="grid grid-flow-row gap-2">
+          <div class="flex items-center">
+            <h4 class="mr-4">{$t('authors')}</h4>
+            <button class="variant-ghost-primary btn" type="button" on:click={addAuthor}>
+              <span>{$t('add')}</span>
+            </button>
           </div>
-        {/each}
+          {#each $data.authors as author, i}
+            <div class="flex items-end">
+              {#if $data.authors[i].user_id}
+                <div class="p-2">
+                  <ModAuthor id={$data.authors[i].user_id} />
+                </div>
+              {/if}
+              <label class="label">
+                <span>User ID</span>
+                <input
+                  type="text"
+                  bind:value={$data.authors[i].user_id}
+                  required
+                  class="input p-2"
+                  disabled={author.role === 'creator'} />
+              </label>
+              {#if author.role !== 'creator'}
+                <button class="variant-ghost-primary btn" type="button" on:click={() => removeAuthor(i)}>
+                  <span>{$t('remove')}</span>
+                </button>
+              {/if}
+            </div>
+          {/each}
+        </div>
       </div>
     {/if}
 

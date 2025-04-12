@@ -34,7 +34,6 @@ mutation EditMod($modId: ModID!, $mod: UpdateMod!) {
       name
       description
     }
-    toggle_network_use
     network_use_disclosure
   }
 }

@@ -29,6 +29,7 @@ export type ModData = {
   hidden: boolean;
   tagIDs?: string[];
   tags?: Tag[];
+  network_use_disclosure?: string;
 };
 
 export const modSchema = zod.object({
@@ -72,5 +73,6 @@ export const modSchema = zod.object({
     })
   ),
   hidden: zod.boolean(),
-  tagIDs: zod.optional(zod.string().array())
+  tagIDs: zod.optional(zod.string().array()),
+  network_use_disclosure: zod.ostring().nullable()
 });
