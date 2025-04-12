@@ -18,7 +18,7 @@
   import EditCompatibilityModal from '$lib/modals/EditCompatibilityModal.svelte';
   import Page404 from '$lib/components/general/Page404.svelte';
   import { getTranslate } from '@tolgee/svelte';
-  import ModNetworkDisclosure from '$lib/components/mods/ModNetworkDisclosure.svelte';
+  import ModNetworkDisclosure from '$lib/components/mods/disclosure/ModNetworkDisclosure.svelte';
 
   export let data: PageData;
 
