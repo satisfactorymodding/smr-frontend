@@ -20,7 +20,11 @@ const connectToLauncher = () => {
     ws.on('disconnect', () => {
       launcherOpen.set(false);
     });
-  }).catch(console.error);
+
+    ws.on('connect_error', () => {
+      console.warn("Could not contact user's local Satisfactory Mod Manager install");
+    });
+  }).catch(console.warn);
 };
 
 const open = (link: string, fallback?: () => void) => {
