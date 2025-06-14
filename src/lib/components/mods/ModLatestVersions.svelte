@@ -8,7 +8,7 @@
   import type { Version, VersionDependency, VersionTarget } from '$lib/generated';
   import { T } from '@tolgee/svelte';
 
-  type IVersion = Pick<Version, 'id' | 'link' | 'version' | 'created_at'> & {
+  type IVersion = Pick<Version, 'id' | 'link' | 'version' | 'created_at' | 'required_on_remote'> & {
     targets?: Pick<VersionTarget, 'targetName' | 'size' | 'hash'>[];
   } & { dependencies?: Pick<VersionDependency, 'mod_id' | 'optional' | 'condition'>[] };
 
@@ -27,6 +27,34 @@
   export let modReference!: string;
 
   export const { t } = getTranslate();
+
+  function formatRemote(targets: Pick<VersionTarget, 'targetName'>[]) {
+    if (!Array.isArray(targets)) {
+      return;
+    }
+
+    const HasClient = targets.some((target) => target.targetName === 'Windows');
+    const HasServer =
+      targets.some((target) => target.targetName === 'WindowsServer') ||
+      targets.some((target) => target.targetName === 'LinuxServer');
+
+    if (HasClient && !HasServer) {
+      return $t({
+        key: 'version.required_on_remote.client',
+        defaultValue: `This mod is only required on the client to function, so no server builds are provided.`
+      });
+    } else if (!HasClient && HasServer) {
+      return $t({
+        key: 'version.required_on_remote.server',
+        defaultValue: `This mod is only required on the server to function, so no client builds are provided.`
+      });
+    } else if (HasClient && HasServer) {
+      return $t({
+        key: 'version.required_on_remote.both',
+        defaultValue: `This mod is only required on the server or the client to function, but not required on both. See mod page/documentation for details.`
+      });
+    }
+  }
 </script>
 
 <div class="card p-4">
@@ -62,6 +90,11 @@
               </a>
             </div>
           </div>
+          {#if !latestVersions[stability].required_on_remote}
+            <div class="grid grid-flow-row text-center">
+              {formatRemote(latestVersions[stability].targets ?? [])}
+            </div>
+          {/if}
           <VersionTargetSupportGrid targets={latestVersions[stability].targets} />
           <VersionDependenciesGrid dependencies={latestVersions[stability].dependencies} />
         {/if}

@@ -27,6 +27,7 @@ query GetMod($mod: String!) {
         version
         created_at
         game_version
+        required_on_remote
       }
       beta {
         id
@@ -45,6 +46,7 @@ query GetMod($mod: String!) {
         version
         created_at
         game_version
+        required_on_remote
       }
       release {
         id
@@ -63,6 +65,7 @@ query GetMod($mod: String!) {
         version
         created_at
         game_version
+        required_on_remote
       }
     }
     downloads
