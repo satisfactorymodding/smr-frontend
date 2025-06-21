@@ -57,6 +57,8 @@
   <MetaDescriptors description="Unapproved mod versions" title="Admin: Unapproved Versions" />
 </svelte:head>
 
+<h1>Unapproved Versions</h1>
+
 {#if totalVersions}
   <div class="mb-5 ml-auto flex justify-end">
     <div>
@@ -124,3 +126,9 @@
       controlVariant="variant-filled-surface" />
   </div>
 {/if}
+
+<style lang="postcss">
+  h1 {
+    @apply my-4 text-4xl font-bold;
+  }
+</style>
