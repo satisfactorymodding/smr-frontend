@@ -8,7 +8,7 @@
   } from '$lib/generated';
   import { getContextClient } from '@urql/svelte';
   import { browser } from '$app/environment';
-  import { page } from '$app/stores';
+  import { page } from '$app/state';
   import { user, userToken } from '$lib/stores/user';
   import cookie from 'js-cookie';
   import { getTranslate } from '@tolgee/svelte';
@@ -85,7 +85,7 @@
     const signInMethod = localStorage.getItem('sign.in.method');
     localStorage.removeItem('sign.in.method');
 
-    let queryParams = Object.fromEntries($page.url.searchParams.entries());
+    let queryParams = Object.fromEntries(page.url.searchParams.entries());
     if (Object.keys(queryParams).length === 0) {
       queryParams = Object.fromEntries(new URLSearchParams(window.location.search));
     }

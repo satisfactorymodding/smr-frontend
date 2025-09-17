@@ -2,9 +2,13 @@
   import type { CompatibilityInput } from '$lib/generated';
   import { CompatibilityState } from '$lib/generated';
 
-  export let compatibility: CompatibilityInput = null;
-  export let EXP = false;
-  let iconText = 'rocket_launch';
+  interface Props {
+    compatibility?: CompatibilityInput;
+    EXP?: boolean;
+  }
+
+  let { compatibility = null, EXP = false }: Props = $props();
+  let iconText = $state('rocket_launch');
   if (EXP) {
     iconText = 'science';
   }

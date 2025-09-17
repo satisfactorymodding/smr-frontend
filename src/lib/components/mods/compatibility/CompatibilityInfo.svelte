@@ -4,7 +4,11 @@
   import { markdown } from '../../../utils/markdown';
   import { getTranslate } from '@tolgee/svelte';
 
-  export let compatibility: CompatibilityInfoInput;
+  interface Props {
+    compatibility: CompatibilityInfoInput;
+  }
+
+  let { compatibility }: Props = $props();
 
   export const { t } = getTranslate();
   export const compatibilityStateDescriptions: {

@@ -1,7 +1,11 @@
 <script lang="ts">
   import type { CompatibilityState } from '$lib/generated';
   import { getTranslate } from '@tolgee/svelte';
-  export let state: CompatibilityState = null;
+  interface Props {
+    state?: CompatibilityState;
+  }
+
+  let { state = null }: Props = $props();
 
   export const { t } = getTranslate();
 

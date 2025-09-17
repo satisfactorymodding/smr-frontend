@@ -1,9 +1,15 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import type { CompatibilityInfoInput } from '$lib/generated';
   import { CompatibilityState } from '$lib/generated';
 
-  export let compatibility: CompatibilityInfoInput;
-  export let logo = false;
+  interface Props {
+    compatibility: CompatibilityInfoInput;
+    logo?: boolean;
+  }
+
+  let { compatibility, logo = false }: Props = $props();
 
   function Worst(input: CompatibilityInfoInput): CompatibilityState {
     const EA = input.EA.state;
@@ -21,13 +27,15 @@
     return EA;
   }
 
-  let worst = CompatibilityState.Works;
-  $: if (compatibility) {
-    worst = Worst(compatibility);
-  } else {
-    worst = CompatibilityState.Works;
-  }
-  $: works = worst === CompatibilityState.Works;
+  let worst = $state(CompatibilityState.Works);
+  run(() => {
+    if (compatibility) {
+      worst = Worst(compatibility);
+    } else {
+      worst = CompatibilityState.Works;
+    }
+  });
+  let works = $derived(worst === CompatibilityState.Works);
 </script>
 
 {#if !works}
@@ -36,5 +44,6 @@
     style="max-width: inherit;"
     class:mod-damaged={worst === CompatibilityState.Damaged}
     class:mod-broken={worst === CompatibilityState.Broken}
-    class:mod-logo-outdated={logo} />
+    class:mod-logo-outdated={logo}>
+  </div>
 {/if}

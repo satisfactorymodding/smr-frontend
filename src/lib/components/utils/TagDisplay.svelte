@@ -1,23 +1,30 @@
 <script lang="ts">
+  import { createBubbler } from 'svelte/legacy';
+
+  const bubble = createBubbler();
   import { type Tag } from '$lib/generated';
   import { popup, type PopupSettings } from '@skeletonlabs/skeleton';
-  export let tag: Tag;
-  export let asButton = false;
-  export let selected = false;
-  export let popupTriggerEvent: PopupSettings['event'] | null = 'click';
+  interface Props {
+    tag: Tag;
+    asButton?: boolean;
+    selected?: boolean;
+    popupTriggerEvent?: PopupSettings['event'] | null;
+  }
 
-  $: popupHover = {
+  let { tag, asButton = false, selected = false, popupTriggerEvent = 'click' }: Props = $props();
+
+  let popupHover = $derived({
     event: popupTriggerEvent,
     target: `popupHoverFor${tag.id}`,
     placement: 'bottom-start'
-  } satisfies PopupSettings;
+  } satisfies PopupSettings);
 </script>
 
 <button
   class={asButton ? 'chip hover:variant-filled-surface [&:not(:hover)]:variant-soft' : ''}
   class:selected
   use:popup={popupHover}
-  on:click>
+  onclick={bubble('click')}>
   <div
     class="lowercase text-neutral-300 [&>*]:pointer-events-none"
     title={popupTriggerEvent === 'click' ? 'Click for tag information' : ''}>

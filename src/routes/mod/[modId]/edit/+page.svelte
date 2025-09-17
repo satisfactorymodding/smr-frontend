@@ -10,12 +10,16 @@
   import { getToastStore } from '@skeletonlabs/skeleton';
   import { get } from 'svelte/store';
 
-  export let data: PageData;
+  interface Props {
+    data: PageData;
+  }
+
+  let { data }: Props = $props();
 
   const client = getContextClient();
   const toastStore = getToastStore();
 
-  $: ({ modId, mod } = data);
+  let { modId, mod } = $derived(data);
 
   const onSubmit = (modData: ModData) => {
     client
@@ -43,12 +47,14 @@
       });
   };
 
-  $: initialValues = $mod.data
-    ? {
-        ...$mod.data.mod,
-        logo: undefined
-      }
-    : undefined;
+  let initialValues = $derived(
+    $mod.data
+      ? {
+          ...$mod.data.mod,
+          logo: undefined
+        }
+      : undefined
+  );
 </script>
 
 <svelte:head>

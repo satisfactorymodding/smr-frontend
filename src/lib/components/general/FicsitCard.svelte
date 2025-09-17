@@ -1,33 +1,56 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import { assets } from '$app/paths';
   import { goto, preloadData } from '$app/navigation';
   import { thumbHashToDataURL } from 'thumbhash';
   import { fade } from 'svelte/transition';
 
-  export let name = '';
-  export let logo = assets + '/images/no_image.webp';
-  export let description = '';
-  export let link = '/';
-  export let fake = false;
-  export let thumbhash = '';
+  interface Props {
+    name?: string;
+    logo?: any;
+    description?: string;
+    link?: string;
+    fake?: boolean;
+    thumbhash?: string;
+    stats?: import('svelte').Snippet;
+    tags?: import('svelte').Snippet;
+    actions?: import('svelte').Snippet;
+    outer?: import('svelte').Snippet;
+  }
 
-  $: renderedLogo = logo || assets + '/images/no_image.webp';
-  $: renderedName = name || (fake && 'Card Name');
-  $: renderedDescription = description || (fake && 'Short card description');
-  $: renderedThumbhash = thumbhash || '2/eFDQIsFmh9h4BreKeAeQqYBxd3d3J4Jw';
-  $: thumbHashData = (() => {
-    try {
-      return thumbHashToDataURL(
-        new Uint8Array(
-          atob(renderedThumbhash)
-            .split('')
-            .map((x) => x.charCodeAt(0))
-        )
-      );
-    } catch (e) {
-      console.error(e);
-    }
-  })();
+  let {
+    name = '',
+    logo = assets + '/images/no_image.webp',
+    description = '',
+    link = '/',
+    fake = false,
+    thumbhash = '',
+    stats,
+    tags,
+    actions,
+    outer
+  }: Props = $props();
+
+  let renderedLogo = $derived(logo || assets + '/images/no_image.webp');
+  let renderedName = $derived(name || (fake && 'Card Name'));
+  let renderedDescription = $derived(description || (fake && 'Short card description'));
+  let renderedThumbhash = $derived(thumbhash || '2/eFDQIsFmh9h4BreKeAeQqYBxd3d3J4Jw');
+  let thumbHashData = $derived(
+    (() => {
+      try {
+        return thumbHashToDataURL(
+          new Uint8Array(
+            atob(renderedThumbhash)
+              .split('')
+              .map((x) => x.charCodeAt(0))
+          )
+        );
+      } catch (e) {
+        console.error(e);
+      }
+    })()
+  );
 
   let preloaded = false;
   let timeoutHandle: number;
@@ -50,28 +73,28 @@
     clearTimeout(timeoutHandle);
   };
 
-  let actionButtons: HTMLElement;
+  let actionButtons: HTMLElement = $state();
 
-  let imageLoaded = false;
-  let thumbnailLoaded = false;
+  let imageLoaded = $state(false);
+  let thumbnailLoaded = $state(false);
 
-  $: {
+  run(() => {
     renderedLogo;
     imageLoaded = false;
-  }
+  });
 
-  $: {
+  run(() => {
     renderedThumbhash;
     thumbnailLoaded = false;
-  }
+  });
 </script>
 
 <div
   class="card relative h-full overflow-hidden"
-  on:mouseover={onOver}
-  on:mouseout={onOut}
-  on:focus={onOver}
-  on:blur={onOut}
+  onmouseover={onOver}
+  onmouseout={onOut}
+  onfocus={onOver}
+  onblur={onOut}
   role="none">
   <div
     class:text-neutral-500={fake}
@@ -80,11 +103,11 @@
     <div class="card-image-container cursor-pointer">
       <a
         href={link}
-        on:keypress={() => goto(link)}
+        onkeypress={() => goto(link)}
         tabindex="0"
         class="relative block max-h-full min-h-full min-w-full max-w-full">
         {#if fake}
-          <div class="logo max-h-full min-h-full min-w-full max-w-full bg-neutral-500" />
+          <div class="logo max-h-full min-h-full min-w-full max-w-full bg-neutral-500"></div>
         {:else}
           <img
             class="logo absolute max-h-full min-h-full min-w-full max-w-full object-contain transition-opacity delay-100 duration-200 ease-linear"
@@ -92,14 +115,14 @@
             class:opacity-0={!imageLoaded}
             src={renderedLogo}
             alt="{renderedName} Logo"
-            on:load={() => (imageLoaded = true)} />
+            onload={() => (imageLoaded = true)} />
           {#if !imageLoaded && thumbHashData}
             <img
               class="logo absolute max-h-full min-h-full min-w-full max-w-full"
               class:invisible={!thumbnailLoaded}
               src={thumbHashData}
               alt="{renderedName} Logo"
-              on:load={() => (thumbnailLoaded = true)}
+              onload={() => (thumbnailLoaded = true)}
               in:fade={{ duration: 200 }}
               out:fade={{ duration: 200, delay: 100 }} />
           {/if}
@@ -114,14 +137,12 @@
           </a>
 
           <h5 class="m-0 text-sm">
-            <slot name="stats">
-              {#if fake}
-                <span class="font-flow">Card stats</span>
-              {/if}
-            </slot>
+            {#if stats}{@render stats()}{:else if fake}
+              <span class="font-flow">Card stats</span>
+            {/if}
           </h5>
 
-          <slot name="tags" />
+          {@render tags?.()}
         </div>
 
         <div class:font-flow={fake} style="word-wrap: anywhere">
@@ -147,13 +168,13 @@
             title="View {renderedName}">
             <span class="material-icons">info</span>
           </a>
-          <slot name="actions" />
+          {@render actions?.()}
         {/if}
       </div>
     </div>
   </div>
 
-  <slot name="outer" />
+  {@render outer?.()}
 </div>
 
 <style lang="postcss">

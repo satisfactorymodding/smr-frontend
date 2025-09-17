@@ -5,7 +5,11 @@
 
   export const { t } = getTranslate();
 
-  export let targets!: Pick<VersionTarget, 'targetName'>[];
+  interface Props {
+    targets: Pick<VersionTarget, 'targetName'>[];
+  }
+
+  let { targets }: Props = $props();
 
   function formatTooltip(filesFoundForTarget: boolean, selectedTarget: string) {
     if (filesFoundForTarget) {
@@ -29,28 +33,28 @@
   const yesGlyph = 'checkmark';
   const noGlyph = 'cancel';
 
-  $: HasWindows = targets.some((target) => target.targetName === 'Windows');
-  $: HasWindowsServer = targets.some((target) => target.targetName === 'WindowsServer');
-  $: HasLinuxServer = targets.some((target) => target.targetName === 'LinuxServer');
-  $: WindowsSupport = {
+  let HasWindows = $derived(targets.some((target) => target.targetName === 'Windows'));
+  let HasWindowsServer = $derived(targets.some((target) => target.targetName === 'WindowsServer'));
+  let HasLinuxServer = $derived(targets.some((target) => target.targetName === 'LinuxServer'));
+  let WindowsSupport = $derived({
     glyph: HasWindows ? yesGlyph : noGlyph,
     tooltip: formatTooltip(HasWindows, 'Windows')
-  };
-  $: WindowsServerSupport = {
+  });
+  let WindowsServerSupport = $derived({
     glyph: HasWindowsServer ? yesGlyph : noGlyph,
     tooltip: formatTooltip(HasWindowsServer, 'Windows Server')
-  };
-  $: LinuxServerSupport = {
+  });
+  let LinuxServerSupport = $derived({
     glyph: HasLinuxServer ? yesGlyph : noGlyph,
     tooltip: formatTooltip(HasLinuxServer, 'Linux Server')
-  };
+  });
 </script>
 
 <div class="grid grid-flow-row">
   <table aria-label="Available Releases" class="max-w-auto table table-hover !overflow-visible">
     <tbody>
       <tr class="rounded border !border-surface-500">
-        <td style="width: 20%;" />
+        <td style="width: 20%;"></td>
         <td style="width: 40%;"
           ><div class="text-center" title="Game client">
             <T keyName="target-platform.client" defaultValue="Client" />

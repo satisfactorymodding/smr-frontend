@@ -2,7 +2,11 @@
   import { base } from '$app/paths';
   import type { VersionDependency } from '$lib/generated';
 
-  export let dependency!: Pick<VersionDependency, 'mod_id' | 'optional' | 'condition'>;
+  interface Props {
+    dependency: Pick<VersionDependency, 'mod_id' | 'optional' | 'condition'>;
+  }
+
+  let { dependency }: Props = $props();
 </script>
 
 <tr class="rounded border !border-surface-500">

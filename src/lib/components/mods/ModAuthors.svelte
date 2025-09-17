@@ -3,11 +3,15 @@
   import { assets, base } from '$app/paths';
   import { getTranslate } from '@tolgee/svelte';
 
-  export let authors: Array<
-    Pick<UserMod, 'role'> & {
-      user?: Pick<User, 'id' | 'username' | 'avatar'>;
-    }
-  >;
+  interface Props {
+    authors: Array<
+      Pick<UserMod, 'role'> & {
+        user?: Pick<User, 'id' | 'username' | 'avatar'>;
+      }
+    >;
+  }
+
+  let { authors }: Props = $props();
 
   export const { t } = getTranslate();
 </script>
@@ -22,7 +26,8 @@
           <div class="grid auto-cols-max grid-flow-col gap-x-4">
             <div
               class="h-14 w-14 rounded-full bg-cover"
-              style={`background-image: url("${author.user.avatar || assets + '/images/no_image.webp'}")`} />
+              style={`background-image: url("${author.user.avatar || assets + '/images/no_image.webp'}")`}>
+            </div>
             <div class="grid grid-flow-row">
               <a href="{base}/user/{author.user.id}/" class="text-yellow-500 underline">{author.user.username}</a>
               <div>{$t(`role.${author.role.toLowerCase()}`)}</div>

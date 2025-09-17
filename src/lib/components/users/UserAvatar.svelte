@@ -1,10 +1,14 @@
 <script lang="ts">
   import { assets } from '$app/paths';
 
-  export let avatar!: string;
-  export let username!: string;
+  interface Props {
+    avatar: string;
+    username: string;
+  }
 
-  $: userAvatar = avatar || assets + '/images/no_image.webp';
+  let { avatar, username }: Props = $props();
+
+  let userAvatar = $derived(avatar || assets + '/images/no_image.webp');
 </script>
 
 <div>

@@ -2,11 +2,17 @@
   import type { Tool } from '$lib/models/tools';
   import FicsitCard from '$lib/components/general/FicsitCard.svelte';
 
-  export let tool: Tool;
+  interface Props {
+    tool: Tool;
+  }
+
+  let { tool }: Props = $props();
 </script>
 
 <FicsitCard name={tool.name} link={tool.link} logo={tool.logo} description={tool.description}>
-  <div slot="stats">
-    <span>{tool.author}</span>
-  </div>
+  {#snippet stats()}
+    <div>
+      <span>{tool.author}</span>
+    </div>
+  {/snippet}
 </FicsitCard>

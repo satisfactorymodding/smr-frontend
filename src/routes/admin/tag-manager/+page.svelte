@@ -163,7 +163,7 @@
                 placeholder="Description"
                 on:change={() => tagChange(tag)} />
             </div>
-            <span slot="helper">Human-Readable name and description of the tag that is shown in UI</span>
+            <span>Human-Readable name and description of the tag that is shown in UI</span>
 
             <button class="variant-ghost-error btn" on:click={(e) => onDeleteClick(e, tag)}>
               <span>Delete</span>

@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import { queryStore, getContextClient } from '@urql/svelte';
   import { GetModsDocument, GetTagsDocument, ModFields, Order, type Tag } from '$lib/generated';
   import ModCard from './ModCard.svelte';
@@ -12,44 +14,52 @@
   import { type PaginationSettings, Paginator } from '@skeletonlabs/skeleton';
   import TagDisplay from '../utils/TagDisplay.svelte';
 
-  export let colCount: 4 | 5 = 4;
-  export let newMod = false;
-  export let showSearch = false;
+  interface Props {
+    colCount?: 4 | 5;
+    newMod?: boolean;
+    showSearch?: boolean;
+  }
+
+  let { colCount = 4, newMod = false, showSearch = false }: Props = $props();
 
   const client = getContextClient();
 
-  let search = (browser && $storePage.url.searchParams.get('q')) || '';
+  let search = $state((browser && $storePage.url.searchParams.get('q')) || '');
 
-  let order: Order = Order.Desc;
-  let orderBy: ModFields = ModFields.LastVersionDate;
+  let order: Order = $state(Order.Desc);
+  let orderBy: ModFields = $state(ModFields.LastVersionDate);
 
-  let perPage = 32;
-  let page = parseInt((browser && $storePage.url.searchParams.get('p')) || '0', 10) || 0;
+  let perPage = $state(32);
+  let page = $state(parseInt((browser && $storePage.url.searchParams.get('p')) || '0', 10) || 0);
 
-  let selectedTags: string[] = [];
+  let selectedTags: string[] = $state([]);
 
-  $: mods = queryStore({
-    query: GetModsDocument,
-    client,
-    variables: { offset: page * perPage, limit: perPage, search, order, orderBy, tagIDs: selectedTags.sort() }
-  });
+  let mods = $derived(
+    queryStore({
+      query: GetModsDocument,
+      client,
+      variables: { offset: page * perPage, limit: perPage, search, order, orderBy, tagIDs: selectedTags.sort() }
+    })
+  );
 
-  $: allTags = queryStore({
-    query: GetTagsDocument,
-    client,
-    variables: {
-      limit: 100
-    }
-  });
+  let allTags = $derived(
+    queryStore({
+      query: GetTagsDocument,
+      client,
+      variables: {
+        limit: 100
+      }
+    })
+  );
 
-  let totalMods: number;
+  let totalMods: number = $derived($mods?.data?.getMods?.count || 0);
 
-  let searchField = search;
-  $: searchDisabled = searchField.length < 3;
-  $: searchButtonClass = searchDisabled ? 'variant-filled-surface' : 'variant-filled-primary';
+  let searchField = $state(search);
+  let searchDisabled = $derived(searchField.length < 3);
+  let searchButtonClass = $derived(searchDisabled ? 'variant-filled-surface' : 'variant-filled-primary');
 
-  let timer: number;
-  $: {
+  let timer: number = $state();
+  run(() => {
     clearTimeout(timer);
     timer = setTimeout(() => {
       if (searchField && !searchDisabled) {
@@ -67,26 +77,30 @@
         search = null;
       }
     }, 250) as unknown as number;
-  }
+  });
 
-  $: if (browser) {
-    const url = new URL(window.location.origin + window.location.pathname);
-    url.searchParams.append('p', page.toString());
-    !searchDisabled && searchField !== '' && searchField !== null && url.searchParams.append('q', searchField);
-    goto(url.toString(), { keepFocus: true });
-  }
+  run(() => {
+    if (browser) {
+      const url = new URL(window.location.origin + window.location.pathname);
+      url.searchParams.append('p', page.toString());
+      !searchDisabled && searchField !== '' && searchField !== null && url.searchParams.append('q', searchField);
+      goto(url.toString(), { keepFocus: true });
+    }
+  });
 
-  $: totalMods = $mods?.data?.getMods?.count || 0;
-  $: showPagination = ($mods && $mods.fetching) || ($mods && !$mods.fetching && totalMods > 0 && !$mods.error);
+  let showPagination = $derived(
+    ($mods && $mods.fetching) || ($mods && !$mods.fetching && totalMods > 0 && !$mods.error)
+  );
 
-  $: gridClasses =
+  let gridClasses = $derived(
     colCount == 4
       ? '3xl:grid-cols-4 2xl:grid-cols-3 lg:grid-cols-2 grid-cols-1'
-      : '3xl:grid-cols-3 2xl:grid-cols-2 grid-cols-1';
+      : '3xl:grid-cols-3 2xl:grid-cols-2 grid-cols-1'
+  );
 
   export const { t } = getTranslate();
 
-  $: orderFields = [
+  let orderFields = $derived([
     [$t('sort-order.name'), 'name'],
     [$t('sort-order.views'), 'views'],
     [$t('sort-order.downloads'), 'downloads'],
@@ -95,14 +109,14 @@
     [$t('sort-order.created_at'), 'created_at'],
     [$t('sort-order.last_version_date'), 'last_version_date'],
     ...(search !== '' && search !== null ? [[$t('sort-order.search'), 'search']] : [])
-  ];
+  ]);
 
-  $: paginationSettings = {
+  let paginationSettings = $derived({
     page: page,
     limit: perPage,
     size: totalMods,
     amounts: [8, 16, 32, 64, 100]
-  } satisfies PaginationSettings;
+  } satisfies PaginationSettings);
 
   const toggleTag = (tagId: string) => {
     if (selectedTags.indexOf(tagId) >= 0) {
@@ -115,7 +129,7 @@
 
   const sortedTags = (tags: Tag[]): Tag[] => tags.toSorted((a, b) => a.name.localeCompare(b.name));
 
-  let tagsOpen = false;
+  let tagsOpen = $state(false);
 </script>
 
 <div class="mb-5 ml-auto flex flex-col gap-4">
@@ -128,7 +142,7 @@
             class="text-md variant-filled-surface btn btn-sm p-2 pl-4 pr-4"
             class:variant-ghost-primary={tagsOpen}
             title={$t('filter.expand-button-tooltip')}
-            on:click={() => (tagsOpen = !tagsOpen)}>
+            onclick={() => (tagsOpen = !tagsOpen)}>
             <span>{$t('filter.expand-button-text')}</span>
           </button>
         </div>

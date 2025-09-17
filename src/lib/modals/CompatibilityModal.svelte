@@ -3,7 +3,11 @@
   import type { CompatibilityInfoInput } from '$lib/generated';
   import { getTranslate } from '@tolgee/svelte';
 
-  export let compatibility: CompatibilityInfoInput;
+  interface Props {
+    compatibility: CompatibilityInfoInput;
+  }
+
+  let { compatibility }: Props = $props();
 
   export const { t } = getTranslate();
 </script>

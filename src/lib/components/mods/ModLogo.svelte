@@ -3,11 +3,15 @@
   import type { CompatibilityInfoInput } from '$lib/generated';
   import OutdatedBanner from '$lib/components/mods/compatibility/OutdatedBanner.svelte';
 
-  export let modLogo!: string;
-  export let modName!: string;
-  export let compatibility: CompatibilityInfoInput;
+  interface Props {
+    modLogo: string;
+    modName: string;
+    compatibility: CompatibilityInfoInput;
+  }
 
-  $: logo = modLogo || assets + '/images/no_image.webp';
+  let { modLogo, modName, compatibility }: Props = $props();
+
+  let logo = $derived(modLogo || assets + '/images/no_image.webp');
 </script>
 
 <div class="relative overflow-hidden">

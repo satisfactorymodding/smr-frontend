@@ -5,7 +5,11 @@
   import { getModalStore } from '@skeletonlabs/skeleton';
   import CompatibilityModal from '$lib/modals/CompatibilityModal.svelte';
 
-  export let compatibility: CompatibilityInfoInput;
+  interface Props {
+    compatibility: CompatibilityInfoInput;
+  }
+
+  let { compatibility }: Props = $props();
 
   export const { t } = getTranslate();
 
@@ -26,7 +30,7 @@
 <button
   class="variant-soft-surface btn m-0 min-w-0 px-1 py-0 text-xs"
   title={$t('compatibility-info.button')}
-  on:click={openCompatibility}>
+  onclick={openCompatibility}>
   <CompatibilityIcon compatibility={compatibility?.EA} />
   <CompatibilityIcon compatibility={compatibility?.EXP} EXP={true} />
 </button>

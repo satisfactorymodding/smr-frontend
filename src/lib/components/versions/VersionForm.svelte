@@ -13,20 +13,30 @@
 
   export const { t } = getTranslate();
 
-  export let modReference: string;
-  export let onSubmit: (data: VersionData) => Promise<void>;
-  export let initialValues: Omit<VersionData, 'file'> = {
-    changelog: '',
-    stability: VersionStabilities.Release
-  };
-  export let submitIcon: string;
-  export let submitText = $t('entry.create');
+  interface Props {
+    modReference: string;
+    onSubmit: (data: VersionData) => Promise<void>;
+    initialValues?: Omit<VersionData, 'file'>;
+    submitIcon: string;
+    submitText?: any;
+    editing?: boolean;
+  }
 
-  export let editing = false;
+  let {
+    modReference,
+    onSubmit,
+    initialValues = {
+      changelog: '',
+      stability: VersionStabilities.Release
+    },
+    submitIcon,
+    submitText = $t('entry.create'),
+    editing = false
+  }: Props = $props();
 
   const modMeta = writable<VersionMetadata>();
 
-  let disabled = false;
+  let disabled = $state(false);
 
   const versionSchema = constructVersionSchema(modReference, modMeta);
   const { form, data } = createForm<VersionData>({
@@ -38,8 +48,8 @@
     }
   });
 
-  $: preview = ($data.changelog as string) || '';
-  $: dependencies = $modMeta?.uplugin?.Plugins?.filter((d) => !d.BasePlugin) || [];
+  let preview = $derived(($data.changelog as string) || '');
+  let dependencies = $derived($modMeta?.uplugin?.Plugins?.filter((d) => !d.BasePlugin) || []);
 </script>
 
 <form use:form>
@@ -48,8 +58,10 @@
       <div class="grid grid-flow-row gap-2">
         <label for="file">{$t('file')} *</label>
         <input id="file" class="base-input" name="file" type="file" accept=".zip,.smod" placeholder="File" />
-        <ValidationMessage for="file" let:messages={message}>
-          <span class="validation-message">{message || ''}</span>
+        <ValidationMessage for="file">
+          {#snippet children({ messages: message })}
+            <span class="validation-message">{message || ''}</span>
+          {/snippet}
         </ValidationMessage>
       </div>
 
@@ -123,10 +135,12 @@
       <div class="grid grid-flow-row auto-rows-max gap-2">
         <label class="label">
           <span>{$t('changelog')} *</span>
-          <textarea class="vertical-textarea textarea p-2" bind:value={$data.changelog} required rows={10} />
+          <textarea class="vertical-textarea textarea p-2" bind:value={$data.changelog} required rows={10}></textarea>
         </label>
-        <ValidationMessage for="changelog" let:messages={message}>
-          <span class="validation-message">{message || ''}</span>
+        <ValidationMessage for="changelog">
+          {#snippet children({ messages: message })}
+            <span class="validation-message">{message || ''}</span>
+          {/snippet}
         </ValidationMessage>
       </div>
       <div class="grid grid-flow-row auto-rows-max gap-2">

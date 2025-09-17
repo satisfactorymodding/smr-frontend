@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { stopPropagation } from 'svelte/legacy';
+
   import { GetModVersionsDocument } from '$lib/generated';
   import { queryStore, getContextClient } from '@urql/svelte';
   import { API_REST } from '$lib/core';
@@ -9,13 +11,17 @@
   import { getTranslate } from '@tolgee/svelte';
   import { popup } from '@skeletonlabs/skeleton';
 
-  export let modId!: string;
+  interface Props {
+    modId: string;
+  }
+
+  let { modId }: Props = $props();
 
   export const { t } = getTranslate();
 
   const client = getContextClient();
 
-  let expandedVersions = new Set<string>();
+  let expandedVersions = $state(new Set<string>());
 
   // TODO Pagination
   const versions = queryStore({
@@ -57,7 +63,7 @@
         </thead>
         <tbody>
           {#each $versions.data.getMod.versions as version}
-            <tr on:click={() => toggleRow(version.id)}>
+            <tr onclick={() => toggleRow(version.id)}>
               <td>{version.version}</td>
               <td>{version.game_version}</td>
               <td>{prettyNumber(version.downloads)}</td>
@@ -66,12 +72,12 @@
                 <div
                   role="none"
                   class="grid grid-flow-col gap-4"
-                  on:click|stopPropagation={() => {
+                  onclick={stopPropagation(() => {
                     /*block table row expansion*/
-                  }}
-                  on:keypress|stopPropagation={() => {
+                  })}
+                  onkeypress={stopPropagation(() => {
                     /*a11y-click-events-have-key-events*/
-                  }}>
+                  })}>
                   <a class="variant-ghost-primary btn btn-sm" href={base + '/mod/' + modId + '/version/' + version.id}
                     >{$t('view')}</a>
                   {#if version.targets.length !== 0}
@@ -127,7 +133,7 @@
                   <button
                     class="variant-ghost-primary btn btn-sm"
                     title="Install via Satisfactory Mod Manager"
-                    on:click={() => installMod($versions.data.getMod.mod_reference)}>
+                    onclick={() => installMod($versions.data.getMod.mod_reference)}>
                     <span class="material-icons">download</span>
                     <span>{$t('install')}</span>
                   </button>

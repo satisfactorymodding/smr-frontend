@@ -3,9 +3,15 @@
   import { CompatibilityState } from '$lib/generated';
   import { getTranslate } from '@tolgee/svelte';
 
-  export let compatibility: Compatibility = {
-    state: CompatibilityState.Works
-  };
+  interface Props {
+    compatibility?: Compatibility;
+  }
+
+  let {
+    compatibility = $bindable({
+      state: CompatibilityState.Works
+    })
+  }: Props = $props();
 
   export const { t } = getTranslate();
 </script>
@@ -23,5 +29,6 @@
 
 <label class="label">
   <span>Note</span>
-  <textarea class="textarea p-4" bind:value={compatibility.note} placeholder={$t('compatibility-info.notes')} />
+  <textarea class="textarea p-4" bind:value={compatibility.note} placeholder={$t('compatibility-info.notes')}
+  ></textarea>
 </label>

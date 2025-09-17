@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import { getContextClient, queryStore } from '@urql/svelte';
   import {
     GetAnnouncementsDocument,
@@ -11,8 +13,8 @@
   import { Accordion, AccordionItem, getToastStore } from '@skeletonlabs/skeleton';
   const client = getContextClient();
 
-  let announcements: Announcement[] = [];
-  const nameFields = {};
+  let announcements: Announcement[] = $state([]);
+  const nameFields = $state({});
   let announcementNegativeID = -1;
   const defaultNewAnnouncementMessage = 'New Announcement';
 
@@ -21,7 +23,9 @@
     client
   });
 
-  $: announcements = $annQuery.data?.getAnnouncements || [];
+  run(() => {
+    announcements = $annQuery.data?.getAnnouncements || [];
+  });
 
   const toastStore = getToastStore();
 
@@ -153,13 +157,14 @@
     <Accordion>
       {#each announcements as announcement}
         <AccordionItem>
-          <svelte:fragment slot="summary"
-            >({announcement.importance}) {(() => {
+          {#snippet summary()}
+            ({announcement.importance}) {(() => {
               const trimTo = 144;
               const trimmed = announcement.message.substring(0, trimTo);
               return announcement.message.length > trimTo ? trimmed + '...' : trimmed;
-            })()}</svelte:fragment>
-          <svelte:fragment slot="content">
+            })()}
+          {/snippet}
+          {#snippet content()}
             <div>
               <div>Message</div>
               <input
@@ -168,26 +173,26 @@
                 bind:value={announcement.message}
                 placeholder="This is the text of the announcement"
                 bind:this={nameFields[announcement.id]}
-                on:change={() => announcementChange(announcement)} />
+                onchange={() => announcementChange(announcement)} />
               <div>Importance (Fix, Info, Warning, Alert)</div>
               <input
                 type="text"
                 class="input p-2"
                 bind:value={announcement.importance}
                 placeholder="Importance level"
-                on:change={() => announcementChange(announcement)} />
+                onchange={() => announcementChange(announcement)} />
             </div>
 
-            <button class="variant-ghost-error btn" on:click={(e) => onDeleteClick(e, announcement)}>
+            <button class="variant-ghost-error btn" onclick={(e) => onDeleteClick(e, announcement)}>
               <span>Delete</span>
             </button>
-          </svelte:fragment>
+          {/snippet}
         </AccordionItem>
       {/each}
     </Accordion>
 
     <section class="p-4">
-      <button class="variant-ghost-primary btn" on:click={newAnnouncement}>
+      <button class="variant-ghost-primary btn" onclick={newAnnouncement}>
         <span>Add new announcement</span>
         <span class="material-icons">add</span>
       </button>

@@ -387,8 +387,8 @@ This line is way far down
 
   const markdownHtml = markdown(typescriptMarkdown);
 
-  let uPluginJsonInput = '';
-  $: upluginErrors = validateUPluginJson(uPluginJsonInput);
+  let uPluginJsonInput = $state('');
+  let upluginErrors = $derived(validateUPluginJson(uPluginJsonInput));
 </script>
 
 <svelte:head>
@@ -402,7 +402,7 @@ This line is way far down
     <section class="p-4">
       <button
         class="variant-ghost-primary btn btn-sm text-2xl"
-        on:click={() =>
+        onclick={() =>
           (window.location.href = 'https://docs.ficsit.app/satisfactory-modding/latest/ForUsers/Welcome.html')}>
         <span>Visit the Welcome Guide</span>
         <span class="material-icons">waving_hand</span>
@@ -427,11 +427,8 @@ This line is way far down
     <div class="card p-4">
       <section class="p-4">
         <h3 class="my-4 text-2xl font-bold">Validate your &lt;mod&gt;.uplugin</h3>
-        <textarea
-          placeholder="enter your <mod>.uplugin"
-          rows="23"
-          class="markdownEditor"
-          bind:value={uPluginJsonInput} />
+        <textarea placeholder="enter your <mod>.uplugin" rows="23" class="markdownEditor" bind:value={uPluginJsonInput}
+        ></textarea>
         {#if uPluginJsonInput !== ''}
           {#await upluginErrors}
             <p>Loading...</p>

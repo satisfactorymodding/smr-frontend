@@ -3,7 +3,11 @@
   import { base } from '$app/paths';
   import { getTranslate } from '@tolgee/svelte';
 
-  export let author: Pick<User, 'id' | 'username' | 'avatar'>;
+  interface Props {
+    author: Pick<User, 'id' | 'username' | 'avatar'>;
+  }
+
+  let { author }: Props = $props();
 
   export const { t } = getTranslate();
 </script>
@@ -15,7 +19,7 @@
 
       <div class="grid auto-rows-min gap-y-4 text-lg">
         <div class="grid auto-cols-min grid-flow-col gap-x-4">
-          <div class="h-14 w-14 rounded-full bg-cover" style={`background-image: url("${author.avatar}")`} />
+          <div class="h-14 w-14 rounded-full bg-cover" style={`background-image: url("${author.avatar}")`}></div>
           <div class="grid grid-flow-row">
             <a href="{base}/user/{author.id}/" class="text-yellow-500 underline">{author.username}</a>
             <div>{$t('role.writer')}</div>

@@ -22,9 +22,13 @@
     release: 'new_releases'
   };
 
-  export let latestVersions!: ILatestVersions;
-  export let modId!: string;
-  export let modReference!: string;
+  interface Props {
+    latestVersions: ILatestVersions;
+    modId: string;
+    modReference: string;
+  }
+
+  let { latestVersions, modId, modReference }: Props = $props();
 
   export const { t } = getTranslate();
 </script>
@@ -54,7 +58,7 @@
             <div class="text-1xl col-span-3 h-auto w-auto p-2.5">
               <a
                 href="#top"
-                on:click={() => installMod(modReference)}
+                onclick={() => installMod(modReference)}
                 title={$t('version.install.tooltip', 'Install via Satisfactory Mod Manager')}
                 class="text-yellow-500">
                 <span class="material-icons align-middle" style="font-size: 118x;">download</span>

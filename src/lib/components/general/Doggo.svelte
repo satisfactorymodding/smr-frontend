@@ -1,27 +1,35 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import { spring } from 'svelte/motion';
   import { assets } from '$app/paths';
   import { writable } from 'svelte/store';
 
-  export let dogVisible = writable<boolean>(false);
+  let { dogVisible = writable<boolean>(false) } = $props();
 
   const x = spring<number>(-2000, { stiffness: 0.004, damping: 0.25, precision: 1 });
   const y = spring<number>(-1000, { stiffness: 0.004, damping: 0.25, precision: 1 });
-  let sprite = assets + '/images/dog_stand.gif';
+  let sprite = $state(assets + '/images/dog_stand.gif');
 
-  let last_mouse = { clientX: -1000, clientY: 0 };
+  let last_mouse = $state({ clientX: -1000, clientY: 0 });
   let patting = false;
 
-  $: actual_mouse_x = last_mouse.clientX - 350;
-  $: actual_mouse_y = last_mouse.clientY - 100;
-  $: dx = Math.abs($x - actual_mouse_x);
-  $: dy = Math.abs($y - actual_mouse_y);
-  $: isClose = dx < 80 && dy < 40;
-  $: isLookingRight = $x < actual_mouse_x;
-  $: sprite = assets + ('/images/dog_' + (isClose ? 'stand.gif' : 'boing.gif'));
-  $: head_offset = isLookingRight ? -70 : 50;
-  $: x.set(actual_mouse_x + head_offset);
-  $: y.set(actual_mouse_y);
+  let actual_mouse_x = $derived(last_mouse.clientX - 350);
+  let actual_mouse_y = $derived(last_mouse.clientY - 100);
+  let dx = $derived(Math.abs($x - actual_mouse_x));
+  let dy = $derived(Math.abs($y - actual_mouse_y));
+  let isClose = $derived(dx < 80 && dy < 40);
+  let isLookingRight = $derived($x < actual_mouse_x);
+  run(() => {
+    sprite = assets + ('/images/dog_' + (isClose ? 'stand.gif' : 'boing.gif'));
+  });
+  let head_offset = $derived(isLookingRight ? -70 : 50);
+  run(() => {
+    x.set(actual_mouse_x + head_offset);
+  });
+  run(() => {
+    y.set(actual_mouse_y);
+  });
 
   function update_pos(event: MouseEvent) {
     if (!patting && dogVisible) {
@@ -52,7 +60,7 @@
   }
 </script>
 
-<svelte:window on:mousedown={try_pat} on:mousemove={update_pos} on:mouseup={end_pat} />
+<svelte:window onmousedown={try_pat} onmousemove={update_pos} onmouseup={end_pat} />
 
 {#if $dogVisible}
   <img

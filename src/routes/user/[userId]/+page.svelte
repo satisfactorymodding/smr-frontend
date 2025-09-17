@@ -9,11 +9,15 @@
   import type { PageData } from './$types';
   import Page404 from '$lib/components/general/Page404.svelte';
 
-  export let data: PageData;
+  interface Props {
+    data: PageData;
+  }
 
-  $: ({ user } = data);
+  let { data }: Props = $props();
 
-  let guidesTab = false;
+  let { user } = $derived(data);
+
+  let guidesTab = $state(false);
 </script>
 
 <svelte:head>
@@ -38,7 +42,7 @@
           <a class="variant-ghost-primary btn" href="{base}/settings">Settings</a>
         {/if}
 
-        <button class="variant-ghost-primary btn" on:click={() => (guidesTab = !guidesTab)}>
+        <button class="variant-ghost-primary btn" onclick={() => (guidesTab = !guidesTab)}>
           {#if !guidesTab}
             Guides
           {:else}

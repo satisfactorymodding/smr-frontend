@@ -9,21 +9,23 @@
 
   const client = getContextClient();
 
-  let perPage = 20;
-  let page = 1;
+  let perPage = $state(20);
+  let page = $state(1);
 
-  $: versions = queryStore({
-    query: GetUnapprovedVersionsDocument,
-    client,
-    variables: {
-      filter: {
-        offset: (page - 1) * perPage,
-        limit: perPage
+  let versions = $derived(
+    queryStore({
+      query: GetUnapprovedVersionsDocument,
+      client,
+      variables: {
+        filter: {
+          offset: (page - 1) * perPage,
+          limit: perPage
+        }
       }
-    }
-  });
+    })
+  );
 
-  $: totalVersions = $versions?.data?.getUnapprovedVersions?.count;
+  let totalVersions = $derived($versions?.data?.getUnapprovedVersions?.count);
 
   const approveVersion = (versionId: string) => {
     client
@@ -45,12 +47,12 @@
       });
   };
 
-  $: paginationSettings = {
+  let paginationSettings = $derived({
     page: page,
     limit: perPage,
     size: totalVersions,
     amounts: [5, 10, 20, 50, 100]
-  } satisfies PaginationSettings;
+  } satisfies PaginationSettings);
 </script>
 
 <svelte:head>
@@ -96,8 +98,8 @@
             <td>{prettyDate(version.created_at)}</td>
             <td class="!p-2.5">
               <div class="grid grid-flow-col gap-4">
-                <button class="variant-ghost-primary btn" on:click={() => approveVersion(version.id)}>Approve</button>
-                <button class="variant-ghost-primary btn" on:click={() => denyVersion(version.id)}>Deny</button>
+                <button class="variant-ghost-primary btn" onclick={() => approveVersion(version.id)}>Approve</button>
+                <button class="variant-ghost-primary btn" onclick={() => denyVersion(version.id)}>Deny</button>
                 <a
                   class="variant-ghost-primary btn"
                   href={API_REST + '/mod/' + version.mod_id + '/versions/' + version.id + '/download'}>
