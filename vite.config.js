@@ -1,4 +1,5 @@
 import { sveltekit } from '@sveltejs/kit/vite';
+import tailwindcss from '@tailwindcss/vite';
 
 const mode = process.env.NODE_ENV || 'development';
 const dev = mode === 'development' || process.env.RUNTIME === 'development';
@@ -6,7 +7,10 @@ process.env.TAILWIND_MODE = dev ? 'watch' : 'build';
 
 /** @type {import('vite').UserConfig} */
 const config = {
-  plugins: [sveltekit()],
+  plugins: [
+    tailwindcss(),
+    sveltekit()
+  ],
   server: {
     port: 3000,
     strictPort: true
