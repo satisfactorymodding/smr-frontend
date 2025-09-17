@@ -40,6 +40,8 @@
 </div>
 
 <style lang="postcss">
+  @reference "../../../app.pcss";
+
   .selected {
     @apply variant-ghost-primary hover:variant-ringed-primary;
   }

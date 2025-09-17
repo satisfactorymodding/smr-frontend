@@ -75,6 +75,8 @@
 </div>
 
 <style lang="postcss">
+  @reference "../../../app.pcss";
+
   .version {
     @apply grid grid-flow-col gap-x-4 text-lg;
     grid-template-columns: max-content auto max-content;
