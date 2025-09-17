@@ -5,9 +5,13 @@
   const baseUrl = $page.url.origin;
   const route = $page.url.pathname;
 
-  export let description: string | undefined = undefined;
-  export let image: string | undefined = undefined;
-  export let title: string | undefined = undefined;
+  interface Props {
+    description?: string | undefined;
+    image?: string | undefined;
+    title?: string | undefined;
+  }
+
+  let { description = undefined, image = undefined, title = undefined }: Props = $props();
 </script>
 
 {#if description}

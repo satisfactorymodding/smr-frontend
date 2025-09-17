@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import LoginDialog from '$lib/components/auth/LoginDialog.svelte';
   import { setContextClient } from '@urql/svelte';
   import { onMount } from 'svelte';
@@ -15,14 +17,19 @@
   import './_global.postcss';
   import { computePosition, autoUpdate, offset, shift, flip, arrow } from '@floating-ui/dom';
 
-  export let data: LayoutData;
+  interface Props {
+    data: LayoutData;
+    children?: import('svelte').Snippet;
+  }
+
+  let { data, children }: Props = $props();
 
   const { client, tolgee } = data;
 
   initializeStores();
   storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow });
 
-  let gTag: unknown;
+  let gTag: unknown = $state();
   if (browser) {
     gTag = PUBLIC_GOOGLE_SITE_TAG as string;
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -30,7 +37,7 @@
     window.gTag = gTag;
   }
 
-  let root: HTMLElement;
+  let root: HTMLElement = $state();
   onMount(async () => {
     if (browser) {
       root = document.body;
@@ -76,8 +83,10 @@
     }
   });
 
-  let accessibility = false;
-  $: root && (accessibility ? root.classList.add('accessibility') : root.classList.remove('accessibility'));
+  let accessibility = $state(false);
+  run(() => {
+    root && (accessibility ? root.classList.add('accessibility') : root.classList.remove('accessibility'));
+  });
 
   setContextClient(client);
 </script>
@@ -130,7 +139,7 @@
       </aside>
       <main class="space-y-4 p-4">
         <AnnouncementHeader />
-        <slot />
+        {@render children?.()}
       </main>
     </div>
   </div>

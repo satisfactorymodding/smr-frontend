@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import { getContextClient } from '@urql/svelte';
   import { UpdateUserDocument } from '$lib/generated';
   import { goto } from '$app/navigation';
@@ -23,10 +25,10 @@
     username: zod.string().min(3).max(32)
   });
 
-  let form: Form<{ [key: string]: string }>['form'];
-  let data: Writable<{ username: string }>;
+  let form: Form<{ [key: string]: string }>['form'] = $state();
+  let data: Writable<{ username: string }> = $state();
 
-  $: {
+  run(() => {
     if ($user && !data) {
       const createdForm = createForm<{ username: string }>({
         initialValues: {
@@ -64,7 +66,7 @@
       form = createdForm.form;
       data = createdForm.data;
     }
-  }
+  });
 </script>
 
 <svelte:head>
@@ -89,8 +91,10 @@
               type="file"
               accept="image/png,image/jpeg,image/gif"
               placeholder="Avatar" />
-            <ValidationMessage for="avatar" let:messages={message}>
-              <span class="validation-message">{message || ''}</span>
+            <ValidationMessage for="avatar">
+              {#snippet children({ messages: message })}
+                <span class="validation-message">{message || ''}</span>
+              {/snippet}
             </ValidationMessage>
           </div>
 
@@ -99,8 +103,10 @@
               <span>Username</span>
               <input type="text" bind:value={$data.username} required class="input p-2" />
             </label>
-            <ValidationMessage for="username" let:messages={message}>
-              <span class="validation-message">{message || ''}</span>
+            <ValidationMessage for="username">
+              {#snippet children({ messages: message })}
+                <span class="validation-message">{message || ''}</span>
+              {/snippet}
             </ValidationMessage>
           </div>
 

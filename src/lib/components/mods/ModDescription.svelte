@@ -3,9 +3,13 @@
   import { markdown } from '$lib/utils/markdown';
   import AnnouncementRow from '../announcements/AnnouncementRow.svelte';
 
-  export let mod!: Pick<Mod, 'full_description' | 'short_description' | 'hidden'>;
+  interface Props {
+    mod: Pick<Mod, 'full_description' | 'short_description' | 'hidden'>;
+  }
 
-  $: description = mod.full_description ? markdown(mod.full_description) : mod.short_description;
+  let { mod }: Props = $props();
+
+  let description = $derived(mod.full_description ? markdown(mod.full_description) : mod.short_description);
 </script>
 
 <div>

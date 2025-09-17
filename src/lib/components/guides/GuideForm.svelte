@@ -10,14 +10,23 @@
 
   export const { t } = getTranslate();
 
-  export let onSubmit: (data: GuideData) => void;
-  export let initialValues: GuideData | undefined = {
-    name: '',
-    guide: '',
-    short_description: ''
-  };
-  export let submitIcon: string;
-  export let submitText = $t('entry.create');
+  interface Props {
+    onSubmit: (data: GuideData) => void;
+    initialValues?: GuideData | undefined;
+    submitIcon: string;
+    submitText?: any;
+  }
+
+  let {
+    onSubmit,
+    initialValues = {
+      name: '',
+      guide: '',
+      short_description: ''
+    },
+    submitIcon,
+    submitText = $t('entry.create')
+  }: Props = $props();
 
   const { form, data } = createForm<GuideData>({
     initialValues: initialValues,
@@ -25,7 +34,7 @@
     onSubmit: (submitted: GuideData) => onSubmit(trimNonSchema(submitted, guideSchema))
   });
 
-  $: preview = ($data.guide as string) || '';
+  let preview = $derived(($data.guide as string) || '');
 </script>
 
 <form use:form>
@@ -35,8 +44,10 @@
         <span>{$t('entry.name')} *</span>
         <input type="text" bind:value={$data.name} required class="input p-2" />
       </label>
-      <ValidationMessage for="name" let:messages={message}>
-        <span class="validation-message">{message || ''}</span>
+      <ValidationMessage for="name">
+        {#snippet children({ messages: message })}
+          <span class="validation-message">{message || ''}</span>
+        {/snippet}
       </ValidationMessage>
     </div>
 
@@ -45,8 +56,10 @@
         <span>{$t('entry.short-description')} *</span>
         <input type="text" bind:value={$data.short_description} required class="input p-2" />
       </label>
-      <ValidationMessage for="short_description" let:messages={message}>
-        <span class="validation-message">{message || ''}</span>
+      <ValidationMessage for="short_description">
+        {#snippet children({ messages: message })}
+          <span class="validation-message">{message || ''}</span>
+        {/snippet}
       </ValidationMessage>
     </div>
 
@@ -54,10 +67,12 @@
       <div class="grid grid-flow-row auto-rows-max gap-2">
         <label class="label">
           <span>{$t('guide')} *</span>
-          <textarea class="vertical-textarea textarea p-2" bind:value={$data.guide} required rows={10} />
+          <textarea class="vertical-textarea textarea p-2" bind:value={$data.guide} required rows={10}></textarea>
         </label>
-        <ValidationMessage for="guide" let:messages={message}>
-          <span class="validation-message">{message || ''}</span>
+        <ValidationMessage for="guide">
+          {#snippet children({ messages: message })}
+            <span class="validation-message">{message || ''}</span>
+          {/snippet}
         </ValidationMessage>
       </div>
       <div class="grid grid-flow-row auto-rows-max gap-2">

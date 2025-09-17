@@ -5,7 +5,11 @@
   import { GetOAuthOptionsDocument } from '$lib/generated';
   import { browser } from '$app/environment';
 
-  export let signingIn = false;
+  interface Props {
+    signingIn?: boolean;
+  }
+
+  let { signingIn = false }: Props = $props();
 
   export const { t } = getTranslate();
 
@@ -46,17 +50,17 @@
       {:else}
         <button
           class="variant-ghost-primary btn"
-          on:click={() => goTo('github', $oauthOptions.data.getOAuthOptions.github)}>
+          onclick={() => goTo('github', $oauthOptions.data.getOAuthOptions.github)}>
           {$t('login-dialog.sign-in-with-github')}
         </button>
         <button
           class="variant-ghost-primary btn"
-          on:click={() => goTo('google', $oauthOptions.data.getOAuthOptions.google)}>
+          onclick={() => goTo('google', $oauthOptions.data.getOAuthOptions.google)}>
           {$t('login-dialog.sign-in-with-google')}
         </button>
         <button
           class="variant-ghost-primary btn"
-          on:click={() => goTo('facebook', $oauthOptions.data.getOAuthOptions.facebook)}>
+          onclick={() => goTo('facebook', $oauthOptions.data.getOAuthOptions.facebook)}>
           {$t('login-dialog.sign-in-with-facebook')}
         </button>
       {/if}

@@ -16,12 +16,16 @@
   };
   const monospacePrefix = 'monotext:';
 
-  export let message: string;
-  export let importance: AnnouncementImportance;
+  interface Props {
+    message: string;
+    importance: AnnouncementImportance;
+  }
+
+  let { message, importance }: Props = $props();
 
   // Enables making monospace announcements
-  $: isMonospace = message.startsWith(monospacePrefix);
-  $: finalMessage = isMonospace ? message.replaceAll(monospacePrefix, '') : message;
+  let isMonospace = $derived(message.startsWith(monospacePrefix));
+  let finalMessage = $derived(isMonospace ? message.replaceAll(monospacePrefix, '') : message);
 </script>
 
 <div class="{backgroundColors[importance]} max-h-64 overflow-hidden rounded-sm">

@@ -6,9 +6,13 @@
   import type { PageData } from './$types';
   import { getTranslate, T } from '@tolgee/svelte';
 
-  export let data: PageData;
+  interface Props {
+    data: PageData;
+  }
 
-  $: ({ mods } = data);
+  let { data }: Props = $props();
+
+  let { mods } = $derived(data);
 
   export const { t } = getTranslate();
 </script>
@@ -25,7 +29,7 @@
       <a href="https://smm.ficsit.app" rel="noopener" target="_blank">
         <div class="card h-full">
           <div class="relative h-full w-full">
-            <div class="banner smm-banner" />
+            <div class="banner smm-banner"></div>
             <div class="absolute top-0 flex h-full w-full items-center justify-center">
               {#if $easterEgg}
                 <img class="flipper-1 h-full" src={assets + '/images/smm_hand.webp'} alt="Ficsit Minion" />
@@ -63,7 +67,7 @@
       <a href="/mods" class="overflow-hidden">
         <div class="card h-full">
           <div class="relative h-full w-full">
-            <div class="smm-banner banner" />
+            <div class="smm-banner banner"></div>
             <div class="absolute top-0 flex h-full w-full items-center justify-end text-center">
               <img class="h-full" src={assets + '/images/mods_mobile.webp'} alt="Ficsit Minion" />
             </div>
@@ -98,7 +102,7 @@
     <a href="https://discord.gg/xkVJ73E" rel="noopener" target="_blank" class="min-h-[25vh] overflow-hidden">
       <div class="card h-full">
         <div class="relative h-full w-full">
-          <div class="modding-banner banner" />
+          <div class="modding-banner banner"></div>
           <div class="absolute top-0 flex h-full w-full flex-col items-center justify-center">
             <img class="centered-logo" src={assets + '/images/sf_modding_logo.webp'} alt="Satisfactory Modding Logo" />
             <div class="variant-ringed-secondary variant-glass-secondary btn btn-md m-6">
@@ -115,7 +119,7 @@
     <a href="https://www.satisfactorygame.com/" rel="noopener" target="_blank" class="min-h-[25vh] overflow-hidden">
       <div class="card h-full">
         <div class="relative h-full w-full">
-          <div class="css-banner banner" />
+          <div class="css-banner banner"></div>
           <div class="absolute top-0 flex h-full w-full flex-col items-center justify-center">
             <img
               class="centered-logo"

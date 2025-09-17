@@ -4,9 +4,13 @@
   import type { SidebarItemData } from '$lib/utils/sidebarItemData';
   import { getDrawerStore } from '@skeletonlabs/skeleton';
 
-  export let item: SidebarItemData;
+  interface Props {
+    item: SidebarItemData;
+  }
 
-  $: currentPath = $page.url.pathname;
+  let { item }: Props = $props();
+
+  let currentPath = $derived($page.url.pathname);
 
   const drawerStore = getDrawerStore();
 </script>
@@ -16,9 +20,9 @@
     <a
       href={item.url}
       class:bg-primary-active-token={currentPath === item.url}
-      on:mouseover={() => preloadData(item.url)}
-      on:click={() => drawerStore.close()}
-      on:focus={() => preloadData(item.url)}>
+      onmouseover={() => preloadData(item.url)}
+      onclick={() => drawerStore.close()}
+      onfocus={() => preloadData(item.url)}>
       <span class="material-icons">{item.icon}</span>
       <span class="flex-auto">{item.label}</span>
     </a>

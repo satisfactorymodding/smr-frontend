@@ -8,35 +8,42 @@
   import { getTranslate } from '@tolgee/svelte';
   import { type PaginationSettings, Paginator } from '@skeletonlabs/skeleton';
 
-  export let colCount: 4 | 5 = 4;
-  export let newGuide = false;
+  interface Props {
+    colCount?: 4 | 5;
+    newGuide?: boolean;
+  }
+
+  let { colCount = 4, newGuide = false }: Props = $props();
 
   const client = getContextClient();
 
-  let perPage = 32;
-  let page = 0;
+  let perPage = $state(32);
+  let page = $state(0);
 
   export const { t } = getTranslate();
 
-  $: guides = queryStore({
-    query: GetGuidesDocument,
-    client,
-    variables: { offset: page * perPage, limit: perPage }
-  });
+  let guides = $derived(
+    queryStore({
+      query: GetGuidesDocument,
+      client,
+      variables: { offset: page * perPage, limit: perPage }
+    })
+  );
 
-  $: totalGuides = $guides?.data?.getGuides?.count || 0;
+  let totalGuides = $derived($guides?.data?.getGuides?.count || 0);
 
-  $: gridClasses =
+  let gridClasses = $derived(
     colCount == 4
       ? '3xl:grid-cols-4 2xl:grid-cols-3 lg:grid-cols-2 grid-cols-1'
-      : '3xl:grid-cols-3 2xl:grid-cols-2 grid-cols-1';
+      : '3xl:grid-cols-3 2xl:grid-cols-2 grid-cols-1'
+  );
 
-  $: paginationSettings = {
+  let paginationSettings = $derived({
     page: page,
     limit: perPage,
     size: totalGuides,
     amounts: [8, 16, 32, 64, 100]
-  } satisfies PaginationSettings;
+  } satisfies PaginationSettings);
 </script>
 
 <div

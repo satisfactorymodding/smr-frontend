@@ -12,15 +12,19 @@
   import { getModalStore, getToastStore, type ModalSettings } from '@skeletonlabs/skeleton';
   import Page404 from '$lib/components/general/Page404.svelte';
 
-  export let data: PageData;
+  interface Props {
+    data: PageData;
+  }
 
-  $: ({ guideId, guide } = data);
+  let { data }: Props = $props();
+
+  let { guideId, guide } = $derived(data);
 
   const client = getContextClient();
 
   const toastStore = getToastStore();
 
-  $: canUserEdit = $user?.roles?.deleteContent || $user?.id === $guide?.data?.getGuide?.user?.id;
+  let canUserEdit = $derived($user?.roles?.deleteContent || $user?.id === $guide?.data?.getGuide?.user?.id);
 
   const deleteGuideFn = () => {
     client
@@ -76,10 +80,10 @@
 
       <div>
         {#if canUserEdit}
-          <button class="variant-ghost-primary btn" on:click={() => goto(base + '/guide/' + guideId + '/edit')}>
+          <button class="variant-ghost-primary btn" onclick={() => goto(base + '/guide/' + guideId + '/edit')}>
             <span class="material-icons pr-2">edit</span>
             Edit</button>
-          <button class="variant-ghost-primary btn" on:click={() => modalStore.trigger(deleteModal)}>
+          <button class="variant-ghost-primary btn" onclick={() => modalStore.trigger(deleteModal)}>
             <span class="material-icons pr-2">delete</span>
             Delete</button>
         {/if}

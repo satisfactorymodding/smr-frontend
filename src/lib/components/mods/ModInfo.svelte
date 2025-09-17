@@ -5,10 +5,11 @@
   import TagList from '$lib/components/utils/TagList.svelte';
   import { getTranslate } from '@tolgee/svelte';
 
-  export let mod!: Pick<
-    Mod,
-    'source_url' | 'created_at' | 'views' | 'downloads' | 'mod_reference' | 'compatibility' | 'tags'
-  >;
+  interface Props {
+    mod: Pick<Mod, 'source_url' | 'created_at' | 'views' | 'downloads' | 'mod_reference' | 'compatibility' | 'tags'>;
+  }
+
+  let { mod }: Props = $props();
 
   export const { t } = getTranslate();
 </script>

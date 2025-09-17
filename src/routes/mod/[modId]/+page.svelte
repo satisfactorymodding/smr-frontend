@@ -19,21 +19,26 @@
   import Page404 from '$lib/components/general/Page404.svelte';
   import { getTranslate } from '@tolgee/svelte';
 
-  export let data: PageData;
+  interface Props {
+    data: PageData;
+  }
+
+  let { data }: Props = $props();
 
   export const { t } = getTranslate();
 
-  $: ({ modId, mod } = data);
+  let { modId, mod } = $derived(data);
 
   const client = getContextClient();
 
-  let versionsTab = false;
+  let versionsTab = $state(false);
 
   const toastStore = getToastStore();
 
-  $: canUserEdit =
-    $user?.roles?.deleteContent || $mod?.data?.mod?.authors?.findIndex((author) => author.user_id == $user?.id) >= 0;
-  $: canUserEditCompatibility = $user?.roles?.editAnyModCompatibility || canUserEdit;
+  let canUserEdit = $derived(
+    $user?.roles?.deleteContent || $mod?.data?.mod?.authors?.findIndex((author) => author.user_id == $user?.id) >= 0
+  );
+  let canUserEditCompatibility = $derived($user?.roles?.editAnyModCompatibility || canUserEdit);
 
   const deleteModFn = () => {
     client
@@ -69,7 +74,7 @@
     }
   };
 
-  $: editCompatibilityModal = {
+  let editCompatibilityModal = $derived({
     type: 'component',
     component: {
       ref: EditCompatibilityModal,
@@ -77,7 +82,7 @@
         mod: $mod.data?.mod
       }
     }
-  } satisfies ModalSettings;
+  } satisfies ModalSettings);
 
   const modalStore = getModalStore();
 </script>
@@ -104,23 +109,23 @@
       <h1 class="text-4xl font-bold">{$mod.data.mod.name}</h1>
       <div>
         {#if canUserEdit}
-          <button class="variant-ghost-primary btn" on:click={() => goto(base + '/mod/' + modId + '/edit')}>
+          <button class="variant-ghost-primary btn" onclick={() => goto(base + '/mod/' + modId + '/edit')}>
             <span class="material-icons pr-2">edit</span>
             {$t('mod.edit')}</button>
-          <button class="variant-ghost-primary btn" on:click={() => modalStore.trigger(deleteModal)}>
+          <button class="variant-ghost-primary btn" onclick={() => modalStore.trigger(deleteModal)}>
             <span class="material-icons pr-2">delete_forever</span>
             {$t('mod.delete')}</button>
-          <button class="variant-ghost-primary btn" on:click={() => goto(base + '/mod/' + modId + '/new-version')}>
+          <button class="variant-ghost-primary btn" onclick={() => goto(base + '/mod/' + modId + '/new-version')}>
             <span class="material-icons pr-2">upload_file</span>
             {$t('mod.new-version')}</button>
         {/if}
         {#if canUserEditCompatibility}
-          <button class="variant-ghost-primary btn" on:click={() => modalStore.trigger(editCompatibilityModal)}>
+          <button class="variant-ghost-primary btn" onclick={() => modalStore.trigger(editCompatibilityModal)}>
             <span class="material-icons">rocket_launch</span>
             <span class="material-icons pr-2">science</span>
             {$t('mod.edit-compatibility')}</button>
         {/if}
-        <button class="variant-ghost-primary btn" on:click={() => (versionsTab = !versionsTab)}>
+        <button class="variant-ghost-primary btn" onclick={() => (versionsTab = !versionsTab)}>
           {#if !versionsTab}
             <span class="material-icons pr-2" title="Browse all uploaded versions of this mod">view_list</span>
             {$t('mod.view-versions')}

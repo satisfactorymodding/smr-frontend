@@ -6,8 +6,12 @@
   import { createEventDispatcher } from 'svelte';
   import { getTranslate } from '@tolgee/svelte';
 
-  export let modId: string;
-  export let mod: ModData;
+  interface Props {
+    modId: string;
+    mod: ModData;
+  }
+
+  let { modId, mod = $bindable() }: Props = $props();
 
   export const { t } = getTranslate();
 
@@ -33,7 +37,7 @@
   }
 </script>
 
-<form on:submit={onSubmit}>
+<form onsubmit={onSubmit}>
   <ModCompatibilityEdit bind:compatibilityInfo={mod.compatibility} />
   <div class="p-5">
     <button class="variant-ghost-primary btn" type="submit">{$t('entry.save')}</button>

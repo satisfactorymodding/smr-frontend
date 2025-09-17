@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import { createForm } from 'felte';
   import { validator } from '@felte/validator-zod';
   import { reporter, ValidationMessage } from '@felte/reporter-svelte';
@@ -15,29 +17,37 @@
 
   export const { t } = getTranslate();
 
-  export let onSubmit: (data: ModData) => void;
-  export let initialValues: ModData = {
-    full_description: '',
-    mod_reference: '',
-    name: '',
-    short_description: '',
-    source_url: '',
-    hidden: false,
-    tagIDs: [],
-    compatibility: {
-      EA: {
-        state: CompatibilityState.Works,
-        note: ''
-      },
-      EXP: {
-        state: CompatibilityState.Works,
-        note: ''
-      }
-    }
-  };
-  export let submitText = $t('entry.create');
+  interface Props {
+    onSubmit: (data: ModData) => void;
+    initialValues?: ModData;
+    submitText?: any;
+    editing?: boolean;
+  }
 
-  export let editing = false;
+  let {
+    onSubmit,
+    initialValues = {
+      full_description: '',
+      mod_reference: '',
+      name: '',
+      short_description: '',
+      source_url: '',
+      hidden: false,
+      tagIDs: [],
+      compatibility: {
+        EA: {
+          state: CompatibilityState.Works,
+          note: ''
+        },
+        EXP: {
+          state: CompatibilityState.Works,
+          note: ''
+        }
+      }
+    },
+    submitText = $t('entry.create'),
+    editing = false
+  }: Props = $props();
 
   const { form, data } = createForm<ModData>({
     initialValues: initialValues,
@@ -45,24 +55,26 @@
     onSubmit: (submitted: ModData) => onSubmit(trimNonSchema(submitted, modSchema))
   });
 
-  let tags = $data.tags;
+  let tags = $state($data.tags);
   const computeTags = () => {
     $data.tagIDs = tags.map((tag) => tag.id);
   };
 
-  $: if (tags) {
-    computeTags();
-  }
+  run(() => {
+    if (tags) {
+      computeTags();
+    }
+  });
 
   // The GQL type NewMod does not have a compatibility field.
   // We remove the field from the data so that the GQL request is valid
-  $: {
+  run(() => {
     if (!editing) {
       delete $data.compatibility;
     }
-  }
+  });
 
-  $: preview = ($data.full_description as string) || '';
+  let preview = $derived(($data.full_description as string) || '');
 
   const addAuthor = () => {
     $data.authors.push({ role: 'editor', user_id: '', key: '' });
@@ -74,8 +86,10 @@
     $data.authors = $data.authors;
   };
 
-  let editCompatibility = false;
-  $: $data.compatibility = $data.compatibility ? $data.compatibility : undefined;
+  let editCompatibility = $state(false);
+  run(() => {
+    $data.compatibility = $data.compatibility ? $data.compatibility : undefined;
+  });
   const originalCompatibility = $data.compatibility;
 </script>
 
@@ -86,8 +100,10 @@
         <span>{$t('entry.name')} *</span>
         <input type="text" bind:value={$data.name} required class="input p-2" />
       </label>
-      <ValidationMessage for="name" let:messages={message}>
-        <span class="validation-message">{message || ''}</span>
+      <ValidationMessage for="name">
+        {#snippet children({ messages: message })}
+          <span class="validation-message">{message || ''}</span>
+        {/snippet}
       </ValidationMessage>
     </div>
 
@@ -99,8 +115,10 @@
           <span>{$t('mod.reference-warning')}</span>
         {/if}
       </label>
-      <ValidationMessage for="mod_reference" let:messages={message}>
-        <span class="validation-message">{message || ''}</span>
+      <ValidationMessage for="mod_reference">
+        {#snippet children({ messages: message })}
+          <span class="validation-message">{message || ''}</span>
+        {/snippet}
       </ValidationMessage>
     </div>
 
@@ -109,8 +127,10 @@
         <span>{$t('entry.short-description')} *</span>
         <input type="text" bind:value={$data.short_description} required class="input p-2" />
       </label>
-      <ValidationMessage for="short_description" let:messages={message}>
-        <span class="validation-message">{message || ''}</span>
+      <ValidationMessage for="short_description">
+        {#snippet children({ messages: message })}
+          <span class="validation-message">{message || ''}</span>
+        {/snippet}
       </ValidationMessage>
     </div>
 
@@ -118,10 +138,13 @@
       <div class="grid grid-flow-row auto-rows-max gap-2">
         <label class="label">
           <span>{$t('entry.full-description')} *</span>
-          <textarea class="vertical-textarea textarea p-2" bind:value={$data.full_description} required rows={10} />
+          <textarea class="vertical-textarea textarea p-2" bind:value={$data.full_description} required rows={10}
+          ></textarea>
         </label>
-        <ValidationMessage for="full_description" let:messages={message}>
-          <span class="validation-message">{message || ''}</span>
+        <ValidationMessage for="full_description">
+          {#snippet children({ messages: message })}
+            <span class="validation-message">{message || ''}</span>
+          {/snippet}
         </ValidationMessage>
       </div>
       <div class="grid grid-flow-row auto-rows-max gap-2">
@@ -146,8 +169,10 @@
         type="file"
         accept="image/png,image/jpeg,image/gif"
         placeholder="Logo" />
-      <ValidationMessage for="logo" let:messages={message}>
-        <span class="validation-message">{message || ''}</span>
+      <ValidationMessage for="logo">
+        {#snippet children({ messages: message })}
+          <span class="validation-message">{message || ''}</span>
+        {/snippet}
       </ValidationMessage>
     </div>
 
@@ -156,8 +181,10 @@
         <span>{$t('entry.source-url')}</span>
         <input type="text" bind:value={$data.source_url} required class="input p-2" />
       </label>
-      <ValidationMessage for="source_url" let:messages={message}>
-        <span class="validation-message">{message || ''}</span>
+      <ValidationMessage for="source_url">
+        {#snippet children({ messages: message })}
+          <span class="validation-message">{message || ''}</span>
+        {/snippet}
       </ValidationMessage>
     </div>
 
@@ -165,8 +192,10 @@
       <SlideToggle name="slider-label" bind:checked={$data.hidden}>
         {$t('entry.hidden')}
       </SlideToggle>
-      <ValidationMessage for="hidden" let:messages={message}>
-        <span class="validation-message">{message || ''}</span>
+      <ValidationMessage for="hidden">
+        {#snippet children({ messages: message })}
+          <span class="validation-message">{message || ''}</span>
+        {/snippet}
       </ValidationMessage>
     </div>
     {#if editing}
@@ -188,7 +217,7 @@
       <div class="grid grid-flow-row gap-2">
         <div class="flex items-center">
           <h4 class="mr-4">{$t('authors')}</h4>
-          <button class="variant-ghost-primary btn" type="button" on:click={addAuthor}>
+          <button class="variant-ghost-primary btn" type="button" onclick={addAuthor}>
             <span>{$t('add')}</span>
           </button>
         </div>
@@ -209,7 +238,7 @@
                 disabled={author.role === 'creator'} />
             </label>
             {#if author.role !== 'creator'}
-              <button class="variant-ghost-primary btn" type="button" on:click={() => removeAuthor(i)}>
+              <button class="variant-ghost-primary btn" type="button" onclick={() => removeAuthor(i)}>
                 <span>{$t('remove')}</span>
               </button>
             {/if}

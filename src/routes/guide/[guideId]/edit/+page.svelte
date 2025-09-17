@@ -9,19 +9,25 @@
   import type { PageData } from './$types';
   import { getModalStore, getToastStore, type ModalSettings } from '@skeletonlabs/skeleton';
 
-  export let data: PageData;
+  interface Props {
+    data: PageData;
+  }
 
-  $: ({ guideId } = data);
+  let { data }: Props = $props();
+
+  let { guideId } = $derived(data);
 
   const client = getContextClient();
 
   const toastStore = getToastStore();
 
-  $: guide = queryStore({
-    query: GetGuideDocument,
-    client,
-    variables: { guide: guideId }
-  });
+  let guide = $derived(
+    queryStore({
+      query: GetGuideDocument,
+      client,
+      variables: { guide: guideId }
+    })
+  );
 
   const onSubmit = (guideData: GuideData) => {
     client
@@ -80,7 +86,7 @@
 <div class="flex h-auto flex-wrap items-center justify-between">
   <h1 class="my-4 text-4xl font-bold">Edit Guide</h1>
   <div>
-    <button class="variant-ghost-primary btn" on:click={() => modalStore.trigger(backModal)}>
+    <button class="variant-ghost-primary btn" onclick={() => modalStore.trigger(backModal)}>
       <span class="material-icons pr-2">arrow_back</span>
       Back to Guide</button>
   </div>

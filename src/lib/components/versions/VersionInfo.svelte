@@ -3,7 +3,11 @@
   import { prettyBytes, prettyDate, prettyNumber } from '$lib/utils/formatting';
   import { getTranslate } from '@tolgee/svelte';
 
-  export let version!: Pick<Version, 'created_at' | 'game_version' | 'size' | 'downloads' | 'hash'>;
+  interface Props {
+    version: Pick<Version, 'created_at' | 'game_version' | 'size' | 'downloads' | 'hash'>;
+  }
+
+  let { version }: Props = $props();
 
   export const { t } = getTranslate();
 </script>

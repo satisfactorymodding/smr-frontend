@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import { CompatibilityState } from '$lib/generated';
   import type { CompatibilityInfo } from '$lib/generated';
   import CompatibilityEdit from '$lib/components/mods/compatibility/CompatibilityEdit.svelte';
@@ -16,28 +18,36 @@
     }
   };
 
-  export let compatibilityInfo: CompatibilityInfo = null;
-  $: if (compatibilityInfo == null) {
-    compatibilityInfo = prefilledCompatibilityInfo;
+  interface Props {
+    compatibilityInfo?: CompatibilityInfo;
   }
+
+  let { compatibilityInfo = $bindable(null) }: Props = $props();
+  run(() => {
+    if (compatibilityInfo == null) {
+      compatibilityInfo = prefilledCompatibilityInfo;
+    }
+  });
   export const { t } = getTranslate();
 </script>
 
 <Accordion>
   <AccordionItem>
-    <svelte:fragment slot="summary">
+    {#snippet summary()}
       <span class="material-icons text-sm">rocket_launch</span>
-      {$t('early-access')} - {$t('compatibility')}</svelte:fragment>
-    <svelte:fragment slot="content">
+      {$t('early-access')} - {$t('compatibility')}
+    {/snippet}
+    {#snippet content()}
       <CompatibilityEdit bind:compatibility={compatibilityInfo.EA} />
-    </svelte:fragment>
+    {/snippet}
   </AccordionItem>
   <AccordionItem>
-    <svelte:fragment slot="summary">
+    {#snippet summary()}
       <span class="material-icons text-sm">science</span>
-      {$t('experimental')} - {$t('compatibility')}</svelte:fragment>
-    <svelte:fragment slot="content">
+      {$t('experimental')} - {$t('compatibility')}
+    {/snippet}
+    {#snippet content()}
       <CompatibilityEdit bind:compatibility={compatibilityInfo.EXP} />
-    </svelte:fragment>
+    {/snippet}
   </AccordionItem>
 </Accordion>

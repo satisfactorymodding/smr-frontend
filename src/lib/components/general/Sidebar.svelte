@@ -8,16 +8,19 @@
   import type { SidebarItemData } from '$lib/utils/sidebarItemData';
   import SidebarItem from './SidebarItem.svelte';
 
-  export let accessibility: boolean;
+  interface Props {
+    accessibility: boolean;
+  }
+
+  let { accessibility = $bindable() }: Props = $props();
 
   export const { t } = getTranslate();
 
-  $: isAdmin = !$user
-    ? false
-    : $user.roles.approveMods || $user.roles.approveVersions || $user.roles.editSatisfactoryVersions;
+  let isAdmin = $derived(
+    !$user ? false : $user.roles.approveMods || $user.roles.approveVersions || $user.roles.editSatisfactoryVersions
+  );
 
-  let top: SidebarItemData[];
-  $: top = [
+  let top: SidebarItemData[] = $derived([
     {
       url: base + '/',
       icon: 'home',
@@ -55,10 +58,9 @@
       label: $t('sidebar.docs'),
       external: true
     }
-  ];
+  ]);
 
-  let bottom: SidebarItemData[];
-  $: bottom = [
+  let bottom: SidebarItemData[] = $derived([
     {
       url: base + '/help',
       icon: 'help',
@@ -90,7 +92,7 @@
       label: $t('sidebar.github'),
       external: true
     }
-  ];
+  ]);
 
   const modalStore = getModalStore();
   const drawerStore = getDrawerStore();
@@ -102,7 +104,7 @@
       <ul>
         {#if $user === null}
           <button
-            on:click={() => {
+            onclick={() => {
               modalStore.trigger({
                 type: 'component',
                 component: {
@@ -118,7 +120,7 @@
         {:else}
           {#if isAdmin}
             <button
-              on:click={() => {
+              onclick={() => {
                 goto(base + '/admin');
                 drawerStore.close();
               }}
@@ -127,13 +129,13 @@
               <span>Admin</span>
             </button>
           {/if}
-          <button class="grid w-full grid-flow-col" on:click={() => goto(base + '/user/' + $user.id)}>
-            <div class="h-7 w-7 rounded-full bg-cover" style={`background-image: url("${$user.avatar}")`} />
+          <button class="grid w-full grid-flow-col" onclick={() => goto(base + '/user/' + $user.id)}>
+            <div class="h-7 w-7 rounded-full bg-cover" style={`background-image: url("${$user.avatar}")`}></div>
             <div>{$user.username}</div>
           </button>
 
           <button
-            on:click={() => {
+            onclick={() => {
               userToken.set(null);
               drawerStore.close();
             }}

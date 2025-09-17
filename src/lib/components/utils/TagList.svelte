@@ -19,23 +19,28 @@
     }
   });
 
-  export let tags: Tag[] = [];
-  export let editable = false;
-  export let popupTriggerEvent: PopupSettings['event'] = 'click';
+  interface Props {
+    tags?: Tag[];
+    editable?: boolean;
+    popupTriggerEvent?: PopupSettings['event'];
+  }
 
-  $: allTags =
+  let { tags = $bindable([]), editable = false, popupTriggerEvent = 'click' }: Props = $props();
+
+  let allTags = $derived(
     $getAllTags.data?.getTags?.map((tag) => ({
       label: `${tag.name} - ${tag.description}`,
       value: tag.id,
       name: tag.name
-    })) || ([] satisfies AutocompleteOption[]);
+    })) || ([] satisfies AutocompleteOption[])
+  );
 
   const popupSettings: PopupSettings = {
     event: 'focus-click',
     target: 'popupAutocomplete',
     placement: 'bottom-start'
   };
-  let tagList = [];
+  let tagList = $state([]);
   const loadTagList = () => (tagList = tags.map((tag: Tag) => tag.name));
 
   onMount(loadTagList);
@@ -60,7 +65,7 @@
     loadTagList();
   };
 
-  let inputTag = '';
+  let inputTag = $state('');
 </script>
 
 <div class="tags">

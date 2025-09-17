@@ -14,14 +14,14 @@
   const client = getContextClient();
 
   const panels = {};
-  const versionFields = {};
+  const versionFields = $state({});
 
   const satisfactoryVersionsQuery = queryStore({
     query: GetSatisfactoryVersionsDocument,
     client
   });
 
-  $: satisfactoryVersions = $satisfactoryVersionsQuery.data?.getSatisfactoryVersions || [];
+  let satisfactoryVersions = $derived($satisfactoryVersionsQuery.data?.getSatisfactoryVersions || []);
 
   const toastStore = getToastStore();
 
@@ -161,8 +161,10 @@
     <Accordion>
       {#each satisfactoryVersions as satisfactoryVersion}
         <AccordionItem>
-          <svelte:fragment slot="summary">{satisfactoryVersion.version}</svelte:fragment>
-          <svelte:fragment slot="content">
+          {#snippet summary()}
+            {satisfactoryVersion.version}
+          {/snippet}
+          {#snippet content()}
             <div>
               <div>Game CL#</div>
               <input
@@ -171,26 +173,26 @@
                 bind:value={satisfactoryVersion.version}
                 placeholder="Version"
                 bind:this={versionFields[satisfactoryVersion.id]}
-                on:change={() => satisfactoryVersionChange(satisfactoryVersion)} />
+                onchange={() => satisfactoryVersionChange(satisfactoryVersion)} />
               <div>Engine Version</div>
               <input
                 type="text"
                 class="input p-2"
                 bind:value={satisfactoryVersion.engine_version}
                 placeholder="Engine version"
-                on:change={() => satisfactoryVersionChange(satisfactoryVersion)} />
+                onchange={() => satisfactoryVersionChange(satisfactoryVersion)} />
             </div>
 
-            <button class="variant-ghost-error btn" on:click={(e) => onDeleteClick(e, satisfactoryVersion)}>
+            <button class="variant-ghost-error btn" onclick={(e) => onDeleteClick(e, satisfactoryVersion)}>
               <span>Delete</span>
             </button>
-          </svelte:fragment>
+          {/snippet}
         </AccordionItem>
       {/each}
     </Accordion>
 
     <section class="p-4">
-      <button class="variant-ghost-primary btn" on:click={newSatisfactoryVersion}>
+      <button class="variant-ghost-primary btn" onclick={newSatisfactoryVersion}>
         <span>Add new Satisfactory version</span>
         <span class="material-icons">add</span>
       </button>

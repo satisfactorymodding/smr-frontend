@@ -16,7 +16,11 @@
 
   export const { t } = getTranslate();
 
-  export let data: PageData;
+  interface Props {
+    data: PageData;
+  }
+
+  let { data }: Props = $props();
 
   const { modId } = data;
 
@@ -119,7 +123,7 @@
     <button
       class="variant-ghost-primary btn"
       title="View the description page for this mod"
-      on:click={() => modalStore.trigger(backModal)}>
+      onclick={() => modalStore.trigger(backModal)}>
       <span class="material-icons pr-2">arrow_back</span>
       {$t('version.back')}
     </button>
@@ -151,7 +155,8 @@
           <div class="mb-4 flex h-2 overflow-hidden rounded bg-neutral-600 text-xs">
             <div
               style="width: {$uploadPercent.toFixed(0)}%"
-              class="flex flex-col justify-center whitespace-nowrap bg-yellow-600 text-center text-white shadow-none" />
+              class="flex flex-col justify-center whitespace-nowrap bg-yellow-600 text-center text-white shadow-none">
+            </div>
           </div>
         </div>
       {/if}

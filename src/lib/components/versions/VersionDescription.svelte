@@ -3,8 +3,12 @@
   import { markdown } from '$lib/utils/markdown';
   import AnnouncementRow from '../announcements/AnnouncementRow.svelte';
 
-  export let changelog!: string;
-  export let approved: boolean;
+  interface Props {
+    changelog: string;
+    approved: boolean;
+  }
+
+  let { changelog, approved }: Props = $props();
 </script>
 
 <div>

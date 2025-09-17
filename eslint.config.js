@@ -19,7 +19,7 @@ const rules = {
   'no-var': 'error',
   'one-var': ['error', 'never'],
   'prefer-arrow-callback': 'error',
-  'prefer-const': 'error',
+  'prefer-const': 'off',
   "yoda": 'error',
   'array-bracket-newline': ['error', { multiline: true }],
   'brace-style': 'error',

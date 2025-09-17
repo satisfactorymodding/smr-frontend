@@ -7,7 +7,11 @@
   import CompatibilityModal from '$lib/modals/CompatibilityModal.svelte';
   import { getTranslate } from '@tolgee/svelte';
 
-  export let compatibility: CompatibilityInfoInput;
+  interface Props {
+    compatibility: CompatibilityInfoInput;
+  }
+
+  let { compatibility }: Props = $props();
 
   export const { t } = getTranslate();
   export const noNotesText = $t('compatibility-info.no-notes');
@@ -45,12 +49,12 @@
           </tr>
           <tr class="rounded border !border-surface-500">
             <td class="text-center">
-              <button class="m-0 min-w-0" title={$t('tooltip.click-for-info')} on:click={openCompatibility}>
+              <button class="m-0 min-w-0" title={$t('tooltip.click-for-info')} onclick={openCompatibility}>
                 <CompatibilityStateText state={compatibility?.EA?.state} />
               </button>
             </td>
             <td class="text-center">
-              <button class="m-0 min-w-0" title={$t('tooltip.click-for-info')} on:click={openCompatibility}>
+              <button class="m-0 min-w-0" title={$t('tooltip.click-for-info')} onclick={openCompatibility}>
                 <CompatibilityStateText state={compatibility?.EXP?.state} />
               </button>
             </td>

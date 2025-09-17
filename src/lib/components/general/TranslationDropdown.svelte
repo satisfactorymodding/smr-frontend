@@ -109,7 +109,7 @@
     <ul>
       {#each Object.entries(languages) as [k, v]}
         <li class:bg-primary-active-token={$lang === k}>
-          <button class="w-full" on:click={() => lang.set(k)}>
+          <button class="w-full" onclick={() => lang.set(k)}>
             <span>{v.name}</span>
             <span class="text-xl {v?.style ?? defaultFlagTextStyle}">{v.flag}</span>
           </button>
@@ -117,5 +117,5 @@
       {/each}
     </ul>
   </nav>
-  <div class="bg-surface-100-800-token arrow" />
+  <div class="bg-surface-100-800-token arrow"></div>
 </div>

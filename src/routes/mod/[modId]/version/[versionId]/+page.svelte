@@ -20,7 +20,11 @@
 
   export const { t } = getTranslate();
 
-  export let data: PageData;
+  interface Props {
+    data: PageData;
+  }
+
+  let { data }: Props = $props();
 
   const { modId, versionId, version } = data;
 
@@ -28,9 +32,10 @@
 
   const toastStore = getToastStore();
 
-  $: canUserEdit =
+  let canUserEdit = $derived(
     $user?.roles?.deleteContent ||
-    $version?.data?.getVersion.mod?.authors?.findIndex((author) => author.user_id == $user?.id) >= 0;
+      $version?.data?.getVersion.mod?.authors?.findIndex((author) => author.user_id == $user?.id) >= 0
+  );
 
   const deleteVersionFn = () => {
     client
@@ -93,11 +98,11 @@
         {#if canUserEdit}
           <button
             class="variant-ghost-primary btn"
-            on:click={() => goto(base + '/mod/' + modId + '/version/' + versionId + '/edit')}>
+            onclick={() => goto(base + '/mod/' + modId + '/version/' + versionId + '/edit')}>
             <span class="material-icons pr-2">edit_document</span>
             Edit
           </button>
-          <button class="variant-ghost-primary btn" on:click={() => modalStore.trigger(deleteModal)}>
+          <button class="variant-ghost-primary btn" onclick={() => modalStore.trigger(deleteModal)}>
             <span class="material-icons pr-2">delete</span>
             Delete</button>
         {/if}
@@ -146,7 +151,7 @@
         <button
           class="variant-ghost-primary btn"
           title="Install via Satisfactory Mod Manager"
-          on:click={() => installMod($version.data.getVersion.mod.mod_reference)}>
+          onclick={() => installMod($version.data.getVersion.mod.mod_reference)}>
           <span class="material-icons">download</span>
           <span>Install</span>
         </button>

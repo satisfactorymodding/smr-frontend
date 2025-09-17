@@ -3,7 +3,11 @@
   import { prettyDate } from '$lib/utils/formatting';
   import { getTranslate } from '@tolgee/svelte';
 
-  export let guide!: Pick<Guide, 'created_at'>;
+  interface Props {
+    guide: Pick<Guide, 'created_at'>;
+  }
+
+  let { guide }: Props = $props();
 
   export const { t } = getTranslate();
 </script>

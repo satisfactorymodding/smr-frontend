@@ -2,7 +2,11 @@
   import type { VirustotalResult } from '$lib/generated';
   import { getTranslate } from '@tolgee/svelte';
 
-  export let results!: Array<VirustotalResult>;
+  interface Props {
+    results: Array<VirustotalResult>;
+  }
+
+  let { results }: Props = $props();
   export const { t } = getTranslate();
 </script>
 

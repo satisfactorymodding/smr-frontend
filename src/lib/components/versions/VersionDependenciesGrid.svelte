@@ -3,10 +3,14 @@
 
   import type { VersionDependency } from '$lib/generated';
 
-  export let dependencies!: Pick<VersionDependency, 'mod_id' | 'optional' | 'condition'>[];
+  interface Props {
+    dependencies: Pick<VersionDependency, 'mod_id' | 'optional' | 'condition'>[];
+  }
 
-  $: requiredDependencies = dependencies.filter((d) => !d.optional);
-  $: optionalDependencies = dependencies.filter((d) => d.optional);
+  let { dependencies }: Props = $props();
+
+  let requiredDependencies = $derived(dependencies.filter((d) => !d.optional));
+  let optionalDependencies = $derived(dependencies.filter((d) => d.optional));
 </script>
 
 <div class="grid grid-flow-row">

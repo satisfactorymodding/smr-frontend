@@ -9,19 +9,25 @@
   import type { PageData } from './$types';
   import { getModalStore, getToastStore, type ModalSettings } from '@skeletonlabs/skeleton';
 
-  export let data: PageData;
+  interface Props {
+    data: PageData;
+  }
 
-  $: ({ modId, versionId } = data);
+  let { data }: Props = $props();
+
+  let { modId, versionId } = $derived(data);
 
   const client = getContextClient();
 
   const toastStore = getToastStore();
 
-  $: version = queryStore({
-    query: GetModVersionDocument,
-    client,
-    variables: { version: versionId }
-  });
+  let version = $derived(
+    queryStore({
+      query: GetModVersionDocument,
+      client,
+      variables: { version: versionId }
+    })
+  );
 
   const onSubmit = async (versionData: VersionData) =>
     client
@@ -48,12 +54,14 @@
         }
       });
 
-  $: initialValues = $version.data
-    ? {
-        ...$version.data.getVersion,
-        logo: undefined
-      }
-    : undefined;
+  let initialValues = $derived(
+    $version.data
+      ? {
+          ...$version.data.getVersion,
+          logo: undefined
+        }
+      : undefined
+  );
 
   const goBackFn = () => {
     goto(base + '/mod/' + modId + '/version/' + versionId);
@@ -86,7 +94,7 @@
 <div class="flex h-auto flex-wrap items-center justify-between">
   <h1 class="my-4 text-4xl font-bold">Edit Version</h1>
   <div>
-    <button class="variant-ghost-primary btn" on:click={() => modalStore.trigger(backModal)}>
+    <button class="variant-ghost-primary btn" onclick={() => modalStore.trigger(backModal)}>
       <span class="material-icons pr-2">arrow_back</span>
       Back to Versions</button>
   </div>
