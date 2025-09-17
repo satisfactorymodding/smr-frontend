@@ -1,6 +1,6 @@
 <script lang="ts">
   import { getTranslate } from '@tolgee/svelte';
-  import { ConicGradient, type ConicStop } from '@skeletonlabs/skeleton';
+  import { type ConicStop } from '@skeletonlabs/skeleton-svelte';
   import { getContextClient, queryStore } from '@urql/svelte';
   import { GetOAuthOptionsDocument } from '$lib/generated';
   import { browser } from '$app/environment';
@@ -49,17 +49,17 @@
         <p>Oh no... {$oauthOptions.error.message}</p>
       {:else}
         <button
-          class="variant-ghost-primary btn"
+          class="preset-tonal-primary border-primary-500 btn border"
           onclick={() => goTo('github', $oauthOptions.data.getOAuthOptions.github)}>
           {$t('login-dialog.sign-in-with-github')}
         </button>
         <button
-          class="variant-ghost-primary btn"
+          class="preset-tonal-primary border-primary-500 btn border"
           onclick={() => goTo('google', $oauthOptions.data.getOAuthOptions.google)}>
           {$t('login-dialog.sign-in-with-google')}
         </button>
         <button
-          class="variant-ghost-primary btn"
+          class="preset-tonal-primary border-primary-500 btn border"
           onclick={() => goTo('facebook', $oauthOptions.data.getOAuthOptions.facebook)}>
           {$t('login-dialog.sign-in-with-facebook')}
         </button>

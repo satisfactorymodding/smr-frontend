@@ -43,7 +43,9 @@
   }
 
   function try_pat() {
-    isClose ? pat() : null;
+    if (isClose) {
+      pat();
+    }
   }
 
   async function end_pat() {

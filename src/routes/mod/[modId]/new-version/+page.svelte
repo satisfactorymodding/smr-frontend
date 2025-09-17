@@ -10,7 +10,7 @@
   import { base } from '$app/paths';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
   import type { PageData } from './$types';
-  import { getModalStore, getToastStore, type ModalSettings } from '@skeletonlabs/skeleton';
+  import { type ModalSettings } from '@skeletonlabs/skeleton-svelte';
   import EditCompatibilityForm from '$lib/components/mods/compatibility/EditCompatibilityForm.svelte';
   import { getTranslate } from '@tolgee/svelte';
 
@@ -43,8 +43,6 @@
     }
   });
 
-  const toastStore = getToastStore();
-
   const mod = queryStore({
     query: GetModDocument,
     client,
@@ -67,7 +65,7 @@
       .then((success) => {
         toastStore.trigger({
           message: `Version created`,
-          background: 'variant-filled-success',
+          background: 'preset-filled-success-500',
           timeout: 5000
         });
         goto(base + '/mod/' + modId + '/version/' + success.version.id);
@@ -76,7 +74,7 @@
         console.error(err);
         toastStore.trigger({
           message: 'Error creating version: ' + err.message,
-          background: 'variant-filled-error',
+          background: 'preset-filled-error-500',
           autohide: false
         });
         uploadStatus.set('');
@@ -98,8 +96,6 @@
       }
     }
   };
-
-  const modalStore = getModalStore();
 </script>
 
 <svelte:head>
@@ -121,7 +117,7 @@
   </h1>
   <div>
     <button
-      class="variant-ghost-primary btn"
+      class="preset-tonal-primary border-primary-500 btn border"
       title="View the description page for this mod"
       onclick={() => modalStore.trigger(backModal)}>
       <span class="material-icons pr-2">arrow_back</span>
@@ -144,7 +140,7 @@
           <div class="mb-2 flex items-center justify-between">
             <div>
               <span
-                class="inline-block rounded-full bg-yellow-600 px-2 py-1 text-xs font-semibold uppercase text-white">
+                class="inline-block rounded-full bg-yellow-600 px-2 py-1 text-xs font-semibold text-white uppercase">
                 {$uploadStatus}
               </span>
             </div>
@@ -155,7 +151,7 @@
           <div class="mb-4 flex h-2 overflow-hidden rounded bg-neutral-600 text-xs">
             <div
               style="width: {$uploadPercent.toFixed(0)}%"
-              class="flex flex-col justify-center whitespace-nowrap bg-yellow-600 text-center text-white shadow-none">
+              class="flex flex-col justify-center bg-yellow-600 text-center whitespace-nowrap text-white shadow-none">
             </div>
           </div>
         </div>

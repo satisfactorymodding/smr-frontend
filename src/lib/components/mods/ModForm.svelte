@@ -13,14 +13,14 @@
   import { CompatibilityState } from '$lib/generated';
   import ModCompatibility from '$lib/components/mods/compatibility/ModCompatibilityEdit.svelte';
   import { getTranslate } from '@tolgee/svelte';
-  import { SlideToggle } from '@skeletonlabs/skeleton';
+  import { Switch } from '@skeletonlabs/skeleton-svelte';
 
   export const { t } = getTranslate();
 
   interface Props {
     onSubmit: (data: ModData) => void;
     initialValues?: ModData;
-    submitText?: any;
+    submitText?: string;
     editing?: boolean;
   }
 
@@ -189,9 +189,9 @@
     </div>
 
     <div class="grid grid-flow-row gap-2">
-      <SlideToggle name="slider-label" bind:checked={$data.hidden}>
+      <Switch name="slider-label" bind:checked={$data.hidden}>
         {$t('entry.hidden')}
-      </SlideToggle>
+      </Switch>
       <ValidationMessage for="hidden">
         {#snippet children({ messages: message })}
           <span class="validation-message">{message || ''}</span>
@@ -200,14 +200,14 @@
     </div>
     {#if editing}
       <div>
-        <SlideToggle
+        <Switch
           name="slider-label"
           bind:checked={editCompatibility}
           on:change={() => {
             $data.compatibility = editCompatibility ? originalCompatibility : undefined;
           }}>
           {$t('compatibility-info.edit')}
-        </SlideToggle>
+        </Switch>
       </div>
 
       {#if editCompatibility}
@@ -217,7 +217,7 @@
       <div class="grid grid-flow-row gap-2">
         <div class="flex items-center">
           <h4 class="mr-4">{$t('authors')}</h4>
-          <button class="variant-ghost-primary btn" type="button" onclick={addAuthor}>
+          <button class="preset-tonal-primary border-primary-500 btn border" type="button" onclick={addAuthor}>
             <span>{$t('add')}</span>
           </button>
         </div>
@@ -238,7 +238,10 @@
                 disabled={author.role === 'creator'} />
             </label>
             {#if author.role !== 'creator'}
-              <button class="variant-ghost-primary btn" type="button" onclick={() => removeAuthor(i)}>
+              <button
+                class="preset-tonal-primary border-primary-500 btn border"
+                type="button"
+                onclick={() => removeAuthor(i)}>
                 <span>{$t('remove')}</span>
               </button>
             {/if}
@@ -248,7 +251,7 @@
     {/if}
 
     <div>
-      <button class="variant-ghost-primary btn" type="submit">{submitText}</button>
+      <button class="preset-tonal-primary border-primary-500 btn border" type="submit">{submitText}</button>
     </div>
   </div>
 </form>

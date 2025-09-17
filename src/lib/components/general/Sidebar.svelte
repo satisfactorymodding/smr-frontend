@@ -1,11 +1,10 @@
 <script lang="ts">
-  import { getDrawerStore, getModalStore, SlideToggle } from '@skeletonlabs/skeleton';
+  import { Switch } from '@skeletonlabs/skeleton-svelte';
   import { goto } from '$app/navigation';
   import { base } from '$app/paths';
   import { user, userToken } from '$lib/stores/user';
   import { getTranslate } from '@tolgee/svelte';
   import TranslationDropdown from '$lib/components/general/TranslationDropdown.svelte';
-  import LoginModal from '$lib/modals/LoginModal.svelte';
   import type { SidebarItemData } from '$lib/utils/sidebarItemData';
   import SidebarItem from './SidebarItem.svelte';
 
@@ -95,8 +94,25 @@
     }
   ]);
 
-  const modalStore = getModalStore();
-  const drawerStore = getDrawerStore();
+  const onClickLogin = () => {
+    // modalStore.trigger({
+    //   type: 'component',
+    //   component: {
+    //     ref: LoginModal
+    //   }
+    // });
+    // drawerStore.close();
+  };
+
+  const onClickAdmin = () => {
+    goto(base + '/admin');
+    // drawerStore.close();
+  };
+
+  const onClickLogout = () => {
+    userToken.set(null);
+    // drawerStore.close();
+  };
 </script>
 
 <li class="flex flex-row items-center justify-center gap-4 px-3 pt-2 xl:hidden">
@@ -108,28 +124,13 @@
     <nav class="list-nav xl:hidden">
       <ul>
         {#if $user === null}
-          <button
-            onclick={() => {
-              modalStore.trigger({
-                type: 'component',
-                component: {
-                  ref: LoginModal
-                }
-              });
-              drawerStore.close();
-            }}
-            class="w-full">
+          <button onclick={onClickLogin} class="w-full">
             <span class="material-icons">login</span>
             <span>{$t('user.sign-in')}</span>
           </button>
         {:else}
           {#if isAdmin}
-            <button
-              onclick={() => {
-                goto(base + '/admin');
-                drawerStore.close();
-              }}
-              class="w-full">
+            <button onclick={onClickAdmin} class="w-full">
               <span class="material-icons">admin_panel_settings</span>
               <span>Admin</span>
             </button>
@@ -139,12 +140,7 @@
             <div>{$user.username}</div>
           </button>
 
-          <button
-            onclick={() => {
-              userToken.set(null);
-              drawerStore.close();
-            }}
-            class="w-full">
+          <button onclick={onClickLogout} class="w-full">
             <span class="material-icons">logout</span>
             <span>{$t('user.logout')}</span>
           </button>
@@ -179,7 +175,7 @@
       </li>
 
       <li class="flex flex-row items-center justify-center gap-4 px-3 pt-2">
-        <SlideToggle
+        <Switch
           bind:checked={accessibility}
           aria-label="Accessibility Font"
           name="accessibility_font"

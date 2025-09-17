@@ -7,7 +7,6 @@
   import { base } from '$app/paths';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
   import type { PageData } from './$types';
-  import { getToastStore } from '@skeletonlabs/skeleton';
   import { get } from 'svelte/store';
 
   interface Props {
@@ -17,7 +16,6 @@
   let { data }: Props = $props();
 
   const client = getContextClient();
-  const toastStore = getToastStore();
 
   let { modId, mod } = $derived(data);
 
@@ -33,13 +31,13 @@
           console.error(value.error.message);
           toastStore.trigger({
             message: 'Error editing mod: ' + value.error.message,
-            background: 'variant-filled-error',
+            background: 'preset-filled-error-500',
             autohide: false
           });
         } else {
           toastStore.trigger({
             message: `Mod updated`,
-            background: 'variant-filled-success',
+            background: 'preset-filled-success-500',
             timeout: 5000
           });
           goto(base + '/mod/' + modId);

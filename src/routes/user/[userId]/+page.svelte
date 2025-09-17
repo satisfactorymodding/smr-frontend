@@ -33,16 +33,16 @@
 {:else if $user.error}
   <p>Oh no... {$user.error.message}</p>
 {:else if $user.data.getUser}
-  <div class="grid gap-6 xlx:grid-flow-row">
+  <div class="xlx:grid-flow-row grid gap-6">
     <div class="flex h-auto flex-wrap items-center justify-between">
       <h1 class="text-4xl font-bold">{$user.data.getUser.username}</h1>
 
       <div>
         {#if $me && $user.data.getUser.id === $me.id}
-          <a class="variant-ghost-primary btn" href="{base}/settings">Settings</a>
+          <a class="preset-tonal-primary border-primary-500 btn border" href="{base}/settings">Settings</a>
         {/if}
 
-        <button class="variant-ghost-primary btn" onclick={() => (guidesTab = !guidesTab)}>
+        <button class="preset-tonal-primary border-primary-500 btn border" onclick={() => (guidesTab = !guidesTab)}>
           {#if !guidesTab}
             Guides
           {:else}
@@ -53,7 +53,7 @@
     </div>
     <div class="grid-auto-max grid auto-cols-fr gap-4">
       {#if !guidesTab}
-        <div class="grid h-fit grid-cols-1 gap-4 2xl:grid-cols-2 3xl:grid-cols-3">
+        <div class="3xl:grid-cols-3 grid h-fit grid-cols-1 gap-4 2xl:grid-cols-2">
           {#each $user.data.getUser.mods as mod}
             <ModCard mod={mod.mod} />
           {/each}
@@ -64,7 +64,7 @@
           {/if}
         </div>
       {:else}
-        <div class="grid h-fit grid-cols-1 gap-4 2xl:grid-cols-2 3xl:grid-cols-3">
+        <div class="3xl:grid-cols-3 grid h-fit grid-cols-1 gap-4 2xl:grid-cols-2">
           {#each $user.data.getUser.guides as guide}
             <GuideCard {guide} logo={$user.data.getUser.avatar} />
           {/each}

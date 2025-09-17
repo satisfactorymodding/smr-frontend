@@ -14,7 +14,7 @@
 
 <div class="card p-4">
   <section>
-    <div class="break-words text-lg">
+    <div class="text-lg break-words">
       <h3 class="my-4 text-2xl font-bold">Info</h3>
       <span><strong>{$t('entry.created-at')}:</strong> {prettyDate(version.created_at)}</span><br />
       <span><strong>{$t('downloads')}:</strong> {prettyNumber(version.downloads)}</span><br />

@@ -1,12 +1,14 @@
 <script lang="ts">
   import { getTolgee, getTranslate } from '@tolgee/svelte';
   import { writable } from 'svelte/store';
-  import { type PopupSettings, popup } from '@skeletonlabs/skeleton';
   import { browser } from '$app/environment';
+  import { Popover } from '@skeletonlabs/skeleton-svelte';
 
   const tolgee = getTolgee(['language']);
 
   export const { t } = getTranslate();
+
+  let openState = $state(false);
 
   type language = {
     name: string;
@@ -90,32 +92,32 @@
       localStorage.setItem('language', l);
     }
   });
-
-  const languageMenuBox: PopupSettings = {
-    event: 'click',
-    target: 'languageMenuBox',
-    placement: 'bottom',
-    closeQuery: 'li'
-  };
 </script>
 
-<button class="variant-ghost-primary btn btn-sm grid grid-flow-col" use:popup={languageMenuBox}>
+<button
+  class="preset-tonal-primary border-primary-500 btn btn-sm grid grid-flow-col border"
+  onclick={() => (openState = !openState)}>
   <span>{languages[$lang].name}</span>
   <span class={`text-xl ${languages[$lang]?.style ?? defaultFlagTextStyle}`}>{languages[$lang].flag}</span>
 </button>
 
-<div class="card w-56 overflow-y-auto scroll-smooth py-2 shadow-xl" data-popup="languageMenuBox">
-  <nav class="list-nav">
-    <ul>
-      {#each Object.entries(languages) as [k, v]}
-        <li class:bg-primary-active-token={$lang === k}>
-          <button class="w-full" onclick={() => lang.set(k)}>
-            <span>{v.name}</span>
-            <span class="text-xl {v?.style ?? defaultFlagTextStyle}">{v.flag}</span>
-          </button>
-        </li>
-      {/each}
-    </ul>
-  </nav>
-  <div class="bg-surface-100-800-token arrow"></div>
-</div>
+<Popover
+  open={openState}
+  onOpenChange={(e) => (openState = e.open)}
+  positioning={{ placement: 'bottom' }}
+  contentBase="card w-56 overflow-y-auto scroll-smooth py-2 shadow-xl">
+  {#snippet content()}
+    <nav class="list-nav">
+      <ul>
+        {#each Object.entries(languages) as [k, v]}
+          <li class:preset-filled-primary-500={$lang === k}>
+            <button class="w-full" onclick={() => lang.set(k)}>
+              <span>{v.name}</span>
+              <span class="text-xl {v?.style ?? defaultFlagTextStyle}">{v.flag}</span>
+            </button>
+          </li>
+        {/each}
+      </ul>
+    </nav>
+  {/snippet}
+</Popover>

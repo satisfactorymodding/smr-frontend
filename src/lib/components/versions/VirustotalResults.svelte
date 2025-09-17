@@ -12,9 +12,9 @@
 
 <div class="grid grid-flow-row">
   <h3 class="my-4 text-2xl font-bold">{$t('virustotal.table.title')}</h3>
-  <table aria-label={$t('virustotal.table.title')} class="max-w-auto table table-hover !overflow-visible">
+  <table aria-label={$t('virustotal.table.title')} class="max-w-auto table !overflow-visible">
     <tbody>
-      <tr class="rounded border !border-surface-500">
+      <tr class="!border-surface-500 rounded border">
         <td style="width: 25%;"
           ><div title={$t('virustotal.table.file_name')}>
             {$t('virustotal.table.file_name')}
@@ -25,7 +25,7 @@
           ><div class="text-center" title={$t('virustotal.table.safe')}>{$t('virustotal.table.safe')}</div></td>
       </tr>
       {#each results as result}
-        <tr class="rounded border !border-surface-500">
+        <tr class="!border-surface-500 rounded border">
           <td>
             <div>{result.file_name}</div>
           </td>

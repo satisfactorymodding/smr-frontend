@@ -14,9 +14,6 @@
   import { base } from '$app/paths';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
   import type { Writable } from 'svelte/store';
-  import { getToastStore } from '@skeletonlabs/skeleton';
-
-  const toastStore = getToastStore();
 
   const client = getContextClient();
 
@@ -48,13 +45,13 @@
                 console.error(value.error.message);
                 toastStore.trigger({
                   message: 'Error editing user: ' + value.error.message,
-                  background: 'variant-filled-error',
+                  background: 'preset-filled-error-500',
                   autohide: false
                 });
               } else {
                 toastStore.trigger({
                   message: `User updated`,
-                  background: 'variant-filled-success',
+                  background: 'preset-filled-success-500',
                   timeout: 5000
                 });
                 goto(base + '/user/' + value.data.updateUser.id);
@@ -111,7 +108,7 @@
           </div>
 
           <div>
-            <button class="variant-ghost-primary btn" type="submit">Save</button>
+            <button class="preset-tonal-primary border-primary-500 btn border" type="submit">Save</button>
           </div>
         </div>
       </form>

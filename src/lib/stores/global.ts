@@ -11,7 +11,9 @@ export const doggoNeedsPats = writable<boolean>(false);
 export const easterEgg = writable<boolean>(false);
 if (browser) {
   mobileQuery.addEventListener('change', (data) => {
-    onMobile && onMobile.set(!data.matches);
+    if (onMobile) {
+      onMobile.set(!data.matches);
+    }
   });
 }
 

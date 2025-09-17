@@ -2,7 +2,6 @@
   import type { Mod } from '$lib/generated';
   import { getTranslate } from '@tolgee/svelte';
   import EditCompatibilityForm from '$lib/components/mods/compatibility/EditCompatibilityForm.svelte';
-  import { getModalStore } from '@skeletonlabs/skeleton';
 
   interface Props {
     mod: Mod;
@@ -11,7 +10,6 @@
   let { mod }: Props = $props();
 
   export const { t } = getTranslate();
-  const modalStore = getModalStore();
 </script>
 
 <div class="card flex flex-col gap-2 p-4">

@@ -6,7 +6,7 @@
 
   interface Props {
     guide: Pick<Guide, 'id' | 'name' | 'views' | 'short_description'>;
-    logo?: any;
+    logo?: string;
   }
 
   let { guide, logo = assets + '/images/no_image.webp' }: Props = $props();

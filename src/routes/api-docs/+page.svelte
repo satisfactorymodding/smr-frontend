@@ -29,7 +29,7 @@
 </div>
 
 <style lang="postcss">
-  @reference "../../app.pcss";
+  @reference "../../app.css";
 
   p {
     @apply my-5 text-base;

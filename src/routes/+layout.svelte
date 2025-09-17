@@ -12,10 +12,10 @@
   import { PUBLIC_GOOGLE_SITE_TAG } from '$env/static/public';
   import type { LayoutData } from './$types';
   import { TolgeeProvider } from '@tolgee/svelte';
-  import { initializeStores, Modal, storePopup, Drawer, Toast } from '@skeletonlabs/skeleton';
+  import { Toaster } from '@skeletonlabs/skeleton-svelte';
   import TopBar from '$lib/components/general/TopBar.svelte';
   import '../app.css';
-  import { computePosition, autoUpdate, offset, shift, flip, arrow } from '@floating-ui/dom';
+  import { toaster } from '$lib/utils/toaster-svelte';
 
   interface Props {
     data: LayoutData;
@@ -25,9 +25,6 @@
   let { data, children }: Props = $props();
 
   const { client, tolgee } = data;
-
-  initializeStores();
-  storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow });
 
   let gTag: unknown = $state();
   if (browser) {
@@ -85,7 +82,13 @@
 
   let accessibility = $state(false);
   run(() => {
-    root && (accessibility ? root.classList.add('accessibility') : root.classList.remove('accessibility'));
+    if (root) {
+      if (accessibility) {
+        root.classList.add('accessibility');
+      } else {
+        root.classList.remove('accessibility');
+      }
+    }
   });
 
   setContextClient(client);
@@ -122,12 +125,7 @@
 </svelte:head>
 
 <TolgeeProvider {tolgee}>
-  <Toast />
-  <Modal />
-
-  <Drawer>
-    <Sidebar bind:accessibility />
-  </Drawer>
+  <Toaster {toaster}></Toaster>
 
   <div class="grid grid-rows-[auto_1fr_auto]">
     <header class="sticky top-0 z-10">

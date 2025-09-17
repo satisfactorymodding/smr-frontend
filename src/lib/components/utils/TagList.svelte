@@ -2,7 +2,7 @@
   import { GetTagsDocument } from '$lib/generated/graphql';
   import type { Tag } from '$lib/generated/graphql';
   import { queryStore, getContextClient } from '@urql/svelte';
-  import { Autocomplete, type AutocompleteOption, InputChip, type PopupSettings, popup } from '@skeletonlabs/skeleton';
+  import { type AutocompleteOption, type PopupSettings, TagsInput } from '@skeletonlabs/skeleton-svelte';
   import { onMount } from 'svelte';
   import TagDisplay from './TagDisplay.svelte';
   import { getTranslate } from '@tolgee/svelte';
@@ -81,12 +81,12 @@
     <div class="mb-2">{$t('mod.tags.title')}</div>
 
     <div use:popup={popupSettings}>
-      <InputChip
+      <TagsInput
         bind:input={inputTag}
         bind:value={tagList}
         on:remove={(tag) => removeTag(tag.detail.chipValue)}
         name="tags"
-        chips="variant-filled-primary" />
+        chips="preset-filled-primary-500" />
     </div>
 
     <div class="card max-h-48 w-max max-w-full overflow-y-auto p-4" tabindex="-1" data-popup="popupAutocomplete">

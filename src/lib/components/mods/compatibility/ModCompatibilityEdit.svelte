@@ -5,7 +5,7 @@
   import type { CompatibilityInfo } from '$lib/generated';
   import CompatibilityEdit from '$lib/components/mods/compatibility/CompatibilityEdit.svelte';
   import { getTranslate } from '@tolgee/svelte';
-  import { Accordion, AccordionItem } from '@skeletonlabs/skeleton';
+  import { Accordion } from '@skeletonlabs/skeleton-svelte';
 
   const prefilledCompatibilityInfo = {
     EA: {
@@ -32,7 +32,7 @@
 </script>
 
 <Accordion>
-  <AccordionItem>
+  <Accordion.Item>
     {#snippet summary()}
       <span class="material-icons text-sm">rocket_launch</span>
       {$t('early-access')} - {$t('compatibility')}
@@ -40,8 +40,8 @@
     {#snippet content()}
       <CompatibilityEdit bind:compatibility={compatibilityInfo.EA} />
     {/snippet}
-  </AccordionItem>
-  <AccordionItem>
+  </Accordion.Item>
+  <Accordion.Item>
     {#snippet summary()}
       <span class="material-icons text-sm">science</span>
       {$t('experimental')} - {$t('compatibility')}
@@ -49,5 +49,5 @@
     {#snippet content()}
       <CompatibilityEdit bind:compatibility={compatibilityInfo.EXP} />
     {/snippet}
-  </AccordionItem>
+  </Accordion.Item>
 </Accordion>

@@ -7,7 +7,7 @@
     UpdateSatisfactoryVersionDocument,
     type GetSatisfactoryVersionsQuery
   } from '$lib/generated';
-  import { Accordion, AccordionItem, getToastStore } from '@skeletonlabs/skeleton';
+  import { Accordion } from '@skeletonlabs/skeleton-svelte';
 
   type SatisfactoryVersion = GetSatisfactoryVersionsQuery['getSatisfactoryVersions'][number];
 
@@ -22,8 +22,6 @@
   });
 
   let satisfactoryVersions = $derived($satisfactoryVersionsQuery.data?.getSatisfactoryVersions || []);
-
-  const toastStore = getToastStore();
 
   function newSatisfactoryVersion() {
     if (!satisfactoryVersions.find((satisfactoryVersion) => satisfactoryVersion.id < 0)) {
@@ -72,7 +70,7 @@
       if (!success) {
         toastStore.trigger({
           message: `Failed to create Satisfactory version '${satisfactoryVersion.version}'!`,
-          background: 'variant-filled-error',
+          background: 'preset-filled-error-500',
           timeout: 2000
         });
         return;
@@ -98,7 +96,7 @@
       if (!success) {
         toastStore.trigger({
           message: `Failed to update Satisfactory version '${satisfactoryVersion.version}'!`,
-          background: 'variant-filled-error',
+          background: 'preset-filled-error-500',
           timeout: 2000
         });
         return;
@@ -107,7 +105,7 @@
 
     toastStore.trigger({
       message: `Satisfactory version '${satisfactoryVersion.version}' saved!`,
-      background: 'variant-filled-success',
+      background: 'preset-filled-success-500',
       timeout: 2000
     });
   }
@@ -130,7 +128,7 @@
       if (!success) {
         toastStore.trigger({
           message: `Failed to remove Satisfactory version '${satisfactoryVersion.version}'!`,
-          background: 'variant-filled-error',
+          background: 'preset-filled-error-500',
           timeout: 2000
         });
         return;
@@ -139,7 +137,7 @@
 
     toastStore.trigger({
       message: `Satisfactory version '${satisfactoryVersion.version}' removed!`,
-      background: 'variant-filled-success',
+      background: 'preset-filled-success-500',
       timeout: 2000
     });
   }
@@ -160,7 +158,7 @@
   {:else}
     <Accordion>
       {#each satisfactoryVersions as satisfactoryVersion}
-        <AccordionItem>
+        <Accordion.Item>
           {#snippet summary()}
             {satisfactoryVersion.version}
           {/snippet}
@@ -183,16 +181,18 @@
                 onchange={() => satisfactoryVersionChange(satisfactoryVersion)} />
             </div>
 
-            <button class="variant-ghost-error btn" onclick={(e) => onDeleteClick(e, satisfactoryVersion)}>
+            <button
+              class="preset-tonal-error border-error-500 btn border"
+              onclick={(e) => onDeleteClick(e, satisfactoryVersion)}>
               <span>Delete</span>
             </button>
           {/snippet}
-        </AccordionItem>
+        </Accordion.Item>
       {/each}
     </Accordion>
 
     <section class="p-4">
-      <button class="variant-ghost-primary btn" onclick={newSatisfactoryVersion}>
+      <button class="preset-tonal-primary border-primary-500 btn border" onclick={newSatisfactoryVersion}>
         <span>Add new Satisfactory version</span>
         <span class="material-icons">add</span>
       </button>
@@ -201,7 +201,7 @@
 </div>
 
 <style lang="postcss">
-  @reference "../../../app.pcss";
+  @reference "../../../app.css";
 
   h1 {
     @apply my-4 text-4xl font-bold;

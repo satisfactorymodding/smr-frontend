@@ -13,7 +13,7 @@
   import VersionDependenciesGrid from '$lib/components/versions/VersionDependenciesGrid.svelte';
   import { getContextClient } from '@urql/svelte';
   import type { PageData } from './$types';
-  import { getModalStore, getToastStore, type ModalSettings, popup } from '@skeletonlabs/skeleton';
+  import { type ModalSettings } from '@skeletonlabs/skeleton-svelte';
   import Page404 from '$lib/components/general/Page404.svelte';
   import { getTranslate } from '@tolgee/svelte';
   import VirustotalResults from '$lib/components/versions/VirustotalResults.svelte';
@@ -30,8 +30,6 @@
 
   const client = getContextClient();
 
-  const toastStore = getToastStore();
-
   let canUserEdit = $derived(
     $user?.roles?.deleteContent ||
       $version?.data?.getVersion.mod?.authors?.findIndex((author) => author.user_id == $user?.id) >= 0
@@ -46,13 +44,13 @@
           console.error(value.error.message);
           toastStore.trigger({
             message: 'Error deleting version: ' + value.error.message,
-            background: 'variant-filled-error',
+            background: 'preset-filled-error-500',
             autohide: false
           });
         } else {
           toastStore.trigger({
             message: `Version deleted`,
-            background: 'variant-filled-success',
+            background: 'preset-filled-success-500',
             timeout: 5000
           });
           goto(base + '/mod/' + modId);
@@ -70,8 +68,6 @@
       }
     }
   };
-
-  const modalStore = getModalStore();
 </script>
 
 <svelte:head>
@@ -87,7 +83,7 @@
 {:else if $version.error}
   <p>Oh no... {$version.error.message}</p>
 {:else if $version.data.getVersion}
-  <div class="grid gap-6 xlx:grid-flow-row">
+  <div class="xlx:grid-flow-row grid gap-6">
     <div class="flex h-auto flex-wrap items-center justify-between">
       <h1 class="text-4xl font-bold">
         {$version.data.getVersion.mod.name}
@@ -97,18 +93,20 @@
       <div class="grid grid-flow-col gap-4">
         {#if canUserEdit}
           <button
-            class="variant-ghost-primary btn"
+            class="preset-tonal-primary border-primary-500 btn border"
             onclick={() => goto(base + '/mod/' + modId + '/version/' + versionId + '/edit')}>
             <span class="material-icons pr-2">edit_document</span>
             Edit
           </button>
-          <button class="variant-ghost-primary btn" onclick={() => modalStore.trigger(deleteModal)}>
+          <button
+            class="preset-tonal-primary border-primary-500 btn border"
+            onclick={() => modalStore.trigger(deleteModal)}>
             <span class="material-icons pr-2">delete</span>
             Delete</button>
         {/if}
         {#if $version.data.getVersion.targets.length != 0}
           <button
-            class="variant-ghost-primary btn"
+            class="preset-tonal-primary border-primary-500 btn border"
             title="Download a specific release target of this mod"
             use:popup={{
               event: 'focus-click',
@@ -143,20 +141,22 @@
             </nav>
           </div>
         {:else}
-          <a class="variant-ghost-primary btn" href={base + '/mod/' + modId + '/version/' + versionId}>View</a>
           <a
-            class="variant-ghost-primary btn"
+            class="preset-tonal-primary border-primary-500 btn border"
+            href={base + '/mod/' + modId + '/version/' + versionId}>View</a>
+          <a
+            class="preset-tonal-primary border-primary-500 btn border"
             href={API_REST + '/mod/' + modId + '/versions/' + versionId + '/download'}>Download</a>
         {/if}
         <button
-          class="variant-ghost-primary btn"
+          class="preset-tonal-primary border-primary-500 btn border"
           title="Install via Satisfactory Mod Manager"
           onclick={() => installMod($version.data.getVersion.mod.mod_reference)}>
           <span class="material-icons">download</span>
           <span>Install</span>
         </button>
         <a
-          class="variant-ghost-primary btn"
+          class="preset-tonal-primary border-primary-500 btn border"
           href={base + '/mod/' + modId}
           title="View the description page for this mod">
           <span class="material-icons">extension</span>

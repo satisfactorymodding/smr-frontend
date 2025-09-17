@@ -32,7 +32,7 @@
   <div class="striped p-1 text-black">
     <span class="material-icons align-middle text-2xl">{iconNames[importance]}</span>
     <div
-      class="text-l announcement-markdown inline-block max-w-full break-words align-middle"
+      class="text-l announcement-markdown inline-block max-w-full align-middle break-words"
       class:font-mono={isMonospace}
       class:whitespace-pre={isMonospace}>
       <b>{importance}: </b>

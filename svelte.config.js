@@ -1,4 +1,4 @@
-import sveltePreprocess from 'svelte-preprocess';
+import { sveltePreprocess } from 'svelte-preprocess';
 import adapterBun from 'svelte-adapter-bun';
 import adapterStatic from '@sveltejs/adapter-static';
 
@@ -11,7 +11,6 @@ const config = {
   // Consult https://github.com/sveltejs/svelte-preprocess
   // for more information about preprocessors
   preprocess: sveltePreprocess({
-    postcss: true,
     sourceMap: true
   }),
 

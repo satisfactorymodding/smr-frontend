@@ -14,10 +14,11 @@
   import CompatibilityGrid from '$lib/components/mods/compatibility/CompatibilityGrid.svelte';
   import { getContextClient } from '@urql/svelte';
   import type { PageData } from './$types';
-  import { getModalStore, getToastStore, type ModalSettings } from '@skeletonlabs/skeleton';
+  import { type ModalSettings } from '@skeletonlabs/skeleton-svelte';
   import EditCompatibilityModal from '$lib/modals/EditCompatibilityModal.svelte';
   import Page404 from '$lib/components/general/Page404.svelte';
   import { getTranslate } from '@tolgee/svelte';
+  import { toaster } from '$lib/utils/toaster-svelte';
 
   interface Props {
     data: PageData;
@@ -33,8 +34,6 @@
 
   let versionsTab = $state(false);
 
-  const toastStore = getToastStore();
-
   let canUserEdit = $derived(
     $user?.roles?.deleteContent || $mod?.data?.mod?.authors?.findIndex((author) => author.user_id == $user?.id) >= 0
   );
@@ -47,16 +46,14 @@
       .then((value) => {
         if (value.error) {
           console.error(value.error.message);
-          toastStore.trigger({
-            message: 'Error deleting mod: ' + value.error.message,
-            background: 'variant-filled-error',
-            autohide: false
+          toaster.error({
+            title: 'Error deleting mod: ' + value.error.message,
+            duration: 0
           });
         } else {
-          toastStore.trigger({
-            message: $t('mod.toast.mod-deleted'),
-            background: 'variant-filled-success',
-            timeout: 5000
+          toaster.success({
+            title: $t('mod.toast.mod-deleted'),
+            duration: 5000
           });
           goto(base + '/mods');
         }
@@ -83,8 +80,6 @@
       }
     }
   } satisfies ModalSettings);
-
-  const modalStore = getModalStore();
 </script>
 
 <svelte:head>
@@ -104,28 +99,36 @@
 {:else if $mod.error}
   <p>Oh no... {$mod.error.message}</p>
 {:else if $mod.data.mod}
-  <div class="grid gap-6 xlx:grid-flow-row">
+  <div class="xlx:grid-flow-row grid gap-6">
     <div class="flex h-auto flex-wrap items-center justify-between">
       <h1 class="text-4xl font-bold">{$mod.data.mod.name}</h1>
       <div>
         {#if canUserEdit}
-          <button class="variant-ghost-primary btn" onclick={() => goto(base + '/mod/' + modId + '/edit')}>
+          <button
+            class="preset-tonal-primary border-primary-500 btn border"
+            onclick={() => goto(base + '/mod/' + modId + '/edit')}>
             <span class="material-icons pr-2">edit</span>
             {$t('mod.edit')}</button>
-          <button class="variant-ghost-primary btn" onclick={() => modalStore.trigger(deleteModal)}>
+          <button
+            class="preset-tonal-primary border-primary-500 btn border"
+            onclick={() => modalStore.trigger(deleteModal)}>
             <span class="material-icons pr-2">delete_forever</span>
             {$t('mod.delete')}</button>
-          <button class="variant-ghost-primary btn" onclick={() => goto(base + '/mod/' + modId + '/new-version')}>
+          <button
+            class="preset-tonal-primary border-primary-500 btn border"
+            onclick={() => goto(base + '/mod/' + modId + '/new-version')}>
             <span class="material-icons pr-2">upload_file</span>
             {$t('mod.new-version')}</button>
         {/if}
         {#if canUserEditCompatibility}
-          <button class="variant-ghost-primary btn" onclick={() => modalStore.trigger(editCompatibilityModal)}>
+          <button
+            class="preset-tonal-primary border-primary-500 btn border"
+            onclick={() => modalStore.trigger(editCompatibilityModal)}>
             <span class="material-icons">rocket_launch</span>
             <span class="material-icons pr-2">science</span>
             {$t('mod.edit-compatibility')}</button>
         {/if}
-        <button class="variant-ghost-primary btn" onclick={() => (versionsTab = !versionsTab)}>
+        <button class="preset-tonal-primary border-primary-500 btn border" onclick={() => (versionsTab = !versionsTab)}>
           {#if !versionsTab}
             <span class="material-icons pr-2" title="Browse all uploaded versions of this mod">view_list</span>
             {$t('mod.view-versions')}

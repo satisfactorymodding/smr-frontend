@@ -3,7 +3,7 @@
 
   const bubble = createBubbler();
   import { type Tag } from '$lib/generated';
-  import { popup, type PopupSettings } from '@skeletonlabs/skeleton';
+  import { type PopupSettings } from '@skeletonlabs/skeleton-svelte';
   interface Props {
     tag: Tag;
     asButton?: boolean;
@@ -21,12 +21,12 @@
 </script>
 
 <button
-  class={asButton ? 'chip hover:variant-filled-surface [&:not(:hover)]:variant-soft' : ''}
+  class={asButton ? 'chip hover:preset-filled-surface-500 [&:not(:hover)]:preset-tonal' : ''}
   class:selected
   use:popup={popupHover}
   onclick={bubble('click')}>
   <div
-    class="lowercase text-neutral-300 [&>*]:pointer-events-none"
+    class="text-neutral-300 lowercase [&>*]:pointer-events-none"
     title={popupTriggerEvent === 'click' ? 'Click for tag information' : ''}>
     <span class="text-orange-500">#</span>{tag.name}
   </div>
@@ -35,14 +35,14 @@
 <!-- Must use high z-index to ensure it draws on top of things like striped compatibility overlays in mod cards -->
 <!-- For some reason this still isn't able to draw over the ModGrid paginator-->
 <!-- https://floating-ui.com/docs/misc#z-index-stacking -->
-<div class="card variant-filled-surface p-4" data-popup={`popupHoverFor${tag.id}`} style="z-index: 1000">
+<div class="card preset-filled-surface-500 p-4" data-popup={`popupHoverFor${tag.id}`} style="z-index: 1000">
   <p>{tag.description}</p>
 </div>
 
 <style lang="postcss">
-  @reference "../../../app.pcss";
+  @reference "../../../app.css";
 
   .selected {
-    @apply variant-ghost-primary hover:variant-ringed-primary;
+    @apply preset-tonal-primary border-primary-500 hover:preset-outlined-primary-500 border;
   }
 </style>

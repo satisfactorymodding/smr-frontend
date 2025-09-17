@@ -12,13 +12,10 @@
   import { user, userToken } from '$lib/stores/user';
   import cookie from 'js-cookie';
   import { getTranslate } from '@tolgee/svelte';
-  import { getModalStore, getToastStore, type ModalSettings } from '@skeletonlabs/skeleton';
-  import LoginModal from '$lib/modals/LoginModal.svelte';
-  import { derived, get, writable } from 'svelte/store';
+  import { writable } from 'svelte/store';
+  import { toaster } from '$lib/utils/toaster-svelte';
 
   const client = getContextClient();
-
-  const toastStore = getToastStore();
 
   export const { t } = getTranslate();
 
@@ -65,21 +62,19 @@
   };
 
   const signingIn = writable(false);
-  const loginModal = derived(
-    signingIn,
-    (val) =>
-      ({
-        type: 'component',
-        component: {
-          ref: LoginModal,
-          props: {
-            signingIn: val
-          }
-        }
-      }) satisfies ModalSettings
-  );
-
-  const modalStore = getModalStore();
+  // const loginModal = derived(
+  //   signingIn,
+  //   (val) =>
+  //     ({
+  //       type: 'component',
+  //       component: {
+  //         ref: LoginModal,
+  //         props: {
+  //           signingIn: val
+  //         }
+  //       }
+  //     })
+  // );
 
   if (browser) {
     const signInMethod = localStorage.getItem('sign.in.method');
@@ -95,7 +90,7 @@
 
     if (signInMethod && code && state) {
       signingIn.set(true);
-      modalStore.trigger(get(loginModal));
+      // modalStore.trigger(get(loginModal));
 
       client
         .mutation(signInMethods[signInMethod as 'github' | 'google' | 'facebook'], {
@@ -106,14 +101,13 @@
         .then((result) => {
           if (result.error) {
             console.error(result.error.message);
-            toastStore.trigger({
-              message: 'Error logging in: ' + result.error.message,
-              background: 'variant-filled-error',
-              autohide: false
+            toaster.error({
+              title: 'Error logging in: ' + result.error.message,
+              duration: 0
             });
           } else {
             $userToken = result.data.session.token;
-            modalStore.close();
+            // modalStore.close();
           }
         })
         .catch()

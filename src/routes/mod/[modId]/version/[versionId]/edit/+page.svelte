@@ -7,7 +7,7 @@
   import { base } from '$app/paths';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
   import type { PageData } from './$types';
-  import { getModalStore, getToastStore, type ModalSettings } from '@skeletonlabs/skeleton';
+  import { type ModalSettings } from '@skeletonlabs/skeleton-svelte';
 
   interface Props {
     data: PageData;
@@ -18,8 +18,6 @@
   let { modId, versionId } = $derived(data);
 
   const client = getContextClient();
-
-  const toastStore = getToastStore();
 
   let version = $derived(
     queryStore({
@@ -41,13 +39,13 @@
           console.error(value.error.message);
           toastStore.trigger({
             message: 'Error editing version: ' + value.error.message,
-            background: 'variant-filled-error',
+            background: 'preset-filled-error-500',
             autohide: false
           });
         } else {
           toastStore.trigger({
             message: `Version updated`,
-            background: 'variant-filled-success',
+            background: 'preset-filled-success-500',
             timeout: 5000
           });
           return goto(base + '/mod/' + modId + '/version/' + versionId);
@@ -79,8 +77,6 @@
       }
     }
   };
-
-  const modalStore = getModalStore();
 </script>
 
 <svelte:head>
@@ -94,7 +90,7 @@
 <div class="flex h-auto flex-wrap items-center justify-between">
   <h1 class="my-4 text-4xl font-bold">Edit Version</h1>
   <div>
-    <button class="variant-ghost-primary btn" onclick={() => modalStore.trigger(backModal)}>
+    <button class="preset-tonal-primary border-primary-500 btn border" onclick={() => modalStore.trigger(backModal)}>
       <span class="material-icons pr-2">arrow_back</span>
       Back to Versions</button>
   </div>
