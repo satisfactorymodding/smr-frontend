@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { page } from '$app/stores';
+  import { page } from '$app/state';
   import { base } from '$app/paths';
 
-  const baseUrl = $page.url.origin;
-  const route = $page.url.pathname;
+  const baseUrl = page.url.origin;
+  const route = page.url.pathname;
 
   interface Props {
     description?: string | undefined;
