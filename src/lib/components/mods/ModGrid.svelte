@@ -6,7 +6,7 @@
   import ModCard from './ModCard.svelte';
   import { base } from '$app/paths';
   import { goto } from '$app/navigation';
-  import { page as storePage } from '$app/stores';
+  import { page as storePage } from '$app/state';
   import { user } from '$lib/stores/user';
   import FicsitCard from '$lib/components/general/FicsitCard.svelte';
   import { browser } from '$app/environment';
@@ -24,13 +24,13 @@
 
   const client = getContextClient();
 
-  let search = $state((browser && $storePage.url.searchParams.get('q')) || '');
+  let search = $state((browser && storePage.url.searchParams.get('q')) || '');
 
   let order: Order = $state(Order.Desc);
   let orderBy: ModFields = $state(ModFields.LastVersionDate);
 
   let perPage = $state(32);
-  let page = $state(parseInt((browser && $storePage.url.searchParams.get('p')) || '0', 10) || 0);
+  let page = $state(parseInt((browser && storePage.url.searchParams.get('p')) || '0', 10) || 0);
 
   let selectedTags: string[] = $state([]);
 

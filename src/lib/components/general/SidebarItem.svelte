@@ -1,6 +1,6 @@
 <script lang="ts">
   import { preloadData } from '$app/navigation';
-  import { page } from '$app/stores';
+  import { page } from '$app/state';
   import type { SidebarItemData } from '$lib/utils/sidebarItemData';
   import { getDrawerStore } from '@skeletonlabs/skeleton';
 
@@ -10,7 +10,7 @@
 
   let { item }: Props = $props();
 
-  let currentPath = $derived($page.url.pathname);
+  let currentPath = $derived(page.url.pathname);
 
   const drawerStore = getDrawerStore();
 </script>
