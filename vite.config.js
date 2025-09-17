@@ -45,19 +45,7 @@ const config = {
             return 'vendor';
           }
         }
-      },
-      plugins: [
-        ...(mode !== 'development'
-          ? [
-              terser({
-                format: {
-                  comments: false
-                },
-                compress: false
-              })
-            ]
-          : [])
-      ]
+      }
     }
   }
 };
