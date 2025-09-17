@@ -130,6 +130,8 @@
 {/if}
 
 <style lang="postcss">
+  @reference "../../../app.pcss";
+
   h1 {
     @apply my-4 text-4xl font-bold;
   }

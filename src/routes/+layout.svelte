@@ -14,7 +14,7 @@
   import { TolgeeProvider } from '@tolgee/svelte';
   import { initializeStores, Modal, storePopup, Drawer, Toast } from '@skeletonlabs/skeleton';
   import TopBar from '$lib/components/general/TopBar.svelte';
-  import './_global.postcss';
+  import '../app.pcss';
   import { computePosition, autoUpdate, offset, shift, flip, arrow } from '@floating-ui/dom';
 
   interface Props {

@@ -89,6 +89,8 @@
 </div>
 
 <style lang="postcss">
+  @reference "../../app.pcss";
+
   p {
     @apply my-5 text-base;
   }

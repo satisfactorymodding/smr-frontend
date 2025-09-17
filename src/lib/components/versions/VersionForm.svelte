@@ -166,6 +166,8 @@
 </form>
 
 <style lang="postcss">
+  @reference "../../../app.pcss";
+
   .split {
     grid-template-columns: 50% 50%;
 
