@@ -9,7 +9,7 @@
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
   import { getContextClient } from '@urql/svelte';
   import type { PageData } from './$types';
-  import { getModalStore, getToastStore, type ModalSettings } from '@skeletonlabs/skeleton';
+  import { type ModalSettings } from '@skeletonlabs/skeleton-svelte';
   import Page404 from '$lib/components/general/Page404.svelte';
 
   interface Props {
@@ -22,8 +22,6 @@
 
   const client = getContextClient();
 
-  const toastStore = getToastStore();
-
   let canUserEdit = $derived($user?.roles?.deleteContent || $user?.id === $guide?.data?.getGuide?.user?.id);
 
   const deleteGuideFn = () => {
@@ -35,13 +33,13 @@
           console.error(value.error.message);
           toastStore.trigger({
             message: 'Error deleting guide: ' + value.error.message,
-            background: 'variant-filled-error',
+            background: 'preset-filled-error-500',
             autohide: false
           });
         } else {
           toastStore.trigger({
             message: `Guide deleted`,
-            background: 'variant-filled-success',
+            background: 'preset-filled-success-500',
             timeout: 5000
           });
           goto(base + '/guides');
@@ -59,8 +57,6 @@
       }
     }
   };
-
-  const modalStore = getModalStore();
 </script>
 
 <svelte:head>
@@ -74,16 +70,20 @@
 {:else if $guide.error}
   <p>Oh no... {$guide.error.message}</p>
 {:else if $guide.data.getGuide}
-  <div class="grid gap-6 xlx:grid-flow-row">
+  <div class="xlx:grid-flow-row grid gap-6">
     <div class="flex h-auto flex-wrap items-center justify-between">
       <h1 class="text-4xl font-bold">{$guide.data.getGuide.name}</h1>
 
       <div>
         {#if canUserEdit}
-          <button class="variant-ghost-primary btn" onclick={() => goto(base + '/guide/' + guideId + '/edit')}>
+          <button
+            class="preset-tonal-primary border-primary-500 btn border"
+            onclick={() => goto(base + '/guide/' + guideId + '/edit')}>
             <span class="material-icons pr-2">edit</span>
             Edit</button>
-          <button class="variant-ghost-primary btn" onclick={() => modalStore.trigger(deleteModal)}>
+          <button
+            class="preset-tonal-primary border-primary-500 btn border"
+            onclick={() => modalStore.trigger(deleteModal)}>
             <span class="material-icons pr-2">delete</span>
             Delete</button>
         {/if}

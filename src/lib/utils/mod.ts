@@ -22,6 +22,7 @@ export const modStatus = (latestVersions?: {
           }
           result = 'own-risk';
         }
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (e) {
         // Ignored
       }

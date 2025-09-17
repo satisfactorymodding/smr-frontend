@@ -2,7 +2,7 @@
   import { getContextClient, queryStore } from '@urql/svelte';
   import { CreateTagDocument, DeleteTagDocument, GetTagsDocument, UpdateTagDocument } from '$lib/generated';
   import type { Tag } from '$lib/generated';
-  import { Accordion, AccordionItem, getToastStore } from '@skeletonlabs/skeleton';
+  import { Accordion } from '@skeletonlabs/skeleton-svelte';
 
   const client = getContextClient();
 
@@ -21,8 +21,6 @@
   });
 
   $: tags = $tagsQuery.data?.getTags || [];
-
-  const toastStore = getToastStore();
 
   function newTag() {
     if (!tags.find((tag) => tag.name == defaultNewTagName)) {
@@ -64,7 +62,7 @@
       if (!success) {
         toastStore.trigger({
           message: `Failed to create Tag '${tag.name}'!`,
-          background: 'variant-filled-error',
+          background: 'preset-filled-error-500',
           timeout: 2000
         });
         return;
@@ -84,7 +82,7 @@
       if (!success) {
         toastStore.trigger({
           message: `Failed to update Tag '${tag.name}'!`,
-          background: 'variant-filled-error',
+          background: 'preset-filled-error-500',
           timeout: 2000
         });
         return;
@@ -93,7 +91,7 @@
 
     toastStore.trigger({
       message: `Tag '${tag.name}' saved!`,
-      background: 'variant-filled-success',
+      background: 'preset-filled-success-500',
       timeout: 2000
     });
   }
@@ -111,7 +109,7 @@
       if (!success) {
         toastStore.trigger({
           message: `Failed to remove Tag '${tag.name}'!`,
-          background: 'variant-filled-error',
+          background: 'preset-filled-error-500',
           timeout: 2000
         });
         return;
@@ -122,7 +120,7 @@
 
     toastStore.trigger({
       message: `Tag '${tag.name}' removed!`,
-      background: 'variant-filled-success',
+      background: 'preset-filled-success-500',
       timeout: 2000
     });
   }
@@ -143,7 +141,7 @@
   {:else}
     <Accordion>
       {#each tags as tag}
-        <AccordionItem bind:this={panels[tag.id]}>
+        <Accordion.Item bind:this={panels[tag.id]}>
           <svelte:fragment slot="summary">{tag.name}</svelte:fragment>
           <svelte:fragment slot="content">
             <div>
@@ -165,16 +163,16 @@
             </div>
             <span>Human-Readable name and description of the tag that is shown in UI</span>
 
-            <button class="variant-ghost-error btn" on:click={(e) => onDeleteClick(e, tag)}>
+            <button class="preset-tonal-error border-error-500 btn border" on:click={(e) => onDeleteClick(e, tag)}>
               <span>Delete</span>
             </button>
           </svelte:fragment>
-        </AccordionItem>
+        </Accordion.Item>
       {/each}
     </Accordion>
 
     <section class="p-4">
-      <button class="variant-ghost-primary btn" on:click={newTag}>
+      <button class="preset-tonal-primary border-primary-500 btn border" on:click={newTag}>
         <span>Add new tag</span>
         <span class="material-icons">add</span>
       </button>
@@ -183,7 +181,7 @@
 </div>
 
 <style lang="postcss">
-  @reference "../../../app.pcss";
+  @reference "../../../app.css";
 
   h1 {
     @apply my-4 text-4xl font-bold;

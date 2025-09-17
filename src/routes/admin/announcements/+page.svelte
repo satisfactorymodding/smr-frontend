@@ -10,7 +10,7 @@
     UpdateAnnouncementDocument,
     DeleteAnnouncementDocument
   } from '$lib/generated';
-  import { Accordion, AccordionItem, getToastStore } from '@skeletonlabs/skeleton';
+  import { Accordion } from '@skeletonlabs/skeleton-svelte';
   const client = getContextClient();
 
   let announcements: Announcement[] = $state([]);
@@ -26,8 +26,6 @@
   run(() => {
     announcements = $annQuery.data?.getAnnouncements || [];
   });
-
-  const toastStore = getToastStore();
 
   function newAnnouncement() {
     if (!announcements.find((announcement) => announcement.message == defaultNewAnnouncementMessage)) {
@@ -73,7 +71,7 @@
       if (!success) {
         toastStore.trigger({
           message: `Failed to create Announcement '${announcement.message}'!`,
-          background: 'variant-filled-error',
+          background: 'preset-filled-error-500',
           timeout: 2000
         });
         return;
@@ -98,7 +96,7 @@
       if (!success) {
         toastStore.trigger({
           message: `Failed to update Announcement '${announcement.message}'!`,
-          background: 'variant-filled-error',
+          background: 'preset-filled-error-500',
           timeout: 2000
         });
         return;
@@ -107,7 +105,7 @@
 
     toastStore.trigger({
       message: `Announcement '${announcement.message}' saved!`,
-      background: 'variant-filled-success',
+      background: 'preset-filled-success-500',
       timeout: 2000
     });
   }
@@ -124,7 +122,7 @@
       if (!success) {
         toastStore.trigger({
           message: `Failed to remove Announcement '${announcement.message}'!`,
-          background: 'variant-filled-error',
+          background: 'preset-filled-error-500',
           timeout: 2000
         });
         return;
@@ -135,7 +133,7 @@
 
     toastStore.trigger({
       message: `Tag '${announcement.message}' removed!`,
-      background: 'variant-filled-success',
+      background: 'preset-filled-success-500',
       timeout: 2000
     });
   }
@@ -156,7 +154,7 @@
   {:else}
     <Accordion>
       {#each announcements as announcement}
-        <AccordionItem>
+        <Accordion.Item>
           {#snippet summary()}
             ({announcement.importance}) {(() => {
               const trimTo = 144;
@@ -183,16 +181,18 @@
                 onchange={() => announcementChange(announcement)} />
             </div>
 
-            <button class="variant-ghost-error btn" onclick={(e) => onDeleteClick(e, announcement)}>
+            <button
+              class="preset-tonal-error border-error-500 btn border"
+              onclick={(e) => onDeleteClick(e, announcement)}>
               <span>Delete</span>
             </button>
           {/snippet}
-        </AccordionItem>
+        </Accordion.Item>
       {/each}
     </Accordion>
 
     <section class="p-4">
-      <button class="variant-ghost-primary btn" onclick={newAnnouncement}>
+      <button class="preset-tonal-primary border-primary-500 btn border" onclick={newAnnouncement}>
         <span>Add new announcement</span>
         <span class="material-icons">add</span>
       </button>
@@ -201,7 +201,7 @@
 </div>
 
 <style lang="postcss">
-  @reference "../../../app.pcss";
+  @reference "../../../app.css";
 
   h1 {
     @apply my-4 text-4xl font-bold;

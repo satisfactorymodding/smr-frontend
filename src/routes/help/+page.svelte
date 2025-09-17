@@ -401,7 +401,7 @@ This line is way far down
   <div class="card p-4">
     <section class="p-4">
       <button
-        class="variant-ghost-primary btn btn-sm text-2xl"
+        class="preset-tonal-primary border-primary-500 btn btn-sm border text-2xl"
         onclick={() =>
           (window.location.href = 'https://docs.ficsit.app/satisfactory-modding/latest/ForUsers/Welcome.html')}>
         <span>Visit the Welcome Guide</span>
@@ -414,7 +414,7 @@ This line is way far down
   <div class="grid grid-flow-row grid-cols-1 grid-rows-2 gap-4 md:grid-cols-2 md:grid-rows-1">
     <div class="card p-4">
       <section class="p-4">
-        <h3 class="my-4 text-2xl font-bold">&lt;mod&gt;.uplugin format</h3>
+        <h3 class="my-4 text-2xl font-bold"><mod>.uplugin format</mod></h3>
         <div class="markdown-content">
           {#await markdown(exampleUPluginJson) then exampleUPluginJsonRendered}
             <!-- eslint-disable -->
@@ -426,7 +426,7 @@ This line is way far down
 
     <div class="card p-4">
       <section class="p-4">
-        <h3 class="my-4 text-2xl font-bold">Validate your &lt;mod&gt;.uplugin</h3>
+        <h3 class="my-4 text-2xl font-bold">Validate your <mod>.uplugin</mod></h3>
         <textarea placeholder="enter your <mod>.uplugin" rows="23" class="markdownEditor" bind:value={uPluginJsonInput}
         ></textarea>
         {#if uPluginJsonInput !== ''}
@@ -434,7 +434,7 @@ This line is way far down
             <p>Loading...</p>
           {:then errors}
             {#if errors.length === 0}
-              <h3 class="my-4 text-2xl font-bold">&lt;mod&gt;.uplugin valid!</h3>
+              <h3 class="my-4 text-2xl font-bold"><mod>.uplugin valid!</mod></h3>
             {:else}
               <ul>
                 {#each errors as err}

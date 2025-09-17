@@ -14,7 +14,7 @@
     onSubmit: (data: GuideData) => void;
     initialValues?: GuideData | undefined;
     submitIcon: string;
-    submitText?: any;
+    submitText?: string;
   }
 
   let {
@@ -85,7 +85,7 @@
     </div>
 
     <div>
-      <button class="variant-ghost-primary btn" type="submit">
+      <button class="preset-tonal-primary border-primary-500 btn border" type="submit">
         <span class="material-icons pr-2">{submitIcon}</span>
         {submitText}</button>
     </div>

@@ -44,7 +44,7 @@
                   {#if $easterEgg || $doggoNeedsPats}{' - Doggo'}{/if}
                 </div>
                 <div class="flex h-1/3 justify-center 2xl:h-1/2">
-                  <div class="variant-ringed-primary variant-glass-surface btn btn-lg m-6 text-3xl">
+                  <div class="preset-outlined-primary-500 preset-tonal-surface btn btn-lg m-6 text-3xl">
                     <span
                       ><T
                         keyName="home.download-satisfactory-mod-manager"
@@ -105,7 +105,7 @@
           <div class="modding-banner banner"></div>
           <div class="absolute top-0 flex h-full w-full flex-col items-center justify-center">
             <img class="centered-logo" src={assets + '/images/sf_modding_logo.webp'} alt="Satisfactory Modding Logo" />
-            <div class="variant-ringed-secondary variant-glass-secondary btn btn-md m-6">
+            <div class="preset-outlined-secondary-500 preset-tonal-secondary btn btn-md m-6">
               <span><T keyName="home.banner.join-discord" defaultValue="Join the Modding Discord" /></span>
               <span class="material-icons">people</span>
             </div>
@@ -125,7 +125,7 @@
               class="centered-logo"
               src={assets + '/images/satisfactory_logo_full_color_small.webp'}
               alt="Satisfactory Logo" />
-            <div class="variant-ringed-surface variant-glass-surface btn btn-md m-6">
+            <div class="preset-outlined-surface-500 preset-tonal-surface btn btn-md m-6">
               <span
                 ><T keyName="home.banner.open-official-website" defaultValue="Visit the Satisfactory Website" /></span>
               <span class="material-icons">launch</span>

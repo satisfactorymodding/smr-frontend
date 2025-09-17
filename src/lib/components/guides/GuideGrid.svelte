@@ -6,7 +6,7 @@
   import { user } from '$lib/stores/user';
   import FicsitCard from '$lib/components/general/FicsitCard.svelte';
   import { getTranslate } from '@tolgee/svelte';
-  import { type PaginationSettings, Paginator } from '@skeletonlabs/skeleton';
+  import { type PaginationSettings, Pagination } from '@skeletonlabs/skeleton-svelte';
 
   interface Props {
     colCount?: 4 | 5;
@@ -51,17 +51,17 @@
   class:justify-between={newGuide && $user !== null}
   class:justify-end={!newGuide || $user == null}>
   {#if newGuide && $user !== null}
-    <a class="variant-ghost-primary btn" href="{base}/new-guide">{$t('guides.new')}</a>
+    <a class="preset-tonal-primary border-primary-500 btn border" href="{base}/new-guide">{$t('guides.new')}</a>
   {/if}
 
   <div>
-    <Paginator
+    <Pagination
       bind:settings={paginationSettings}
       showFirstLastButtons={true}
       showPreviousNextButtons={true}
       on:page={(p) => (page = p.detail)}
       on:amount={(p) => (perPage = p.detail)}
-      controlVariant="variant-filled-surface" />
+      controlVariant="preset-filled-surface-500" />
   </div>
 </div>
 
@@ -81,14 +81,14 @@
   </div>
 {/if}
 
-<div class="ml-auto mt-5 flex justify-end">
+<div class="mt-5 ml-auto flex justify-end">
   <div>
-    <Paginator
+    <Pagination
       bind:settings={paginationSettings}
       showFirstLastButtons={true}
       showPreviousNextButtons={true}
       on:page={(p) => (page = p.detail)}
       on:amount={(p) => (perPage = p.detail)}
-      controlVariant="variant-filled-surface" />
+      controlVariant="preset-filled-surface-500" />
   </div>
 </div>

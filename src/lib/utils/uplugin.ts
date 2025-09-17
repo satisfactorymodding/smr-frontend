@@ -19,6 +19,7 @@ const resolveValue = (object: unknown, path: string) => {
       key = parser.exec(path);
     }
     return value;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (e) {
     // Ignore exception
   }
@@ -56,6 +57,7 @@ export const validateUPluginJson = async (input: string): Promise<string[]> => {
         return message;
       })
       .filter((v) => !!v);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (e) {
     return ['Invalid JSON'];
   }

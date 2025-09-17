@@ -6,12 +6,9 @@
   import type { ModData } from '$lib/models/mods';
   import { base } from '$app/paths';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
-  import { getToastStore } from '@skeletonlabs/skeleton';
   import { getTranslate } from '@tolgee/svelte';
 
   export const { t } = getTranslate();
-
-  const toastStore = getToastStore();
 
   const client = getContextClient();
 
@@ -26,13 +23,13 @@
           console.error(value.error.message);
           toastStore.trigger({
             message: 'Error creating mod: ' + value.error.message,
-            background: 'variant-filled-error',
+            background: 'preset-filled-error-500',
             autohide: false
           });
         } else {
           toastStore.trigger({
             message: $t('new-mod.toast.creation-success'),
-            background: 'variant-filled-success',
+            background: 'preset-filled-success-500',
             timeout: 5000
           });
           goto(base + '/mod/' + value.data.createMod.id);

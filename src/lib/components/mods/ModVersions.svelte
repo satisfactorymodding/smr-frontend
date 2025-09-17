@@ -9,7 +9,6 @@
   import { installMod } from '$lib/stores/launcher';
   import { prettyDate, prettyNumber, prettyBytes, prettyTarget } from '$lib/utils/formatting';
   import { getTranslate } from '@tolgee/svelte';
-  import { popup } from '@skeletonlabs/skeleton';
 
   interface Props {
     modId: string;
@@ -51,7 +50,7 @@
     <section class="p-4">{$t('error.oh-no')} {$versions.error.message}</section>
   {:else}
     <div class="table-container">
-      <table class="table table-hover max-w-full">
+      <table class="table max-w-full">
         <thead>
           <tr>
             <th>{$t('version')}</th>
@@ -78,11 +77,12 @@
                   onkeypress={stopPropagation(() => {
                     /*a11y-click-events-have-key-events*/
                   })}>
-                  <a class="variant-ghost-primary btn btn-sm" href={base + '/mod/' + modId + '/version/' + version.id}
-                    >{$t('view')}</a>
+                  <a
+                    class="preset-tonal-primary border-primary-500 btn btn-sm border"
+                    href={base + '/mod/' + modId + '/version/' + version.id}>{$t('view')}</a>
                   {#if version.targets.length !== 0}
                     <button
-                      class="variant-ghost-primary btn btn-sm"
+                      class="preset-tonal-primary border-primary-500 btn btn-sm border"
                       style="padding: 0; min-width: 36px;"
                       use:popup={{
                         event: 'focus-click',
@@ -124,14 +124,14 @@
                     </div>
                   {:else}
                     <a
-                      class="variant-ghost-primary btn btn-sm"
+                      class="preset-tonal-primary border-primary-500 btn btn-sm border"
                       href={API_REST + '/mod/' + modId + '/versions/' + version.id + '/download'}>
                       {$t('download')}
                     </a>
                   {/if}
 
                   <button
-                    class="variant-ghost-primary btn btn-sm"
+                    class="preset-tonal-primary border-primary-500 btn btn-sm border"
                     title="Install via Satisfactory Mod Manager"
                     onclick={() => installMod($versions.data.getMod.mod_reference)}>
                     <span class="material-icons">download</span>

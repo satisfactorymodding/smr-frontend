@@ -57,7 +57,7 @@
   {/snippet}
   {#snippet actions()}
     {#if installable}
-      <button class="variant-soft-surface btn btn-sm" title="Install" onclick={() => installMod(mod.mod_reference)}>
+      <button class="preset-tonal-surface btn btn-sm" title="Install" onclick={() => installMod(mod.mod_reference)}>
         <span class="material-icons">download</span>
       </button>
     {/if}

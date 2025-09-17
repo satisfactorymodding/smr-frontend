@@ -75,7 +75,7 @@
 </div>
 
 <style lang="postcss">
-  @reference "../../../app.pcss";
+  @reference "../../../app.css";
 
   .version {
     @apply grid grid-flow-col gap-x-4 text-lg;

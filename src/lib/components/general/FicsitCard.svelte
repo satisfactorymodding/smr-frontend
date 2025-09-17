@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { run } from 'svelte/legacy';
-
   import { assets } from '$app/paths';
   import { goto, preloadData } from '$app/navigation';
   import { thumbHashToDataURL } from 'thumbhash';
@@ -8,7 +6,7 @@
 
   interface Props {
     name?: string;
-    logo?: any;
+    logo?: string;
     description?: string;
     link?: string;
     fake?: boolean;
@@ -77,16 +75,6 @@
 
   let imageLoaded = $state(false);
   let thumbnailLoaded = $state(false);
-
-  run(() => {
-    renderedLogo;
-    imageLoaded = false;
-  });
-
-  run(() => {
-    renderedThumbhash;
-    thumbnailLoaded = false;
-  });
 </script>
 
 <div
@@ -105,12 +93,12 @@
         href={link}
         onkeypress={() => goto(link)}
         tabindex="0"
-        class="relative block max-h-full min-h-full min-w-full max-w-full">
+        class="relative block max-h-full min-h-full max-w-full min-w-full">
         {#if fake}
-          <div class="logo max-h-full min-h-full min-w-full max-w-full bg-neutral-500"></div>
+          <div class="logo max-h-full min-h-full max-w-full min-w-full bg-neutral-500"></div>
         {:else}
           <img
-            class="logo absolute max-h-full min-h-full min-w-full max-w-full object-contain transition-opacity delay-100 duration-200 ease-linear"
+            class="logo absolute max-h-full min-h-full max-w-full min-w-full object-contain transition-opacity delay-100 duration-200 ease-linear"
             class:invisible={!imageLoaded}
             class:opacity-0={!imageLoaded}
             src={renderedLogo}
@@ -118,7 +106,7 @@
             onload={() => (imageLoaded = true)} />
           {#if !imageLoaded && thumbHashData}
             <img
-              class="logo absolute max-h-full min-h-full min-w-full max-w-full"
+              class="logo absolute max-h-full min-h-full max-w-full min-w-full"
               class:invisible={!thumbnailLoaded}
               src={thumbHashData}
               alt="{renderedName} Logo"
@@ -133,7 +121,7 @@
       <div class="flex flex-col px-3 py-2 pb-0">
         <div class="mb-1.5">
           <a href={link} class="text-white">
-            <span class="break-words text-xl">{renderedName}</span>
+            <span class="text-xl break-words">{renderedName}</span>
           </a>
 
           <h5 class="m-0 text-sm">
@@ -158,12 +146,12 @@
       </div>
 
       <div
-        class="absolute bottom-0 right-0 flex flex-row items-center gap-1 self-end px-2 py-2 text-lg"
+        class="absolute right-0 bottom-0 flex flex-row items-center gap-1 self-end px-2 py-2 text-lg"
         bind:this={actionButtons}>
         {#if !fake}
           <a
             href={link}
-            class="variant-soft-surface btn btn-sm"
+            class="preset-tonal-surface btn btn-sm"
             aria-label="View {renderedName}"
             title="View {renderedName}">
             <span class="material-icons">info</span>

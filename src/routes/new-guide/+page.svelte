@@ -6,9 +6,6 @@
   import type { GuideData } from '$lib/models/guides';
   import { base } from '$app/paths';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
-  import { getToastStore } from '@skeletonlabs/skeleton';
-
-  const toastStore = getToastStore();
 
   const client = getContextClient();
 
@@ -23,13 +20,13 @@
           console.error(value.error.message);
           toastStore.trigger({
             message: 'Error creating guide: ' + value.error.message,
-            background: 'variant-filled-error',
+            background: 'preset-filled-error-500',
             autohide: false
           });
         } else {
           toastStore.trigger({
             message: `Guide created`,
-            background: 'variant-filled-success',
+            background: 'preset-filled-success-500',
             timeout: 5000
           });
           goto(base + '/guide/' + value.data.createGuide.id);

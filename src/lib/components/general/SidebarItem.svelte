@@ -2,7 +2,6 @@
   import { preloadData } from '$app/navigation';
   import { page } from '$app/state';
   import type { SidebarItemData } from '$lib/utils/sidebarItemData';
-  import { getDrawerStore } from '@skeletonlabs/skeleton';
 
   interface Props {
     item: SidebarItemData;
@@ -12,16 +11,18 @@
 
   let currentPath = $derived(page.url.pathname);
 
-  const drawerStore = getDrawerStore();
+  const onCloseDrawer = () => {
+    // drawerStore.close()
+  };
 </script>
 
 <li>
   {#if !item.external}
     <a
       href={item.url}
-      class:bg-primary-active-token={currentPath === item.url}
+      class:preset-filled-primary-500={currentPath === item.url}
       onmouseover={() => preloadData(item.url)}
-      onclick={() => drawerStore.close()}
+      onclick={onCloseDrawer}
       onfocus={() => preloadData(item.url)}>
       <span class="material-icons">{item.icon}</span>
       <span class="flex-auto">{item.label}</span>

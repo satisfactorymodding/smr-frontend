@@ -11,7 +11,7 @@
   import FicsitCard from '$lib/components/general/FicsitCard.svelte';
   import { browser } from '$app/environment';
   import { getTranslate } from '@tolgee/svelte';
-  import { type PaginationSettings, Paginator } from '@skeletonlabs/skeleton';
+  import { type PaginationSettings, Pagination } from '@skeletonlabs/skeleton-svelte';
   import TagDisplay from '../utils/TagDisplay.svelte';
 
   interface Props {
@@ -56,7 +56,7 @@
 
   let searchField = $state(search);
   let searchDisabled = $derived(searchField.length < 3);
-  let searchButtonClass = $derived(searchDisabled ? 'variant-filled-surface' : 'variant-filled-primary');
+  let searchButtonClass = $derived(searchDisabled ? 'preset-filled-surface-500' : 'preset-filled-primary-500');
 
   let timer: number = $state();
   run(() => {
@@ -83,7 +83,9 @@
     if (browser) {
       const url = new URL(window.location.origin + window.location.pathname);
       url.searchParams.append('p', page.toString());
-      !searchDisabled && searchField !== '' && searchField !== null && url.searchParams.append('q', searchField);
+      if (!searchDisabled && searchField !== '' && searchField !== null) {
+        url.searchParams.append('q', searchField);
+      }
       goto(url.toString(), { keepFocus: true });
     }
   });
@@ -139,8 +141,8 @@
         <div>
           <button
             type="button"
-            class="text-md variant-filled-surface btn btn-sm p-2 pl-4 pr-4"
-            class:variant-ghost-primary={tagsOpen}
+            class="text-md preset-filled-surface-500 btn btn-sm p-2 pr-4 pl-4"
+            class:preset-tonal-primary={tagsOpen}
             title={$t('filter.expand-button-tooltip')}
             onclick={() => (tagsOpen = !tagsOpen)}>
             <span>{$t('filter.expand-button-text')}</span>
@@ -160,7 +162,7 @@
           </select>
         </div>
 
-        <div class="input-group input-group-divider w-fit grid-cols-[1fr_auto] rounded-container-token">
+        <div class="input-group input-group-divider rounded-container w-fit grid-cols-[1fr_auto]">
           <input
             bind:value={searchField}
             class="border-0 bg-transparent p-1.5 ring-0"
@@ -196,17 +198,17 @@
     class:justify-between={newMod && $user !== null}
     class:justify-end={!newMod || $user == null}>
     {#if newMod && $user !== null}
-      <a class="variant-ghost-primary btn self-end" href="{base}/new-mod">{$t('mods.new')}</a>
+      <a class="preset-tonal-primary border-primary-500 btn self-end border" href="{base}/new-mod">{$t('mods.new')}</a>
     {/if}
     {#if showPagination}
       <div class="self-end">
-        <Paginator
+        <Pagination
           bind:settings={paginationSettings}
           showFirstLastButtons={true}
           showPreviousNextButtons={true}
           on:page={(p) => (page = p.detail)}
           on:amount={(p) => (perPage = p.detail)}
-          controlVariant="variant-filled-surface" />
+          controlVariant="preset-filled-surface-500" />
       </div>
     {/if}
   </div>
@@ -233,15 +235,15 @@
 {/if}
 
 {#if showPagination}
-  <div class="ml-auto mt-5 flex justify-end">
+  <div class="mt-5 ml-auto flex justify-end">
     <div>
-      <Paginator
+      <Pagination
         bind:settings={paginationSettings}
         showFirstLastButtons={true}
         showPreviousNextButtons={true}
         on:page={(p) => (page = p.detail)}
         on:amount={(p) => (perPage = p.detail)}
-        controlVariant="variant-filled-surface" />
+        controlVariant="preset-filled-surface-500" />
     </div>
   </div>
 {/if}

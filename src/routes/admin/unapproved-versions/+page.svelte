@@ -5,7 +5,7 @@
   import { base } from '$app/paths';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
   import { prettyDate } from '$lib/utils/formatting';
-  import { type PaginationSettings, Paginator } from '@skeletonlabs/skeleton';
+  import { type PaginationSettings, Pagination } from '@skeletonlabs/skeleton-svelte';
 
   const client = getContextClient();
 
@@ -64,13 +64,13 @@
 {#if totalVersions}
   <div class="mb-5 ml-auto flex justify-end">
     <div>
-      <Paginator
+      <Pagination
         bind:settings={paginationSettings}
         showFirstLastButtons={true}
         showPreviousNextButtons={true}
         on:page={(p) => (page = p.detail)}
         on:amount={(p) => (perPage = p.detail)}
-        controlVariant="variant-filled-surface" />
+        controlVariant="preset-filled-surface-500" />
     </div>
   </div>
 {/if}
@@ -81,7 +81,7 @@
   {:else if $versions.error}
     <section class="p-4">Oh no... {$versions.error.message}</section>
   {:else}
-    <table class="table table-hover max-w-full">
+    <table class="table max-w-full">
       <thead>
         <tr>
           <th>Mod</th>
@@ -98,14 +98,20 @@
             <td>{prettyDate(version.created_at)}</td>
             <td class="!p-2.5">
               <div class="grid grid-flow-col gap-4">
-                <button class="variant-ghost-primary btn" onclick={() => approveVersion(version.id)}>Approve</button>
-                <button class="variant-ghost-primary btn" onclick={() => denyVersion(version.id)}>Deny</button>
+                <button
+                  class="preset-tonal-primary border-primary-500 btn border"
+                  onclick={() => approveVersion(version.id)}>Approve</button>
+                <button
+                  class="preset-tonal-primary border-primary-500 btn border"
+                  onclick={() => denyVersion(version.id)}>Deny</button>
                 <a
-                  class="variant-ghost-primary btn"
+                  class="preset-tonal-primary border-primary-500 btn border"
                   href={API_REST + '/mod/' + version.mod_id + '/versions/' + version.id + '/download'}>
                   Download
                 </a>
-                <a class="variant-ghost-primary btn" href={base + '/mod/' + version.mod_id + '/version/' + version.id}>
+                <a
+                  class="preset-tonal-primary border-primary-500 btn border"
+                  href={base + '/mod/' + version.mod_id + '/version/' + version.id}>
                   View
                 </a>
               </div>
@@ -118,19 +124,19 @@
 </div>
 
 {#if totalVersions}
-  <div class="ml-auto mt-5 flex justify-end">
-    <Paginator
+  <div class="mt-5 ml-auto flex justify-end">
+    <Pagination
       bind:settings={paginationSettings}
       showFirstLastButtons={true}
       showPreviousNextButtons={true}
       on:page={(p) => (page = p.detail)}
       on:amount={(p) => (perPage = p.detail)}
-      controlVariant="variant-filled-surface" />
+      controlVariant="preset-filled-surface-500" />
   </div>
 {/if}
 
 <style lang="postcss">
-  @reference "../../../app.pcss";
+  @reference "../../../app.css";
 
   h1 {
     @apply my-4 text-4xl font-bold;

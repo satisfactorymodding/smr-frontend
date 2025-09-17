@@ -3,7 +3,6 @@
   import CompatibilityStateText from '$lib/components/mods/compatibility/CompatibilityStateText.svelte';
   import { markdown } from '../../../utils/markdown';
   import CompatibilityIcon from '$lib/components/mods/compatibility/CompatibilityIcon.svelte';
-  import { getModalStore } from '@skeletonlabs/skeleton';
   import CompatibilityModal from '$lib/modals/CompatibilityModal.svelte';
   import { getTranslate } from '@tolgee/svelte';
 
@@ -16,7 +15,6 @@
   export const { t } = getTranslate();
   export const noNotesText = $t('compatibility-info.no-notes');
 
-  const modalStore = getModalStore();
   const openCompatibility = () => {
     modalStore.trigger({
       type: 'component',
@@ -35,9 +33,9 @@
     <h3 class="my-4 text-2xl font-bold">{$t('compatibility-info.header')}</h3>
     <p>{$t('compatibility-info.subtitle')}</p>
     <div class="grid grid-flow-row">
-      <table aria-label="Available Releases" class="max-w-auto table table-hover !overflow-visible">
+      <table aria-label="Available Releases" class="max-w-auto table !overflow-visible">
         <tbody>
-          <tr class="rounded border !border-surface-500">
+          <tr class="!border-surface-500 rounded border">
             <td
               ><div class="flex items-center justify-center">
                 <CompatibilityIcon />{$t('compatibility-info.branch.stable')}
@@ -47,7 +45,7 @@
                 <CompatibilityIcon EXP={true} />{$t('compatibility-info.branch.unstable')}
               </div></td>
           </tr>
-          <tr class="rounded border !border-surface-500">
+          <tr class="!border-surface-500 rounded border">
             <td class="text-center">
               <button class="m-0 min-w-0" title={$t('tooltip.click-for-info')} onclick={openCompatibility}>
                 <CompatibilityStateText state={compatibility?.EA?.state} />
@@ -59,7 +57,7 @@
               </button>
             </td>
           </tr>
-          <tr class="rounded border !border-surface-500">
+          <tr class="!border-surface-500 rounded border">
             {#if compatibility}
               <td>
                 <span style="padding: 2px; white-space:normal">

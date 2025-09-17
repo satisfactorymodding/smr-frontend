@@ -18,7 +18,7 @@
     onSubmit: (data: VersionData) => Promise<void>;
     initialValues?: Omit<VersionData, 'file'>;
     submitIcon: string;
-    submitText?: any;
+    submitText?: string;
     editing?: boolean;
   }
 
@@ -157,7 +157,7 @@
     </div>
 
     <div>
-      <button class="variant-ghost-primary btn" type="submit" {disabled}>
+      <button class="preset-tonal-primary border-primary-500 btn border" type="submit" {disabled}>
         <span class="material-icons pr-2">{submitIcon}</span>
         {submitText}
       </button>
@@ -166,7 +166,7 @@
 </form>
 
 <style lang="postcss">
-  @reference "../../../app.pcss";
+  @reference "../../../app.css";
 
   .split {
     grid-template-columns: 50% 50%;

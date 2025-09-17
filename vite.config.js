@@ -7,10 +7,7 @@ process.env.TAILWIND_MODE = dev ? 'watch' : 'build';
 
 /** @type {import('vite').UserConfig} */
 const config = {
-  plugins: [
-    tailwindcss(),
-    sveltekit()
-  ],
+  plugins: [tailwindcss(), sveltekit()],
   server: {
     port: 3000,
     strictPort: true
