@@ -185,7 +185,6 @@
           active="bg-primary-500" />
         <span>{$t('sidebar.accessibility-font')}</span>
       </li>
-
     </ul>
   </nav>
 </div>
