@@ -83,6 +83,14 @@
       link: 'https://github.com/deantendo/sfuikit'
     },
     {
+      name: 'Satisfactory Architect',
+      author: 'RaiderB',
+      logo: 'https://satisfactory-architect.com/favicon_full.png',
+      description:
+        'Plan and visualize complex production chains, keep track of your in-game factories, find bottlenecks, and calculate power consumption/production rates.',
+      link: 'https://satisfactory-architect.com/'
+    },
+    {
       name: "Daniel's Satisfactory Tools",
       author: 'DanielTheProgrammer',
       logo: 'https://i.imgur.com/Ogt0r9k.png',

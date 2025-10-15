@@ -16,6 +16,7 @@
 
   const defaultFlagTextStyle = 'text-white';
 
+  // Be sure to also update /routes/+layout.svelte when adding entries here
   // cspell:disable
   const languages: Record<string, language> = {
     en: {

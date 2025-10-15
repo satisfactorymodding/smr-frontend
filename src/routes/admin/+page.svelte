@@ -26,6 +26,10 @@
     <a href="{base}/admin/tag-manager" class="text-white">
       <h2>Tag Manager</h2>
     </a>
+
+    <a href="{base}/admin/announcements" class="text-white">
+      <h2>Announcements</h2>
+    </a>
   </section>
 </div>
 

@@ -20,7 +20,7 @@
     <div>
       <h2>REST API</h2>
       <p>
-        The GraphQL API is available at the endpoint <code>{API_REST}</code> with docs available at
+        The REST API is available at the endpoint <code>{API_REST}</code> with docs available at
         <code>{API_REST_DOCS}</code>
       </p>
       <p>It is recommended that you use the GraphQL API as the REST API is not feature complete by design.</p>

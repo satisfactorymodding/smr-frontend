@@ -1,0 +1,7 @@
+mutation CreateAnnouncement($announcement: NewAnnouncement!) {
+  createAnnouncement(announcement: $announcement) {
+    id
+    message
+    importance
+  }
+}

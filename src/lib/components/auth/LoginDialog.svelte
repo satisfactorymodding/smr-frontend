@@ -24,14 +24,10 @@
 
   if (browser) {
     let first = true;
+
     userToken.subscribe((token) => {
-      if (token) {
-        const oneMonth = new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000);
-        cookie.set('token', token, {
-          domain: window.location.hostname,
-          expires: oneMonth
-        });
-      } else if (!first) {
+      if (!token && !first) {
+        // User is logged in but token has been set to null (logging out)
         client
           .mutation(LogoutDocument, undefined, {
             requestPolicy: 'network-only'
@@ -41,11 +37,13 @@
           .then(() => {
             cookie.remove('token');
           });
-      }
-
-      first = false;
-
-      if (token) {
+        $user = null;
+      } else if (token) {
+        const oneMonth = new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000);
+        cookie.set('token', token, {
+          expires: oneMonth
+        });
+        first = false;
         client
           .query(GetMeDocument, {}, { requestPolicy: 'network-only' })
           .toPromise()
@@ -53,11 +51,9 @@
             if (response.error) {
               console.error(response.error.message);
             } else if (response.data) {
-              user.set(response.data.getMe);
+              $user = response.data.getMe;
             }
           });
-      } else {
-        user.set(null);
       }
     });
   }
@@ -116,7 +112,7 @@
               autohide: false
             });
           } else {
-            userToken.set(result.data.session.token);
+            $userToken = result.data.session.token;
             modalStore.close();
           }
         })
