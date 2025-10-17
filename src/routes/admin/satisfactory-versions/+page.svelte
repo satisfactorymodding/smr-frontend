@@ -150,6 +150,8 @@
   }
 </script>
 
+<h1>Satisfactory Versions</h1>
+
 <div class="card">
   {#if $satisfactoryVersionsQuery.fetching}
     <h1>Loading satisfactory versions...</h1>
@@ -162,6 +164,7 @@
           <svelte:fragment slot="summary">{satisfactoryVersion.version}</svelte:fragment>
           <svelte:fragment slot="content">
             <div>
+              <div>Game CL#</div>
               <input
                 type="text"
                 class="input p-2"
@@ -169,7 +172,7 @@
                 placeholder="Version"
                 bind:this={versionFields[satisfactoryVersion.id]}
                 on:change={() => satisfactoryVersionChange(satisfactoryVersion)} />
-
+              <div>Engine Version</div>
               <input
                 type="text"
                 class="input p-2"
@@ -194,3 +197,9 @@
     </section>
   {/if}
 </div>
+
+<style lang="postcss">
+  h1 {
+    @apply my-4 text-4xl font-bold;
+  }
+</style>

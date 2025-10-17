@@ -7,6 +7,8 @@ on:
         required: true
         type: string
 
+# cspell:ignore snok rlespinasse
+
 jobs:
   build:
     name: Build

@@ -1,0 +1,7 @@
+mutation UpdateAnnouncement($id: AnnouncementID!, $announcement: UpdateAnnouncement!) {
+  updateAnnouncement(announcementId: $id, announcement: $announcement) {
+    id
+    message
+    importance
+  }
+}

@@ -5,23 +5,23 @@ display_error() {
     exit 1
 }
 
-if [[ -z "${PUBLIC_TOLGEE_API_URL}" ]]; then
+if [ -z "${PUBLIC_TOLGEE_API_URL}" ]; then
     display_error "PUBLIC_TOLGEE_API_URL"
 else
-    echo "Using PUBLIC_TOLGEE_API_URL of $PUBLIC_TOLGEE_API_URL"
+    echo "Using PUBLIC_TOLGEE_API_URL of ${PUBLIC_TOLGEE_API_URL}"
 fi
 
-if [[ -z "${PUBLIC_TOLGEE_API_KEY}" ]]; then
+if [ -z "${PUBLIC_TOLGEE_API_KEY}" ]; then
     display_error "PUBLIC_TOLGEE_API_KEY"
 else
-  echo "Using PUBLIC_TOLGEE_API_KEY of $PUBLIC_TOLGEE_API_KEY"
+  echo "Using PUBLIC_TOLGEE_API_KEY of ${PUBLIC_TOLGEE_API_KEY}"
 fi
 
-curl "$PUBLIC_TOLGEE_API_URL/v2/projects/export" -H "X-API-Key: $PUBLIC_TOLGEE_API_KEY" --output translations.zip
+CURL_URL="${PUBLIC_TOLGEE_API_URL}/v2/projects/export"
 
-if ! curl "$PUBLIC_TOLGEE_API_URL/v2/projects/export" -H "X-API-Key: $PUBLIC_TOLGEE_API_KEY" --output translations.zip; then
+if ! curl $CURL_URL -H "X-API-Key: ${PUBLIC_TOLGEE_API_KEY}" --output translations.zip; then
     echo "Failed to download translation zip file? Tried using URL:"
-    echo "$PUBLIC_TOLGEE_API_URL/v2/projects/export"
+    echo $CURL_URL
     exit 1
 fi
 
