@@ -19,7 +19,7 @@ const resolveValue = (object: unknown, path: string) => {
       key = parser.exec(path);
     }
     return value;
-  } catch (e) {
+  } catch (_e) {
     // Ignore exception
   }
 
@@ -56,7 +56,7 @@ export const validateUPluginJson = async (input: string): Promise<string[]> => {
         return message;
       })
       .filter((v) => !!v);
-  } catch (e) {
+  } catch (_e) {
     return ['Invalid JSON'];
   }
 };
