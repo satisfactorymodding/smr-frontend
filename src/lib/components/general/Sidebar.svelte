@@ -4,6 +4,7 @@
   import { base } from '$app/paths';
   import { user, userToken } from '$lib/stores/user';
   import { getTranslate } from '@tolgee/svelte';
+  import TranslationDropdown from '$lib/components/general/TranslationDropdown.svelte';
   import LoginModal from '$lib/modals/LoginModal.svelte';
   import type { SidebarItemData } from '$lib/utils/sidebarItemData';
   import SidebarItem from './SidebarItem.svelte';
@@ -95,6 +96,10 @@
   const modalStore = getModalStore();
   const drawerStore = getDrawerStore();
 </script>
+
+<li class="flex flex-row items-center justify-center gap-4 px-3 pt-2 xl:hidden">
+  <TranslationDropdown />
+</li>
 
 <div class="flex h-full max-w-xl flex-col justify-between overflow-y-auto p-4">
   <div class="flex h-full max-w-xl flex-col gap-4">
