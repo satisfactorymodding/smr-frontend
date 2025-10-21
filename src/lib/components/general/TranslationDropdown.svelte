@@ -92,7 +92,7 @@
   });
 
   const languageMenuBox: PopupSettings = {
-    event: 'focus-click',
+    event: 'click',
     target: 'languageMenuBox',
     placement: 'bottom',
     closeQuery: 'li'
