@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en" class="dark" data-theme="ficsittheme">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    
+		<link href="/smr-frontend/annual-bump/_app/immutable/assets/vendor.DRUOLw6S.css" rel="stylesheet">
+		<link rel="modulepreload" href="/smr-frontend/annual-bump/_app/immutable/entry/start.BzfxB-yQ.js">
+		<link rel="modulepreload" href="/smr-frontend/annual-bump/_app/immutable/chunks/CVeMU510.js">
+		<link rel="modulepreload" href="/smr-frontend/annual-bump/_app/immutable/chunks/3LKu3IoZ.js">
+		<link rel="modulepreload" href="/smr-frontend/annual-bump/_app/immutable/entry/app.B-SV1TnC.js">
+		<link rel="modulepreload" href="/smr-frontend/annual-bump/_app/immutable/chunks/PPVm8Dsz.js">
+  </head>
+  <body>
+    <div style="display: contents" class="h-full overflow-hidden">
+			<script>
+				{
+					__sveltekit_dev = {
+						base: "/smr-frontend/annual-bump",
+						assets: "/smr-frontend/annual-bump"
+					};
+
+					const element = document.currentScript.parentElement;
+
+					Promise.all([
+						import("/smr-frontend/annual-bump/_app/immutable/entry/start.BzfxB-yQ.js"),
+						import("/smr-frontend/annual-bump/_app/immutable/entry/app.B-SV1TnC.js")
+					]).then(([kit, app]) => {
+						kit.start(app, element);
+					});
+
+					if ('serviceWorker' in navigator) {
+						addEventListener('load', function () {
+							navigator.serviceWorker.register('/smr-frontend/annual-bump/service-worker.js', { type: 'module' });
+						});
+					}
+				}
+			</script>
+		</div>
+  </body>
+</html>

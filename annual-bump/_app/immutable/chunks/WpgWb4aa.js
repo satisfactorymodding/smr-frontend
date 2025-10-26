@@ -1,0 +1,2 @@
+import{Z as c}from"./Dw_6YRib.js";const n=(f,e)=>Object.fromEntries(Object.entries(f).map(([r,t])=>{if(Object.keys(e.shape).indexOf(r)>=0){if(t!=null&&typeof t=="object"){let o=e.shape[r];if(o instanceof c&&(o=o.unwrap()),Array.isArray(t)){const s=o.element;for(let i=0;i<t.length;i++)typeof t[i]=="object"&&(t[i]=n(t[i],s))}else t.constructor.name!=="File"&&(t=n(t,o))}return[r,t]}}).filter(r=>!!r));export{n as t};
+//# sourceMappingURL=WpgWb4aa.js.map
