@@ -19,7 +19,7 @@
 <label class="label">
   <span>Compatibility State</span>
   <select class="select" style="margin-bottom: 10px" bind:value={compatibility.state}>
-    {#each Object.values(CompatibilityState) as state}
+    {#each Object.values(CompatibilityState) as state (state)}
       <option value={state}>{state}</option>
     {/each}
   </select>

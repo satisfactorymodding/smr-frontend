@@ -6,7 +6,7 @@
   <MetaDescriptors description="Terms of service for the Satisfactory Mod Repository" title="Terms of service" />
 </svelte:head>
 
-<div class="card p-4">
+<div class="card preset-filled-surface-100-900 p-4">
   <section class="p-4">
     <h1>Terms of Service</h1>
     <p>

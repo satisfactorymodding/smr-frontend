@@ -9,8 +9,9 @@
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
   import { getContextClient } from '@urql/svelte';
   import type { PageData } from './$types';
-  import { type ModalSettings } from '@skeletonlabs/skeleton-svelte';
   import Page404 from '$lib/components/general/Page404.svelte';
+  import { toaster } from '$lib/utils/toaster-svelte';
+  import BasicModal from '$lib/components/general/BasicModal.svelte';
 
   interface Props {
     data: PageData;
@@ -31,32 +32,20 @@
       .then((value) => {
         if (value.error) {
           console.error(value.error.message);
-          toastStore.trigger({
-            message: 'Error deleting guide: ' + value.error.message,
-            background: 'preset-filled-error-500',
-            autohide: false
+          toaster.error({
+            description: 'Error deleting guide: ' + value.error.message
           });
         } else {
-          toastStore.trigger({
-            message: `Guide deleted`,
-            background: 'preset-filled-success-500',
-            timeout: 5000
+          toaster.success({
+            description: `Guide deleted`,
+            duration: 5000
           });
           goto(base + '/guides');
         }
       });
   };
 
-  const deleteModal: ModalSettings = {
-    type: 'confirm',
-    title: 'Delete Guide?',
-    body: 'Are you sure you wish to delete this guide?',
-    response: (r: boolean) => {
-      if (r) {
-        deleteGuideFn();
-      }
-    }
-  };
+  let deleteModalOpen = $state(false);
 </script>
 
 <svelte:head>
@@ -77,20 +66,26 @@
       <div>
         {#if canUserEdit}
           <button
-            class="preset-tonal-primary border-primary-500 btn border"
+            class="btn border border-primary-500 preset-tonal-primary"
             onclick={() => goto(base + '/guide/' + guideId + '/edit')}>
             <span class="material-icons pr-2">edit</span>
             Edit</button>
-          <button
-            class="preset-tonal-primary border-primary-500 btn border"
-            onclick={() => modalStore.trigger(deleteModal)}>
+
+          <BasicModal
+            bind:open={deleteModalOpen}
+            title="Delete guide?"
+            body="Are you sure you wish to delete this guide?"
+            buttonTextCancel="Cancel"
+            buttonTextConfirm="Delete"
+            confirm={deleteGuideFn} />
+          <button class="btn border border-primary-500 preset-tonal-primary" onclick={() => (deleteModalOpen = true)}>
             <span class="material-icons pr-2">delete</span>
             Delete</button>
         {/if}
       </div>
     </div>
     <div class="grid-auto-max grid auto-cols-fr gap-4">
-      <div class="card h-fit p-4">
+      <div class="h-fit card preset-filled-surface-100-900 p-4">
         <section>
           <div class="markdown-content break-words">
             {#await markdown($guide.data.getGuide.guide) then guideRendered}

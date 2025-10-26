@@ -39,10 +39,10 @@
 
       <div>
         {#if $me && $user.data.getUser.id === $me.id}
-          <a class="preset-tonal-primary border-primary-500 btn border" href="{base}/settings">Settings</a>
+          <a class="btn border border-primary-500 preset-tonal-primary" href="{base}/settings">Settings</a>
         {/if}
 
-        <button class="preset-tonal-primary border-primary-500 btn border" onclick={() => (guidesTab = !guidesTab)}>
+        <button class="btn border border-primary-500 preset-tonal-primary" onclick={() => (guidesTab = !guidesTab)}>
           {#if !guidesTab}
             Guides
           {:else}
@@ -53,8 +53,8 @@
     </div>
     <div class="grid-auto-max grid auto-cols-fr gap-4">
       {#if !guidesTab}
-        <div class="3xl:grid-cols-3 grid h-fit grid-cols-1 gap-4 2xl:grid-cols-2">
-          {#each $user.data.getUser.mods as mod}
+        <div class="grid h-fit grid-cols-1 gap-4 3xl:grid-cols-3 2xl:grid-cols-2">
+          {#each $user.data.getUser.mods as mod (mod.mod.id)}
             <ModCard mod={mod.mod} />
           {/each}
 
@@ -64,8 +64,8 @@
           {/if}
         </div>
       {:else}
-        <div class="3xl:grid-cols-3 grid h-fit grid-cols-1 gap-4 2xl:grid-cols-2">
-          {#each $user.data.getUser.guides as guide}
+        <div class="grid h-fit grid-cols-1 gap-4 3xl:grid-cols-3 2xl:grid-cols-2">
+          {#each $user.data.getUser.guides as guide (guide.id)}
             <GuideCard {guide} logo={$user.data.getUser.avatar} />
           {/each}
 

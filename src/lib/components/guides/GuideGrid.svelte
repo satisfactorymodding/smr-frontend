@@ -6,7 +6,7 @@
   import { user } from '$lib/stores/user';
   import FicsitCard from '$lib/components/general/FicsitCard.svelte';
   import { getTranslate } from '@tolgee/svelte';
-  import { type PaginationSettings, Pagination } from '@skeletonlabs/skeleton-svelte';
+  import Pager from '$lib/components/general/Pager.svelte';
 
   interface Props {
     colCount?: 4 | 5;
@@ -37,13 +37,6 @@
       ? '3xl:grid-cols-4 2xl:grid-cols-3 lg:grid-cols-2 grid-cols-1'
       : '3xl:grid-cols-3 2xl:grid-cols-2 grid-cols-1'
   );
-
-  let paginationSettings = $derived({
-    page: page,
-    limit: perPage,
-    size: totalGuides,
-    amounts: [8, 16, 32, 64, 100]
-  } satisfies PaginationSettings);
 </script>
 
 <div
@@ -51,23 +44,17 @@
   class:justify-between={newGuide && $user !== null}
   class:justify-end={!newGuide || $user == null}>
   {#if newGuide && $user !== null}
-    <a class="preset-tonal-primary border-primary-500 btn border" href="{base}/new-guide">{$t('guides.new')}</a>
+    <a class="btn border border-primary-500 preset-tonal-primary" href="{base}/new-guide">{$t('guides.new')}</a>
   {/if}
 
   <div>
-    <Pagination
-      bind:settings={paginationSettings}
-      showFirstLastButtons={true}
-      showPreviousNextButtons={true}
-      on:page={(p) => (page = p.detail)}
-      on:amount={(p) => (perPage = p.detail)}
-      controlVariant="preset-filled-surface-500" />
+    <Pager bind:page bind:perPage total={totalGuides} />
   </div>
 </div>
 
 {#if $guides.fetching}
   <div class="grid {gridClasses} gap-4">
-    {#each Array(perPage) as _}
+    {#each Array(perPage) as _, i (i)}
       <FicsitCard fake />
     {/each}
   </div>
@@ -75,7 +62,7 @@
   <p>{$t('error.oh-no')} {$guides.error.message}</p>
 {:else}
   <div class="grid {gridClasses} gap-4">
-    {#each $guides.data.getGuides.guides as guide}
+    {#each $guides.data.getGuides.guides as guide (guide.id)}
       <GuideCard {guide} logo={guide.user.avatar} />
     {/each}
   </div>
@@ -83,12 +70,6 @@
 
 <div class="mt-5 ml-auto flex justify-end">
   <div>
-    <Pagination
-      bind:settings={paginationSettings}
-      showFirstLastButtons={true}
-      showPreviousNextButtons={true}
-      on:page={(p) => (page = p.detail)}
-      on:amount={(p) => (perPage = p.detail)}
-      controlVariant="preset-filled-surface-500" />
+    <Pager bind:page bind:perPage total={totalGuides} />
   </div>
 </div>

@@ -9,7 +9,7 @@
   let { dependency }: Props = $props();
 </script>
 
-<tr class="!border-surface-500 rounded border">
+<tr class="rounded border !border-surface-500">
   <td>
     <a title="Click to view mod page" href={`${base}/mod/${dependency.mod_id}`} class="text-yellow-500">
       <u>{dependency.mod_id}</u>

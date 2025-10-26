@@ -2,6 +2,7 @@
   import { preloadData } from '$app/navigation';
   import { page } from '$app/state';
   import type { SidebarItemData } from '$lib/utils/sidebarItemData';
+  import { Navigation } from '@skeletonlabs/skeleton-svelte';
 
   interface Props {
     item: SidebarItemData;
@@ -14,23 +15,30 @@
   const onCloseDrawer = () => {
     // drawerStore.close()
   };
+
+  let anchorSidebar = 'btn hover:preset-tonal justify-start px-2 w-full';
 </script>
 
-<li>
-  {#if !item.external}
+{#if !item.external}
+  <Navigation.Menu>
     <a
       href={item.url}
       class:preset-filled-primary-500={currentPath === item.url}
       onmouseover={() => preloadData(item.url)}
       onclick={onCloseDrawer}
-      onfocus={() => preloadData(item.url)}>
+      onfocus={() => preloadData(item.url)}
+      class={anchorSidebar}
+      title={item.label}
+      aria-label={item.label}>
       <span class="material-icons">{item.icon}</span>
-      <span class="flex-auto">{item.label}</span>
+      <span>{item.label}</span>
     </a>
-  {:else}
-    <a href={item.url} target="_blank" rel="noopener">
+  </Navigation.Menu>
+{:else}
+  <Navigation.Menu>
+    <a href={item.url} target="_blank" rel="noopener" class={anchorSidebar} title={item.label} aria-label={item.label}>
       <span class="material-icons">{item.icon}</span>
-      <span class="flex-auto">{item.label}</span>
+      <span>{item.label}</span>
     </a>
-  {/if}
-</li>
+  </Navigation.Menu>
+{/if}

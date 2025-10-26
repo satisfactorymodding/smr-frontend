@@ -8,6 +8,7 @@
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
   import type { PageData } from './$types';
   import { get } from 'svelte/store';
+  import { toaster } from '$lib/utils/toaster-svelte';
 
   interface Props {
     data: PageData;
@@ -29,16 +30,13 @@
       .then((value) => {
         if (value.error) {
           console.error(value.error.message);
-          toastStore.trigger({
-            message: 'Error editing mod: ' + value.error.message,
-            background: 'preset-filled-error-500',
-            autohide: false
+          toaster.error({
+            description: 'Error editing mod: ' + value.error.message
           });
         } else {
-          toastStore.trigger({
-            message: `Mod updated`,
-            background: 'preset-filled-success-500',
-            timeout: 5000
+          toaster.success({
+            description: `Mod updated`,
+            duration: 5000
           });
           goto(base + '/mod/' + modId);
         }
@@ -66,7 +64,7 @@
 
 <h1 class="my-4 text-4xl font-bold">Edit Mod</h1>
 
-<div class="card p-4">
+<div class="card preset-filled-surface-100-900 p-4">
   <section>
     {#if $mod.fetching}
       <p>Loading...</p>

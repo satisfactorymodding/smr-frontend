@@ -3,12 +3,11 @@
   import { CreateTagDocument, DeleteTagDocument, GetTagsDocument, UpdateTagDocument } from '$lib/generated';
   import type { Tag } from '$lib/generated';
   import { Accordion } from '@skeletonlabs/skeleton-svelte';
+  import { toaster } from '$lib/utils/toaster-svelte';
 
   const client = getContextClient();
 
-  let tags: Tag[] = [];
-  const panels = {};
-  const nameFields = {};
+  let tags: Tag[] = $state([]);
   let tagNegativeID = -1;
   const defaultNewTagName = 'New Tag';
 
@@ -20,7 +19,13 @@
     }
   });
 
-  $: tags = $tagsQuery.data?.getTags || [];
+  tagsQuery.subscribe((val) => {
+    if (val.data?.getTags) {
+      tags = val.data?.getTags || [];
+    }
+  });
+
+  let value = $state(['0']);
 
   function newTag() {
     if (!tags.find((tag) => tag.name == defaultNewTagName)) {
@@ -28,15 +33,10 @@
       tags.push(tag);
       tags = tags;
       setTimeout(() => {
-        panels[tag.id].setOpen(true);
-        const field = nameFields[tag.id];
-        field.focus();
-        const input = field.getElement().querySelectorAll('input')[0] as HTMLInputElement;
-        input.select();
+        value = [tag.id];
       }, 0);
     } else {
-      panels[tags[tags.length - 1].id].setOpen(true);
-      nameFields[tags[tags.length - 1].id].focus();
+      value = [tags[tags.length - 1].id];
     }
   }
 
@@ -60,10 +60,9 @@
         console.log(err);
       }
       if (!success) {
-        toastStore.trigger({
-          message: `Failed to create Tag '${tag.name}'!`,
-          background: 'preset-filled-error-500',
-          timeout: 2000
+        toaster.error({
+          description: `Failed to create Tag '${tag.name}'!`,
+          duration: 2000
         });
         return;
       }
@@ -80,19 +79,17 @@
         // nothing
       }
       if (!success) {
-        toastStore.trigger({
-          message: `Failed to update Tag '${tag.name}'!`,
-          background: 'preset-filled-error-500',
-          timeout: 2000
+        toaster.error({
+          description: `Failed to update Tag '${tag.name}'!`,
+          duration: 2000
         });
         return;
       }
     }
 
-    toastStore.trigger({
-      message: `Tag '${tag.name}' saved!`,
-      background: 'preset-filled-success-500',
-      timeout: 2000
+    toaster.success({
+      description: `Tag '${tag.name}' saved!`,
+      duration: 2000
     });
   }
 
@@ -107,10 +104,9 @@
         success = false;
       }
       if (!success) {
-        toastStore.trigger({
-          message: `Failed to remove Tag '${tag.name}'!`,
-          background: 'preset-filled-error-500',
-          timeout: 2000
+        toaster.error({
+          description: `Failed to remove Tag '${tag.name}'!`,
+          duration: 2000
         });
         return;
       }
@@ -118,10 +114,9 @@
       tags.splice(tags.indexOf(tag), 1);
     }
 
-    toastStore.trigger({
-      message: `Tag '${tag.name}' removed!`,
-      background: 'preset-filled-success-500',
-      timeout: 2000
+    toaster.success({
+      description: `Tag '${tag.name}' removed!`,
+      duration: 2000
     });
   }
 
@@ -133,17 +128,17 @@
 
 <h1>Mod Tag Manager</h1>
 
-<div class="card">
+<div class="card preset-filled-surface-100-900">
   {#if $tagsQuery.fetching}
     <h1>Loading tags...</h1>
   {:else if $tagsQuery.error}
     <h1>Failed to load tags: {$tagsQuery.error.message}</h1>
   {:else}
-    <Accordion>
-      {#each tags as tag}
-        <Accordion.Item bind:this={panels[tag.id]}>
-          <svelte:fragment slot="summary">{tag.name}</svelte:fragment>
-          <svelte:fragment slot="content">
+    <Accordion {value} onValueChange={(details) => (value = details.value)}>
+      {#each tags as tag (tag.id)}
+        <Accordion.Item value={tag.id}>
+          <Accordion.ItemTrigger>{tag.name}</Accordion.ItemTrigger>
+          <Accordion.ItemContent>
             <div>
               <div>Tag name</div>
               <input
@@ -151,28 +146,27 @@
                 class="input p-2"
                 bind:value={tag.name}
                 placeholder="Name"
-                bind:this={nameFields[tag.id]}
-                on:change={() => tagChange(tag)} />
+                onchange={() => tagChange(tag)} />
               <div>Tag description</div>
               <input
                 type="text"
                 class="input p-2"
                 bind:value={tag.description}
                 placeholder="Description"
-                on:change={() => tagChange(tag)} />
+                onchange={() => tagChange(tag)} />
             </div>
             <span>Human-Readable name and description of the tag that is shown in UI</span>
 
-            <button class="preset-tonal-error border-error-500 btn border" on:click={(e) => onDeleteClick(e, tag)}>
+            <button class="btn border border-error-500 preset-tonal-error" onclick={(e) => onDeleteClick(e, tag)}>
               <span>Delete</span>
             </button>
-          </svelte:fragment>
+          </Accordion.ItemContent>
         </Accordion.Item>
       {/each}
     </Accordion>
 
     <section class="p-4">
-      <button class="preset-tonal-primary border-primary-500 btn border" on:click={newTag}>
+      <button class="btn border border-primary-500 preset-tonal-primary" onclick={newTag}>
         <span>Add new tag</span>
         <span class="material-icons">add</span>
       </button>

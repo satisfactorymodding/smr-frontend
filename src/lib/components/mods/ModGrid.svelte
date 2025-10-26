@@ -11,8 +11,8 @@
   import FicsitCard from '$lib/components/general/FicsitCard.svelte';
   import { browser } from '$app/environment';
   import { getTranslate } from '@tolgee/svelte';
-  import { type PaginationSettings, Pagination } from '@skeletonlabs/skeleton-svelte';
   import TagDisplay from '../utils/TagDisplay.svelte';
+  import Pager from '$lib/components/general/Pager.svelte';
 
   interface Props {
     colCount?: 4 | 5;
@@ -54,6 +54,7 @@
 
   let totalMods: number = $derived($mods?.data?.getMods?.count || 0);
 
+  // svelte-ignore state_referenced_locally
   let searchField = $state(search);
   let searchDisabled = $derived(searchField.length < 3);
   let searchButtonClass = $derived(searchDisabled ? 'preset-filled-surface-500' : 'preset-filled-primary-500');
@@ -113,13 +114,6 @@
     ...(search !== '' && search !== null ? [[$t('sort-order.search'), 'search']] : [])
   ]);
 
-  let paginationSettings = $derived({
-    page: page,
-    limit: perPage,
-    size: totalMods,
-    amounts: [8, 16, 32, 64, 100]
-  } satisfies PaginationSettings);
-
   const toggleTag = (tagId: string) => {
     if (selectedTags.indexOf(tagId) >= 0) {
       const i = selectedTags.indexOf(tagId);
@@ -141,7 +135,7 @@
         <div>
           <button
             type="button"
-            class="text-md preset-filled-surface-500 btn btn-sm p-2 pr-4 pl-4"
+            class="text-md btn preset-filled-surface-500 p-2 btn-sm pr-4 pl-4"
             class:preset-tonal-primary={tagsOpen}
             title={$t('filter.expand-button-tooltip')}
             onclick={() => (tagsOpen = !tagsOpen)}>
@@ -150,7 +144,7 @@
         </div>
         <div>
           <select bind:value={orderBy} class="select">
-            {#each orderFields as orderField}
+            {#each orderFields as orderField (orderField[1])}
               <option value={orderField[1]}>{orderField[0]}</option>
             {/each}
           </select>
@@ -162,7 +156,7 @@
           </select>
         </div>
 
-        <div class="input-group input-group-divider rounded-container w-fit grid-cols-[1fr_auto]">
+        <div class="input-group-divider input-group w-fit grid-cols-[1fr_auto] rounded-container">
           <input
             bind:value={searchField}
             class="border-0 bg-transparent p-1.5 ring-0"
@@ -179,13 +173,8 @@
           {#if $allTags.error}
             <p>Oh no... {$allTags.error.message}</p>
           {:else if !$allTags.fetching}
-            {#each sortedTags($allTags.data.getTags) as tag}
-              <TagDisplay
-                {tag}
-                popupTriggerEvent="hover"
-                asButton={true}
-                selected={selectedTags.indexOf(tag.id) >= 0}
-                on:click={() => toggleTag(tag.id)} />
+            {#each sortedTags($allTags.data.getTags) as tag (tag.id)}
+              <TagDisplay {tag} selected={selectedTags.indexOf(tag.id) >= 0} onclick={() => toggleTag(tag.id)} />
             {/each}
           {/if}
         </div>
@@ -198,17 +187,11 @@
     class:justify-between={newMod && $user !== null}
     class:justify-end={!newMod || $user == null}>
     {#if newMod && $user !== null}
-      <a class="preset-tonal-primary border-primary-500 btn self-end border" href="{base}/new-mod">{$t('mods.new')}</a>
+      <a class="btn self-end border border-primary-500 preset-tonal-primary" href="{base}/new-mod">{$t('mods.new')}</a>
     {/if}
     {#if showPagination}
       <div class="self-end">
-        <Pagination
-          bind:settings={paginationSettings}
-          showFirstLastButtons={true}
-          showPreviousNextButtons={true}
-          on:page={(p) => (page = p.detail)}
-          on:amount={(p) => (perPage = p.detail)}
-          controlVariant="preset-filled-surface-500" />
+        <Pager bind:page bind:perPage total={totalMods} />
       </div>
     {/if}
   </div>
@@ -216,7 +199,7 @@
 
 {#if $mods.fetching}
   <div class="grid {gridClasses} gap-4">
-    {#each Array(perPage) as _}
+    {#each Array(perPage) as _, i (i)}
       <FicsitCard fake />
     {/each}
   </div>
@@ -228,7 +211,7 @@
   {$t('search.results.empty')}
 {:else}
   <div class="grid {gridClasses} gap-4">
-    {#each $mods.data.getMods.mods as mod}
+    {#each $mods.data.getMods.mods as mod (mod.id)}
       <ModCard {mod} />
     {/each}
   </div>
@@ -237,13 +220,7 @@
 {#if showPagination}
   <div class="mt-5 ml-auto flex justify-end">
     <div>
-      <Pagination
-        bind:settings={paginationSettings}
-        showFirstLastButtons={true}
-        showPreviousNextButtons={true}
-        on:page={(p) => (page = p.detail)}
-        on:amount={(p) => (perPage = p.detail)}
-        controlVariant="preset-filled-surface-500" />
+      <Pager bind:page bind:perPage total={totalMods} />
     </div>
   </div>
 {/if}

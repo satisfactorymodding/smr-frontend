@@ -90,7 +90,6 @@
   run(() => {
     $data.compatibility = $data.compatibility ? $data.compatibility : undefined;
   });
-  const originalCompatibility = $data.compatibility;
 </script>
 
 <form use:form>
@@ -189,8 +188,12 @@
     </div>
 
     <div class="grid grid-flow-row gap-2">
-      <Switch name="slider-label" bind:checked={$data.hidden}>
-        {$t('entry.hidden')}
+      <Switch checked={$data.hidden} onCheckedChange={(e) => ($data.hidden = e.checked)}>
+        <Switch.Control>
+          <Switch.Thumb />
+        </Switch.Control>
+        <Switch.Label>{$t('entry.hidden')}</Switch.Label>
+        <Switch.HiddenInput />
       </Switch>
       <ValidationMessage for="hidden">
         {#snippet children({ messages: message })}
@@ -200,13 +203,12 @@
     </div>
     {#if editing}
       <div>
-        <Switch
-          name="slider-label"
-          bind:checked={editCompatibility}
-          on:change={() => {
-            $data.compatibility = editCompatibility ? originalCompatibility : undefined;
-          }}>
-          {$t('compatibility-info.edit')}
+        <Switch checked={editCompatibility} onCheckedChange={(e) => (editCompatibility = e.checked)}>
+          <Switch.Control>
+            <Switch.Thumb />
+          </Switch.Control>
+          <Switch.Label>{$t('compatibility-info.edit')}</Switch.Label>
+          <Switch.HiddenInput />
         </Switch>
       </div>
 
@@ -217,7 +219,7 @@
       <div class="grid grid-flow-row gap-2">
         <div class="flex items-center">
           <h4 class="mr-4">{$t('authors')}</h4>
-          <button class="preset-tonal-primary border-primary-500 btn border" type="button" onclick={addAuthor}>
+          <button class="btn border border-primary-500 preset-tonal-primary" type="button" onclick={addAuthor}>
             <span>{$t('add')}</span>
           </button>
         </div>
@@ -239,7 +241,7 @@
             </label>
             {#if author.role !== 'creator'}
               <button
-                class="preset-tonal-primary border-primary-500 btn border"
+                class="btn border border-primary-500 preset-tonal-primary"
                 type="button"
                 onclick={() => removeAuthor(i)}>
                 <span>{$t('remove')}</span>
@@ -251,7 +253,7 @@
     {/if}
 
     <div>
-      <button class="preset-tonal-primary border-primary-500 btn border" type="submit">{submitText}</button>
+      <button class="btn border border-primary-500 preset-tonal-primary" type="submit">{submitText}</button>
     </div>
   </div>
 </form>

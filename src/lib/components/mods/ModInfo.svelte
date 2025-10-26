@@ -14,7 +14,7 @@
   export const { t } = getTranslate();
 </script>
 
-<div class="card p-4">
+<div class="card preset-filled-surface-100-900 p-4">
   <section>
     <div class="text-lg break-words">
       <h3 class="my-4 text-2xl font-bold">Info</h3>

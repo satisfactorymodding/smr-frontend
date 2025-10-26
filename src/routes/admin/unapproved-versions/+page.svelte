@@ -5,7 +5,7 @@
   import { base } from '$app/paths';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
   import { prettyDate } from '$lib/utils/formatting';
-  import { type PaginationSettings, Pagination } from '@skeletonlabs/skeleton-svelte';
+  import Pager from '$lib/components/general/Pager.svelte';
 
   const client = getContextClient();
 
@@ -46,13 +46,6 @@
         versions.resume();
       });
   };
-
-  let paginationSettings = $derived({
-    page: page,
-    limit: perPage,
-    size: totalVersions,
-    amounts: [5, 10, 20, 50, 100]
-  } satisfies PaginationSettings);
 </script>
 
 <svelte:head>
@@ -64,18 +57,12 @@
 {#if totalVersions}
   <div class="mb-5 ml-auto flex justify-end">
     <div>
-      <Pagination
-        bind:settings={paginationSettings}
-        showFirstLastButtons={true}
-        showPreviousNextButtons={true}
-        on:page={(p) => (page = p.detail)}
-        on:amount={(p) => (perPage = p.detail)}
-        controlVariant="preset-filled-surface-500" />
+      <Pager bind:page bind:perPage total={totalVersions} />
     </div>
   </div>
 {/if}
 
-<div class="card">
+<div class="card preset-filled-surface-100-900">
   {#if $versions.fetching}
     <section class="p-4">Loading...</section>
   {:else if $versions.error}
@@ -91,7 +78,7 @@
         </tr>
       </thead>
       <tbody>
-        {#each $versions.data.getUnapprovedVersions.versions as version}
+        {#each $versions.data.getUnapprovedVersions.versions as version (version.id)}
           <tr>
             <td>{version.mod.name}</td>
             <td>{version.version}</td>
@@ -99,18 +86,18 @@
             <td class="!p-2.5">
               <div class="grid grid-flow-col gap-4">
                 <button
-                  class="preset-tonal-primary border-primary-500 btn border"
+                  class="btn border border-primary-500 preset-tonal-primary"
                   onclick={() => approveVersion(version.id)}>Approve</button>
                 <button
-                  class="preset-tonal-primary border-primary-500 btn border"
+                  class="btn border border-primary-500 preset-tonal-primary"
                   onclick={() => denyVersion(version.id)}>Deny</button>
                 <a
-                  class="preset-tonal-primary border-primary-500 btn border"
+                  class="btn border border-primary-500 preset-tonal-primary"
                   href={API_REST + '/mod/' + version.mod_id + '/versions/' + version.id + '/download'}>
                   Download
                 </a>
                 <a
-                  class="preset-tonal-primary border-primary-500 btn border"
+                  class="btn border border-primary-500 preset-tonal-primary"
                   href={base + '/mod/' + version.mod_id + '/version/' + version.id}>
                   View
                 </a>
@@ -125,13 +112,7 @@
 
 {#if totalVersions}
   <div class="mt-5 ml-auto flex justify-end">
-    <Pagination
-      bind:settings={paginationSettings}
-      showFirstLastButtons={true}
-      showPreviousNextButtons={true}
-      on:page={(p) => (page = p.detail)}
-      on:amount={(p) => (perPage = p.detail)}
-      controlVariant="preset-filled-surface-500" />
+    <Pager bind:page bind:perPage total={totalVersions} />
   </div>
 {/if}
 

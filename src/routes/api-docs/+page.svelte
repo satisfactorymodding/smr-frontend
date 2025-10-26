@@ -8,7 +8,7 @@
 </svelte:head>
 
 <h1>API Docs</h1>
-<div class="card p-4">
+<div class="card preset-filled-surface-100-900 p-4">
   <section class="p-4">
     <div>
       <h2>GraphQL API</h2>

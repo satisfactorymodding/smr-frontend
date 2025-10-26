@@ -1,5 +1,5 @@
 [tools]
-bun = "1.2.22"
+bun = "1.3.1"
 
 [env]
 PUBLIC_TOLGEE_API_URL = 'https://translate.ficsit.app'
@@ -7,6 +7,10 @@ PUBLIC_TOLGEE_API_KEY = 'tgpak_gjptqytrm5sgyy3ohfwdk2junf2wemtbnezts2lig5yte'
 
 [tasks.dev_staging]
 run = "bun run dev"
+env = { NODE_ENV = 'staging' }
+
+[tasks.dev_staging_serve]
+run = "bun run dev:serve"
 env = { NODE_ENV = 'staging' }
 
 [tasks.setup]

@@ -9,6 +9,7 @@
   import { installMod } from '$lib/stores/launcher';
   import { prettyDate, prettyNumber, prettyBytes, prettyTarget } from '$lib/utils/formatting';
   import { getTranslate } from '@tolgee/svelte';
+  import { Popover, Portal } from '@skeletonlabs/skeleton-svelte';
 
   interface Props {
     modId: string;
@@ -43,7 +44,7 @@
   };
 </script>
 
-<div class="card h-fit">
+<div class="h-fit card preset-filled-surface-100-900">
   {#if $versions.fetching}
     <section class="p-4">{$t('loading')}...</section>
   {:else if $versions.error}
@@ -61,7 +62,7 @@
           </tr>
         </thead>
         <tbody>
-          {#each $versions.data.getMod.versions as version}
+          {#each $versions.data.getMod.versions as version (version.id)}
             <tr onclick={() => toggleRow(version.id)}>
               <td>{version.version}</td>
               <td>{version.game_version}</td>
@@ -78,60 +79,59 @@
                     /*a11y-click-events-have-key-events*/
                   })}>
                   <a
-                    class="preset-tonal-primary border-primary-500 btn btn-sm border"
+                    class="btn border border-primary-500 preset-tonal-primary btn-sm"
                     href={base + '/mod/' + modId + '/version/' + version.id}>{$t('view')}</a>
                   {#if version.targets.length !== 0}
-                    <button
-                      class="preset-tonal-primary border-primary-500 btn btn-sm border"
-                      style="padding: 0; min-width: 36px;"
-                      use:popup={{
-                        event: 'focus-click',
-                        target: 'versionArchDropdown_' + version.version,
-                        placement: 'bottom',
-                        closeQuery: 'a'
-                      }}>
-                      <span>{$t('download')}...</span>
-                      <span class="material-icons" style="margin: 0;">arrow_drop_down</span>
-                    </button>
-
-                    <div class="card w-72 shadow-xl" data-popup="versionArchDropdown_{version.version}">
-                      <nav class="list-nav">
-                        <ul>
-                          <li>
-                            <a href={API_REST + '/mod/' + modId + '/versions/' + version.id + '/download'}>
-                              <span class="material-icons">polyline</span>
-                              <span>{$t('version.download-multi-target')}</span>
-                            </a>
-                          </li>
-                          {#each version.targets as target, _}
-                            <li>
-                              <a
-                                class="w-full"
-                                href={API_REST +
-                                  '/mod/' +
-                                  modId +
-                                  '/versions/' +
-                                  version.id +
-                                  '/' +
-                                  target.targetName +
-                                  '/download'}>
-                                <span>{$t('download')} {prettyTarget(target.targetName)}</span>
-                              </a>
-                            </li>
-                          {/each}
-                        </ul>
-                      </nav>
-                    </div>
+                    <Popover>
+                      <Popover.Trigger
+                        class="btn border border-primary-500 preset-tonal-primary btn-sm"
+                        title="Download a specific release target of this mod">
+                        {$t('download')}
+                        <span class="material-icons" style="margin: 0;">arrow_drop_down</span>
+                      </Popover.Trigger>
+                      <Portal>
+                        <Popover.Positioner>
+                          <Popover.Content class="w-72 card preset-filled-surface-100-900 shadow-xl">
+                            <nav class="list-nav">
+                              <ul>
+                                <li>
+                                  <a href={API_REST + '/mod/' + modId + '/versions/' + version.id + '/download'}>
+                                    <span class="material-icons">polyline</span>
+                                    <span>{$t('version.download-multi-target')}</span>
+                                  </a>
+                                </li>
+                                {#each version.targets as target, _ (target.targetName)}
+                                  <li>
+                                    <a
+                                      class="w-full"
+                                      href={API_REST +
+                                        '/mod/' +
+                                        modId +
+                                        '/versions/' +
+                                        version.id +
+                                        '/' +
+                                        target.targetName +
+                                        '/download'}>
+                                      <span>{$t('download')} {prettyTarget(target.targetName)}</span>
+                                    </a>
+                                  </li>
+                                {/each}
+                              </ul>
+                            </nav>
+                          </Popover.Content>
+                        </Popover.Positioner>
+                      </Portal>
+                    </Popover>
                   {:else}
                     <a
-                      class="preset-tonal-primary border-primary-500 btn btn-sm border"
+                      class="btn border border-primary-500 preset-tonal-primary btn-sm"
                       href={API_REST + '/mod/' + modId + '/versions/' + version.id + '/download'}>
                       {$t('download')}
                     </a>
                   {/if}
 
                   <button
-                    class="preset-tonal-primary border-primary-500 btn btn-sm border"
+                    class="btn border border-primary-500 preset-tonal-primary btn-sm"
                     title="Install via Satisfactory Mod Manager"
                     onclick={() => installMod($versions.data.getMod.mod_reference)}>
                     <span class="material-icons">download</span>

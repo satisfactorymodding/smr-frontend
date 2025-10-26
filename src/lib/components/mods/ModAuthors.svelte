@@ -16,13 +16,13 @@
   export const { t } = getTranslate();
 </script>
 
-<div class="card p-4">
+<div class="card preset-filled-surface-100-900 p-4">
   <section>
     <div class="grid grid-flow-row gap-y-2">
       <h3 class="my-4 text-2xl font-bold">{$t('authors')}</h3>
 
       <div class="grid auto-rows-min gap-y-4 text-lg">
-        {#each authors as author}
+        {#each authors as author (author.user.id)}
           <div class="grid auto-cols-max grid-flow-col gap-x-4">
             <div
               class="h-14 w-14 rounded-full bg-cover"

@@ -10,11 +10,12 @@
   import { base } from '$app/paths';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
   import type { PageData } from './$types';
-  import { type ModalSettings } from '@skeletonlabs/skeleton-svelte';
   import EditCompatibilityForm from '$lib/components/mods/compatibility/EditCompatibilityForm.svelte';
   import { getTranslate } from '@tolgee/svelte';
+  import { toaster } from '$lib/utils/toaster-svelte';
+  import BasicModal from '$lib/components/general/BasicModal.svelte';
 
-  export const { t } = getTranslate();
+  const { t } = getTranslate();
 
   interface Props {
     data: PageData;
@@ -63,19 +64,16 @@
       client
     )
       .then((success) => {
-        toastStore.trigger({
-          message: `Version created`,
-          background: 'preset-filled-success-500',
-          timeout: 5000
+        toaster.success({
+          description: `Version created`,
+          duration: 5000
         });
         goto(base + '/mod/' + modId + '/version/' + success.version.id);
       })
       .catch((err) => {
         console.error(err);
-        toastStore.trigger({
-          message: 'Error creating version: ' + err.message,
-          background: 'preset-filled-error-500',
-          autohide: false
+        toaster.error({
+          description: 'Error creating version: ' + err.message
         });
         uploadStatus.set('');
       });
@@ -84,18 +82,7 @@
     goto(base + '/mod/' + modId);
   };
 
-  const backModal: ModalSettings = {
-    type: 'confirm',
-    title: 'Go Back?',
-    buttonTextCancel: 'Keep Editing',
-    buttonTextConfirm: 'Go Back',
-    body: 'Going back will discard any unsaved changes. Are you sure you wish to continue?',
-    response: (r: boolean) => {
-      if (r) {
-        goBackFn();
-      }
-    }
-  };
+  let backModalOpen = $state(false);
 </script>
 
 <svelte:head>
@@ -116,17 +103,24 @@
     {/if}
   </h1>
   <div>
+    <BasicModal
+      bind:open={backModalOpen}
+      title="Go Back?"
+      body="Going back will discard any unsaved changes. Are you sure you wish to continue?"
+      buttonTextCancel="Keep Editing"
+      buttonTextConfirm="Go Back"
+      confirm={goBackFn} />
     <button
-      class="preset-tonal-primary border-primary-500 btn border"
+      class="btn border border-primary-500 preset-tonal-primary"
       title="View the description page for this mod"
-      onclick={() => modalStore.trigger(backModal)}>
+      onclick={() => (backModalOpen = true)}>
       <span class="material-icons pr-2">arrow_back</span>
       {$t('version.back')}
     </button>
   </div>
 </div>
 
-<div class="card p-4">
+<div class="card preset-filled-surface-100-900 p-4">
   <section>
     {#if $mod.fetching}
       <p>Loading...</p>
@@ -160,7 +154,7 @@
       <div class="p-4">
         <span>Edit Compatibility Info</span>
       </div>
-      <div class="card p-4">
+      <div class="card preset-filled-surface-100-900 p-4">
         <EditCompatibilityForm
           mod={$mod.data.mod}
           modId={$mod.data.mod.id}

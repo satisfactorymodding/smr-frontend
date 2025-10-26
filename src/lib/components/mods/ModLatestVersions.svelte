@@ -33,12 +33,12 @@
   export const { t } = getTranslate();
 </script>
 
-<div class="card p-4">
+<div class="card preset-filled-surface-100-900 p-4">
   <section>
     <div class="grid grid-flow-row gap-y-2">
       <h3 class="my-4 text-2xl font-bold"><T keyName="mod.latest-versions" defaultValue="Latest Versions" /></h3>
 
-      {#each Object.keys(stabilities) as stability}
+      {#each Object.keys(stabilities) as stability (stability)}
         {#if latestVersions[stability]}
           <div class="version">
             <div class="h-14 w-14 p-2.5 text-4xl" title={`Latest ${stability} release`}>

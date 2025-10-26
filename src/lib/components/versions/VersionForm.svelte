@@ -100,7 +100,7 @@
           {#if $modMeta.uplugin.Plugins !== undefined}
             <p>
               <strong>{$t('dependencies')}:</strong><br />
-              {#each dependencies as dependency}
+              {#each dependencies as dependency (dependency.Name)}
                 <strong>{dependency.Name}: </strong>
                 {#if dependency.SemVersion}
                   <span>{dependency.SemVersion}</span>
@@ -115,7 +115,7 @@
           {#if $modMeta.objects && $modMeta.objects.length > 0}
             <p>
               <strong>{$t('objects')}:</strong><br />
-              {#each $modMeta.objects as object}
+              {#each $modMeta.objects as object (object)}
                 <span>{object}</span>
                 <br />
               {/each}
@@ -157,7 +157,7 @@
     </div>
 
     <div>
-      <button class="preset-tonal-primary border-primary-500 btn border" type="submit" {disabled}>
+      <button class="btn border border-primary-500 preset-tonal-primary" type="submit" {disabled}>
         <span class="material-icons pr-2">{submitIcon}</span>
         {submitText}
       </button>

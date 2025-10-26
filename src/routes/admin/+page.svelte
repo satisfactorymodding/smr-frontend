@@ -9,7 +9,7 @@
 
 <h1>Admin Panel</h1>
 
-<div class="card p-4">
+<div class="card preset-filled-surface-100-900 p-4">
   <section>
     <a href="{base}/admin/unapproved-mods" class="text-white">
       <h2>Unapproved Mods</h2>

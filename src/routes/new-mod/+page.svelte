@@ -7,8 +7,9 @@
   import { base } from '$app/paths';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
   import { getTranslate } from '@tolgee/svelte';
+  import { toaster } from '$lib/utils/toaster-svelte';
 
-  export const { t } = getTranslate();
+  const { t } = getTranslate();
 
   const client = getContextClient();
 
@@ -21,16 +22,13 @@
       .then((value) => {
         if (value.error) {
           console.error(value.error.message);
-          toastStore.trigger({
-            message: 'Error creating mod: ' + value.error.message,
-            background: 'preset-filled-error-500',
-            autohide: false
+          toaster.error({
+            description: 'Error creating mod: ' + value.error.message
           });
         } else {
-          toastStore.trigger({
-            message: $t('new-mod.toast.creation-success'),
-            background: 'preset-filled-success-500',
-            timeout: 5000
+          toaster.success({
+            description: $t('new-mod.toast.creation-success'),
+            duration: 5000
           });
           goto(base + '/mod/' + value.data.createMod.id);
         }
@@ -44,7 +42,7 @@
 
 <h1 class="my-4 text-4xl font-bold">{$t('new-mod.title')}</h1>
 
-<div class="card p-4">
+<div class="card preset-filled-surface-100-900 p-4">
   <section>
     <ModForm {onSubmit} />
   </section>

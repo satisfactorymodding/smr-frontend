@@ -55,11 +55,11 @@ export const modSchema = zod.object({
     zod.object({
       EA: zod.object({
         state: zod.string(),
-        note: zod.ostring()
+        note: zod.optional(zod.string())
       }),
       EXP: zod.object({
         state: zod.string(),
-        note: zod.ostring()
+        note: zod.optional(zod.string())
       })
     })
   ),

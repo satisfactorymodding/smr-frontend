@@ -1,4 +1,4 @@
-import { sveltePreprocess } from 'svelte-preprocess';
+import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 import adapterBun from 'svelte-adapter-bun';
 import adapterStatic from '@sveltejs/adapter-static';
 
@@ -10,9 +10,7 @@ process.env.TAILWIND_MODE = dev ? 'watch' : 'build';
 const config = {
   // Consult https://github.com/sveltejs/svelte-preprocess
   // for more information about preprocessors
-  preprocess: sveltePreprocess({
-    sourceMap: true
-  }),
+  preprocess: vitePreprocess(),
 
   kit: {
     // By default, `npm run build` will create a standard Node app.

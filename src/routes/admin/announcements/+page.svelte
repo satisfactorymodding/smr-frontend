@@ -11,6 +11,7 @@
     DeleteAnnouncementDocument
   } from '$lib/generated';
   import { Accordion } from '@skeletonlabs/skeleton-svelte';
+  import { toaster } from '$lib/utils/toaster-svelte';
   const client = getContextClient();
 
   let announcements: Announcement[] = $state([]);
@@ -69,10 +70,9 @@
         console.log(err);
       }
       if (!success) {
-        toastStore.trigger({
-          message: `Failed to create Announcement '${announcement.message}'!`,
-          background: 'preset-filled-error-500',
-          timeout: 2000
+        toaster.error({
+          description: `Failed to create Announcement '${announcement.message}'!`,
+          duration: 2000
         });
         return;
       }
@@ -94,19 +94,17 @@
         // nothing
       }
       if (!success) {
-        toastStore.trigger({
-          message: `Failed to update Announcement '${announcement.message}'!`,
-          background: 'preset-filled-error-500',
-          timeout: 2000
+        toaster.error({
+          description: `Failed to update Announcement '${announcement.message}'!`,
+          duration: 2000
         });
         return;
       }
     }
 
-    toastStore.trigger({
-      message: `Announcement '${announcement.message}' saved!`,
-      background: 'preset-filled-success-500',
-      timeout: 2000
+    toaster.success({
+      description: `Announcement '${announcement.message}' saved!`,
+      duration: 2000
     });
   }
 
@@ -120,10 +118,9 @@
         success = false;
       }
       if (!success) {
-        toastStore.trigger({
-          message: `Failed to remove Announcement '${announcement.message}'!`,
-          background: 'preset-filled-error-500',
-          timeout: 2000
+        toaster.error({
+          description: `Failed to remove Announcement '${announcement.message}'!`,
+          duration: 2000
         });
         return;
       }
@@ -131,10 +128,9 @@
       announcements.splice(announcements.indexOf(announcement), 1);
     }
 
-    toastStore.trigger({
-      message: `Tag '${announcement.message}' removed!`,
-      background: 'preset-filled-success-500',
-      timeout: 2000
+    toaster.success({
+      description: `Tag '${announcement.message}' removed!`,
+      duration: 2000
     });
   }
 
@@ -146,23 +142,23 @@
 
 <h1>Announcements</h1>
 
-<div class="card">
+<div class="card preset-filled-surface-100-900">
   {#if $annQuery.fetching}
     <h1>Loading announcements...</h1>
   {:else if $annQuery.error}
     <h1>Failed to load announcements: {$annQuery.error.message}</h1>
   {:else}
     <Accordion>
-      {#each announcements as announcement}
-        <Accordion.Item>
-          {#snippet summary()}
+      {#each announcements as announcement (announcement.id)}
+        <Accordion.Item value={announcement.id}>
+          <Accordion.ItemTrigger>
             ({announcement.importance}) {(() => {
               const trimTo = 144;
               const trimmed = announcement.message.substring(0, trimTo);
               return announcement.message.length > trimTo ? trimmed + '...' : trimmed;
             })()}
-          {/snippet}
-          {#snippet content()}
+          </Accordion.ItemTrigger>
+          <Accordion.ItemContent>
             <div>
               <div>Message</div>
               <input
@@ -182,17 +178,17 @@
             </div>
 
             <button
-              class="preset-tonal-error border-error-500 btn border"
+              class="btn border border-error-500 preset-tonal-error"
               onclick={(e) => onDeleteClick(e, announcement)}>
               <span>Delete</span>
             </button>
-          {/snippet}
+          </Accordion.ItemContent>
         </Accordion.Item>
       {/each}
     </Accordion>
 
     <section class="p-4">
-      <button class="preset-tonal-primary border-primary-500 btn border" onclick={newAnnouncement}>
+      <button class="btn border border-primary-500 preset-tonal-primary" onclick={newAnnouncement}>
         <span>Add new announcement</span>
         <span class="material-icons">add</span>
       </button>

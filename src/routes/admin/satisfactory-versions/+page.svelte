@@ -8,6 +8,7 @@
     type GetSatisfactoryVersionsQuery
   } from '$lib/generated';
   import { Accordion } from '@skeletonlabs/skeleton-svelte';
+  import { toaster } from '$lib/utils/toaster-svelte';
 
   type SatisfactoryVersion = GetSatisfactoryVersionsQuery['getSatisfactoryVersions'][number];
 
@@ -68,10 +69,9 @@
         console.log(err);
       }
       if (!success) {
-        toastStore.trigger({
-          message: `Failed to create Satisfactory version '${satisfactoryVersion.version}'!`,
-          background: 'preset-filled-error-500',
-          timeout: 2000
+        toaster.error({
+          description: `Failed to create Satisfactory version '${satisfactoryVersion.version}'!`,
+          duration: 2000
         });
         return;
       }
@@ -94,19 +94,17 @@
         // nothing
       }
       if (!success) {
-        toastStore.trigger({
-          message: `Failed to update Satisfactory version '${satisfactoryVersion.version}'!`,
-          background: 'preset-filled-error-500',
-          timeout: 2000
+        toaster.error({
+          description: `Failed to update Satisfactory version '${satisfactoryVersion.version}'!`,
+          duration: 2000
         });
         return;
       }
     }
 
-    toastStore.trigger({
-      message: `Satisfactory version '${satisfactoryVersion.version}' saved!`,
-      background: 'preset-filled-success-500',
-      timeout: 2000
+    toaster.success({
+      description: `Satisfactory version '${satisfactoryVersion.version}' saved!`,
+      duration: 2000
     });
   }
 
@@ -126,19 +124,17 @@
         success = false;
       }
       if (!success) {
-        toastStore.trigger({
-          message: `Failed to remove Satisfactory version '${satisfactoryVersion.version}'!`,
-          background: 'preset-filled-error-500',
-          timeout: 2000
+        toaster.error({
+          description: `Failed to remove Satisfactory version '${satisfactoryVersion.version}'!`,
+          duration: 2000
         });
         return;
       }
     }
 
-    toastStore.trigger({
-      message: `Satisfactory version '${satisfactoryVersion.version}' removed!`,
-      background: 'preset-filled-success-500',
-      timeout: 2000
+    toaster.success({
+      description: `Satisfactory version '${satisfactoryVersion.version}' removed!`,
+      duration: 2000
     });
   }
 
@@ -150,19 +146,19 @@
 
 <h1>Satisfactory Versions</h1>
 
-<div class="card">
+<div class="card preset-filled-surface-100-900">
   {#if $satisfactoryVersionsQuery.fetching}
     <h1>Loading satisfactory versions...</h1>
   {:else if $satisfactoryVersionsQuery.error}
     <h1>Failed to load satisfactory versions: {$satisfactoryVersionsQuery.error.message}</h1>
   {:else}
     <Accordion>
-      {#each satisfactoryVersions as satisfactoryVersion}
-        <Accordion.Item>
-          {#snippet summary()}
+      {#each satisfactoryVersions as satisfactoryVersion (satisfactoryVersion.id)}
+        <Accordion.Item value={satisfactoryVersion.id}>
+          <Accordion.ItemTrigger>
             {satisfactoryVersion.version}
-          {/snippet}
-          {#snippet content()}
+          </Accordion.ItemTrigger>
+          <Accordion.ItemContent>
             <div>
               <div>Game CL#</div>
               <input
@@ -182,17 +178,17 @@
             </div>
 
             <button
-              class="preset-tonal-error border-error-500 btn border"
+              class="btn border border-error-500 preset-tonal-error"
               onclick={(e) => onDeleteClick(e, satisfactoryVersion)}>
               <span>Delete</span>
             </button>
-          {/snippet}
+          </Accordion.ItemContent>
         </Accordion.Item>
       {/each}
     </Accordion>
 
     <section class="p-4">
-      <button class="preset-tonal-primary border-primary-500 btn border" onclick={newSatisfactoryVersion}>
+      <button class="btn border border-primary-500 preset-tonal-primary" onclick={newSatisfactoryVersion}>
         <span>Add new Satisfactory version</span>
         <span class="material-icons">add</span>
       </button>

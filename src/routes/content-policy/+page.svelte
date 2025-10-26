@@ -6,7 +6,7 @@
   <MetaDescriptors description="Mod content policy for the Satisfactory Mod Repository" title="Content Policy" />
 </svelte:head>
 
-<div class="card p-4">
+<div class="card preset-filled-surface-100-900 p-4">
   <section class="p-4">
     <h1>Content Policy</h1>
     <h2>Advertising within Mods</h2>

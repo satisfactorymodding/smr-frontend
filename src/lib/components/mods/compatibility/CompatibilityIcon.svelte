@@ -15,7 +15,7 @@
 </script>
 
 <p
-  class="material-icons text-sm"
+  class="material-icons text-sm!"
   class:mod-state-works={compatibility?.state === CompatibilityState.Works}
   class:mod-state-damaged={compatibility?.state === CompatibilityState.Damaged}
   class:mod-state-broken={compatibility?.state === CompatibilityState.Broken}

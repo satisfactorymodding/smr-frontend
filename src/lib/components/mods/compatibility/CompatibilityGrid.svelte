@@ -15,27 +15,19 @@
   export const { t } = getTranslate();
   export const noNotesText = $t('compatibility-info.no-notes');
 
-  const openCompatibility = () => {
-    modalStore.trigger({
-      type: 'component',
-      component: {
-        ref: CompatibilityModal,
-        props: {
-          compatibility
-        }
-      }
-    });
-  };
+  let compatibilityOpen = $state(false);
 </script>
 
-<div class="card p-4">
+<CompatibilityModal bind:open={compatibilityOpen} {compatibility}></CompatibilityModal>
+
+<div class="card preset-filled-surface-100-900 p-4">
   <div class="grid grid-flow-row gap-y-2">
     <h3 class="my-4 text-2xl font-bold">{$t('compatibility-info.header')}</h3>
     <p>{$t('compatibility-info.subtitle')}</p>
     <div class="grid grid-flow-row">
       <table aria-label="Available Releases" class="max-w-auto table !overflow-visible">
         <tbody>
-          <tr class="!border-surface-500 rounded border">
+          <tr class="rounded border !border-surface-500">
             <td
               ><div class="flex items-center justify-center">
                 <CompatibilityIcon />{$t('compatibility-info.branch.stable')}
@@ -45,24 +37,31 @@
                 <CompatibilityIcon EXP={true} />{$t('compatibility-info.branch.unstable')}
               </div></td>
           </tr>
-          <tr class="!border-surface-500 rounded border">
+          <tr class="rounded border !border-surface-500">
             <td class="text-center">
-              <button class="m-0 min-w-0" title={$t('tooltip.click-for-info')} onclick={openCompatibility}>
+              <button
+                class="m-0 min-w-0"
+                title={$t('tooltip.click-for-info')}
+                onclick={() => (compatibilityOpen = true)}>
                 <CompatibilityStateText state={compatibility?.EA?.state} />
               </button>
             </td>
             <td class="text-center">
-              <button class="m-0 min-w-0" title={$t('tooltip.click-for-info')} onclick={openCompatibility}>
+              <button
+                class="m-0 min-w-0"
+                title={$t('tooltip.click-for-info')}
+                onclick={() => (compatibilityOpen = true)}>
                 <CompatibilityStateText state={compatibility?.EXP?.state} />
               </button>
             </td>
           </tr>
-          <tr class="!border-surface-500 rounded border">
+          <tr class="rounded border !border-surface-500">
             {#if compatibility}
               <td>
                 <span style="padding: 2px; white-space:normal">
                   {#if compatibility?.EA?.note}
                     {#await markdown(compatibility.EA.note) then rendered}
+                      <!-- eslint-disable-next-line svelte/no-at-html-tags -->
                       {@html rendered}
                     {/await}
                   {:else}
@@ -74,6 +73,7 @@
                 <span style="padding: 2px; white-space:normal">
                   {#if compatibility?.EXP?.note}
                     {#await markdown(compatibility.EXP.note) then rendered}
+                      <!-- eslint-disable-next-line svelte/no-at-html-tags -->
                       {@html rendered}
                     {/await}
                   {:else}

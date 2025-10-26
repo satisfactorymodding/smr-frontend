@@ -12,23 +12,12 @@
 
   export const { t } = getTranslate();
 
-  const openCompatibility = () => {
-    modalStore.trigger({
-      type: 'component',
-      component: {
-        ref: CompatibilityModal,
-        props: {
-          compatibility
-        }
-      }
-    });
-  };
+  let open = $state(false);
 </script>
 
-<button
-  class="preset-tonal-surface btn m-0 min-w-0 px-1 py-0 text-xs"
-  title={$t('compatibility-info.button')}
-  onclick={openCompatibility}>
+<button class="m-0 btn min-w-0 px-1 py-0" title={$t('compatibility-info.button')} onclick={() => (open = true)}>
   <CompatibilityIcon compatibility={compatibility?.EA} />
   <CompatibilityIcon compatibility={compatibility?.EXP} EXP={true} />
 </button>
+
+<CompatibilityModal bind:open {compatibility}></CompatibilityModal>

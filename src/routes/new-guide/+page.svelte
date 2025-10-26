@@ -6,6 +6,7 @@
   import type { GuideData } from '$lib/models/guides';
   import { base } from '$app/paths';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
+  import { toaster } from '$lib/utils/toaster-svelte';
 
   const client = getContextClient();
 
@@ -18,16 +19,13 @@
       .then((value) => {
         if (value.error) {
           console.error(value.error.message);
-          toastStore.trigger({
-            message: 'Error creating guide: ' + value.error.message,
-            background: 'preset-filled-error-500',
-            autohide: false
+          toaster.error({
+            description: 'Error creating guide: ' + value.error.message
           });
         } else {
-          toastStore.trigger({
-            message: `Guide created`,
-            background: 'preset-filled-success-500',
-            timeout: 5000
+          toaster.success({
+            description: `Guide created`,
+            duration: 5000
           });
           goto(base + '/guide/' + value.data.createGuide.id);
         }
@@ -41,7 +39,7 @@
 
 <h1 class="my-4 text-4xl font-bold">New Guide</h1>
 
-<div class="card p-4">
+<div class="card preset-filled-surface-100-900 p-4">
   <section>
     <GuideForm {onSubmit} submitIcon="add_circle" />
   </section>

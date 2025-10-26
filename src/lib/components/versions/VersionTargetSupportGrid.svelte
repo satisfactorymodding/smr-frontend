@@ -53,7 +53,7 @@
 <div class="grid grid-flow-row">
   <table aria-label="Available Releases" class="max-w-auto table !overflow-visible">
     <tbody>
-      <tr class="!border-surface-500 rounded border">
+      <tr class="rounded border !border-surface-500">
         <td style="width: 20%;"></td>
         <td style="width: 40%;"
           ><div class="text-center" title="Game client">
@@ -64,7 +64,7 @@
             <T keyName="target-platform.server" defaultValue="Server" />
           </div></td>
       </tr>
-      <tr class="!border-surface-500 rounded border">
+      <tr class="rounded border !border-surface-500">
         <td><T keyName="target-platform.windows" defaultValue="Windows" /></td>
         <td
           ><div class="text-center">
@@ -77,7 +77,7 @@
               >{WindowsServerSupport.glyph}</span>
           </div></td>
       </tr>
-      <tr class="!border-surface-500 rounded border">
+      <tr class="rounded border !border-surface-500">
         <td><T keyName="target-platform.linux" defaultValue="Linux" /></td>
         <td
           ><div

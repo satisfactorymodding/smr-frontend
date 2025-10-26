@@ -16,7 +16,7 @@
 <div class="grid grid-flow-row">
   <table aria-label="Required Mod Dependencies" class="max-w-auto table !overflow-visible">
     <tbody>
-      <tr class="!border-surface-500 rounded border">
+      <tr class="rounded border !border-surface-500">
         <td
           class="underline decoration-dotted"
           title="Other mods that must be installed for this mod to function. The Mod Manager will automatically install these for you."
@@ -25,12 +25,12 @@
       </tr>
       {#if requiredDependencies?.length === 0}
         <!-- A mod *not* having required dependencies is rare, so point it out when this is the case -->
-        <tr class="!border-surface-500 rounded border">
+        <tr class="rounded border !border-surface-500">
           <td><div class="text-center">None</div></td>
           <td><div class="text-center">N/A</div></td>
         </tr>
       {:else}
-        {#each requiredDependencies as dependency}
+        {#each requiredDependencies as dependency (dependency.mod_id)}
           <DependencyRow {dependency} />
         {/each}
       {/if}
@@ -43,14 +43,14 @@
   <div class="grid grid-flow-row">
     <table aria-label="Optional Mod Dependencies" class="max-w-auto table !overflow-visible">
       <tbody>
-        <tr class="!border-surface-500 rounded border">
+        <tr class="rounded border !border-surface-500">
           <td
             class="underline decoration-dotted"
             title="Other mods that don't need to be installed for this mod to function, but may unlock additional functionality when present. You must chose to install them in the Mod Manager if you wish to use them."
             >Optional Dependencies</td>
           <td><div class="text-center">Version Range</div></td>
         </tr>
-        {#each optionalDependencies as dependency}
+        {#each optionalDependencies as dependency (dependency.mod_id)}
           <DependencyRow {dependency} />
         {/each}
       </tbody>

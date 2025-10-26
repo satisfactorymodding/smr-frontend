@@ -7,6 +7,7 @@
   import TranslationDropdown from '$lib/components/general/TranslationDropdown.svelte';
   import type { SidebarItemData } from '$lib/utils/sidebarItemData';
   import SidebarItem from './SidebarItem.svelte';
+  import { Navigation } from '@skeletonlabs/skeleton-svelte';
 
   interface Props {
     accessibility: boolean;
@@ -119,10 +120,10 @@
   <TranslationDropdown />
 </li>
 
-<div class="flex h-full max-w-xl flex-col justify-between overflow-y-auto p-4">
-  <div class="flex h-full max-w-xl flex-col gap-4">
-    <nav class="list-nav xl:hidden">
-      <ul>
+<div class="grid h-[728px] w-full grid-cols-[auto_1fr] items-stretch border border-surface-200-800">
+  <Navigation layout="sidebar" class="grid grid-rows-[auto_1fr_auto] gap-4">
+    <Navigation.Header>
+      <div class="list-nav xl:hidden">
         {#if $user === null}
           <button onclick={onClickLogin} class="w-full">
             <span class="material-icons">login</span>
@@ -145,44 +146,43 @@
             <span>{$t('user.logout')}</span>
           </button>
         {/if}
-      </ul>
-    </nav>
+      </div>
+    </Navigation.Header>
 
-    <div class="xl:hidden">
-      <hr />
-    </div>
-
-    <nav class="list-nav">
-      <ul>
-        {#each top as item}
+    <Navigation.Content>
+      <Navigation.Group>
+        {#each top as item (item.url)}
           <SidebarItem {item} />
         {/each}
-      </ul>
-    </nav>
-  </div>
+      </Navigation.Group>
+    </Navigation.Content>
 
-  <nav class="list-nav">
-    <ul>
-      {#each bottom as item}
-        <SidebarItem {item} />
-      {/each}
+    <Navigation.Footer>
+      <Navigation.Group>
+        {#each bottom as item (item.url)}
+          <SidebarItem {item} />
+        {/each}
 
-      <li class="xl:hidden">
-        <a target="_blank" href="https://smm.ficsit.app" rel="noopener">
-          <span class="material-icons">file_download</span>
-          <span class="flex-auto">{$t('sidebar.mod-manager')}</span>
-        </a>
-      </li>
+        <li class="xl:hidden">
+          <a target="_blank" href="https://smm.ficsit.app" rel="noopener">
+            <span class="material-icons">file_download</span>
+            <span class="flex-auto">{$t('sidebar.mod-manager')}</span>
+          </a>
+        </li>
 
-      <li class="flex flex-row items-center justify-center gap-4 px-3 pt-2">
-        <Switch
-          bind:checked={accessibility}
-          aria-label="Accessibility Font"
-          name="accessibility_font"
-          size="sm"
-          active="bg-primary-500" />
-        <span>{$t('sidebar.accessibility-font')}</span>
-      </li>
-    </ul>
-  </nav>
+        <li class="flex flex-row items-center justify-center gap-4 px-3 pt-2">
+          <Switch
+            checked={accessibility}
+            onCheckedChange={(e) => (accessibility = e.checked)}
+            name="accessibility_font">
+            <Switch.Control>
+              <Switch.Thumb />
+            </Switch.Control>
+            <Switch.Label>{$t('sidebar.accessibility-font')}</Switch.Label>
+            <Switch.HiddenInput />
+          </Switch>
+        </li>
+      </Navigation.Group>
+    </Navigation.Footer>
+  </Navigation>
 </div>

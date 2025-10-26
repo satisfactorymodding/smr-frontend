@@ -32,22 +32,22 @@
 </script>
 
 <Accordion>
-  <Accordion.Item>
-    {#snippet summary()}
+  <Accordion.Item value="early-access">
+    <Accordion.ItemTrigger>
       <span class="material-icons text-sm">rocket_launch</span>
       {$t('early-access')} - {$t('compatibility')}
-    {/snippet}
-    {#snippet content()}
+    </Accordion.ItemTrigger>
+    <Accordion.ItemContent>
       <CompatibilityEdit bind:compatibility={compatibilityInfo.EA} />
-    {/snippet}
+    </Accordion.ItemContent>
   </Accordion.Item>
-  <Accordion.Item>
-    {#snippet summary()}
+  <Accordion.Item value="early-access">
+    <Accordion.ItemTrigger>
       <span class="material-icons text-sm">science</span>
       {$t('experimental')} - {$t('compatibility')}
-    {/snippet}
-    {#snippet content()}
+    </Accordion.ItemTrigger>
+    <Accordion.ItemContent>
       <CompatibilityEdit bind:compatibility={compatibilityInfo.EXP} />
-    {/snippet}
+    </Accordion.ItemContent>
   </Accordion.Item>
 </Accordion>

@@ -14,11 +14,11 @@
   import CompatibilityGrid from '$lib/components/mods/compatibility/CompatibilityGrid.svelte';
   import { getContextClient } from '@urql/svelte';
   import type { PageData } from './$types';
-  import { type ModalSettings } from '@skeletonlabs/skeleton-svelte';
   import EditCompatibilityModal from '$lib/modals/EditCompatibilityModal.svelte';
   import Page404 from '$lib/components/general/Page404.svelte';
   import { getTranslate } from '@tolgee/svelte';
   import { toaster } from '$lib/utils/toaster-svelte';
+  import BasicModal from '$lib/components/general/BasicModal.svelte';
 
   interface Props {
     data: PageData;
@@ -26,7 +26,7 @@
 
   let { data }: Props = $props();
 
-  export const { t } = getTranslate();
+  const { t } = getTranslate();
 
   let { modId, mod } = $derived(data);
 
@@ -60,26 +60,8 @@
       });
   };
 
-  const deleteModal: ModalSettings = {
-    type: 'confirm',
-    title: $t('mod.modal.delete.title'),
-    body: $t('mod.modal.delete.text'),
-    response: (r: boolean) => {
-      if (r) {
-        deleteModFn();
-      }
-    }
-  };
-
-  let editCompatibilityModal = $derived({
-    type: 'component',
-    component: {
-      ref: EditCompatibilityModal,
-      props: {
-        mod: $mod.data?.mod
-      }
-    }
-  } satisfies ModalSettings);
+  let deleteModalOpen = $state(false);
+  let editCompatibilityModalOpen = $state(false);
 </script>
 
 <svelte:head>
@@ -105,30 +87,38 @@
       <div>
         {#if canUserEdit}
           <button
-            class="preset-tonal-primary border-primary-500 btn border"
+            class="btn border border-primary-500 preset-tonal-primary"
             onclick={() => goto(base + '/mod/' + modId + '/edit')}>
             <span class="material-icons pr-2">edit</span>
             {$t('mod.edit')}</button>
-          <button
-            class="preset-tonal-primary border-primary-500 btn border"
-            onclick={() => modalStore.trigger(deleteModal)}>
+
+          <BasicModal
+            bind:open={deleteModalOpen}
+            title={$t('mod.modal.delete.title')}
+            body={$t('mod.modal.delete.text')}
+            buttonTextCancel="Cancel"
+            buttonTextConfirm="Delete"
+            confirm={deleteModFn} />
+          <button class="btn border border-primary-500 preset-tonal-primary" onclick={() => (deleteModalOpen = true)}>
             <span class="material-icons pr-2">delete_forever</span>
             {$t('mod.delete')}</button>
           <button
-            class="preset-tonal-primary border-primary-500 btn border"
+            class="btn border border-primary-500 preset-tonal-primary"
             onclick={() => goto(base + '/mod/' + modId + '/new-version')}>
             <span class="material-icons pr-2">upload_file</span>
             {$t('mod.new-version')}</button>
         {/if}
         {#if canUserEditCompatibility}
+          <EditCompatibilityModal mod={$mod.data?.mod} bind:open={editCompatibilityModalOpen} />
+
           <button
-            class="preset-tonal-primary border-primary-500 btn border"
-            onclick={() => modalStore.trigger(editCompatibilityModal)}>
+            class="btn border border-primary-500 preset-tonal-primary"
+            onclick={() => (editCompatibilityModalOpen = true)}>
             <span class="material-icons">rocket_launch</span>
             <span class="material-icons pr-2">science</span>
             {$t('mod.edit-compatibility')}</button>
         {/if}
-        <button class="preset-tonal-primary border-primary-500 btn border" onclick={() => (versionsTab = !versionsTab)}>
+        <button class="btn border border-primary-500 preset-tonal-primary" onclick={() => (versionsTab = !versionsTab)}>
           {#if !versionsTab}
             <span class="material-icons pr-2" title="Browse all uploaded versions of this mod">view_list</span>
             {$t('mod.view-versions')}

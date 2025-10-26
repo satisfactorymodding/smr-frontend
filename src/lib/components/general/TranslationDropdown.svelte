@@ -2,13 +2,11 @@
   import { getTolgee, getTranslate } from '@tolgee/svelte';
   import { writable } from 'svelte/store';
   import { browser } from '$app/environment';
-  import { Popover } from '@skeletonlabs/skeleton-svelte';
+  import { Popover, Portal } from '@skeletonlabs/skeleton-svelte';
 
   const tolgee = getTolgee(['language']);
 
   export const { t } = getTranslate();
-
-  let openState = $state(false);
 
   type language = {
     name: string;
@@ -94,30 +92,33 @@
   });
 </script>
 
-<button
-  class="preset-tonal-primary border-primary-500 btn btn-sm grid grid-flow-col border"
-  onclick={() => (openState = !openState)}>
-  <span>{languages[$lang].name}</span>
-  <span class={`text-xl ${languages[$lang]?.style ?? defaultFlagTextStyle}`}>{languages[$lang].flag}</span>
-</button>
-
-<Popover
-  open={openState}
-  onOpenChange={(e) => (openState = e.open)}
-  positioning={{ placement: 'bottom' }}
-  contentBase="card w-56 overflow-y-auto scroll-smooth py-2 shadow-xl">
-  {#snippet content()}
-    <nav class="list-nav">
-      <ul>
-        {#each Object.entries(languages) as [k, v]}
-          <li class:preset-filled-primary-500={$lang === k}>
-            <button class="w-full" onclick={() => lang.set(k)}>
-              <span>{v.name}</span>
-              <span class="text-xl {v?.style ?? defaultFlagTextStyle}">{v.flag}</span>
-            </button>
-          </li>
-        {/each}
-      </ul>
-    </nav>
-  {/snippet}
+<Popover>
+  <Popover.Trigger class="btn grid grid-flow-col border border-primary-500 preset-tonal-primary btn-sm">
+    <span>{languages[$lang].name}</span>
+    <span class={`text-xl ${languages[$lang]?.style ?? defaultFlagTextStyle}`}>{languages[$lang].flag}</span>
+  </Popover.Trigger>
+  <Portal>
+    <Popover.Positioner>
+      <Popover.Content class="max-w-md space-y-2 card bg-surface-100-900 p-4 shadow-xl">
+        <Popover.Description>
+          <nav class="list-nav">
+            <ul>
+              {#each Object.entries(languages) as [k, v] (k)}
+                <li class:preset-filled-primary-500={$lang === k}>
+                  <button class="w-full" onclick={() => lang.set(k)}>
+                    <span>{v.name}</span>
+                    <span class="text-xl {v?.style ?? defaultFlagTextStyle}">{v.flag}</span>
+                  </button>
+                </li>
+              {/each}
+            </ul>
+          </nav>
+        </Popover.Description>
+        <Popover.Arrow
+          style="--arrow-size: calc(var(--spacing) * 2); --arrow-background: var(--color-surface-100-900);">
+          <Popover.ArrowTip />
+        </Popover.Arrow>
+      </Popover.Content>
+    </Popover.Positioner>
+  </Portal>
 </Popover>

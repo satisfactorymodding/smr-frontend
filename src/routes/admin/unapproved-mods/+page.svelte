@@ -4,7 +4,7 @@
   import { base } from '$app/paths';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
   import { prettyDate } from '$lib/utils/formatting';
-  import { type PaginationSettings, Pagination } from '@skeletonlabs/skeleton-svelte';
+  import Pager from '$lib/components/general/Pager.svelte';
 
   const client = getContextClient();
 
@@ -45,13 +45,6 @@
         mods.resume();
       });
   };
-
-  let paginationSettings = $derived({
-    page: page,
-    limit: perPage,
-    size: totalMods,
-    amounts: [5, 10, 20, 50, 100]
-  } satisfies PaginationSettings);
 </script>
 
 <svelte:head>
@@ -63,18 +56,12 @@
 {#if totalMods}
   <div class="mb-5 ml-auto flex justify-end">
     <div>
-      <Pagination
-        bind:settings={paginationSettings}
-        showFirstLastButtons={true}
-        showPreviousNextButtons={true}
-        on:page={(p) => (page = p.detail)}
-        on:amount={(p) => (perPage = p.detail)}
-        controlVariant="preset-filled-surface-500" />
+      <Pager bind:page bind:perPage total={totalMods} />
     </div>
   </div>
 {/if}
 
-<div class="card">
+<div class="card preset-filled-surface-100-900">
   {#if $mods.fetching}
     <section class="p-4">Loading...</section>
   {:else if $mods.error}
@@ -90,7 +77,7 @@
         </tr>
       </thead>
       <tbody>
-        {#each $mods.data.getUnapprovedMods.mods as mod}
+        {#each $mods.data.getUnapprovedMods.mods as mod (mod.id)}
           <tr>
             <td>{mod.name}</td>
             <td>{mod.short_description}</td>
@@ -98,12 +85,12 @@
             <td class="!p-2.5">
               <div class="grid grid-flow-col gap-4">
                 <button
-                  class="preset-tonal-primary border-primary-500 btn btn-sm border"
+                  class="btn border border-primary-500 preset-tonal-primary btn-sm"
                   onclick={() => approveMod(mod.id)}>Approve</button>
                 <button
-                  class="preset-tonal-primary border-primary-500 btn btn-sm border"
+                  class="btn border border-primary-500 preset-tonal-primary btn-sm"
                   onclick={() => denyMod(mod.id)}>Deny</button>
-                <a class="preset-tonal-primary border-primary-500 btn btn-sm border" href={base + '/mod/' + mod.id}
+                <a class="btn border border-primary-500 preset-tonal-primary btn-sm" href={base + '/mod/' + mod.id}
                   >View</a>
               </div>
             </td>
@@ -117,13 +104,7 @@
 {#if totalMods}
   <div class="mt-5 ml-auto flex justify-end">
     <div>
-      <Pagination
-        bind:settings={paginationSettings}
-        showFirstLastButtons={true}
-        showPreviousNextButtons={true}
-        on:page={(p) => (page = p.detail)}
-        on:amount={(p) => (perPage = p.detail)}
-        controlVariant="preset-filled-surface-500" />
+      <Pager bind:page bind:perPage total={totalMods} />
     </div>
   </div>
 {/if}

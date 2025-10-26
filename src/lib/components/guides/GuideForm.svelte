@@ -85,7 +85,7 @@
     </div>
 
     <div>
-      <button class="preset-tonal-primary border-primary-500 btn border" type="submit">
+      <button class="btn border border-primary-500 preset-tonal-primary" type="submit">
         <span class="material-icons pr-2">{submitIcon}</span>
         {submitText}</button>
     </div>

@@ -20,7 +20,7 @@
     importance={AnnouncementImportance.Warning} />
 {:else if $announcements && $announcements.data && $announcements.data.getAnnouncements}
   <div class="mt-3 mr-3 mb-3 ml-3 flex max-h-96 flex-col gap-2 overflow-y-auto xl:mb-0 xl:ml-0">
-    {#each $announcements?.data?.getAnnouncements as announcement}
+    {#each $announcements?.data?.getAnnouncements as announcement (announcement.id)}
       <AnnouncementRow message={announcement.message} importance={announcement.importance} />
     {/each}
   </div>

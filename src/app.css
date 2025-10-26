@@ -1,13 +1,14 @@
 @import 'https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible&family=Roboto&family=Roboto+Mono&family=Material+Icons&family=Noto+Color+Emoji&display=swap';
 
 @import '@skeletonlabs/skeleton';
-@import '@skeletonlabs/skeleton/optional/presets';
 @import './theme.css';
 
 @import 'tailwindcss';
 
 @import '../node_modules/prismjs/themes/prism-okaidia.css';
 @import '../node_modules/cookieconsent/build/cookieconsent.min.css';
+
+@import '@skeletonlabs/skeleton-svelte';
 
 @theme {
   --font-flow: Flow;
@@ -281,4 +282,8 @@ body.accessibility {
 
 .validation-message {
   color: red;
+}
+
+.selected-tag {
+  @apply border border-primary-500 preset-tonal-primary hover:preset-outlined-primary-500;
 }

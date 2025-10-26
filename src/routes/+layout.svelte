@@ -12,7 +12,7 @@
   import { PUBLIC_GOOGLE_SITE_TAG } from '$env/static/public';
   import type { LayoutData } from './$types';
   import { TolgeeProvider } from '@tolgee/svelte';
-  import { Toaster } from '@skeletonlabs/skeleton-svelte';
+  import { Toast } from '@skeletonlabs/skeleton-svelte';
   import TopBar from '$lib/components/general/TopBar.svelte';
   import '../app.css';
   import { toaster } from '$lib/utils/toaster-svelte';
@@ -31,7 +31,7 @@
     gTag = PUBLIC_GOOGLE_SITE_TAG as string;
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    window.gTag = gTag;
+    window.gTag = PUBLIC_GOOGLE_SITE_TAG as string;
   }
 
   let root: HTMLElement = $state();
@@ -125,9 +125,19 @@
 </svelte:head>
 
 <TolgeeProvider {tolgee}>
-  <Toaster {toaster}></Toaster>
+  <Toast.Group {toaster}>
+    {#snippet children(toast)}
+      <Toast {toast}>
+        <Toast.Message>
+          <Toast.Title>{toast.title}</Toast.Title>
+          <Toast.Description>{toast.description}</Toast.Description>
+        </Toast.Message>
+        <Toast.CloseTrigger />
+      </Toast>
+    {/snippet}
+  </Toast.Group>
 
-  <div class="grid grid-rows-[auto_1fr_auto]">
+  <div class="grid h-screen grid-rows-[auto_1fr_auto]">
     <header class="sticky top-0 z-10">
       <TopBar />
     </header>
@@ -135,7 +145,7 @@
       <aside class="sticky top-[calc(72px)] col-span-1 hidden h-[calc(100vh-72px)] xl:block">
         <Sidebar bind:accessibility />
       </aside>
-      <main class="space-y-4 p-4">
+      <main class="col-span-1 space-y-4 p-4">
         <AnnouncementHeader />
         {@render children?.()}
       </main>

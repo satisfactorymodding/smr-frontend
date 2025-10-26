@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { run } from 'svelte/legacy';
-
   import { getContextClient } from '@urql/svelte';
   import { UpdateUserDocument } from '$lib/generated';
   import { goto } from '$app/navigation';
@@ -14,10 +12,11 @@
   import { base } from '$app/paths';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
   import type { Writable } from 'svelte/store';
+  import { toaster } from '$lib/utils/toaster-svelte';
 
   const client = getContextClient();
 
-  export const userSchema = zod.object({
+  const userSchema = zod.object({
     avatar: zod.optional(zod.any().refine((logo) => 'name' in logo && 'size' in logo && 'type' in logo)),
     username: zod.string().min(3).max(32)
   });
@@ -25,8 +24,8 @@
   let form: Form<{ [key: string]: string }>['form'] = $state();
   let data: Writable<{ username: string }> = $state();
 
-  run(() => {
-    if ($user && !data) {
+  $effect(() => {
+    if ($user && !$data) {
       const createdForm = createForm<{ username: string }>({
         initialValues: {
           username: $user.username
@@ -43,16 +42,13 @@
             .then((value) => {
               if (value.error) {
                 console.error(value.error.message);
-                toastStore.trigger({
-                  message: 'Error editing user: ' + value.error.message,
-                  background: 'preset-filled-error-500',
-                  autohide: false
+                toaster.error({
+                  description: 'Error editing user: ' + value.error.message
                 });
               } else {
-                toastStore.trigger({
-                  message: `User updated`,
-                  background: 'preset-filled-success-500',
-                  timeout: 5000
+                toaster.success({
+                  description: `User updated`,
+                  duration: 5000
                 });
                 goto(base + '/user/' + value.data.updateUser.id);
               }
@@ -72,7 +68,7 @@
 
 <h1 class="my-4 text-4xl font-bold">Settings</h1>
 
-<div class="card p-4">
+<div class="card preset-filled-surface-100-900 p-4">
   <section>
     {#if $user === null}
       <p>Please log in</p>
@@ -108,7 +104,7 @@
           </div>
 
           <div>
-            <button class="preset-tonal-primary border-primary-500 btn border" type="submit">Save</button>
+            <button class="btn border border-primary-500 preset-tonal-primary" type="submit">Save</button>
           </div>
         </div>
       </form>

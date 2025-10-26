@@ -7,7 +7,8 @@
   import { base } from '$app/paths';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
   import type { PageData } from './$types';
-  import { type ModalSettings } from '@skeletonlabs/skeleton-svelte';
+  import { toaster } from '$lib/utils/toaster-svelte';
+  import BasicModal from '$lib/components/general/BasicModal.svelte';
 
   interface Props {
     data: PageData;
@@ -37,16 +38,13 @@
       .then((value) => {
         if (value.error) {
           console.error(value.error.message);
-          toastStore.trigger({
-            message: 'Error editing version: ' + value.error.message,
-            background: 'preset-filled-error-500',
-            autohide: false
+          toaster.error({
+            description: 'Error editing version: ' + value.error.message
           });
         } else {
-          toastStore.trigger({
-            message: `Version updated`,
-            background: 'preset-filled-success-500',
-            timeout: 5000
+          toaster.success({
+            description: `Version updated`,
+            duration: 5000
           });
           return goto(base + '/mod/' + modId + '/version/' + versionId);
         }
@@ -65,18 +63,7 @@
     goto(base + '/mod/' + modId + '/version/' + versionId);
   };
 
-  const backModal: ModalSettings = {
-    type: 'confirm',
-    title: 'Go Back?',
-    buttonTextCancel: 'Keep Editing',
-    buttonTextConfirm: 'Go Back',
-    body: 'Going back will discard any unsaved changes. Are you sure you wish to continue?',
-    response: (r: boolean) => {
-      if (r) {
-        goBackFn();
-      }
-    }
-  };
+  let backModalOpen = $state(false);
 </script>
 
 <svelte:head>
@@ -90,13 +77,20 @@
 <div class="flex h-auto flex-wrap items-center justify-between">
   <h1 class="my-4 text-4xl font-bold">Edit Version</h1>
   <div>
-    <button class="preset-tonal-primary border-primary-500 btn border" onclick={() => modalStore.trigger(backModal)}>
+    <BasicModal
+      bind:open={backModalOpen}
+      title="Go Back?"
+      body="Going back will discard any unsaved changes. Are you sure you wish to continue?"
+      buttonTextCancel="Keep Editing"
+      buttonTextConfirm="Go Back"
+      confirm={goBackFn} />
+    <button class="btn border border-primary-500 preset-tonal-primary" onclick={() => (backModalOpen = true)}>
       <span class="material-icons pr-2">arrow_back</span>
       Back to Versions</button>
   </div>
 </div>
 
-<div class="card p-4">
+<div class="card preset-filled-surface-100-900 p-4">
   <section>
     {#if $version.fetching}
       <p>Loading...</p>

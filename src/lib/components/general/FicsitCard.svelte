@@ -78,7 +78,7 @@
 </script>
 
 <div
-  class="card relative h-full overflow-hidden"
+  class="relative h-full overflow-hidden card preset-filled-surface-100-900"
   onmouseover={onOver}
   onmouseout={onOut}
   onfocus={onOver}
@@ -151,7 +151,7 @@
         {#if !fake}
           <a
             href={link}
-            class="preset-tonal-surface btn btn-sm"
+            class="btn preset-tonal-surface btn-sm"
             aria-label="View {renderedName}"
             title="View {renderedName}">
             <span class="material-icons">info</span>

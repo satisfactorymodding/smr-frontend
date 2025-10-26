@@ -40,6 +40,6 @@
 <form onsubmit={onSubmit}>
   <ModCompatibilityEdit bind:compatibilityInfo={mod.compatibility} />
   <div class="p-5">
-    <button class="preset-tonal-primary border-primary-500 btn border" type="submit">{$t('entry.save')}</button>
+    <button class="btn border border-primary-500 preset-tonal-primary" type="submit">{$t('entry.save')}</button>
   </div>
 </form>

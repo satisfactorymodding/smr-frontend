@@ -398,10 +398,10 @@ This line is way far down
 
 <div>
   <h1 class="my-4 text-4xl font-bold">Get Help Using Mods</h1>
-  <div class="card p-4">
+  <div class="card preset-filled-surface-100-900 p-4">
     <section class="p-4">
       <button
-        class="preset-tonal-primary border-primary-500 btn btn-sm border text-2xl"
+        class="btn border border-primary-500 preset-tonal-primary btn-sm text-2xl"
         onclick={() =>
           (window.location.href = 'https://docs.ficsit.app/satisfactory-modding/latest/ForUsers/Welcome.html')}>
         <span>Visit the Welcome Guide</span>
@@ -412,7 +412,7 @@ This line is way far down
 
   <h1 class="my-4 text-4xl font-bold">Mod Developer Resources</h1>
   <div class="grid grid-flow-row grid-cols-1 grid-rows-2 gap-4 md:grid-cols-2 md:grid-rows-1">
-    <div class="card p-4">
+    <div class="card preset-filled-surface-100-900 p-4">
       <section class="p-4">
         <h3 class="my-4 text-2xl font-bold"><mod>.uplugin format</mod></h3>
         <div class="markdown-content">
@@ -424,7 +424,7 @@ This line is way far down
       </section>
     </div>
 
-    <div class="card p-4">
+    <div class="card preset-filled-surface-100-900 p-4">
       <section class="p-4">
         <h3 class="my-4 text-2xl font-bold">Validate your <mod>.uplugin</mod></h3>
         <textarea placeholder="enter your <mod>.uplugin" rows="23" class="markdownEditor" bind:value={uPluginJsonInput}
@@ -452,7 +452,7 @@ This line is way far down
   </div>
 
   <h1 class="my-4 text-4xl font-bold">Markdown</h1>
-  <div class="card p-4">
+  <div class="card preset-filled-surface-100-900 p-4">
     <section class="p-4">
       <div class="markdown-content">
         {#await markdownHtml then markdownHtmlRendered}

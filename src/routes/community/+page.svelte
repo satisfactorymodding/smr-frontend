@@ -13,7 +13,7 @@
 
 <div>
   <div class="grid grid-flow-col grid-cols-1 grid-rows-2 gap-4 md:grid-cols-2 md:grid-rows-1">
-    <div class="card p-4">
+    <div class="card preset-filled-surface-100-900 p-4">
       <div
         class="grid grid-flow-col grid-cols-1 grid-rows-2 justify-items-center gap-4 2xl:grid-cols-2 2xl:grid-rows-1">
         <div>
@@ -49,7 +49,7 @@
       </div>
     </div>
 
-    <div class="card p-4">
+    <div class="card preset-filled-surface-100-900 p-4">
       <section class="p-4">
         <h1><T keyName="community.welcome.header" defaultValue="Welcome" /></h1>
         <p>

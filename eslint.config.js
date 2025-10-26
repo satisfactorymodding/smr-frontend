@@ -1,7 +1,12 @@
-import typescriptParser from '@typescript-eslint/parser';
-import typescriptPlugin from '@typescript-eslint/eslint-plugin';
-import sveltePlugin from "eslint-plugin-svelte";
-import svelteParser from "svelte-eslint-parser";
+import prettier from 'eslint-config-prettier';
+import { fileURLToPath } from 'node:url';
+import { includeIgnoreFile } from '@eslint/compat';
+import js from '@eslint/js';
+import svelte from 'eslint-plugin-svelte';
+import { defineConfig } from 'eslint/config';
+import globals from 'globals';
+import ts from 'typescript-eslint';
+import svelteConfig from './svelte.config.js';
 
 const rules = {
   'array-callback-return': 'error',
@@ -26,65 +31,93 @@ const rules = {
   'no-shadow': 'error',
   'no-use-before-define': 'error',
   'no-unused-vars': 'off',
-  '@typescript-eslint/no-unused-vars': ['error', {
-    varsIgnorePattern: '^_',
-    argsIgnorePattern: '^_'
-  }]
+  '@typescript-eslint/no-unused-vars': [
+    'error',
+    {
+      varsIgnorePattern: '^_',
+      argsIgnorePattern: '^_'
+    }
+  ],
+  'svelte/no-navigation-without-resolve': 'off',
+  'svelte/no-unused-props': [
+    'error',
+    {
+      'allowUnusedNestedProperties': true,
+    }
+  ]
 };
 
-export default [
-  {
-    ignores: [
-      ".svelte-kit/**/*",
-      "node_modules/**/*",
-      "dist/**/*",
-      "build/**/*",
-      "src/i18n/**/*"
-    ],
-  },
+const gitignorePath = fileURLToPath(new URL('./.gitignore', import.meta.url));
 
+export default defineConfig(
+  includeIgnoreFile(gitignorePath),
+  js.configs.recommended,
+  ...ts.configs.recommended,
+  ...svelte.configs.recommended,
+  prettier,
+  ...svelte.configs.prettier,
   {
-    files: ["**/*.ts"],
-    ignores: [
-      "custom-theme.ts",
-      "src/service-worker.ts",
-      "tailwind.config.ts"
-    ],
     languageOptions: {
-      parser: typescriptParser,
-      parserOptions: {
-        project: "./tsconfig.json",
-        extraFileExtensions: [".svelte"],
-      },
-    },
-    plugins: {
-      "@typescript-eslint": typescriptPlugin,
+      globals: { ...globals.browser, ...globals.node }
     },
     rules: {
-      ...typescriptPlugin.configs.recommended.rules,
+      "no-undef": 'off',
       ...rules
-    },
+    }
+  },
+  {
+    files: [
+      '**/*.svelte',
+      '**/*.svelte.ts',
+      '**/*.svelte.js'
+    ],
+    languageOptions: {
+      parserOptions: {
+        projectService: true,
+        extraFileExtensions: ['.svelte'],
+        parser: ts.parser,
+        svelteConfig
+      }
+    }
   },
 
-  {
-    files: ["**/*.svelte"],
-    languageOptions: {
-      parser: svelteParser,
-      parserOptions: {
-        parser: typescriptParser,
-        project: "./tsconfig.json",
-        extraFileExtensions: [".svelte"],
-      },
-    },
-    plugins: {
-      svelte: sveltePlugin,
-      "@typescript-eslint": typescriptPlugin,
-    },
-    rules: {
-      ...typescriptPlugin.configs.recommended.rules,
-      ...sveltePlugin.configs.recommended.rules,
-      ...rules,
-      'svelte/no-at-html-tags': 'off'
-    },
-  },
-];
+  // {
+  //   files: ["**/*.ts"],
+  //   languageOptions: {
+  //     parser: typescriptParser,
+  //     parserOptions: {
+  //       project: "./tsconfig.json",
+  //       extraFileExtensions: [".svelte"],
+  //     },
+  //   },
+  //   plugins: {
+  //     "@typescript-eslint": typescriptPlugin,
+  //   },
+  //   rules: {
+  //     ...typescriptPlugin.configs.recommended.rules,
+  //     ...rules
+  //   },
+  // },
+  //
+  // {
+  //   files: ["**/*.svelte"],
+  //   languageOptions: {
+  //     parser: svelteParser,
+  //     parserOptions: {
+  //       parser: typescriptParser,
+  //       project: "./tsconfig.json",
+  //       extraFileExtensions: [".svelte"],
+  //     },
+  //   },
+  //   plugins: {
+  //     svelte: sveltePlugin,
+  //     "@typescript-eslint": typescriptPlugin,
+  //   },
+  //   rules: {
+  //     ...typescriptPlugin.configs.recommended.rules,
+  //     ...sveltePlugin.configs.recommended.rules,
+  //     ...rules,
+  //     'svelte/no-at-html-tags': 'off'
+  //   },
+  // },
+);
