@@ -15,3 +15,8 @@ env = { NODE_ENV = 'staging' }
 
 [tasks.setup]
 run = "bun run translations"
+
+[tasks.build_staging]
+run = "bun run build"
+env = { NODE_ENV = 'staging' }
+

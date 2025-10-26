@@ -14,13 +14,17 @@ const config = {
     noExternal: ['custom-protocol-check']
   },
   optimizeDeps: {
-    exclude: ['custom-protocol-check']
+    exclude: ['custom-protocol-check', 'jsdom']
+  },
+  resolve: {
+    conditions: ['browser']
   },
   mode,
   build: {
     sourcemap: true,
-    target: ['es2020'],
+    target: ['es2022'],
     rollupOptions: {
+      external: (id) => id.includes('jsdom'),
       output: {
         manualChunks(id) {
           if (id.includes('jszip')) {
@@ -33,7 +37,6 @@ const config = {
             id.includes('marked') ||
             id.includes('prismjs') ||
             id.includes('dompurify') ||
-            id.includes('jsdom') ||
             id.includes('@cfworker/json-schema')
           ) {
             return 'extras';
