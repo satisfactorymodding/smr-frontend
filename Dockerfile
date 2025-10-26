@@ -1,4 +1,4 @@
-FROM oven/bun:1.1.20 as build
+FROM oven/bun:1.3.1 AS build
 
 ARG NODE_ENV_ARG=production
 
@@ -18,9 +18,9 @@ COPY . .
 RUN NODE_ENV=$NODE_ENV_ARG set -o allexport; set -ex; source .env.$NODE_ENV_ARG; set +o allexport && bun run prepare && bun run graphql-codegen && bun run translations && bun run build:$NODE_ENV_ARG
 
 
-FROM ghcr.io/vilsol/yeet:v0.6.4 as yeet
+FROM ghcr.io/vilsol/yeet:v0.6.4 AS yeet
 
-FROM oven/bun:1.1.20
+FROM oven/bun:1.3.1 AS final
 
 COPY --from=yeet /yeet /yeet
 
@@ -28,14 +28,13 @@ RUN apt update && apt install -y bash
 
 WORKDIR /app
 
-COPY --from=build /app/build /app/build
-
-RUN cd /app/build/node && bun install --no-save
+COPY package.json bun.lockb /app/
+RUN bun install --no-save
 
 COPY docker/entrypoint.sh /entrypoint.sh
-
 ENV HOST_HEADER=host
-
 EXPOSE 80
+
+COPY --from=build /app/build /app/build
 
 ENTRYPOINT ["bash", "/entrypoint.sh"]

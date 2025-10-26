@@ -1,5 +1,5 @@
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
-import adapterBun from 'svelte-adapter-bun';
+import adapterNode from '@sveltejs/adapter-node';
 import adapterStatic from '@sveltejs/adapter-static';
 
 const mode = process.env.NODE_ENV || 'development';
@@ -16,10 +16,8 @@ const config = {
     // By default, `npm run build` will create a standard Node app.
     // You can create optimized builds for different platforms by
     // specifying a different adapter
-    adapter: process.env.SVELTE_ADAPTER === 'bun' ? adapterBun({
-      out: 'build/node',
-      dynamic_origin: true,
-      development: dev,
+    adapter: process.env.SVELTE_ADAPTER === 'bun' ? adapterNode({
+      out: 'build/node'
     }) : adapterStatic({
       pages: 'build/static',
       assets: 'build/static',
