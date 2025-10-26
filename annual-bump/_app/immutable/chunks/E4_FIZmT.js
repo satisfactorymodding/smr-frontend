@@ -1,0 +1,2 @@
+import{a as o,p as c,f as h,g as i,q as p,r as n,F as a,y as f}from"./C6V5fW-3.js";e[a]="src/lib/components/general/Page404.svelte";var d=i(f('<div class="flex h-full w-full items-center justify-center pt-16"><div class="flex flex-col items-center gap-4"><h1 class="h1">404</h1> <h4 class="h4">there probably should be something here</h4></div></div>'),e[a],[[1,0,[[2,2,[[3,4],[4,4]]]]]]);function e(s,t){o(new.target),c(t,!1,e);var r={...h()},l=d();return p(s,l),n(r)}export{e as P};
+//# sourceMappingURL=E4_FIZmT.js.map

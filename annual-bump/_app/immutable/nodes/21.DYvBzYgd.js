@@ -1,2 +1,0 @@
-import{ax as s,a as t,p as n,f as c,r as p,F as d}from"../chunks/CVeMU510.js";const i=async({params:e})=>{s(302,"/mod/"+e.modId+"/version/"+e.versionId)},v=Object.freeze(Object.defineProperty({__proto__:null,load:i},Symbol.toStringTag,{value:"Module"}));o[d]="src/routes/mod/[modId]/version/[versionId]/view/+page.svelte";function o(e,r){t(new.target),n(r,!1,o);var a={...c()};return p(a)}export{o as component,v as universal};
-//# sourceMappingURL=21.DYvBzYgd.js.map
