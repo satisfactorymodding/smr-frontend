@@ -18,7 +18,7 @@ jobs:
       matrix:
         action: [ "build:node", "build:static" ]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - uses: oven-sh/setup-bun@v2
         with:
@@ -38,7 +38,7 @@ jobs:
     name: Lint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - uses: oven-sh/setup-bun@v2
         with:
@@ -62,7 +62,7 @@ jobs:
       - lint
     if: ${{ github.event_name != 'pull_request' }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - uses: oven-sh/setup-bun@v2
         with:
@@ -71,7 +71,7 @@ jobs:
       - name: Install dependencies
         run: bun install
 
-      - uses: rlespinasse/github-slug-action@v4
+      - uses: rlespinasse/github-slug-action@v5
 
       - name: Build
         run: |
@@ -120,12 +120,12 @@ jobs:
           build-args: |
             NODE_ENV_ARG=${{ inputs.env }}
 
-      - uses: snok/container-retention-policy@v3.0.0
+      - uses: snok/container-retention-policy@v3.0.1
         with:
           account: ${{ github.repository_owner }}
           token: ${{ secrets.GITHUB_TOKEN }}
           image-names: "smr-frontend"
           image-tags: "${{ inputs.env }}-*"
-          cut-off: 4w
-          dry-run: true
-          keep-n-most-recent: 1
+          cut-off: 8w
+          dry-run: false
+          keep-n-most-recent: 3
