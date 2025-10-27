@@ -112,7 +112,7 @@
       description:
         'This is a factory planner/optimizer/analyzer tool for factories old and new! Simulate resource chains, factory layouts, and more! (pre-Update 4 recipes)',
       link: 'https://satisgraphtory.com/'
-    }
+    },
     {
       name: 'Satisfactory Sync',
       author: 'Vojtak42',
