@@ -114,7 +114,7 @@
       link: 'https://satisgraphtory.com/'
     }
     {
-      name: 'Satisfactory-multiplayer-cloud-sync',
+      name: 'Satisfactory Sync',
       author: 'Vojtak42',
       logo: 'https://raw.githubusercontent.com/Vojtak42/Satisfactory-multiplayer-cloud-sync/refs/heads/Page/imgs/AI_logo.png',
       description:
