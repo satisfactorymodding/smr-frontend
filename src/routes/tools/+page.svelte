@@ -118,7 +118,7 @@
       author: 'Vojtak42',
       logo: 'https://raw.githubusercontent.com/Vojtak42/Satisfactory-multiplayer-cloud-sync/refs/heads/Page/imgs/AI_logo.png',
       description:
-        'This little script syncs savegames between you and your friends, so you can play the game even when the host isn\'t online without the need for a dedicated server.',
+        "This little script syncs savegames between you and your friends, so you can play the game even when the host isn't online without the need for a dedicated server.",
       link: 'https://satisfactorysync.netlify.app/'
     }
   ];
