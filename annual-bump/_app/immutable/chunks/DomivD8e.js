@@ -1,0 +1,2 @@
+import{T as r}from"./C2xQDKU4.js";const c=t=>(typeof t=="string"&&(t=new Date(t)),t.toLocaleString()),B=t=>t.toLocaleString(),p=(t,e=2)=>{if(t===0)return"0 Bytes";const o=1024,s=e<0?0:e,a=["Bytes","KB","MB","GB","TB","PB","EB","ZB","YB"],n=Math.floor(Math.log(t)/Math.log(o));return parseFloat((t/Math.pow(o,n)).toFixed(s))+" "+a[n]},u=t=>{switch(t){case r.Windows:return"Windows Client";case r.WindowsServer:return"Windows Server";case r.LinuxServer:return"Linux Server"}return t};export{c as a,p as b,u as c,B as p};
+//# sourceMappingURL=DomivD8e.js.map
