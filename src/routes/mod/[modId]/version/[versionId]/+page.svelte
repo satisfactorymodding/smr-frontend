@@ -14,6 +14,7 @@
   import { getContextClient } from '@urql/svelte';
   import type { PageData } from './$types';
   import Page404 from '$lib/components/general/Page404.svelte';
+  import QueryStateHandler from '$lib/components/general/QueryStateHandler.svelte';
   import { getTranslate } from '@tolgee/svelte';
   import VirustotalResults from '$lib/components/versions/VirustotalResults.svelte';
   import { toaster } from '$lib/utils/toaster-svelte';
@@ -68,109 +69,111 @@
   {/if}
 </svelte:head>
 
-{#if $version.fetching}
-  <p>Loading...</p>
-{:else if $version.error}
-  <p>Oh no... {$version.error.message}</p>
-{:else if $version.data.getVersion}
-  <div class="xlx:grid-flow-row grid gap-6">
-    <div class="flex h-auto flex-wrap items-center justify-between">
-      <h1 class="text-4xl font-bold">
-        {$version.data.getVersion.mod.name}
-        Version {$version.data.getVersion.version}
-      </h1>
+<QueryStateHandler query={version}>
+  {#snippet empty()}
+    <Page404 />
+  {/snippet}
 
-      <div class="grid grid-flow-col gap-4">
-        {#if canUserEdit}
+  {#if $version.data.getVersion}
+    <div class="xlx:grid-flow-row grid gap-6">
+      <div class="flex h-auto flex-wrap items-center justify-between">
+        <h1 class="text-4xl font-bold">
+          {$version.data.getVersion.mod.name}
+          Version {$version.data.getVersion.version}
+        </h1>
+
+        <div class="grid grid-flow-col gap-4">
+          {#if canUserEdit}
+            <button
+              class="btn border border-primary-500 preset-tonal-primary"
+              onclick={() => goto(base + '/mod/' + modId + '/version/' + versionId + '/edit')}>
+              <span class="material-icons pr-2">edit_document</span>
+              Edit
+            </button>
+
+            <BasicModal
+              bind:open={deleteModalOpen}
+              title="Delete version?"
+              body="Are you sure you wish to delete this version?"
+              buttonTextCancel="Cancel"
+              buttonTextConfirm="Delete"
+              confirm={deleteVersionFn} />
+            <button class="btn border border-primary-500 preset-tonal-primary" onclick={() => (deleteModalOpen = true)}>
+              <span class="material-icons pr-2">delete</span>
+              Delete</button>
+          {/if}
+          {#if $version.data.getVersion.targets.length != 0}
+            <Popover>
+              <Popover.Trigger
+                class="btn border border-primary-500 preset-tonal-primary"
+                title="Download a specific release target of this mod">
+                {$t('download')}
+                <span class="material-icons" style="margin: 0;">arrow_drop_down</span>
+              </Popover.Trigger>
+              <Portal>
+                <Popover.Positioner>
+                  <Popover.Content class="z-10 w-72 card preset-filled-surface-100-900 shadow-xl">
+                    <nav class="list-nav">
+                      <ul>
+                        {#each $version.data.getVersion.targets as target (target.targetName)}
+                          <li>
+                            <a
+                              class="w-full"
+                              href={API_REST +
+                                '/mod/' +
+                                modId +
+                                '/versions/' +
+                                versionId +
+                                '/' +
+                                target.targetName +
+                                '/download'}>
+                              <span>Download {prettyTarget(target.targetName)}</span>
+                            </a>
+                          </li>
+                        {/each}
+                      </ul>
+                    </nav>
+                  </Popover.Content>
+                </Popover.Positioner>
+              </Portal>
+            </Popover>
+          {:else}
+            <a
+              class="btn border border-primary-500 preset-tonal-primary"
+              href={base + '/mod/' + modId + '/version/' + versionId}>View</a>
+            <a
+              class="btn border border-primary-500 preset-tonal-primary"
+              href={API_REST + '/mod/' + modId + '/versions/' + versionId + '/download'}>Download</a>
+          {/if}
           <button
             class="btn border border-primary-500 preset-tonal-primary"
-            onclick={() => goto(base + '/mod/' + modId + '/version/' + versionId + '/edit')}>
-            <span class="material-icons pr-2">edit_document</span>
-            Edit
+            title="Install via Satisfactory Mod Manager"
+            onclick={() => installMod($version.data.getVersion.mod.mod_reference)}>
+            <span class="material-icons">download</span>
+            <span>Install</span>
           </button>
-
-          <BasicModal
-            bind:open={deleteModalOpen}
-            title="Delete version?"
-            body="Are you sure you wish to delete this version?"
-            buttonTextCancel="Cancel"
-            buttonTextConfirm="Delete"
-            confirm={deleteVersionFn} />
-          <button class="btn border border-primary-500 preset-tonal-primary" onclick={() => (deleteModalOpen = true)}>
-            <span class="material-icons pr-2">delete</span>
-            Delete</button>
-        {/if}
-        {#if $version.data.getVersion.targets.length != 0}
-          <Popover>
-            <Popover.Trigger
-              class="btn border border-primary-500 preset-tonal-primary"
-              title="Download a specific release target of this mod">
-              {$t('download')}
-              <span class="material-icons" style="margin: 0;">arrow_drop_down</span>
-            </Popover.Trigger>
-            <Portal>
-              <Popover.Positioner>
-                <Popover.Content class="z-10 w-72 card preset-filled-surface-100-900 shadow-xl">
-                  <nav class="list-nav">
-                    <ul>
-                      {#each $version.data.getVersion.targets as target (target.targetName)}
-                        <li>
-                          <a
-                            class="w-full"
-                            href={API_REST +
-                              '/mod/' +
-                              modId +
-                              '/versions/' +
-                              versionId +
-                              '/' +
-                              target.targetName +
-                              '/download'}>
-                            <span>Download {prettyTarget(target.targetName)}</span>
-                          </a>
-                        </li>
-                      {/each}
-                    </ul>
-                  </nav>
-                </Popover.Content>
-              </Popover.Positioner>
-            </Portal>
-          </Popover>
-        {:else}
           <a
             class="btn border border-primary-500 preset-tonal-primary"
-            href={base + '/mod/' + modId + '/version/' + versionId}>View</a>
-          <a
-            class="btn border border-primary-500 preset-tonal-primary"
-            href={API_REST + '/mod/' + modId + '/versions/' + versionId + '/download'}>Download</a>
-        {/if}
-        <button
-          class="btn border border-primary-500 preset-tonal-primary"
-          title="Install via Satisfactory Mod Manager"
-          onclick={() => installMod($version.data.getVersion.mod.mod_reference)}>
-          <span class="material-icons">download</span>
-          <span>Install</span>
-        </button>
-        <a
-          class="btn border border-primary-500 preset-tonal-primary"
-          href={base + '/mod/' + modId}
-          title="View the description page for this mod">
-          <span class="material-icons">extension</span>
-          <span>{$t('version.back')}</span>
-        </a>
+            href={base + '/mod/' + modId}
+            title="View the description page for this mod">
+            <span class="material-icons">extension</span>
+            <span>{$t('version.back')}</span>
+          </a>
+        </div>
+      </div>
+      <div class="grid-auto-max grid auto-cols-fr gap-4">
+        <VersionDescription
+          changelog={$version.data.getVersion.changelog}
+          approved={$version.data.getVersion.approved} />
+        <div class="grid auto-rows-min grid-cols-1 gap-8">
+          <VersionInfo version={$version.data.getVersion} />
+          <VersionTargetSupportGrid targets={$version.data.getVersion.targets} />
+          <VersionDependenciesGrid dependencies={$version.data.getVersion.dependencies} />
+          {#if $version.data.getVersion.virustotal_results.length != 0}
+            <VirustotalResults results={$version.data.getVersion.virustotal_results} />
+          {/if}
+        </div>
       </div>
     </div>
-    <div class="grid-auto-max grid auto-cols-fr gap-4">
-      <VersionDescription changelog={$version.data.getVersion.changelog} approved={$version.data.getVersion.approved} />
-      <div class="grid auto-rows-min grid-cols-1 gap-8">
-        <VersionInfo version={$version.data.getVersion} />
-        <VersionTargetSupportGrid targets={$version.data.getVersion.targets} />
-        <VersionDependenciesGrid dependencies={$version.data.getVersion.dependencies} />
-        {#if $version.data.getVersion.virustotal_results.length != 0}
-          <VirustotalResults results={$version.data.getVersion.virustotal_results} />
-        {/if}
-      </div>
-    </div>
-  </div>
-{:else}
-  <Page404 />
-{/if}
+  {/if}
+</QueryStateHandler>

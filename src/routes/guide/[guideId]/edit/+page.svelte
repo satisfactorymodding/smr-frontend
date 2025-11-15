@@ -9,6 +9,7 @@
   import type { PageData } from './$types';
   import { toaster } from '$lib/utils/toaster-svelte';
   import BasicModal from '$lib/components/general/BasicModal.svelte';
+  import QueryStateHandler from '$lib/components/general/QueryStateHandler.svelte';
 
   interface Props {
     data: PageData;
@@ -84,12 +85,8 @@
 
 <div class="card preset-filled-surface-100-900 p-4">
   <section>
-    {#if $guide.fetching}
-      <p>Loading...</p>
-    {:else if $guide.error}
-      <p>Oh no... {$guide.error.message}</p>
-    {:else}
+    <QueryStateHandler query={guide}>
       <GuideForm {onSubmit} initialValues={$guide.data.getGuide} submitText="Save" submitIcon="save" />
-    {/if}
+    </QueryStateHandler>
   </section>
 </div>

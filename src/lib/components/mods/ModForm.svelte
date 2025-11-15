@@ -3,17 +3,19 @@
 
   import { createForm } from 'felte';
   import { validator } from '@felte/validator-zod';
-  import { reporter, ValidationMessage } from '@felte/reporter-svelte';
+  import { reporter } from '@felte/reporter-svelte';
   import type { ModData } from '$lib/models/mods';
   import { modSchema } from '$lib/models/mods';
   import { trimNonSchema } from '$lib/utils/forms';
-  import { markdown } from '$lib/utils/markdown';
   import ModAuthor from '$lib/components/mods/ModAuthor.svelte';
   import TagList from '$lib/components/utils/TagList.svelte';
   import { CompatibilityState } from '$lib/generated';
   import ModCompatibility from '$lib/components/mods/compatibility/ModCompatibilityEdit.svelte';
   import { getTranslate } from '@tolgee/svelte';
   import { Switch } from '@skeletonlabs/skeleton-svelte';
+  import FormField from '$lib/components/forms/FormField.svelte';
+  import FormMarkdownField from '$lib/components/forms/FormMarkdownField.svelte';
+  import FormFileField from '$lib/components/forms/FormFileField.svelte';
 
   export const { t } = getTranslate();
 
@@ -74,8 +76,6 @@
     }
   });
 
-  let preview = $derived(($data.full_description as string) || '');
-
   const addAuthor = () => {
     $data.authors.push({ role: 'editor', user_id: '', key: '' });
     $data.authors = $data.authors;
@@ -94,98 +94,40 @@
 
 <form use:form>
   <div class="grid grid-flow-row gap-6">
-    <div class="grid grid-flow-row gap-2">
-      <label class="label">
-        <span>{$t('entry.name')} *</span>
-        <input type="text" bind:value={$data.name} required class="input p-2" />
-      </label>
-      <ValidationMessage for="name">
-        {#snippet children({ messages: message })}
-          <span class="validation-message">{message || ''}</span>
-        {/snippet}
-      </ValidationMessage>
-    </div>
+    <FormField label={$t('entry.name')} name="name" bind:value={$data.name} required />
 
-    <div class="grid grid-flow-row gap-2">
-      <label class="label">
-        <span>{$t('mod.reference')} *</span>
-        <input type="text" bind:value={$data.mod_reference} required class="input p-2" disabled={editing} />
-        {#if !editing}
-          <span>{$t('mod.reference-warning')}</span>
-        {/if}
-      </label>
-      <ValidationMessage for="mod_reference">
-        {#snippet children({ messages: message })}
-          <span class="validation-message">{message || ''}</span>
-        {/snippet}
-      </ValidationMessage>
-    </div>
+    <FormField
+      label={$t('mod.reference')}
+      name="mod_reference"
+      bind:value={$data.mod_reference}
+      required
+      disabled={editing}
+      helperText={!editing ? $t('mod.reference-warning') : undefined} />
 
-    <div class="grid grid-flow-row gap-2">
-      <label class="label">
-        <span>{$t('entry.short-description')} *</span>
-        <input type="text" bind:value={$data.short_description} required class="input p-2" />
-      </label>
-      <ValidationMessage for="short_description">
-        {#snippet children({ messages: message })}
-          <span class="validation-message">{message || ''}</span>
-        {/snippet}
-      </ValidationMessage>
-    </div>
+    <FormField
+      label={$t('entry.short-description')}
+      name="short_description"
+      bind:value={$data.short_description}
+      required />
 
-    <div class="split grid gap-6">
-      <div class="grid grid-flow-row auto-rows-max gap-2">
-        <label class="label">
-          <span>{$t('entry.full-description')} *</span>
-          <textarea class="vertical-textarea textarea p-2" bind:value={$data.full_description} required rows={10}
-          ></textarea>
-        </label>
-        <ValidationMessage for="full_description">
-          {#snippet children({ messages: message })}
-            <span class="validation-message">{message || ''}</span>
-          {/snippet}
-        </ValidationMessage>
-      </div>
-      <div class="grid grid-flow-row auto-rows-max gap-2">
-        <span>{$t('preview')}:</span>
-        {#await markdown(preview) then previewRendered}
-          <!-- eslint-disable -->
-          <div class="markdown-content right">{@html previewRendered}</div>
-        {/await}
-      </div>
-    </div>
+    <FormMarkdownField
+      label={$t('entry.full-description')}
+      name="full_description"
+      bind:value={$data.full_description}
+      required />
 
     <div class="grid grid-flow-row gap-2">
       <TagList editable={true} bind:tags />
     </div>
 
-    <div class="grid grid-flow-row gap-2">
-      <label for="logo">{$t('logo')}:</label>
-      <input
-        id="logo"
-        class="base-input"
-        name="logo"
-        type="file"
-        accept="image/png,image/jpeg,image/gif"
-        placeholder="Logo" />
-      <ValidationMessage for="logo">
-        {#snippet children({ messages: message })}
-          <span class="validation-message">{message || ''}</span>
-        {/snippet}
-      </ValidationMessage>
-    </div>
+    <FormFileField
+      label="{$t('logo')}:"
+      name="logo"
+      id="logo"
+      accept="image/png,image/jpeg,image/gif"
+      placeholder="Logo" />
 
-    <div class="grid grid-flow-row gap-2">
-      <label class="label">
-        <span>{$t('entry.source-url')}</span>
-        <input type="text" bind:value={$data.source_url} required class="input p-2" />
-      </label>
-      <ValidationMessage for="source_url">
-        {#snippet children({ messages: message })}
-          <span class="validation-message">{message || ''}</span>
-        {/snippet}
-      </ValidationMessage>
-    </div>
+    <FormField label={$t('entry.source-url')} name="source_url" bind:value={$data.source_url} required />
 
     <div class="grid grid-flow-row gap-2">
       <Switch checked={$data.hidden} onCheckedChange={(e) => ($data.hidden = e.checked)}>
@@ -195,11 +137,6 @@
         <Switch.Label>{$t('entry.hidden')}</Switch.Label>
         <Switch.HiddenInput />
       </Switch>
-      <ValidationMessage for="hidden">
-        {#snippet children({ messages: message })}
-          <span class="validation-message">{message || ''}</span>
-        {/snippet}
-      </ValidationMessage>
     </div>
     {#if editing}
       <div>
@@ -223,7 +160,7 @@
             <span>{$t('add')}</span>
           </button>
         </div>
-        {#each $data.authors as author, i}
+        {#each $data.authors as author, i (author.key || i)}
           <div class="flex items-end">
             {#if $data.authors[i].user_id}
               <div class="p-2">
@@ -257,14 +194,3 @@
     </div>
   </div>
 </form>
-
-<style lang="postcss">
-  .split {
-    grid-template-columns: 50% 50%;
-
-    & .right {
-      max-height: 75vh;
-      overflow: auto;
-    }
-  }
-</style>

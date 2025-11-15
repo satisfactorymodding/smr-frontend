@@ -8,6 +8,7 @@
   import { base } from '$app/paths';
   import type { PageData } from './$types';
   import Page404 from '$lib/components/general/Page404.svelte';
+  import QueryStateHandler from '$lib/components/general/QueryStateHandler.svelte';
 
   interface Props {
     data: PageData;
@@ -28,59 +29,59 @@
   {/if}
 </svelte:head>
 
-{#if $user.fetching}
-  <p>Loading...</p>
-{:else if $user.error}
-  <p>Oh no... {$user.error.message}</p>
-{:else if $user.data.getUser}
-  <div class="xlx:grid-flow-row grid gap-6">
-    <div class="flex h-auto flex-wrap items-center justify-between">
-      <h1 class="text-4xl font-bold">{$user.data.getUser.username}</h1>
+<QueryStateHandler query={user}>
+  {#snippet empty()}
+    <Page404 />
+  {/snippet}
 
-      <div>
-        {#if $me && $user.data.getUser.id === $me.id}
-          <a class="btn border border-primary-500 preset-tonal-primary" href="{base}/settings">Settings</a>
+  {#if $user.data.getUser}
+    <div class="xlx:grid-flow-row grid gap-6">
+      <div class="flex h-auto flex-wrap items-center justify-between">
+        <h1 class="text-4xl font-bold">{$user.data.getUser.username}</h1>
+
+        <div>
+          {#if $me && $user.data.getUser.id === $me.id}
+            <a class="btn border border-primary-500 preset-tonal-primary" href="{base}/settings">Settings</a>
+          {/if}
+
+          <button class="btn border border-primary-500 preset-tonal-primary" onclick={() => (guidesTab = !guidesTab)}>
+            {#if !guidesTab}
+              Guides
+            {:else}
+              Mods
+            {/if}
+          </button>
+        </div>
+      </div>
+      <div class="grid-auto-max grid auto-cols-fr gap-4">
+        {#if !guidesTab}
+          <div class="grid h-fit grid-cols-1 gap-4 3xl:grid-cols-3 2xl:grid-cols-2">
+            {#each $user.data.getUser.mods as mod (mod.mod.id)}
+              <ModCard mod={mod.mod} />
+            {/each}
+
+            {#if $user.data.getUser.mods.length === 0}
+              <!-- TODO Prettier -->
+              User has no mods
+            {/if}
+          </div>
+        {:else}
+          <div class="grid h-fit grid-cols-1 gap-4 3xl:grid-cols-3 2xl:grid-cols-2">
+            {#each $user.data.getUser.guides as guide (guide.id)}
+              <GuideCard {guide} logo={$user.data.getUser.avatar} />
+            {/each}
+
+            {#if $user.data.getUser.guides.length === 0}
+              <!-- TODO Prettier -->
+              User has no guides
+            {/if}
+          </div>
         {/if}
-
-        <button class="btn border border-primary-500 preset-tonal-primary" onclick={() => (guidesTab = !guidesTab)}>
-          {#if !guidesTab}
-            Guides
-          {:else}
-            Mods
-          {/if}
-        </button>
+        <div class="grid auto-rows-min grid-cols-1 gap-8">
+          <UserAvatar avatar={$user.data.getUser.avatar} username={$user.data.getUser.username} />
+          <UserInfo user={$user.data.getUser} />
+        </div>
       </div>
     </div>
-    <div class="grid-auto-max grid auto-cols-fr gap-4">
-      {#if !guidesTab}
-        <div class="grid h-fit grid-cols-1 gap-4 3xl:grid-cols-3 2xl:grid-cols-2">
-          {#each $user.data.getUser.mods as mod (mod.mod.id)}
-            <ModCard mod={mod.mod} />
-          {/each}
-
-          {#if $user.data.getUser.mods.length === 0}
-            <!-- TODO Prettier -->
-            User has no mods
-          {/if}
-        </div>
-      {:else}
-        <div class="grid h-fit grid-cols-1 gap-4 3xl:grid-cols-3 2xl:grid-cols-2">
-          {#each $user.data.getUser.guides as guide (guide.id)}
-            <GuideCard {guide} logo={$user.data.getUser.avatar} />
-          {/each}
-
-          {#if $user.data.getUser.guides.length === 0}
-            <!-- TODO Prettier -->
-            User has no guides
-          {/if}
-        </div>
-      {/if}
-      <div class="grid auto-rows-min grid-cols-1 gap-8">
-        <UserAvatar avatar={$user.data.getUser.avatar} username={$user.data.getUser.username} />
-        <UserInfo user={$user.data.getUser} />
-      </div>
-    </div>
-  </div>
-{:else}
-  <Page404 />
-{/if}
+  {/if}
+</QueryStateHandler>

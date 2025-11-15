@@ -1,15 +1,16 @@
 <script lang="ts">
   import { createForm } from 'felte';
   import { validator } from '@felte/validator-zod';
-  import { reporter, ValidationMessage } from '@felte/reporter-svelte';
+  import { reporter } from '@felte/reporter-svelte';
   import type { VersionData, VersionMetadata } from '$lib/models/versions';
   import { constructVersionSchema } from '$lib/models/versions';
   import { trimNonSchema } from '$lib/utils/forms';
-  import { markdown } from '$lib/utils/markdown';
   import { writable } from 'svelte/store';
   import { VersionStabilities } from '$lib/generated';
   import { prettyBytes } from '$lib/utils/formatting';
   import { getTranslate } from '@tolgee/svelte';
+  import FormFileField from '$lib/components/forms/FormFileField.svelte';
+  import FormMarkdownField from '$lib/components/forms/FormMarkdownField.svelte';
 
   export const { t } = getTranslate();
 
@@ -48,22 +49,13 @@
     }
   });
 
-  let preview = $derived(($data.changelog as string) || '');
   let dependencies = $derived($modMeta?.uplugin?.Plugins?.filter((d) => !d.BasePlugin) || []);
 </script>
 
 <form use:form>
   <div class="grid grid-flow-row gap-6">
     {#if !editing}
-      <div class="grid grid-flow-row gap-2">
-        <label for="file">{$t('file')} *</label>
-        <input id="file" class="base-input" name="file" type="file" accept=".zip,.smod" placeholder="File" />
-        <ValidationMessage for="file">
-          {#snippet children({ messages: message })}
-            <span class="validation-message">{message || ''}</span>
-          {/snippet}
-        </ValidationMessage>
-      </div>
+      <FormFileField label="{$t('file')} *" name="file" id="file" accept=".zip,.smod" placeholder="File" />
 
       {#if $data.file}
         <div>
@@ -131,26 +123,7 @@
       {/if}
     {/if}
 
-    <div class="split grid gap-6">
-      <div class="grid grid-flow-row auto-rows-max gap-2">
-        <label class="label">
-          <span>{$t('changelog')} *</span>
-          <textarea class="vertical-textarea textarea p-2" bind:value={$data.changelog} required rows={10}></textarea>
-        </label>
-        <ValidationMessage for="changelog">
-          {#snippet children({ messages: message })}
-            <span class="validation-message">{message || ''}</span>
-          {/snippet}
-        </ValidationMessage>
-      </div>
-      <div class="grid grid-flow-row auto-rows-max gap-2">
-        <span>{$t('preview')}:</span>
-        {#await markdown(preview) then previewRendered}
-          <!-- eslint-disable-next-line -->
-          <div class="markdown-content right">{@html previewRendered}</div>
-        {/await}
-      </div>
-    </div>
+    <FormMarkdownField label={$t('changelog')} name="changelog" bind:value={$data.changelog} required />
 
     <div class="text-muted">
       {$t('version-form.agreement-to')} <a href="/content-policy">{$t('content-policy')}</a>.
@@ -167,15 +140,6 @@
 
 <style lang="postcss">
   @reference "../../../app.css";
-
-  .split {
-    grid-template-columns: 50% 50%;
-
-    & .right {
-      max-height: 75vh;
-      overflow: auto;
-    }
-  }
 
   a {
     @apply text-yellow-500 underline;

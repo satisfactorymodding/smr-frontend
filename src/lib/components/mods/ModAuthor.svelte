@@ -1,8 +1,8 @@
 <script lang="ts">
   import { queryStore, getContextClient } from '@urql/svelte';
   import { GetUserDocument } from '$lib/generated';
-  import { assets } from '$app/paths';
   import { getTranslate } from '@tolgee/svelte';
+  import UserDisplay from '$lib/components/users/UserDisplay.svelte';
 
   interface Props {
     id: string;
@@ -28,14 +28,12 @@
 {:else if $user.error}
   <p class="mr-2">{$t('error.oh-no')}... {$user.error.message}</p>
 {:else if $user.data.getUser}
-  <div class="mr-2 grid auto-cols-max grid-flow-col gap-x-2">
-    <div
-      class="h-7 w-7 rounded-full bg-cover"
-      style={`background-image: url("${$user.data.getUser.avatar || assets + '/images/no_image.webp'}")`}>
-    </div>
-    <div class="grid grid-flow-row">
-      <span class="text-yellow-500">{$user.data.getUser.username}</span>
-    </div>
+  <div class="mr-2">
+    <UserDisplay
+      user={{ id: $user.data.getUser.id, username: $user.data.getUser.username, avatar: $user.data.getUser.avatar }}
+      size="small"
+      showLink={false}
+      gap="small" />
   </div>
 {:else}
   <p class="mr-2 whitespace-nowrap">Unknown User ID</p>

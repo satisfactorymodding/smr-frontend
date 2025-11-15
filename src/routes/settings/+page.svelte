@@ -4,7 +4,7 @@
   import { goto } from '$app/navigation';
   import { createForm } from 'felte';
   import { validator } from '@felte/validator-zod';
-  import { reporter, ValidationMessage } from '@felte/reporter-svelte';
+  import { reporter } from '@felte/reporter-svelte';
   import { trimNonSchema } from '$lib/utils/forms';
   import { user } from '$lib/stores/user';
   import * as zod from 'zod';
@@ -13,6 +13,8 @@
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
   import type { Writable } from 'svelte/store';
   import { toaster } from '$lib/utils/toaster-svelte';
+  import FormFileField from '$lib/components/forms/FormFileField.svelte';
+  import FormField from '$lib/components/forms/FormField.svelte';
 
   const client = getContextClient();
 
@@ -72,36 +74,17 @@
   <section>
     {#if $user === null}
       <p>Please log in</p>
-    {:else}
+    {:else if $data !== undefined}
       <form use:form>
         <div class="grid grid-flow-row gap-6">
-          <div class="grid grid-flow-row gap-2">
-            <label for="avatar">Avatar:</label>
-            <input
-              id="avatar"
-              class="base-input"
-              name="avatar"
-              type="file"
-              accept="image/png,image/jpeg,image/gif"
-              placeholder="Avatar" />
-            <ValidationMessage for="avatar">
-              {#snippet children({ messages: message })}
-                <span class="validation-message">{message || ''}</span>
-              {/snippet}
-            </ValidationMessage>
-          </div>
+          <FormFileField
+            label="Avatar:"
+            name="avatar"
+            id="avatar"
+            accept="image/png,image/jpeg,image/gif"
+            placeholder="Avatar" />
 
-          <div class="grid grid-flow-row gap-2">
-            <label class="label">
-              <span>Username</span>
-              <input type="text" bind:value={$data.username} required class="input p-2" />
-            </label>
-            <ValidationMessage for="username">
-              {#snippet children({ messages: message })}
-                <span class="validation-message">{message || ''}</span>
-              {/snippet}
-            </ValidationMessage>
-          </div>
+          <FormField label="Username" name="username" bind:value={$data.username} required />
 
           <div>
             <button class="btn border border-primary-500 preset-tonal-primary" type="submit">Save</button>

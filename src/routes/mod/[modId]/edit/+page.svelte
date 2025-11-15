@@ -9,6 +9,7 @@
   import type { PageData } from './$types';
   import { get } from 'svelte/store';
   import { toaster } from '$lib/utils/toaster-svelte';
+  import QueryStateHandler from '$lib/components/general/QueryStateHandler.svelte';
 
   interface Props {
     data: PageData;
@@ -66,12 +67,8 @@
 
 <div class="card preset-filled-surface-100-900 p-4">
   <section>
-    {#if $mod.fetching}
-      <p>Loading...</p>
-    {:else if $mod.error}
-      <p>Oh no... {$mod.error.message}</p>
-    {:else}
+    <QueryStateHandler query={mod}>
       <ModForm {onSubmit} {initialValues} editing={true} submitText="Save" />
-    {/if}
+    </QueryStateHandler>
   </section>
 </div>

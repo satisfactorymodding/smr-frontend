@@ -14,6 +14,7 @@
   import { getTranslate } from '@tolgee/svelte';
   import { toaster } from '$lib/utils/toaster-svelte';
   import BasicModal from '$lib/components/general/BasicModal.svelte';
+  import QueryStateHandler from '$lib/components/general/QueryStateHandler.svelte';
 
   const { t } = getTranslate();
 
@@ -122,11 +123,7 @@
 
 <div class="card preset-filled-surface-100-900 p-4">
   <section>
-    {#if $mod.fetching}
-      <p>Loading...</p>
-    {:else if $mod.error}
-      <p>Oh no... {$mod.error.message}</p>
-    {:else}
+    <QueryStateHandler query={mod}>
       <VersionForm {onSubmit} modReference={$mod.data.mod.mod_reference} submitIcon="add_circle" />
 
       {#if $uploadStatus}
@@ -165,6 +162,6 @@
             alert("Mod compatibility data updated. Don't forget to upload the version too!");
           }} />
       </div>
-    {/if}
+    </QueryStateHandler>
   </section>
 </div>

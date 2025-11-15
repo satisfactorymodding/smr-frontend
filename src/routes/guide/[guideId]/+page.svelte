@@ -12,6 +12,7 @@
   import Page404 from '$lib/components/general/Page404.svelte';
   import { toaster } from '$lib/utils/toaster-svelte';
   import BasicModal from '$lib/components/general/BasicModal.svelte';
+  import QueryStateHandler from '$lib/components/general/QueryStateHandler.svelte';
 
   interface Props {
     data: PageData;
@@ -54,53 +55,53 @@
   {/if}
 </svelte:head>
 
-{#if $guide.fetching}
-  <p>Loading...</p>
-{:else if $guide.error}
-  <p>Oh no... {$guide.error.message}</p>
-{:else if $guide.data.getGuide}
-  <div class="xlx:grid-flow-row grid gap-6">
-    <div class="flex h-auto flex-wrap items-center justify-between">
-      <h1 class="text-4xl font-bold">{$guide.data.getGuide.name}</h1>
+<QueryStateHandler query={guide}>
+  {#snippet empty()}
+    <Page404 />
+  {/snippet}
 
-      <div>
-        {#if canUserEdit}
-          <button
-            class="btn border border-primary-500 preset-tonal-primary"
-            onclick={() => goto(base + '/guide/' + guideId + '/edit')}>
-            <span class="material-icons pr-2">edit</span>
-            Edit</button>
+  {#if $guide.data.getGuide}
+    <div class="xlx:grid-flow-row grid gap-6">
+      <div class="flex h-auto flex-wrap items-center justify-between">
+        <h1 class="text-4xl font-bold">{$guide.data.getGuide.name}</h1>
 
-          <BasicModal
-            bind:open={deleteModalOpen}
-            title="Delete guide?"
-            body="Are you sure you wish to delete this guide?"
-            buttonTextCancel="Cancel"
-            buttonTextConfirm="Delete"
-            confirm={deleteGuideFn} />
-          <button class="btn border border-primary-500 preset-tonal-primary" onclick={() => (deleteModalOpen = true)}>
-            <span class="material-icons pr-2">delete</span>
-            Delete</button>
-        {/if}
+        <div>
+          {#if canUserEdit}
+            <button
+              class="btn border border-primary-500 preset-tonal-primary"
+              onclick={() => goto(base + '/guide/' + guideId + '/edit')}>
+              <span class="material-icons pr-2">edit</span>
+              Edit</button>
+
+            <BasicModal
+              bind:open={deleteModalOpen}
+              title="Delete guide?"
+              body="Are you sure you wish to delete this guide?"
+              buttonTextCancel="Cancel"
+              buttonTextConfirm="Delete"
+              confirm={deleteGuideFn} />
+            <button class="btn border border-primary-500 preset-tonal-primary" onclick={() => (deleteModalOpen = true)}>
+              <span class="material-icons pr-2">delete</span>
+              Delete</button>
+          {/if}
+        </div>
+      </div>
+      <div class="grid-auto-max grid auto-cols-fr gap-4">
+        <div class="h-fit card preset-filled-surface-100-900 p-4">
+          <section>
+            <div class="markdown-content break-words">
+              {#await markdown($guide.data.getGuide.guide) then guideRendered}
+                <!-- eslint-disable -->
+                <p>{@html guideRendered}</p>
+              {/await}
+            </div>
+          </section>
+        </div>
+        <div class="grid auto-rows-min grid-cols-1 gap-8">
+          <GuideInfo guide={$guide.data.getGuide} />
+          <GuideAuthor author={$guide.data.getGuide.user} />
+        </div>
       </div>
     </div>
-    <div class="grid-auto-max grid auto-cols-fr gap-4">
-      <div class="h-fit card preset-filled-surface-100-900 p-4">
-        <section>
-          <div class="markdown-content break-words">
-            {#await markdown($guide.data.getGuide.guide) then guideRendered}
-              <!-- eslint-disable -->
-              <p>{@html guideRendered}</p>
-            {/await}
-          </div>
-        </section>
-      </div>
-      <div class="grid auto-rows-min grid-cols-1 gap-8">
-        <GuideInfo guide={$guide.data.getGuide} />
-        <GuideAuthor author={$guide.data.getGuide.user} />
-      </div>
-    </div>
-  </div>
-{:else}
-  <Page404 />
-{/if}
+  {/if}
+</QueryStateHandler>

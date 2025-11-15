@@ -19,6 +19,7 @@
   import { getTranslate } from '@tolgee/svelte';
   import { toaster } from '$lib/utils/toaster-svelte';
   import BasicModal from '$lib/components/general/BasicModal.svelte';
+  import QueryStateHandler from '$lib/components/general/QueryStateHandler.svelte';
 
   interface Props {
     data: PageData;
@@ -76,82 +77,84 @@
   {/if}
 </svelte:head>
 
-{#if $mod.fetching}
-  <p>Loading...</p>
-{:else if $mod.error}
-  <p>Oh no... {$mod.error.message}</p>
-{:else if $mod.data.mod}
-  <div class="xlx:grid-flow-row grid gap-6">
-    <div class="flex h-auto flex-wrap items-center justify-between">
-      <h1 class="text-4xl font-bold">{$mod.data.mod.name}</h1>
-      <div>
-        {#if canUserEdit}
-          <button
-            class="btn border border-primary-500 preset-tonal-primary"
-            onclick={() => goto(base + '/mod/' + modId + '/edit')}>
-            <span class="material-icons pr-2">edit</span>
-            {$t('mod.edit')}</button>
+<QueryStateHandler query={mod}>
+  {#snippet empty()}
+    <Page404 />
+  {/snippet}
 
-          <BasicModal
-            bind:open={deleteModalOpen}
-            title={$t('mod.modal.delete.title')}
-            body={$t('mod.modal.delete.text')}
-            buttonTextCancel="Cancel"
-            buttonTextConfirm="Delete"
-            confirm={deleteModFn} />
-          <button class="btn border border-primary-500 preset-tonal-primary" onclick={() => (deleteModalOpen = true)}>
-            <span class="material-icons pr-2">delete_forever</span>
-            {$t('mod.delete')}</button>
-          <button
-            class="btn border border-primary-500 preset-tonal-primary"
-            onclick={() => goto(base + '/mod/' + modId + '/new-version')}>
-            <span class="material-icons pr-2">upload_file</span>
-            {$t('mod.new-version')}</button>
-        {/if}
-        {#if canUserEditCompatibility}
-          <EditCompatibilityModal mod={$mod.data?.mod} bind:open={editCompatibilityModalOpen} />
+  {#if $mod.data.mod}
+    <div class="xlx:grid-flow-row grid gap-6">
+      <div class="flex h-auto flex-wrap items-center justify-between">
+        <h1 class="text-4xl font-bold">{$mod.data.mod.name}</h1>
+        <div>
+          {#if canUserEdit}
+            <button
+              class="btn border border-primary-500 preset-tonal-primary"
+              onclick={() => goto(base + '/mod/' + modId + '/edit')}>
+              <span class="material-icons pr-2">edit</span>
+              {$t('mod.edit')}</button>
 
-          <button
-            class="btn border border-primary-500 preset-tonal-primary"
-            onclick={() => (editCompatibilityModalOpen = true)}>
-            <span class="material-icons">rocket_launch</span>
-            <span class="material-icons pr-2">science</span>
-            {$t('mod.edit-compatibility')}</button>
-        {/if}
-        <button class="btn border border-primary-500 preset-tonal-primary" onclick={() => (versionsTab = !versionsTab)}>
-          {#if !versionsTab}
-            <span class="material-icons pr-2" title="Browse all uploaded versions of this mod">view_list</span>
-            {$t('mod.view-versions')}
-          {:else}
-            <span class="material-icons pr-2" title="View the description page for this mod">description</span>
-            {$t('mod.view-description')}
+            <BasicModal
+              bind:open={deleteModalOpen}
+              title={$t('mod.modal.delete.title')}
+              body={$t('mod.modal.delete.text')}
+              buttonTextCancel="Cancel"
+              buttonTextConfirm="Delete"
+              confirm={deleteModFn} />
+            <button class="btn border border-primary-500 preset-tonal-primary" onclick={() => (deleteModalOpen = true)}>
+              <span class="material-icons pr-2">delete_forever</span>
+              {$t('mod.delete')}</button>
+            <button
+              class="btn border border-primary-500 preset-tonal-primary"
+              onclick={() => goto(base + '/mod/' + modId + '/new-version')}>
+              <span class="material-icons pr-2">upload_file</span>
+              {$t('mod.new-version')}</button>
           {/if}
-        </button>
-      </div>
-    </div>
-    <div class="grid-auto-max grid auto-cols-fr gap-4">
-      {#if !versionsTab}
-        <ModDescription mod={$mod.data.mod} />
-      {:else}
-        <ModVersions modId={$mod.data.mod.id} />
-      {/if}
-      <div class="grid auto-rows-min grid-cols-1 gap-8">
-        <div class="m-auto">
-          <ModLogo
-            modLogo={$mod.data.mod.logo}
-            modName={$mod.data.mod.name}
-            compatibility={$mod.data.mod.compatibility} />
+          {#if canUserEditCompatibility}
+            <EditCompatibilityModal mod={$mod.data?.mod} bind:open={editCompatibilityModalOpen} />
+
+            <button
+              class="btn border border-primary-500 preset-tonal-primary"
+              onclick={() => (editCompatibilityModalOpen = true)}>
+              <span class="material-icons">rocket_launch</span>
+              <span class="material-icons pr-2">science</span>
+              {$t('mod.edit-compatibility')}</button>
+          {/if}
+          <button
+            class="btn border border-primary-500 preset-tonal-primary"
+            onclick={() => (versionsTab = !versionsTab)}>
+            {#if !versionsTab}
+              <span class="material-icons pr-2" title="Browse all uploaded versions of this mod">view_list</span>
+              {$t('mod.view-versions')}
+            {:else}
+              <span class="material-icons pr-2" title="View the description page for this mod">description</span>
+              {$t('mod.view-description')}
+            {/if}
+          </button>
         </div>
-        <ModLatestVersions
-          modId={$mod.data.mod.id}
-          modReference={$mod.data.mod.mod_reference}
-          latestVersions={$mod.data.mod.latestVersions} />
-        <CompatibilityGrid compatibility={$mod.data.mod.compatibility} />
-        <ModInfo mod={$mod.data.mod} />
-        <ModAuthors authors={$mod.data.mod.authors} />
+      </div>
+      <div class="grid-auto-max grid auto-cols-fr gap-4">
+        {#if !versionsTab}
+          <ModDescription mod={$mod.data.mod} />
+        {:else}
+          <ModVersions modId={$mod.data.mod.id} />
+        {/if}
+        <div class="grid auto-rows-min grid-cols-1 gap-8">
+          <div class="m-auto">
+            <ModLogo
+              modLogo={$mod.data.mod.logo}
+              modName={$mod.data.mod.name}
+              compatibility={$mod.data.mod.compatibility} />
+          </div>
+          <ModLatestVersions
+            modId={$mod.data.mod.id}
+            modReference={$mod.data.mod.mod_reference}
+            latestVersions={$mod.data.mod.latestVersions} />
+          <CompatibilityGrid compatibility={$mod.data.mod.compatibility} />
+          <ModInfo mod={$mod.data.mod} />
+          <ModAuthors authors={$mod.data.mod.authors} />
+        </div>
       </div>
     </div>
-  </div>
-{:else}
-  <Page404 />
-{/if}
+  {/if}
+</QueryStateHandler>

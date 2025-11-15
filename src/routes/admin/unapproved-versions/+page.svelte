@@ -6,6 +6,7 @@
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
   import { prettyDate } from '$lib/utils/formatting';
   import Pager from '$lib/components/general/Pager.svelte';
+  import QueryStateHandler from '$lib/components/general/QueryStateHandler.svelte';
 
   const client = getContextClient();
 
@@ -63,11 +64,15 @@
 {/if}
 
 <div class="card preset-filled-surface-100-900">
-  {#if $versions.fetching}
-    <section class="p-4">Loading...</section>
-  {:else if $versions.error}
-    <section class="p-4">Oh no... {$versions.error.message}</section>
-  {:else}
+  <QueryStateHandler query={versions}>
+    {#snippet loading()}
+      <section class="p-4">Loading...</section>
+    {/snippet}
+
+    {#snippet error(err)}
+      <section class="p-4">Oh no... {err.message}</section>
+    {/snippet}
+
     <table class="table max-w-full">
       <thead>
         <tr>
@@ -107,7 +112,7 @@
         {/each}
       </tbody>
     </table>
-  {/if}
+  </QueryStateHandler>
 </div>
 
 {#if totalVersions}
