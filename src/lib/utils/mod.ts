@@ -22,7 +22,7 @@ export const modStatus = (latestVersions?: {
           }
           result = 'own-risk';
         }
-      } catch (e) {
+      } catch (_e) {
         // Ignored
       }
     }
