@@ -13,3 +13,7 @@ See [Contributing](CONTRIBUTING.md) for more information.
 
 To avoid duplicating information, all setup and development information is included in the contributing guide.
 See [Contributing](CONTRIBUTING.md) for more information.
+
+## Deployment
+
+See [Deployment](DEPLOYMENT.md) for more information.
