@@ -8,12 +8,10 @@ To extend or enhance the main site, you'll need to fork and open a PR targeting 
 
 ## Requirements
 
-### Note: Dev Container
+### Note: A Dev Container Exists
 
-This project uses [Bun](https://bun.sh/) which is not fully featured yet for Windows.
-If you're developing from windows, we suggest you use the devcontainer included with the project instead.
-Generic directions for setup can be found
-[here](https://github.com/satisfactorymodding/Documentation/blob/master/README.md#devcontainer).
+This repository previously needed a devcontainer to comfortably develop from a Windows host machine.
+This is no longer required, but the container is still around if you'd like to use it.
 
 You should [operate the devcontainer out of an isolated Docker volume](https://code.visualstudio.com/docs/devcontainers/containers#_quick-start-open-a-git-repository-or-github-pr-in-an-isolated-container-volume)
 to avoid the _significant_ slowdowns caused by working on the host file system.
