@@ -236,6 +236,12 @@ When you've opened up your Pull Request we do a few more things:
   1. we lint the code again (you can sneak stuff in, husky is imperfect in enforcement!)
   1. if that all passes we deploy to our GitHub page!
 
+## Merging
+
+The `main` branch is for releases. All contribution PRs should target the `staging` so they can be tested first. The staging branch is automatically deployed to <https://ficsit.dev>.
+
+When the `staging` branch is working and it's time to release, we rebase its changes onto the `main` branch. To ensure this process works, we require linear history on all branches, and we squash or rebase external pull requests (squash if they have merge commits).
+
 ## Wrap Up
 
 If you follow these conventions, it will be much quicker for all parties involved to incorporate your changes!
