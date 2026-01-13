@@ -3,4 +3,5 @@ export type SidebarItemData = {
   icon: string;
   label: string;
   external?: boolean;
+  newerIcon?: boolean;
 };

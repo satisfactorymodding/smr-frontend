@@ -27,7 +27,13 @@
     {
       url: base + '/mods',
       icon: 'extension',
-      label: $t('sidebar.mods')
+      label: $t('sidebar.mods'),
+      newerIcon: true
+    },
+    {
+      url: base + '/modpacks',
+      icon: 'box',
+      label: $t('sidebar.modpacks')
     },
     {
       url: base + '/guides',

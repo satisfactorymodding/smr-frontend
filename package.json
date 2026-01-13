@@ -46,8 +46,8 @@
     "prismjs": "^1.29.0",
     "semver": "^7.6.3",
     "socket.io-client": "^4.7.5",
-    "tslib": "^2.6.3",
     "thumbhash": "^0.1.1",
+    "tslib": "^2.6.3",
     "wonka": "^6.3.4",
     "zod": "^3.23.8"
   },
