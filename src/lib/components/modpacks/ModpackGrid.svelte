@@ -27,8 +27,7 @@
 
   let selectedTags: string[] = [];
 
-  // TODO: Change to modpacks not mods
-  $: mods = queryStore({
+  $: modpacks = queryStore({
     query: GetModpacksDocument,
     client,
     variables: { offset: page * perPage, limit: perPage, search, order, orderBy, tagIDs: selectedTags.sort() }
@@ -76,10 +75,8 @@
     goto(url.toString(), { keepFocus: true });
   }
 
-  // TODO: Change to modpack
-  $: totalModpacks = $mods?.data?.getMods?.count || 0;
-  // TODO: Change to modpack
-  $: showPagination = ($mods && $mods.fetching) || ($mods && !$mods.fetching && totalModpacks > 0 && !$mods.error);
+  $: totalModpacks = $modpacks?.data?.getModpacks?.count || 0;
+  $: showPagination = ($modpacks && $modpacks.fetching) || ($modpacks && !$modpacks.fetching && totalModpacks > 0 && !$modpacks.error);
 
   $: gridClasses =
     colCount == 4
@@ -205,28 +202,23 @@
   </div>
 </div>
 
-// TODO: Change to modpack
-{#if $mods.fetching}
+{#if $modpacks.fetching}
   <div class="grid {gridClasses} gap-4">
     {#each Array(perPage) as _}
       <FicsitCard fake />
     {/each}
   </div>
-  // TODO: Change to modpack
-{:else if $mods.error && $mods.error.message.includes("'Search' failed on the 'min' tag")}
+{:else if $modpacks.error && $modpacks.error.message.includes("'Search' failed on the 'min' tag")}
   {$t('search.failed.query-too-short')}
-  // TODO: Change to modpack
-{:else if $mods.error}
-  // TODO: Change to modpack
-  <p>Oh no... {$mods.error.message}</p>
+{:else if $modpacks.error}
+  <p>Oh no... {$modpacks.error.message}</p>
 {:else if totalModpacks == 0}
   {$t('search.results.empty')}
 {:else}
   <div class="grid {gridClasses} gap-4">
-    // TODO: Change to modpack card
-    <!-- {#each $mods.data.getMods.mods as mod} -->
-      <!-- <ModCard {mod} /> -->
-    <!-- {/each} -->
+    {#each $modpacks.data.getModpacks.modpacks as modpack}
+      <ModpackCard {modpack} />
+    {/each}
   </div>
 {/if}
 
