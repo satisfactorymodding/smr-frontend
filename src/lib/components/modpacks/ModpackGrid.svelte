@@ -2,7 +2,7 @@
   import { queryStore, getContextClient } from '@urql/svelte';
 
   import { GetModpacksDocument, GetTagsDocument, ModpackFields, Order, type Tag } from '$lib/generated';
-
+  import ModpackCard from './ModpackCard.svelte';
   import { goto } from '$app/navigation';
   import { page as storePage } from '$app/stores';
   import FicsitCard from '$lib/components/general/FicsitCard.svelte';
