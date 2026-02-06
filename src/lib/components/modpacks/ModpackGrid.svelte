@@ -1,8 +1,7 @@
 <script lang="ts">
   import { queryStore, getContextClient } from '@urql/svelte';
 
-  // TODO: How do we get new things in here
-  import { GetModsDocument, GetTagsDocument, ModFields, Order, type Tag } from '$lib/generated';
+  import { GetModpacksDocument, GetTagsDocument, ModpackFields, Order, type Tag } from '$lib/generated';
 
   import { goto } from '$app/navigation';
   import { page as storePage } from '$app/stores';
@@ -21,8 +20,7 @@
   let search = (browser && $storePage.url.searchParams.get('q')) || '';
 
   let order: Order = Order.Desc;
-  // TODO: Change this to modpack not mod
-  let orderBy: ModFields = ModFields.LastVersionDate;
+  let orderBy: ModpackFields = ModpackFields.UpdatedAt;
 
   let perPage = 32;
   let page = parseInt((browser && $storePage.url.searchParams.get('p')) || '0', 10) || 0;
@@ -31,7 +29,7 @@
 
   // TODO: Change to modpacks not mods
   $: mods = queryStore({
-    query: GetModsDocument,
+    query: GetModpacksDocument,
     client,
     variables: { offset: page * perPage, limit: perPage, search, order, orderBy, tagIDs: selectedTags.sort() }
   });
@@ -56,17 +54,14 @@
     timer = setTimeout(() => {
       if (searchField && !searchDisabled) {
         if ((search === '' || search === null) && searchField !== '' && searchField !== null) {
-          // TODO: Change to modpack
-          orderBy = ModFields.Search;
+          orderBy = ModpackFields.Search;
           page = 0;
         }
 
         search = searchField;
       } else if (searchField === '' || searchField === null) {
-        // TODO: Change to modpack
-        if (orderBy === ModFields.Search || !orderBy) {
-          // TODO: Change to modpack
-          orderBy = ModFields.LastVersionDate;
+        if (orderBy === ModpackFields.Search || !orderBy) {
+          orderBy = ModpackFields.UpdatedAt;
         }
 
         search = null;
@@ -93,7 +88,6 @@
 
   export const { t } = getTranslate();
 
-  // TODO: Decide on new fields
   $: orderFields = [
     [$t('sort-order.name'), 'name'],
     [$t('sort-order.views'), 'views'],
