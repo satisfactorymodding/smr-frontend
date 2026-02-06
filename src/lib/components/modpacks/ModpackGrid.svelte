@@ -1,11 +1,11 @@
 <script lang="ts">
   import { queryStore, getContextClient } from '@urql/svelte';
+
+  // TODO: How do we get new things in here
   import { GetModsDocument, GetTagsDocument, ModFields, Order, type Tag } from '$lib/generated';
-  import ModCard from './ModCard.svelte';
-  import { base } from '$app/paths';
+
   import { goto } from '$app/navigation';
   import { page as storePage } from '$app/stores';
-  import { user } from '$lib/stores/user';
   import FicsitCard from '$lib/components/general/FicsitCard.svelte';
   import { browser } from '$app/environment';
   import { getTranslate } from '@tolgee/svelte';
@@ -13,7 +13,7 @@
   import TagDisplay from '../utils/TagDisplay.svelte';
 
   export let colCount: 4 | 5 = 4;
-  export let newMod = false;
+//   export let newModpack = false;
   export let showSearch = false;
 
   const client = getContextClient();
@@ -21,6 +21,7 @@
   let search = (browser && $storePage.url.searchParams.get('q')) || '';
 
   let order: Order = Order.Desc;
+  // TODO: Change this to modpack not mod
   let orderBy: ModFields = ModFields.LastVersionDate;
 
   let perPage = 32;
@@ -28,6 +29,7 @@
 
   let selectedTags: string[] = [];
 
+  // TODO: Change to modpacks not mods
   $: mods = queryStore({
     query: GetModsDocument,
     client,
@@ -42,7 +44,7 @@
     }
   });
 
-  let totalMods: number;
+  let totalModpacks: number;
 
   let searchField = search;
   $: searchDisabled = searchField.length < 3;
@@ -54,13 +56,16 @@
     timer = setTimeout(() => {
       if (searchField && !searchDisabled) {
         if ((search === '' || search === null) && searchField !== '' && searchField !== null) {
+          // TODO: Change to modpack
           orderBy = ModFields.Search;
           page = 0;
         }
 
         search = searchField;
       } else if (searchField === '' || searchField === null) {
+        // TODO: Change to modpack
         if (orderBy === ModFields.Search || !orderBy) {
+          // TODO: Change to modpack
           orderBy = ModFields.LastVersionDate;
         }
 
@@ -76,8 +81,10 @@
     goto(url.toString(), { keepFocus: true });
   }
 
-  $: totalMods = $mods?.data?.getMods?.count || 0;
-  $: showPagination = ($mods && $mods.fetching) || ($mods && !$mods.fetching && totalMods > 0 && !$mods.error);
+  // TODO: Change to modpack
+  $: totalModpacks = $mods?.data?.getMods?.count || 0;
+  // TODO: Change to modpack
+  $: showPagination = ($mods && $mods.fetching) || ($mods && !$mods.fetching && totalModpacks > 0 && !$mods.error);
 
   $: gridClasses =
     colCount == 4
@@ -86,6 +93,7 @@
 
   export const { t } = getTranslate();
 
+  // TODO: Decide on new fields
   $: orderFields = [
     [$t('sort-order.name'), 'name'],
     [$t('sort-order.views'), 'views'],
@@ -100,7 +108,7 @@
   $: paginationSettings = {
     page: page,
     limit: perPage,
-    size: totalMods,
+    size: totalModpacks,
     amounts: [8, 16, 32, 64, 100]
   } satisfies PaginationSettings;
 
@@ -158,6 +166,7 @@
             title={searchDisabled ? $t('search.disabled') : ''}>arrow_forward</button>
         </div>
       </div>
+      // TODO: Decide if this is needed for modpacks. Are we using tags?
       {#if tagsOpen}
         <div class="flex flex-grow flex-row flex-wrap items-center justify-center gap-1 pb-10">
           {#if $allTags.error}
@@ -178,12 +187,16 @@
   {/if}
 
   <div
-    class="flex grow flex-row flex-wrap"
-    class:justify-between={newMod && $user !== null}
-    class:justify-end={!newMod || $user == null}>
-    {#if newMod && $user !== null}
-      <a class="variant-ghost-primary btn self-end" href="{base}/new-mod">{$t('mods.new')}</a>
-    {/if}
+    class="flex grow flex-row flex-wrap">
+
+    <!-- This section is setup to be the new modpack button, if we decide to use it (copied from mods page) -->
+
+    <!-- class:justify-between={newModpack && $user !== null}
+    class:justify-end={!newModpack || $user == null}>
+    {#if newModpack && $user !== null}
+      <a class="variant-ghost-primary btn self-end" href="{base}/new-modpack">{$t('modpacks.new')}</a>
+    {/if} -->
+
     {#if showPagination}
       <div class="self-end">
         <Paginator
@@ -198,23 +211,28 @@
   </div>
 </div>
 
+// TODO: Change to modpack
 {#if $mods.fetching}
   <div class="grid {gridClasses} gap-4">
     {#each Array(perPage) as _}
       <FicsitCard fake />
     {/each}
   </div>
+  // TODO: Change to modpack
 {:else if $mods.error && $mods.error.message.includes("'Search' failed on the 'min' tag")}
   {$t('search.failed.query-too-short')}
+  // TODO: Change to modpack
 {:else if $mods.error}
+  // TODO: Change to modpack
   <p>Oh no... {$mods.error.message}</p>
-{:else if totalMods == 0}
+{:else if totalModpacks == 0}
   {$t('search.results.empty')}
 {:else}
   <div class="grid {gridClasses} gap-4">
-    {#each $mods.data.getMods.mods as mod}
-      <ModCard {mod} />
-    {/each}
+    // TODO: Change to modpack card
+    <!-- {#each $mods.data.getMods.mods as mod} -->
+      <!-- <ModCard {mod} /> -->
+    <!-- {/each} -->
   </div>
 {/if}
 
