@@ -52,6 +52,12 @@ export const installMod = (modReference: string) => {
   });
 };
 
+export const installModpack = (modpackReference: string) => {
+  open('smmanager://install?modpackID=' + modpackReference, () => {
+    window.open(modLoaderLink, '_blank');
+  });
+};
+
 if (browser) {
   connectToLauncher();
 }
