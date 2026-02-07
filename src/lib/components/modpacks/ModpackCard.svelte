@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Modpack, Maybe, Version } from '$lib/generated';
+  import type { Modpack } from '$lib/generated';
   import { base } from '$app/paths';
   import FicsitCard from '$lib/components/general/FicsitCard.svelte';
   import { installModpack } from '$lib/stores/launcher';
