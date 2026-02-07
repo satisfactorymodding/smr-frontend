@@ -118,7 +118,31 @@
 </script>
 
 <div class="mb-5 ml-auto flex flex-col gap-4">
-  {#if showSearch}
+
+  <div class="flex min-h-full flex-col" style="height: calc(15vh)">
+    <div class="card h-full">
+      <div class="relative h-full w-full">
+        <div class="modpack-banner h-full w-full flex items-center justify-center">
+          <div class="variant-ringed-primary variant-ghost-primary btn btn-lg m-6 text-3xl">
+            <span>{$t('modpacks.banner.guide')}</span>
+          </div>
+        </div>
+      </div>
+    </div>  
+  </div>
+
+  <div
+    class="flex grow flex-row flex-wrap">
+
+    <!-- This section is setup to be the new modpack button, if we decide to use it (copied from mods page) -->
+
+    <!-- class:justify-between={newModpack && $user !== null}
+    class:justify-end={!newModpack || $user == null}>
+    {#if newModpack && $user !== null} 
+      <a class="variant-ghost-primary btn self-end" href="{base}/new-modpack">{$t('modpacks.new')}</a>
+    {/if} -->
+
+    {#if showSearch}
     <div class="flex grow flex-col items-center justify-center gap-4 sm:px-4">
       <div class="flex grow flex-row flex-wrap items-center justify-center gap-3 sm:px-4">
         <div>
@@ -157,7 +181,6 @@
             title={searchDisabled ? $t('search.disabled') : ''}>arrow_forward</button>
         </div>
       </div>
-      // TODO: Decide if this is needed for modpacks. Are we using tags?
       {#if tagsOpen}
         <div class="flex flex-grow flex-row flex-wrap items-center justify-center gap-1 pb-10">
           {#if $allTags.error}
@@ -176,17 +199,6 @@
       {/if}
     </div>
   {/if}
-
-  <div
-    class="flex grow flex-row flex-wrap">
-
-    <!-- This section is setup to be the new modpack button, if we decide to use it (copied from mods page) -->
-
-    <!-- class:justify-between={newModpack && $user !== null}
-    class:justify-end={!newModpack || $user == null}>
-    {#if newModpack && $user !== null}
-      <a class="variant-ghost-primary btn self-end" href="{base}/new-modpack">{$t('modpacks.new')}</a>
-    {/if} -->
 
     {#if showPagination}
       <div class="self-end">
@@ -249,4 +261,28 @@
     display: inline-block;
     margin: 0 12px;
   }
+
+.modpack-banner {
+  position: relative;
+  overflow: hidden;
+}
+
+.modpack-banner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url('/images/satisfactory_scene.webp');
+  background-position: center;
+  background-size: cover;
+  filter: blur(4px);
+  transform: scale(1.05); /* prevents edge clipping */
+  z-index: 0;
+}
+
+.modpack-banner > * {
+  position: relative;
+  z-index: 1;
+}
+
+
 </style>
