@@ -4,8 +4,8 @@
   import FicsitCard from '$lib/components/general/FicsitCard.svelte';
   import { installModpack } from '$lib/stores/launcher';
   import { prettyNumber } from '$lib/utils/formatting';
-//   import OutdatedBanner from '$lib/components/mods/compatibility/OutdatedBanner.svelte';
-//   import CompatibilityButton from '$lib/components/mods/compatibility/CompatibilityButton.svelte';
+//   import OutdatedBanner from '$lib/components/modpacks/compatibility/OutdatedBanner.svelte';
+//   import CompatibilityButton from '$lib/components/modpacks/compatibility/CompatibilityButton.svelte';
   import TagList from '$lib/components/utils/TagList.svelte';
 
   export let modpack: Pick<
