@@ -1,7 +1,5 @@
 <script lang="ts">
   import { assets } from '$app/paths';
-  import type { CompatibilityInfoInput } from '$lib/generated';
-  import OutdatedBanner from '$lib/components/mods/compatibility/OutdatedBanner.svelte';
 
   export let modpackLogo!: string;
   export let modpackName!: string;
