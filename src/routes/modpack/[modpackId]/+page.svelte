@@ -16,7 +16,7 @@
   export const { t } = getTranslate();
 
   $: ({ modpackId, modpack } = data);
-
+  
   const client = getContextClient();
 
   const toastStore = getToastStore();
@@ -43,41 +43,9 @@
   <div class="grid gap-6 xlx:grid-flow-row">
     <div class="flex h-auto flex-wrap items-center justify-between">
       <h1 class="text-4xl font-bold">{$modpack.data.getModpack.name}</h1>
-      <div>
-        <!-- {#if canUserEdit}
-          <button class="variant-ghost-primary btn" on:click={() => goto(base + '/mod/' + modId + '/edit')}>
-            <span class="material-icons pr-2">edit</span>
-            {$t('mod.edit')}</button>
-          <button class="variant-ghost-primary btn" on:click={() => modalStore.trigger(deleteModal)}>
-            <span class="material-icons pr-2">delete_forever</span>
-            {$t('mod.delete')}</button>
-          <button class="variant-ghost-primary btn" on:click={() => goto(base + '/mod/' + modId + '/new-version')}>
-            <span class="material-icons pr-2">upload_file</span>
-            {$t('mod.new-version')}</button>
-        {/if} -->
-        <!-- {#if canUserEditCompatibility}
-          <button class="variant-ghost-primary btn" on:click={() => modalStore.trigger(editCompatibilityModal)}>
-            <span class="material-icons">rocket_launch</span>
-            <span class="material-icons pr-2">science</span>
-            {$t('mod.edit-compatibility')}</button>
-        {/if} -->
-        <!-- <button class="variant-ghost-primary btn" on:click={() => (versionsTab = !versionsTab)}>
-          {#if !versionsTab}
-            <span class="material-icons pr-2" title="Browse all uploaded versions of this mod">view_list</span>
-            {$t('mod.view-versions')}
-          {:else}
-            <span class="material-icons pr-2" title="View the description page for this mod">description</span>
-            {$t('mod.view-description')}
-          {/if}
-        </button> -->
-      </div>
     </div>
     <div class="grid-auto-max grid auto-cols-fr gap-4">
-      <!-- {#if !versionsTab} -->
         <ModpackDescription modpack={$modpack.data.getModpack} />
-      <!-- {:else} -->
-        <!-- <ModVersions modId={$mod.data.mod.id} /> -->
-      <!-- {/if} -->
       <div class="grid auto-rows-min grid-cols-1 gap-8">
         <div class="m-auto">
           <ModpackLogo
