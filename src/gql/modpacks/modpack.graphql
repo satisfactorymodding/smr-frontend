@@ -2,6 +2,7 @@ query GetModpack($modpackID: ModpackID!) {
   getModpack(modpackID: $modpackID) {
     id
     created_at
+    updated_at
     name
     full_description
     short_description
