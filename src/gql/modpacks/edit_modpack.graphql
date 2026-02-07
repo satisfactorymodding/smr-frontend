@@ -1,0 +1,14 @@
+mutation EditModpack($modpackId: ModpackID!, $modpack: UpdateModpack!) {
+  updateModpack(modpackID: $modpackId, modpack: $modpack) {
+    id
+    name
+    full_description
+    short_description
+    logo
+    tags {
+      id
+      name
+      description
+    }
+  }
+}

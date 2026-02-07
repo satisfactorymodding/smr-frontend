@@ -1,0 +1,21 @@
+query GetModpacks($offset: Int!, $limit: Int!, $search: String, $order: Order, $orderBy: ModpackFields, $tagIDs: [TagID!]) {
+  getModpacks(
+    filter: { limit: $limit, offset: $offset, search: $search, order: $order, order_by: $orderBy, tagIDs: $tagIDs }
+  ) {
+    count
+    modpacks {
+      id
+      name
+      logo
+      logo_thumbhash
+      views
+      installs
+      short_description
+      tags {
+        id
+        name
+        description
+      }
+    }
+  }
+}

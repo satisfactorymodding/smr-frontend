@@ -1,0 +1,3 @@
+mutation DeleteModpack($ModpackID: ModpackID!) {
+  deleteModpack(modpackID: $ModpackID)
+}
