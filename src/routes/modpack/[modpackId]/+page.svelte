@@ -1,20 +1,13 @@
 <script lang="ts">
   import ModpackInfo from '$lib/components/modpacks/ModpackInfo.svelte';
-  // import ModLatestVersions from '$lib/components/mods/ModLatestVersions.svelte';
-  // import ModAuthors from '$lib/components/mods/ModAuthors.svelte';
   import ModpackLogo from '$lib/components/modpacks/ModpackLogo.svelte';
   import ModpackDescription from '$lib/components/modpacks/ModpackDescription.svelte';
-  // import ModVersions from '$lib/components/mods/ModVersions.svelte';
-  // import { user } from '$lib/stores/user';
-  // import { goto } from '$app/navigation';
-  // import { base } from '$app/paths';
+  import ModpackInstall from '$lib/components/modpacks/ModpackInstall.svelte';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
   import { modpackSchema, serializeSchema } from '$lib/utils/schema';
-  // import CompatibilityGrid from '$lib/components/mods/compatibility/CompatibilityGrid.svelte';
   import { getContextClient } from '@urql/svelte';
   import type { PageData } from './$types';
-  import { getModalStore, getToastStore, type ModalSettings } from '@skeletonlabs/skeleton';
-  // import EditCompatibilityModal from '$lib/modals/EditCompatibilityModal.svelte';
+  import { getModalStore, getToastStore } from '@skeletonlabs/skeleton';
   import Page404 from '$lib/components/general/Page404.svelte';
   import { getTranslate } from '@tolgee/svelte';
 
@@ -38,7 +31,6 @@
       title={$modpack.data.getModpack.name}
       image={$modpack.data.getModpack.logo} />
 
-    eslint-disable
     {@html serializeSchema(modpackSchema($modpack.data.getModpack))}
   {/if}
 </svelte:head>
@@ -92,6 +84,7 @@
             modpackLogo={$modpack.data.getModpack.logo}
             modpackName={$modpack.data.getModpack.name} />
         </div>
+        <ModpackInstall modpack={$modpack.data.getModpack} /> 
         <ModpackInfo modpack={$modpack.data.getModpack} />
         <!-- <ModAuthors authors={$mod.data.mod.authors} /> -->
       </div>
