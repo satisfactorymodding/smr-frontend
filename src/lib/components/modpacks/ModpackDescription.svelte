@@ -2,8 +2,7 @@
   import { AnnouncementImportance, type Modpack } from '$lib/generated';
   import { markdown } from '$lib/utils/markdown';
   import AnnouncementRow from '../announcements/AnnouncementRow.svelte';
-  import { getTranslate, T } from '@tolgee/svelte';
-  import ModList from './ModList.svelte';
+  import { getTranslate } from '@tolgee/svelte';
   import { TabGroup, Tab } from '@skeletonlabs/skeleton';
 
 
@@ -46,10 +45,9 @@
               {#await description then descriptionRendered}
                 <p>{@html descriptionRendered}</p>
               {/await}
-      </div>
+            </div>
           {:else if tabSet === 'list'}
-            List the most important features here with short, pragmatic descriptions
-            so readers can scan for what matters (accessibility, theming, integrations).
+            This has not been implemented at all yet.
           {/if}
         </svelte:fragment>
       </TabGroup>
