@@ -2,6 +2,7 @@ query GetModpack($modpackID: ModpackID!) {
   getModpack(modpackID: $modpackID) {
     id
     created_at
+    creator_id
     updated_at
     name
     full_description
@@ -14,6 +15,11 @@ query GetModpack($modpackID: ModpackID!) {
       id
       name
       description
+    }
+    parent_id
+    mods {
+      version_constraint
+      mod_id
     }
   }
 }

@@ -3,11 +3,10 @@
   import ModpackLogo from '$lib/components/modpacks/ModpackLogo.svelte';
   import ModpackDescription from '$lib/components/modpacks/ModpackDescription.svelte';
   import ModpackInstall from '$lib/components/modpacks/ModpackInstall.svelte';
+  import ModpackCreators from '$lib/components/modpacks/ModpackCreators.svelte';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
   import { modpackSchema, serializeSchema } from '$lib/utils/schema';
-  import { getContextClient } from '@urql/svelte';
   import type { PageData } from './$types';
-  import { getModalStore, getToastStore } from '@skeletonlabs/skeleton';
   import Page404 from '$lib/components/general/Page404.svelte';
   import { getTranslate } from '@tolgee/svelte';
 
@@ -15,13 +14,7 @@
 
   export const { t } = getTranslate();
 
-  $: ({ modpackId, modpack } = data);
-  
-  const client = getContextClient();
-
-  const toastStore = getToastStore();
-
-  const modalStore = getModalStore();
+  $: ({ modpack } = data);
 </script>
 
 <svelte:head>
@@ -54,7 +47,7 @@
         </div>
         <ModpackInstall modpack={$modpack.data.getModpack} /> 
         <ModpackInfo modpack={$modpack.data.getModpack} />
-        <!-- <ModAuthors authors={$mod.data.mod.authors} /> -->
+        <!-- <ModpackCreators creator={$modpack.data.getModpack.creator_id} remix={$modpack.data.getModpack.parent_id.getModpack.creator_id} /> -->
       </div>
     </div>
   </div>

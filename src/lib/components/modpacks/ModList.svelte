@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Modpack } from '$lib/generated';
+  // import type { Modpack } from '$lib/generated';
   import { getTranslate } from '@tolgee/svelte';
 
 //   export let modpack!: Pick<
