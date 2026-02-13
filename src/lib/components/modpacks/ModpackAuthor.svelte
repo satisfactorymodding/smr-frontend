@@ -1,10 +1,11 @@
 <script lang="ts">
   import { queryStore, getContextClient } from '@urql/svelte';
   import { GetUserDocument } from '$lib/generated';  
-  import { assets } from '$app/paths';
+  import { assets, base } from '$app/paths';
   import { getTranslate } from '@tolgee/svelte';
 
   export let creator: string;
+  export let role: string;
 
   export const { t } = getTranslate();
 
@@ -25,12 +26,13 @@
 {:else if $user.data.getUser}
   <div class="mr-2 grid auto-cols-max grid-flow-col gap-x-2">
     <div
-      class="h-7 w-7 rounded-full bg-cover"
+      class="h-14 w-14 rounded-full bg-cover"
       style={`background-image: url("${$user.data.getUser.avatar || assets + '/images/no_image.webp'}")`} />
     <div class="grid grid-flow-row">
-      <span class="text-yellow-500">{$user.data.getUser.username}</span>
+      <a href="{base}/user/{$user.data.getUser.id}/" class="text-yellow-500 underline">{$user.data.getUser.username}</a>
+      <span class="text-white-500">{role}</span>
     </div>
   </div>
 {:else}
-  <p class="mr-2 whitespace-nowrap">Unknown User ID</p>
+  <p class="mr-2 whitespace-nowrap">{$t('user.unknown')}</p>
 {/if}

@@ -9,12 +9,27 @@
   import type { PageData } from './$types';
   import Page404 from '$lib/components/general/Page404.svelte';
   import { getTranslate } from '@tolgee/svelte';
+  import { queryStore, getContextClient } from '@urql/svelte';
+  import { GetModpackDocument } from '$lib/generated';
 
   export let data: PageData;
+
+  const client = getContextClient();
 
   export const { t } = getTranslate();
 
   $: ({ modpack } = data);
+
+  $: parentId = $modpack.data?.getModpack?.parent_id ?? null;
+
+  $: parent = queryStore({
+    query: GetModpackDocument,
+    client,
+    pause: !parentId,
+    variables: parentId ? { modpackID: parentId } : undefined,
+    requestPolicy: 'network-only'
+  });
+
 </script>
 
 <svelte:head>
@@ -45,9 +60,9 @@
             modpackLogo={$modpack.data.getModpack.logo}
             modpackName={$modpack.data.getModpack.name} />
         </div>
-        <ModpackInstall modpack={$modpack.data.getModpack} /> 
+        <ModpackInstall modpack={$modpack.data.getModpack} />  
         <ModpackInfo modpack={$modpack.data.getModpack} />
-        <!-- <ModpackCreators creator={$modpack.data.getModpack.creator_id} remix={$modpack.data.getModpack.parent_id.getModpack.creator_id} /> -->
+        <ModpackCreators creator={$modpack.data.getModpack.creator_id} remix={parentId && !$parent.fetching && !$parent.error ? $parent.data?.getModpack?.creator_id : undefined} />
       </div>
     </div>
   </div>
