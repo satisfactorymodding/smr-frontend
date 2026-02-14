@@ -55,7 +55,7 @@
       <h1 class="text-4xl font-bold">{$modpack.data.getModpack.name}</h1>
     </div>
     <div class="grid-auto-max grid auto-cols-fr gap-4">
-        <ModpackDescription modpack={$modpack.data.getModpack} />
+        <ModpackDescription modpack={$modpack.data.getModpack} modReferences={modIds}/>
       <div class="grid auto-rows-min grid-cols-1 gap-8">
         <div class="m-auto">
           <ModpackLogo
