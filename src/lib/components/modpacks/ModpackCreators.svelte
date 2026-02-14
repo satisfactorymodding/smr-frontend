@@ -2,13 +2,50 @@
   // import type { User, UserMod } from '$lib/generated';
   // import { assets, base } from '$app/paths';
   import { getTranslate } from '@tolgee/svelte';
-    import ModpackAuthor from './ModpackAuthor.svelte';
+  import ModpackAuthor from './ModpackAuthor.svelte';
+  import { getContextClient, queryStore } from '@urql/svelte';
+  import { GetModDocument } from '$lib/generated';
+  import { derived } from 'svelte/store';
 
   export let creator: string;
-
   export let remix: string;
+  export let modReferences: string[] = [];
 
+  const client = getContextClient();
 
+  $: mods = modReferences.map((modID) =>
+    queryStore({
+      query: GetModDocument,
+      client,
+      variables: { mod: modID },
+      requestPolicy: 'network-only'
+    }))
+
+    $: modResultsStore = derived(mods, ($results) => $results, []);
+
+    $: authors =
+      $modResultsStore
+        .map((r) => r?.data?.mod?.authors ?? [])
+        .flat();
+
+    $: creatorCounts = (() => {
+      const counts: Record<string, number> = {};
+
+      for (const author of authors) {
+        if (author?.role === "creator") {
+          const id = author.user_id;
+          counts[id] = (counts[id] ?? 0) + 1;
+        }
+      }
+
+      return counts;
+    })();
+
+    $: creatorCountsList = Object.entries(creatorCounts)
+      .map(([userId, count]) => ({ userId, count }))
+      .sort((a, b) => b.count - a.count);
+
+    $: console.log(creatorCounts);
 
   export const { t } = getTranslate();
 </script>
@@ -29,8 +66,17 @@
         {:else}
           <ModpackAuthor creator={creator} role={$t("modpack.original.original-creator")}></ModpackAuthor>
         {/if}
-        <!-- {#each creators as author}
-          <div class="grid auto-cols-max grid-flow-col gap-x-4">
+
+        <hr>
+
+        <h3 class="my-4 text-2xl font-bold">{$t('modpack.mod.authors')}</h3>
+        {#each creatorCountsList as author}
+          {#if author.count == 1}
+            <ModpackAuthor creator={author.userId.toString()} role={$t("modpack.mod-creator.single", { count: author.count})}></ModpackAuthor>
+          {:else}
+            <ModpackAuthor creator={author.userId.toString()} role={$t("modpack.mod-creator.many", { count: author.count})}></ModpackAuthor>
+          {/if}
+          <!-- <div class="grid auto-cols-max grid-flow-col gap-x-4">
             <div
               class="h-14 w-14 rounded-full bg-cover"
               style={`background-image: url("${author.user.avatar || assets + '/images/no_image.webp'}")`} />
@@ -38,8 +84,8 @@
               <a href="{base}/user/{author.user.id}/" class="text-yellow-500 underline">{author.user.username}</a>
               <div>{$t(`role.${author.role.toLowerCase()}`)}</div>
             </div>
-          </div>
-        {/each} -->
+          </div> -->
+        {/each}
       </div>
     </div>
   </section>
