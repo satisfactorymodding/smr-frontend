@@ -69,23 +69,18 @@
 
         <hr>
 
-        <h3 class="my-4 text-2xl font-bold">{$t('modpack.mod.authors')}</h3>
-        {#each creatorCountsList as author}
-          {#if author.count == 1}
-            <ModpackAuthor creator={author.userId.toString()} role={$t("modpack.mod-creator.single", { count: author.count})}></ModpackAuthor>
-          {:else}
-            <ModpackAuthor creator={author.userId.toString()} role={$t("modpack.mod-creator.many", { count: author.count})}></ModpackAuthor>
-          {/if}
-          <!-- <div class="grid auto-cols-max grid-flow-col gap-x-4">
-            <div
-              class="h-14 w-14 rounded-full bg-cover"
-              style={`background-image: url("${author.user.avatar || assets + '/images/no_image.webp'}")`} />
-            <div class="grid grid-flow-row">
-              <a href="{base}/user/{author.user.id}/" class="text-yellow-500 underline">{author.user.username}</a>
-              <div>{$t(`role.${author.role.toLowerCase()}`)}</div>
-            </div>
-          </div> -->
-        {/each}
+        <h3 class="mt-1 mb-2 text-2xl font-bold">{$t('modpack.mod.authors')}</h3>
+        <div class="max-h-[300px] overflow-y-auto">
+          <div class="grid gap-y-4">
+            {#each creatorCountsList as author}
+              {#if author.count == 1}
+                <ModpackAuthor creator={author.userId.toString()} role={$t("modpack.mod-creator.single", { count: author.count})}></ModpackAuthor>
+              {:else}
+                <ModpackAuthor creator={author.userId.toString()} role={$t("modpack.mod-creator.many", { count: author.count})}></ModpackAuthor>
+              {/if}
+            {/each}
+          </div>
+        </div>
       </div>
     </div>
   </section>
