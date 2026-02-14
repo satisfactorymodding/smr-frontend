@@ -87,12 +87,12 @@
         <div class="flex w-full border-b border-surface-300">
           <div class="flex-1 text-center">
             <Tab bind:group={tabSet} name="info" value="info">
-              Modpack Info
+              {$t('modpack.show-info')}
             </Tab>
           </div>
           <div class="flex-1 text-center">
             <Tab bind:group={tabSet} name="list" value="list">
-              Mod List
+              {$t("modpack.show-mod-list")}
             </Tab>
           </div>
         </div>
@@ -156,7 +156,6 @@
                         <td class="px-4 py-3 text-white/70">{modCreatorMap[mod.id]}</td>
                         <td class="px-4 py-3 text-white/70">{mod.latestVersions.release.game_version}</td>
 
-                        <!-- Actions -->
                         <td class="px-4 py-3">
                           <div class="flex justify-end gap-3">
                             <button class="min-w-[140px] btn variant-ghost-primary" on:click={() => goto(`/mod/${mod.id}`)}>{$t('modpack.list-view.view-mod')}</button>

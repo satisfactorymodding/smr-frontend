@@ -38,7 +38,24 @@
           <a class="variant-ghost-primary btn" href="{base}/settings">Settings</a>
         {/if}
 
+        <TabGroup class="w-full">
+          <div class="flex w-full border-b border-surface-300">
+            <div class="flex-1 text-center">
+              <Tab bind:group={tabSet} name="info" value="info">
+                Modpack Info
+              </Tab>
+            </div>
+            <div class="flex-1 text-center">
+              <Tab bind:group={tabSet} name="list" value="list">
+                Mod List
+              </Tab>
+            </div>
+          </div>
+
+
+
         <button class="variant-ghost-primary btn" on:click={() => (guidesTab = !guidesTab)}>
+
           {#if !guidesTab}
             Guides
           {:else}
