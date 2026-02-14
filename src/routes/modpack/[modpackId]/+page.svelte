@@ -22,6 +22,8 @@
 
   $: parentId = $modpack.data?.getModpack?.parent_id ?? null;
 
+  $: modIds = ($modpack.data?.getModpack?.mods ?? []).map((m) => String(m.mod_id));
+
   $: parent = queryStore({
     query: GetModpackDocument,
     client,
@@ -62,7 +64,8 @@
         </div>
         <ModpackInstall modpack={$modpack.data.getModpack} />  
         <ModpackInfo modpack={$modpack.data.getModpack} />
-        <ModpackCreators creator={$modpack.data.getModpack.creator_id} remix={parentId && !$parent.fetching && !$parent.error ? $parent.data?.getModpack?.creator_id : undefined} />
+        <ModpackCreators creator={$modpack.data.getModpack.creator_id} remix={parentId && !$parent.fetching && !$parent.error ? $parent.data?.getModpack?.creator_id : undefined}
+          modReferences={modIds}/>
       </div>
     </div>
   </div>
