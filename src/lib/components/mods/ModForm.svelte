@@ -171,6 +171,33 @@
       </ValidationMessage>
     </div>
 
+    <div class="input grid grid-flow-row gap-2 p-2">
+      <span>Was AI used? *</span>
+      <select
+        id="ai_disclosure"
+        bind:value={$data.ai_use_disclosure_type}
+        required
+        class="input grid grid-flow-row gap-2">
+        <option value=""></option>
+        <option value="no_ai_usage">No AI Usage</option>
+        <option value="ai_usage">AI Used</option>
+        <option value="runtime_ai_usage">Runtime AI Used</option>
+      </select>
+      <ValidationMessage for="ai_use_disclosure_type" let:messages={message}>
+        <span class="validation-message">{message || ''}</span>
+      </ValidationMessage>
+    </div>
+
+    <div class="grid grid-flow-row gap-2">
+      <label class="label">
+        <span>How was AI used, if at all?</span>
+        <input type="text" bind:value={$data.ai_use_disclosure} class="input p-2" />
+      </label>
+      <ValidationMessage for="ai_use_disclosure" let:messages={message}>
+        <span class="validation-message">{message || ''}</span>
+      </ValidationMessage>
+    </div>
+
     <div class="grid grid-flow-row gap-2">
       <SlideToggle name="slider-label" bind:checked={$data.hidden}>
         {$t('entry.hidden')}
