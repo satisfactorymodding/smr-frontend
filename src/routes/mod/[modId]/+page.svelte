@@ -164,12 +164,14 @@
             compatibility={$mod.data.mod.compatibility} />
         </div>
         <div class="tab grid auto-rows-min grid-cols-4 gap-8">
-          <button class="tablinks" on:click={() => openTab('Latest Versions')}>Latest Versions</button>
-          <button class="tablinks" on:click={() => openTab('Compatibility Grid')}>Compatibility Grid</button>
-          <button class="tablinks" on:click={() => openTab('Mod Info')}>Mod Info</button>
-          <button class="tablinks" on:click={() => openTab('Mod Authors')}>Mod Authors</button>
-          <button class="tablinks" on:click={() => openTab('Mod Network Disclosures')}>Mod Network Disclosures</button>
-          <button class="tablinks" on:click={() => openTab('Mod AI Disclosures')}>Mod AI Disclosures</button>
+          <button class="tablinks" on:click={() => openTab('Latest Versions')}>{$t('mod.latest-versions')}</button>
+          <button class="tablinks" on:click={() => openTab('Compatibility Grid')}>{$t('compatibility-info')}</button>
+          <button class="tablinks" on:click={() => openTab('Mod Info')}>{$t('mod.info.header')}</button>
+          <button class="tablinks" on:click={() => openTab('Mod Authors')}>{$t('modpack.mod.authors')}</button>
+          <button class="tablinks" on:click={() => openTab('Mod Network Disclosures')}
+            >{$t('mod.network_disclosure.header')}</button>
+          <button class="tablinks" on:click={() => openTab('Mod AI Disclosures')}
+            >{$t('mod.ai_disclosure.header')}</button>
         </div>
 
         <div id="Latest Versions" class="tabcontent">
@@ -193,7 +195,7 @@
         <div id="Mod AI Disclosures" class="tabcontent" style="display:none">
           <AIDisclosure mod={$mod.data.mod} />
           <button class="variant-ghost-primary btn" on:click={() => goto(base + '/content-policy')}>
-            <span class=" pr-2">AI Policy</span>
+            <span class=" pr-2">{$t('content-policy')}</span>
           </button>
         </div>
       </div>

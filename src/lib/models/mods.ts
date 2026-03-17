@@ -74,7 +74,7 @@ export const modSchema = zod.object({
       })
     })
   ),
-  ai_use_disclosure_type: zod.string(),
+  ai_use_disclosure_type: zod.string().min(1, { message: 'An option must be selected' }),
   ai_use_disclosure: zod.optional(zod.string()),
   hidden: zod.boolean(),
   tagIDs: zod.optional(zod.string().array()),
