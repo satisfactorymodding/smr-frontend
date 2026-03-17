@@ -19,6 +19,7 @@
   import Page404 from '$lib/components/general/Page404.svelte';
   import { getTranslate } from '@tolgee/svelte';
   import ModNetworkDisclosure from '$lib/components/mods/disclosure/ModNetworkDisclosure.svelte';
+  import AIDisclosure from '$lib/components/mods/disclosure/AIDisclosure.svelte';
 
   export let data: PageData;
 
@@ -57,6 +58,22 @@
           goto(base + '/mods');
         }
       });
+  };
+
+  const openTab = (tabName) => {
+    let i = 0;
+    const tabcontent = document.getElementsByClassName('tabcontent');
+    for (i = 0; i < tabcontent.length; i++) {
+      (tabcontent[i] as HTMLElement).style.display = 'none';
+    }
+
+    const tablinks = document.getElementsByClassName('tablinks');
+    for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(' active', '');
+    }
+
+    document.getElementById(tabName).style.display = 'block';
+    document.getElementById(tabName).className += ' active';
   };
 
   const deleteModal: ModalSettings = {
@@ -146,14 +163,39 @@
             modName={$mod.data.mod.name}
             compatibility={$mod.data.mod.compatibility} />
         </div>
-        <ModLatestVersions
-          modId={$mod.data.mod.id}
-          modReference={$mod.data.mod.mod_reference}
-          latestVersions={$mod.data.mod.latestVersions} />
-        <CompatibilityGrid compatibility={$mod.data.mod.compatibility} />
-        <ModInfo mod={$mod.data.mod} />
-        <ModAuthors authors={$mod.data.mod.authors} />
-        <ModNetworkDisclosure mod={$mod.data.mod} />
+        <div class="tab grid auto-rows-min grid-cols-4 gap-8">
+          <button class="tablinks" on:click={() => openTab('Latest Versions')}>Latest Versions</button>
+          <button class="tablinks" on:click={() => openTab('Compatibility Grid')}>Compatibility Grid</button>
+          <button class="tablinks" on:click={() => openTab('Mod Info')}>Mod Info</button>
+          <button class="tablinks" on:click={() => openTab('Mod Authors')}>Mod Authors</button>
+          <button class="tablinks" on:click={() => openTab('Mod Network Disclosures')}>Mod Network Disclosures</button>
+          <button class="tablinks" on:click={() => openTab('Mod AI Disclosures')}>Mod AI Disclosures</button>
+        </div>
+
+        <div id="Latest Versions" class="tabcontent">
+          <ModLatestVersions
+            modId={$mod.data.mod.id}
+            modReference={$mod.data.mod.mod_reference}
+            latestVersions={$mod.data.mod.latestVersions} />
+        </div>
+        <div id="Compatibility Grid" class="tabcontent" style="display:none">
+          <CompatibilityGrid compatibility={$mod.data.mod.compatibility} />
+        </div>
+        <div id="Mod Info" class="tabcontent" style="display:none">
+          <ModInfo mod={$mod.data.mod} />
+        </div>
+        <div id="Mod Authors" class="tabcontent" style="display:none">
+          <ModAuthors authors={$mod.data.mod.authors} />
+        </div>
+        <div id="Mod Network Disclosures" class="tabcontent" style="display:none">
+          <ModNetworkDisclosure mod={$mod.data.mod} />
+        </div>
+        <div id="Mod AI Disclosures" class="tabcontent" style="display:none">
+          <AIDisclosure mod={$mod.data.mod} />
+          <button class="variant-ghost-primary btn" on:click={() => goto(base + '/content-policy')}>
+            <span class=" pr-2">AI Policy</span>
+          </button>
+        </div>
       </div>
     </div>
   </div>

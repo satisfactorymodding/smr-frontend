@@ -26,6 +26,8 @@ export type ModData = {
       note?: string;
     };
   };
+  ai_use_disclosure_type: string;
+  ai_use_disclosure?: string;
   hidden: boolean;
   tagIDs?: string[];
   tags?: Tag[];
@@ -72,6 +74,8 @@ export const modSchema = zod.object({
       })
     })
   ),
+  ai_use_disclosure_type: zod.string(),
+  ai_use_disclosure: zod.optional(zod.string()),
   hidden: zod.boolean(),
   tagIDs: zod.optional(zod.string().array()),
   network_use_disclosure: zod.ostring().nullable()
