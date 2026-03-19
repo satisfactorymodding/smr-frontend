@@ -60,22 +60,6 @@
       });
   };
 
-  const openTab = (tabName) => {
-    let i = 0;
-    const tabcontent = document.getElementsByClassName('tabcontent');
-    for (i = 0; i < tabcontent.length; i++) {
-      (tabcontent[i] as HTMLElement).style.display = 'none';
-    }
-
-    const tablinks = document.getElementsByClassName('tablinks');
-    for (i = 0; i < tablinks.length; i++) {
-      tablinks[i].className = tablinks[i].className.replace(' active', '');
-    }
-
-    document.getElementById(tabName).style.display = 'block';
-    document.getElementById(tabName).className += ' active';
-  };
-
   const deleteModal: ModalSettings = {
     type: 'confirm',
     title: $t('mod.modal.delete.title'),
