@@ -32,6 +32,17 @@
           <T keyName={mod.ai_use_disclosure.disclosure_string} /></span
         ><br />
       {/if}
+      {#if mod?.ai_use_disclosure === ''}
+        <strong>{$t('mod.ai_disclosure.no_description')}</strong>
+      {:else}
+        <div>
+          <strong>{$t('mod.ai_disclosure.description')}</strong>
+          {#await markdown(mod.ai_use_disclosure) then rendered}
+            <!-- eslint-disable-next-line -->
+            {@html rendered}
+          {/await}
+        </div>
+      {/if}
       <button
         class="variant-ringed-surface variant-glass-surface btn btn-md m-6"
         on:click={() => goto(base + '/content-policy')}>
