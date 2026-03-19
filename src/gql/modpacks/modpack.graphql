@@ -21,5 +21,15 @@ query GetModpack($modpackID: ModpackID!) {
       version_constraint
       mod_id
     }
+    compatibility {
+      EA {
+        state
+        note
+      }
+      EXP {
+        state
+        note
+      }
+    }
   }
 }
