@@ -2,16 +2,18 @@
   import UserInfo from '$lib/components/users/UserInfo.svelte';
   import UserAvatar from '$lib/components/users/UserAvatar.svelte';
   import ModCard from '$lib/components/mods/ModCard.svelte';
+  import ModpackCard from '$lib/components/modpacks/ModpackCard.svelte';
   import GuideCard from '$lib/components/guides/GuideCard.svelte';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
   import { user as me } from '$lib/stores/user';
   import { base } from '$app/paths';
   import type { PageData } from './$types';
-  import Page404 from '$lib/components/general/Page404.svelte';
-    import { Tab, TabGroup } from '@skeletonlabs/skeleton';
-    import { getTranslate } from '@tolgee/svelte';
+  import Page404 from '$lib/components/general/Page404.svelte'; 
+  import { Tab, TabGroup } from '@skeletonlabs/skeleton';
+  import { getTranslate } from '@tolgee/svelte';
 
   export let data: PageData;
+
 
   export const { t } = getTranslate();
 
@@ -74,7 +76,14 @@
                     {/if}
                   </div>
                 {:else if tabSet === 'modpacks'}
-                  TODO
+                  <div class="grid h-fit grid-cols-1 gap-4 2xl:grid-cols-2 3xl:grid-cols-3">
+                    {#each $user.data.getUser.modpacks as link}
+                      <ModpackCard modpack={link.modpack} />
+                    {/each}
+                    {#if $user.data.getUser.modpacks.length === 0}
+                      User has no modpacks
+                    {/if}
+                  </div>
                 {:else if tabSet === 'guides'}
                   <div class="grid h-fit grid-cols-1 gap-4 2xl:grid-cols-2 3xl:grid-cols-3">
                     {#each $user.data.getUser.guides as guide}

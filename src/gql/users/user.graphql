@@ -44,6 +44,41 @@ query GetUser($user: UserID!) {
         }
       }
     }
+    modpacks {
+      modpack {
+        id
+        created_at
+        creator_id
+        updated_at
+        name
+        full_description
+        short_description
+        logo
+        hidden
+        installs
+        views
+        tags {
+          id
+          name
+          description
+        }
+        parent_id
+        mods {
+          version_constraint
+          mod_id
+        }
+        compatibility {
+          EA {
+            state
+            note
+          }
+          EXP {
+            state
+            note
+          }
+        }
+      }
+    }
     guides {
       id
       name
@@ -51,4 +86,6 @@ query GetUser($user: UserID!) {
       views
     }
   }
+
+  
 }
