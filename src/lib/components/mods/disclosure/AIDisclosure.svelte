@@ -2,6 +2,8 @@
   import type { Mod } from '$lib/generated';
   import { markdown } from '$lib/utils/markdown';
   import { getTranslate, T } from '@tolgee/svelte';
+  import { goto } from '$app/navigation';
+  import { base } from '$app/paths';
 
   export let mod!: Pick<Mod, 'ai_use_disclosure_type' | 'ai_use_disclosure'>;
 
@@ -36,6 +38,11 @@
           {/await}
         </div>
       {/if}
+      <button
+        class="variant-ringed-surface variant-glass-surface btn btn-md m-6"
+        on:click={() => goto(base + '/content-policy')}>
+        <span class=" pr-2">{$t('content-policy')}</span>
+      </button>
     </div>
   </section>
 </div>
