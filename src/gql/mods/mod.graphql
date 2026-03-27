@@ -96,7 +96,9 @@ query GetMod($mod: String!) {
       description
     }
     network_use_disclosure
-    ai_use_disclosure
-    ai_use_disclosure_type
+    ai_use_disclosure {
+      disclosure_type
+      disclosure_string
+    }
   }
 }
