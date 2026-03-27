@@ -1,11 +1,10 @@
 <script lang="ts">
   import type { Mod } from '$lib/generated';
-  import { markdown } from '$lib/utils/markdown';
   import { getTranslate, T } from '@tolgee/svelte';
   import { goto } from '$app/navigation';
   import { base } from '$app/paths';
 
-  export let mod!: Pick<Mod, 'ai_use_disclosure_type' | 'ai_use_disclosure'>;
+  export let mod!: Pick<Mod, 'ai_use_disclosure'>;
 
   export const { t } = getTranslate();
 </script>
@@ -16,27 +15,22 @@
       <h3 class="my-4 text-2xl font-bold underline decoration-dotted" title={$t('mod.ai_disclosure.header.tooltip')}>
         <T keyName="mod.ai_disclosure.header" />
       </h3>
-      {#if mod?.ai_use_disclosure_type === ''}
+      {#if mod?.ai_use_disclosure === null}
+        <span>{$t('mod.ai_disclosure.no_ai_use_disclosure')}</span>
+        <br />
+      {:else if mod?.ai_use_disclosure.disclosure_type === 'no_ai_usage'}
+        <span>{$t('mod.ai_disclosure.no_ai_use')}</span>
+        <br />
+      {:else if mod?.ai_use_disclosure.disclosure_type === 'ai_usage'}
         <span
-          ><strong>{$t('mod.ai_disclosure.ai_use')}: </strong>
-          {$t('mod.ai_disclosure.no_type')}</span
+          ><strong>{$t('mod.ai_disclosure.ai_use')} </strong>
+          <T keyName={mod.ai_use_disclosure.disclosure_string} /></span
         ><br />
-      {:else}
+      {:else if mod?.ai_use_disclosure.disclosure_type === 'runtime_ai_usage'}
         <span
-          ><strong>{$t('mod.ai_disclosure.ai_use')}: </strong>
-          <T keyName="mod.ai_disclosure.{mod.ai_use_disclosure_type}" /></span
+          ><strong>{$t('mod.ai_disclosure.runtime_ai_use')} </strong>
+          <T keyName={mod.ai_use_disclosure.disclosure_string} /></span
         ><br />
-      {/if}
-      {#if mod?.ai_use_disclosure === ''}
-        <strong>{$t('mod.ai_disclosure.no_description')}</strong>
-      {:else}
-        <div>
-          <strong>{$t('mod.ai_disclosure.description')}</strong>
-          {#await markdown(mod.ai_use_disclosure) then rendered}
-            <!-- eslint-disable-next-line -->
-            {@html rendered}
-          {/await}
-        </div>
       {/if}
       <button
         class="variant-ringed-surface variant-glass-surface btn btn-md m-6"

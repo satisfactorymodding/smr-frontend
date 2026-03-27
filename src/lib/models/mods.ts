@@ -1,5 +1,5 @@
 import * as zod from 'zod';
-import type { CompatibilityState, ControllerCompatibilityState, Tag } from '$lib/generated';
+import type { CompatibilityState, ControllerCompatibilityState, AiUseDisclosureType, Tag } from '$lib/generated';
 
 export type ModData = {
   name: string;
@@ -26,8 +26,10 @@ export type ModData = {
       note?: string;
     };
   };
-  ai_use_disclosure_type: string;
-  ai_use_disclosure?: string;
+  ai_use_disclosure?: {
+    disclosure_type: AiUseDisclosureType;
+    disclosure_string?: string;
+  };
   hidden: boolean;
   tagIDs?: string[];
   tags?: Tag[];
@@ -74,8 +76,14 @@ export const modSchema = zod.object({
       })
     })
   ),
-  ai_use_disclosure_type: zod.string().min(1, { message: 'An option must be selected' }),
-  ai_use_disclosure: zod.optional(zod.string()),
+  ai_use_disclosure: zod.optional(
+    zod.object({
+      disclosure_type: zod.string().min(1, { message: 'An option must be selected' }),
+      disclosure_string: zod.optional(
+        zod.string().min(1, { message: 'A disclosure is required when AI has been used' }).or(zod.literal(''))
+      )
+    })
+  ),
   hidden: zod.boolean(),
   tagIDs: zod.optional(zod.string().array()),
   network_use_disclosure: zod.ostring().nullable()
