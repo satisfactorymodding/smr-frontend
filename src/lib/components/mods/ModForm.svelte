@@ -39,8 +39,10 @@
         note: ''
       }
     },
-    ai_use_disclosure: '',
-    ai_use_disclosure_type: ''
+    ai_use_disclosure: {
+      disclosure_type: null,
+      disclosure_string: ''
+    }
   };
   export let submitText = $t('entry.create');
 
@@ -79,6 +81,16 @@
   const removeAuthor = (i: number) => {
     $data.authors.splice(i, 1);
     $data.authors = $data.authors;
+  };
+
+  const enableAIDisclosureText = () => {
+    document.getElementById('ai_disclosure').style.display = 'block';
+    $data.ai_use_disclosure.disclosure_string = null;
+  };
+
+  const disableAIDisclosureText = () => {
+    document.getElementById('ai_disclosure').style.display = 'none';
+    $data.ai_use_disclosure.disclosure_string = '';
   };
 
   let editCompatibility = false;
@@ -171,8 +183,12 @@
     <div class="input grid grid-flow-row gap-2 p-2">
       <span>{$t('mod.ai_disclosure.usage_question')} *</span>
       <select
-        id="ai_disclosure"
-        bind:value={$data.ai_use_disclosure_type}
+        bind:value={$data.ai_use_disclosure.disclosure_type}
+        on:change={() => {
+          $data.ai_use_disclosure.disclosure_type != 'no_ai_usage'
+            ? enableAIDisclosureText()
+            : disableAIDisclosureText();
+        }}
         required
         class="input grid grid-flow-row gap-2">
         <option disabled selected value=""></option>
@@ -180,17 +196,22 @@
         <option value="ai_usage">{$t('mod.ai_disclosure.ai_usage')}</option>
         <option value="runtime_ai_usage">{$t('mod.ai_disclosure.runtime_ai_usage')}</option>
       </select>
-      <ValidationMessage for="ai_use_disclosure_type" let:messages={message}>
+      <ValidationMessage for="ai_use_disclosure.disclosure_type" let:messages={message}>
         <span class="validation-message">{message || ''}</span>
       </ValidationMessage>
     </div>
 
-    <div class="grid grid-flow-row gap-2">
+    <div class="grid grid-flow-row gap-2" id="ai_disclosure" style="display:none">
       <label class="label">
-        <span>{$t('mod.ai_disclosure.usage_question_full')}</span>
-        <input type="text" bind:value={$data.ai_use_disclosure} class="input p-2" />
+        <span>{$t('mod.ai_disclosure.usage_question_full')} *</span>
+        <input
+          required
+          type="text"
+          id="ai_disclosure_text"
+          bind:value={$data.ai_use_disclosure.disclosure_string}
+          class="input p-2" />
       </label>
-      <ValidationMessage for="ai_use_disclosure" let:messages={message}>
+      <ValidationMessage for="ai_use_disclosure.disclosure_string" let:messages={message}>
         <span class="validation-message">{message || ''}</span>
       </ValidationMessage>
     </div>
