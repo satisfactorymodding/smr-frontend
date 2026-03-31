@@ -122,7 +122,7 @@ To do this:
 3. Visit [the project's integration page](https://translate.ficsit.app/projects/2/integrate) to generate an API key (the "weapon" you select does not matter)
 4. Replace the `PUBLIC_TOLGEE_API_KEY` in your new env file with the API key you generated
 5. Use your new env name when running commands.
-   For example, run `fenv personal` to switch to it.
+   For example, use `NODE_ENV=personal` before commands to use it.
 
 Using the in-context translation Screenshot feature also requires installing the _Tolgee Tools_ browser extension.
 
@@ -159,11 +159,11 @@ It executes several smaller scripts for you:
 * GraphQL Code Generator with hot reload (graphql-codegen:watch)
 * ESLint with hot reload (lint:dev)
 
-Run the dev script via `bun dev`.
+Run the dev script via `bun run dev`.
 For example:
 
 ```shell
-NODE_ENV=staging bun dev
+NODE_ENV=staging bun run dev
 ```
 
 The expected output is:
