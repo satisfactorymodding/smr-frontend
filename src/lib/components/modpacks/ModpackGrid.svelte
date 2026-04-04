@@ -7,9 +7,10 @@
   import { page as storePage } from '$app/stores';
   import FicsitCard from '$lib/components/general/FicsitCard.svelte';
   import { browser } from '$app/environment';
-  import { getTranslate } from '@tolgee/svelte';
+  import { getTranslate, T } from '@tolgee/svelte';
   import { type PaginationSettings, Paginator } from '@skeletonlabs/skeleton';
   import TagDisplay from '../utils/TagDisplay.svelte';
+  import LinkButton from '../general/LinkButton.svelte';
 
   export let colCount: 4 | 5 = 4;
   //   export let newModpack = false;
@@ -123,8 +124,22 @@
     <div class="card h-full">
       <div class="relative h-full w-full">
         <div class="modpack-banner flex h-full w-full items-center justify-center">
-          <div class="variant-ringed-primary variant-ghost-primary btn btn-lg m-6 text-3xl">
-            <span>{$t('modpacks.banner.guide')}</span>
+          <!-- TODO better layout on mobile. this stacks them side by side, never wrapping-->
+          <div class="p-4">
+            <LinkButton
+              url="https://docs.ficsit.app/satisfactory-modding/latest/ForUsers/ModpackInstallation.html"
+              icon="play_arrow"
+              extraCss="btn-lg text-2xl">
+              <T keyName="modpacks.banner.guide.usage" />
+            </LinkButton>
+          </div>
+          <div class="p-4">
+            <LinkButton
+              url="https://docs.ficsit.app/satisfactory-modding/latest/ForUsers/ModpackCreation.html"
+              icon="construction"
+              extraCss="btn-lg text-2xl">
+              <T keyName="modpacks.banner.guide.creation" />
+            </LinkButton>
           </div>
         </div>
       </div>
