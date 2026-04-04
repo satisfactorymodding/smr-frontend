@@ -12,7 +12,7 @@
   import TagDisplay from '../utils/TagDisplay.svelte';
 
   export let colCount: 4 | 5 = 4;
-//   export let newModpack = false;
+  //   export let newModpack = false;
   export let showSearch = false;
 
   const client = getContextClient();
@@ -76,7 +76,8 @@
   }
 
   $: totalModpacks = $modpacks?.data?.getModpacks?.count || 0;
-  $: showPagination = ($modpacks && $modpacks.fetching) || ($modpacks && !$modpacks.fetching && totalModpacks > 0 && !$modpacks.error);
+  $: showPagination =
+    ($modpacks && $modpacks.fetching) || ($modpacks && !$modpacks.fetching && totalModpacks > 0 && !$modpacks.error);
 
   $: gridClasses =
     colCount == 4
@@ -118,22 +119,19 @@
 </script>
 
 <div class="mb-5 ml-auto flex flex-col gap-4">
-
   <div class="flex min-h-full flex-col" style="height: calc(15vh)">
     <div class="card h-full">
       <div class="relative h-full w-full">
-        <div class="modpack-banner h-full w-full flex items-center justify-center">
+        <div class="modpack-banner flex h-full w-full items-center justify-center">
           <div class="variant-ringed-primary variant-ghost-primary btn btn-lg m-6 text-3xl">
             <span>{$t('modpacks.banner.guide')}</span>
           </div>
         </div>
       </div>
-    </div>  
+    </div>
   </div>
 
-  <div
-    class="flex grow flex-row flex-wrap">
-
+  <div class="flex grow flex-row flex-wrap">
     <!-- This section is setup to be the new modpack button, if we decide to use it (copied from mods page) -->
 
     <!-- class:justify-between={newModpack && $user !== null}
@@ -143,62 +141,62 @@
     {/if} -->
 
     {#if showSearch}
-    <div class="flex grow flex-col items-center justify-center gap-4 sm:px-4">
-      <div class="flex grow flex-row flex-wrap items-center justify-center gap-3 sm:px-4">
-        <div>
-          <button
-            type="button"
-            class="text-md variant-filled-surface btn btn-sm p-2 pl-4 pr-4"
-            class:variant-ghost-primary={tagsOpen}
-            title={$t('filter.expand-button-tooltip')}
-            on:click={() => (tagsOpen = !tagsOpen)}>
-            <span>{$t('filter.expand-button-text')}</span>
-          </button>
-        </div>
-        <div>
-          <select bind:value={orderBy} class="select">
-            {#each orderFields as orderField}
-              <option value={orderField[1]}>{orderField[0]}</option>
-            {/each}
-          </select>
-        </div>
-        <div>
-          <select bind:value={order} class="select">
-            <option value="asc">{$t('ascending')}</option>
-            <option value="desc">{$t('descending')}</option>
-          </select>
-        </div>
+      <div class="flex grow flex-col items-center justify-center gap-4 sm:px-4">
+        <div class="flex grow flex-row flex-wrap items-center justify-center gap-3 sm:px-4">
+          <div>
+            <button
+              type="button"
+              class="text-md variant-filled-surface btn btn-sm p-2 pl-4 pr-4"
+              class:variant-ghost-primary={tagsOpen}
+              title={$t('filter.expand-button-tooltip')}
+              on:click={() => (tagsOpen = !tagsOpen)}>
+              <span>{$t('filter.expand-button-text')}</span>
+            </button>
+          </div>
+          <div>
+            <select bind:value={orderBy} class="select">
+              {#each orderFields as orderField}
+                <option value={orderField[1]}>{orderField[0]}</option>
+              {/each}
+            </select>
+          </div>
+          <div>
+            <select bind:value={order} class="select">
+              <option value="asc">{$t('ascending')}</option>
+              <option value="desc">{$t('descending')}</option>
+            </select>
+          </div>
 
-        <div class="input-group input-group-divider w-fit grid-cols-[1fr_auto] rounded-container-token">
-          <input
-            bind:value={searchField}
-            class="border-0 bg-transparent p-1.5 ring-0"
-            name="search"
-            placeholder={$t('search.placeholder-text')} />
-          <button
-            class="material-icons {searchButtonClass}"
-            disabled={searchDisabled}
-            title={searchDisabled ? $t('search.disabled') : ''}>arrow_forward</button>
+          <div class="input-group input-group-divider w-fit grid-cols-[1fr_auto] rounded-container-token">
+            <input
+              bind:value={searchField}
+              class="border-0 bg-transparent p-1.5 ring-0"
+              name="search"
+              placeholder={$t('search.placeholder-text')} />
+            <button
+              class="material-icons {searchButtonClass}"
+              disabled={searchDisabled}
+              title={searchDisabled ? $t('search.disabled') : ''}>arrow_forward</button>
+          </div>
         </div>
+        {#if tagsOpen}
+          <div class="flex flex-grow flex-row flex-wrap items-center justify-center gap-1 pb-10">
+            {#if $allTags.error}
+              <p>Oh no... {$allTags.error.message}</p>
+            {:else if !$allTags.fetching}
+              {#each sortedTags($allTags.data.getTags) as tag}
+                <TagDisplay
+                  {tag}
+                  popupTriggerEvent="hover"
+                  asButton={true}
+                  selected={selectedTags.indexOf(tag.id) >= 0}
+                  on:click={() => toggleTag(tag.id)} />
+              {/each}
+            {/if}
+          </div>
+        {/if}
       </div>
-      {#if tagsOpen}
-        <div class="flex flex-grow flex-row flex-wrap items-center justify-center gap-1 pb-10">
-          {#if $allTags.error}
-            <p>Oh no... {$allTags.error.message}</p>
-          {:else if !$allTags.fetching}
-            {#each sortedTags($allTags.data.getTags) as tag}
-              <TagDisplay
-                {tag}
-                popupTriggerEvent="hover"
-                asButton={true}
-                selected={selectedTags.indexOf(tag.id) >= 0}
-                on:click={() => toggleTag(tag.id)} />
-            {/each}
-          {/if}
-        </div>
-      {/if}
-    </div>
-  {/if}
+    {/if}
 
     {#if showPagination}
       <div class="self-end">
@@ -262,27 +260,25 @@
     margin: 0 12px;
   }
 
-.modpack-banner {
-  position: relative;
-  overflow: hidden;
-}
+  .modpack-banner {
+    position: relative;
+    overflow: hidden;
+  }
 
-.modpack-banner::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image: url('/images/satisfactory_scene.webp');
-  background-position: center;
-  background-size: cover;
-  filter: blur(4px);
-  transform: scale(1.05); /* prevents edge clipping */
-  z-index: 0;
-}
+  .modpack-banner::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url('/images/satisfactory_scene.webp');
+    background-position: center;
+    background-size: cover;
+    filter: blur(4px);
+    transform: scale(1.05); /* prevents edge clipping */
+    z-index: 0;
+  }
 
-.modpack-banner > * {
-  position: relative;
-  z-index: 1;
-}
-
-
+  .modpack-banner > * {
+    position: relative;
+    z-index: 1;
+  }
 </style>

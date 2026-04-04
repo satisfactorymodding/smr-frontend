@@ -5,10 +5,7 @@
   import TagList from '$lib/components/utils/TagList.svelte';
   import { getTranslate } from '@tolgee/svelte';
 
-  export let modpack!: Pick<
-    Modpack,
-    'created_at' | 'views' | 'installs' | 'tags' | 'updated_at'
-  >;
+  export let modpack!: Pick<Modpack, 'created_at' | 'views' | 'installs' | 'tags' | 'updated_at'>;
 
   export const { t } = getTranslate();
 </script>

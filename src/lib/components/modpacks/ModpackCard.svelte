@@ -12,17 +12,10 @@
 
   export let modpack: Pick<
     Modpack,
-    | 'id'
-    | 'name'
-    | 'logo'
-    | 'views'
-    | 'installs'
-    | 'short_description'
-    | 'tags'
-    | 'logo_thumbhash'
-    | 'compatibility'>
+    'id' | 'name' | 'logo' | 'views' | 'installs' | 'short_description' | 'tags' | 'logo_thumbhash' | 'compatibility'
+  >;
 
-    // const client = getContextClient();
+  // const client = getContextClient();
   // $: worstModList = [[modpack.compatibility], [modpack.compatibility]];
   //  $: worstModList = queryStore({
   //   query: GetModsCompatabilityDocument,
@@ -31,7 +24,6 @@
   //   variables: modpack.id ? { modpackID: modpack.id } : undefined,
   //   requestPolicy: 'network-only'
   // });
-
 
   // let modpackTrueCompatibility: typeof modpack.compatibility;
 
@@ -47,7 +39,6 @@
   //     modpackTrueCompatibility.EA.state === CompatibilityState.Damaged ? "" :
   //     modpackTrueCompatibility.EA.state === CompatibilityState.Works ? "modpack.compatibility.note.works" :
   //     modpack.compatibility.EA.note;
-
 </script>
 
 <FicsitCard
@@ -66,7 +57,7 @@
   </div>
   <svelte:fragment slot="actions">
     <button class="variant-soft-surface btn btn-sm" title="Install" on:click={() => installModpack(modpack.id)}>
-    <span class="material-icons">download</span>
+      <span class="material-icons">download</span>
     </button>
   </svelte:fragment>
   <div slot="outer">

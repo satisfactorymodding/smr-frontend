@@ -1,4 +1,11 @@
-query GetModpacks($offset: Int!, $limit: Int!, $search: String, $order: Order, $orderBy: ModpackFields, $tagIDs: [TagID!]) {
+query GetModpacks(
+  $offset: Int!
+  $limit: Int!
+  $search: String
+  $order: Order
+  $orderBy: ModpackFields
+  $tagIDs: [TagID!]
+) {
   getModpacks(
     filter: { limit: $limit, offset: $offset, search: $search, order: $order, order_by: $orderBy, tagIDs: $tagIDs }
   ) {

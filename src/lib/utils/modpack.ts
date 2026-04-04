@@ -1,4 +1,4 @@
 export const modpackCreator = (creator?: string) => {
-    creator = null;
-    return creator;
-}
+  creator = null;
+  return creator;
+};

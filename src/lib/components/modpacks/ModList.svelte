@@ -2,10 +2,10 @@
   // import type { Modpack } from '$lib/generated';
   import { getTranslate } from '@tolgee/svelte';
 
-//   export let modpack!: Pick<
-//     Modpack,
-//     'mods'
-//   >;
+  //   export let modpack!: Pick<
+  //     Modpack,
+  //     'mods'
+  //   >;
 
   export const { t } = getTranslate();
 </script>

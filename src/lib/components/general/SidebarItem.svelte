@@ -22,7 +22,7 @@
       {#if item.newerIcon}
         <span class="material-icons">{item.icon}</span>
       {:else}
-      <span class="material-symbols-outlined">{item.icon}</span>
+        <span class="material-symbols-outlined">{item.icon}</span>
       {/if}
       <span class="flex-auto">{item.label}</span>
     </a>

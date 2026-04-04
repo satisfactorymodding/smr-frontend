@@ -31,7 +31,6 @@
     variables: parentId ? { modpackID: parentId } : undefined,
     requestPolicy: 'network-only'
   });
-
 </script>
 
 <svelte:head>
@@ -55,17 +54,17 @@
       <h1 class="text-4xl font-bold">{$modpack.data.getModpack.name}</h1>
     </div>
     <div class="grid-auto-max grid auto-cols-fr gap-4">
-        <ModpackDescription modpack={$modpack.data.getModpack} modReferences={modIds}/>
+      <ModpackDescription modpack={$modpack.data.getModpack} modReferences={modIds} />
       <div class="grid auto-rows-min grid-cols-1 gap-8">
         <div class="m-auto">
-          <ModpackLogo
-            modpackLogo={$modpack.data.getModpack.logo}
-            modpackName={$modpack.data.getModpack.name} />
+          <ModpackLogo modpackLogo={$modpack.data.getModpack.logo} modpackName={$modpack.data.getModpack.name} />
         </div>
-        <ModpackInstall modpack={$modpack.data.getModpack} />  
+        <ModpackInstall modpack={$modpack.data.getModpack} />
         <ModpackInfo modpack={$modpack.data.getModpack} />
-        <ModpackCreators creator={$modpack.data.getModpack.creator_id} remix={parentId && !$parent.fetching && !$parent.error ? $parent.data?.getModpack?.creator_id : undefined}
-          modReferences={modIds}/>
+        <ModpackCreators
+          creator={$modpack.data.getModpack.creator_id}
+          remix={parentId && !$parent.fetching && !$parent.error ? $parent.data?.getModpack?.creator_id : undefined}
+          modReferences={modIds} />
       </div>
     </div>
   </div>
