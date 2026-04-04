@@ -221,11 +221,11 @@
     {/each}
   </div>
 {:else if $modpacks.error && $modpacks.error.message.includes("'Search' failed on the 'min' tag")}
-  {$t('search.failed.query-too-short')}
+  <p>{$t('search.failed.query-too-short')}</p>
 {:else if $modpacks.error}
   <p>Oh no... {$modpacks.error.message}</p>
 {:else if totalModpacks == 0}
-  {$t('search.results.empty')}
+  <p>{$t('search.results.empty')}</p>
 {:else}
   <div class="grid {gridClasses} gap-4">
     {#each $modpacks.data.getModpacks.modpacks as modpack}
