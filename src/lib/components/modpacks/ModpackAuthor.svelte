@@ -1,6 +1,6 @@
 <script lang="ts">
   import { queryStore, getContextClient } from '@urql/svelte';
-  import { GetUserDocument } from '$lib/generated';  
+  import { GetUserDocument } from '$lib/generated';
   import { assets, base } from '$app/paths';
   import { getTranslate } from '@tolgee/svelte';
 
@@ -12,11 +12,10 @@
   const client = getContextClient();
 
   $: user = queryStore({
-  query: GetUserDocument,
-  client,
-  variables: { user: creator }
+    query: GetUserDocument,
+    client,
+    variables: { user: creator }
   });
-
 </script>
 
 {#if $user.fetching}

@@ -8,12 +8,11 @@
   import { user as me } from '$lib/stores/user';
   import { base } from '$app/paths';
   import type { PageData } from './$types';
-  import Page404 from '$lib/components/general/Page404.svelte'; 
+  import Page404 from '$lib/components/general/Page404.svelte';
   import { Tab, TabGroup } from '@skeletonlabs/skeleton';
   import { getTranslate } from '@tolgee/svelte';
 
   export let data: PageData;
-
 
   export const { t } = getTranslate();
 
@@ -44,7 +43,7 @@
           <a class="variant-ghost-primary btn" href="{base}/settings">Settings</a>
         {/if}
 
-        <div class="grid gap-8 xl:grid-cols-4 mt-4">
+        <div class="mt-4 grid gap-8 xl:grid-cols-4">
           <div class="xl:col-span-3">
             <TabGroup class="w-full">
               <div class="flex w-full border-b border-surface-300">

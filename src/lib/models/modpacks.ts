@@ -1,4 +1,4 @@
-import * as zod from 'zod'; 
+import * as zod from 'zod';
 
 export type ModpackData = {
   name: string;
