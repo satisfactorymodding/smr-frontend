@@ -71,15 +71,9 @@
         <div class="max-h-[300px] overflow-y-auto">
           <div class="grid gap-y-4">
             {#each creatorCountsList as author}
-              {#if author.count == 1}
                 <ModpackAuthor
                   creator={author.userId.toString()}
-                  role={$t('modpack.mod-creator.single', { count: author.count })}></ModpackAuthor>
-              {:else}
-                <ModpackAuthor
-                  creator={author.userId.toString()}
-                  role={$t('modpack.mod-creator.many', { count: author.count })}></ModpackAuthor>
-              {/if}
+                  role={$t('modpack.mod-creator', { count: author.count })}></ModpackAuthor>
             {/each}
           </div>
         </div>
