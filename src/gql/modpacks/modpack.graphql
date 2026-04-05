@@ -33,3 +33,40 @@ query GetModpack($modpackID: ModpackID!) {
     }
   }
 }
+
+query GetModCompatibilities($modpackID: ModpackID!) {
+  getModCompatibilities(modpackID: $modpackID) {
+    worstEA {
+      id
+      name
+      compatibility {
+							EA {
+								state
+						}
+							EXP {
+								state
+							}
+						}
+    }
+    worstEXP {
+      id
+      name
+      compatibility {
+							EA {
+								state
+						}
+							EXP {
+								state
+							}
+						}
+    }
+    compatibility {
+      EA {
+        state
+      }
+      EXP {
+        state
+      }
+    }
+  }
+}
