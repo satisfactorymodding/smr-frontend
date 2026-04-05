@@ -26,6 +26,7 @@
     "@felte/reporter-svelte": "^1.1.11",
     "@felte/validator-zod": "^1.0.17",
     "@floating-ui/dom": "^1.6.8",
+    "@tolgee/format-icu": "^7.0.0",
     "@tolgee/svelte": "^5.28.6",
     "@urql/core": "^5.0.4",
     "@urql/exchange-auth": "^2.2.0",

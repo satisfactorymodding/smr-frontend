@@ -76,10 +76,10 @@
                   </div>
                 {:else if tabSet === 'modpacks'}
                   <div class="grid h-fit grid-cols-1 gap-4 2xl:grid-cols-2 3xl:grid-cols-3">
-                    {#each $user.data.getUser.modpacks as link}
+                    {#each $user.data.getUser?.modpacks as link}
                       <ModpackCard modpack={link.modpack} />
                     {/each}
-                    {#if $user.data.getUser.modpacks.length === 0}
+                    {#if $user.data.getUser?.modpacks.length === 0}
                       User has no modpacks
                     {/if}
                   </div>

@@ -23,6 +23,16 @@ query GetModpacks(
         name
         description
       }
+      compatibility {
+        EA {
+          state
+          note
+        }
+        EXP {
+          state
+          note
+        }
+      }
     }
   }
 }
