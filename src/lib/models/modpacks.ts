@@ -9,15 +9,15 @@ export type ModpackData = {
   logo_thumbhash?: string; // Unsure if this is a string, type not shown in txt
   creator_id: string;
   compatibility?: {
-      EA: {
-        state: CompatibilityState;
-        note?: string;
-      };
-      EXP: {
-        state: CompatibilityState;
-        note?: string;
-      };
+    EA: {
+      state: CompatibilityState;
+      note?: string;
     };
+    EXP: {
+      state: CompatibilityState;
+      note?: string;
+    };
+  };
   views: number;
   hotness: number;
   installs: number;
@@ -34,17 +34,17 @@ export const modpackSchema = zod.object({
   logo_thumbhash: zod.string().optional(),
   creator_id: zod.string().uuid(),
   compatibility: zod.optional(
-      zod.object({
-        EA: zod.object({
-          state: zod.string(),
-          note: zod.ostring()
-        }),
-        EXP: zod.object({
-          state: zod.string(),
-          note: zod.ostring()
-        })
+    zod.object({
+      EA: zod.object({
+        state: zod.string(),
+        note: zod.ostring()
+      }),
+      EXP: zod.object({
+        state: zod.string(),
+        note: zod.ostring()
       })
-    ),
+    })
+  ),
   views: zod.number().min(0).default(0),
   hotness: zod.number().min(0).default(0),
   installs: zod.number().min(0).default(0),
