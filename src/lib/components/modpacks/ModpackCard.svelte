@@ -19,7 +19,7 @@
   >;
 
   const client = getContextClient();
-   $: worstModList = queryStore({
+  $: worstModList = queryStore({
     query: GetModCompatibilitiesDocument,
     client,
     pause: !modpack.id,
@@ -27,43 +27,66 @@
     requestPolicy: 'network-only'
   });
 
-  $: modpackTrueCompatibility = { "EA": {"state": null, "note": null}, "EXP": {"state": null, "note": null}};
+  $: modpackTrueCompatibility = { EA: { state: null, note: null }, EXP: { state: null, note: null } };
 
   $: worst = $worstModList.data?.getModCompatibilities;
 
-function findCompatibilityLabel(modpackCompat, worstCompat, state) {
-  if (state === CompatibilityState.Broken) {
-    if (modpackCompat?.state === CompatibilityState.Broken) {
-      return $t('modpack.compatibility.note.broken.modpack');
-    } else {
-      return $t({ key: 'modpack.compatibility.note.broken.mod', params: { mods: worstCompat?.length, modName: worstCompat?.[0]?.name } });
+  function findCompatibilityLabel(modpackCompat, worstCompat, state) {
+    if (state === CompatibilityState.Broken) {
+      if (modpackCompat?.state === CompatibilityState.Broken) {
+        return $t('modpack.compatibility.note.broken.modpack');
+      } else {
+        return $t({
+          key: 'modpack.compatibility.note.broken.mod',
+          params: { mods: worstCompat?.length, modName: worstCompat?.[0]?.name }
+        });
+      }
+    } else if (state === CompatibilityState.Damaged) {
+      if (modpackCompat?.state === CompatibilityState.Damaged) {
+        return $t('modpack.compatibility.note.damaged.modpack');
+      } else {
+        return $t({
+          key: 'modpack.compatibility.note.damaged.mod',
+          params: { mods: worstCompat?.length, modName: worstCompat?.[0]?.name }
+        });
+      }
+    } else if (state === CompatibilityState.Works) {
+      return $t('modpack.compatibility.note.works');
     }
-  } else if (state === CompatibilityState.Damaged) {
-    if (modpackCompat?.state === CompatibilityState.Damaged) {
-      return $t('modpack.compatibility.note.damaged.modpack');
-    } else {
-      return $t({ key: 'modpack.compatibility.note.damaged.mod', params: { mods: worstCompat?.length, modName: worstCompat?.[0]?.name } });
-    }
-  } else if (state === CompatibilityState.Works) {
-    return $t('modpack.compatibility.note.works');
+    return null;
   }
-  return null;
-}
 
-  $: modpackTrueCompatibility.EA.state = (modpack?.compatibility?.EA?.state === "Broken" || worst?.compatibility.EA.state === CompatibilityState.Broken) ? CompatibilityState.Broken :
-      (modpack?.compatibility?.EA.state === "Damaged" || worst?.compatibility.EA.state === "Damaged") ? CompatibilityState.Damaged :
-      (modpack?.compatibility?.EA.state === "Works" || worst?.compatibility.EA.state === "Works") ? CompatibilityState.Works : null;
+  $: modpackTrueCompatibility.EA.state =
+    modpack?.compatibility?.EA?.state === 'Broken' || worst?.compatibility.EA.state === CompatibilityState.Broken
+      ? CompatibilityState.Broken
+      : modpack?.compatibility?.EA.state === 'Damaged' || worst?.compatibility.EA.state === 'Damaged'
+        ? CompatibilityState.Damaged
+        : modpack?.compatibility?.EA.state === 'Works' || worst?.compatibility.EA.state === 'Works'
+          ? CompatibilityState.Works
+          : null;
 
-  $: modpackTrueCompatibility.EXP.state = (modpack?.compatibility?.EXP?.state === "Broken" || worst?.compatibility.EXP.state === CompatibilityState.Broken) ? CompatibilityState.Broken :
-      (modpack?.compatibility?.EXP.state === "Damaged" || worst?.compatibility.EXP.state === "Damaged") ? CompatibilityState.Damaged :
-      (modpack?.compatibility?.EXP.state === "Works" || worst?.compatibility.EXP.state === "Works") ? CompatibilityState.Works : null;
+  $: modpackTrueCompatibility.EXP.state =
+    modpack?.compatibility?.EXP?.state === 'Broken' || worst?.compatibility.EXP.state === CompatibilityState.Broken
+      ? CompatibilityState.Broken
+      : modpack?.compatibility?.EXP.state === 'Damaged' || worst?.compatibility.EXP.state === 'Damaged'
+        ? CompatibilityState.Damaged
+        : modpack?.compatibility?.EXP.state === 'Works' || worst?.compatibility.EXP.state === 'Works'
+          ? CompatibilityState.Works
+          : null;
 
-  $: modpackTrueCompatibility.EA.note = findCompatibilityLabel(modpack?.compatibility?.EA, worst?.worstEA, modpackTrueCompatibility?.EA?.state);
-    
-  $: modpackTrueCompatibility.EXP.note = findCompatibilityLabel(modpack?.compatibility?.EXP, worst?.worstEXP, modpackTrueCompatibility?.EXP?.state);
+  $: modpackTrueCompatibility.EA.note = findCompatibilityLabel(
+    modpack?.compatibility?.EA,
+    worst?.worstEA,
+    modpackTrueCompatibility?.EA?.state
+  );
+
+  $: modpackTrueCompatibility.EXP.note = findCompatibilityLabel(
+    modpack?.compatibility?.EXP,
+    worst?.worstEXP,
+    modpackTrueCompatibility?.EXP?.state
+  );
 
   $: console.log(modpackTrueCompatibility);
-
 </script>
 
 <FicsitCard

@@ -40,25 +40,25 @@ query GetModCompatibilities($modpackID: ModpackID!) {
       id
       name
       compatibility {
-							EA {
-								state
-						}
-							EXP {
-								state
-							}
-						}
+        EA {
+          state
+        }
+        EXP {
+          state
+        }
+      }
     }
     worstEXP {
       id
       name
       compatibility {
-							EA {
-								state
-						}
-							EXP {
-								state
-							}
-						}
+        EA {
+          state
+        }
+        EXP {
+          state
+        }
+      }
     }
     compatibility {
       EA {
