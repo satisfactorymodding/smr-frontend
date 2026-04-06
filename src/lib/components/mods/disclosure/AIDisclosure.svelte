@@ -15,19 +15,19 @@
       <h3 class="my-4 text-2xl font-bold underline decoration-dotted" title={$t('mod.ai_disclosure.header.tooltip')}>
         <T keyName="mod.ai_disclosure.header" />
       </h3>
-      {#if mod?.ai_use_disclosure === null}
+      {#if mod?.ai_use_disclosure === null || mod?.ai_use_disclosure.disclosure_type === 'no_disclosure'}
         <span>{$t('mod.ai_disclosure.no_ai_use_disclosure')}</span>
         <br />
       {:else if mod?.ai_use_disclosure.disclosure_type === 'no_ai_usage'}
-        <span>{$t('mod.ai_disclosure.no_ai_use')}</span>
+        <span class="italic">{$t('mod.ai_disclosure.no_ai_use')}</span>
         <br />
       {:else if mod?.ai_use_disclosure.disclosure_type === 'ai_usage'}
-        <span
+        <span class="italic"
           ><strong>{$t('mod.ai_disclosure.ai_use')} </strong>
           <T keyName={mod.ai_use_disclosure.disclosure_string} /></span
         ><br />
       {:else if mod?.ai_use_disclosure.disclosure_type === 'runtime_ai_usage'}
-        <span
+        <span class="italic"
           ><strong>{$t('mod.ai_disclosure.runtime_ai_use')} </strong>
           <T keyName={mod.ai_use_disclosure.disclosure_string} /></span
         ><br />
