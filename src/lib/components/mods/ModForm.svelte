@@ -8,11 +8,12 @@
   import { markdown } from '$lib/utils/markdown';
   import ModAuthor from '$lib/components/mods/ModAuthor.svelte';
   import TagList from '$lib/components/utils/TagList.svelte';
-  import { CompatibilityState, ControllerCompatibilityState } from '$lib/generated';
+  import { AiUseDisclosureType, CompatibilityState, ControllerCompatibilityState } from '$lib/generated';
   import ModCompatibility from '$lib/components/mods/compatibility/ModCompatibilityEdit.svelte';
   import { getTranslate } from '@tolgee/svelte';
   import { SlideToggle } from '@skeletonlabs/skeleton';
   import ModNetworkDisclosureEdit from './disclosure/ModNetworkDisclosureEdit.svelte';
+  import AIDisclosureEdit from './disclosure/AIDisclosureEdit.svelte';
 
   export const { t } = getTranslate();
 
@@ -40,7 +41,7 @@
       }
     },
     ai_use_disclosure: {
-      disclosure_type: null,
+      disclosure_type: AiUseDisclosureType.NoDisclosure,
       disclosure_string: ''
     }
   };
@@ -81,16 +82,6 @@
   const removeAuthor = (i: number) => {
     $data.authors.splice(i, 1);
     $data.authors = $data.authors;
-  };
-
-  const enableAIDisclosureText = () => {
-    document.getElementById('ai_disclosure').style.display = 'block';
-    $data.ai_use_disclosure.disclosure_string = null;
-  };
-
-  const disableAIDisclosureText = () => {
-    document.getElementById('ai_disclosure').style.display = 'none';
-    $data.ai_use_disclosure.disclosure_string = '';
   };
 
   let editCompatibility = false;
@@ -180,42 +171,6 @@
       </ValidationMessage>
     </div>
 
-    <div class="input grid grid-flow-row gap-2 p-2">
-      <span>{$t('mod.ai_disclosure.usage_question')} *</span>
-      <select
-        bind:value={$data.ai_use_disclosure.disclosure_type}
-        on:change={() => {
-          $data.ai_use_disclosure.disclosure_type != 'no_ai_usage'
-            ? enableAIDisclosureText()
-            : disableAIDisclosureText();
-        }}
-        required
-        class="input grid grid-flow-row gap-2">
-        <option disabled selected value=""></option>
-        <option value="no_ai_usage">{$t('mod.ai_disclosure.no_ai_usage')}</option>
-        <option value="ai_usage">{$t('mod.ai_disclosure.ai_usage')}</option>
-        <option value="runtime_ai_usage">{$t('mod.ai_disclosure.runtime_ai_usage')}</option>
-      </select>
-      <ValidationMessage for="ai_use_disclosure.disclosure_type" let:messages={message}>
-        <span class="validation-message">{message || ''}</span>
-      </ValidationMessage>
-    </div>
-
-    <div class="grid grid-flow-row gap-2" id="ai_disclosure" style="display:none">
-      <label class="label">
-        <span>{$t('mod.ai_disclosure.usage_question_full')} *</span>
-        <input
-          required
-          type="text"
-          id="ai_disclosure_text"
-          bind:value={$data.ai_use_disclosure.disclosure_string}
-          class="input p-2" />
-      </label>
-      <ValidationMessage for="ai_use_disclosure.disclosure_string" let:messages={message}>
-        <span class="validation-message">{message || ''}</span>
-      </ValidationMessage>
-    </div>
-
     <div class="grid grid-flow-row gap-2">
       <SlideToggle name="slider-label" bind:checked={$data.hidden}>
         {$t('entry.hidden')}
@@ -239,6 +194,10 @@
         {#if editCompatibility}
           <ModCompatibility bind:compatibilityInfo={$data.compatibility} />
         {/if}
+      </div>
+
+      <div class="card p-4">
+        <AIDisclosureEdit bind:ai_disclosure={$data.ai_use_disclosure} />
       </div>
 
       <div class="card p-4">

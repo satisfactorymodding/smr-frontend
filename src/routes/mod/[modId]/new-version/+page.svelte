@@ -3,7 +3,7 @@
   import { goto } from '$app/navigation';
   import type { VersionData } from '$lib/models/versions';
   import VersionForm from '$lib/components/versions/VersionForm.svelte';
-  import { GetModDocument } from '$lib/generated';
+  import { AiUseDisclosureType, AnnouncementImportance, GetModDocument } from '$lib/generated';
   import { writable } from 'svelte/store';
   import { chunkedUpload } from '$lib/utils/chunked-upload';
   import type { UploadState } from '$lib/utils/chunked-upload';
@@ -13,6 +13,7 @@
   import { getModalStore, getToastStore, type ModalSettings } from '@skeletonlabs/skeleton';
   import EditCompatibilityForm from '$lib/components/mods/compatibility/EditCompatibilityForm.svelte';
   import { getTranslate } from '@tolgee/svelte';
+  import AnnouncementRow from '$lib/components/announcements/AnnouncementRow.svelte';
 
   export const { t } = getTranslate();
 
@@ -82,6 +83,10 @@
     goto(base + '/mod/' + modId);
   };
 
+  const goToEditPage = () => {
+    goto(base + '/mod/' + modId + '/edit');
+  };
+
   const backModal: ModalSettings = {
     type: 'confirm',
     title: 'Go Back?',
@@ -132,6 +137,18 @@
       <p>Loading...</p>
     {:else if $mod.error}
       <p>Oh no... {$mod.error.message}</p>
+    {:else if $mod.data.mod.ai_use_disclosure == null || $mod.data.mod.ai_use_disclosure.disclosure_type === AiUseDisclosureType.NoDisclosure}
+      <div class="p-4">
+        <AnnouncementRow
+          importance={AnnouncementImportance.Warning}
+          message="This mod does not have an AI disclosure attached, and thus it cannot be updated with a new version." />
+      </div>
+      <button
+        class="variant-ghost-primary btn"
+        title="Go to the edit page for this mod"
+        on:click={() => goToEditPage()}>
+        {$t('mod.edit')}
+      </button>
     {:else}
       <VersionForm {onSubmit} modReference={$mod.data.mod.mod_reference} submitIcon="add_circle" />
 

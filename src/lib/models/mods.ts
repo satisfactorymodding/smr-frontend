@@ -78,10 +78,11 @@ export const modSchema = zod.object({
   ),
   ai_use_disclosure: zod.optional(
     zod.object({
-      disclosure_type: zod.string().min(1, { message: 'An option must be selected' }),
-      disclosure_string: zod.optional(
-        zod.string().min(1, { message: 'A disclosure is required when AI has been used' }).or(zod.literal(''))
-      )
+      disclosure_type: zod.string(),
+      disclosure_string: zod
+        .string()
+        .min(1, { message: 'A disclosure is required when AI has been used' })
+        .or(zod.literal(''))
     })
   ),
   hidden: zod.boolean(),
