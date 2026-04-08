@@ -41,6 +41,12 @@ query GetMods($offset: Int!, $limit: Int!, $search: String, $order: Order, $orde
         name
         description
       }
+      versions {
+        id
+        version
+        changelog
+        updated_at
+      }
     }
   }
 }

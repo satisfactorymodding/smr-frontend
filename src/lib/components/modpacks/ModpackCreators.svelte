@@ -43,8 +43,6 @@
     .map(([userId, count]) => ({ userId, count }))
     .sort((a, b) => b.count - a.count);
 
-  $: console.log(creatorCounts);
-
   export const { t } = getTranslate();
 </script>
 
@@ -71,9 +69,9 @@
         <div class="max-h-[300px] overflow-y-auto">
           <div class="grid gap-y-4">
             {#each creatorCountsList as author}
-                <ModpackAuthor
-                  creator={author.userId.toString()}
-                  role={$t('modpack.mod-creator', { count: author.count })}></ModpackAuthor>
+              <ModpackAuthor
+                creator={author.userId.toString()}
+                role={$t('modpack.mod-creator', { count: author.count })}></ModpackAuthor>
             {/each}
           </div>
         </div>
