@@ -8,12 +8,14 @@
   import FicsitCard from '$lib/components/general/FicsitCard.svelte';
   import { browser } from '$app/environment';
   import { getTranslate, T } from '@tolgee/svelte';
+  import { user } from '$lib/stores/user';
+  import { base } from '$app/paths';
   import { type PaginationSettings, Paginator } from '@skeletonlabs/skeleton';
   import TagDisplay from '../utils/TagDisplay.svelte';
   import LinkButton from '../general/LinkButton.svelte';
 
   export let colCount: 4 | 5 = 4;
-  //   export let newModpack = false;
+  export let newModpack = true;
   export let showSearch = false;
 
   const client = getContextClient();
@@ -146,14 +148,13 @@
     </div>
   </div>
 
-  <div class="flex grow flex-row flex-wrap">
-    <!-- This section is setup to be the new modpack button, if we decide to use it (copied from mods page) -->
-
-    <!-- class:justify-between={newModpack && $user !== null}
+  <div
+    class="flex grow flex-row flex-wrap"
+    class:justify-between={newModpack && $user !== null}
     class:justify-end={!newModpack || $user == null}>
-    {#if newModpack && $user !== null} 
+    {#if newModpack && $user !== null}
       <a class="variant-ghost-primary btn self-end" href="{base}/new-modpack">{$t('modpacks.new')}</a>
-    {/if} -->
+    {/if}
 
     {#if showSearch}
       <div class="flex grow flex-col items-center justify-center gap-4 sm:px-4">

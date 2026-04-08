@@ -1,26 +1,248 @@
 <script lang="ts">
-  // import type { Modpack } from '$lib/generated';
+  import { queryStore, getContextClient } from '@urql/svelte';
+  import { GetModsDocument, GetTagsDocument, ModFields, Order, type Tag } from '$lib/generated';
+  import ModCard from '../mods/ModCard.svelte';
+  import { goto } from '$app/navigation';
+  import { page as storePage } from '$app/stores';
+  import FicsitCard from '$lib/components/general/FicsitCard.svelte';
+  import { browser } from '$app/environment';
   import { getTranslate } from '@tolgee/svelte';
+  import { type PaginationSettings, Paginator } from '@skeletonlabs/skeleton';
+  import TagDisplay from '../utils/TagDisplay.svelte';
 
-  //   export let modpack!: Pick<
-  //     Modpack,
-  //     'mods'
-  //   >;
+  export let colCount: 4 | 5 = 4;
+  export let showSearch = true;
+
+  export let include = false;
+  export let exclude = false;
+
+  export let modIDs: string[] = [];
+
+  const client = getContextClient();
+
+  let search = (browser && $storePage.url.searchParams.get('q')) || '';
+  let order: Order = Order.Desc;
+  let orderBy: ModFields = ModFields.LastVersionDate;
+  let perPage = 32;
+  let page = parseInt((browser && $storePage.url.searchParams.get('p')) || '0', 10) || 0;
+  let selectedTags: string[] = [];
+
+  $: mods = queryStore({
+    query: GetModsDocument,
+    client,
+    variables: { offset: page * perPage, limit: perPage, search, order, orderBy, tagIDs: selectedTags.sort() }
+  });
+
+  function filterMods(modList, currentIDs: string[]) {
+    if (!modList) {
+      return [];
+    }
+
+    if (include) {
+      return modList.filter((mod) => currentIDs.includes(mod.id));
+    }
+    if (exclude) {
+      return modList.filter((mod) => !currentIDs.includes(mod.id));
+    }
+    return modList;
+  }
+
+  $: displayedMods = filterMods($mods?.data?.getMods?.mods || [], modIDs);
+
+  $: allTags = queryStore({
+    query: GetTagsDocument,
+    client,
+    variables: { limit: 100 }
+  });
+
+  let totalMods: number;
+  let searchField = search;
+  $: searchDisabled = searchField.length < 3;
+  $: searchButtonClass = searchDisabled ? 'variant-filled-surface' : 'variant-filled-primary';
+
+  let timer: number;
+  $: {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      if (searchField && !searchDisabled) {
+        if ((search === '' || search === null) && searchField !== '' && searchField !== null) {
+          orderBy = ModFields.Search;
+          page = 0;
+        }
+        search = searchField;
+      } else if (searchField === '' || searchField === null) {
+        if (orderBy === ModFields.Search || !orderBy) {
+          orderBy = ModFields.LastVersionDate;
+        }
+        search = null;
+      }
+    }, 250) as unknown as number;
+  }
+
+  $: if (browser && showSearch) {
+    const url = new URL(window.location.origin + window.location.pathname);
+    url.searchParams.append('p', page.toString());
+    !searchDisabled && searchField !== '' && searchField !== null && url.searchParams.append('q', searchField);
+    goto(url.toString(), { keepFocus: true });
+  }
+
+  $: totalMods = $mods?.data?.getMods?.count || 0;
+  $: showPagination = ($mods && $mods.fetching) || ($mods && !$mods.fetching && totalMods > 0 && !$mods.error);
+
+  $: gridClasses =
+    colCount == 4
+      ? '3xl:grid-cols-4 2xl:grid-cols-3 lg:grid-cols-2 grid-cols-1'
+      : '3xl:grid-cols-3 2xl:grid-cols-2 grid-cols-1';
 
   export const { t } = getTranslate();
+
+  $: orderFields = [
+    [$t('sort-order.name'), 'name'],
+    [$t('sort-order.views'), 'views'],
+    [$t('sort-order.downloads'), 'downloads'],
+    [$t('sort-order.hotness'), 'hotness'],
+    [$t('sort-order.popularity'), 'popularity'],
+    [$t('sort-order.created_at'), 'created_at'],
+    [$t('sort-order.last_version_date'), 'last_version_date'],
+    ...(search !== '' && search !== null ? [[$t('sort-order.search'), 'search']] : [])
+  ];
+
+  $: paginationSettings = {
+    page: page,
+    limit: perPage,
+    size: totalMods,
+    amounts: [8, 16, 32, 64, 100]
+  } satisfies PaginationSettings;
+
+  const toggleTag = (tagId: string) => {
+    if (selectedTags.indexOf(tagId) >= 0) {
+      const i = selectedTags.indexOf(tagId);
+      selectedTags = [...selectedTags.slice(0, i), ...selectedTags.slice(i + 1)];
+    } else {
+      selectedTags = [...selectedTags, tagId];
+    }
+  };
+
+  const sortedTags = (tags: Tag[]): Tag[] => tags.toSorted((a, b) => a.name.localeCompare(b.name));
+
+  let tagsOpen = false;
 </script>
 
-<div class="card p-4">
-  <section>
-    <div class="break-words text-lg">
-      <!-- {modpack.mods.length > 0}
-            <h3 class="my-4 text-2xl font-bold">{$t('modpack.mod-list')}</h3>
-            <ul class="list-disc list-inside">
-              {#each modpack.mods as mod}
-                <li>{mod.mod_id}</li>
+<div class="mb-5 ml-auto flex flex-col items-center gap-4">
+  {#if showSearch}
+    <div class="flex w-full grow flex-col items-center justify-center gap-4 sm:px-4">
+      <div class="flex grow flex-row flex-wrap items-center justify-center gap-3 sm:px-4">
+        <div>
+          <button
+            type="button"
+            class="text-md variant-filled-surface btn btn-sm p-2 pl-4 pr-4"
+            class:variant-ghost-primary={tagsOpen}
+            title={$t('filter.expand-button-tooltip')}
+            on:click={() => (tagsOpen = !tagsOpen)}>
+            <span>{$t('filter.expand-button-text')}</span>
+          </button>
+        </div>
+        <div>
+          <select bind:value={orderBy} class="select">
+            {#each orderFields as orderField}
+              <option value={orderField[1]}>{orderField[0]}</option>
+            {/each}
+          </select>
+        </div>
+        <div>
+          <select bind:value={order} class="select">
+            <option value="asc">{$t('ascending')}</option>
+            <option value="desc">{$t('descending')}</option>
+          </select>
+        </div>
+
+        <div class="input-group input-group-divider w-fit grid-cols-[1fr_auto] rounded-container-token">
+          <input
+            bind:value={searchField}
+            class="border-0 bg-transparent p-1.5 ring-0"
+            name="search"
+            placeholder={$t('search.placeholder-text')} />
+          <button
+            class="material-icons {searchButtonClass}"
+            disabled={searchDisabled}
+            title={searchDisabled ? $t('search.disabled') : ''}>arrow_forward</button>
+        </div>
+
+        {#if tagsOpen}
+          <div class="flex flex-grow flex-row flex-wrap items-center justify-center gap-1 pb-10">
+            {#if $allTags.error}
+              <p>Oh no... {$allTags.error.message}</p>
+            {:else if !$allTags.fetching}
+              {#each sortedTags($allTags.data.getTags) as tag}
+                <TagDisplay
+                  {tag}
+                  popupTriggerEvent="hover"
+                  asButton={true}
+                  selected={selectedTags.indexOf(tag.id) >= 0}
+                  on:click={() => toggleTag(tag.id)} />
               {/each}
-            </ul>
-        : <p>{$t('modpack.no-mods')}</p> -->
+            {/if}
+          </div>
+        {/if}
+
+        {#if showPagination}
+          <div class="self-end">
+            <Paginator
+              bind:settings={paginationSettings}
+              showFirstLastButtons={true}
+              showPreviousNextButtons={true}
+              on:page={(p) => (page = p.detail)}
+              on:amount={(p) => (perPage = p.detail)}
+              controlVariant="variant-filled-surface" />
+          </div>
+        {/if}
+      </div>
     </div>
-  </section>
+  {/if}
 </div>
+
+{#if $mods.fetching}
+  <div class="grid {gridClasses} gap-4">
+    {#each Array(perPage) as _}
+      <FicsitCard fake />
+    {/each}
+  </div>
+{:else if $mods.error && $mods.error.message.includes("'Search' failed on the 'min' tag")}
+  <p>{$t('search.failed.query-too-short')}</p>
+{:else if $mods.error}
+  <p>Oh no... {$mods.error.message}</p>
+{:else if displayedMods.length === 0}
+  <p class="py-10 text-center italic opacity-50">{$t('search.results.empty')}</p>
+{:else}
+  <div class="grid {gridClasses} gap-4">
+    {#each displayedMods as mod (mod.id)}
+      <ModCard {mod} {include} {exclude} />
+    {/each}
+  </div>
+{/if}
+
+{#if showPagination}
+  <div class="ml-auto mt-5 flex justify-end">
+    <Paginator
+      bind:settings={paginationSettings}
+      showFirstLastButtons={true}
+      showPreviousNextButtons={true}
+      on:page={(p) => (page = p.detail)}
+      on:amount={(p) => (perPage = p.detail)}
+      controlVariant="variant-filled-surface" />
+  </div>
+{/if}
+
+<style lang="postcss">
+  * :global(.search-paper) {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    max-width: 600px;
+    height: 48px;
+  }
+  * :global(.search-paper > *) {
+    display: inline-block;
+    margin: 0 12px;
+  }
+</style>
