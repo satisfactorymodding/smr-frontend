@@ -13,7 +13,7 @@
   import { getTranslate } from '@tolgee/svelte';
   import { SlideToggle } from '@skeletonlabs/skeleton';
   import ModNetworkDisclosureEdit from './disclosure/ModNetworkDisclosureEdit.svelte';
-  import AIDisclosureEdit from './disclosure/AIDisclosureEdit.svelte';
+  import ModAiDisclosureEdit from './disclosure/ModAiDisclosureEdit.svelte';
 
   export const { t } = getTranslate();
 
@@ -243,7 +243,7 @@
       </div>
 
       <div class="card p-4">
-        <AIDisclosureEdit bind:ai_disclosure={$data.ai_use_disclosure} />
+        <ModAiDisclosureEdit bind:ai_disclosure={$data.ai_use_disclosure} />
       </div>
 
       <div class="card p-4">

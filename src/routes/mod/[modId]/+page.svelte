@@ -19,7 +19,7 @@
   import Page404 from '$lib/components/general/Page404.svelte';
   import { getTranslate } from '@tolgee/svelte';
   import ModNetworkDisclosure from '$lib/components/mods/disclosure/ModNetworkDisclosure.svelte';
-  import AIDisclosure from '$lib/components/mods/disclosure/AIDisclosure.svelte';
+  import ModAiDisclosure from '$lib/components/mods/disclosure/ModAiDisclosure.svelte';
 
   export let data: PageData;
 
@@ -155,7 +155,7 @@
         <ModInfo mod={$mod.data.mod} />
         <ModAuthors authors={$mod.data.mod.authors} />
         <ModNetworkDisclosure mod={$mod.data.mod} />
-        <AIDisclosure mod={$mod.data.mod} />
+        <ModAiDisclosure mod={$mod.data.mod} />
       </div>
     </div>
   </div>
