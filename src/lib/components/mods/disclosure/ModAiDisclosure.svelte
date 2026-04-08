@@ -23,19 +23,19 @@
         <br />
       {:else if mod?.ai_use_disclosure.disclosure_type === 'ai_usage'}
         <span class="italic"
-          ><strong>{$t('mod.ai_disclosure.ai_use')} </strong>
+          >{$t('mod.ai_disclosure.ai_use')}
           <T keyName={mod.ai_use_disclosure.disclosure_string} /></span
         ><br />
       {:else if mod?.ai_use_disclosure.disclosure_type === 'runtime_ai_usage'}
         <span class="italic"
-          ><strong>{$t('mod.ai_disclosure.runtime_ai_use')} </strong>
+          >{$t('mod.ai_disclosure.runtime_ai_use')}
           <T keyName={mod.ai_use_disclosure.disclosure_string} /></span
         ><br />
       {/if}
       <button
         class="variant-ringed-surface variant-glass-surface btn btn-md m-6"
         on:click={() => goto(base + '/content-policy')}>
-        <span class=" pr-2">{$t('content-policy')}</span>
+        <span>{$t('content-policy')}</span>
       </button>
     </div>
   </section>
