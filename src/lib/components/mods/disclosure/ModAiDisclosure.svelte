@@ -16,19 +16,19 @@
         <T keyName="mod.ai_disclosure.header" />
       </h3>
       {#if mod?.ai_use_disclosure === null || mod?.ai_use_disclosure.disclosure_type === 'no_disclosure'}
-        <span>{$t('mod.ai_disclosure.no_ai_use_disclosure')}</span>
+        <span>{$t('mod.ai_disclosure.no_ai_use_disclosure.description.user')}</span>
         <br />
       {:else if mod?.ai_use_disclosure.disclosure_type === 'no_ai_usage'}
-        <span class="italic">{$t('mod.ai_disclosure.no_ai_use')}</span>
+        <span class="italic">{$t('mod.ai_disclosure.no_ai_use.description.user')}</span>
         <br />
       {:else if mod?.ai_use_disclosure.disclosure_type === 'ai_usage'}
         <span class="italic"
-          >{$t('mod.ai_disclosure.ai_use')}
+          >{$t('mod.ai_disclosure.ai_use.description.user')}
           <T keyName={mod.ai_use_disclosure.disclosure_string} /></span
         ><br />
       {:else if mod?.ai_use_disclosure.disclosure_type === 'runtime_ai_usage'}
         <span class="italic"
-          >{$t('mod.ai_disclosure.runtime_ai_use')}
+          >{$t('mod.ai_disclosure.runtime_ai_use.description.user')}
           <T keyName={mod.ai_use_disclosure.disclosure_string} /></span
         ><br />
       {/if}
