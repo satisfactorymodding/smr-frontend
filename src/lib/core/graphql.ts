@@ -20,6 +20,7 @@ export const initializeGraphQLClient = (fetch?: LoadEvent['fetch']): Client =>
           GetModpacks: () => null,
           LatestVersions: () => null,
           UserMod: () => null,
+          UserModpacks: () => null,
           GetGuides: () => null,
           OAuthOptions: () => null,
           UserRoles: () => null,

@@ -1,0 +1,3 @@
+mutation EditModpackCompatibility($modpackId: ModpackID!, $compatibility: CompatibilityInfoInput!) {
+  updateModpackCompatibility(modpackId: $modpackId, compatibility: $compatibility)
+}
