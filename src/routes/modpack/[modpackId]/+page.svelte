@@ -83,7 +83,7 @@
     component: {
       ref: EditCompatibilityModal,
       props: {
-        mod: $modpack.data?.getModpack
+        modpack: $modpack.data?.getModpack
       }
     }
   } satisfies ModalSettings;
