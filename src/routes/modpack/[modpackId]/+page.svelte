@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { DeleteModpackDocument } from '$lib/generated';
+  import { DeleteModpackDocument, GetModpackDocument } from '$lib/generated';
   import ModpackInfo from '$lib/components/modpacks/ModpackInfo.svelte';
   import ModpackLogo from '$lib/components/modpacks/ModpackLogo.svelte';
   import ModpackDescription from '$lib/components/modpacks/ModpackDescription.svelte';
@@ -13,8 +13,7 @@
   import { base } from '$app/paths';
   import Page404 from '$lib/components/general/Page404.svelte';
   import { getTranslate } from '@tolgee/svelte';
-  import { queryStore, getContextClient } from '@urql/svelte';
-  import { GetModpackDocument } from '$lib/generated';
+  import { getContextClient, queryStore } from '@urql/svelte';
   import { getModalStore, getToastStore, type ModalSettings } from '@skeletonlabs/skeleton';
   import EditCompatibilityModal from '$lib/modals/EditCompatibilityModal.svelte';
 
@@ -30,9 +29,11 @@
 
   $: ({ modpack } = data);
 
-  $: parentId = $modpack.data?.getModpack?.parent_id ?? null;
+  $: modpackValue = $modpack.data?.getModpack;
 
-  $: modIds = ($modpack.data?.getModpack?.mods ?? []).map((m) => String(m.mod_id));
+  $: parentId = modpackValue?.parent_id ?? null;
+
+  $: modIds = (modpackValue?.mods).map((m) => String(m.mod_id));
 
   $: parent = queryStore({
     query: GetModpackDocument,
@@ -88,7 +89,7 @@
     }
   } satisfies ModalSettings;
 
-  $: canUserEdit = $user?.roles?.deleteContent || $modpack?.data?.getModpack?.creator_id == $user?.id;
+  $: canUserEdit = $user?.roles?.deleteContent || modpackValue?.creator_id == $user?.id;
   $: canUserEditCompatibility = $user?.roles?.editAnyModCompatibility || canUserEdit;
 </script>
 

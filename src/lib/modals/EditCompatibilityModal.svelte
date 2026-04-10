@@ -28,15 +28,15 @@
         }} />
     {:else if modpack}
       <EditModpackCompatibilityForm
-      modpackId={modpack.id}
-      {modpack}
-      on:fail={() => {
-        alert('Failed to update compatibility information, check browser console for more info.');
-      }}
-      on:submit={() => {
-        modalStore.close();
-        location.reload();
-      }} />
+        modpackId={modpack.id}
+        {modpack}
+        on:fail={() => {
+          alert('Failed to update compatibility information, check browser console for more info.');
+        }}
+        on:submit={() => {
+          modalStore.close();
+          location.reload();
+        }} />
     {/if}
   </div>
 </div>

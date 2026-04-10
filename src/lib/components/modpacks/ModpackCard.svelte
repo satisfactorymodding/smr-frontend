@@ -85,8 +85,6 @@
     worst?.worstEXP,
     modpackTrueCompatibility?.EXP?.state
   );
-
-  $: console.log(modpackTrueCompatibility);
 </script>
 
 <FicsitCard

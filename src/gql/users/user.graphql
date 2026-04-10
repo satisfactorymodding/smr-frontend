@@ -47,25 +47,20 @@ query GetUser($user: UserID!) {
     modpacks {
       modpack {
         id
-        created_at
-        creator_id
-        updated_at
         name
-        full_description
-        short_description
         logo
-        hidden
-        installs
+        logo_thumbhash
         views
+        installs
+        short_description
         tags {
           id
           name
           description
         }
-        parent_id
         mods {
-          version_constraint
           mod_id
+          version_constraint
         }
         compatibility {
           EA {
