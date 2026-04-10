@@ -16,7 +16,7 @@ export type ModpackData = {
       note?: string;
     };
   };
-  readonly parent_id?: string;
+  parent_id?: string;
   hidden: boolean;
   mods: ModpackModEntry[];
   tagIDs?: string[];
@@ -50,7 +50,7 @@ export const modpackSchema = zod.object({
       })
     })
   ),
-  parent_id: zod.string().uuid().optional().readonly(),
+  parent_id: zod.string().optional(),
   hidden: zod.boolean().default(false),
   tagIDs: zod.optional(zod.string().array())
 });

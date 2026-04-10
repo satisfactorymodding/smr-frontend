@@ -7,11 +7,11 @@
   import { trimNonSchema } from '$lib/utils/forms';
   import { markdown } from '$lib/utils/markdown';
   import { CompatibilityState, type ModpackModEntry } from '$lib/generated';
-  import ModCompatibility from '$lib/components/mods/compatibility/ModCompatibilityEdit.svelte';
   import { getTranslate } from '@tolgee/svelte';
   import { getModalStore, SlideToggle, type ModalSettings } from '@skeletonlabs/skeleton';
   import TagList from '../utils/TagList.svelte';
   import ManageModsModal from '$lib/modals/ManageModsModal.svelte';
+  import ModpackCompatibility from './compatibility/ModpackCompatibilityEdit.svelte';
 
   export const { t } = getTranslate();
 
@@ -38,12 +38,39 @@
   export let manageMods = $t('modpack.create.manage-mods');
 
   export let editing = false;
+  export let remixId = null;
+  export let remixMods = null;
 
-  const { form, data } = createForm<ModpackData>({
+  if (remixId != null) {
+    const remixValues: ModpackData = {
+      full_description: '',
+      name: '',
+      short_description: '',
+      hidden: false,
+      compatibility: {
+        EA: {
+          state: CompatibilityState.Works,
+          note: ''
+        },
+        EXP: {
+          state: CompatibilityState.Works,
+          note: ''
+        }
+      },
+      mods: remixMods,
+      tags: [],
+      parent_id: remixId
+    };
+    initialValues = remixValues;
+  }
+
+  const { form, data, errors } = createForm<ModpackData>({
     initialValues: initialValues,
     extend: [validator({ schema: modpackSchema }), reporter],
     onSubmit: (submitted: ModpackData) => onSubmit(trimNonSchema(submitted, modpackSchema))
   });
+
+  $: console.log($errors);
 
   let tags = $data.tags;
   const computeTags = () => {
@@ -74,6 +101,11 @@
       delete $data.compatibility;
     }
   }
+  $: {
+    if (editing) {
+      delete $data.parent_id;
+    }
+  }
 
   $: preview = ($data.full_description as string) || '';
 
@@ -87,7 +119,7 @@
     <div class="grid grid-flow-row gap-2">
       <label class="label">
         <span>{$t('entry.name')} *</span>
-        <input type="text" bind:value={$data.name} required class="input p-2" />
+        <input type="text" bind:value={$data.name} required class="input p-2" disabled={editing} />
       </label>
       <ValidationMessage for="name" let:messages={message}>
         <span class="validation-message">{message || ''}</span>
@@ -162,7 +194,7 @@
       </div>
 
       {#if editCompatibility}
-        <ModCompatibility bind:compatibilityInfo={$data.compatibility} />
+        <ModpackCompatibility bind:compatibilityInfo={$data.compatibility} />
       {/if}
     {/if}
 

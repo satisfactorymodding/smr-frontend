@@ -7,7 +7,7 @@
   export let compatibility: CompatibilityInfoInput;
 
   export let isModpack = false;
-  
+
   export const { t } = getTranslate();
 </script>
 

@@ -43,7 +43,7 @@
     requestPolicy: 'network-only'
   });
 
-  const deleteModFn = () => {
+  const deleteModpackFn = () => {
     client
       .mutation(DeleteModpackDocument, { ModpackID: $modpack.data.getModpack.id })
       .toPromise()
@@ -51,17 +51,17 @@
         if (value.error) {
           console.error(value.error.message);
           toastStore.trigger({
-            message: 'Error deleting mod: ' + value.error.message,
+            message: 'Error deleting modpack: ' + value.error.message,
             background: 'variant-filled-error',
             autohide: false
           });
         } else {
           toastStore.trigger({
-            message: $t('mod.toast.mod-deleted'),
+            message: $t('modpack.toast.modpack-deleted'),
             background: 'variant-filled-success',
             timeout: 5000
           });
-          goto(base + '/mods');
+          goto(base + '/modpacks');
         }
       });
   };
@@ -70,11 +70,11 @@
 
   const deleteModal: ModalSettings = {
     type: 'confirm',
-    title: $t('mod.modal.delete.title'),
-    body: $t('mod.modal.delete.text'),
+    title: $t('modpack.modal.delete.title'),
+    body: $t('modpack.modal.delete.text'),
     response: (r: boolean) => {
       if (r) {
-        deleteModFn();
+        deleteModpackFn();
       }
     }
   };
@@ -143,9 +143,13 @@
             {$t('mod.view-description')}
           {/if}
         </button>
-        <button class="variant-ghost-primary btn">
-          <span class="material-icons">replay</span>
-          {$t('modpacks.remix')}</button>
+        {#if $user !== null}
+          <button
+            class="variant-ghost-primary btn"
+            on:click={() => goto(base + '/new-modpack?remixId=' + $modpack.data.getModpack.id)}>
+            <span class="material-icons">replay</span>
+            {$t('modpacks.remix')}</button>
+        {/if}
       </div>
     </div>
     <div class="grid-auto-max grid auto-cols-fr gap-4">

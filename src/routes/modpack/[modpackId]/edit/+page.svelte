@@ -19,7 +19,7 @@
   const onSubmit = (modpackData: ModpackData) => {
     client
       .mutation(EditModpackDocument, {
-        modpackId: modpackData.name,
+        modpackId: $modpack.data?.getModpack?.id,
         modpack: modpackData
       })
       .toPromise()
