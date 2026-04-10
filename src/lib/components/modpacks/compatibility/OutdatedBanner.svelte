@@ -27,7 +27,7 @@
   } else {
     worst = CompatibilityState.Works;
   }
-  $: works = worst === CompatibilityState.Works;
+  $: works = worst === CompatibilityState.Works || worst === null;
 </script>
 
 {#if !works}
