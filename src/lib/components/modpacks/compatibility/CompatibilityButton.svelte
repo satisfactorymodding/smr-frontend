@@ -16,7 +16,8 @@
       component: {
         ref: CompatibilityModal,
         props: {
-          compatibility
+          compatibility,
+          isModpack: true
         }
       }
     });
