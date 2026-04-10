@@ -13,6 +13,7 @@
 
   export const { t } = getTranslate();
 
+  export let downloadable = true;
   export let modpack: Pick<
     Modpack,
     'id' | 'name' | 'logo' | 'views' | 'installs' | 'short_description' | 'tags' | 'logo_thumbhash' | 'compatibility'
@@ -102,9 +103,11 @@
     <TagList tags={modpack.tags} />
   </div>
   <svelte:fragment slot="actions">
-    <button class="variant-soft-surface btn btn-sm" title="Install" on:click={() => installModpack(modpack.id)}>
-      <span class="material-icons">download</span>
-    </button>
+    {#if downloadable}
+      <button class="variant-soft-surface btn btn-sm" title="Install" on:click={() => installModpack(modpack.id)}>
+        <span class="material-icons">download</span>
+      </button>
+    {/if}
   </svelte:fragment>
   <div slot="outer">
     <OutdatedBanner compatibility={modpackTrueCompatibility} />
