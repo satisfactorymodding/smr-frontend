@@ -8,7 +8,7 @@
 
   export let data: PageData;
 
-  $: ({ mods } = data);
+  $: ({ mods, modpacks } = data);
 
   export const { t } = getTranslate();
 </script>
@@ -78,7 +78,16 @@
                       {$mods.data.getMods.count}
                     {/if}
                   </span>
-                  {$t('home.banner.mods')}!
+                  {$t('home.banner.mods')}
+                  {$t('home.banner.and')}
+                  <span class="font-bold text-amber-600">
+                    {#if $modpacks.fetching || $modpacks.error}
+                      ...
+                    {:else}
+                      {$modpacks.data.getModpacks.count}
+                    {/if}
+                  </span>
+                  {$t('home.banner.modpacks')}!
                 </div>
                 <div class="text-md max-w-prose">{$t('home.banner.most-are-compatible')}</div>
               </div>
@@ -86,6 +95,7 @@
             <div class="absolute top-0 flex h-full w-full items-end justify-center">
               <button class="btn h-1/4 w-full px-14 py-3" style="background: #5a7b78; color: white">
                 {$t('home.banner.take-a-look')}
+                {$t('home.banner.mods')}!
               </button>
             </div>
           </div>
