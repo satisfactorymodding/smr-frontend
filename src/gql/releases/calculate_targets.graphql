@@ -1,0 +1,9 @@
+query CalculateTargetWithMods($mods: [ModpackModInput!]!) {
+  calculateTargetWithMods(mods: $mods) {
+    mods {
+      mod_id
+      version_constraint
+    }
+    targets
+  }
+}

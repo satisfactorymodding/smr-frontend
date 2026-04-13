@@ -37,6 +37,18 @@ query GetModpacks(
           note
         }
       }
+      releases {
+        id
+        version
+        created_at
+        lockfile
+        changelog
+        targets {
+          id
+          release_id
+          target_name
+        }
+      }
     }
   }
 }

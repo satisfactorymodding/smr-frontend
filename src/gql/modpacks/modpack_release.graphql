@@ -1,0 +1,14 @@
+query GetModpackRelease($modpackID: ModpackID!, $version: String!) {
+  getModpackRelease(modpackID: $modpackID, version: $version) {
+    id
+    version
+    created_at
+    lockfile
+    changelog
+    targets {
+      id
+      release_id
+      target_name
+    }
+  }
+}
