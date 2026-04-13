@@ -8,7 +8,6 @@
 
   export let modpackId: string;
   export let modpack: ModpackData;
-
   export const { t } = getTranslate();
 
   const client = getContextClient();

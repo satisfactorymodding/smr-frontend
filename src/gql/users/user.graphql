@@ -53,6 +53,18 @@ query GetUser($user: UserID!) {
         views
         installs
         short_description
+        releases {
+          id
+          version
+          created_at
+          lockfile
+          changelog
+          targets {
+            id
+            release_id
+            target_name
+          }
+        }
         tags {
           id
           name

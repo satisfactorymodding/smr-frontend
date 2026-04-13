@@ -1,0 +1,3 @@
+mutation DeleteModpackRelease($modpackID: ModpackID!, $version: String!) {
+  deleteModpackRelease(modpackID: $modpackID, version: $version)
+}

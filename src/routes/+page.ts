@@ -16,13 +16,13 @@ export const load: PageLoad = async ({ parent }) => ({
       }
     })
   })),
-    modpacks: queryStore({
-      query: GetModpacksDocument,
-      client: (await parent()).client,
-      variables: {
-        offset: 0,
-        limit: 4,
-        order: Order.Desc,
-      }
-    }),
-  });
+  modpacks: queryStore({
+    query: GetModpacksDocument,
+    client: (await parent()).client,
+    variables: {
+      offset: 0,
+      limit: 4,
+      order: Order.Desc
+    }
+  })
+});

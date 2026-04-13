@@ -1,0 +1,6 @@
+query ResolveModpackSpecificVersions($modpackID: ModpackID!) {
+  resolveModpackSpecificVersions(modpackID: $modpackID) {
+    mod_id
+    version_constraint
+  }
+}

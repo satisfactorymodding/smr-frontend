@@ -3,7 +3,6 @@
   import ModpackInfo from '$lib/components/modpacks/ModpackInfo.svelte';
   import ModpackLogo from '$lib/components/modpacks/ModpackLogo.svelte';
   import ModpackDescription from '$lib/components/modpacks/ModpackDescription.svelte';
-  import ModpackInstall from '$lib/components/modpacks/ModpackInstall.svelte';
   import ModpackCreators from '$lib/components/modpacks/ModpackCreators.svelte';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
   import { modpackSchema, serializeSchema } from '$lib/utils/schema';
@@ -16,6 +15,8 @@
   import { getContextClient, queryStore } from '@urql/svelte';
   import { getModalStore, getToastStore, type ModalSettings } from '@skeletonlabs/skeleton';
   import EditCompatibilityModal from '$lib/modals/EditCompatibilityModal.svelte';
+  import ModpackLatestRelease from '$lib/components/modpacks/ModpackLatestRelease.svelte';
+  import ModpackReleases from '$lib/components/modpacks/ModpackReleases.svelte';
 
   export let data: PageData;
 
@@ -66,7 +67,7 @@
       });
   };
 
-  let versionsTab = false;
+  let releaseTab = false;
 
   const deleteModal: ModalSettings = {
     type: 'confirm',
@@ -134,13 +135,13 @@
             <span class="material-icons pr-2">science</span>
             {$t('modpack.edit-compatibility')}</button>
         {/if}
-        <button class="variant-ghost-primary btn" on:click={() => (versionsTab = !versionsTab)}>
-          {#if !versionsTab}
-            <span class="material-icons pr-2" title="Browse all uploaded versions of this mod">view_list</span>
-            {$t('mod.view-versions')}
+        <button class="variant-ghost-primary btn" on:click={() => (releaseTab = !releaseTab)}>
+          {#if !releaseTab}
+            <span class="material-icons pr-2" title="Browse all uploaded releases of this mod">view_list</span>
+            {$t('modpack.view-releases')}
           {:else}
-            <span class="material-icons pr-2" title="View the description page for this mod">description</span>
-            {$t('mod.view-description')}
+            <span class="material-icons pr-2" title="View the description page for this modpack">description</span>
+            {$t('modpack.view-description')}
           {/if}
         </button>
         {#if $user !== null}
@@ -153,12 +154,16 @@
       </div>
     </div>
     <div class="grid-auto-max grid auto-cols-fr gap-4">
-      <ModpackDescription modpack={$modpack.data.getModpack} modReferences={modIds} />
+      {#if releaseTab}
+        <ModpackReleases releases={$modpack.data.getModpack.releases} />
+      {:else}
+        <ModpackDescription modpack={$modpack.data.getModpack} modReferences={modIds} />
+      {/if}
       <div class="grid auto-rows-min grid-cols-1 gap-8">
         <div class="m-auto">
           <ModpackLogo modpackLogo={$modpack.data.getModpack.logo} modpackName={$modpack.data.getModpack.name} />
         </div>
-        <ModpackInstall modpack={$modpack.data.getModpack} />
+        <ModpackLatestRelease modpackId={$modpack.data.getModpack.id} release={$modpack.data?.getModpack.releases[0]} />
         <ModpackInfo modpack={$modpack.data.getModpack} />
         <ModpackCreators
           creator={$modpack.data.getModpack.creator_id}

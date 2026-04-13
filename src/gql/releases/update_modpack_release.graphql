@@ -1,0 +1,7 @@
+mutation UpdateModpackRelease($modpackID: ModpackID!, $version: String!, $release: UpdateModpackRelease!) {
+  updateModpackRelease(modpackID: $modpackID, version: $version, release: $release) {
+    id
+    version
+    changelog
+  }
+}

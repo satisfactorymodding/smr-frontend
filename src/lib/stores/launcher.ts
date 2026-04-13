@@ -52,11 +52,11 @@ export const installMod = (modReference: string) => {
   });
 };
 
-export const installModpack = (modpackReference: string) => {
+export const installModpack = (modpackReference: string, version: string) => {
   if (!get(hasLauncher)) {
     window.open('https://docs.ficsit.app/satisfactory-modding/latest/ForUsers/SatisfactoryModManager.html', '_blank');
   } else {
-    open('smmanager://install?modpackID=' + modpackReference, () => {
+    open('smmanager://install?modpackID=' + modpackReference + '&version=' + version, () => {
       window.open(modLoaderLink, '_blank');
     });
   }

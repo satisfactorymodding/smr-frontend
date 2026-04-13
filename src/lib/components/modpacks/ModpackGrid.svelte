@@ -33,7 +33,8 @@
   $: modpacks = queryStore({
     query: GetModpacksDocument,
     client,
-    variables: { offset: page * perPage, limit: perPage, search, order, orderBy, tagIDs: selectedTags.sort() }
+    variables: { offset: page * perPage, limit: perPage, search, order, orderBy, tagIDs: selectedTags.sort() },
+    requestPolicy: 'cache-and-network'
   });
 
   $: allTags = queryStore({

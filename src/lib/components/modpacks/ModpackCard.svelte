@@ -104,7 +104,7 @@
   </div>
   <svelte:fragment slot="actions">
     {#if downloadable}
-      <button class="variant-soft-surface btn btn-sm" title="Install" on:click={() => installModpack(modpack.id)}>
+      <button class="variant-soft-surface btn btn-sm" title="Install" on:click={() => installModpack(modpack.id, '')}>
         <span class="material-icons">download</span>
       </button>
     {/if}
