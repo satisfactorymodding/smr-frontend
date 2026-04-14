@@ -137,12 +137,21 @@
       <p>Loading...</p>
     {:else if $mod.error}
       <p>Oh no... {$mod.error.message}</p>
-    {:else if $mod.data.mod.ai_use_disclosure == null || $mod.data.mod.ai_use_disclosure.disclosure_type === AiUseDisclosureType.NoDisclosure}
-      <div class="p-4">
-        <AnnouncementRow
-          importance={AnnouncementImportance.Warning}
-          message="This mod does not have an AI disclosure attached, and thus it cannot be updated with a new version." />
-      </div>
+    {:else if $mod.data.mod.ai_use_disclosure == null || $mod.data.mod.ai_use_disclosure.disclosure_type === AiUseDisclosureType.NoDisclosure || $mod.data.mod.network_use_disclosure == null}
+      {#if $mod.data.mod.ai_use_disclosure == null || $mod.data.mod.ai_use_disclosure.disclosure_type === AiUseDisclosureType.NoDisclosure}
+        <div class="p-4">
+          <AnnouncementRow
+            importance={AnnouncementImportance.Warning}
+            message="This mod does not have an AI disclosure attached, and thus it cannot be updated with a new version." />
+        </div>
+      {/if}
+      {#if $mod.data.mod.network_use_disclosure == null}
+        <div class="p-4">
+          <AnnouncementRow
+            importance={AnnouncementImportance.Warning}
+            message="This mod does not have a network disclosure attached, and thus it cannot be updated with a new version." />
+        </div>
+      {/if}
       <button
         class="variant-ghost-primary btn"
         title="Go to the edit page for this mod"
