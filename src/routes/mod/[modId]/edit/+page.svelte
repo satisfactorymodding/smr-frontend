@@ -14,6 +14,7 @@
 
   const client = getContextClient();
   const toastStore = getToastStore();
+  let canSubmit = true;
 
   $: ({ modId, mod } = data);
 
@@ -29,6 +30,13 @@
           console.error(value.error.message);
           toastStore.trigger({
             message: 'Error editing mod: ' + value.error.message,
+            background: 'variant-filled-error',
+            autohide: false
+          });
+        } else if (!canSubmit) {
+          console.error('You need to fill in a network disclosure if the mod contacts external networks');
+          toastStore.trigger({
+            message: 'You need to fill in a network disclosure if the mod contacts external networks',
             background: 'variant-filled-error',
             autohide: false
           });
@@ -69,7 +77,7 @@
     {:else if $mod.error}
       <p>Oh no... {$mod.error.message}</p>
     {:else}
-      <ModForm {onSubmit} {initialValues} editing={true} submitText="Save" />
+      <ModForm {onSubmit} {initialValues} editing={true} submitText="Save" bind:canSubmit />
     {/if}
   </section>
 </div>
