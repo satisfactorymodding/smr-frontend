@@ -48,6 +48,7 @@
   export let submitText = $t('entry.create');
 
   export let editing = false;
+  export let canSubmit;
 
   const { form, data } = createForm<ModData>({
     initialValues: initialValues,
@@ -247,7 +248,9 @@
       </div>
 
       <div class="card p-4">
-        <ModNetworkDisclosureEdit bind:disclosure={$data.network_use_disclosure} />
+        <ModNetworkDisclosureEdit
+          bind:disclosure={$data.network_use_disclosure}
+          bind:canSubmitNetworkUsage={canSubmit} />
       </div>
 
       <div class="card p-4">
