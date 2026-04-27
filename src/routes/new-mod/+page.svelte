@@ -15,6 +15,8 @@
 
   const client = getContextClient();
 
+  let canSubmit = true;
+
   const onSubmit = (data: ModData) => {
     client
       .mutation(NewModDocument, {
@@ -26,6 +28,13 @@
           console.error(value.error.message);
           toastStore.trigger({
             message: 'Error creating mod: ' + value.error.message,
+            background: 'variant-filled-error',
+            autohide: false
+          });
+        } else if (!canSubmit) {
+          console.error('You need to fill in a network disclosure if the mod contacts external networks');
+          toastStore.trigger({
+            message: 'You need to fill in a network disclosure if the mod contacts external networks',
             background: 'variant-filled-error',
             autohide: false
           });
@@ -49,6 +58,6 @@
 
 <div class="card p-4">
   <section>
-    <ModForm {onSubmit} />
+    <ModForm {onSubmit} bind:canSubmit />
   </section>
 </div>
