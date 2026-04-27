@@ -9,11 +9,15 @@
   import type { PageData } from './$types';
   import { getToastStore } from '@skeletonlabs/skeleton';
   import { get } from 'svelte/store';
+  import { getTranslate } from '@tolgee/svelte';
 
   export let data: PageData;
 
   const client = getContextClient();
   const toastStore = getToastStore();
+
+  export const { t } = getTranslate();
+
   let canSubmit = true;
 
   $: ({ modId, mod } = data);
@@ -34,9 +38,9 @@
             autohide: false
           });
         } else if (!canSubmit) {
-          console.error('You need to fill in a network disclosure if the mod contacts external networks');
+          console.error($t('You need to fill in a network disclosure if the mod contacts external networks'));
           toastStore.trigger({
-            message: 'You need to fill in a network disclosure if the mod contacts external networks',
+            message: $t('You need to fill in a network disclosure if the mod contacts external networks'),
             background: 'variant-filled-error',
             autohide: false
           });
