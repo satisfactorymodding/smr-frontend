@@ -48,7 +48,7 @@
   export let submitText = $t('entry.create');
 
   export let editing = false;
-  export let canSubmit;
+  export let canSubmit = true;
 
   const { form, data } = createForm<ModData>({
     initialValues: initialValues,
