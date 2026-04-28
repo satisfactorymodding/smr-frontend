@@ -38,9 +38,9 @@
             autohide: false
           });
         } else if (!canSubmit) {
-          console.error($t('You need to fill in a network disclosure if the mod contacts external networks'));
+          console.error('submission blocked by empty network disclosure');
           toastStore.trigger({
-            message: $t('You need to fill in a network disclosure if the mod contacts external networks'),
+            message: $t('mod.network_disclosure.developer.error.disclosure-required'),
             background: 'variant-filled-error',
             autohide: false
           });
