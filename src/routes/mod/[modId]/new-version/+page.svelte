@@ -100,6 +100,11 @@
     }
   };
 
+  $: missingAiDisclosure =
+    $mod.data.mod.ai_use_disclosure == null ||
+    $mod.data.mod.ai_use_disclosure.disclosure_type === AiUseDisclosureType.NoDisclosure;
+  $: missingNetworkDisclosure = $mod.data.mod.network_use_disclosure == null;
+
   const modalStore = getModalStore();
 </script>
 
@@ -137,26 +142,23 @@
       <p>Loading...</p>
     {:else if $mod.error}
       <p>Oh no... {$mod.error.message}</p>
-    {:else if $mod.data.mod.ai_use_disclosure == null || $mod.data.mod.ai_use_disclosure.disclosure_type === AiUseDisclosureType.NoDisclosure || $mod.data.mod.network_use_disclosure == null}
-      {#if $mod.data.mod.ai_use_disclosure == null || $mod.data.mod.ai_use_disclosure.disclosure_type === AiUseDisclosureType.NoDisclosure}
+    {:else if missingAiDisclosure || missingNetworkDisclosure}
+      {#if missingAiDisclosure}
         <div class="p-4">
           <AnnouncementRow
-            importance={AnnouncementImportance.Warning}
-            message="This mod does not have an AI disclosure attached, and thus it cannot be updated with a new version." />
+            importance={AnnouncementImportance.Alert}
+            message={$t('mod.ai_disclosure.developer.error.disclosure-required-before-version-upload')} />
         </div>
       {/if}
-      {#if $mod.data.mod.network_use_disclosure == null}
+      {#if missingNetworkDisclosure}
         <div class="p-4">
           <AnnouncementRow
-            importance={AnnouncementImportance.Warning}
-            message="This mod does not have a network disclosure attached, and thus it cannot be updated with a new version." />
+            importance={AnnouncementImportance.Alert}
+            message={$t('mod.network_disclosure.developer.error.disclosure-required-before-version-upload')} />
         </div>
       {/if}
-      <button
-        class="variant-ghost-primary btn"
-        title="Go to the edit page for this mod"
-        on:click={() => goToEditPage()}>
-        {$t('mod.edit')}
+      <button class="variant-ghost-primary btn" on:click={() => goToEditPage()}>
+        <span class="material-icons pr-2">edit</span>{$t('mod.edit')}
       </button>
     {:else}
       <VersionForm {onSubmit} modReference={$mod.data.mod.mod_reference} submitIcon="add_circle" />
