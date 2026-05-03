@@ -80,7 +80,9 @@
             defaultValue="The community used to host a Discourse-powered forums website for modding discussion, but it has since been
           archived due to low usage. You can find the archives here." />
         </p>
-        <LinkButton url="https://forums.ficsit.app/" icon="forum">
+        <LinkButton
+          url="https://web.archive.org/web/20260309124622/https://forums.ficsit.app/index-2.html"
+          icon="forum">
           <T keyName="community.forums.visit-button" defaultValue="View the Archived Forums" />
         </LinkButton>
       </section>
