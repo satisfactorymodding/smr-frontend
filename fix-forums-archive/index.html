@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    
+		<link href="/smr-frontend/fix-forums-archive/_app/immutable/assets/vendor.Cirlo5Z8.css" rel="stylesheet">
+		<link rel="modulepreload" href="/smr-frontend/fix-forums-archive/_app/immutable/entry/start.BO3rAsJd.js">
+		<link rel="modulepreload" href="/smr-frontend/fix-forums-archive/_app/immutable/chunks/vendor.Dx54Q24W.js">
+		<link rel="modulepreload" href="/smr-frontend/fix-forums-archive/_app/immutable/entry/app.BxrgHSyW.js">
+		<link rel="modulepreload" href="/smr-frontend/fix-forums-archive/_app/immutable/chunks/preload-helper.9YLJ1q38.js">
+  </head>
+  <body data-theme="custom-theme">
+    <div style="display: contents" class="h-full overflow-hidden">
+			<script>
+				{
+					__sveltekit_1i400m6 = {
+						base: "/smr-frontend/fix-forums-archive",
+						assets: "/smr-frontend/fix-forums-archive"
+					};
+
+					const element = document.currentScript.parentElement;
+
+					Promise.all([
+						import("/smr-frontend/fix-forums-archive/_app/immutable/entry/start.BO3rAsJd.js"),
+						import("/smr-frontend/fix-forums-archive/_app/immutable/entry/app.BxrgHSyW.js")
+					]).then(([kit, app]) => {
+						kit.start(app, element);
+					});
+
+					if ('serviceWorker' in navigator) {
+						addEventListener('load', function () {
+							navigator.serviceWorker.register('/smr-frontend/fix-forums-archive/service-worker.js');
+						});
+					}
+				}
+			</script>
+		</div>
+  </body>
+</html>
