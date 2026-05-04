@@ -1,16 +1,7 @@
 <script lang="ts">
+  import { NetworkDisclosureState } from '$lib/models/mods';
   import { valueForUnspecifiedDisclosure, valueForNoUsageDisclosure } from '$lib/utils/mod';
   import { getTolgee, getTranslate, T } from '@tolgee/svelte';
-
-  // Since network usage disclosure is stored as a null/empty string/non-empty string,
-  // the enum of states only exists here on the frontend
-  // eslint bug? https://stackoverflow.com/questions/63961803/eslint-says-all-enums-in-typescript-app-are-already-declared-in-the-upper-scope
-  // eslint-disable-next-line no-shadow
-  enum NetworkDisclosureState {
-    Unspecified,
-    NoNetworkUsage,
-    YesNetworkUsage
-  }
 
   const optionTranslationKeys: Record<NetworkDisclosureState, string> = {
     [NetworkDisclosureState.Unspecified]: 'mod.network_disclosure.state.unspecified.option_name',
@@ -35,6 +26,8 @@
         ? NetworkDisclosureState.NoNetworkUsage
         : NetworkDisclosureState.YesNetworkUsage;
 
+  export let dropdownChoiceForValidation: NetworkDisclosureState = disclosureState;
+
   let oldDisclosure: string | null = null;
   oldDisclosure = disclosure;
   export let canSubmitNetworkUsage = true;
@@ -50,6 +43,7 @@
       [NetworkDisclosureState.NoNetworkUsage]: valueForNoUsageDisclosure,
       [NetworkDisclosureState.YesNetworkUsage]: oldDisclosure
     }[disclosureState];
+    dropdownChoiceForValidation = disclosureState;
 
     if (disclosureState != NetworkDisclosureState.YesNetworkUsage) {
       canSubmitNetworkUsage = true;
@@ -88,6 +82,7 @@
       class="textarea p-4"
       bind:value={disclosure}
       on:change={onTextInputChange}
+      required
       placeholder={$t('mod.network_disclosure.developer.description.placeholder')} />
   </label>
 {/if}
