@@ -49,6 +49,7 @@
         <textarea
           class="textarea p-4"
           bind:value={ai_disclosure.disclosure_string}
+          required
           placeholder={$t('mod.ai_disclosure.developer.description_required.placeholder')} />
       </label>
     </div>
