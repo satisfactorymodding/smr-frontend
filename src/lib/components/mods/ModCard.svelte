@@ -123,7 +123,7 @@
 
   <div
     data-popup={popupId}
-    class="card z-[999] min-w-[14rem] border border-surface-500/30 bg-surface-800 p-2 shadow-xl">
+    class="card z-[999] min-w-[14rem] border border-surface-500/30 bg-surface-800 p-2 shadow-xl max-h-[70vh] overflow-y-auto">
     <nav class="list-nav">
       <ul>
         <li>

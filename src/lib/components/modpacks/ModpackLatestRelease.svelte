@@ -26,10 +26,10 @@
 <div class="card p-4">
   <section>
     <div class="grid grid-flow-row gap-y-2">
-      <h3 class="my-4 text-2xl font-bold"><T keyName="mod.latest-versions" defaultValue="Latest Versions" /></h3>
+      <h3 class="my-4 text-2xl font-bold"><T keyName="modpack.latest-release" defaultValue="Latest Release" /></h3>
 
       {#if !release}
-        <p>{$t('mod.no-versions', { defaultValue: 'No releases yet' })}</p>
+        <p>{$t('modpack.no-releases', { defaultValue: 'No releases yet' })}</p>
       {:else}
         {#each Object.keys(stabilities) as stability}
           <div class="version">

@@ -28,7 +28,8 @@ export const initializeGraphQLClient = (fetch?: LoadEvent['fetch']): Client =>
           Compatibility: () => null,
           CompatibilityInfo: () => null,
           VersionTarget: () => null,
-          VersionDependency: () => null
+          VersionDependency: () => null,
+          GetModCompatibilities: () => null
         },
         updates: {
           Mutation: {
