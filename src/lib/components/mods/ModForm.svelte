@@ -3,7 +3,7 @@
   import { validator } from '@felte/validator-zod';
   import { reporter, ValidationMessage } from '@felte/reporter-svelte';
   import type { ModData } from '$lib/models/mods';
-  import { modSchema } from '$lib/models/mods';
+  import { modSchema, NetworkDisclosureState } from '$lib/models/mods';
   import { trimNonSchema } from '$lib/utils/forms';
   import { markdown } from '$lib/utils/markdown';
   import ModAuthor from '$lib/components/mods/ModAuthor.svelte';
@@ -50,10 +50,45 @@
   export let editing = false;
   export let canSubmit = true;
 
-  const { form, data } = createForm<ModData>({
+  let networkUseDisclosureDropdownChoice: NetworkDisclosureState = NetworkDisclosureState.Unspecified;
+
+  // Both the schema validator and validate() apply and merge their reported errors
+  const { form, data, errors } = createForm<ModData>({
     initialValues: initialValues,
     extend: [validator({ schema: modSchema }), reporter],
-    onSubmit: (submitted: ModData) => onSubmit(trimNonSchema(submitted, modSchema))
+    onSubmit: (submitted: ModData) => onSubmit(trimNonSchema(submitted, modSchema)),
+    validate: (values) => {
+      if (
+        networkUseDisclosureDropdownChoice === NetworkDisclosureState.YesNetworkUsage &&
+        (values?.network_use_disclosure?.trim()?.length ?? 0) <= 0
+      ) {
+        return {
+          network_use_disclosure: $t('mod.network_disclosure.developer.error.disclosure-required')
+        };
+      }
+      return {};
+    }
+  });
+
+  const _hasNonNullContent = (key: string, value: unknown): boolean => {
+    if (value === null) {
+      return false;
+    } else if (key === 'authors') {
+      // Skip authors field since final submit gives it values unrelated to validation?
+      return false;
+    } else if (Array.isArray(value)) {
+      return value.some((item) => _hasNonNullContent('', item));
+    } else if (typeof value === 'object') {
+      return Object.entries(value).some(([k, v]) => _hasNonNullContent(k, v));
+    }
+    return true;
+  };
+
+  // Debug logging of form errors
+  errors.subscribe((e) => {
+    if (Object.entries(e).some(([key, value]) => _hasNonNullContent(key, value))) {
+      console.log('DEBUG: ModForm Errors', e);
+    }
   });
 
   let tags = $data.tags;
@@ -199,12 +234,19 @@
 
       <div class="card p-4">
         <ModAiDisclosureEdit bind:ai_disclosure={$data.ai_use_disclosure} />
+        <ValidationMessage for="ai_use_disclosure" let:messages={message}>
+          <span class="validation-message">{message || ''}</span>
+        </ValidationMessage>
       </div>
 
       <div class="card p-4">
         <ModNetworkDisclosureEdit
+          bind:dropdownChoiceForValidation={networkUseDisclosureDropdownChoice}
           bind:disclosure={$data.network_use_disclosure}
           bind:canSubmitNetworkUsage={canSubmit} />
+        <ValidationMessage for="network_use_disclosure" let:messages={message}>
+          <span class="validation-message">{message || ''}</span>
+        </ValidationMessage>
       </div>
 
       <div class="card p-4">

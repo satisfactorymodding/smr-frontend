@@ -1,5 +1,20 @@
 import * as zod from 'zod';
-import type { CompatibilityState, ControllerCompatibilityState, AiUseDisclosureType, Tag } from '$lib/generated';
+import {
+  type CompatibilityState,
+  type ControllerCompatibilityState,
+  AiUseDisclosureType,
+  type Tag
+} from '$lib/generated';
+
+// Since network usage disclosure is stored as a null/empty string/non-empty string,
+// the enum of states only exists here on the frontend
+// eslint bug? https://stackoverflow.com/questions/63961803/eslint-says-all-enums-in-typescript-app-are-already-declared-in-the-upper-scope
+// eslint-disable-next-line no-shadow
+export enum NetworkDisclosureState {
+  Unspecified,
+  NoNetworkUsage,
+  YesNetworkUsage
+}
 
 export type ModData = {
   name: string;
@@ -77,15 +92,28 @@ export const modSchema = zod.object({
     })
   ),
   ai_use_disclosure: zod.optional(
-    zod.object({
-      disclosure_type: zod.string(),
-      disclosure_string: zod
-        .string()
-        .min(1, { message: 'A disclosure is required when AI has been used' })
-        .or(zod.literal(''))
-    })
+    zod
+      .object({
+        disclosure_type: zod.nativeEnum(AiUseDisclosureType),
+        disclosure_string: zod.string().or(zod.literal(''))
+      })
+      .refine(
+        (data) => {
+          if (
+            data.disclosure_type === AiUseDisclosureType.AiUsage ||
+            data.disclosure_type === AiUseDisclosureType.RuntimeAiUsage
+          ) {
+            return data.disclosure_string?.trim().length > 0;
+          }
+          return true;
+          // TODO not sure how to localize, no convenient Tolgee context. Only devs will see this so not a huge priority
+        },
+        { message: 'You must provide a description.' }
+      )
   ),
   hidden: zod.boolean(),
   tagIDs: zod.optional(zod.string().array()),
+
+  // Also validated separately in ModForm to determine if empty string is valid based on dropdown choice
   network_use_disclosure: zod.ostring().nullable()
 });
