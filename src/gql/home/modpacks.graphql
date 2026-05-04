@@ -1,0 +1,54 @@
+query GetModpacks(
+  $offset: Int!
+  $limit: Int!
+  $search: String
+  $order: Order
+  $orderBy: ModpackFields
+  $tagIDs: [TagID!]
+) {
+  getModpacks(
+    filter: { limit: $limit, offset: $offset, search: $search, order: $order, order_by: $orderBy, tagIDs: $tagIDs }
+  ) {
+    count
+    modpacks {
+      id
+      name
+      logo
+      logo_thumbhash
+      views
+      installs
+      short_description
+      tags {
+        id
+        name
+        description
+      }
+      mods {
+        mod_id
+        version_constraint
+      }
+      compatibility {
+        EA {
+          state
+          note
+        }
+        EXP {
+          state
+          note
+        }
+      }
+      releases {
+        id
+        version
+        created_at
+        lockfile
+        changelog
+        targets {
+          id
+          release_id
+          target_name
+        }
+      }
+    }
+  }
+}

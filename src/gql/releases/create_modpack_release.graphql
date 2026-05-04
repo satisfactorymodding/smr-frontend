@@ -1,0 +1,7 @@
+mutation CreateModpackRelease($modpackID: ModpackID!, $release: NewModpackRelease!) {
+  createModpackRelease(modpackID: $modpackID, release: $release) {
+    id
+    version
+    changelog
+  }
+}

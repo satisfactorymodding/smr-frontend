@@ -1,6 +1,7 @@
 import type { LayoutLoad } from './$types';
 import { initializeGraphQLClient } from '$lib/core';
 import { DevTools, FormatSimple, LanguageDetector, Tolgee } from '@tolgee/svelte';
+import { FormatIcu } from '@tolgee/format-icu';
 import { browser } from '$app/environment';
 import { PUBLIC_TOLGEE_API_KEY, PUBLIC_TOLGEE_API_URL } from '$env/static/public';
 
@@ -25,7 +26,7 @@ export const prerender = 'auto';
 export const load: LayoutLoad = async ({ fetch }) => {
   const client = initializeGraphQLClient(fetch);
 
-  let chainer = Tolgee().use(FormatSimple());
+  let chainer = Tolgee().use(FormatSimple()).use(FormatIcu());
 
   if (browser) {
     chainer = chainer.use(LanguageDetector()).use(DevTools());

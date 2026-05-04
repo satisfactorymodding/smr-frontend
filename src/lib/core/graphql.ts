@@ -17,15 +17,19 @@ export const initializeGraphQLClient = (fetch?: LoadEvent['fetch']): Client =>
         schema,
         keys: {
           GetMods: () => null,
+          GetModpacks: () => null,
           LatestVersions: () => null,
           UserMod: () => null,
+          UserModpack: () => null,
           GetGuides: () => null,
           OAuthOptions: () => null,
           UserRoles: () => null,
+          ModpackModEntry: () => null,
           Compatibility: () => null,
           CompatibilityInfo: () => null,
           VersionTarget: () => null,
-          VersionDependency: () => null
+          VersionDependency: () => null,
+          GetModCompatibilities: () => null
         },
         updates: {
           Mutation: {
@@ -75,6 +79,31 @@ export const initializeGraphQLClient = (fetch?: LoadEvent['fetch']): Client =>
               cache.invalidate({
                 __typename: 'Version',
                 id: args.versionId as string
+              });
+            },
+            updateModpackRelease(result, args, cache) {
+              const release = (result as { updateModpackRelease?: { id: string } }).updateModpackRelease;
+              if (release) {
+                cache.invalidate({
+                  __typename: 'ModpackRelease',
+                  id: release.id
+                });
+              }
+              cache.invalidate({
+                __typename: 'Modpack',
+                id: args.modpackID as string
+              });
+            },
+            createModpackRelease(_result, args, cache) {
+              cache.invalidate({
+                __typename: 'Modpack',
+                id: args.modpackID as string
+              });
+            },
+            deleteModpackRelease(_result, args, cache) {
+              cache.invalidate({
+                __typename: 'Modpack',
+                id: args.modpackID as string
               });
             }
           }

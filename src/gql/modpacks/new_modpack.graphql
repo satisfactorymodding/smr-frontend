@@ -1,0 +1,5 @@
+mutation NewModpack($modpack: NewModpack!) {
+  createModpack(modpack: $modpack) {
+    id
+  }
+}

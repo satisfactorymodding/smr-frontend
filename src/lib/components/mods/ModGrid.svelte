@@ -205,11 +205,11 @@
     {/each}
   </div>
 {:else if $mods.error && $mods.error.message.includes("'Search' failed on the 'min' tag")}
-  {$t('search.failed.query-too-short')}
+  <p>{$t('search.failed.query-too-short')}</p>
 {:else if $mods.error}
   <p>Oh no... {$mods.error.message}</p>
 {:else if totalMods == 0}
-  {$t('search.results.empty')}
+  <p>{$t('search.results.empty')}</p>
 {:else}
   <div class="grid {gridClasses} gap-4">
     {#each $mods.data.getMods.mods as mod}

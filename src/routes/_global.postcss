@@ -1,7 +1,7 @@
 @import '../../node_modules/prismjs/themes/prism-okaidia.css';
 @import '../../node_modules/cookieconsent/build/cookieconsent.min.css';
 
-@import 'https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible&family=Roboto&family=Roboto+Mono&family=Material+Icons&family=Noto+Color+Emoji&display=swap';
+@import 'https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible&family=Roboto&family=Roboto+Mono&family=Material+Icons&family=Material+Symbols+Outlined&family=Noto+Color+Emoji&display=swap';
 
 @tailwind base;
 @tailwind components;
@@ -202,7 +202,27 @@ body.accessibility {
   box-shadow: inset 0 0 70px 20px rgba(32, 15, 0, 0.75);
 }
 
+.modpack-inset {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  box-shadow: inset 0 0 70px 20px rgba(32, 15, 0, 0.75);
+}
+
 .mod-outdated-stripe {
+  user-select: none;
+  pointer-events: none;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  box-shadow: inset 0 0 70px 20px rgba(32, 15, 0, 0.75);
+  clip-path: polygon(70% 0%, 100% 0%, 100% 70%, 100% 70%);
+}
+
+.modpack-outdated-stripe {
   user-select: none;
   pointer-events: none;
   width: 100%;
@@ -223,11 +243,29 @@ body.accessibility {
   background: repeating-linear-gradient(to top right, transparent, transparent 4%, red 4%, red 8%);
 }
 
+.modpack-damaged {
+  opacity: 30%;
+  background: repeating-linear-gradient(to top right, transparent, transparent 4%, darkorange 4%, darkorange 8%);
+}
+
+.modpack-broken {
+  opacity: 50%;
+  background: repeating-linear-gradient(to top right, transparent, transparent 4%, red 4%, red 8%);
+}
+
 .mod-logo-outdated {
   clip-path: polygon(37% 0%, 100% 0%, 100% 63%, 100% 63%);
 }
 
 .mod-state {
+  display: inline-block;
+}
+
+.modpack-logo-outdated {
+  clip-path: polygon(37% 0%, 100% 0%, 100% 63%, 100% 63%);
+}
+
+.modpack-state {
   display: inline-block;
 }
 
@@ -244,6 +282,22 @@ body.accessibility {
 }
 
 .mod-state-unknown {
+  color: grey;
+}
+
+.modpack-state-works {
+  color: limegreen;
+}
+
+.modpack-state-damaged {
+  color: darkorange;
+}
+
+.modpack-state-broken {
+  color: red;
+}
+
+.modpack-state-unknown {
   color: grey;
 }
 

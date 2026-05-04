@@ -1,0 +1,30 @@
+mutation EditModpack($modpackId: ModpackID!, $modpack: UpdateModpack!) {
+  updateModpack(modpackID: $modpackId, modpack: $modpack) {
+    id
+    name
+    full_description
+    short_description
+    logo
+    parent_id
+    tags {
+      id
+      name
+      description
+    }
+    compatibility {
+      EA {
+        state
+        note
+      }
+      EXP {
+        state
+        note
+      }
+    }
+    hidden
+    mods {
+      version_constraint
+      mod_id
+    }
+  }
+}
