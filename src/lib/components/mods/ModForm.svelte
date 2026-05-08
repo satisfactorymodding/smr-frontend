@@ -83,7 +83,7 @@
     return true;
   };
 
-  // Debug logging of form errors
+  // Debug logging of form errors. Intentionally kept in case we run into some weird edge cases.
   errors.subscribe((e) => {
     if (Object.entries(e).some(([key, value]) => _hasNonNullContent(key, value))) {
       console.log('DEBUG: ModForm Errors', e);
@@ -234,7 +234,17 @@
       <div class="card p-4">
         <ModAiDisclosureEdit bind:ai_disclosure={$data.ai_use_disclosure} />
         <ValidationMessage for="ai_use_disclosure" let:messages={message}>
-          <span class="validation-message">{message || ''}</span>
+          <span class="validation-message"
+            >{(() => {
+              // Very bizarre data handling to work around zod/felte/something reporting error format improperly (see mods.ts)
+              if (!message) {
+                return '';
+              } else if ('disclosure_string_empty' in message) {
+                return message?.disclosure_string_empty;
+              } else {
+                return JSON.stringify(message);
+              }
+            })()}</span>
         </ValidationMessage>
       </div>
 
