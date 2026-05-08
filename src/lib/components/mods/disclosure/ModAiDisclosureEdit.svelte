@@ -8,7 +8,7 @@
     disclosure_string: ''
   };
 
-  export let ai_disclosure: AiUseDisclosureInfo | null = null;
+  export let ai_disclosure: AiUseDisclosureInfo = null;
   $: if (ai_disclosure == null) {
     ai_disclosure = prefilled_ai_use_disclosure;
   }
