@@ -91,26 +91,32 @@ export const modSchema = zod.object({
       })
     })
   ),
-  ai_use_disclosure: zod.optional(
-    zod
-      .object({
-        disclosure_type: zod.nativeEnum(AiUseDisclosureType),
-        disclosure_string: zod.string().or(zod.literal(''))
-      })
-      .refine(
-        (data) => {
-          if (
-            data.disclosure_type === AiUseDisclosureType.AiUsage ||
-            data.disclosure_type === AiUseDisclosureType.RuntimeAiUsage
-          ) {
-            return data.disclosure_string?.trim().length > 0;
-          }
-          return true;
-          // TODO not sure how to localize, no convenient Tolgee context. Only devs will see this so not a huge priority
-        },
-        { message: 'You must provide a description.' }
-      )
-  ),
+  ai_use_disclosure: zod
+    .object({
+      disclosure_type: zod.nativeEnum(AiUseDisclosureType),
+      disclosure_string: zod.string().or(zod.literal(''))
+    })
+    // Must use superRefine to work around weird issue where if this is the only error in the form,
+    // the reported error is `[{"disclosure_type": [], "disclosure_string": []}]` which is not a string,
+    // breaking the expected types for the felte forms validation, and displays on the frontend as `[object Object]`.
+    // Note that this only seems to happen if this is the first error ever reported in the "session",
+    // as soon as any other validation error is also reported, it'd properly return just a string, even if that other error is fixed.
+    .superRefine((data, ctx) => {
+      if (
+        data.disclosure_type === AiUseDisclosureType.AiUsage ||
+        data.disclosure_type === AiUseDisclosureType.RuntimeAiUsage
+      ) {
+        if (data.disclosure_string?.trim().length === 0) {
+          ctx.addIssue({
+            code: zod.ZodIssueCode.custom,
+            path: ['disclosure_string_empty'],
+            // TODO not sure how to localize, no convenient Tolgee context. Only devs will see this so not a huge priority
+            message: 'You must provide a description.'
+          });
+        }
+      }
+    })
+    .optional(),
   hidden: zod.boolean(),
   tagIDs: zod.optional(zod.string().array()),
 
