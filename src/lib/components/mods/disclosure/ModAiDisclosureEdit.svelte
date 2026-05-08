@@ -3,6 +3,22 @@
   import { AiUseDisclosureType, type AiUseDisclosureInfo } from '$lib/generated';
   import { base } from '$app/paths';
 
+  const optionTranslationKeys: Record<AiUseDisclosureType, string> = {
+    [AiUseDisclosureType.NoDisclosure]: 'mod.ai_disclosure.unspecified_disclosure.option.developer',
+    [AiUseDisclosureType.NoAiUsage]: 'mod.ai_disclosure.no_ai_usage.option.developer',
+    [AiUseDisclosureType.AiUsage]: 'mod.ai_disclosure.ai_usage.option.developer',
+    [AiUseDisclosureType.RuntimeAiUsage]: 'mod.ai_disclosure.runtime_ai_usage.option.developer'
+  };
+  // Used to control the order they're presented in (generated code alphabetizes them)
+  const dropdown_options = Object.keys(optionTranslationKeys) as Array<AiUseDisclosureType>;
+
+  const descriptionTranslationKeys: Record<AiUseDisclosureType, string> = {
+    [AiUseDisclosureType.NoDisclosure]: 'mod.ai_disclosure.no_disclosure.description.developer',
+    [AiUseDisclosureType.NoAiUsage]: 'mod.ai_disclosure.no_ai_usage.description.developer',
+    [AiUseDisclosureType.AiUsage]: 'mod.ai_disclosure.ai_usage.description.developer',
+    [AiUseDisclosureType.RuntimeAiUsage]: 'mod.ai_disclosure.runtime_ai_usage.description.developer'
+  };
+
   const prefilled_ai_use_disclosure = {
     disclosure_type: AiUseDisclosureType.NoDisclosure,
     disclosure_string: ''
@@ -25,18 +41,16 @@
   <span class="underline decoration-dotted" title={$t('mod.ai_disclosure.header.tooltip')}
     ><T keyName="mod.ai_disclosure.header.developer" /></span>
   <select bind:value={ai_disclosure.disclosure_type} class="select" style="margin-bottom: 10px">
-    <option value={AiUseDisclosureType.NoDisclosure}
-      >{$t('mod.ai_disclosure.unspecified_disclosure.option.developer')}</option>
-    <option value={AiUseDisclosureType.NoAiUsage}>{$t('mod.ai_disclosure.no_ai_usage.option.developer')}</option>
-    <option value={AiUseDisclosureType.AiUsage}>{$t('mod.ai_disclosure.ai_usage.option.developer')}</option>
-    <option value={AiUseDisclosureType.RuntimeAiUsage}
-      >{$t('mod.ai_disclosure.runtime_ai_usage.option.developer')}</option>
+    {#each dropdown_options as state}
+      <!-- @ts-ignore -->
+      <option value={state}><T keyName={optionTranslationKeys[state]} /></option>
+    {/each}
   </select>
   <p
     class="compatibility-state-description pb-4 {ai_disclosure.disclosure_type == AiUseDisclosureType.NoDisclosure
       ? 'text-warning-500'
       : ''}">
-    <T keyName="mod.ai_disclosure.{ai_disclosure.disclosure_type}.description.developer" />
+    <T keyName={descriptionTranslationKeys[ai_disclosure.disclosure_type]} />
   </p>
   <button class="variant-ringed-surface variant-glass-surface btn btn-md m-6">
     <a href={base + '/content-policy'} target="_blank" rel="noopener noreferrer">
