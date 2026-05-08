@@ -48,7 +48,6 @@
   export let submitText = $t('entry.create');
 
   export let editing = false;
-  export let canSubmit = true;
 
   let networkUseDisclosureDropdownChoice: NetworkDisclosureState = NetworkDisclosureState.Unspecified;
 
@@ -242,8 +241,7 @@
       <div class="card p-4">
         <ModNetworkDisclosureEdit
           bind:dropdownChoiceForValidation={networkUseDisclosureDropdownChoice}
-          bind:disclosure={$data.network_use_disclosure}
-          bind:canSubmitNetworkUsage={canSubmit} />
+          bind:disclosure={$data.network_use_disclosure} />
         <ValidationMessage for="network_use_disclosure" let:messages={message}>
           <span class="validation-message">{message || ''}</span>
         </ValidationMessage>
