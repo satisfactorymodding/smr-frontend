@@ -6,6 +6,7 @@
     "csstools.postcss",
     "vunguyentuan.vscode-postcss",
     "github.copilot",
-    "eamodio.gitlens"
+    "eamodio.gitlens",
+    "joshbolduc.commitlint"
   ]
 }
