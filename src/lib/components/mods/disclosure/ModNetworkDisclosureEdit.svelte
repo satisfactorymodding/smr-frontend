@@ -30,7 +30,6 @@
 
   let oldDisclosure: string | null = null;
   oldDisclosure = disclosure;
-  export let canSubmitNetworkUsage = true;
 
   const onStatePickerChange = () => {
     if (disclosure?.length > 0) {
@@ -44,16 +43,6 @@
       [NetworkDisclosureState.YesNetworkUsage]: oldDisclosure
     }[disclosureState];
     dropdownChoiceForValidation = disclosureState;
-
-    if (disclosureState != NetworkDisclosureState.YesNetworkUsage) {
-      canSubmitNetworkUsage = true;
-    } else if (disclosure == '') {
-      canSubmitNetworkUsage = false;
-    }
-  };
-
-  const onTextInputChange = () => {
-    canSubmitNetworkUsage = disclosure != '';
   };
 
   export const { t } = getTranslate();
@@ -81,7 +70,6 @@
     <textarea
       class="textarea p-4"
       bind:value={disclosure}
-      on:change={onTextInputChange}
       required
       placeholder={$t('mod.network_disclosure.developer.description.placeholder')} />
   </label>

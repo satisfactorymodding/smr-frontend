@@ -18,8 +18,6 @@
 
   export const { t } = getTranslate();
 
-  let canSubmit = true;
-
   $: ({ modId, mod } = data);
 
   const onSubmit = (modData: ModData) => {
@@ -34,13 +32,6 @@
           console.error(value.error.message);
           toastStore.trigger({
             message: 'Error editing mod: ' + value.error.message,
-            background: 'variant-filled-error',
-            autohide: false
-          });
-        } else if (!canSubmit) {
-          console.error('submission blocked by empty network disclosure');
-          toastStore.trigger({
-            message: $t('mod.network_disclosure.developer.error.disclosure-required'),
             background: 'variant-filled-error',
             autohide: false
           });
@@ -81,7 +72,7 @@
     {:else if $mod.error}
       <p>Oh no... {$mod.error.message}</p>
     {:else}
-      <ModForm {onSubmit} {initialValues} editing={true} submitText="Save" bind:canSubmit />
+      <ModForm {onSubmit} {initialValues} editing={true} submitText="Save" />
     {/if}
   </section>
 </div>
