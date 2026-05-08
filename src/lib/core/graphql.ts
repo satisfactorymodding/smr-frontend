@@ -27,7 +27,7 @@ export const initializeGraphQLClient = (fetch?: LoadEvent['fetch']): Client =>
           CompatibilityInfo: () => null,
           VersionTarget: () => null,
           VersionDependency: () => null,
-          AiUseDisclosureInfo: () => null
+          AIUseDisclosureInfo: () => null
         },
         updates: {
           Mutation: {
