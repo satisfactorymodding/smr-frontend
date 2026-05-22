@@ -69,23 +69,26 @@
     }
   });
 
-  const _hasNonNullContent = (key: string, value: unknown): boolean => {
+  const _hasErrorContent = (key: string, value: unknown): boolean => {
     if (value === null) {
       return false;
     } else if (key === 'authors') {
       // Skip authors field since final submit gives it values unrelated to validation?
       return false;
+    } else if (key === 'ai_use_disclosure' && Array.isArray(value) && value.length === 0) {
+      // Stupid case where the custom error is eaten and turned into empty array
+      return true;
     } else if (Array.isArray(value)) {
-      return value.some((item) => _hasNonNullContent('', item));
+      return value.some((item) => _hasErrorContent('', item));
     } else if (typeof value === 'object') {
-      return Object.entries(value).some(([k, v]) => _hasNonNullContent(k, v));
+      return Object.entries(value).some(([k, v]) => _hasErrorContent(k, v));
     }
     return true;
   };
 
   // Debug logging of form errors. Intentionally kept in case we run into some weird edge cases.
   errors.subscribe((e) => {
-    if (Object.entries(e).some(([key, value]) => _hasNonNullContent(key, value))) {
+    if (Object.entries(e).some(([key, value]) => _hasErrorContent(key, value))) {
       console.log('DEBUG: ModForm Errors', e);
     }
   });
@@ -239,9 +242,15 @@
               // Very bizarre data handling to work around zod/felte/something reporting error format improperly (see mods.ts)
               if (!message) {
                 return '';
-              } else if ('disclosure_string_empty' in message) {
-                return message?.disclosure_string_empty;
+              } else if ('disclosure_string' in message) {
+                // Case where the custom error actually gets reported, but as an object
+                return message?.disclosure_string;
+              } else if (Array.isArray(message) && message.length === 0) {
+                // Case where nothing but `[]` is returned despite the custom error code executing
+                // (Intentionally not localized since the one in mods.ts isn't either)
+                return 'You must provide a description.';
               } else {
+                // Backup in case something else comes out (who knows!?)
                 return JSON.stringify(message);
               }
             })()}</span>
