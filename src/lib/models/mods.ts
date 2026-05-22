@@ -96,11 +96,14 @@ export const modSchema = zod.object({
       disclosure_type: zod.nativeEnum(AiUseDisclosureType),
       disclosure_string: zod.string().or(zod.literal(''))
     })
+    // WARNING: Very frustrating possible bug workaround.
     // Must use superRefine to work around weird issue where if this is the only error in the form,
     // the reported error is `[{"disclosure_type": [], "disclosure_string": []}]` which is not a string,
     // breaking the expected types for the felte forms validation, and displays on the frontend as `[object Object]`.
     // Note that this only seems to happen if this is the first error ever reported in the "session",
     // as soon as any other validation error is also reported, it'd properly return just a string, even if that other error is fixed.
+    // Also, sometimes the reported error is just `[]` because reasons!!!
+    // See ModForm.svelte for the other half that makes this work
     .superRefine((data, ctx) => {
       if (
         data.disclosure_type === AiUseDisclosureType.AiUsage ||
@@ -109,8 +112,8 @@ export const modSchema = zod.object({
         if (data.disclosure_string?.trim().length === 0) {
           ctx.addIssue({
             code: zod.ZodIssueCode.custom,
-            path: ['disclosure_string_empty'],
-            // TODO not sure how to localize, no convenient Tolgee context. Only devs will see this so not a huge priority
+            path: ['disclosure_string'],
+            // TODO not sure how to localize, no convenient Tolgee context. Only mod devs will see this so not a huge priority
             message: 'You must provide a description.'
           });
         }
