@@ -8,7 +8,7 @@
   import { markdown } from '$lib/utils/markdown';
   import ModAuthor from '$lib/components/mods/ModAuthor.svelte';
   import TagList from '$lib/components/utils/TagList.svelte';
-  import { AiUseDisclosureType, CompatibilityState, ControllerCompatibilityState } from '$lib/generated';
+  import { CompatibilityState, ControllerCompatibilityState } from '$lib/generated';
   import ModCompatibility from '$lib/components/mods/compatibility/ModCompatibilityEdit.svelte';
   import { getTranslate } from '@tolgee/svelte';
   import { SlideToggle } from '@skeletonlabs/skeleton';
@@ -39,10 +39,6 @@
         state: ControllerCompatibilityState.Untested,
         note: ''
       }
-    },
-    ai_use_disclosure: {
-      disclosure_type: AiUseDisclosureType.NoDisclosure,
-      disclosure_string: ''
     }
   };
   export let submitText = $t('entry.create');
