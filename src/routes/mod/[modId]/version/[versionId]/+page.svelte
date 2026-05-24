@@ -58,7 +58,7 @@
   const deleteModal: ModalSettings = {
     type: 'confirm',
     title: 'Delete Version?',
-    body: 'Are you sure you wish to delete this version?',
+    body: 'Are you sure you wish to delete this version? You will not be able to upload another version with the same version number later.',
     response: (r: boolean) => {
       if (r) {
         deleteVersionFn();
