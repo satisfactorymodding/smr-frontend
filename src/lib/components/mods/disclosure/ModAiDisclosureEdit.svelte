@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { getTolgee, getTranslate, T } from '@tolgee/svelte';
+  import { getTranslate, T } from '@tolgee/svelte';
   import { AiUseDisclosureType, type AiUseDisclosureInfo } from '$lib/generated';
   import { base } from '$app/paths';
 
@@ -34,7 +34,6 @@
     ai_disclosure.disclosure_type == AiUseDisclosureType.RuntimeAiUsage;
 
   export const { t } = getTranslate();
-  export const tolgee = getTolgee().value;
 </script>
 
 <label class="label">

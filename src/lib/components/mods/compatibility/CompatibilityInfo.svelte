@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { ControllerCompatibilityState, type CompatibilityInfoInput } from '$lib/generated';
+  import { type CompatibilityInfoInput } from '$lib/generated';
   import CompatibilityStateText from '$lib/components/mods/compatibility/branch/CompatibilityStateText.svelte';
   import { markdown } from '../../../utils/markdown';
-  import { getTolgee, getTranslate } from '@tolgee/svelte';
+  import { getTranslate } from '@tolgee/svelte';
   import ControllerCompatibilityStateText from './controller/ControllerCompatibilityStateText.svelte';
   import {
     getCompatibilityStateDescriptionFor,
@@ -12,7 +12,6 @@
   export let compatibility: CompatibilityInfoInput;
 
   export const { t } = getTranslate();
-  export const tolgee = getTolgee().value;
 </script>
 
 <div>
@@ -23,7 +22,7 @@
 {#if compatibility}
   <div>{$t('early-access')}: <CompatibilityStateText state={compatibility?.EA?.state} /></div>
   <div class="compatibility-state-description">
-    {getCompatibilityStateDescriptionFor(compatibility?.EA?.state || 'Unknown', tolgee)}
+    {getCompatibilityStateDescriptionFor($t, compatibility?.EA?.state)}
   </div>
   {#if compatibility.EA.note}
     <div>
@@ -36,7 +35,7 @@
   <br />
   <div>{$t('experimental')}: <CompatibilityStateText state={compatibility?.EXP?.state} /></div>
   <div class="compatibility-state-description">
-    {getCompatibilityStateDescriptionFor(compatibility?.EXP?.state || 'Unknown', tolgee)}
+    {getCompatibilityStateDescriptionFor($t, compatibility?.EXP?.state)}
   </div>
   {#if compatibility.EXP.note}
     <div>
@@ -49,10 +48,7 @@
   <br />
   <div>{$t('controller')}: <ControllerCompatibilityStateText state={compatibility?.Controller?.state} /></div>
   <div class="compatibility-state-description">
-    {getControllerCompatibilityStateDescriptionFor(
-      compatibility?.Controller?.state || ControllerCompatibilityState.Untested,
-      tolgee
-    )}
+    {getControllerCompatibilityStateDescriptionFor($t, compatibility?.Controller?.state)}
   </div>
   {#if compatibility.Controller.note}
     <div>
@@ -64,6 +60,6 @@
   {/if}
 {:else}
   <div>
-    {getCompatibilityStateDescriptionFor('Unknown', tolgee)}
+    {getCompatibilityStateDescriptionFor($t, 'Unknown')}
   </div>
 {/if}

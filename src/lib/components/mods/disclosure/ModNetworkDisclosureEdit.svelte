@@ -1,7 +1,7 @@
 <script lang="ts">
   import { NetworkDisclosureState } from '$lib/models/mods';
   import { valueForUnspecifiedDisclosure, valueForNoUsageDisclosure } from '$lib/utils/mod';
-  import { getTolgee, getTranslate, T } from '@tolgee/svelte';
+  import { getTranslate, T } from '@tolgee/svelte';
 
   const optionTranslationKeys: Record<NetworkDisclosureState, string> = {
     [NetworkDisclosureState.Unspecified]: 'mod.network_disclosure.state.unspecified.option_name',
@@ -46,7 +46,6 @@
   };
 
   export const { t } = getTranslate();
-  export const tolgee = getTolgee().value;
 </script>
 
 <label class="label">

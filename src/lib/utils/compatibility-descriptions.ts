@@ -1,5 +1,5 @@
-import type { CompatibilityState, ControllerCompatibilityState } from '$lib/generated';
-import type { TolgeeInstance } from '@tolgee/svelte';
+import { ControllerCompatibilityState, type CompatibilityState } from '$lib/generated';
+import type { TFnType } from '@tolgee/svelte';
 
 export const compatibilityStateDescriptions: Record<CompatibilityState | 'Unknown', string> = {
   Works: 'compatibility-info.state.works.description',
@@ -16,10 +16,10 @@ export const controllerCompatibilityStateDescriptions: Record<ControllerCompatib
   Supported: 'controller-compatibility-info.state.supported.description'
 };
 
-export const getCompatibilityStateDescriptionFor = (state: CompatibilityState | 'Unknown', tolgee: TolgeeInstance): string =>
-  tolgee.t(compatibilityStateDescriptions[state]);
+export const getCompatibilityStateDescriptionFor = ($t: TFnType, state?: CompatibilityState | 'Unknown'): string =>
+  $t(compatibilityStateDescriptions[state ?? 'Unknown']);
 
 export const getControllerCompatibilityStateDescriptionFor = (
-  state: ControllerCompatibilityState,
-  tolgee: TolgeeInstance
-): string => tolgee.t(controllerCompatibilityStateDescriptions[state]);
+  $t: TFnType,
+  state?: ControllerCompatibilityState
+): string => $t(controllerCompatibilityStateDescriptions[state ?? ControllerCompatibilityState.Untested]);
