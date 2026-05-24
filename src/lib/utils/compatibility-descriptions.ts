@@ -2,10 +2,10 @@ import { ControllerCompatibilityState, type CompatibilityState } from '$lib/gene
 import type { TFnType } from '@tolgee/svelte';
 
 export const compatibilityStateDescriptions: Record<CompatibilityState | 'Unknown', string> = {
-  Works: 'compatibility-info.state.works.description',
-  Damaged: 'compatibility-info.state.damaged.description',
+  Unknown: 'compatibility-info.state.unknown.description',
   Broken: 'compatibility-info.state.broken.description',
-  Unknown: 'compatibility-info.state.unknown.description'
+  Damaged: 'compatibility-info.state.damaged.description',
+  Works: 'compatibility-info.state.works.description'
 };
 
 export const controllerCompatibilityStateDescriptions: Record<ControllerCompatibilityState, string> = {

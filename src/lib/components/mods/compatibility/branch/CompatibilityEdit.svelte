@@ -8,13 +8,16 @@
     state: CompatibilityState.Works
   };
 
+  // Controls presentation order (generated code alphabetizes them)
+  const dropdown_options = [CompatibilityState.Broken, CompatibilityState.Damaged, CompatibilityState.Works];
+
   export const { t } = getTranslate();
 </script>
 
 <label class="label">
   <span>Compatibility State</span>
   <select class="select" style="margin-bottom: 10px" bind:value={compatibility.state}>
-    {#each Object.values(CompatibilityState) as state}
+    {#each dropdown_options as state}
       <option value={state}>{state}</option>
     {/each}
   </select>
