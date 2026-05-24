@@ -9,7 +9,7 @@
     [AiUseDisclosureType.AiUsage]: 'mod.ai_disclosure.ai_usage.option.developer',
     [AiUseDisclosureType.RuntimeAiUsage]: 'mod.ai_disclosure.runtime_ai_usage.option.developer'
   };
-  // Used to control the order they're presented in (generated code alphabetizes them)
+  // Controls presentation order (generated code alphabetizes them)
   const dropdown_options = Object.keys(optionTranslationKeys) as Array<AiUseDisclosureType>;
 
   const descriptionTranslationKeys: Record<AiUseDisclosureType, string> = {
