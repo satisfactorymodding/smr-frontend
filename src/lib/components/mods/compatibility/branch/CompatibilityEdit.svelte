@@ -2,14 +2,13 @@
   import type { Compatibility } from '$lib/generated';
   import { CompatibilityState } from '$lib/generated';
   import { getCompatibilityStateDescriptionFor } from '$lib/utils/compatibility-descriptions';
-  import { getTolgee, getTranslate } from '@tolgee/svelte';
+  import { getTranslate } from '@tolgee/svelte';
 
   export let compatibility: Compatibility = {
     state: CompatibilityState.Works
   };
 
   export const { t } = getTranslate();
-  export const tolgee = getTolgee().value;
 </script>
 
 <label class="label">
@@ -20,7 +19,7 @@
     {/each}
   </select>
   <p class="compatibility-state-description">
-    {getCompatibilityStateDescriptionFor(compatibility.state || 'Unknown', tolgee)}
+    {getCompatibilityStateDescriptionFor($t, compatibility.state)}
   </p>
 </label>
 <label class="label">
