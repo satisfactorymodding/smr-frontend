@@ -270,29 +270,31 @@
               <span>{$t('add')}</span>
             </button>
           </div>
-          {#each $data.authors as author, i}
-            <div class="flex items-end">
-              {#if $data.authors[i].user_id}
-                <div class="p-2">
-                  <ModAuthor id={$data.authors[i].user_id} />
-                </div>
-              {/if}
-              <label class="label">
-                <span>User ID</span>
-                <input
-                  type="text"
-                  bind:value={$data.authors[i].user_id}
-                  required
-                  class="input p-2"
-                  disabled={author.role === 'creator'} />
-              </label>
-              {#if author.role !== 'creator'}
-                <button class="variant-ghost-primary btn" type="button" on:click={() => removeAuthor(i)}>
-                  <span>{$t('remove')}</span>
-                </button>
-              {/if}
-            </div>
-          {/each}
+          {#if $data.authors !== undefined}
+            {#each $data.authors as author, i}
+              <div class="flex items-end">
+                {#if $data.authors[i].user_id}
+                  <div class="p-2">
+                    <ModAuthor id={$data.authors[i].user_id} />
+                  </div>
+                {/if}
+                <label class="label">
+                  <span>User ID</span>
+                  <input
+                    type="text"
+                    bind:value={$data.authors[i].user_id}
+                    required
+                    class="input p-2"
+                    disabled={author.role === 'creator'} />
+                </label>
+                {#if author.role !== 'creator'}
+                  <button class="variant-ghost-primary btn" type="button" on:click={() => removeAuthor(i)}>
+                    <span>{$t('remove')}</span>
+                  </button>
+                {/if}
+              </div>
+            {/each}
+          {/if}
         </div>
       </div>
     {/if}
