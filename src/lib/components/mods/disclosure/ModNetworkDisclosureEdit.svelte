@@ -32,7 +32,7 @@
   oldDisclosure = disclosure;
 
   const onStatePickerChange = () => {
-    if (disclosure?.length > 0) {
+    if ((disclosure?.length ?? 0) > 0) {
       // Hold onto the user's previously entered value if they explore other dropdown options.
       oldDisclosure = disclosure;
     }

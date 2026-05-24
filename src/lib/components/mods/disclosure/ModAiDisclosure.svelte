@@ -16,21 +16,21 @@
       <h3 class="my-4 text-2xl font-bold underline decoration-dotted" title={$t('mod.ai_disclosure.header.tooltip')}>
         <T keyName="mod.ai_disclosure.header" />
       </h3>
-      {#if mod?.ai_use_disclosure === null || mod?.ai_use_disclosure.disclosure_type === AiUseDisclosureType.NoDisclosure}
+      {#if mod?.ai_use_disclosure === null || mod?.ai_use_disclosure?.disclosure_type === AiUseDisclosureType.NoDisclosure}
         <span>{$t('mod.ai_disclosure.no_ai_use_disclosure.description.user')}</span>
         <br />
-      {:else if mod?.ai_use_disclosure.disclosure_type === AiUseDisclosureType.NoAiUsage}
+      {:else if mod?.ai_use_disclosure?.disclosure_type === AiUseDisclosureType.NoAiUsage}
         <span class="italic">{$t('mod.ai_disclosure.no_ai_use.description.user')}</span>
         <br />
-      {:else if mod?.ai_use_disclosure.disclosure_type === AiUseDisclosureType.AiUsage}
+      {:else if mod?.ai_use_disclosure?.disclosure_type === AiUseDisclosureType.AiUsage}
         <span class="italic">{$t('mod.ai_disclosure.ai_use.description.user')}</span>
-        {#await markdown(mod.ai_use_disclosure.disclosure_string) then rendered}
+        {#await markdown(mod?.ai_use_disclosure?.disclosure_string ?? 'Invalid State!') then rendered}
           <!-- eslint-disable-next-line -->
           {@html rendered}
         {/await}<br />
-      {:else if mod?.ai_use_disclosure.disclosure_type === AiUseDisclosureType.RuntimeAiUsage}
+      {:else if mod?.ai_use_disclosure?.disclosure_type === AiUseDisclosureType.RuntimeAiUsage}
         <span class="italic">{$t('mod.ai_disclosure.runtime_ai_use.description.user')} </span>
-        {#await markdown(mod.ai_use_disclosure.disclosure_string) then rendered}
+        {#await markdown(mod?.ai_use_disclosure?.disclosure_string ?? 'Invalid State!') then rendered}
           <!-- eslint-disable-next-line -->
           {@html rendered}
         {/await}<br />
