@@ -37,7 +37,7 @@ mutation EditMod($modId: ModID!, $mod: UpdateMod!) {
     network_use_disclosure
     ai_use_disclosure {
       disclosure_type
-      disclosure_string
+      message
     }
   }
 }

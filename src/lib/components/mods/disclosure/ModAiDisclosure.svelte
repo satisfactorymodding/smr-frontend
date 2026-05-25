@@ -50,7 +50,7 @@
         {/if}
         {#if AiChoiceRequiresDescription(disclosure?.disclosure_type)}
           <div class="card p-2">
-            {#await markdown(disclosure?.disclosure_string ?? 'Invalid State!') then rendered}
+            {#await markdown(disclosure?.message ?? 'Invalid State!') then rendered}
               <!-- eslint-disable-next-line -->
               {@html rendered}
             {/await}
