@@ -60,7 +60,7 @@ export type ModData = {
   };
   ai_use_disclosure?: {
     disclosure_type: AiUseDisclosureType;
-    disclosure_string?: string;
+    message?: string;
   };
   hidden: boolean;
   tagIDs?: string[];
@@ -148,7 +148,7 @@ export const modFormSchema = zod.object({
   ai_use_disclosure: zod.optional(
     zod.object({
       disclosure_type: zod.nativeEnum(AiUseDisclosureType),
-      disclosure_string: zod.string().optional()
+      message: zod.string().optional()
     })
   ),
   hidden: zod.boolean(),

@@ -63,7 +63,7 @@
       if (choice !== AiDisclosureChoice.Unspecified) {
         db_disclosure = {
           disclosure_type: AiDisclosureChoiceToDbType[choice],
-          disclosure_string: submitted.pending_ai_use_disclosure!.message
+          message: submitted.pending_ai_use_disclosure!.message
         };
       }
       delete submitted.pending_ai_use_disclosure;

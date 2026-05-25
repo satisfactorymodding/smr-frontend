@@ -59,7 +59,7 @@
         // Only copy values to form prefill if valid
         outgoing.pending_ai_use_disclosure = {
           choice: aiDisclosure.disclosure_type,
-          message: aiDisclosure.disclosure_string
+          message: aiDisclosure.message
         };
       }
       return outgoing;
