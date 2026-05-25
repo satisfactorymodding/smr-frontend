@@ -26,6 +26,7 @@
         ? NetworkDisclosureState.NoNetworkUsage
         : NetworkDisclosureState.YesNetworkUsage;
 
+  // Must expose internal dropdown state due to "null/empty string/valid string" significance to form validation
   export let dropdownChoiceForValidation: NetworkDisclosureState = disclosureState;
 
   let oldDisclosure: string | null = null;
