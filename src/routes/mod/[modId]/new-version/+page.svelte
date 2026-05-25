@@ -51,7 +51,7 @@
   const onSubmit = async (versionData: VersionData) =>
     chunkedUpload(
       versionData.file,
-      $mod.data.mod.id,
+      $mod.data!.mod!.id,
       {
         changelog: versionData.changelog,
         stability: versionData.stability
@@ -67,7 +67,7 @@
           background: 'variant-filled-success',
           timeout: 5000
         });
-        goto(base + '/mod/' + modId + '/version/' + success.version.id);
+        goto(base + '/mod/' + modId + '/version/' + success!.version!.id);
       })
       .catch((err) => {
         console.error(err);
@@ -101,15 +101,15 @@
   };
 
   $: missingAiDisclosure =
-    $mod.data.mod.ai_use_disclosure == null ||
-    $mod.data.mod.ai_use_disclosure.disclosure_type === AiUseDisclosureType.NoDisclosure;
-  $: missingNetworkDisclosure = $mod.data.mod.network_use_disclosure == null;
+    $mod.data?.mod?.ai_use_disclosure == null ||
+    $mod.data?.mod?.ai_use_disclosure.disclosure_type === AiUseDisclosureType.NoDisclosure;
+  $: missingNetworkDisclosure = $mod.data?.mod?.network_use_disclosure == null;
 
   const modalStore = getModalStore();
 </script>
 
 <svelte:head>
-  {#if !$mod.fetching && !$mod.error && $mod.data.mod}
+  {#if !$mod.fetching && !$mod.error && $mod.data?.mod}
     <MetaDescriptors
       description="Creating a new version of mod {$mod.data.mod.name}"
       title="New version of mod {$mod.data.mod.name}" />
@@ -121,7 +121,7 @@
     New Version for
     {#if $mod.fetching}
       ...
-    {:else if !$mod.error}
+    {:else if !$mod.error && $mod.data?.mod}
       {$mod.data.mod.name}
     {/if}
   </h1>

@@ -64,7 +64,7 @@
 
       customProtocolCheck.set(await import('$lib/thirdparty/custom_protocol'));
 
-      if (localStorage.getItem('hasLauncher') && localStorage.getItem('hasLauncher').toLocaleLowerCase() === 'true') {
+      if (localStorage.getItem('hasLauncher') && localStorage.getItem('hasLauncher')!.toLocaleLowerCase() === 'true') {
         hasLauncher.set(true);
       }
 

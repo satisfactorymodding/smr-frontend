@@ -41,7 +41,6 @@
     ><T keyName="mod.ai_disclosure.header.developer" /></span>
   <select bind:value={ai_disclosure.disclosure_type} class="select" style="margin-bottom: 10px">
     {#each dropdown_options as state}
-      <!-- @ts-ignore -->
       <option value={state}><T keyName={optionTranslationKeys[state]} /></option>
     {/each}
   </select>
