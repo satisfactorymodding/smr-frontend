@@ -2,9 +2,9 @@
   import type { ControllerCompatibilityInput } from '$lib/generated';
   import { ControllerCompatibilityState } from '$lib/generated';
 
-  export let compatibility: ControllerCompatibilityInput = null;
+  export let compatibility: ControllerCompatibilityInput | null = null;
   let iconText = 'videogame_asset';
-  if (compatibility?.state === ControllerCompatibilityState.Unsupported) {
+  $: if (compatibility?.state === ControllerCompatibilityState.Unsupported) {
     iconText = 'videogame_asset_off';
   }
 </script>

@@ -90,12 +90,12 @@
   });
 
   let tags = $data.tags;
-  const computeTags = () => {
-    $data.tagIDs = tags.map((tag) => tag.id);
+  const computeTagIds = () => {
+    $data.tagIDs = tags!.map((tag) => tag.id);
   };
 
   $: if (tags) {
-    computeTags();
+    computeTagIds();
   }
 
   // The GQL type NewMod does not have a compatibility field.
@@ -109,12 +109,12 @@
   $: preview = ($data.full_description as string) || '';
 
   const addAuthor = () => {
-    $data.authors.push({ role: 'editor', user_id: '', key: '' });
+    $data.authors!.push({ role: 'editor', user_id: '', key: '' });
     $data.authors = $data.authors;
   };
 
   const removeAuthor = (i: number) => {
-    $data.authors.splice(i, 1);
+    $data.authors!.splice(i, 1);
     $data.authors = $data.authors;
   };
 
