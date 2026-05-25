@@ -28,9 +28,6 @@
     {getControllerCompatibilityStateDescriptionFor($t, compatibility.state)}
   </p>
 </label>
-
-<br />
-
 <label class="label">
   <span>Note</span>
   <textarea class="textarea p-4" bind:value={compatibility.note} placeholder={$t('compatibility-info.notes')} />

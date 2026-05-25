@@ -93,7 +93,7 @@
       </table>
     </div>
     <div class="grid grid-flow-row">
-      <table aria-label="Compatibility Information" class="max-w-auto table table-hover !overflow-visible">
+      <table aria-label="Controller Compatibility Information" class="max-w-auto table table-hover !overflow-visible">
         <tbody>
           <tr class="rounded border !border-surface-500">
             <td>
