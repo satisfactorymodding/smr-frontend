@@ -17,17 +17,19 @@
 
   async function onSubmit(e: Event) {
     e.preventDefault();
-    const success = (
-      await client
-        .mutation(EditModCompatibilityDocument, {
-          modId,
-          compatibility: mod.compatibility
-        })
-        .toPromise()
-    ).data.updateModCompatibility;
+
+    const result = await client
+      .mutation(EditModCompatibilityDocument, {
+        modId,
+        compatibility: mod.compatibility!
+      })
+      .toPromise();
+    const success = result.data?.updateModCompatibility ?? false;
+
     if (success) {
       dispatch('submit');
     } else {
+      console.error('Failed to update compatibility information', result.error);
       dispatch('fail');
     }
   }
