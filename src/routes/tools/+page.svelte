@@ -3,7 +3,7 @@
   import ToolCard from '$lib/components/tools/ToolCard.svelte';
   import MetaDescriptors from '$lib/components/utils/MetaDescriptors.svelte';
 
-  // cspell:ignore SatisGraphtory tehalexf thinkaliker Moritz
+  // cspell:ignore SatisGraphtory tehalexf thinkaliker Moritz Vojtak
   const tools: Tool[] = [
     {
       name: 'Satisfactory Interactive Map',

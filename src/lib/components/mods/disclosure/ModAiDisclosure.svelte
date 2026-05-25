@@ -56,9 +56,8 @@
           {/await}
         </div>
       {/if}
-      <br />
       <button
-        class="variant-ringed-surface variant-glass-surface btn btn-md"
+        class="variant-ringed-surface variant-glass-surface btn btn-md mt-2"
         on:click={() => goto(base + '/content-policy')}>
         <span class="material-icons">verified_user</span>
         <span>{$t('content-policy')}</span>

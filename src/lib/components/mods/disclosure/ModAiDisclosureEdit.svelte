@@ -45,9 +45,8 @@
     {/each}
   </select>
   <p
-    class="compatibility-state-description pb-4 {ai_disclosure.disclosure_type == AiUseDisclosureType.NoDisclosure
-      ? 'text-warning-500'
-      : ''}">
+    class="compatibility-state-description pb-4"
+    class:text-warning-500={ai_disclosure.choice == AiDisclosureChoice.Unspecified}>
     <T keyName={descriptionTranslationKeys[ai_disclosure.disclosure_type]} />
   </p>
   <button class="variant-ringed-surface variant-glass-surface btn btn-md m-6">

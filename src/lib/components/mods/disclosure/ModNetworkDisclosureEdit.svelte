@@ -58,9 +58,8 @@
     {/each}
   </select>
   <p
-    class="compatibility-state-description pb-4 {disclosureState === NetworkDisclosureState.Unspecified
-      ? 'text-warning-500'
-      : ''}">
+    class="compatibility-state-description pb-4"
+    class:text-warning-500={disclosureState === NetworkDisclosureState.Unspecified}>
     <T keyName={descriptionTranslationKeys[disclosureState]} />
   </p>
 </label>
