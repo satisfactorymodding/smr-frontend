@@ -61,7 +61,7 @@ export type ModData = {
   ai_use_disclosure?: {
     disclosure_type: AiUseDisclosureType;
     message?: string;
-  };
+  } | null; // Null allowed so submitting null properly surfaces the backend error instead of silently not requesting a change to the value at all
   hidden: boolean;
   tagIDs?: string[];
   tags?: Tag[];
