@@ -78,6 +78,9 @@ export const initializeGraphQLClient = (fetch?: LoadEvent['fetch']): Client =>
                 __typename: 'Version',
                 id: args.versionId as string
               });
+            },
+            updateMod(_result, args, cache) {
+              cache.invalidate({ __typename: 'Mod', id: args.modId as string });
             }
           }
         }
