@@ -59,7 +59,7 @@
     onSubmit: (submitted: ModFormData) => {
       // Transform pending AI Disclosure data into the format the query wants
       const choice = submitted.pending_ai_use_disclosure?.choice ?? AiDisclosureChoice.Unspecified;
-      let db_disclosure: ModData['ai_use_disclosure'];
+      let db_disclosure: ModData['ai_use_disclosure'] = null;
       if (choice !== AiDisclosureChoice.Unspecified) {
         db_disclosure = {
           disclosure_type: AiDisclosureChoiceToDbType[choice],
