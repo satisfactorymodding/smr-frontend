@@ -1,13 +1,12 @@
 <script lang="ts">
   import ModCompatibilityEdit from './ModCompatibilityEdit.svelte';
-  import type { ModData } from '$lib/models/mods';
-  import { EditModCompatibilityDocument } from '$lib/generated';
+  import { EditModCompatibilityDocument, type Mod } from '$lib/generated';
   import { getContextClient } from '@urql/svelte';
   import { createEventDispatcher } from 'svelte';
   import { getTranslate } from '@tolgee/svelte';
 
   export let modId: string;
-  export let mod: ModData;
+  export let mod: Pick<Mod, 'compatibility'>;
 
   export const { t } = getTranslate();
 

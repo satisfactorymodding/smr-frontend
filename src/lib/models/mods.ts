@@ -1,14 +1,31 @@
 import * as zod from 'zod';
 import {
+  AiUseDisclosureType,
   type CompatibilityState,
   type ControllerCompatibilityState,
-  AiUseDisclosureType,
   type Tag
 } from '$lib/generated';
 
+// eslint bug? https://stackoverflow.com/questions/63961803/eslint-says-all-enums-in-typescript-app-are-already-declared-in-the-upper-scope
+// eslint-disable-next-line no-shadow
+export enum AiDisclosureChoice {
+  Unspecified = 'unspecified', // Added for frontend dropdowns
+  AiUsage = AiUseDisclosureType.AiUsage,
+  NoAiUsage = AiUseDisclosureType.NoAiUsage,
+  RuntimeAiUsage = AiUseDisclosureType.RuntimeAiUsage
+}
+
+export const AiDisclosureChoiceToDbType = {
+  [AiDisclosureChoice.AiUsage]: AiUseDisclosureType.AiUsage,
+  [AiDisclosureChoice.NoAiUsage]: AiUseDisclosureType.NoAiUsage,
+  [AiDisclosureChoice.RuntimeAiUsage]: AiUseDisclosureType.RuntimeAiUsage
+};
+
+export const AiChoiceRequiresDescription = (choice: AiDisclosureChoice | AiUseDisclosureType | undefined) =>
+  [AiDisclosureChoice.AiUsage.valueOf(), AiDisclosureChoice.RuntimeAiUsage.valueOf()].includes(choice?.valueOf() ?? '');
+
 // Since network usage disclosure is stored as a null/empty string/non-empty string,
 // the enum of states only exists here on the frontend
-// eslint bug? https://stackoverflow.com/questions/63961803/eslint-says-all-enums-in-typescript-app-are-already-declared-in-the-upper-scope
 // eslint-disable-next-line no-shadow
 export enum NetworkDisclosureState {
   Unspecified,
@@ -51,7 +68,18 @@ export type ModData = {
   network_use_disclosure?: string;
 };
 
-export const modSchema = zod.object({
+export type FormAiDisclosure = {
+  choice: AiDisclosureChoice;
+  message?: string;
+};
+
+type ModAdditionalFormData = {
+  pending_ai_use_disclosure?: FormAiDisclosure;
+};
+
+export type ModFormData = ModData & ModAdditionalFormData;
+
+export const modFormSchema = zod.object({
   name: zod.string().min(3).max(32),
   mod_reference: zod
     .string()
@@ -91,28 +119,25 @@ export const modSchema = zod.object({
       })
     })
   ),
-  ai_use_disclosure: zod
+  pending_ai_use_disclosure: zod
     .object({
-      disclosure_type: zod.nativeEnum(AiUseDisclosureType),
-      disclosure_string: zod.string().or(zod.literal(''))
+      choice: zod.nativeEnum(AiDisclosureChoice),
+      message: zod.string().optional()
     })
-    // WARNING: Very frustrating possible bug workaround.
+    // WARNING: Very frustrating workaround below.
     // Must use superRefine to work around weird issue where if this is the only error in the form,
-    // the reported error is `[{"disclosure_type": [], "disclosure_string": []}]` which is not a string,
+    // the reported error is `[{"choice": [], "message": []}]` which is not a string,
     // breaking the expected types for the felte forms validation, and displays on the frontend as `[object Object]`.
     // Note that this only seems to happen if this is the first error ever reported in the "session",
     // as soon as any other validation error is also reported, it'd properly return just a string, even if that other error is fixed.
     // Also, sometimes the reported error is just `[]` because reasons!!!
     // See ModForm.svelte for the other half that makes this work
-    .superRefine((data, ctx) => {
-      if (
-        data.disclosure_type === AiUseDisclosureType.AiUsage ||
-        data.disclosure_type === AiUseDisclosureType.RuntimeAiUsage
-      ) {
-        if (data.disclosure_string?.trim().length === 0) {
+    .superRefine(({ choice, message }, ctx) => {
+      if (AiChoiceRequiresDescription(choice)) {
+        if ((message?.trim().length ?? 0) == 0) {
           ctx.addIssue({
             code: zod.ZodIssueCode.custom,
-            path: ['disclosure_string'],
+            path: ['message'],
             // TODO not sure how to localize, no convenient Tolgee context. Only mod devs will see this so not a huge priority
             message: 'You must provide a description.'
           });
@@ -120,6 +145,12 @@ export const modSchema = zod.object({
       }
     })
     .optional(),
+  ai_use_disclosure: zod.optional(
+    zod.object({
+      disclosure_type: zod.nativeEnum(AiUseDisclosureType),
+      disclosure_string: zod.string().optional()
+    })
+  ),
   hidden: zod.boolean(),
   tagIDs: zod.optional(zod.string().array()),
 

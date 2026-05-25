@@ -46,12 +46,27 @@
       });
   };
 
-  $: initialValues = $mod.data
-    ? {
-        ...$mod.data.mod,
+  $: initialValues = ((incoming) => {
+    if (incoming) {
+      const aiDisclosure = incoming.mod?.ai_use_disclosure;
+      const outgoing = {
+        ...incoming.mod,
+        pending_ai_use_disclosure: undefined as unknown,
+        ai_use_disclosure: undefined,
         logo: undefined
+      };
+      if (aiDisclosure) {
+        // Only copy values to form prefill if valid
+        outgoing.pending_ai_use_disclosure = {
+          choice: aiDisclosure.disclosure_type,
+          message: aiDisclosure.disclosure_string
+        };
       }
-    : undefined;
+      return outgoing;
+    } else {
+      return undefined;
+    }
+  })($mod.data);
 </script>
 
 <svelte:head>

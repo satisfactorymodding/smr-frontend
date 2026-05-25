@@ -4,11 +4,12 @@
   import { goto } from '$app/navigation';
   import { base } from '$app/paths';
   import { markdown } from '$lib/utils/markdown';
+  import { AiChoiceRequiresDescription } from '$lib/models/mods';
 
   export let mod!: Pick<Mod, 'ai_use_disclosure'>;
 
   const getIcon = (disclosure?: AiUseDisclosureType) => {
-    if (disclosure === undefined || disclosure === AiUseDisclosureType.NoDisclosure) {
+    if (disclosure === undefined) {
       return 'question_mark';
     } else {
       return {
@@ -19,9 +20,7 @@
     }
   };
 
-  $: hasDescription =
-    mod.ai_use_disclosure?.disclosure_type == AiUseDisclosureType.AiUsage ||
-    mod.ai_use_disclosure?.disclosure_type == AiUseDisclosureType.RuntimeAiUsage;
+  $: disclosure = mod.ai_use_disclosure;
 
   export const { t } = getTranslate();
 </script>
@@ -36,26 +35,28 @@
         <span
           title={$t('symbol_for_status.tooltip')}
           class="material-icons variant-filled-surface badge-icon p-4 text-2xl">
-          {getIcon(mod?.ai_use_disclosure?.disclosure_type)}
+          {getIcon(disclosure?.disclosure_type)}
         </span>
       </h3>
-      {#if mod?.ai_use_disclosure === null || mod?.ai_use_disclosure?.disclosure_type === AiUseDisclosureType.NoDisclosure}
-        <span>{$t('mod.ai_disclosure.no_ai_use_disclosure.description.user')}</span>
-      {:else if mod?.ai_use_disclosure?.disclosure_type === AiUseDisclosureType.NoAiUsage}
-        <span class="italic">{$t('mod.ai_disclosure.no_ai_use.description.user')}</span>
-      {:else if mod?.ai_use_disclosure?.disclosure_type === AiUseDisclosureType.AiUsage}
-        <span class="italic">{$t('mod.ai_disclosure.ai_use.description.user')}</span>
-      {:else if mod?.ai_use_disclosure?.disclosure_type === AiUseDisclosureType.RuntimeAiUsage}
-        <span class="italic">{$t('mod.ai_disclosure.runtime_ai_use.description.user')} </span>
-      {/if}
-      {#if hasDescription}
-        <div class="card p-2">
-          {#await markdown(mod?.ai_use_disclosure?.disclosure_string ?? 'Invalid State!') then rendered}
-            <!-- eslint-disable-next-line -->
-            {@html rendered}
-          {/await}
-        </div>
-      {/if}
+      <div>
+        {#if disclosure === null}
+          <span>{$t('mod.ai_disclosure.no_ai_use_disclosure.description.user')}</span>
+        {:else if disclosure?.disclosure_type === AiUseDisclosureType.NoAiUsage}
+          <span class="italic">{$t('mod.ai_disclosure.no_ai_use.description.user')}</span>
+        {:else if disclosure?.disclosure_type === AiUseDisclosureType.AiUsage}
+          <span class="italic">{$t('mod.ai_disclosure.ai_use.description.user')}</span>
+        {:else if disclosure?.disclosure_type === AiUseDisclosureType.RuntimeAiUsage}
+          <span class="italic">{$t('mod.ai_disclosure.runtime_ai_use.description.user')} </span>
+        {/if}
+        {#if AiChoiceRequiresDescription(disclosure?.disclosure_type)}
+          <div class="card p-2">
+            {#await markdown(disclosure?.disclosure_string ?? 'Invalid State!') then rendered}
+              <!-- eslint-disable-next-line -->
+              {@html rendered}
+            {/await}
+          </div>
+        {/if}
+      </div>
       <button
         class="variant-ringed-surface variant-glass-surface btn btn-md mt-2"
         on:click={() => goto(base + '/content-policy')}>
