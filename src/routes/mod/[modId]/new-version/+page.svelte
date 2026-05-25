@@ -3,7 +3,7 @@
   import { goto } from '$app/navigation';
   import type { VersionData } from '$lib/models/versions';
   import VersionForm from '$lib/components/versions/VersionForm.svelte';
-  import { AiUseDisclosureType, AnnouncementImportance, GetModDocument } from '$lib/generated';
+  import { AnnouncementImportance, GetModDocument } from '$lib/generated';
   import { writable } from 'svelte/store';
   import { chunkedUpload } from '$lib/utils/chunked-upload';
   import type { UploadState } from '$lib/utils/chunked-upload';
@@ -100,9 +100,7 @@
     }
   };
 
-  $: missingAiDisclosure =
-    $mod.data?.mod?.ai_use_disclosure == null ||
-    $mod.data?.mod?.ai_use_disclosure.disclosure_type === AiUseDisclosureType.NoDisclosure;
+  $: missingAiDisclosure = $mod.data?.mod?.ai_use_disclosure == null;
   $: missingNetworkDisclosure = $mod.data?.mod?.network_use_disclosure == null;
 
   const modalStore = getModalStore();

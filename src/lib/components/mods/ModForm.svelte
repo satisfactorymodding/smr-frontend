@@ -2,8 +2,13 @@
   import { createForm } from 'felte';
   import { validator } from '@felte/validator-zod';
   import { reporter, ValidationMessage } from '@felte/reporter-svelte';
-  import type { ModData } from '$lib/models/mods';
-  import { modSchema, NetworkDisclosureState } from '$lib/models/mods';
+  import type { ModData, ModFormData } from '$lib/models/mods';
+  import {
+    AiDisclosureChoice,
+    AiDisclosureChoiceToDbType,
+    modFormSchema,
+    NetworkDisclosureState
+  } from '$lib/models/mods';
   import { trimNonSchema } from '$lib/utils/forms';
   import { markdown } from '$lib/utils/markdown';
   import ModAuthor from '$lib/components/mods/ModAuthor.svelte';
@@ -48,10 +53,31 @@
   let networkUseDisclosureDropdownChoice: NetworkDisclosureState = NetworkDisclosureState.Unspecified;
 
   // Both the schema validator and validate() apply and merge their reported errors
-  const { form, data, errors } = createForm<ModData>({
+  const { form, data, errors } = createForm<ModFormData>({
     initialValues: initialValues,
-    extend: [validator({ schema: modSchema }), reporter],
-    onSubmit: (submitted: ModData) => onSubmit(trimNonSchema(submitted, modSchema)),
+    extend: [validator({ schema: modFormSchema }), reporter],
+    onSubmit: (submitted: ModFormData) => {
+      // Transform pending AI Disclosure data into the format the query wants
+      const choice = submitted.pending_ai_use_disclosure?.choice ?? AiDisclosureChoice.Unspecified;
+      let db_disclosure: ModData['ai_use_disclosure'];
+      if (choice !== AiDisclosureChoice.Unspecified) {
+        db_disclosure = {
+          disclosure_type: AiDisclosureChoiceToDbType[choice],
+          disclosure_string: submitted.pending_ai_use_disclosure!.message
+        };
+      }
+      delete submitted.pending_ai_use_disclosure;
+
+      // NewMod does not have a compatibility field
+      if (!editing) {
+        delete submitted.compatibility;
+      }
+
+      // trimNonSchema errors if ai_use_disclosure data is present, so it must be added after
+      const nonSchema: ModData = trimNonSchema(submitted, modFormSchema);
+      nonSchema.ai_use_disclosure = db_disclosure;
+      return onSubmit(nonSchema);
+    },
     validate: (values) => {
       if (
         networkUseDisclosureDropdownChoice === NetworkDisclosureState.YesNetworkUsage &&
@@ -71,7 +97,7 @@
     } else if (key === 'authors') {
       // Skip authors field since final submit gives it values unrelated to validation?
       return false;
-    } else if (key === 'ai_use_disclosure' && Array.isArray(value) && value.length === 0) {
+    } else if (key === 'pending_ai_use_disclosure' && Array.isArray(value) && value.length === 0) {
       // Stupid case where the custom error is eaten and turned into empty array
       return true;
     } else if (Array.isArray(value)) {
@@ -96,14 +122,6 @@
 
   $: if (tags) {
     computeTagIds();
-  }
-
-  // The GQL type NewMod does not have a compatibility field.
-  // We remove the field from the data so that the GQL request is valid
-  $: {
-    if (!editing) {
-      delete $data.compatibility;
-    }
   }
 
   $: preview = ($data.full_description as string) || '';
@@ -231,23 +249,28 @@
       </div>
 
       <div class="card p-4">
-        <ModAiDisclosureEdit bind:ai_disclosure={$data.ai_use_disclosure} />
-        <ValidationMessage for="ai_use_disclosure" let:messages={message}>
+        <ModAiDisclosureEdit bind:ai_disclosure={$data.pending_ai_use_disclosure} />
+        <ValidationMessage for="pending_ai_use_disclosure" let:messages={message}>
           <span class="validation-message"
             >{(() => {
-              // Very bizarre data handling to work around zod/felte/something reporting error format improperly (see mods.ts)
+              // Very bizarre data handling to work around zod/felte/something reporting error format improperly, in inconsistent formats (see mods.ts)
               if (!message) {
+                // Case where there is no error
                 return '';
-              } else if ('disclosure_string' in message) {
+              } else if ('message' in message) {
                 // Case where the custom error actually gets reported, but as an object
-                return message?.disclosure_string;
+                if (message.message === null) {
+                  // When the user fixes the error, it changes to this state
+                  return '';
+                }
+                return message?.message;
               } else if (Array.isArray(message) && message.length === 0) {
                 // Case where nothing but `[]` is returned despite the custom error code executing
                 // (Intentionally not localized since the one in mods.ts isn't either)
                 return 'You must provide a description.';
               } else {
                 // Backup in case something else comes out (who knows!?)
-                return JSON.stringify(message);
+                return 'Error displaying error message, raw value is: ' + JSON.stringify(message);
               }
             })()}</span>
         </ValidationMessage>
