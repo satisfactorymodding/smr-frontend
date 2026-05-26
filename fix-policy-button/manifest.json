@@ -1,0 +1,21 @@
+{
+  "name": "Satisfactory Mod Repo",
+  "short_name": "SMR",
+  "theme_color": "#ff6f00",
+  "background_color": "#da8517",
+  "display": "standalone",
+  "scope": "/",
+  "start_url": "/",
+  "icons": [
+    {
+      "src": "assets/android-chrome-192x192.png?v=69P26YMB35",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/android-chrome-512x512.png?v=69P26YMB35",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
