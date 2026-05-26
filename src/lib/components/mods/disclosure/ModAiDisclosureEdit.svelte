@@ -2,7 +2,6 @@
   import { getTranslate, T } from '@tolgee/svelte';
   import { base } from '$app/paths';
   import { AiChoiceRequiresDescription, AiDisclosureChoice, type FormAiDisclosure } from '$lib/models/mods';
-  import { goto } from '$app/navigation';
 
   const optionTranslationKeys: Record<AiDisclosureChoice, string> = {
     [AiDisclosureChoice.Unspecified]: 'mod.ai_disclosure.unspecified_disclosure.option.developer',
@@ -45,12 +44,14 @@
     class:text-warning-500={ai_disclosure.choice == AiDisclosureChoice.Unspecified}>
     <T keyName={descriptionTranslationKeys[ai_disclosure.choice]} />
   </p>
-  <button
-    class="variant-ringed-surface variant-glass-surface btn btn-md mt-2"
-    on:click={() => goto(base + '/content-policy')}>
+  <a
+    href={base + '/content-policy'}
+    target="_blank"
+    rel="noopener noreferrer"
+    class="variant-ringed-surface variant-glass-surface btn btn-md mt-2">
     <span class="material-icons">verified_user</span>
     <span>{$t('content-policy')}</span>
-  </button>
+  </a>
   <div class="p-2"></div>
   {#if AiChoiceRequiresDescription(ai_disclosure.choice)}
     <div class="grid grid-flow-row gap-2">
