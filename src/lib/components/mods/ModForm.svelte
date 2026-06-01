@@ -68,14 +68,15 @@
       }
       delete submitted.pending_ai_use_disclosure;
 
-      // NewMod does not have a compatibility field
-      if (!editing) {
-        delete submitted.compatibility;
-      }
-
       // trimNonSchema errors if ai_use_disclosure data is present, so it must be added after
       const nonSchema: ModData = trimNonSchema(submitted, modFormSchema);
       nonSchema.ai_use_disclosure = db_disclosure;
+
+      if (!editing) {
+        // NewMod does not have compatibility or disclosure fields
+        delete nonSchema.compatibility;
+        delete nonSchema.ai_use_disclosure;
+      }
       return onSubmit(nonSchema);
     },
     validate: (values) => {
