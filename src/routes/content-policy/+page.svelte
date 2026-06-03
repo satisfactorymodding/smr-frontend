@@ -68,7 +68,7 @@
 
     <p>
       Generative Artificial Intelligence (AI) is a rapidly changing, legally and morally murky technology with an
-      unclear future. As a result, expect this section the be updated as technology and laws develop.
+      unclear future. As a result, expect this section to be updated as technology and laws develop.
     </p>
 
     <p>
