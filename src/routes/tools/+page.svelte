@@ -120,6 +120,13 @@
       description:
         "This little script syncs savegames between you and your friends, so you can play the game even when the host isn't online without the need for a dedicated server.",
       link: 'https://satisfactorysync.netlify.app/'
+    },
+    {
+      name: 'Node Randomization Previewer',
+      author: 'Konsl',
+      logo: 'https://avatars.githubusercontent.com/u/82901383?v=4',
+      description: 'Program to simulate the World Randomization node distribution introduced in 1.2',
+      link: 'https://github.com/Konsl/satisfactory-world-generator'
     }
   ];
 </script>
